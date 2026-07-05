@@ -12,7 +12,7 @@ from colorama import init as colorama_init
 from dotenv import load_dotenv
 from modules.stt_vosk import VoskSTT
 from modules.tts_edge import EdgeTTS
-from modules.nlu import predict, pick_uncertain_response, pick_generic_uncertain_response, pick_named_response
+from modules.nlu import predict, pick_named_response
 from modules.audio_control import AudioControl
 from modules.audio_output import AudioOutputControl
 from modules.screenshot import ScreenshotService
@@ -30,6 +30,7 @@ from modules.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
 from modules.stt_refinement import maybe_refine_with_whisper as stt_maybe_refine_with_whisper
+from modules.reply_builder import build_reply_text
 from modules.understanding_helpers import (
     needs_normalization_retry,
     should_use_retry_result,
@@ -131,32 +132,12 @@ def _is_accepted(meta: Dict[str, Any]) -> bool:
 
 
 def _reply_text(router: Router, meta: Dict[str, Any]) -> str:
-    """
-    Текст ответа:
-      - если ACCEPT + уверенность >= SAY -> обычный ответ (router.reply)
-     - если ACCEPT, но ниже SAY -> мягко ("Похоже, ...")
-      - если не ACCEPT -> say/FALLBACK из NLU (и в inbox)
-    """
-    conf = float(meta.get("confidence") or 0.0)
-    if _is_accepted(meta):
-        base = router.reply(meta) or (meta.get("say") or "...")
-        if conf >= SETTINGS.nlu_say_conf or (meta.get("intent") or "").upper() in {"SHOW_IP", "WEATHER"}:
-            return base
-
-        uncertain = pick_uncertain_response(
-            meta.get("intent") or "",
-            meta.get("slots") or {},
-        )
-        if uncertain:
-            return uncertain
-
-        generic_uncertain = pick_generic_uncertain_response()
-        if generic_uncertain:
-            return generic_uncertain
-
-        return "Похоже, я не до конца уверен, но попробую выполнить команду."
-    # не принимаем к выполнению — говорим fallback из NLU
-    return meta.get("say") or "Не понял команду. Повтори, пожалуйста."
+    return build_reply_text(
+        router=router,
+        meta=meta,
+        accept_conf=SETTINGS.nlu_accept_conf,
+        say_conf=SETTINGS.nlu_say_conf,
+    )
 
 
 def main():
