@@ -35,9 +35,13 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Command audit", _python_cmd("tools/command_audit.py")),
             Step("Evaluate NLU", _python_cmd("tools/eval_nlu.py")),
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
+            Step("Evaluate confirmation", _python_cmd("tools/eval_confirmation.py")),
         ],
         "decision": [
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
+        ],
+        "confirmation": [
+            Step("Evaluate confirmation", _python_cmd("tools/eval_confirmation.py")),
         ],
         "analyze": [
             Step("Learning report", _python_cmd("tools/learning_report.py")),
@@ -131,6 +135,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  decision   Run command decision eval only", log_file)
     _emit("  audit      Check command registry consistency", log_file)
     _emit("  check      Run command audit + NLU eval", log_file)
+    _emit("  confirmation Run confirmation phrase eval only", log_file)
     _emit("  analyze    Run analysis reports only", log_file)
     _emit("  promote    Export promotion results only", log_file)
     _emit("  raw_inbox  Export raw learning cases to inbox (rescue/manual path)", log_file)

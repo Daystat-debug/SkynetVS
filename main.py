@@ -32,6 +32,11 @@ from modules.understanding_helpers import (
     needs_normalization_retry,
     should_use_retry_result,
 )
+from modules.confirmation import (
+    build_confirmation_prompt,
+    is_confirmation_no,
+    is_confirmation_yes,
+)
 
 colorama_init()
 load_dotenv()
@@ -98,20 +103,6 @@ def should_ignore_during_ack_window(text: str) -> bool:
     - bare hotword, если он прилетел эхом сразу после ACK
     """
     return is_ack_echo(text) or is_only_hotword(text)
-
-
-def is_confirmation_yes(text: str) -> bool:
-    t = norm(text)
-    return t in {
-        "да", "ага", "угу", "подтверждаю", "подтвердить", "ок", "okay", "ok", "выполняй"
-    }
-
-
-def is_confirmation_no(text: str) -> bool:
-    t = norm(text)
-    return t in {
-        "нет", "не", "отмена", "отменить", "не надо", "не нужно", "стоп"
-    }
 
 
 def say(stt: VoskSTT, tts: EdgeTTS, text: str, *, mute_stt: bool = True) -> float:
@@ -826,20 +817,6 @@ def main():
             extend_cmd_window()
             return
 
-
-    def build_confirmation_prompt(meta: Dict[str, Any]) -> str:
-        intent = str(meta.get("intent") or "").upper()
-        slots = meta.get("slots") or {}
-
-        prompt = pick_named_response(f"{intent}_CONFIRM", slots)
-        if prompt:
-            return prompt
-
-        prompt = pick_named_response("CONFIRM_FALLBACK", slots)
-        if prompt:
-            return prompt
-
-        return "Подтвердить выполнение команды?"
 
     def clear_pending_confirmation() -> None:
         mode_manager.clear_pending_confirmation()
