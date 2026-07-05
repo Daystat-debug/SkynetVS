@@ -28,6 +28,7 @@ from modules.mode_manager import ModeManager
 from modules.window_context_service import WindowContextService
 from modules.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
+from modules.dictation_commands import is_dictation_stop_phrase
 from modules.understanding_helpers import (
     needs_normalization_retry,
     should_use_retry_result,
@@ -36,6 +37,14 @@ from modules.confirmation import (
     build_confirmation_prompt,
     is_confirmation_no,
     is_confirmation_yes,
+)
+from modules.hotword_utils import (
+    has_hotword as hotword_has_hotword,
+    is_ack_echo as hotword_is_ack_echo,
+    is_only_hotword as hotword_is_only_hotword,
+    norm_text,
+    should_ignore_during_ack_window as hotword_should_ignore_during_ack_window,
+    strip_hotword as hotword_strip_hotword,
 )
 
 colorama_init()
@@ -52,57 +61,31 @@ warnings.filterwarnings(
 SETTINGS = Settings.from_env()
 
 def norm(text: str) -> str:
-    return " ".join((text or "").lower().split())
+    return norm_text(text)
 
 
 def has_hotword(text: str) -> bool:
-    t = norm(text)
-    return any(t.startswith(hw) for hw in SETTINGS.hotwords)
+    return hotword_has_hotword(text, hotwords=SETTINGS.hotwords)
 
 
 def strip_hotword(text: str) -> str:
-    t = norm(text)
-    for hw in SETTINGS.hotwords:
-        if t.startswith(hw):
-            return t[len(hw):].strip(" ,.!?:;—-")
-    return ""
+    return hotword_strip_hotword(text, hotwords=SETTINGS.hotwords)
 
 
 def is_only_hotword(text: str) -> bool:
-    t = norm(text)
-    return any(t == hw for hw in SETTINGS.hotwords)
+    return hotword_is_only_hotword(text, hotwords=SETTINGS.hotwords)
 
 
 def is_ack_echo(text: str) -> bool:
-    """
-    Более мягкая проверка эха ACK.
-    STT может распознать 'Слушаю' как 'слушай', поэтому одного точного
-    сравнения недостаточно.
-    """
-    t = norm(text)
-    ack = norm(SETTINGS.ack_text)
-
-    if not t:
-        return False
-
-    if t == ack:
-        return True
-
-    ack_variants = {
-        ack,
-        "слушаю",
-        "слушай",
-    }
-    return t in ack_variants
+    return hotword_is_ack_echo(text, ack_text=SETTINGS.ack_text)
 
 
 def should_ignore_during_ack_window(text: str) -> bool:
-    """
-    Во время короткого окна после ACK игнорируем:
-    - эхо самой фразы ACK
-    - bare hotword, если он прилетел эхом сразу после ACK
-    """
-    return is_ack_echo(text) or is_only_hotword(text)
+    return hotword_should_ignore_during_ack_window(
+        text,
+        hotwords=SETTINGS.hotwords,
+        ack_text=SETTINGS.ack_text,
+    )
 
 
 def say(stt: VoskSTT, tts: EdgeTTS, text: str, *, mute_stt: bool = True) -> float:
@@ -290,15 +273,6 @@ def main():
     cmd_timer: threading.Timer | None = None
     cmd_window_token = 0
     mode_manager = ModeManager()
-    dictation_stop_phrases = {
-        "прекрати печать",
-        "останови печать",
-        "выйди из режима диктовки",
-        "выключи режим диктовки",
-        "выйди из режима ввода текста",
-        "выключи режим ввода текста",
-        "заверши диктовку",
-    }
 
     def current_mode_name() -> str:
         if mode_manager.is_dictation_mode():
@@ -820,12 +794,6 @@ def main():
 
     def clear_pending_confirmation() -> None:
         mode_manager.clear_pending_confirmation()
-
-    def is_dictation_stop_phrase(text: str) -> bool:
-        t = norm(text)
-        if has_hotword(t):
-            t = strip_hotword(t) or ""
-        return t in dictation_stop_phrases
 
     while True:
         evt = event_q.get()

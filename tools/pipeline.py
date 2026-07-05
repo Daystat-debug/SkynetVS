@@ -36,6 +36,8 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate NLU", _python_cmd("tools/eval_nlu.py")),
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
             Step("Evaluate confirmation", _python_cmd("tools/eval_confirmation.py")),
+            Step("Evaluate dictation commands", _python_cmd("tools/eval_dictation_commands.py")),
+            Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
         ],
         "decision": [
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
@@ -70,6 +72,12 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Correction memory report", _python_cmd("tools/correction_memory_report.py")),
             Step("Promotion report", _python_cmd("tools/promotion_report.py")),
             Step("Export promotions", _python_cmd("tools/export_promotions.py")),
+        ],
+        "dictation": [
+            Step("Evaluate dictation commands", _python_cmd("tools/eval_dictation_commands.py")),
+        ],
+        "hotword": [
+            Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
         ],
     }
 
@@ -143,6 +151,8 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  train      Run train/train_nlu.py only", log_file)
     _emit("  eval       Run tools/eval_nlu.py only", log_file)
     _emit("  full       Analyze + promote", log_file)
+    _emit("  dictation   Run dictation command eval only", log_file)
+    _emit("  hotword    Run hotword utility eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
