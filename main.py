@@ -28,6 +28,10 @@ from modules.mode_manager import ModeManager
 from modules.window_context_service import WindowContextService
 from modules.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
+from modules.understanding_helpers import (
+    needs_normalization_retry,
+    should_use_retry_result,
+)
 
 colorama_init()
 load_dotenv()
@@ -216,66 +220,6 @@ def _reply_text(router: Router, meta: Dict[str, Any]) -> str:
         return "Похоже, я не до конца уверен, но попробую выполнить команду."
     # не принимаем к выполнению — говорим fallback из NLU
     return meta.get("say") or "Не понял команду. Повтори, пожалуйста."
-
-
-def _filled_slot_count(meta: Dict[str, Any]) -> int:
-    slots = meta.get("slots") or {}
-    count = 0
-    for value in slots.values():
-        if value is None:
-            continue
-        if isinstance(value, str) and not value.strip():
-            continue
-        if isinstance(value, (list, dict, tuple, set)) and not value:
-            continue
-        count += 1
-    return count
-
-
-def _needs_normalization_retry(raw_text: str, meta: Dict[str, Any]) -> bool:
-    intent = str(meta.get("intent") or "").upper()
-    slots = meta.get("slots") or {}
-
-    if not intent:
-        return True
-
-    if intent in {"OPEN_APP", "CLOSE_APP"} and not slots.get("app"):
-        return True
-
-    if intent == "OPEN_URL" and not slots.get("url"):
-        return True
-
-    if intent == "OPEN_FOLDER" and not slots.get("folder"):
-        return True
-
-    return False
-
-
-def _should_use_retry_result(old_meta: Dict[str, Any], new_meta: Dict[str, Any]) -> bool:
-    old_intent = str(old_meta.get("intent") or "").upper()
-    new_intent = str(new_meta.get("intent") or "").upper()
-
-    if not new_intent:
-        return False
-
-    if not old_intent:
-        return True
-
-    if old_intent == new_intent:
-        if _filled_slot_count(new_meta) > _filled_slot_count(old_meta):
-            return True
-
-        old_conf = float(old_meta.get("confidence") or 0.0)
-        new_conf = float(new_meta.get("confidence") or 0.0)
-        if new_conf > old_conf + 0.05:
-            return True
-
-        return False
-
-    if (not _is_accepted(old_meta)) and _is_accepted(new_meta):
-        return True
-
-    return False
 
 
 def main():
@@ -489,7 +433,7 @@ def main():
         meta = predict(text_in)
         meta["_text"] = text_in
 
-        if _needs_normalization_retry(raw_text_in, meta):
+        if needs_normalization_retry(raw_text_in, meta):
             normalized_text, was_normalized = normalize_command_text(raw_text_in)
             if was_normalized and normalized_text != raw_text_in:
                 meta_retry = predict(normalized_text)
@@ -505,7 +449,11 @@ def main():
                     },
                 )
 
-                if _should_use_retry_result(meta, meta_retry):
+                if should_use_retry_result(
+                        meta,
+                        meta_retry,
+                        accept_conf=SETTINGS.nlu_accept_conf,
+                ):
                     text_in = normalized_text
                     meta = meta_retry
                     logger.event(
