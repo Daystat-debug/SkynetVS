@@ -1,0 +1,284 @@
+from __future__ import annotations
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import TextIO
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PIPELINE_LOG_DIR = PROJECT_ROOT / "data" / "logs" / "pipeline"
+
+
+@dataclass(frozen=True)
+class Step:
+    name: str
+    cmd: list[str]
+    interactive: bool = False
+
+
+def _python_cmd(*args: str) -> list[str]:
+    return [sys.executable, *args]
+
+
+def available_flows() -> dict[str, list[Step]]:
+    return {
+        "audit": [
+            Step("Command audit", _python_cmd("tools/command_audit.py")),
+        ],
+        "check": [
+            Step("Command audit", _python_cmd("tools/command_audit.py")),
+            Step("Evaluate NLU", _python_cmd("tools/eval_nlu.py")),
+            Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
+        ],
+        "decision": [
+            Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
+        ],
+        "analyze": [
+            Step("Learning report", _python_cmd("tools/learning_report.py")),
+            Step("Build correction memory", _python_cmd("tools/build_correction_memory.py")),
+            Step("Correction memory report", _python_cmd("tools/correction_memory_report.py")),
+            Step("Promotion report", _python_cmd("tools/promotion_report.py")),
+        ],
+        "promote": [
+            Step("Export promotions", _python_cmd("tools/export_promotions.py")),
+        ],
+        "raw_inbox": [
+            Step("Export learning to inbox", _python_cmd("tools/export_learning_to_inbox.py")),
+        ],
+        "label": [
+            Step("Label inbox", _python_cmd("tools/label_inbox.py"), interactive=True),
+        ],
+        "train": [
+            Step("Train NLU", _python_cmd("train/train_nlu.py")),
+        ],
+        "eval": [
+            Step("Evaluate NLU", _python_cmd("tools/eval_nlu.py")),
+        ],
+        "full": [
+            Step("Learning report", _python_cmd("tools/learning_report.py")),
+            Step("Build correction memory", _python_cmd("tools/build_correction_memory.py")),
+            Step("Correction memory report", _python_cmd("tools/correction_memory_report.py")),
+            Step("Promotion report", _python_cmd("tools/promotion_report.py")),
+            Step("Export promotions", _python_cmd("tools/export_promotions.py")),
+        ],
+    }
+
+
+def _emit(message: str = "", log_file: TextIO | None = None) -> None:
+    print(message)
+    if log_file is not None:
+        log_file.write(message + "\n")
+        log_file.flush()
+
+
+def _emit_raw(message: str, log_file: TextIO | None = None) -> None:
+    print(message, end="")
+    if log_file is not None:
+        log_file.write(message)
+        log_file.flush()
+
+
+def _safe_log_name_part(value: str) -> str:
+    value = (value or "pipeline").strip().lower()
+    value = re.sub(r"[^a-z0-9а-яё_-]+", "_", value, flags=re.IGNORECASE)
+    value = value.strip("_")
+    return value or "pipeline"
+
+
+def _make_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
+    if explicit_path:
+        path = Path(explicit_path)
+        if not path.is_absolute():
+            path = PROJECT_ROOT / path
+    else:
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        safe_flow = _safe_log_name_part(flow_name)
+        path = PIPELINE_LOG_DIR / f"{ts}_{safe_flow}.log"
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def _build_child_env(cwd: Path) -> dict[str, str]:
+    env = dict(os.environ)
+
+    old_pythonpath = env.get("PYTHONPATH", "").strip()
+    if old_pythonpath:
+        env["PYTHONPATH"] = str(cwd) + os.pathsep + old_pythonpath
+    else:
+        env["PYTHONPATH"] = str(cwd)
+
+    # Чтобы кириллица из дочерних Python-скриптов нормально попадала в log-файл.
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONUTF8"] = "1"
+
+    return env
+
+
+def print_help(log_file: TextIO | None = None) -> None:
+    _emit("SkynetVS tools pipeline", log_file)
+    _emit("", log_file)
+    _emit("Usage:", log_file)
+    _emit("  python tools/pipeline.py <flow> [options]", log_file)
+    _emit("", log_file)
+    _emit("Flows:", log_file)
+    _emit("  decision   Run command decision eval only", log_file)
+    _emit("  audit      Check command registry consistency", log_file)
+    _emit("  check      Run command audit + NLU eval", log_file)
+    _emit("  analyze    Run analysis reports only", log_file)
+    _emit("  promote    Export promotion results only", log_file)
+    _emit("  raw_inbox  Export raw learning cases to inbox (rescue/manual path)", log_file)
+    _emit("  label      Run label_inbox.py only", log_file)
+    _emit("  train      Run train/train_nlu.py only", log_file)
+    _emit("  eval       Run tools/eval_nlu.py only", log_file)
+    _emit("  full       Analyze + promote", log_file)
+    _emit("", log_file)
+    _emit("Options:", log_file)
+    _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
+    _emit("  --no-log           Do not create pipeline log file", log_file)
+    _emit("", log_file)
+    _emit("Recommended order:", log_file)
+    _emit("  1) python tools/pipeline.py check", log_file)
+    _emit("  2) python tools/pipeline.py analyze", log_file)
+    _emit("  3) python tools/pipeline.py promote", log_file)
+    _emit("  4) python tools/pipeline.py label", log_file)
+    _emit("  5) python tools/pipeline.py train", log_file)
+    _emit("  6) python tools/pipeline.py check", log_file)
+    _emit("", log_file)
+    _emit("Notes:", log_file)
+    _emit("  - Logs are saved by default to data/logs/pipeline/.", log_file)
+    _emit("  - 'raw_inbox' is NOT part of normal promote flow.", log_file)
+    _emit("  - Use 'raw_inbox' only when you intentionally want to inspect noisy raw cases.", log_file)
+    _emit("  - 'label' is interactive; its inner prompt output may not be fully captured in log.", log_file)
+    _emit("  - 'full' does NOT run label/train/eval on purpose.", log_file)
+
+
+def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
+    _emit("", log_file)
+    _emit("=" * 72, log_file)
+    _emit(f"[RUN] {step.name}", log_file)
+    _emit(f"[CMD] {' '.join(step.cmd)}", log_file)
+    _emit("=" * 72, log_file)
+
+    env = _build_child_env(cwd)
+
+    # Интерактивные команды лучше не запускать через stdout=PIPE,
+    # иначе input()/prompt могут работать неудобно.
+    if step.interactive:
+        _emit("[INFO] Interactive step: child output is shown in console directly.", log_file)
+        _emit("[INFO] Interactive child output may not be fully captured in pipeline log.", log_file)
+
+        try:
+            completed = subprocess.run(step.cmd, cwd=str(cwd), env=env, check=False)
+        except KeyboardInterrupt:
+            _emit("\n[STOP] Interrupted by user.", log_file)
+            return 130
+        except Exception as e:
+            _emit(f"[FAIL] {step.name}: {type(e).__name__}: {e}", log_file)
+            return 1
+
+        rc = int(completed.returncode)
+    else:
+        process: subprocess.Popen[str] | None = None
+
+        try:
+            process = subprocess.Popen(
+                step.cmd,
+                cwd=str(cwd),
+                env=env,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                bufsize=1,
+            )
+
+            if process.stdout is not None:
+                for line in process.stdout:
+                    _emit_raw(line, log_file)
+
+            rc = int(process.wait())
+
+        except KeyboardInterrupt:
+            if process is not None:
+                process.kill()
+            _emit("\n[STOP] Interrupted by user.", log_file)
+            return 130
+        except Exception as e:
+            _emit(f"[FAIL] {step.name}: {type(e).__name__}: {e}", log_file)
+            return 1
+
+    if rc != 0:
+        _emit(f"[FAIL] {step.name}: exit code {rc}", log_file)
+    else:
+        _emit(f"[OK] {step.name}", log_file)
+
+    return rc
+
+
+def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
+    flows = available_flows()
+    steps = flows.get(flow_name)
+
+    if not steps:
+        _emit(f"[FAIL] Unknown flow: {flow_name}", log_file)
+        _emit("", log_file)
+        print_help(log_file)
+        return 2
+
+    _emit(f"[INFO] Project root: {PROJECT_ROOT}", log_file)
+    _emit(f"[INFO] Selected flow: {flow_name}", log_file)
+
+    for step in steps:
+        rc = run_step(step, cwd=PROJECT_ROOT, log_file=log_file)
+        if rc != 0:
+            _emit("", log_file)
+            _emit(f"[STOP] Flow '{flow_name}' stopped on step: {step.name}", log_file)
+            return rc
+
+    _emit("", log_file)
+    _emit(f"[DONE] Flow '{flow_name}' completed successfully.", log_file)
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("flow", nargs="?", default="help")
+    parser.add_argument("--log-file", default=None)
+    parser.add_argument("--no-log", action="store_true")
+    parser.add_argument("-h", "--help", action="store_true")
+    return parser
+
+
+def main() -> int:
+    parser = build_parser()
+    args = parser.parse_args()
+
+    flow_name = str(args.flow).strip().lower()
+
+    if args.help or flow_name in {"help", "--help", "-h"}:
+        print_help()
+        return 0
+
+    if args.no_log:
+        return run_flow(flow_name, log_file=None)
+
+    log_path = _make_log_path(flow_name, args.log_file)
+
+    with log_path.open("w", encoding="utf-8", newline="") as log_file:
+        _emit(f"[INFO] Pipeline log: {log_path}", log_file)
+        rc = run_flow(flow_name, log_file=log_file)
+        _emit(f"[INFO] Pipeline log saved: {log_path}", log_file)
+
+    return rc
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

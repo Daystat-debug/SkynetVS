@@ -1,0 +1,182 @@
+# Project inventory
+
+Root: `C:\Project\SkynetVS`
+
+## Tree
+
+- `.env  [SENSITIVE: do not upload contents]` (1.4 KB, 59 lines)
+- `.env.example` (422 B, 20 lines)
+- `.gitignore` (135 B, 11 lines)
+- `data\inbox_labeled.jsonl` (1.6 KB, 8 lines)
+- `data\inbox_unlabeled.jsonl` (26.5 KB, 108 lines)
+- `data\intents.json` (13.0 KB, 434 lines)
+- `data\learning\alias_suggestions.jsonl` (0 B, 0 lines)
+- `data\learning\command_history.jsonl` (28.7 KB, 76 lines)
+- `data\learning\correction_memory.jsonl` (439 B, 1 lines)
+- `data\learning\nlu_hard_cases.jsonl` (4.1 KB, 13 lines)
+- `data\learning\phrase_correction_suggestions.jsonl` (223 B, 1 lines)
+- `data\learning\resolver_candidates.jsonl` (359 B, 1 lines)
+- `data\logs\errors.jsonl` (3.8 KB, 3 lines)
+- `data\logs\runtime.jsonl` (1.3 MB, 10802 lines)
+- `data\say_templates.json` (12.5 KB, 333 lines)
+- `main.py` (32.8 KB, 918 lines)
+- `models\model_large\am\final.mdl` (113.2 MB)
+- `models\model_large\am\frame_subsampling_factor` (1 B, 1 lines)
+- `models\model_large\am\tree` (350.8 KB)
+- `models\model_large\conf\ivector_extractor.conf` (219 B, 6 lines)
+- `models\model_large\conf\mfcc.conf` (128 B, 7 lines)
+- `models\model_large\conf\model.conf` (289 B, 10 lines)
+- `models\model_large\conf\online.conf` (152 B, 4 lines)
+- `models\model_large\decode.py` (690 B, 32 lines)
+- `models\model_large\extra\golos_crowd.ref` (995.1 KB, 9994 lines)
+- `models\model_large\extra\README` (66 B, 1 lines)
+- `models\model_large\extra\silero_books.ref` (744.8 KB, 8134 lines)
+- `models\model_large\extra\silero_calls.ref` (1.2 MB, 13597 lines)
+- `models\model_large\extra\silero_youtube.ref` (725.4 KB, 7470 lines)
+- `models\model_large\extra\sova_devices.ref` (282.8 KB, 2332 lines)
+- `models\model_large\graph\disambig_tid.int` (35 B, 7 lines)
+- `models\model_large\graph\HCLG.fst` (808.2 MB)
+- `models\model_large\graph\num_pdfs` (5 B, 1 lines)
+- `models\model_large\graph\phones.txt` (1.7 KB, 211 lines)
+- `models\model_large\graph\phones\align_lexicon.int` (97.7 MB, 2024203 lines)
+- `models\model_large\graph\phones\align_lexicon.txt` (170.2 MB, 2024203 lines)
+- `models\model_large\graph\phones\disambig.int` (32 B, 8 lines)
+- `models\model_large\graph\phones\disambig.txt` (24 B, 8 lines)
+- `models\model_large\graph\phones\optional_silence.csl` (2 B, 1 lines)
+- `models\model_large\graph\phones\optional_silence.int` (2 B, 1 lines)
+- `models\model_large\graph\phones\optional_silence.txt` (4 B, 1 lines)
+- `models\model_large\graph\phones\silence.csl` (21 B, 1 lines)
+- `models\model_large\graph\phones\word_boundary.int` (2.1 KB, 202 lines)
+- `models\model_large\graph\phones\word_boundary.txt` (2.4 KB, 202 lines)
+- `models\model_large\graph\words.txt` (54.6 MB, 2012591 lines)
+- `models\model_large\ivector\final.dubm` (164.1 KB)
+- `models\model_large\ivector\final.ie` (9.5 MB)
+- `models\model_large\ivector\final.mat` (43.9 KB)
+- `models\model_large\ivector\global_cmvn.stats` (1.1 KB, 3 lines)
+- `models\model_large\ivector\online_cmvn.conf` (0 B, 0 lines)
+- `models\model_large\ivector\splice.conf` (35 B, 2 lines)
+- `models\model_large\README` (1.3 KB, 60 lines)
+- `models\model_large\rescore\G.carpa` (1503.6 MB)
+- `models\model_large\rescore\G.fst` (146.4 MB)
+- `models\model_large\rnnlm\feat_embedding.final.mat` (13.2 MB)
+- `models\model_large\rnnlm\features.txt` (243.4 KB, 10811 lines)
+- `models\model_large\rnnlm\final.raw` (79.9 MB)
+- `models\model_large\rnnlm\oov.txt` (6 B, 1 lines)
+- `models\model_large\rnnlm\special_symbol_opts.conf` (64 B, 4 lines)
+- `models\model_large\rnnlm\special_symbol_opts.txt` (64 B, 1 lines)
+- `models\model_large\rnnlm\unigram_probs.txt` (57.2 MB, 2012592 lines)
+- `models\model_large\rnnlm\word_feats.txt` (466.2 MB, 2012592 lines)
+- `models\model_small\am\final.mdl` (15.1 MB)
+- `models\model_small\conf\mfcc.conf` (131 B, 7 lines)
+- `models\model_small\conf\model.conf` (289 B, 10 lines)
+- `models\model_small\graph\disambig_tid.int` (25 B, 5 lines)
+- `models\model_small\graph\Gr.fst` (30.8 MB)
+- `models\model_small\graph\HCLr.fst` (31.5 MB)
+- `models\model_small\graph\phones\word_boundary.int` (2.1 KB, 202 lines)
+- `models\model_small\ivector\final.dubm` (164.1 KB)
+- `models\model_small\ivector\final.ie` (9.5 MB)
+- `models\model_small\ivector\final.mat` (43.9 KB)
+- `models\model_small\ivector\global_cmvn.stats` (1.1 KB, 3 lines)
+- `models\model_small\ivector\online_cmvn.conf` (95 B, 1 lines)
+- `models\model_small\ivector\splice.conf` (35 B, 2 lines)
+- `models\model_small\README` (660 B, 8 lines)
+- `modules\__init__.py` (0 B, 0 lines)
+- `modules\actions.py` (31.8 KB, 833 lines)
+- `modules\audio_control.py` (3.4 KB, 98 lines)
+- `modules\audio_output.py` (6.7 KB, 191 lines)
+- `modules\config.py` (3.0 KB, 88 lines)
+- `modules\correction_memory.py` (3.5 KB, 107 lines)
+- `modules\dialog_state.py` (1.4 KB, 40 lines)
+- `modules\entity_resolver.py` (4.5 KB, 133 lines)
+- `modules\error_log.py` (1.0 KB, 39 lines)
+- `modules\feedback_analyzer.py` (19.1 KB, 496 lines)
+- `modules\learning_memory.py` (3.6 KB, 121 lines)
+- `modules\logger.py` (1.7 KB, 57 lines)
+- `modules\media_control.py` (1.3 KB, 48 lines)
+- `modules\mode_manager.py` (3.0 KB, 98 lines)
+- `modules\nlu.py` (20.2 KB, 662 lines)
+- `modules\promotion_engine.py` (6.5 KB, 206 lines)
+- `modules\router.py` (5.3 KB, 131 lines)
+- `modules\screenshot.py` (2.3 KB, 64 lines)
+- `modules\stt_vosk.py` (10.1 KB, 250 lines)
+- `modules\stt_whisper.py` (2.1 KB, 72 lines)
+- `modules\text_normalizer.py` (2.3 KB, 79 lines)
+- `modules\tts_edge.py` (9.5 KB, 305 lines)
+- `modules\typing_service.py` (3.6 KB, 111 lines)
+- `modules\weather_service.py` (5.5 KB, 168 lines)
+- `modules\window_context_service.py` (3.9 KB, 116 lines)
+- `requirements-train.txt` (49 B, 3 lines)
+- `requirements.txt` (207 B, 12 lines)
+- `test.py` (128 B, 5 lines)
+- `tools\build_correction_memory.py` (1.3 KB, 40 lines)
+- `tools\correction_memory_report.py` (2.9 KB, 107 lines)
+- `tools\eval_nlu.py` (4.6 KB, 164 lines)
+- `tools\export_learning_to_inbox.py` (2.7 KB, 97 lines)
+- `tools\export_promotions.py` (5.6 KB, 175 lines)
+- `tools\label_inbox.py` (5.9 KB, 182 lines)
+- `tools\learning_report.py` (1.5 KB, 44 lines)
+- `tools\pipeline.py` (5.4 KB, 171 lines)
+- `tools\project_inventory.py` (6.7 KB, 278 lines)
+- `tools\promotion_report.py` (1.0 KB, 37 lines)
+- `tools\README.md` (10.1 KB, 378 lines)
+- `train\train_nlu.py` (3.7 KB, 121 lines)
+
+## Summary
+
+- Files listed: **116**
+
+### By top-level folder
+
+- `models`: 60
+- `modules`: 25
+- `data`: 12
+- `tools`: 11
+- `.env`: 1
+- `.env.example`: 1
+- `.gitignore`: 1
+- `main.py`: 1
+- `requirements-train.txt`: 1
+- `requirements.txt`: 1
+- `test.py`: 1
+- `train`: 1
+
+### By extension
+
+- `.py`: 39
+- `.txt`: 13
+- `.conf`: 11
+- `.jsonl`: 10
+- `[no extension]`: 8
+- `.int`: 7
+- `.ref`: 5
+- `.fst`: 4
+- `.mat`: 3
+- `.csl`: 2
+- `.dubm`: 2
+- `.ie`: 2
+- `.json`: 2
+- `.mdl`: 2
+- `.stats`: 2
+- `.carpa`: 1
+- `.example`: 1
+- `.md`: 1
+- `.raw`: 1
+
+## Likely important files
+
+- `data\intents.json`
+- `data\say_templates.json`
+- `main.py`
+- `modules\actions.py`
+- `modules\config.py`
+- `modules\correction_memory.py`
+- `modules\feedback_analyzer.py`
+- `modules\learning_memory.py`
+- `modules\mode_manager.py`
+- `modules\nlu.py`
+- `modules\promotion_engine.py`
+- `modules\router.py`
+- `modules\stt_vosk.py`
+- `modules\tts_edge.py`
+- `tools\eval_nlu.py`
+- `tools\pipeline.py`

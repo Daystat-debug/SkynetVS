@@ -1,0 +1,90 @@
+# =========================
+# Environment
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+
+# =========================
+# Virtual environments
+# =========================
+.venv/
+venv/
+env/
+
+# =========================
+# IDE / OS
+# =========================
+.idea/
+.vscode/
+*.iml
+
+.DS_Store
+Thumbs.db
+
+# =========================
+# Trained / downloaded models
+# =========================
+models/
+*.joblib
+*.pkl
+*.pickle
+*.onnx
+*.pt
+*.pth
+*.gguf
+*.bin
+*.mdl
+*.fst
+*.carpa
+*.raw
+
+# Если когда-нибудь захочешь держать пустую папку models в git:
+# !models/.gitkeep
+
+# =========================
+# Runtime logs
+# =========================
+data/logs/
+*.log
+
+# =========================
+# Runtime learning artifacts
+# =========================
+data/learning/*.jsonl
+data/inbox_unlabeled.jsonl
+data/inbox_labeled.jsonl
+
+# =========================
+# Temporary audio / speech / screenshots
+# =========================
+tmp/
+temp/
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.png
+*.jpg
+*.jpeg
+*.webp
+
+# =========================
+# Build / dist
+# =========================
+build/
+dist/

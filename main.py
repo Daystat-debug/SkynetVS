@@ -1,0 +1,923 @@
+# main.py
+from __future__ import annotations
+
+import time
+import queue
+import threading
+import warnings
+from pathlib import Path
+from typing import Any, Dict
+
+from colorama import init as colorama_init
+from dotenv import load_dotenv
+from modules.stt_vosk import VoskSTT
+from modules.tts_edge import EdgeTTS
+from modules.nlu import predict, pick_uncertain_response, pick_generic_uncertain_response, pick_named_response
+from modules.audio_control import AudioControl
+from modules.audio_output import AudioOutputControl
+from modules.screenshot import ScreenshotService
+from modules.actions import Actions
+from modules.router import Router
+from modules.logger import JsonlLogger, LoggerConfig
+from modules.config import Settings
+from modules.weather_service import WeatherService
+from modules.typing_service import TypingService
+from modules.text_normalizer import normalize_command_text
+from modules.entity_resolver import resolve_entities
+from modules.mode_manager import ModeManager
+from modules.window_context_service import WindowContextService
+from modules.learning_memory import LearningMemory
+from modules.command_decision import build_command_decision
+
+colorama_init()
+load_dotenv()
+
+# подавляем шумные warnings от pycaw (не влияют на работу)
+warnings.filterwarnings(
+    "ignore",
+    message=r"COMError attempting to get property .* from device .*",
+    category=UserWarning,
+    module=r"pycaw\.utils",
+)
+
+SETTINGS = Settings.from_env()
+
+def norm(text: str) -> str:
+    return " ".join((text or "").lower().split())
+
+
+def has_hotword(text: str) -> bool:
+    t = norm(text)
+    return any(t.startswith(hw) for hw in SETTINGS.hotwords)
+
+
+def strip_hotword(text: str) -> str:
+    t = norm(text)
+    for hw in SETTINGS.hotwords:
+        if t.startswith(hw):
+            return t[len(hw):].strip(" ,.!?:;—-")
+    return ""
+
+
+def is_only_hotword(text: str) -> bool:
+    t = norm(text)
+    return any(t == hw for hw in SETTINGS.hotwords)
+
+
+def is_ack_echo(text: str) -> bool:
+    """
+    Более мягкая проверка эха ACK.
+    STT может распознать 'Слушаю' как 'слушай', поэтому одного точного
+    сравнения недостаточно.
+    """
+    t = norm(text)
+    ack = norm(SETTINGS.ack_text)
+
+    if not t:
+        return False
+
+    if t == ack:
+        return True
+
+    ack_variants = {
+        ack,
+        "слушаю",
+        "слушай",
+    }
+    return t in ack_variants
+
+
+def should_ignore_during_ack_window(text: str) -> bool:
+    """
+    Во время короткого окна после ACK игнорируем:
+    - эхо самой фразы ACK
+    - bare hotword, если он прилетел эхом сразу после ACK
+    """
+    return is_ack_echo(text) or is_only_hotword(text)
+
+
+def is_confirmation_yes(text: str) -> bool:
+    t = norm(text)
+    return t in {
+        "да", "ага", "угу", "подтверждаю", "подтвердить", "ок", "okay", "ok", "выполняй"
+    }
+
+
+def is_confirmation_no(text: str) -> bool:
+    t = norm(text)
+    return t in {
+        "нет", "не", "отмена", "отменить", "не надо", "не нужно", "стоп"
+    }
+
+
+def say(stt: VoskSTT, tts: EdgeTTS, text: str, *, mute_stt: bool = True) -> float:
+    if mute_stt:
+        stt.pause()
+        try:
+            tts.speak_blocking(text)
+        finally:
+            stt.resume()
+    else:
+        tts.speak_blocking(text)
+    return time.time()
+
+
+def say_interruptible(tts: EdgeTTS, text: str) -> float:
+    tts.speak_interruptible(text)
+    return time.time()
+
+
+def _merge_phrases(left: str, right: str) -> str:
+    left_n = norm(left)
+    right_n = norm(right)
+    if not left_n:
+        return right_n
+    if not right_n:
+        return left_n
+    return f"{left_n} {right_n}".strip()
+
+def _looks_incomplete_command(text: str) -> bool:
+    """
+    Очень простой эвристический детектор:
+    если фраза короткая и похожа на начало команды,
+    не исполняем её сразу, а ждём хвост.
+    """
+    t = norm(text)
+    if not t:
+        return False
+
+    words = t.split()
+
+    incomplete_starters = {
+        "открой",
+        "запусти",
+        "включи",
+        "выключи",
+        "переключи",
+        "сделай",
+        "поставь",
+        "установи",
+        "добавь",
+        "убавь",
+        "уменьши",
+        "увеличь",
+    }
+
+    # bare hotword не является командой и не должен попадать в pending
+    if is_only_hotword(t):
+        return False
+
+    # ждём продолжение только для ОДНОСЛОВНОГО начала команды:
+    # "открой", "запусти", "переключи" и т.п.
+    if len(words) == 1 and t in incomplete_starters:
+        return True
+
+    return False
+
+def _is_accepted(meta: Dict[str, Any]) -> bool:
+    """
+    Совместимый helper для старых мест main.py.
+
+    Важно:
+    источник истины по accepted теперь modules.command_decision,
+    а не ручная проверка intent/confidence в main.py.
+    """
+    decision = build_command_decision(
+        meta,
+        accept_conf=SETTINGS.nlu_accept_conf,
+    )
+    return decision.accepted
+
+
+def _reply_text(router: Router, meta: Dict[str, Any]) -> str:
+    """
+    Текст ответа:
+      - если ACCEPT + уверенность >= SAY -> обычный ответ (router.reply)
+     - если ACCEPT, но ниже SAY -> мягко ("Похоже, ...")
+      - если не ACCEPT -> say/FALLBACK из NLU (и в inbox)
+    """
+    conf = float(meta.get("confidence") or 0.0)
+    if _is_accepted(meta):
+        base = router.reply(meta) or (meta.get("say") or "...")
+        if conf >= SETTINGS.nlu_say_conf or (meta.get("intent") or "").upper() in {"SHOW_IP", "WEATHER"}:
+            return base
+
+        uncertain = pick_uncertain_response(
+            meta.get("intent") or "",
+            meta.get("slots") or {},
+        )
+        if uncertain:
+            return uncertain
+
+        generic_uncertain = pick_generic_uncertain_response()
+        if generic_uncertain:
+            return generic_uncertain
+
+        return "Похоже, я не до конца уверен, но попробую выполнить команду."
+    # не принимаем к выполнению — говорим fallback из NLU
+    return meta.get("say") or "Не понял команду. Повтори, пожалуйста."
+
+
+def _filled_slot_count(meta: Dict[str, Any]) -> int:
+    slots = meta.get("slots") or {}
+    count = 0
+    for value in slots.values():
+        if value is None:
+            continue
+        if isinstance(value, str) and not value.strip():
+            continue
+        if isinstance(value, (list, dict, tuple, set)) and not value:
+            continue
+        count += 1
+    return count
+
+
+def _needs_normalization_retry(raw_text: str, meta: Dict[str, Any]) -> bool:
+    intent = str(meta.get("intent") or "").upper()
+    slots = meta.get("slots") or {}
+
+    if not intent:
+        return True
+
+    if intent in {"OPEN_APP", "CLOSE_APP"} and not slots.get("app"):
+        return True
+
+    if intent == "OPEN_URL" and not slots.get("url"):
+        return True
+
+    if intent == "OPEN_FOLDER" and not slots.get("folder"):
+        return True
+
+    return False
+
+
+def _should_use_retry_result(old_meta: Dict[str, Any], new_meta: Dict[str, Any]) -> bool:
+    old_intent = str(old_meta.get("intent") or "").upper()
+    new_intent = str(new_meta.get("intent") or "").upper()
+
+    if not new_intent:
+        return False
+
+    if not old_intent:
+        return True
+
+    if old_intent == new_intent:
+        if _filled_slot_count(new_meta) > _filled_slot_count(old_meta):
+            return True
+
+        old_conf = float(old_meta.get("confidence") or 0.0)
+        new_conf = float(new_meta.get("confidence") or 0.0)
+        if new_conf > old_conf + 0.05:
+            return True
+
+        return False
+
+    if (not _is_accepted(old_meta)) and _is_accepted(new_meta):
+        return True
+
+    return False
+
+
+def main():
+    stt = VoskSTT(
+        model_path = SETTINGS.stt_model_small,
+        samplerate = 16000,
+        blocksize = 1024,
+        device = SETTINGS.stt_input_device,
+    )
+    tts = EdgeTTS()
+    logger = JsonlLogger(
+        LoggerConfig(
+            enabled = SETTINGS.log_enable,
+            log_path = Path(SETTINGS.log_path),
+            inbox_path = Path(SETTINGS.inbox_path),
+        )
+    )
+    learning_memory = LearningMemory()
+
+    whisper = None
+    if SETTINGS.whisper_enable:
+        try:
+            from modules.stt_whisper import WhisperRefiner
+            whisper = WhisperRefiner(model_name=SETTINGS.whisper_model, language=SETTINGS.whisper_lang)
+            print(f"[WHISPER] enabled: model={SETTINGS.whisper_model} lang={SETTINGS.whisper_lang}")
+        except Exception as e:
+            whisper = None
+            print(f"[WHISPER] disabled: {e}")
+
+    try:
+        audio = AudioControl()
+    except Exception as e:
+        audio = None
+        print(f"[AUDIO] disabled: {e}")
+
+    try:
+        audio_output = AudioOutputControl(
+            headphones_name=SETTINGS.audio_output_headphones,
+            speakers_name=SETTINGS.audio_output_speakers,
+        )
+        audio_output.debug_dump_devices()
+    except Exception as e:
+        audio_output = None
+        print(f"[AUDIO_OUTPUT] disabled: {e}")
+
+    screenshot_service = ScreenshotService()
+    weather_service = WeatherService()
+    typing_service = TypingService()
+    window_context_service = WindowContextService()
+
+    actions = Actions(
+        audio=audio,
+        volume_step=SETTINGS.volume_step,
+        audio_output=audio_output,
+        screenshot_service=screenshot_service,
+        weather_service=weather_service,
+        typing_service=typing_service,
+        window_context_service=window_context_service,
+    )
+    router = Router(actions, settings=SETTINGS)
+
+    print("[BOOT] SkynetVS")
+    print("[INFO] Скажи: 'Скайнет' / 'Skynet'")
+    print(f"[STT] small model: {SETTINGS.stt_model_small}")
+
+    if SETTINGS.stt_model_large:
+        print(f"[STT] loading large model in background: {SETTINGS.stt_model_large}")
+        stt.load_model_async(
+            SETTINGS.stt_model_large,
+            on_swapped=lambda: print("[STT] large model loaded (will switch automatically)"),
+        )
+
+    last_tts_end = 0.0
+    ack_ignore_until = 0.0
+    pending_command_wait_sec = 1.2
+    event_q: queue.Queue[dict] = queue.Queue()
+    cmd_timer: threading.Timer | None = None
+    cmd_window_token = 0
+    mode_manager = ModeManager()
+    dictation_stop_phrases = {
+        "прекрати печать",
+        "останови печать",
+        "выйди из режима диктовки",
+        "выключи режим диктовки",
+        "выйди из режима ввода текста",
+        "выключи режим ввода текста",
+        "заверши диктовку",
+    }
+
+    def current_mode_name() -> str:
+        if mode_manager.is_dictation_mode():
+            return "dictation"
+        if mode_manager.is_command_window_open():
+            return "command_window"
+        return "direct"
+
+    def emit_event(evt: dict) -> None:
+        event_q.put(evt)
+
+    def cancel_cmd_timer() -> None:
+        nonlocal cmd_timer
+        if cmd_timer is not None:
+            try:
+                cmd_timer.cancel()
+            except Exception:
+                pass
+            cmd_timer = None
+
+    def schedule_cmd_timeout() -> None:
+        nonlocal cmd_timer, cmd_window_token
+        cancel_cmd_timer()
+        cmd_window_token += 1
+        token = cmd_window_token
+
+        def _fire() -> None:
+            emit_event({"type": "cmd_timeout", "token": token})
+
+        cmd_timer = threading.Timer(SETTINGS.command_window_sec, _fire)
+        cmd_timer.daemon = True
+        cmd_timer.start()
+
+    def open_cmd_window() -> None:
+        mode_manager.open_command_window()
+        logger.event("cmd_window_open", {"deadline_sec": SETTINGS.command_window_sec, "ack": SETTINGS.ack_text})
+        schedule_cmd_timeout()
+
+    def extend_cmd_window() -> None:
+        if mode_manager.is_command_window_open():
+            schedule_cmd_timeout()
+            logger.event("cmd_window_extend", {"deadline_sec": SETTINGS.command_window_sec})
+
+    def close_cmd_window(reason: str, *, speak_close: bool) -> None:
+        nonlocal last_tts_end
+        if not mode_manager.is_command_window_open():
+            return
+        mode_manager.close_command_window()
+        cancel_cmd_timer()
+        print("⬛ [SKYNET] окно команды закрыто")
+        logger.event(reason, {})
+        if speak_close:
+            last_tts_end = say(stt, tts, "Окно команды закрыто")
+
+    def stt_producer() -> None:
+        try:
+            for phrase in stt.listen_phrases():
+                emit_event({"type": "phrase", "text": phrase})
+        except Exception as e:
+            emit_event({"type": "stt_error", "error": str(e)})
+
+    threading.Thread(target=stt_producer, daemon=True).start()
+
+    def maybe_refine_with_whisper(original_text: str, meta: dict) -> tuple[str, dict]:
+        """
+        Если NLU не уверена — пробуем Whisper на аудио последней фразы и повторяем NLU.
+        Возвращает: (итоговый_текст, итоговый_meta)
+        """
+        if whisper is None:
+            return original_text, meta
+
+        conf = float(meta.get("confidence") or 0.0)
+        intent = meta.get("intent")
+        # триггер: intent None ИЛИ конфа ниже порога
+        if intent and conf >= SETTINGS.whisper_trigger_conf:
+            return original_text, meta
+
+        pcm = getattr(stt, "last_utterance_audio", b"") or b""
+        if not pcm:
+            return original_text, meta
+        try:
+            refined = whisper.refine_pcm(pcm, samplerate=stt.samplerate)
+            refined = norm(refined)
+        except Exception as e:
+            print(f"[WHISPER] refine failed: {e}")
+            return original_text, meta
+
+        if not refined or refined == norm(original_text):
+            return original_text, meta
+
+        meta2 = predict(refined)
+        print(f"[WHISPER] '{original_text}' -> '{refined}'")
+        print(f"[NLU] refined intent={meta2.get('intent')} conf={meta2.get('confidence', 0.0):.2f} slots={meta2.get('slots')}")
+
+        # если refined увереннее — берём его
+        conf2 = float(meta2.get("confidence") or 0.0)
+        if meta2.get("intent") and conf2 >= conf:
+            return refined, meta2
+
+        return original_text, meta
+
+    def handle_command_text(command_text: str, *, immediate_label: str) -> dict[str, Any]:
+        """
+        Единая обработка текстовой команды:
+        NLU -> Whisper fallback -> Router preprocess -> reply -> execute.
+        immediate_label нужен только для красивого лога:
+          - "команда сразу"
+          - "команда"
+        """
+        nonlocal last_tts_end
+
+        raw_text_in = norm(command_text)
+        if not raw_text_in:
+            return {"intent": None, "confidence": 0.0, "slots": {}, "say": ""}
+
+        text_in = raw_text_in
+
+        if immediate_label == "immediate":
+            print(f"✅ команда сразу: {raw_text_in}")
+        else:
+            print(f"✅ команда: {raw_text_in}")
+
+        meta = predict(text_in)
+        meta["_text"] = text_in
+
+        if _needs_normalization_retry(raw_text_in, meta):
+            normalized_text, was_normalized = normalize_command_text(raw_text_in)
+            if was_normalized and normalized_text != raw_text_in:
+                meta_retry = predict(normalized_text)
+                meta_retry["_text"] = normalized_text
+
+                logger.event(
+                    "nlu_retry",
+                    {
+                        "from": raw_text_in,
+                        "to": normalized_text,
+                        "meta_before": meta,
+                        "meta_after": meta_retry,
+                    },
+                )
+
+                if _should_use_retry_result(meta, meta_retry):
+                    text_in = normalized_text
+                    meta = meta_retry
+                    logger.event(
+                        "text_normalized",
+                        {
+                            "from": raw_text_in,
+                            "to": normalized_text,
+                        },
+                    )
+
+        print(f"[NLU] intent={meta.get('intent')} conf={meta.get('confidence', 0.0):.2f} slots={meta.get('slots')}")
+        logger.event("nlu", {"text": text_in, "meta": meta})
+
+        # Whisper fallback (если не уверены)
+        text2, meta = maybe_refine_with_whisper(text_in, meta)
+        if text2 != text_in:
+            logger.event("whisper_refine", {"from": text_in, "to": text2, "meta": meta})
+            text_in = text2
+            meta["_text"] = text_in
+
+        # Пост-NLU resolver: аккуратно дозаполняем сущности для closed-set интентов.
+        meta_before_resolve = {
+            "intent": meta.get("intent"),
+            "slots": dict(meta.get("slots") or {}),
+        }
+        meta = resolve_entities(text_in, meta)
+
+        if (meta.get("slots") or {}) != meta_before_resolve.get("slots", {}):
+            logger.event(
+                "entity_resolved",
+                {
+                    "text": text_in,
+                    "intent": meta.get("intent"),
+                    "slots_before": meta_before_resolve.get("slots", {}),
+                    "slots_after": meta.get("slots") or {},
+                },
+            )
+
+        # Router preprocess: "повтори/ещё" -> last_meta
+        meta_before = dict(meta)
+        meta = router.preprocess(meta)
+        if meta is not meta_before and meta.get("_from_history"):
+            logger.event(
+                "router_preprocess",
+                {
+                    "from": meta_before.get("_text"),
+                    "to_intent": meta.get("intent"),
+                    "from_history": True,
+                },
+            )
+
+        decision = build_command_decision(
+            meta,
+            accept_conf=SETTINGS.nlu_accept_conf,
+        )
+
+        accepted = decision.accepted
+        missing_slots = decision.missing_slots
+
+        learning_memory.log_command(
+            raw_text=raw_text_in,
+            final_text=text_in,
+            meta=meta,
+            mode=current_mode_name(),
+            accepted=accepted,
+            immediate_label=immediate_label,
+            missing_slots=missing_slots,
+        )
+
+        if missing_slots:
+            learning_memory.log_resolver_candidate(
+                raw_text=raw_text_in,
+                final_text=text_in,
+                meta=meta,
+                mode=current_mode_name(),
+                missing_slots=missing_slots,
+                reason="missing_required_slots",
+            )
+
+        if not accepted:
+            learning_memory.log_nlu_hard_case(
+                raw_text=raw_text_in,
+                final_text=text_in,
+                meta=meta,
+                mode=current_mode_name(),
+                reason=decision.reason or "not_accepted",
+            )
+            text_out = _reply_text(router, meta)
+            logger.inbox(text_in, meta)
+            last_tts_end = say(stt, tts, text_out)
+            return meta
+
+        if decision.reason == "missing_required_slots":
+            logger.event(
+                "missing_required_slots_blocked",
+                {
+                    "text": text_in,
+                    "intent": meta.get("intent"),
+                    "missing_slots": decision.missing_slots,
+                    "slots": meta.get("slots") or {},
+                },
+            )
+
+            text_out = router.reply(meta) or "Не хватает данных для выполнения команды."
+            last_tts_end = say(stt, tts, text_out)
+            return meta
+
+        if decision.requires_confirmation:
+            mode_manager.set_pending_confirmation(
+                {
+                    "meta": meta,
+                }
+            )
+            prompt = build_confirmation_prompt(meta)
+            last_tts_end = say(stt, tts, prompt)
+            return meta
+
+        intent_name = (meta.get("intent") or "").upper()
+
+        if intent_name == "DICTATION_MODE_ON":
+            mode_manager.enter_dictation_mode()
+            mode_manager.close_command_window()
+            cancel_cmd_timer()
+
+            text_out = _reply_text(router, meta)
+            last_tts_end = say(stt, tts, text_out)
+            return meta
+
+        if intent_name == "DICTATION_MODE_OFF":
+            mode_manager.exit_dictation_mode()
+            text_out = _reply_text(router, meta)
+            last_tts_end = say(stt, tts, text_out)
+            return meta
+
+        text_out = _reply_text(router, meta)
+
+        if intent_name == "WEATHER":
+            last_tts_end = say_interruptible(tts, text_out)
+            return meta
+
+        last_tts_end = say(stt, tts, text_out)
+        try:
+            router.execute(meta)
+        except Exception as e:
+            learning_memory.log_action_failure(
+                raw_text=raw_text_in,
+                final_text=text_in,
+                meta=meta,
+                mode=current_mode_name(),
+                error=e,
+            )
+            raise
+        return meta
+
+    def handle_cmd_timeout_event(evt: dict) -> None:
+        if mode_manager.is_command_window_open() and int(evt.get("token") or -1) == cmd_window_token:
+            close_cmd_window("cmd_window_close_timeout", speak_close=True)
+
+    def handle_phrase_event(evt: dict) -> None:
+        nonlocal last_tts_end, ack_ignore_until
+
+        phrase = evt.get("text") or ""
+
+        # Пока ассистент говорит interruptible-речь, сначала даём шанс команде STOP_TALKING.
+        # Во время активной речи разрешаем stop и с hotword, и без hotword.
+        if tts.is_speaking():
+            stop_text = phrase
+            if has_hotword(stop_text):
+                stop_text = strip_hotword(stop_text) or stop_text
+
+            stop_text, _ = normalize_command_text(stop_text)
+
+            stop_meta = predict(stop_text)
+            if (stop_meta.get("intent") or "").upper() == "STOP_TALKING":
+                logger.event("tts_stop_requested", {"text": phrase})
+                tts.stop()
+                last_tts_end = time.time()
+                return
+
+            logger.event("stt_ignored_while_tts_speaking", {"text": phrase})
+            return
+
+        # Сначала фильтруем эхо ACK/горячее слово после ACK,
+        # и только потом печатаем/логируем как обычную фразу.
+        if time.time() < ack_ignore_until and should_ignore_during_ack_window(phrase):
+            logger.event("stt_ignored_ack_window", {"text": phrase})
+            return
+
+        if not mode_manager.is_dictation_mode() and (time.time() - last_tts_end) < SETTINGS.ignore_after_tts_sec:
+            logger.event("stt_ignored_after_tts", {"text": phrase})
+            return
+
+        print(f"🎧 распознано: {phrase}")
+        logger.event("stt_phrase", {"text": phrase})
+
+        if mode_manager.has_pending_confirmation():
+            pending_confirmation = mode_manager.get_pending_confirmation() or {}
+            if is_confirmation_yes(phrase):
+                meta = pending_confirmation.get("meta") or {}
+                clear_pending_confirmation()
+
+                confirm_ok = pick_named_response("CONFIRM_OK")
+                last_tts_end = say(
+                    stt,
+                    tts,
+                    confirm_ok or "Подтверждаю. Выполняю."
+                )
+
+                confirm_decision = build_command_decision(
+                    meta,
+                    accept_conf=SETTINGS.nlu_accept_conf,
+                )
+
+                if confirm_decision.accepted and not confirm_decision.missing_slots:
+                    try:
+                        router.execute(meta)
+                    except Exception as e:
+                        learning_memory.log_action_failure(
+                            raw_text=meta.get("_text") or "",
+                            final_text=meta.get("_text") or "",
+                            meta=meta,
+                            mode=current_mode_name(),
+                            error=e,
+                        )
+                        raise
+
+                if mode_manager.is_command_window_open():
+                    extend_cmd_window()
+                return
+
+            if is_confirmation_no(phrase):
+                clear_pending_confirmation()
+
+                confirm_cancel = pick_named_response("CONFIRM_CANCEL")
+                last_tts_end = say(
+                    stt,
+                    tts,
+                    confirm_cancel or "Отменено."
+                )
+
+                if mode_manager.is_command_window_open():
+                    extend_cmd_window()
+                return
+
+            confirm_repeat = pick_named_response("CONFIRM_REPEAT")
+            last_tts_end = say(
+                stt,
+                tts,
+                confirm_repeat or "Скажи да или нет."
+            )
+
+            if mode_manager.is_command_window_open():
+                extend_cmd_window()
+            return
+
+        if mode_manager.is_dictation_mode():
+            if is_only_hotword(phrase):
+                logger.event("dictation_ignore_bare_hotword", {"text": phrase})
+                return
+
+            dictation_text = phrase
+            if has_hotword(dictation_text):
+                dictation_text = strip_hotword(dictation_text) or ""
+
+            dictation_text = norm(dictation_text)
+            if not dictation_text:
+                return
+
+            if is_dictation_stop_phrase(dictation_text):
+                mode_manager.exit_dictation_mode()
+                text_out = pick_named_response("DICTATION_MODE_OFF") or "Режим диктовки выключен."
+                last_tts_end = say(stt, tts, text_out)
+                logger.event("dictation_mode_off", {"text": phrase})
+                return
+
+            stop_meta = predict(dictation_text)
+            if (stop_meta.get("intent") or "").upper() == "DICTATION_MODE_OFF" and _is_accepted(stop_meta):
+                mode_manager.exit_dictation_mode()
+                text_out = pick_named_response("DICTATION_MODE_OFF") or "Режим диктовки выключен."
+                last_tts_end = say(stt, tts, text_out)
+                logger.event("dictation_mode_off", {"text": phrase})
+                return
+
+            dictation_intent = (stop_meta.get("intent") or "").upper()
+            if dictation_intent == "PRESS_ENTER" and _is_accepted(stop_meta):
+                typing_service.press_enter()
+                mode_manager.reset_dictation_separator()
+                logger.event("dictation_editor_action", {"action": "enter", "text": phrase})
+                return
+
+            if dictation_intent == "PRESS_BACKSPACE" and _is_accepted(stop_meta):
+                typing_service.press_backspace()
+                logger.event("dictation_editor_action", {"action": "backspace", "text": phrase})
+                return
+
+            if dictation_intent == "PRESS_TAB" and _is_accepted(stop_meta):
+                typing_service.press_tab()
+                mode_manager.reset_dictation_separator()
+                logger.event("dictation_editor_action", {"action": "tab", "text": phrase})
+                return
+
+            text_to_type = mode_manager.dictation_prefix() + dictation_text
+            typing_service.type_text(text_to_type)
+            mode_manager.mark_dictation_text_typed()
+            logger.event("dictation_typed", {"text": text_to_type})
+            return
+
+        # если уже ждём команду, и пользователь сказал "скайнет <...>", считаем это командой
+        if mode_manager.is_command_window_open() and has_hotword(phrase):
+            phrase = strip_hotword(phrase) or phrase
+
+        if not mode_manager.is_command_window_open() and has_hotword(phrase):
+            rest = strip_hotword(phrase)
+            if rest:
+                handle_command_text(rest, immediate_label="immediate")
+                return
+
+            # Говорим ACK и открываем независимое окно команд
+            # mute_stt=False чтобы не терять начало команды после "Слушаю"
+            last_tts_end = say(stt, tts, SETTINGS.ack_text, mute_stt=False)
+            ack_ignore_until = time.time() + max(0.2, SETTINGS.ack_ignore_sec)
+            open_cmd_window()
+            return
+
+        if mode_manager.is_command_window_open():
+            now = time.time()
+
+            # если в уже открытом окне снова прилетел только hotword,
+            # просто игнорируем его и держим окно открытым
+            if is_only_hotword(phrase):
+                logger.event("cmd_ignore_bare_hotword", {"text": phrase})
+                extend_cmd_window()
+                return
+
+            cmd_candidate = norm(phrase)
+
+            # если уже ждём хвост короткой команды и пришла новая фраза —
+            # ВСЕГДА сначала пробуем склеить, даже если wait_sec уже почти истёк
+            if mode_manager.has_pending_command() and cmd_candidate:
+                cmd_candidate = _merge_phrases(mode_manager.get_pending_command_text(), cmd_candidate)
+                mode_manager.clear_pending_command()
+            elif mode_manager.has_pending_command() and (
+                    now - mode_manager.get_pending_command_ts()) > pending_command_wait_sec:
+                if is_only_hotword(mode_manager.get_pending_command_text()):
+                    mode_manager.clear_pending_command()
+                    extend_cmd_window()
+                    return
+                cmd_candidate = mode_manager.get_pending_command_text()
+                mode_manager.clear_pending_command()
+
+            # если команда выглядит обрезанной/незавершённой —
+            # подождём хвост, а окно продлим
+            if _looks_incomplete_command(cmd_candidate):
+                mode_manager.set_pending_command(cmd_candidate, now)
+                extend_cmd_window()
+                logger.event("cmd_pending_fragment", {"text": cmd_candidate})
+                return
+
+            phrase = cmd_candidate
+
+            cmd = norm(phrase)
+            meta = handle_command_text(cmd, immediate_label="window")
+
+            # Если сказали "стоп/всё/закрой режим" — закрываем окно команд явно
+            if (meta.get("intent") or "").upper() == "STOP_LISTEN":
+                close_cmd_window("cmd_window_close_stop_intent", speak_close=False)
+                return
+
+            # Окно команд НЕ закрываем после одной команды.
+            extend_cmd_window()
+            return
+
+
+    def build_confirmation_prompt(meta: Dict[str, Any]) -> str:
+        intent = str(meta.get("intent") or "").upper()
+        slots = meta.get("slots") or {}
+
+        prompt = pick_named_response(f"{intent}_CONFIRM", slots)
+        if prompt:
+            return prompt
+
+        prompt = pick_named_response("CONFIRM_FALLBACK", slots)
+        if prompt:
+            return prompt
+
+        return "Подтвердить выполнение команды?"
+
+    def clear_pending_confirmation() -> None:
+        mode_manager.clear_pending_confirmation()
+
+    def is_dictation_stop_phrase(text: str) -> bool:
+        t = norm(text)
+        if has_hotword(t):
+            t = strip_hotword(t) or ""
+        return t in dictation_stop_phrases
+
+    while True:
+        evt = event_q.get()
+
+        if evt.get("type") == "stt_error":
+            print(f"[STT] producer error: {evt.get('error')}")
+            logger.event("stt_error", {"error": evt.get("error")})
+            continue
+
+        if evt.get("type") == "cmd_timeout":
+            handle_cmd_timeout_event(evt)
+            continue
+
+        if evt.get("type") == "phrase":
+            handle_phrase_event(evt)
+            continue
+
+
+if __name__ == "__main__":
+    main()
