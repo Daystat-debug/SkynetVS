@@ -1,0 +1,109 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any, Callable, Dict, Optional
+
+
+PredictFunc = Callable[[str], Dict[str, Any]]
+NormFunc = Callable[[str], str]
+
+
+@dataclass(frozen=True)
+class SttRefinementResult:
+    text: str
+    meta: Dict[str, Any]
+    changed: bool
+    reason: str
+    candidate_text: Optional[str] = None
+    candidate_meta: Optional[Dict[str, Any]] = None
+    error: Optional[str] = None
+
+
+def maybe_refine_with_whisper(
+    *,
+    original_text: str,
+    meta: Dict[str, Any],
+    whisper: Any,
+    stt: Any,
+    trigger_conf: float,
+    predict_func: PredictFunc,
+    norm_func: NormFunc,
+) -> SttRefinementResult:
+    """
+    Пробует уточнить STT-текст через Whisper, если NLU не уверена.
+
+    Возвращает структуру с итоговым text/meta и диагностикой.
+    """
+    if whisper is None:
+        return SttRefinementResult(
+            text=original_text,
+            meta=meta,
+            changed=False,
+            reason="whisper_disabled",
+        )
+
+    conf = float(meta.get("confidence") or 0.0)
+    intent = meta.get("intent")
+
+    if intent and conf >= trigger_conf:
+        return SttRefinementResult(
+            text=original_text,
+            meta=meta,
+            changed=False,
+            reason="confident_enough",
+        )
+
+    pcm = getattr(stt, "last_utterance_audio", b"") or b""
+    if not pcm:
+        return SttRefinementResult(
+            text=original_text,
+            meta=meta,
+            changed=False,
+            reason="no_audio",
+        )
+
+    try:
+        refined = whisper.refine_pcm(
+            pcm,
+            samplerate=getattr(stt, "samplerate", 16000),
+        )
+        refined = norm_func(refined)
+    except Exception as e:
+        return SttRefinementResult(
+            text=original_text,
+            meta=meta,
+            changed=False,
+            reason="refine_failed",
+            error=f"{type(e).__name__}: {e}",
+        )
+
+    if not refined or refined == norm_func(original_text):
+        return SttRefinementResult(
+            text=original_text,
+            meta=meta,
+            changed=False,
+            reason="same_text",
+            candidate_text=refined,
+        )
+
+    refined_meta = predict_func(refined)
+    conf2 = float(refined_meta.get("confidence") or 0.0)
+
+    if refined_meta.get("intent") and conf2 >= conf:
+        return SttRefinementResult(
+            text=refined,
+            meta=refined_meta,
+            changed=True,
+            reason="accepted_refinement",
+            candidate_text=refined,
+            candidate_meta=refined_meta,
+        )
+
+    return SttRefinementResult(
+        text=original_text,
+        meta=meta,
+        changed=False,
+        reason="refinement_not_better",
+        candidate_text=refined,
+        candidate_meta=refined_meta,
+    )

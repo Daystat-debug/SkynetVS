@@ -29,6 +29,7 @@ from modules.window_context_service import WindowContextService
 from modules.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
+from modules.stt_refinement import maybe_refine_with_whisper as stt_maybe_refine_with_whisper
 from modules.understanding_helpers import (
     needs_normalization_retry,
     should_use_retry_result,
@@ -299,42 +300,29 @@ def main():
     threading.Thread(target=stt_producer, daemon=True).start()
 
     def maybe_refine_with_whisper(original_text: str, meta: dict) -> tuple[str, dict]:
-        """
-        Если NLU не уверена — пробуем Whisper на аудио последней фразы и повторяем NLU.
-        Возвращает: (итоговый_текст, итоговый_meta)
-        """
-        if whisper is None:
-            return original_text, meta
+        result = stt_maybe_refine_with_whisper(
+            original_text=original_text,
+            meta=meta,
+            whisper=whisper,
+            stt=stt,
+            trigger_conf=SETTINGS.whisper_trigger_conf,
+            predict_func=predict,
+            norm_func=norm,
+        )
 
-        conf = float(meta.get("confidence") or 0.0)
-        intent = meta.get("intent")
-        # триггер: intent None ИЛИ конфа ниже порога
-        if intent and conf >= SETTINGS.whisper_trigger_conf:
-            return original_text, meta
+        if result.error:
+            print(f"[WHISPER] refine failed: {result.error}")
 
-        pcm = getattr(stt, "last_utterance_audio", b"") or b""
-        if not pcm:
-            return original_text, meta
-        try:
-            refined = whisper.refine_pcm(pcm, samplerate=stt.samplerate)
-            refined = norm(refined)
-        except Exception as e:
-            print(f"[WHISPER] refine failed: {e}")
-            return original_text, meta
+        if result.candidate_text and result.candidate_meta is not None:
+            print(f"[WHISPER] '{original_text}' -> '{result.candidate_text}'")
+            print(
+                "[NLU] refined "
+                f"intent={result.candidate_meta.get('intent')} "
+                f"conf={result.candidate_meta.get('confidence', 0.0):.2f} "
+                f"slots={result.candidate_meta.get('slots')}"
+            )
 
-        if not refined or refined == norm(original_text):
-            return original_text, meta
-
-        meta2 = predict(refined)
-        print(f"[WHISPER] '{original_text}' -> '{refined}'")
-        print(f"[NLU] refined intent={meta2.get('intent')} conf={meta2.get('confidence', 0.0):.2f} slots={meta2.get('slots')}")
-
-        # если refined увереннее — берём его
-        conf2 = float(meta2.get("confidence") or 0.0)
-        if meta2.get("intent") and conf2 >= conf:
-            return refined, meta2
-
-        return original_text, meta
+        return result.text, result.meta
 
     def handle_command_text(command_text: str, *, immediate_label: str) -> dict[str, Any]:
         """

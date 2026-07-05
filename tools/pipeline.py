@@ -40,6 +40,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
             Step("Evaluate command fragments", _python_cmd("tools/eval_command_fragments.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
+            Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
         ],
         "decision": [
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
@@ -89,6 +90,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "main_inventory": [
             Step("Main.py inventory", _python_cmd("tools/main_inventory.py")),
+        ],
+        "stt_refinement": [
+            Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
         ],
     }
 
@@ -167,6 +171,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  fragments  Run command fragments eval only", log_file)
     _emit("  speech     Run speech IO eval only", log_file)
     _emit("  main_inventory Run main.py structure inventory", log_file)
+    _emit("  stt_refinement Run STT refinement eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
