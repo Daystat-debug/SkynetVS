@@ -46,6 +46,10 @@ from modules.hotword_utils import (
     should_ignore_during_ack_window as hotword_should_ignore_during_ack_window,
     strip_hotword as hotword_strip_hotword,
 )
+from modules.command_fragments import (
+    looks_incomplete_command,
+    merge_phrases,
+)
 
 colorama_init()
 load_dotenv()
@@ -106,51 +110,14 @@ def say_interruptible(tts: EdgeTTS, text: str) -> float:
 
 
 def _merge_phrases(left: str, right: str) -> str:
-    left_n = norm(left)
-    right_n = norm(right)
-    if not left_n:
-        return right_n
-    if not right_n:
-        return left_n
-    return f"{left_n} {right_n}".strip()
+    return merge_phrases(left, right)
+
 
 def _looks_incomplete_command(text: str) -> bool:
-    """
-    Очень простой эвристический детектор:
-    если фраза короткая и похожа на начало команды,
-    не исполняем её сразу, а ждём хвост.
-    """
-    t = norm(text)
-    if not t:
-        return False
-
-    words = t.split()
-
-    incomplete_starters = {
-        "открой",
-        "запусти",
-        "включи",
-        "выключи",
-        "переключи",
-        "сделай",
-        "поставь",
-        "установи",
-        "добавь",
-        "убавь",
-        "уменьши",
-        "увеличь",
-    }
-
-    # bare hotword не является командой и не должен попадать в pending
-    if is_only_hotword(t):
-        return False
-
-    # ждём продолжение только для ОДНОСЛОВНОГО начала команды:
-    # "открой", "запусти", "переключи" и т.п.
-    if len(words) == 1 and t in incomplete_starters:
-        return True
-
-    return False
+    return looks_incomplete_command(
+        text,
+        hotwords=SETTINGS.hotwords,
+    )
 
 def _is_accepted(meta: Dict[str, Any]) -> bool:
     """

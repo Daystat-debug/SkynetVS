@@ -38,6 +38,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate confirmation", _python_cmd("tools/eval_confirmation.py")),
             Step("Evaluate dictation commands", _python_cmd("tools/eval_dictation_commands.py")),
             Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
+            Step("Evaluate command fragments", _python_cmd("tools/eval_command_fragments.py")),
         ],
         "decision": [
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
@@ -78,6 +79,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "hotword": [
             Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
+        ],
+        "fragments": [
+            Step("Evaluate command fragments", _python_cmd("tools/eval_command_fragments.py")),
         ],
     }
 
@@ -153,6 +157,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  full       Analyze + promote", log_file)
     _emit("  dictation   Run dictation command eval only", log_file)
     _emit("  hotword    Run hotword utility eval only", log_file)
+    _emit("  fragments  Run command fragments eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
