@@ -87,6 +87,9 @@ def available_flows() -> dict[str, list[Step]]:
         "speech": [
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
         ],
+        "main_inventory": [
+            Step("Main.py inventory", _python_cmd("tools/main_inventory.py")),
+        ],
     }
 
 
@@ -163,6 +166,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  hotword    Run hotword utility eval only", log_file)
     _emit("  fragments  Run command fragments eval only", log_file)
     _emit("  speech     Run speech IO eval only", log_file)
+    _emit("  main_inventory Run main.py structure inventory", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
