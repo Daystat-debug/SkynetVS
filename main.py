@@ -50,6 +50,10 @@ from modules.command_fragments import (
     looks_incomplete_command,
     merge_phrases,
 )
+from modules.speech_io import (
+    say as speech_say,
+    say_interruptible as speech_say_interruptible,
+)
 
 colorama_init()
 load_dotenv()
@@ -93,20 +97,11 @@ def should_ignore_during_ack_window(text: str) -> bool:
 
 
 def say(stt: VoskSTT, tts: EdgeTTS, text: str, *, mute_stt: bool = True) -> float:
-    if mute_stt:
-        stt.pause()
-        try:
-            tts.speak_blocking(text)
-        finally:
-            stt.resume()
-    else:
-        tts.speak_blocking(text)
-    return time.time()
+    return speech_say(stt, tts, text, mute_stt=mute_stt)
 
 
 def say_interruptible(tts: EdgeTTS, text: str) -> float:
-    tts.speak_interruptible(text)
-    return time.time()
+    return speech_say_interruptible(tts, text)
 
 
 def _merge_phrases(left: str, right: str) -> str:
