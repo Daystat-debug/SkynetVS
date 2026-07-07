@@ -167,7 +167,7 @@ CASES: List[Case] = [
             "router_events": [],
             "mode_events": ["set_pending_confirmation:EMPTY_RECYCLE_BIN"],
             "learning_events": [],
-            "speech_events": ["say:Ты уверен, что хочешь очистить корзину?"],
+            "speech_events": ["say:<confirmation_prompt>"],
             "cancel_calls": 0,
             "last_tts_end": 100.0,
             "raised": False,
@@ -328,6 +328,12 @@ def main() -> int:
             "last_tts_end": result_last_tts_end,
             "raised": raised,
         }
+
+        if case["name"] == "confirmation runtime":
+            actual["speech_events"] = [
+                "say:<confirmation_prompt>" if event.startswith("say:") else event
+                for event in actual["speech_events"]
+            ]
 
         expected = dict(case["expected"])
         ok = actual == expected

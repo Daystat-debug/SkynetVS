@@ -29,14 +29,13 @@ from modules.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
 from modules.reply_builder import build_reply_text
-from modules.command_understanding import understand_command_text
 from modules.speech_interrupt import handle_phrase_while_tts_speaking
 from modules.phrase_guards import check_phrase_preprocessing_guards
 from modules.dictation_runtime import handle_dictation_phrase
 from modules.confirmation_runtime import handle_pending_confirmation_phrase
 from modules.hotword_activation_runtime import handle_hotword_activation_phrase
 from modules.command_window_runtime import handle_command_window_phrase
-from modules.command_runtime import handle_command_runtime
+from modules.command_processor import CommandProcessor
 from modules.confirmation import (
     is_confirmation_no,
     is_confirmation_yes,
@@ -57,8 +56,6 @@ from modules.speech_io import (
     say as speech_say,
     say_interruptible as speech_say_interruptible,
 )
-from modules.command_outcome import classify_command_outcome
-from modules.command_learning import log_command_observation
 
 colorama_init()
 load_dotenv()
@@ -281,81 +278,37 @@ def main():
         except Exception as e:
             emit_event({"type": "stt_error", "error": str(e)})
 
-    threading.Thread(target=stt_producer, daemon=True).start()
+    threading.Thread(target=stt_producer, daemon=True).start(),
+
+    command_processor = CommandProcessor(
+        router=router,
+        logger=logger,
+        whisper=whisper,
+        stt=stt,
+        tts=tts,
+        settings=SETTINGS,
+        learning_memory=learning_memory,
+        mode_manager=mode_manager,
+        say_func=say,
+        say_interruptible_func=say_interruptible,
+        reply_text_func=lambda m: _reply_text(router, dict(m)),
+        current_mode_name_func=current_mode_name,
+        cancel_cmd_timer_func=cancel_cmd_timer,
+        print_func=print,
+    )
 
     def handle_command_text(command_text: str, *, immediate_label: str) -> dict[str, Any]:
-        """
-        Единая обработка текстовой команды:
-        NLU -> Whisper fallback -> Router preprocess -> reply -> execute.
-        immediate_label нужен только для красивого лога:
-          - "команда сразу"
-          - "команда"
-        """
         nonlocal last_tts_end
 
-        raw_text_in = norm(command_text)
-        if not raw_text_in:
-            return {"intent": None, "confidence": 0.0, "slots": {}, "say": ""}
-
-        if immediate_label == "immediate":
-            print(f"✅ команда сразу: {raw_text_in}")
-        else:
-            print(f"✅ команда: {raw_text_in}")
-
-        understanding = understand_command_text(
-            raw_text_in,
-            router=router,
-            logger=logger,
-            whisper=whisper,
-            stt=stt,
-            accept_conf=SETTINGS.nlu_accept_conf,
-            whisper_trigger_conf=SETTINGS.whisper_trigger_conf,
-            print_func=print,
-        )
-
-        raw_text_in = understanding.raw_text
-        text_in = understanding.final_text
-        meta = understanding.meta
-        decision = understanding.decision
-        outcome = classify_command_outcome(meta, decision)
-
-        accepted = decision.accepted
-        missing_slots = decision.missing_slots
-
-        log_command_observation(
-            learning_memory=learning_memory,
-            raw_text=raw_text_in,
-            final_text=text_in,
-            meta=meta,
-            mode=current_mode_name(),
-            accepted=accepted,
+        result = command_processor.process(
+            command_text,
             immediate_label=immediate_label,
-            missing_slots=missing_slots,
         )
 
-        runtime_result = handle_command_runtime(
-            raw_text=raw_text_in,
-            final_text=text_in,
-            meta=meta,
-            decision=decision,
-            outcome=outcome,
-            learning_memory=learning_memory,
-            logger=logger,
-            router=router,
-            mode_manager=mode_manager,
-            stt=stt,
-            tts=tts,
-            say_func=say,
-            say_interruptible_func=say_interruptible,
-            reply_text_func=lambda m: _reply_text(router, dict(m)),
-            current_mode_name_func=current_mode_name,
-            cancel_cmd_timer_func=cancel_cmd_timer,
-        )
+        if result.last_tts_end is not None:
+            last_tts_end = result.last_tts_end
 
-        if runtime_result.last_tts_end is not None:
-            last_tts_end = runtime_result.last_tts_end
-
-        return runtime_result.meta
+        return result.meta
 
     def handle_cmd_timeout_event(evt: dict) -> None:
         if mode_manager.is_command_window_open() and int(evt.get("token") or -1) == cmd_window_token:
