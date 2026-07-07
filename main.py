@@ -35,6 +35,7 @@ from modules.phrase_guards import check_phrase_preprocessing_guards
 from modules.dictation_runtime import handle_dictation_phrase
 from modules.confirmation_runtime import handle_pending_confirmation_phrase
 from modules.hotword_activation_runtime import handle_hotword_activation_phrase
+from modules.command_window_runtime import handle_command_window_phrase
 from modules.confirmation import (
     build_confirmation_prompt,
     is_confirmation_no,
@@ -532,52 +533,22 @@ def main():
 
             return
 
-        if mode_manager.is_command_window_open():
-            now = time.time()
+        command_window_result = handle_command_window_phrase(
+            phrase,
+            mode_manager=mode_manager,
+            logger=logger,
+            now=time.time(),
+            pending_command_wait_sec=pending_command_wait_sec,
+            is_only_hotword_func=is_only_hotword,
+            norm_func=norm,
+            merge_phrases_func=_merge_phrases,
+            looks_incomplete_command_func=_looks_incomplete_command,
+            handle_command_text_func=handle_command_text,
+            extend_cmd_window_func=extend_cmd_window,
+            close_cmd_window_func=close_cmd_window,
+        )
 
-            # если в уже открытом окне снова прилетел только hotword,
-            # просто игнорируем его и держим окно открытым
-            if is_only_hotword(phrase):
-                logger.event("cmd_ignore_bare_hotword", {"text": phrase})
-                extend_cmd_window()
-                return
-
-            cmd_candidate = norm(phrase)
-
-            # если уже ждём хвост короткой команды и пришла новая фраза —
-            # ВСЕГДА сначала пробуем склеить, даже если wait_sec уже почти истёк
-            if mode_manager.has_pending_command() and cmd_candidate:
-                cmd_candidate = _merge_phrases(mode_manager.get_pending_command_text(), cmd_candidate)
-                mode_manager.clear_pending_command()
-            elif mode_manager.has_pending_command() and (
-                    now - mode_manager.get_pending_command_ts()) > pending_command_wait_sec:
-                if is_only_hotword(mode_manager.get_pending_command_text()):
-                    mode_manager.clear_pending_command()
-                    extend_cmd_window()
-                    return
-                cmd_candidate = mode_manager.get_pending_command_text()
-                mode_manager.clear_pending_command()
-
-            # если команда выглядит обрезанной/незавершённой —
-            # подождём хвост, а окно продлим
-            if _looks_incomplete_command(cmd_candidate):
-                mode_manager.set_pending_command(cmd_candidate, now)
-                extend_cmd_window()
-                logger.event("cmd_pending_fragment", {"text": cmd_candidate})
-                return
-
-            phrase = cmd_candidate
-
-            cmd = norm(phrase)
-            meta = handle_command_text(cmd, immediate_label="window")
-
-            # Если сказали "стоп/всё/закрой режим" — закрываем окно команд явно
-            if (meta.get("intent") or "").upper() == "STOP_LISTEN":
-                close_cmd_window("cmd_window_close_stop_intent", speak_close=False)
-                return
-
-            # Окно команд НЕ закрываем после одной команды.
-            extend_cmd_window()
+        if command_window_result.handled:
             return
 
     while True:
