@@ -47,6 +47,30 @@ EXACT_INTENT_RULES: Dict[str, str] = {
     "останови диктовку": "DICTATION_MODE_OFF",
     "выключи диктовку": "DICTATION_MODE_OFF",
     "выйди из режима диктовки": "DICTATION_MODE_OFF",
+
+    # keyboard / editor controls
+    "нажми enter": "PRESS_ENTER",
+    "нажми энтер": "PRESS_ENTER",
+    "enter": "PRESS_ENTER",
+    "энтер": "PRESS_ENTER",
+    "ввод": "PRESS_ENTER",
+    "новая строка": "PRESS_ENTER",
+    "перенос строки": "PRESS_ENTER",
+
+    "нажми backspace": "PRESS_BACKSPACE",
+    "нажми бэкспейс": "PRESS_BACKSPACE",
+    "нажми бэк спейс": "PRESS_BACKSPACE",
+    "нажми бэк спэйс": "PRESS_BACKSPACE",
+    "нажми бэк спайс": "PRESS_BACKSPACE",
+    "удали символ": "PRESS_BACKSPACE",
+    "стереть символ": "PRESS_BACKSPACE",
+    "удали последнюю букву": "PRESS_BACKSPACE",
+    "сотри последнюю букву": "PRESS_BACKSPACE",
+
+    "нажми tab": "PRESS_TAB",
+    "нажми таб": "PRESS_TAB",
+    "таб": "PRESS_TAB",
+    "вставь таб": "PRESS_TAB",
 }
 
 

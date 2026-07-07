@@ -332,6 +332,9 @@ class Actions:
             if app == "chrome":
                 subprocess.Popen(["cmd", "/c", "start", "chrome"])
                 return
+            if app == "explorer":
+                subprocess.Popen(["explorer.exe"])
+                return
             if app == "discord":
                 subprocess.Popen(["cmd", "/c", "start", "discord"])
                 return

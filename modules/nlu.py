@@ -27,10 +27,26 @@ _TEMPLATES_PATH = Path("data/say_templates.json")
 # simple app synonyms (для слота app, пока без отдельной модели слотов)
 _APP_SYNS: Dict[str, list[str]] = {
     "notepad": ["блокнот", "notepad", "нотпад"],
-    "calc": ["калькулятор", "calculator", "calc"],
-    "chrome": ["хром", "chrome", "гугл хром", "google chrome"],
+    "calc": ["калькулятор", "calculator", "calc", "кальк"],
+    "chrome": [
+        "хром",
+        "chrome",
+        "гугл хром",
+        "google chrome",
+        "браузер",
+        "гугл браузер",
+        "google браузер",
+        "интернет браузер",
+    ],
     "discord": ["дискорд", "discord"],
-    "explorer": ["проводник", "explorer", "file explorer"],
+    "explorer": [
+        "проводник",
+        "проводник windows",
+        "проводник виндовс",
+        "explorer",
+        "file explorer",
+        "файловый менеджер",
+    ],
 }
 
 # как красиво произносить app (если нет — будет просто код)
@@ -126,7 +142,10 @@ def _env_float(name: str, default: str) -> float:
 
 
 def _nlu_min_conf() -> float:
-    return _env_float("NLU_MIN_CONF", "0.35")
+    return _env_float(
+        "NLU_ACCEPT_CONF",
+        os.getenv("NLU_MIN_CONF", "0.35"),
+    )
 
 
 def _load_model():
@@ -496,10 +515,11 @@ def _extract_search_query(text: str) -> Optional[str]:
     t = _norm(text)
 
     patterns = [
-        r"^найди в интернете\s+(.+)$",
         r"^найди в интернете про\s+(.+)$",
-        r"^найди\s+(.+)$",
+        r"^поищи в интернете про\s+(.+)$",
+        r"^найди в интернете\s+(.+)$",
         r"^поищи в интернете\s+(.+)$",
+        r"^найди\s+(.+)$",
         r"^поищи\s+(.+)$",
         r"^поиск\s+(.+)$",
     ]

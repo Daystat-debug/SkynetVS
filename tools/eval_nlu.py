@@ -56,9 +56,33 @@ APP_CASES: List[Case] = [
         "recommended_conf": 0.35,
     },
     {
+        "text": "открой хром",
+        "intent": "OPEN_APP",
+        "required_slots": {"app": "chrome"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "открой браузер",
+        "intent": "OPEN_APP",
+        "required_slots": {"app": "chrome"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "открой проводник",
+        "intent": "OPEN_APP",
+        "required_slots": {"app": "explorer"},
+        "recommended_conf": 0.35,
+    },
+    {
         "text": "закрой блокнот",
         "intent": "CLOSE_APP",
         "required_slots": {"app": "notepad"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "закрой проводник",
+        "intent": "CLOSE_APP",
+        "required_slots": {"app": "explorer"},
         "recommended_conf": 0.35,
     },
 ]
@@ -246,6 +270,12 @@ OPEN_SEARCH_CASES: List[Case] = [
         "text": "найди на ютубе музыку",
         "intent": "SEARCH_YOUTUBE",
         "required_slots": {"query": "музыку"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "найди в интернете про python",
+        "intent": "SEARCH_WEB",
+        "required_slots": {"query": "python"},
         "recommended_conf": 0.35,
     },
 ]

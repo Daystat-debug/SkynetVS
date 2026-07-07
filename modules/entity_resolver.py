@@ -9,9 +9,25 @@ from typing import Any, Dict, Tuple
 _APP_ALIASES: Dict[str, list[str]] = {
     "notepad": ["блокнот", "notepad", "нотпад"],
     "calc": ["калькулятор", "calculator", "calc", "кальк"],
-    "chrome": ["хром", "chrome", "гугл хром", "google chrome"],
+    "chrome": [
+        "хром",
+        "chrome",
+        "гугл хром",
+        "google chrome",
+        "браузер",
+        "гугл браузер",
+        "google браузер",
+        "интернет браузер",
+    ],
     "discord": ["дискорд", "discord", "дискомфорт", "де скоро", "диск орды", "дискорда"],
-    "explorer": ["проводник", "explorer", "file explorer"],
+    "explorer": [
+        "проводник",
+        "проводник windows",
+        "проводник виндовс",
+        "explorer",
+        "file explorer",
+        "файловый менеджер",
+    ],
 }
 
 _SITE_ALIASES: Dict[str, list[str]] = {

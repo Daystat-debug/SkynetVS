@@ -65,6 +65,42 @@ CASES: List[Case] = [
         },
     },
     {
+        "name": "open chrome app understanding",
+        "text": "открой хром",
+        "router": FakeRouter(),
+        "expected": {
+            "intent": "OPEN_APP",
+            "accepted": True,
+            "runnable": True,
+            "missing_slots": [],
+            "requires_confirmation": False,
+        },
+    },
+    {
+        "name": "open browser app understanding",
+        "text": "открой браузер",
+        "router": FakeRouter(),
+        "expected": {
+            "intent": "OPEN_APP",
+            "accepted": True,
+            "runnable": True,
+            "missing_slots": [],
+            "requires_confirmation": False,
+        },
+    },
+    {
+        "name": "open explorer app understanding",
+        "text": "открой проводник",
+        "router": FakeRouter(),
+        "expected": {
+            "intent": "OPEN_APP",
+            "accepted": True,
+            "runnable": True,
+            "missing_slots": [],
+            "requires_confirmation": False,
+        },
+    },
+    {
         "name": "set volume understanding",
         "text": "громкость 50",
         "router": FakeRouter(),
