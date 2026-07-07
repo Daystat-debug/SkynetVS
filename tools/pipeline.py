@@ -89,6 +89,9 @@ def available_flows() -> dict[str, list[Step]]:
         "nlu_diag": [
             Step("Evaluate NLU diagnostics", _python_cmd("tools/eval_nlu_diagnostics.py")),
         ],
+        "nlu_risk": [
+            Step("NLU risk report", _python_cmd("tools/eval_nlu_risk_report.py")),
+        ],
         "full": [
             Step("Learning report", _python_cmd("tools/learning_report.py")),
             Step("Build correction memory", _python_cmd("tools/build_correction_memory.py")),
@@ -234,6 +237,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  train      Run train/train_nlu.py only", log_file)
     _emit("  eval       Run tools/eval_nlu.py only", log_file)
     _emit("  nlu_diag   Run NLU diagnostics with top-k candidates", log_file)
+    _emit("  nlu_risk   Run NLU risk report", log_file)
     _emit("  full       Analyze + promote", log_file)
     _emit("  dictation   Run dictation command eval only", log_file)
     _emit("  hotword    Run hotword utility eval only", log_file)
