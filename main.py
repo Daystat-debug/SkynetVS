@@ -30,6 +30,7 @@ from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
 from modules.reply_builder import build_reply_text
 from modules.command_understanding import understand_command_text
+from modules.speech_interrupt import handle_phrase_while_tts_speaking
 from modules.confirmation import (
     build_confirmation_prompt,
     is_confirmation_no,
@@ -425,23 +426,19 @@ def main():
 
         phrase = evt.get("text") or ""
 
-        # Пока ассистент говорит interruptible-речь, сначала даём шанс команде STOP_TALKING.
-        # Во время активной речи разрешаем stop и с hotword, и без hotword.
-        if tts.is_speaking():
-            stop_text = phrase
-            if has_hotword(stop_text):
-                stop_text = strip_hotword(stop_text) or stop_text
+        speech_interrupt = handle_phrase_while_tts_speaking(
+            phrase,
+            tts=tts,
+            logger=logger,
+            has_hotword_func=has_hotword,
+            strip_hotword_func=strip_hotword,
+            normalize_func=normalize_command_text,
+            predict_func=predict,
+        )
 
-            stop_text, _ = normalize_command_text(stop_text)
-
-            stop_meta = predict(stop_text)
-            if (stop_meta.get("intent") or "").upper() == "STOP_TALKING":
-                logger.event("tts_stop_requested", {"text": phrase})
-                tts.stop()
+        if speech_interrupt.handled:
+            if speech_interrupt.stopped:
                 last_tts_end = time.time()
-                return
-
-            logger.event("stt_ignored_while_tts_speaking", {"text": phrase})
             return
 
         # Сначала фильтруем эхо ACK/горячее слово после ACK,
