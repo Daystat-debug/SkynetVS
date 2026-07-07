@@ -53,6 +53,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate command window runtime", _python_cmd("tools/eval_command_window_runtime.py")),
             Step("Evaluate command runtime", _python_cmd("tools/eval_command_runtime.py")),
             Step("Evaluate command processor", _python_cmd("tools/eval_command_processor.py")),
+            Step("Evaluate phrase event processor", _python_cmd("tools/eval_phrase_event_processor.py")),
         ],
         "decision": [
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
@@ -142,6 +143,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "command_processor": [
             Step("Evaluate command processor", _python_cmd("tools/eval_command_processor.py")),
+        ],
+        "phrase_event": [
+            Step("Evaluate phrase event processor", _python_cmd("tools/eval_phrase_event_processor.py")),
         ],
     }
 
@@ -233,6 +237,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  command_window Run command window runtime eval only", log_file)
     _emit("  command_runtime Run command runtime eval only", log_file)
     _emit("  command_processor Run command processor eval only", log_file)
+    _emit("  phrase_event Run phrase event processor eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)

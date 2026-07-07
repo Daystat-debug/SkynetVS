@@ -29,12 +29,7 @@ from modules.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
 from modules.reply_builder import build_reply_text
-from modules.speech_interrupt import handle_phrase_while_tts_speaking
-from modules.phrase_guards import check_phrase_preprocessing_guards
-from modules.dictation_runtime import handle_dictation_phrase
-from modules.confirmation_runtime import handle_pending_confirmation_phrase
-from modules.hotword_activation_runtime import handle_hotword_activation_phrase
-from modules.command_window_runtime import handle_command_window_phrase
+from modules.phrase_event_processor import PhraseEventProcessor
 from modules.command_processor import CommandProcessor
 from modules.confirmation import (
     is_confirmation_no,
@@ -278,7 +273,7 @@ def main():
         except Exception as e:
             emit_event({"type": "stt_error", "error": str(e)})
 
-    threading.Thread(target=stt_producer, daemon=True).start(),
+    threading.Thread(target=stt_producer, daemon=True).start()
 
     command_processor = CommandProcessor(
         router=router,
@@ -310,6 +305,40 @@ def main():
 
         return result.meta
 
+    phrase_event_processor = PhraseEventProcessor(
+        tts=tts,
+        stt=stt,
+        logger=logger,
+        settings=SETTINGS,
+        mode_manager=mode_manager,
+        learning_memory=learning_memory,
+        typing_service=typing_service,
+        say_func=say,
+        has_hotword_func=has_hotword,
+        strip_hotword_func=strip_hotword,
+        is_only_hotword_func=is_only_hotword,
+        norm_func=norm,
+        is_dictation_stop_phrase_func=is_dictation_stop_phrase,
+        predict_func=predict,
+        is_accepted_func=_is_accepted,
+        pick_named_response_func=pick_named_response,
+        is_confirmation_yes_func=is_confirmation_yes,
+        is_confirmation_no_func=is_confirmation_no,
+        current_mode_name_func=current_mode_name,
+        handle_command_text_func=handle_command_text,
+        open_cmd_window_func=open_cmd_window,
+        extend_cmd_window_func=extend_cmd_window,
+        close_cmd_window_func=close_cmd_window,
+        merge_phrases_func=_merge_phrases,
+        looks_incomplete_command_func=_looks_incomplete_command,
+        pending_command_wait_sec=pending_command_wait_sec,
+        normalize_func=normalize_command_text,
+        should_ignore_during_ack_window_func=should_ignore_during_ack_window,
+        router=router,
+        print_func=print,
+        time_func=time.time,
+    )
+
     def handle_cmd_timeout_event(evt: dict) -> None:
         if mode_manager.is_command_window_open() and int(evt.get("token") or -1) == cmd_window_token:
             close_cmd_window("cmd_window_close_timeout", speak_close=True)
@@ -317,127 +346,17 @@ def main():
     def handle_phrase_event(evt: dict) -> None:
         nonlocal last_tts_end, ack_ignore_until
 
-        phrase = evt.get("text") or ""
-
-        speech_interrupt = handle_phrase_while_tts_speaking(
-            phrase,
-            tts=tts,
-            logger=logger,
-            has_hotword_func=has_hotword,
-            strip_hotword_func=strip_hotword,
-            normalize_func=normalize_command_text,
-            predict_func=predict,
-        )
-
-        if speech_interrupt.handled:
-            if speech_interrupt.stopped:
-                last_tts_end = time.time()
-            return
-
-        phrase_guard = check_phrase_preprocessing_guards(
-            phrase,
-            now=time.time(),
-            ack_ignore_until=ack_ignore_until,
+        result = phrase_event_processor.process_phrase(
+            evt.get("text") or "",
             last_tts_end=last_tts_end,
-            ignore_after_tts_sec=SETTINGS.ignore_after_tts_sec,
-            is_dictation_mode=mode_manager.is_dictation_mode(),
-            should_ignore_during_ack_window_func=should_ignore_during_ack_window,
+            ack_ignore_until=ack_ignore_until,
         )
 
-        if phrase_guard.ignored:
-            logger.event(phrase_guard.reason or "stt_ignored", {"text": phrase})
-            return
+        if result.last_tts_end is not None:
+            last_tts_end = result.last_tts_end
 
-        print(f"🎧 распознано: {phrase}")
-        logger.event("stt_phrase", {"text": phrase})
-
-        confirmation_result = handle_pending_confirmation_phrase(
-            phrase,
-            mode_manager=mode_manager,
-            router=router,
-            learning_memory=learning_memory,
-            stt=stt,
-            tts=tts,
-            say_func=say,
-            pick_named_response_func=pick_named_response,
-            is_confirmation_yes_func=is_confirmation_yes,
-            is_confirmation_no_func=is_confirmation_no,
-            accept_conf=SETTINGS.nlu_accept_conf,
-            current_mode_name_func=current_mode_name,
-            extend_cmd_window_func=extend_cmd_window,
-        )
-
-        if confirmation_result.handled:
-            if confirmation_result.last_tts_end is not None:
-                last_tts_end = confirmation_result.last_tts_end
-            return
-
-        dictation_result = handle_dictation_phrase(
-            phrase,
-            mode_manager=mode_manager,
-            typing_service=typing_service,
-            logger=logger,
-            stt=stt,
-            tts=tts,
-            say_func=say,
-            has_hotword_func=has_hotword,
-            strip_hotword_func=strip_hotword,
-            is_only_hotword_func=is_only_hotword,
-            norm_func=norm,
-            is_dictation_stop_phrase_func=is_dictation_stop_phrase,
-            predict_func=predict,
-            is_accepted_func=_is_accepted,
-            pick_named_response_func=pick_named_response,
-        )
-
-        if dictation_result.handled:
-            if dictation_result.last_tts_end is not None:
-                last_tts_end = dictation_result.last_tts_end
-            return
-
-        hotword_activation = handle_hotword_activation_phrase(
-            phrase,
-            mode_manager=mode_manager,
-            stt=stt,
-            tts=tts,
-            now=time.time(),
-            ack_text=SETTINGS.ack_text,
-            ack_ignore_sec=SETTINGS.ack_ignore_sec,
-            say_func=say,
-            has_hotword_func=has_hotword,
-            strip_hotword_func=strip_hotword,
-            handle_command_text_func=handle_command_text,
-            open_cmd_window_func=open_cmd_window,
-        )
-
-        phrase = hotword_activation.phrase
-
-        if hotword_activation.handled:
-            if hotword_activation.last_tts_end is not None:
-                last_tts_end = hotword_activation.last_tts_end
-
-            if hotword_activation.ack_ignore_until is not None:
-                ack_ignore_until = hotword_activation.ack_ignore_until
-
-            return
-
-        command_window_result = handle_command_window_phrase(
-            phrase,
-            mode_manager=mode_manager,
-            logger=logger,
-            now=time.time(),
-            pending_command_wait_sec=pending_command_wait_sec,
-            is_only_hotword_func=is_only_hotword,
-            norm_func=norm,
-            merge_phrases_func=_merge_phrases,
-            looks_incomplete_command_func=_looks_incomplete_command,
-            handle_command_text_func=handle_command_text,
-            extend_cmd_window_func=extend_cmd_window,
-            close_cmd_window_func=close_cmd_window,
-        )
-
-        if command_window_result.handled:
-            return
+        if result.ack_ignore_until is not None:
+            ack_ignore_until = result.ack_ignore_until
 
     while True:
         evt = event_q.get()
