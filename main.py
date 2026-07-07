@@ -33,6 +33,7 @@ from modules.command_understanding import understand_command_text
 from modules.speech_interrupt import handle_phrase_while_tts_speaking
 from modules.phrase_guards import check_phrase_preprocessing_guards
 from modules.dictation_runtime import handle_dictation_phrase
+from modules.confirmation_runtime import handle_pending_confirmation_phrase
 from modules.confirmation import (
     build_confirmation_prompt,
     is_confirmation_no,
@@ -460,65 +461,25 @@ def main():
         print(f"🎧 распознано: {phrase}")
         logger.event("stt_phrase", {"text": phrase})
 
-        if mode_manager.has_pending_confirmation():
-            pending_confirmation = mode_manager.get_pending_confirmation() or {}
-            if is_confirmation_yes(phrase):
-                meta = pending_confirmation.get("meta") or {}
-                clear_pending_confirmation()
+        confirmation_result = handle_pending_confirmation_phrase(
+            phrase,
+            mode_manager=mode_manager,
+            router=router,
+            learning_memory=learning_memory,
+            stt=stt,
+            tts=tts,
+            say_func=say,
+            pick_named_response_func=pick_named_response,
+            is_confirmation_yes_func=is_confirmation_yes,
+            is_confirmation_no_func=is_confirmation_no,
+            accept_conf=SETTINGS.nlu_accept_conf,
+            current_mode_name_func=current_mode_name,
+            extend_cmd_window_func=extend_cmd_window,
+        )
 
-                confirm_ok = pick_named_response("CONFIRM_OK")
-                last_tts_end = say(
-                    stt,
-                    tts,
-                    confirm_ok or "Подтверждаю. Выполняю."
-                )
-
-                confirm_decision = build_command_decision(
-                    meta,
-                    accept_conf=SETTINGS.nlu_accept_conf,
-                )
-
-                if confirm_decision.accepted and not confirm_decision.missing_slots:
-                    try:
-                        router.execute(meta)
-                    except Exception as e:
-                        log_command_action_failure(
-                            learning_memory=learning_memory,
-                            raw_text=meta.get("_text") or "",
-                            final_text=meta.get("_text") or "",
-                            meta=meta,
-                            mode=current_mode_name(),
-                            error=e,
-                        )
-                        raise
-
-                if mode_manager.is_command_window_open():
-                    extend_cmd_window()
-                return
-
-            if is_confirmation_no(phrase):
-                clear_pending_confirmation()
-
-                confirm_cancel = pick_named_response("CONFIRM_CANCEL")
-                last_tts_end = say(
-                    stt,
-                    tts,
-                    confirm_cancel or "Отменено."
-                )
-
-                if mode_manager.is_command_window_open():
-                    extend_cmd_window()
-                return
-
-            confirm_repeat = pick_named_response("CONFIRM_REPEAT")
-            last_tts_end = say(
-                stt,
-                tts,
-                confirm_repeat or "Скажи да или нет."
-            )
-
-            if mode_manager.is_command_window_open():
-                extend_cmd_window()
+        if confirmation_result.handled:
+            if confirmation_result.last_tts_end is not None:
+                last_tts_end = confirmation_result.last_tts_end
             return
 
         dictation_result = handle_dictation_phrase(
@@ -608,10 +569,6 @@ def main():
             # Окно команд НЕ закрываем после одной команды.
             extend_cmd_window()
             return
-
-
-    def clear_pending_confirmation() -> None:
-        mode_manager.clear_pending_confirmation()
 
     while True:
         evt = event_q.get()
