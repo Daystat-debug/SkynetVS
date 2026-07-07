@@ -16,122 +16,27 @@ from modules.intent_rules import (
 
 import joblib
 
+from modules.entity_registry import (
+    APP_ALIASES as _APP_SYNS,
+    APP_TITLES as _APP_TITLES,
+    SITE_ALIASES as _SITE_SYNS,
+    SITE_TITLES as _SITE_TITLES,
+    SITE_URLS as _SITE_URLS,
+    FOLDER_ALIASES as _FOLDER_SYNS,
+    FOLDER_TITLES as _FOLDER_TITLES,
+    SETTINGS_SECTION_ALIASES as _SETTINGS_SECTION_SYNS,
+    SETTINGS_SECTION_TITLES as _SETTINGS_SECTION_TITLES,
+    match_app_code,
+    match_folder_code,
+    match_settings_section_code,
+    match_site_code,
+)
+
 _MODEL = None
 _MODEL_PATH = Path("models/nlu_intent.joblib")
 
 _TEMPLATES = None
 _TEMPLATES_PATH = Path("data/say_templates.json")
-
-# NLU_MIN_CONF = float(os.getenv("NLU_MIN_CONF", "0.35"))
-
-# simple app synonyms (для слота app, пока без отдельной модели слотов)
-_APP_SYNS: Dict[str, list[str]] = {
-    "notepad": ["блокнот", "notepad", "нотпад"],
-    "calc": ["калькулятор", "calculator", "calc", "кальк"],
-    "chrome": [
-        "хром",
-        "chrome",
-        "гугл хром",
-        "google chrome",
-        "браузер",
-        "гугл браузер",
-        "google браузер",
-        "интернет браузер",
-    ],
-    "discord": ["дискорд", "discord"],
-    "explorer": [
-        "проводник",
-        "проводник windows",
-        "проводник виндовс",
-        "explorer",
-        "file explorer",
-        "файловый менеджер",
-    ],
-}
-
-# как красиво произносить app (если нет — будет просто код)
-_APP_TITLES: Dict[str, str] = {
-    "notepad": "блокнот",
-    "calc": "калькулятор",
-    "chrome": "браузер",
-    "discord": "дискорд",
-    "explorer": "проводник",
-}
-
-_SITE_SYNS: Dict[str, list[str]] = {
-    "youtube": ["ютуб", "youtube", "you tube"],
-    "google": ["гугл", "google"],
-    "github": [
-        "гитхаб", "github", "git hub",
-        "гит хаб", "гед хаб", "гид хаб", "гиды хаб",
-        "github.com"
-    ],
-    "gmail": ["gmail", "джимейл", "почта gmail", "gmail почта"],
-    "chatgpt": [
-        "chatgpt", "чат gpt", "чат джипити", "чат gpt",
-        "чат жпт", "чат гпт", "чат джип ти",
-        "чат джип идти", "чат же пяти", "чоджи пяти",
-        "чат гпу", "чат гбдд"
-    ],
-    "habr": ["хабр", "habr", "хабр ру", "habr.ru"],
-    "yandex": ["яндекс", "yandex", "яндекс ру", "yandex.ru"],
-    "vk": ["вк", "vk", "вконтакте", "vk.com", "вк точка ком"],
-    "openai": ["openai", "open ai", "openai.com", "опен аи"],
-}
-
-_SITE_TITLES: Dict[str, str] = {
-    "youtube": "ютуб",
-    "google": "гугл",
-    "github": "гитхаб",
-    "gmail": "gmail",
-    "chatgpt": "chatgpt",
-    "habr": "хабр",
-    "yandex": "яндекс",
-    "vk": "вк",
-    "openai": "openai",
-}
-
-_SITE_URLS: Dict[str, str] = {
-    "youtube": "https://www.youtube.com",
-    "google": "https://www.google.com",
-    "github": "https://github.com",
-    "gmail": "https://mail.google.com",
-    "chatgpt": "https://chatgpt.com",
-    "habr": "https://habr.com",
-    "yandex": "https://yandex.ru",
-    "vk": "https://vk.com",
-    "openai": "https://openai.com",
-}
-
-_FOLDER_SYNS: Dict[str, list[str]] = {
-    "downloads": ["загрузки", "папка загрузки", "downloads", "download"],
-    "desktop": ["рабочий стол", "desktop", "стол"],
-    "documents": ["документы", "мои документы", "documents", "docs"],
-    "pictures": ["картинки", "изображения", "фото", "pictures", "images"],
-}
-
-_FOLDER_TITLES: Dict[str, str] = {
-    "downloads": "загрузки",
-    "desktop": "рабочий стол",
-    "documents": "документы",
-    "pictures": "картинки",
-}
-
-_SETTINGS_SECTION_SYNS: Dict[str, list[str]] = {
-    "system": ["настройки", "параметры", "система"],
-    "sound": ["настройки звука", "параметры звука", "звук", "аудио"],
-    "network": ["настройки сети", "параметры сети", "сеть", "интернет", "wi-fi", "вайфай"],
-    "bluetooth": ["настройки bluetooth", "настройки блютуз", "bluetooth", "блютуз"],
-    "display": ["настройки экрана", "параметры экрана", "экран", "дисплей"],
-}
-
-_SETTINGS_SECTION_TITLES: Dict[str, str] = {
-    "system": "настройки",
-    "sound": "настройки звука",
-    "network": "настройки сети",
-    "bluetooth": "настройки bluetooth",
-    "display": "настройки экрана",
-}
 
 
 def _env_float(name: str, default: str) -> float:
@@ -306,71 +211,19 @@ def _extract_open_folder_slots(text: str) -> Dict[str, Any]:
 
 
 def _fallback_match_app(text: str) -> Optional[str]:
-    t = _norm(text)
-    for app, syns in _APP_SYNS.items():
-        for s in syns:
-            if s in t:
-                return app
-    return None
+    return match_app_code(text)
 
 
 def _fallback_match_site(text: str) -> Optional[str]:
-    t = _norm(text)
-    t_compact = _compact(text)
-
-    for site, syns in _SITE_SYNS.items():
-        for s in syns:
-            s_norm = _norm(s)
-            s_compact = _compact(s)
-
-            if s_norm and s_norm in t:
-                return site
-            if s_compact and s_compact in t_compact:
-                return site
-
-    return None
+    return match_site_code(text)
 
 
 def _fallback_match_folder(text: str) -> Optional[str]:
-    t = _norm(text)
-    t_compact = _compact(text)
-
-    for folder, syns in _FOLDER_SYNS.items():
-        for s in syns:
-            s_norm = _norm(s)
-            s_compact = _compact(s)
-
-            if s_norm and s_norm in t:
-                return folder
-            if s_compact and s_compact in t_compact:
-                return folder
-
-    return None
+    return match_folder_code(text)
 
 
 def _fallback_match_settings_section(text: str) -> Optional[str]:
-    t = _norm(text)
-    t_compact = _compact(text)
-
-    best_section: Optional[str] = None
-    best_score = -1
-
-    for section, syns in _SETTINGS_SECTION_SYNS.items():
-        for s in syns:
-            s_norm = _norm(s)
-            s_compact = _compact(s)
-
-            score = -1
-            if s_norm and s_norm in t:
-                score = len(s_compact)
-            elif s_compact and s_compact in t_compact:
-                score = len(s_compact)
-
-            if score > best_score:
-                best_score = score
-                best_section = section
-
-    return best_section
+    return match_settings_section_code(text)
 
 
 _TLD_SYNS: Dict[str, str] = {

@@ -21,6 +21,14 @@ from pathlib import Path
 from modules.weather_service import WeatherService
 from modules.typing_service import TypingService
 from modules.window_context_service import WindowContextService
+from modules.entity_registry import (
+    get_app_close_strategy,
+    get_app_image_names,
+    get_app_open_command,
+    get_app_title_patterns,
+    get_folder_path_kind,
+    get_settings_section_uri,
+)
 
 
 class Actions:
@@ -322,27 +330,22 @@ class Actions:
         return meta.get("say") or "..."
 
     def _open_app(self, app: str) -> None:
+        app_code = str(app or "").lower().strip()
+        if not app_code:
+            return
+
+        command = get_app_open_command(app_code)
+        if not command:
+            return
+
         try:
-            if app == "notepad":
-                subprocess.Popen(["notepad.exe"])
-                return
-            if app == "calc":
-                subprocess.Popen(["calc.exe"])
-                return
-            if app == "chrome":
-                subprocess.Popen(["cmd", "/c", "start", "chrome"])
-                return
-            if app == "explorer":
-                subprocess.Popen(["explorer.exe"])
-                return
-            if app == "discord":
-                subprocess.Popen(["cmd", "/c", "start", "discord"])
-                return
+            subprocess.Popen(list(command))
         except Exception:
             return
 
     def _resolve_folder_path(self, folder_code: str) -> Optional[str]:
         home = Path.home()
+        path_kind = get_folder_path_kind(str(folder_code or "").strip())
 
         mapping = {
             "downloads": home / "Downloads",
@@ -351,20 +354,15 @@ class Actions:
             "pictures": home / "Pictures",
         }
 
-        path = mapping.get(folder_code)
+        path = mapping.get(path_kind)
         if path is None:
             return None
+
         return str(path)
 
     def _resolve_settings_uri(self, section_code: str) -> str:
-        mapping = {
-            "system": "ms-settings:",
-            "sound": "ms-settings:sound",
-            "network": "ms-settings:network",
-            "bluetooth": "ms-settings:bluetooth",
-            "display": "ms-settings:display",
-        }
-        return mapping.get(section_code, "ms-settings:")
+        section = str(section_code or "system").strip()
+        return get_settings_section_uri(section)
 
     def _get_local_ip(self) -> str:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -418,23 +416,10 @@ class Actions:
         return class_name in protected_classes
 
     def _app_image_names(self, app_code: str) -> list[str]:
-        mapping = {
-            "notepad": ["notepad.exe"],
-            "calc": ["CalculatorApp.exe", "calc.exe"],
-            "chrome": ["chrome.exe"],
-            "discord": ["Discord.exe", "Update.exe"],
-            "explorer": ["explorer.exe"],
-        }
-        return mapping.get(app_code, [])
+        return list(get_app_image_names(str(app_code or "").strip().lower()))
 
     def _app_window_title_patterns(self, app_code: str) -> list[str]:
-        mapping = {
-            "calc": ["калькулятор", "calculator"],
-            "notepad": ["блокнот", "notepad"],
-            "discord": ["discord", "дискорд"],
-            "chrome": ["chrome", "google chrome", "хром"],
-        }
-        return mapping.get(app_code, [])
+        return list(get_app_title_patterns(str(app_code or "").strip().lower()))
 
     def _get_window_process_image(self, hwnd: int) -> str:
         if not hwnd:
@@ -579,7 +564,7 @@ class Actions:
             except Exception:
                 pass
 
-        return
+        return closed_any
 
     def _terminate_by_image_names(self, image_names: list[str]) -> bool:
         ok_any = False
@@ -823,7 +808,7 @@ class Actions:
 
         # Важный special-case: не убиваем explorer.exe как shell,
         # закрываем только конкретные окна Проводника.
-        if app_code == "explorer":
+        if get_app_close_strategy(app_code) == "explorer_windows_only":
             self._close_explorer_windows()
             return
 

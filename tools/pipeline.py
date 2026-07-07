@@ -33,6 +33,8 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "check": [
             Step("Command audit", _python_cmd("tools/command_audit.py")),
+            Step("Evaluate entity registry", _python_cmd("tools/eval_entity_registry.py")),
+            Step("Evaluate actions registry integration", _python_cmd("tools/eval_actions_registry.py")),
             Step("Evaluate NLU", _python_cmd("tools/eval_nlu.py")),
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
             Step("Evaluate confirmation", _python_cmd("tools/eval_confirmation.py")),
@@ -147,6 +149,12 @@ def available_flows() -> dict[str, list[Step]]:
         "phrase_event": [
             Step("Evaluate phrase event processor", _python_cmd("tools/eval_phrase_event_processor.py")),
         ],
+        "registry": [
+            Step("Evaluate entity registry", _python_cmd("tools/eval_entity_registry.py")),
+        ],
+        "actions_registry": [
+            Step("Evaluate actions registry integration", _python_cmd("tools/eval_actions_registry.py")),
+        ],
     }
 
 
@@ -238,6 +246,8 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  command_runtime Run command runtime eval only", log_file)
     _emit("  command_processor Run command processor eval only", log_file)
     _emit("  phrase_event Run phrase event processor eval only", log_file)
+    _emit("  registry   Run entity registry eval only", log_file)
+    _emit("  actions_registry Run actions registry integration eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
