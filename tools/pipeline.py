@@ -46,6 +46,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate command outcome", _python_cmd("tools/eval_command_outcome.py")),
             Step("Evaluate command learning", _python_cmd("tools/eval_command_learning.py")),
             Step("Evaluate speech interrupt", _python_cmd("tools/eval_speech_interrupt.py")),
+            Step("Evaluate phrase guards", _python_cmd("tools/eval_phrase_guards.py")),
         ],
         "decision": [
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
@@ -114,6 +115,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "speech_interrupt": [
             Step("Evaluate speech interrupt", _python_cmd("tools/eval_speech_interrupt.py")),
+        ],
+        "phrase_guards": [
+            Step("Evaluate phrase guards", _python_cmd("tools/eval_phrase_guards.py")),
         ],
     }
 
@@ -198,6 +202,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  outcome    Run command outcome eval only", log_file)
     _emit("  learning   Run command learning eval only", log_file)
     _emit("  speech_interrupt Run speech interrupt eval only", log_file)
+    _emit("  phrase_guards Run phrase guard eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)

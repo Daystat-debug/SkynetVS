@@ -31,6 +31,7 @@ from modules.dictation_commands import is_dictation_stop_phrase
 from modules.reply_builder import build_reply_text
 from modules.command_understanding import understand_command_text
 from modules.speech_interrupt import handle_phrase_while_tts_speaking
+from modules.phrase_guards import check_phrase_preprocessing_guards
 from modules.confirmation import (
     build_confirmation_prompt,
     is_confirmation_no,
@@ -441,14 +442,18 @@ def main():
                 last_tts_end = time.time()
             return
 
-        # Сначала фильтруем эхо ACK/горячее слово после ACK,
-        # и только потом печатаем/логируем как обычную фразу.
-        if time.time() < ack_ignore_until and should_ignore_during_ack_window(phrase):
-            logger.event("stt_ignored_ack_window", {"text": phrase})
-            return
+        phrase_guard = check_phrase_preprocessing_guards(
+            phrase,
+            now=time.time(),
+            ack_ignore_until=ack_ignore_until,
+            last_tts_end=last_tts_end,
+            ignore_after_tts_sec=SETTINGS.ignore_after_tts_sec,
+            is_dictation_mode=mode_manager.is_dictation_mode(),
+            should_ignore_during_ack_window_func=should_ignore_during_ack_window,
+        )
 
-        if not mode_manager.is_dictation_mode() and (time.time() - last_tts_end) < SETTINGS.ignore_after_tts_sec:
-            logger.event("stt_ignored_after_tts", {"text": phrase})
+        if phrase_guard.ignored:
+            logger.event(phrase_guard.reason or "stt_ignored", {"text": phrase})
             return
 
         print(f"🎧 распознано: {phrase}")
