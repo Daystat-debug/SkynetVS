@@ -36,8 +36,8 @@ from modules.dictation_runtime import handle_dictation_phrase
 from modules.confirmation_runtime import handle_pending_confirmation_phrase
 from modules.hotword_activation_runtime import handle_hotword_activation_phrase
 from modules.command_window_runtime import handle_command_window_phrase
+from modules.command_runtime import handle_command_runtime
 from modules.confirmation import (
-    build_confirmation_prompt,
     is_confirmation_no,
     is_confirmation_yes,
 )
@@ -57,20 +57,8 @@ from modules.speech_io import (
     say as speech_say,
     say_interruptible as speech_say_interruptible,
 )
-from modules.command_outcome import (
-    OUTCOME_CONFIRMATION_REQUIRED,
-    OUTCOME_DICTATION_OFF,
-    OUTCOME_DICTATION_ON,
-    OUTCOME_INTERRUPTIBLE_REPLY,
-    OUTCOME_MISSING_SLOTS,
-    OUTCOME_NOT_ACCEPTED,
-    classify_command_outcome,
-)
-from modules.command_learning import (
-    log_command_action_failure,
-    log_command_observation,
-    log_not_accepted_command,
-)
+from modules.command_outcome import classify_command_outcome
+from modules.command_learning import log_command_observation
 
 colorama_init()
 load_dotenv()
@@ -345,82 +333,29 @@ def main():
             missing_slots=missing_slots,
         )
 
-        if outcome.kind == OUTCOME_NOT_ACCEPTED:
-            log_not_accepted_command(
-                learning_memory=learning_memory,
-                raw_text=raw_text_in,
-                final_text=text_in,
-                meta=meta,
-                mode=current_mode_name(),
-                reason=decision.reason or "not_accepted",
-            )
-            text_out = _reply_text(router, meta)
-            logger.inbox(text_in, meta)
-            last_tts_end = say(stt, tts, text_out)
-            return meta
+        runtime_result = handle_command_runtime(
+            raw_text=raw_text_in,
+            final_text=text_in,
+            meta=meta,
+            decision=decision,
+            outcome=outcome,
+            learning_memory=learning_memory,
+            logger=logger,
+            router=router,
+            mode_manager=mode_manager,
+            stt=stt,
+            tts=tts,
+            say_func=say,
+            say_interruptible_func=say_interruptible,
+            reply_text_func=lambda m: _reply_text(router, dict(m)),
+            current_mode_name_func=current_mode_name,
+            cancel_cmd_timer_func=cancel_cmd_timer,
+        )
 
-        if outcome.kind == OUTCOME_MISSING_SLOTS:
-            logger.event(
-                "missing_required_slots_blocked",
-                {
-                    "text": text_in,
-                    "intent": meta.get("intent"),
-                    "missing_slots": decision.missing_slots,
-                    "slots": meta.get("slots") or {},
-                },
-            )
+        if runtime_result.last_tts_end is not None:
+            last_tts_end = runtime_result.last_tts_end
 
-            text_out = router.reply(meta) or "Не хватает данных для выполнения команды."
-            last_tts_end = say(stt, tts, text_out)
-            return meta
-
-        if outcome.kind == OUTCOME_CONFIRMATION_REQUIRED:
-            mode_manager.set_pending_confirmation(
-                {
-                    "meta": meta,
-                }
-            )
-            prompt = build_confirmation_prompt(meta)
-            last_tts_end = say(stt, tts, prompt)
-            return meta
-
-        intent_name = (meta.get("intent") or "").upper()
-
-        if outcome.kind == OUTCOME_DICTATION_ON:
-            mode_manager.enter_dictation_mode()
-            mode_manager.close_command_window()
-            cancel_cmd_timer()
-
-            text_out = _reply_text(router, meta)
-            last_tts_end = say(stt, tts, text_out)
-            return meta
-
-        if outcome.kind == OUTCOME_DICTATION_OFF:
-            mode_manager.exit_dictation_mode()
-            text_out = _reply_text(router, meta)
-            last_tts_end = say(stt, tts, text_out)
-            return meta
-
-        text_out = _reply_text(router, meta)
-
-        if outcome.kind == OUTCOME_INTERRUPTIBLE_REPLY:
-            last_tts_end = say_interruptible(tts, text_out)
-            return meta
-
-        last_tts_end = say(stt, tts, text_out)
-        try:
-            router.execute(meta)
-        except Exception as e:
-            log_command_action_failure(
-                learning_memory=learning_memory,
-                raw_text=raw_text_in,
-                final_text=text_in,
-                meta=meta,
-                mode=current_mode_name(),
-                error=e,
-            )
-            raise
-        return meta
+        return runtime_result.meta
 
     def handle_cmd_timeout_event(evt: dict) -> None:
         if mode_manager.is_command_window_open() and int(evt.get("token") or -1) == cmd_window_token:
