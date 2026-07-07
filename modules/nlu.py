@@ -505,6 +505,157 @@ _SLOT_EXTRACTORS: Dict[str, Callable[[str], Dict[str, Any]]] = {
 }
 
 
+def _model_classes(pipe: Any) -> list[Any]:
+    classes = getattr(pipe, "classes_", None)
+    if classes is not None:
+        return list(classes)
+
+    steps = getattr(pipe, "steps", None)
+    if steps:
+        try:
+            last_step = steps[-1][1]
+            classes = getattr(last_step, "classes_", None)
+            if classes is not None:
+                return list(classes)
+        except Exception:
+            return []
+
+    return []
+
+
+def _extract_slots_for_intent(intent: Optional[str], text: str) -> Dict[str, Any]:
+    if not intent:
+        return {}
+
+    extractor = _SLOT_EXTRACTORS.get(str(intent).upper())
+    if not extractor:
+        return {}
+
+    try:
+        return dict(extractor(text) or {})
+    except Exception:
+        return {}
+
+
+def predict_candidates(
+    text: str,
+    *,
+    limit: int = 5,
+    include_rules: bool = True,
+) -> list[Dict[str, Any]]:
+    """
+    Возвращает diagnostic top-k кандидатов NLU.
+
+    Важно:
+      - не меняет поведение predict()
+      - нужен для eval/debug
+      - показывает rule-кандидаты и model-кандидаты
+    """
+    t = _norm(text)
+    if not t:
+        return []
+
+    try:
+        limit = max(1, int(limit))
+    except Exception:
+        limit = 5
+
+    rows: list[Dict[str, Any]] = []
+
+    if include_rules:
+        incomplete_meta = build_incomplete_command_meta(t)
+        if incomplete_meta:
+            rows.append(
+                {
+                    "intent": None,
+                    "confidence": 0.0,
+                    "source": "rule",
+                    "rule": "incomplete_command_rule",
+                    "slots": {},
+                    "accepted_by_threshold": False,
+                }
+            )
+
+        rule_intent = get_exact_intent(t)
+        if rule_intent:
+            slots = _extract_slots_for_intent(rule_intent, t)
+            rows.append(
+                {
+                    "intent": str(rule_intent).upper(),
+                    "confidence": 1.0,
+                    "source": "rule",
+                    "rule": "exact_intent_rule",
+                    "slots": slots,
+                    "accepted_by_threshold": True,
+                }
+            )
+
+        set_volume_meta = build_set_volume_meta(t, extract_volume=_extract_volume)
+        if set_volume_meta:
+            intent = str(set_volume_meta.get("intent") or "").upper()
+            slots = dict(set_volume_meta.get("slots") or {})
+            rows.append(
+                {
+                    "intent": intent or None,
+                    "confidence": float(set_volume_meta.get("confidence") or 0.0),
+                    "source": "rule",
+                    "rule": "set_volume_rule",
+                    "slots": slots,
+                    "accepted_by_threshold": True,
+                }
+            )
+
+    pipe = _load_model()
+    if not pipe:
+        return rows[:limit]
+
+    try:
+        if hasattr(pipe, "predict_proba"):
+            proba = pipe.predict_proba([t])[0]
+            classes = _model_classes(pipe)
+
+            if classes and len(classes) == len(proba):
+                pairs = sorted(
+                    zip(classes, proba),
+                    key=lambda pair: float(pair[1]),
+                    reverse=True,
+                )
+
+                for rank, (intent_raw, conf_raw) in enumerate(pairs[:limit], start=1):
+                    intent = str(intent_raw).upper()
+                    conf = float(conf_raw)
+                    slots = _extract_slots_for_intent(intent, t)
+
+                    rows.append(
+                        {
+                            "rank": rank,
+                            "intent": intent,
+                            "confidence": round(conf, 4),
+                            "source": "model",
+                            "slots": slots,
+                            "accepted_by_threshold": conf >= _nlu_min_conf(),
+                        }
+                    )
+
+                return rows[: max(limit, len(rows))]
+
+        intent = str(pipe.predict([t])[0]).upper()
+        rows.append(
+            {
+                "rank": 1,
+                "intent": intent,
+                "confidence": 1.0,
+                "source": "model",
+                "slots": _extract_slots_for_intent(intent, t),
+                "accepted_by_threshold": True,
+            }
+        )
+    except Exception:
+        return rows[:limit]
+
+    return rows[:limit]
+
+
 def predict(text: str) -> Dict[str, Any]:
     """
     -> {

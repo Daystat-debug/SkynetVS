@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from modules.nlu import predict
+from modules.nlu import predict, predict_candidates
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -591,6 +591,7 @@ def check_case(case: Dict[str, Any]) -> Dict[str, Any]:
     actual_intent = str(meta.get("intent") or "").upper()
     actual_conf = float(meta.get("confidence") or 0.0)
     actual_slots = dict(meta.get("slots") or {})
+    top_candidates = predict_candidates(text, limit=5)
 
     hard_fail_reasons: List[str] = []
     warnings: List[str] = []
@@ -641,6 +642,7 @@ def check_case(case: Dict[str, Any]) -> Dict[str, Any]:
         "rule": meta.get("_rule"),
         "hard_fail_reasons": hard_fail_reasons,
         "warnings": warnings,
+        "top_candidates": top_candidates,
         "ok": len(hard_fail_reasons) == 0,
     }
 
@@ -677,21 +679,21 @@ def main() -> int:
 
         print()
         print(f"{idx}. {result['text']}")
-        print(
-            json.dumps(
-                {
-                    "group": result["group"],
-                    "expected_intent": result["expected_intent"],
-                    "forbidden_intents": result["forbidden_intents"],
-                    "actual_intent": result["actual_intent"],
-                    "confidence": round(float(result["confidence"]), 4),
-                    "expected_slots": result["expected_slots"],
-                    "actual_slots": result["actual_slots"],
-                    "rule": result["rule"],
-                },
-                ensure_ascii=False,
-            )
-        )
+        payload = {
+            "group": result["group"],
+            "expected_intent": result["expected_intent"],
+            "forbidden_intents": result["forbidden_intents"],
+            "actual_intent": result["actual_intent"],
+            "confidence": round(float(result["confidence"]), 4),
+            "expected_slots": result["expected_slots"],
+            "actual_slots": result["actual_slots"],
+            "rule": result["rule"],
+        }
+
+        if result["hard_fail_reasons"] or result["warnings"]:
+            payload["top_candidates"] = result["top_candidates"]
+
+        print(json.dumps(payload, ensure_ascii=False))
 
         if result["hard_fail_reasons"]:
             hard_fail_count += 1
