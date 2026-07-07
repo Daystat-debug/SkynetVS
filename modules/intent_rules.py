@@ -41,12 +41,30 @@ EXACT_INTENT_RULES: Dict[str, str] = {
     "начни музыку заново": "MUSIC_RESTART",
     "включи трек сначала": "MUSIC_RESTART",
 
-    # dictation mode control
+    # dictation mode on
+    "режим диктовки": "DICTATION_MODE_ON",
+    "включи режим диктовки": "DICTATION_MODE_ON",
+    "начни диктовку": "DICTATION_MODE_ON",
+    "режим ввода текста": "DICTATION_MODE_ON",
+    "включи режим ввода текста": "DICTATION_MODE_ON",
+    "включи печать голосом": "DICTATION_MODE_ON",
+
+    # dictation mode off
     "выключи режим диктовки": "DICTATION_MODE_OFF",
     "закрой режим диктовки": "DICTATION_MODE_OFF",
     "останови диктовку": "DICTATION_MODE_OFF",
     "выключи диктовку": "DICTATION_MODE_OFF",
     "выйди из режима диктовки": "DICTATION_MODE_OFF",
+    "прекрати печать": "DICTATION_MODE_OFF",
+    "останови печать": "DICTATION_MODE_OFF",
+    "выйди из режима ввода текста": "DICTATION_MODE_OFF",
+    "выключи режим ввода текста": "DICTATION_MODE_OFF",
+    "заверши диктовку": "DICTATION_MODE_OFF",
+    "закрой режим ввода текста": "DICTATION_MODE_OFF",
+    "останови режим диктовки": "DICTATION_MODE_OFF",
+    "заверши режим диктовки": "DICTATION_MODE_OFF",
+    "заверши режим ввода текста": "DICTATION_MODE_OFF",
+    "останови режим ввода текста": "DICTATION_MODE_OFF",
 
     # keyboard / editor controls
     "нажми enter": "PRESS_ENTER",
@@ -103,6 +121,8 @@ INCOMPLETE_COMMAND_STARTERS = {
     "установи",
     "включи",
     "выключи",
+    "громкость",
+    "звук",
 }
 
 

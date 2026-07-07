@@ -15,7 +15,7 @@ INTENTS_PATH = Path("data/intents.json")
 OUT_MODEL_PATH = Path("models/nlu_intent.joblib")
 
 
-def _load_dataset(path: Path) -> Tuple[List[str], List[str]]:
+def _load_dataset(path: Path) -> Tuple[List[str], List[str], Dict[str, int]]:
     if not path.exists():
         raise FileNotFoundError(f"Dataset not found: {path}")
 
@@ -25,25 +25,46 @@ def _load_dataset(path: Path) -> Tuple[List[str], List[str]]:
     X: List[str] = []
     y: List[str] = []
 
+    seen: set[tuple[str, str]] = set()
+    duplicate_count = 0
+    skipped_empty_count = 0
+
     for item in intents:
-        intent = str(item.get("intent") or "").strip()
+        intent = str(item.get("intent") or "").strip().upper()
         examples = item.get("examples") or []
+
         if not intent or not isinstance(examples, list):
             continue
+
         for ex in examples:
             s = str(ex or "").strip().lower()
-            if s:
-                X.append(s)
-                y.append(intent)
+
+            if not s:
+                skipped_empty_count += 1
+                continue
+
+            key = (intent, s)
+            if key in seen:
+                duplicate_count += 1
+                continue
+
+            seen.add(key)
+            X.append(s)
+            y.append(intent)
 
     if not X:
         raise ValueError("Dataset is empty: no examples found")
 
-    return X, y
+    stats = {
+        "duplicate_count": duplicate_count,
+        "skipped_empty_count": skipped_empty_count,
+    }
+
+    return X, y, stats
 
 
 def train() -> Pipeline:
-    X, y = _load_dataset(INTENTS_PATH)
+    X, y, stats = _load_dataset(INTENTS_PATH)
 
     # LinearSVC хорошо работает на маленьких датасетах, но не умеет predict_proba.
     # Поэтому заворачиваем в CalibratedClassifierCV, чтобы получить "confidence".
@@ -56,8 +77,8 @@ def train() -> Pipeline:
             ("tfidf", TfidfVectorizer(
                 analyzer="char_wb",
                 ngram_range=(3, 5),
-                min_df = 1,
-                lowercase = True,
+                min_df=1,
+                lowercase=True,
             )),
             ("clf", clf),
         ]
@@ -69,6 +90,8 @@ def train() -> Pipeline:
     joblib.dump(pipe, OUT_MODEL_PATH)
 
     print(f"[OK] trained on {len(X)} samples")
+    print(f"[OK] skipped duplicate examples: {stats['duplicate_count']}")
+    print(f"[OK] skipped empty examples: {stats['skipped_empty_count']}")
     print(f"[OK] saved model: {OUT_MODEL_PATH}")
     return pipe
 
@@ -101,6 +124,19 @@ def quick_test(pipe: Pipeline) -> None:
         "громкость 50",
         "звук на 10",
         "установи громкость 80",
+        "прибавь громкость",
+        "сделай звук потише",
+
+        # hardening
+        "сними экран",
+        "сделай скрин",
+        "приостанови музыку",
+        "включи следующий трек",
+        "перезапусти трек",
+        "закрой режим ввода текста",
+        "нажми клавишу enter",
+        "нажми клавишу tab",
+        "сделай отступ",
         ]
 
     print("\n[TEST] predictions:")

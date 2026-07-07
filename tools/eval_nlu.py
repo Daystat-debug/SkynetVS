@@ -41,6 +41,16 @@ BASE_CASES: List[Case] = [
         "recommended_conf": 0.35,
     },
     {
+        "text": "сними экран",
+        "intent": "SCREENSHOT",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "сделай скрин",
+        "intent": "SCREENSHOT",
+        "recommended_conf": 0.35,
+    },
+    {
         "text": "стоп",
         "intent": "STOP_LISTEN",
         "recommended_conf": 0.90,
@@ -119,6 +129,21 @@ MUSIC_CASES: List[Case] = [
         "intent": "MUSIC_RESTART",
         "recommended_conf": 0.90,
     },
+    {
+        "text": "приостанови музыку",
+        "intent": "MUSIC_PAUSE",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "включи следующий трек",
+        "intent": "MUSIC_NEXT",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "перезапусти трек",
+        "intent": "MUSIC_RESTART",
+        "recommended_conf": 0.35,
+    },
 ]
 
 
@@ -183,6 +208,26 @@ EDITOR_DICTATION_CASES: List[Case] = [
         "intent": "PRESS_TAB",
         "recommended_conf": 0.35,
     },
+    {
+        "text": "закрой режим ввода текста",
+        "intent": "DICTATION_MODE_OFF",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "нажми клавишу enter",
+        "intent": "PRESS_ENTER",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "нажми клавишу tab",
+        "intent": "PRESS_TAB",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "сделай отступ",
+        "intent": "PRESS_TAB",
+        "recommended_conf": 0.35,
+    },
 ]
 
 
@@ -243,6 +288,16 @@ AUDIO_VOLUME_CASES: List[Case] = [
         "intent": "SET_VOLUME",
         "required_slots": {"volume": 30},
         "recommended_conf": 0.90,
+    },
+    {
+        "text": "прибавь громкость",
+        "intent": "VOLUME_UP",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "сделай звук потише",
+        "intent": "VOLUME_DOWN",
+        "recommended_conf": 0.35,
     },
 ]
 
