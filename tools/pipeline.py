@@ -43,6 +43,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
             Step("Evaluate command understanding", _python_cmd("tools/eval_command_understanding.py")),
+            Step("Evaluate command outcome", _python_cmd("tools/eval_command_outcome.py")),
         ],
         "decision": [
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
@@ -102,6 +103,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "understanding": [
             Step("Evaluate command understanding", _python_cmd("tools/eval_command_understanding.py")),
+        ],
+        "outcome": [
+            Step("Evaluate command outcome", _python_cmd("tools/eval_command_outcome.py")),
         ],
     }
 
@@ -183,6 +187,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  stt_refinement Run STT refinement eval only", log_file)
     _emit("  reply      Run reply builder eval only", log_file)
     _emit("  understanding Run command understanding eval only", log_file)
+    _emit("  outcome    Run command outcome eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)

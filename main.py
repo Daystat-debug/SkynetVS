@@ -51,6 +51,15 @@ from modules.speech_io import (
     say as speech_say,
     say_interruptible as speech_say_interruptible,
 )
+from modules.command_outcome import (
+    OUTCOME_CONFIRMATION_REQUIRED,
+    OUTCOME_DICTATION_OFF,
+    OUTCOME_DICTATION_ON,
+    OUTCOME_INTERRUPTIBLE_REPLY,
+    OUTCOME_MISSING_SLOTS,
+    OUTCOME_NOT_ACCEPTED,
+    classify_command_outcome,
+)
 
 colorama_init()
 load_dotenv()
@@ -309,6 +318,7 @@ def main():
         text_in = understanding.final_text
         meta = understanding.meta
         decision = understanding.decision
+        outcome = classify_command_outcome(meta, decision)
 
         accepted = decision.accepted
         missing_slots = decision.missing_slots
@@ -333,7 +343,7 @@ def main():
                 reason="missing_required_slots",
             )
 
-        if not accepted:
+        if outcome.kind == OUTCOME_NOT_ACCEPTED:
             learning_memory.log_nlu_hard_case(
                 raw_text=raw_text_in,
                 final_text=text_in,
@@ -346,7 +356,7 @@ def main():
             last_tts_end = say(stt, tts, text_out)
             return meta
 
-        if decision.reason == "missing_required_slots":
+        if outcome.kind == OUTCOME_MISSING_SLOTS:
             logger.event(
                 "missing_required_slots_blocked",
                 {
@@ -361,7 +371,7 @@ def main():
             last_tts_end = say(stt, tts, text_out)
             return meta
 
-        if decision.requires_confirmation:
+        if outcome.kind == OUTCOME_CONFIRMATION_REQUIRED:
             mode_manager.set_pending_confirmation(
                 {
                     "meta": meta,
@@ -373,7 +383,7 @@ def main():
 
         intent_name = (meta.get("intent") or "").upper()
 
-        if intent_name == "DICTATION_MODE_ON":
+        if outcome.kind == OUTCOME_DICTATION_ON:
             mode_manager.enter_dictation_mode()
             mode_manager.close_command_window()
             cancel_cmd_timer()
@@ -382,7 +392,7 @@ def main():
             last_tts_end = say(stt, tts, text_out)
             return meta
 
-        if intent_name == "DICTATION_MODE_OFF":
+        if outcome.kind == OUTCOME_DICTATION_OFF:
             mode_manager.exit_dictation_mode()
             text_out = _reply_text(router, meta)
             last_tts_end = say(stt, tts, text_out)
@@ -390,7 +400,7 @@ def main():
 
         text_out = _reply_text(router, meta)
 
-        if intent_name == "WEATHER":
+        if outcome.kind == OUTCOME_INTERRUPTIBLE_REPLY:
             last_tts_end = say_interruptible(tts, text_out)
             return meta
 
