@@ -34,6 +34,7 @@ from modules.speech_interrupt import handle_phrase_while_tts_speaking
 from modules.phrase_guards import check_phrase_preprocessing_guards
 from modules.dictation_runtime import handle_dictation_phrase
 from modules.confirmation_runtime import handle_pending_confirmation_phrase
+from modules.hotword_activation_runtime import handle_hotword_activation_phrase
 from modules.confirmation import (
     build_confirmation_prompt,
     is_confirmation_no,
@@ -505,21 +506,30 @@ def main():
                 last_tts_end = dictation_result.last_tts_end
             return
 
-        # если уже ждём команду, и пользователь сказал "скайнет <...>", считаем это командой
-        if mode_manager.is_command_window_open() and has_hotword(phrase):
-            phrase = strip_hotword(phrase) or phrase
+        hotword_activation = handle_hotword_activation_phrase(
+            phrase,
+            mode_manager=mode_manager,
+            stt=stt,
+            tts=tts,
+            now=time.time(),
+            ack_text=SETTINGS.ack_text,
+            ack_ignore_sec=SETTINGS.ack_ignore_sec,
+            say_func=say,
+            has_hotword_func=has_hotword,
+            strip_hotword_func=strip_hotword,
+            handle_command_text_func=handle_command_text,
+            open_cmd_window_func=open_cmd_window,
+        )
 
-        if not mode_manager.is_command_window_open() and has_hotword(phrase):
-            rest = strip_hotword(phrase)
-            if rest:
-                handle_command_text(rest, immediate_label="immediate")
-                return
+        phrase = hotword_activation.phrase
 
-            # Говорим ACK и открываем независимое окно команд
-            # mute_stt=False чтобы не терять начало команды после "Слушаю"
-            last_tts_end = say(stt, tts, SETTINGS.ack_text, mute_stt=False)
-            ack_ignore_until = time.time() + max(0.2, SETTINGS.ack_ignore_sec)
-            open_cmd_window()
+        if hotword_activation.handled:
+            if hotword_activation.last_tts_end is not None:
+                last_tts_end = hotword_activation.last_tts_end
+
+            if hotword_activation.ack_ignore_until is not None:
+                ack_ignore_until = hotword_activation.ack_ignore_until
+
             return
 
         if mode_manager.is_command_window_open():
