@@ -60,6 +60,11 @@ from modules.command_outcome import (
     OUTCOME_NOT_ACCEPTED,
     classify_command_outcome,
 )
+from modules.command_learning import (
+    log_command_action_failure,
+    log_command_observation,
+    log_not_accepted_command,
+)
 
 colorama_init()
 load_dotenv()
@@ -323,7 +328,8 @@ def main():
         accepted = decision.accepted
         missing_slots = decision.missing_slots
 
-        learning_memory.log_command(
+        log_command_observation(
+            learning_memory=learning_memory,
             raw_text=raw_text_in,
             final_text=text_in,
             meta=meta,
@@ -333,18 +339,9 @@ def main():
             missing_slots=missing_slots,
         )
 
-        if missing_slots:
-            learning_memory.log_resolver_candidate(
-                raw_text=raw_text_in,
-                final_text=text_in,
-                meta=meta,
-                mode=current_mode_name(),
-                missing_slots=missing_slots,
-                reason="missing_required_slots",
-            )
-
         if outcome.kind == OUTCOME_NOT_ACCEPTED:
-            learning_memory.log_nlu_hard_case(
+            log_not_accepted_command(
+                learning_memory=learning_memory,
                 raw_text=raw_text_in,
                 final_text=text_in,
                 meta=meta,
@@ -408,7 +405,8 @@ def main():
         try:
             router.execute(meta)
         except Exception as e:
-            learning_memory.log_action_failure(
+            log_command_action_failure(
+                learning_memory=learning_memory,
                 raw_text=raw_text_in,
                 final_text=text_in,
                 meta=meta,
@@ -481,7 +479,8 @@ def main():
                     try:
                         router.execute(meta)
                     except Exception as e:
-                        learning_memory.log_action_failure(
+                        log_command_action_failure(
+                            learning_memory=learning_memory,
                             raw_text=meta.get("_text") or "",
                             final_text=meta.get("_text") or "",
                             meta=meta,
