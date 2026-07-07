@@ -23,18 +23,13 @@ from modules.config import Settings
 from modules.weather_service import WeatherService
 from modules.typing_service import TypingService
 from modules.text_normalizer import normalize_command_text
-from modules.entity_resolver import resolve_entities
 from modules.mode_manager import ModeManager
 from modules.window_context_service import WindowContextService
 from modules.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
-from modules.stt_refinement import maybe_refine_with_whisper as stt_maybe_refine_with_whisper
 from modules.reply_builder import build_reply_text
-from modules.understanding_helpers import (
-    needs_normalization_retry,
-    should_use_retry_result,
-)
+from modules.command_understanding import understand_command_text
 from modules.confirmation import (
     build_confirmation_prompt,
     is_confirmation_no,
@@ -280,31 +275,6 @@ def main():
 
     threading.Thread(target=stt_producer, daemon=True).start()
 
-    def maybe_refine_with_whisper(original_text: str, meta: dict) -> tuple[str, dict]:
-        result = stt_maybe_refine_with_whisper(
-            original_text=original_text,
-            meta=meta,
-            whisper=whisper,
-            stt=stt,
-            trigger_conf=SETTINGS.whisper_trigger_conf,
-            predict_func=predict,
-            norm_func=norm,
-        )
-
-        if result.error:
-            print(f"[WHISPER] refine failed: {result.error}")
-
-        if result.candidate_text and result.candidate_meta is not None:
-            print(f"[WHISPER] '{original_text}' -> '{result.candidate_text}'")
-            print(
-                "[NLU] refined "
-                f"intent={result.candidate_meta.get('intent')} "
-                f"conf={result.candidate_meta.get('confidence', 0.0):.2f} "
-                f"slots={result.candidate_meta.get('slots')}"
-            )
-
-        return result.text, result.meta
-
     def handle_command_text(command_text: str, *, immediate_label: str) -> dict[str, Any]:
         """
         Единая обработка текстовой команды:
@@ -319,92 +289,26 @@ def main():
         if not raw_text_in:
             return {"intent": None, "confidence": 0.0, "slots": {}, "say": ""}
 
-        text_in = raw_text_in
-
         if immediate_label == "immediate":
             print(f"✅ команда сразу: {raw_text_in}")
         else:
             print(f"✅ команда: {raw_text_in}")
 
-        meta = predict(text_in)
-        meta["_text"] = text_in
-
-        if needs_normalization_retry(raw_text_in, meta):
-            normalized_text, was_normalized = normalize_command_text(raw_text_in)
-            if was_normalized and normalized_text != raw_text_in:
-                meta_retry = predict(normalized_text)
-                meta_retry["_text"] = normalized_text
-
-                logger.event(
-                    "nlu_retry",
-                    {
-                        "from": raw_text_in,
-                        "to": normalized_text,
-                        "meta_before": meta,
-                        "meta_after": meta_retry,
-                    },
-                )
-
-                if should_use_retry_result(
-                        meta,
-                        meta_retry,
-                        accept_conf=SETTINGS.nlu_accept_conf,
-                ):
-                    text_in = normalized_text
-                    meta = meta_retry
-                    logger.event(
-                        "text_normalized",
-                        {
-                            "from": raw_text_in,
-                            "to": normalized_text,
-                        },
-                    )
-
-        print(f"[NLU] intent={meta.get('intent')} conf={meta.get('confidence', 0.0):.2f} slots={meta.get('slots')}")
-        logger.event("nlu", {"text": text_in, "meta": meta})
-
-        # Whisper fallback (если не уверены)
-        text2, meta = maybe_refine_with_whisper(text_in, meta)
-        if text2 != text_in:
-            logger.event("whisper_refine", {"from": text_in, "to": text2, "meta": meta})
-            text_in = text2
-            meta["_text"] = text_in
-
-        # Пост-NLU resolver: аккуратно дозаполняем сущности для closed-set интентов.
-        meta_before_resolve = {
-            "intent": meta.get("intent"),
-            "slots": dict(meta.get("slots") or {}),
-        }
-        meta = resolve_entities(text_in, meta)
-
-        if (meta.get("slots") or {}) != meta_before_resolve.get("slots", {}):
-            logger.event(
-                "entity_resolved",
-                {
-                    "text": text_in,
-                    "intent": meta.get("intent"),
-                    "slots_before": meta_before_resolve.get("slots", {}),
-                    "slots_after": meta.get("slots") or {},
-                },
-            )
-
-        # Router preprocess: "повтори/ещё" -> last_meta
-        meta_before = dict(meta)
-        meta = router.preprocess(meta)
-        if meta is not meta_before and meta.get("_from_history"):
-            logger.event(
-                "router_preprocess",
-                {
-                    "from": meta_before.get("_text"),
-                    "to_intent": meta.get("intent"),
-                    "from_history": True,
-                },
-            )
-
-        decision = build_command_decision(
-            meta,
+        understanding = understand_command_text(
+            raw_text_in,
+            router=router,
+            logger=logger,
+            whisper=whisper,
+            stt=stt,
             accept_conf=SETTINGS.nlu_accept_conf,
+            whisper_trigger_conf=SETTINGS.whisper_trigger_conf,
+            print_func=print,
         )
+
+        raw_text_in = understanding.raw_text
+        text_in = understanding.final_text
+        meta = understanding.meta
+        decision = understanding.decision
 
         accepted = decision.accepted
         missing_slots = decision.missing_slots
