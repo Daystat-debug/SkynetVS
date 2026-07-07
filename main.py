@@ -32,6 +32,7 @@ from modules.reply_builder import build_reply_text
 from modules.command_understanding import understand_command_text
 from modules.speech_interrupt import handle_phrase_while_tts_speaking
 from modules.phrase_guards import check_phrase_preprocessing_guards
+from modules.dictation_runtime import handle_dictation_phrase
 from modules.confirmation import (
     build_confirmation_prompt,
     is_confirmation_no,
@@ -520,56 +521,27 @@ def main():
                 extend_cmd_window()
             return
 
-        if mode_manager.is_dictation_mode():
-            if is_only_hotword(phrase):
-                logger.event("dictation_ignore_bare_hotword", {"text": phrase})
-                return
+        dictation_result = handle_dictation_phrase(
+            phrase,
+            mode_manager=mode_manager,
+            typing_service=typing_service,
+            logger=logger,
+            stt=stt,
+            tts=tts,
+            say_func=say,
+            has_hotword_func=has_hotword,
+            strip_hotword_func=strip_hotword,
+            is_only_hotword_func=is_only_hotword,
+            norm_func=norm,
+            is_dictation_stop_phrase_func=is_dictation_stop_phrase,
+            predict_func=predict,
+            is_accepted_func=_is_accepted,
+            pick_named_response_func=pick_named_response,
+        )
 
-            dictation_text = phrase
-            if has_hotword(dictation_text):
-                dictation_text = strip_hotword(dictation_text) or ""
-
-            dictation_text = norm(dictation_text)
-            if not dictation_text:
-                return
-
-            if is_dictation_stop_phrase(dictation_text):
-                mode_manager.exit_dictation_mode()
-                text_out = pick_named_response("DICTATION_MODE_OFF") or "Режим диктовки выключен."
-                last_tts_end = say(stt, tts, text_out)
-                logger.event("dictation_mode_off", {"text": phrase})
-                return
-
-            stop_meta = predict(dictation_text)
-            if (stop_meta.get("intent") or "").upper() == "DICTATION_MODE_OFF" and _is_accepted(stop_meta):
-                mode_manager.exit_dictation_mode()
-                text_out = pick_named_response("DICTATION_MODE_OFF") or "Режим диктовки выключен."
-                last_tts_end = say(stt, tts, text_out)
-                logger.event("dictation_mode_off", {"text": phrase})
-                return
-
-            dictation_intent = (stop_meta.get("intent") or "").upper()
-            if dictation_intent == "PRESS_ENTER" and _is_accepted(stop_meta):
-                typing_service.press_enter()
-                mode_manager.reset_dictation_separator()
-                logger.event("dictation_editor_action", {"action": "enter", "text": phrase})
-                return
-
-            if dictation_intent == "PRESS_BACKSPACE" and _is_accepted(stop_meta):
-                typing_service.press_backspace()
-                logger.event("dictation_editor_action", {"action": "backspace", "text": phrase})
-                return
-
-            if dictation_intent == "PRESS_TAB" and _is_accepted(stop_meta):
-                typing_service.press_tab()
-                mode_manager.reset_dictation_separator()
-                logger.event("dictation_editor_action", {"action": "tab", "text": phrase})
-                return
-
-            text_to_type = mode_manager.dictation_prefix() + dictation_text
-            typing_service.type_text(text_to_type)
-            mode_manager.mark_dictation_text_typed()
-            logger.event("dictation_typed", {"text": text_to_type})
+        if dictation_result.handled:
+            if dictation_result.last_tts_end is not None:
+                last_tts_end = dictation_result.last_tts_end
             return
 
         # если уже ждём команду, и пользователь сказал "скайнет <...>", считаем это командой
