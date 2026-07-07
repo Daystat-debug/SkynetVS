@@ -71,6 +71,22 @@ EXACT_INTENT_RULES: Dict[str, str] = {
     "нажми таб": "PRESS_TAB",
     "таб": "PRESS_TAB",
     "вставь таб": "PRESS_TAB",
+
+    # volume relative controls
+    "сделай громче": "VOLUME_UP",
+    "громче": "VOLUME_UP",
+    "прибавь звук": "VOLUME_UP",
+    "добавь громкости": "VOLUME_UP",
+    "увеличь громкость": "VOLUME_UP",
+    "добавь звука": "VOLUME_UP",
+    "громкость вверх": "VOLUME_UP",
+
+    "сделай тише": "VOLUME_DOWN",
+    "тише": "VOLUME_DOWN",
+    "убавь звук": "VOLUME_DOWN",
+    "уменьши громкость": "VOLUME_DOWN",
+    "громкость вниз": "VOLUME_DOWN",
+    "сделай звук тише": "VOLUME_DOWN",
 }
 
 
