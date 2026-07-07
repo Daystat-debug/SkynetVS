@@ -65,6 +65,42 @@ CASES: List[Case] = [
         },
     },
     {
+        "name": "open github dot com understanding",
+        "text": "открой github точка com",
+        "router": FakeRouter(),
+        "expected": {
+            "intent": "OPEN_URL",
+            "accepted": True,
+            "runnable": True,
+            "missing_slots": [],
+            "requires_confirmation": False,
+        },
+    },
+    {
+        "name": "open network settings understanding",
+        "text": "открой настройки интернета",
+        "router": FakeRouter(),
+        "expected": {
+            "intent": "OPEN_SETTINGS",
+            "accepted": True,
+            "runnable": True,
+            "missing_slots": [],
+            "requires_confirmation": False,
+        },
+    },
+    {
+        "name": "open downloads folder accusative understanding",
+        "text": "открой папку загрузок",
+        "router": FakeRouter(),
+        "expected": {
+            "intent": "OPEN_FOLDER",
+            "accepted": True,
+            "runnable": True,
+            "missing_slots": [],
+            "requires_confirmation": False,
+        },
+    },
+    {
         "name": "open chrome app understanding",
         "text": "открой хром",
         "router": FakeRouter(),

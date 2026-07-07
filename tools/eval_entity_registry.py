@@ -72,6 +72,21 @@ MATCH_CASES: List[Case] = [
     },
     {
         "kind": "site",
+        "text": "открой github точка com",
+        "expected": "github",
+    },
+    {
+        "kind": "site",
+        "text": "открой openai точка com",
+        "expected": "openai",
+    },
+    {
+        "kind": "site",
+        "text": "открой почту джимейл",
+        "expected": "gmail",
+    },
+    {
+        "kind": "site",
         "text": "открой чат gpt",
         "expected": "chatgpt",
     },
@@ -84,6 +99,16 @@ MATCH_CASES: List[Case] = [
         "kind": "folder",
         "text": "открой папку загрузок",
         "expected": "downloads",
+    },
+    {
+        "kind": "folder",
+        "text": "открой папку документы",
+        "expected": "documents",
+    },
+    {
+        "kind": "folder",
+        "text": "открой папку документов",
+        "expected": "documents",
     },
     {
         "kind": "folder",
@@ -103,6 +128,21 @@ MATCH_CASES: List[Case] = [
     {
         "kind": "settings",
         "text": "открой параметры сети",
+        "expected": "network",
+    },
+    {
+        "kind": "settings",
+        "text": "открой настройки интернета",
+        "expected": "network",
+    },
+    {
+        "kind": "settings",
+        "text": "открой параметры интернета",
+        "expected": "network",
+    },
+    {
+        "kind": "settings",
+        "text": "открой настройки вайфая",
         "expected": "network",
     },
     {

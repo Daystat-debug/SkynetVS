@@ -278,6 +278,24 @@ OPEN_SEARCH_CASES: List[Case] = [
         "required_slots": {"query": "python"},
         "recommended_conf": 0.35,
     },
+    {
+        "text": "открой github точка com",
+        "intent": "OPEN_URL",
+        "required_slots": {"site": "github"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "открой openai точка com",
+        "intent": "OPEN_URL",
+        "required_slots": {"site": "openai"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "открой почту джимейл",
+        "intent": "OPEN_URL",
+        "required_slots": {"site": "gmail"},
+        "recommended_conf": 0.35,
+    },
 ]
 
 
@@ -304,6 +322,30 @@ FOLDER_SETTINGS_CASES: List[Case] = [
         "text": "открой настройки bluetooth",
         "intent": "OPEN_SETTINGS",
         "required_slots": {"section": "bluetooth"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "открой папку загрузок",
+        "intent": "OPEN_FOLDER",
+        "required_slots": {"folder": "downloads"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "открой папку документы",
+        "intent": "OPEN_FOLDER",
+        "required_slots": {"folder": "documents"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "открой настройки интернета",
+        "intent": "OPEN_SETTINGS",
+        "required_slots": {"section": "network"},
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "открой параметры интернета",
+        "intent": "OPEN_SETTINGS",
+        "required_slots": {"section": "network"},
         "recommended_conf": 0.35,
     },
 ]
