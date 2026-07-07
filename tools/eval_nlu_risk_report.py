@@ -4,7 +4,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 from dotenv import load_dotenv
 
@@ -29,6 +29,23 @@ REQUIRED_SLOTS_BY_INTENT: Dict[str, List[str]] = {
     "SET_VOLUME": ["volume"],
     "OPEN_FOLDER": ["folder"],
     "OPEN_SETTINGS": ["section"],
+}
+
+
+SEVERITY_ORDER = {
+    "high": 0,
+    "medium": 1,
+    "low": 2,
+}
+
+
+KIND_ORDER = {
+    "negative_case_model_would_execute": 0,
+    "actual_none_but_model_would_execute": 1,
+    "actual_intent_missing_required_slots": 2,
+    "model_top_differs_from_actual": 3,
+    "model_top_missing_required_slots": 4,
+    "model_confidence_near_threshold": 5,
 }
 
 
@@ -133,17 +150,61 @@ def _missing_required_slots_for_actual(result: Dict[str, Any]) -> List[str]:
     return missing
 
 
-def _risk_key(risk: Risk) -> Tuple[str, str, str]:
+def _is_covered_by_rule(result: Dict[str, Any]) -> bool:
+    """
+    True означает: модель хотела бы что-то выполнить,
+    но финальный слой правил/защит оставил actual_intent пустым.
+    """
+    rule = str(result.get("rule") or "").strip()
+    actual_intent = str(result.get("actual_intent") or "").upper().strip()
+
+    return bool(rule and not actual_intent)
+
+
+def _recommendation_for_risk(risk: Risk) -> str:
+    kind = str(risk.get("kind") or "")
+    rule = str(risk.get("rule") or "")
+    covered_by_rule = bool(risk.get("covered_by_rule"))
+
+    if covered_by_rule and rule == "incomplete_command_rule":
+        return "keep_rule"
+
+    if kind in {
+        "negative_case_model_would_execute",
+        "actual_none_but_model_would_execute",
+    }:
+        if covered_by_rule:
+            return "keep_rule"
+        return "add_negative_training_examples"
+
+    if kind == "model_top_missing_required_slots":
+        if covered_by_rule:
+            return "keep_rule"
+        return "improve_slot_extractor"
+
+    if kind == "actual_intent_missing_required_slots":
+        return "improve_slot_extractor"
+
+    if kind == "model_top_differs_from_actual":
+        return "candidate_for_nlu_reasoning"
+
+    if kind == "model_confidence_near_threshold":
+        return "add_training_examples"
+
+    return "review"
+
+
+def _risk_sort_key(risk: Risk) -> tuple[int, int, str, str]:
     return (
+        SEVERITY_ORDER.get(str(risk.get("severity")), 99),
+        KIND_ORDER.get(str(risk.get("kind")), 99),
+        str(risk.get("group") or ""),
         str(risk.get("text") or ""),
-        str(risk.get("kind") or ""),
-        str(risk.get("intent") or ""),
     )
 
 
 def _add_risk(
     risks: List[Risk],
-    seen: set[Tuple[str, str, str]],
     *,
     severity: str,
     kind: str,
@@ -161,20 +222,16 @@ def _add_risk(
         "confidence": round(_as_float(result.get("confidence")), 4),
         "rule": result.get("rule"),
         "intent": intent,
+        "covered_by_rule": _is_covered_by_rule(result),
         "details": details or {},
     }
 
-    key = _risk_key(risk)
-    if key in seen:
-        return
-
-    seen.add(key)
+    risk["recommendation"] = _recommendation_for_risk(risk)
     risks.append(risk)
 
 
 def analyze_result(result: Dict[str, Any]) -> List[Risk]:
     risks: List[Risk] = []
-    seen: set[Tuple[str, str, str]] = set()
 
     actual_intent = str(result.get("actual_intent") or "").upper().strip()
     expected_intent = result.get("expected_intent")
@@ -188,7 +245,6 @@ def analyze_result(result: Dict[str, Any]) -> List[Risk]:
     if expected_intent is None and model_top and model_top_accepted:
         _add_risk(
             risks,
-            seen,
             severity="high",
             kind="negative_case_model_would_execute",
             result=result,
@@ -202,7 +258,6 @@ def analyze_result(result: Dict[str, Any]) -> List[Risk]:
     if not actual_intent and model_top and model_top_accepted:
         _add_risk(
             risks,
-            seen,
             severity="high" if rule == "incomplete_command_rule" else "medium",
             kind="actual_none_but_model_would_execute",
             result=result,
@@ -216,7 +271,6 @@ def analyze_result(result: Dict[str, Any]) -> List[Risk]:
     if actual_intent and model_top and model_top_accepted and model_top_intent != actual_intent:
         _add_risk(
             risks,
-            seen,
             severity="medium",
             kind="model_top_differs_from_actual",
             result=result,
@@ -232,7 +286,6 @@ def analyze_result(result: Dict[str, Any]) -> List[Risk]:
         if delta <= NEAR_THRESHOLD_MARGIN:
             _add_risk(
                 risks,
-                seen,
                 severity="low",
                 kind="model_confidence_near_threshold",
                 result=result,
@@ -250,7 +303,6 @@ def analyze_result(result: Dict[str, Any]) -> List[Risk]:
         if missing_model_slots:
             _add_risk(
                 risks,
-                seen,
                 severity="medium",
                 kind="model_top_missing_required_slots",
                 result=result,
@@ -265,7 +317,6 @@ def analyze_result(result: Dict[str, Any]) -> List[Risk]:
     if actual_intent and missing_actual_slots:
         _add_risk(
             risks,
-            seen,
             severity="high",
             kind="actual_intent_missing_required_slots",
             result=result,
@@ -277,6 +328,49 @@ def analyze_result(result: Dict[str, Any]) -> List[Risk]:
         )
 
     return risks
+
+
+def dedupe_risks(raw_risks: List[Risk]) -> List[Risk]:
+    """
+    Схлопывает несколько рисков по одной фразе в один primary-risk.
+
+    Пример:
+      "открой" может одновременно попасть в:
+        - negative_case_model_would_execute
+        - actual_none_but_model_would_execute
+        - model_top_missing_required_slots
+
+    В отчёте оставляем главный риск, а остальные складываем в related_*.
+    """
+    grouped: Dict[str, List[Risk]] = {}
+
+    for risk in raw_risks:
+        text = str(risk.get("text") or "")
+        grouped.setdefault(text, []).append(risk)
+
+    result: List[Risk] = []
+
+    for text, group in grouped.items():
+        ordered = sorted(group, key=_risk_sort_key)
+        primary = dict(ordered[0])
+
+        primary["related_raw_risk_count"] = len(group)
+        primary["related_risk_kinds"] = sorted({
+            str(item.get("kind") or "")
+            for item in group
+            if item.get("kind")
+        })
+        primary["related_recommendations"] = sorted({
+            str(item.get("recommendation") or "")
+            for item in group
+            if item.get("recommendation")
+        })
+        primary["covered_by_rule_any"] = any(bool(item.get("covered_by_rule")) for item in group)
+
+        result.append(primary)
+
+    result.sort(key=_risk_sort_key)
+    return result
 
 
 def _count_by(items: List[Dict[str, Any]], key: str) -> Dict[str, int]:
@@ -292,25 +386,12 @@ def _count_by(items: List[Dict[str, Any]], key: str) -> Dict[str, int]:
 def main() -> int:
     results = [check_case(case) for case in TEST_CASES]
 
-    risks: List[Risk] = []
+    raw_risks: List[Risk] = []
 
     for result in results:
-        risks.extend(analyze_result(result))
+        raw_risks.extend(analyze_result(result))
 
-    severity_order = {
-        "high": 0,
-        "medium": 1,
-        "low": 2,
-    }
-
-    risks.sort(
-        key=lambda item: (
-            severity_order.get(str(item.get("severity")), 99),
-            str(item.get("kind") or ""),
-            str(item.get("group") or ""),
-            str(item.get("text") or ""),
-        )
-    )
+    risks = dedupe_risks(raw_risks)
 
     print("=== NLU RISK REPORT ===")
     print()
@@ -319,8 +400,11 @@ def main() -> int:
             {
                 "total_cases": len(results),
                 "risk_count": len(risks),
+                "raw_risk_count": len(raw_risks),
                 "by_severity": _count_by(risks, "severity"),
                 "by_kind": _count_by(risks, "kind"),
+                "by_recommendation": _count_by(risks, "recommendation"),
+                "raw_by_kind": _count_by(raw_risks, "kind"),
                 "accept_conf": ACCEPT_CONF,
                 "near_threshold_margin": NEAR_THRESHOLD_MARGIN,
             },
@@ -337,8 +421,21 @@ def main() -> int:
     else:
         for idx, risk in enumerate(risks, start=1):
             print()
-            print(f"{idx}. [{risk['severity']}] {risk['kind']}: {risk['text']}")
+            print(
+                f"{idx}. [{risk['severity']}] "
+                f"{risk['kind']}: {risk['text']} "
+                f"-> {risk['recommendation']}"
+            )
             print(json.dumps(risk, ensure_ascii=False))
+
+    print()
+    print("=== RECOMMENDATIONS ===")
+    recommendation_counts = _count_by(risks, "recommendation")
+
+    if not recommendation_counts:
+        print("[OK] no recommendations")
+    else:
+        print(json.dumps(recommendation_counts, ensure_ascii=False, indent=2))
 
     print()
     print("=== SUMMARY ===")
@@ -347,6 +444,7 @@ def main() -> int:
             {
                 "total_cases": len(results),
                 "risk_count": len(risks),
+                "raw_risk_count": len(raw_risks),
                 "high": _count_by(risks, "severity").get("high", 0),
                 "medium": _count_by(risks, "severity").get("medium", 0),
                 "low": _count_by(risks, "severity").get("low", 0),
