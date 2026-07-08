@@ -228,6 +228,56 @@ EDITOR_DICTATION_CASES: List[Case] = [
         "intent": "PRESS_TAB",
         "recommended_conf": 0.35,
     },
+    {
+        "text": "включи диктовку",
+        "intent": "DICTATION_MODE_ON",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "запусти режим диктовки",
+        "intent": "DICTATION_MODE_ON",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "активируй режим диктовки",
+        "intent": "DICTATION_MODE_ON",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "включи голосовой ввод",
+        "intent": "DICTATION_MODE_ON",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "начни ввод текста голосом",
+        "intent": "DICTATION_MODE_ON",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "отключи диктовку",
+        "intent": "DICTATION_MODE_OFF",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "выключи голосовой ввод",
+        "intent": "DICTATION_MODE_OFF",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "останови голосовой ввод",
+        "intent": "DICTATION_MODE_OFF",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "заверши ввод текста голосом",
+        "intent": "DICTATION_MODE_OFF",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "закрой ввод текста голосом",
+        "intent": "DICTATION_MODE_OFF",
+        "recommended_conf": 0.35,
+    },
 ]
 
 

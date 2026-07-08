@@ -68,7 +68,7 @@ def train() -> Pipeline:
 
     # LinearSVC хорошо работает на маленьких датасетах, но не умеет predict_proba.
     # Поэтому заворачиваем в CalibratedClassifierCV, чтобы получить "confidence".
-    base = LinearSVC(class_weight="balanced")
+    base = LinearSVC(class_weight="balanced", random_state=42)
     clf = CalibratedClassifierCV(base, method="sigmoid", cv=3)
 
     pipe: Pipeline = Pipeline(
@@ -137,6 +137,19 @@ def quick_test(pipe: Pipeline) -> None:
         "нажми клавишу enter",
         "нажми клавишу tab",
         "сделай отступ",
+
+        # dictation separation
+        "режим диктовки",
+        "режим ввода текста",
+        "включи диктовку",
+        "запусти режим диктовки",
+        "активируй режим диктовки",
+        "включи голосовой ввод",
+        "начни ввод текста голосом",
+        "отключи диктовку",
+        "выключи голосовой ввод",
+        "останови голосовой ввод",
+        "заверши ввод текста голосом",
         ]
 
     print("\n[TEST] predictions:")

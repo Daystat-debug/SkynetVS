@@ -37,6 +37,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate actions registry integration", _python_cmd("tools/eval_actions_registry.py")),
             Step("Evaluate registry cleanup", _python_cmd("tools/eval_registry_cleanup.py")),
             Step("Evaluate NLU", _python_cmd("tools/eval_nlu.py")),
+            Step("Evaluate dictation intent separation", _python_cmd("tools/eval_dictation_intent_separation.py")),
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
             Step("Evaluate confirmation", _python_cmd("tools/eval_confirmation.py")),
             Step("Evaluate dictation commands", _python_cmd("tools/eval_dictation_commands.py")),
@@ -101,6 +102,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "dictation": [
             Step("Evaluate dictation commands", _python_cmd("tools/eval_dictation_commands.py")),
+        ],
+        "dictation_intent": [
+            Step("Evaluate dictation intent separation", _python_cmd("tools/eval_dictation_intent_separation.py")),
         ],
         "hotword": [
             Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
@@ -240,6 +244,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  nlu_risk   Run NLU risk report", log_file)
     _emit("  full       Analyze + promote", log_file)
     _emit("  dictation   Run dictation command eval only", log_file)
+    _emit("  dictation_intent Run dictation ON/OFF model separation eval only", log_file)
     _emit("  hotword    Run hotword utility eval only", log_file)
     _emit("  fragments  Run command fragments eval only", log_file)
     _emit("  speech     Run speech IO eval only", log_file)
