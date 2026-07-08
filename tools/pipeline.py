@@ -47,6 +47,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate command fragments", _python_cmd("tools/eval_command_fragments.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
+            Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
             Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
             Step("Evaluate command understanding", _python_cmd("tools/eval_command_understanding.py")),
             Step("Evaluate command outcome", _python_cmd("tools/eval_command_outcome.py")),
@@ -128,6 +129,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "stt_refinement": [
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
+        ],
+        "stt_diagnostics": [
+            Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
         ],
         "reply": [
             Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
@@ -260,6 +264,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  speech     Run speech IO eval only", log_file)
     _emit("  main_inventory Run main.py structure inventory", log_file)
     _emit("  stt_refinement Run STT refinement eval only", log_file)
+    _emit("  stt_diagnostics Run STT diagnostics eval only", log_file)
     _emit("  reply      Run reply builder eval only", log_file)
     _emit("  understanding Run command understanding eval only", log_file)
     _emit("  outcome    Run command outcome eval only", log_file)

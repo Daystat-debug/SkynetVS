@@ -39,6 +39,7 @@ class VoskSTT:
         device: Optional[Union[int, str]] = None,
     ):
         self.model = Model(model_path)
+        self.active_model_path = str(model_path)
         self.samplerate = int(samplerate)
         self.blocksize = int(blocksize)
         self.device = self._resolve_input_device(device)
@@ -55,6 +56,7 @@ class VoskSTT:
         self._lock = threading.RLock()
         self._pending_model: Optional[Model] = None
         self._swap_event = threading.Event()
+        self._pending_model_path: str = ""
 
         dev_info = self.get_current_input_device_info()
         if dev_info:
@@ -168,6 +170,7 @@ class VoskSTT:
                 m = Model(model_path)  # тяжёлая операция
                 with self._lock:
                     self._pending_model = m
+                    self._pending_model_path = str(model_path)
                     self._swap_event.set()
                 if on_swapped:
                     on_swapped()
@@ -176,6 +179,50 @@ class VoskSTT:
                 print(f"[STT] failed to load model '{model_path}': {e}")
 
         threading.Thread(target=_worker, daemon=True).start()
+
+    def get_diagnostics(self) -> dict:
+        """
+        Возвращает безопасную диагностическую информацию по STT.
+        Не включает сами audio bytes.
+        """
+        dev_info = self.get_current_input_device_info()
+
+        if dev_info:
+            input_device = {
+                "index": dev_info.get("index"),
+                "name": str(dev_info.get("name") or ""),
+                "default_samplerate": dev_info.get("default_samplerate"),
+            }
+        else:
+            input_device = None
+
+        audio_bytes = len(self.last_utterance_audio or b"")
+
+        if self.samplerate > 0:
+            # int16 mono = 2 bytes на sample
+            duration_sec = audio_bytes / (2 * self.samplerate)
+        else:
+            duration_sec = 0.0
+
+        if self.last_utterance_ts:
+            age_sec = max(0.0, time.time() - self.last_utterance_ts)
+        else:
+            age_sec = None
+
+        return {
+            "engine": "vosk",
+            "active_model_path": self.active_model_path,
+            "pending_model": self._pending_model is not None,
+            "pending_model_path": self._pending_model_path,
+            "samplerate": self.samplerate,
+            "blocksize": self.blocksize,
+            "device": self.device,
+            "input_device": input_device,
+            "last_utterance_text": self.last_utterance_text,
+            "last_utterance_audio_bytes": audio_bytes,
+            "last_utterance_duration_sec": round(duration_sec, 3),
+            "last_utterance_age_sec": round(age_sec, 3) if age_sec is not None else None,
+        }
 
     def listen_phrases(self) -> Iterator[str]:
         """
@@ -220,7 +267,9 @@ class VoskSTT:
                     with self._lock:
                         if self._pending_model is not None:
                             self.model = self._pending_model
+                            self.active_model_path = self._pending_model_path or self.active_model_path
                             self._pending_model = None
+                            self._pending_model_path = ""
                             self._drain_queue(max_items=50)
                             # новый распознаватель на новой модели
                             rec = KaldiRecognizer(self.model, self.samplerate)

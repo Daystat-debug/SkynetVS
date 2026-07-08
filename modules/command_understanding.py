@@ -9,6 +9,7 @@ from modules.hotword_utils import norm_text
 from modules.nlu import predict
 from modules.stt_refinement import maybe_refine_with_whisper
 from modules.text_normalizer import normalize_command_text
+from modules.stt_diagnostics import build_stt_diagnostic_payload
 from modules.understanding_helpers import (
     needs_normalization_retry,
     should_use_retry_result,
@@ -160,6 +161,9 @@ def understand_command_text(
         },
     )
 
+    text_before_refinement = text_in
+    meta_before_refinement = dict(meta)
+
     refinement = maybe_refine_with_whisper(
         original_text=text_in,
         meta=meta,
@@ -182,6 +186,20 @@ def understand_command_text(
             f"conf={refinement.candidate_meta.get('confidence', 0.0):.2f} "
             f"slots={refinement.candidate_meta.get('slots')}",
         )
+
+    _log_event(
+        logger,
+        "stt_diagnostic",
+        build_stt_diagnostic_payload(
+            raw_text=raw_text_in,
+            text_before_refinement=text_before_refinement,
+            final_text=refinement.text,
+            meta_before_refinement=meta_before_refinement,
+            meta_after_refinement=refinement.meta,
+            refinement=refinement,
+            stt=stt,
+        ),
+    )
 
     text2 = refinement.text
     meta = refinement.meta
