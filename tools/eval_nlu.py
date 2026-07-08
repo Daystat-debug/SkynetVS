@@ -278,6 +278,36 @@ EDITOR_DICTATION_CASES: List[Case] = [
         "intent": "DICTATION_MODE_OFF",
         "recommended_conf": 0.35,
     },
+    {
+        "text": "нажми клавишу backspace",
+        "intent": "PRESS_BACKSPACE",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "нажми клавишу бэкспейс",
+        "intent": "PRESS_BACKSPACE",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "нажми клавишу бэк спайс",
+        "intent": "PRESS_BACKSPACE",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "сотри символ",
+        "intent": "PRESS_BACKSPACE",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "удали предыдущий символ",
+        "intent": "PRESS_BACKSPACE",
+        "recommended_conf": 0.35,
+    },
+    {
+        "text": "сотри последний символ",
+        "intent": "PRESS_BACKSPACE",
+        "recommended_conf": 0.35,
+    },
 ]
 
 

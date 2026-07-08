@@ -38,6 +38,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate registry cleanup", _python_cmd("tools/eval_registry_cleanup.py")),
             Step("Evaluate NLU", _python_cmd("tools/eval_nlu.py")),
             Step("Evaluate dictation intent separation", _python_cmd("tools/eval_dictation_intent_separation.py")),
+            Step("Evaluate backspace intent separation", _python_cmd("tools/eval_backspace_intent_separation.py")),
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
             Step("Evaluate confirmation", _python_cmd("tools/eval_confirmation.py")),
             Step("Evaluate dictation commands", _python_cmd("tools/eval_dictation_commands.py")),
@@ -105,6 +106,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "dictation_intent": [
             Step("Evaluate dictation intent separation", _python_cmd("tools/eval_dictation_intent_separation.py")),
+        ],
+        "backspace_intent": [
+            Step("Evaluate backspace intent separation", _python_cmd("tools/eval_backspace_intent_separation.py")),
         ],
         "hotword": [
             Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
@@ -245,6 +249,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  full       Analyze + promote", log_file)
     _emit("  dictation   Run dictation command eval only", log_file)
     _emit("  dictation_intent Run dictation ON/OFF model separation eval only", log_file)
+    _emit("  backspace_intent Run backspace model separation eval only", log_file)
     _emit("  hotword    Run hotword utility eval only", log_file)
     _emit("  fragments  Run command fragments eval only", log_file)
     _emit("  speech     Run speech IO eval only", log_file)
