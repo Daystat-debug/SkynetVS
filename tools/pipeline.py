@@ -39,6 +39,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate NLU", _python_cmd("tools/eval_nlu.py")),
             Step("Evaluate dictation intent separation", _python_cmd("tools/eval_dictation_intent_separation.py")),
             Step("Evaluate backspace intent separation", _python_cmd("tools/eval_backspace_intent_separation.py")),
+            Step("NLU risk guard", _python_cmd("tools/eval_nlu_risk_guard.py")),
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
             Step("Evaluate confirmation", _python_cmd("tools/eval_confirmation.py")),
             Step("Evaluate dictation commands", _python_cmd("tools/eval_dictation_commands.py")),
@@ -93,6 +94,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "nlu_risk": [
             Step("NLU risk report", _python_cmd("tools/eval_nlu_risk_report.py")),
+        ],
+        "nlu_risk_guard": [
+            Step("NLU risk guard", _python_cmd("tools/eval_nlu_risk_guard.py")),
         ],
         "full": [
             Step("Learning report", _python_cmd("tools/learning_report.py")),
@@ -246,6 +250,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  eval       Run tools/eval_nlu.py only", log_file)
     _emit("  nlu_diag   Run NLU diagnostics with top-k candidates", log_file)
     _emit("  nlu_risk   Run NLU risk report", log_file)
+    _emit("  nlu_risk_guard Run NLU risk guard", log_file)
     _emit("  full       Analyze + promote", log_file)
     _emit("  dictation   Run dictation command eval only", log_file)
     _emit("  dictation_intent Run dictation ON/OFF model separation eval only", log_file)
