@@ -49,7 +49,8 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
             Step("Evaluate STT missing slots trigger", _python_cmd("tools/eval_stt_missing_slots_trigger.py")),
-            Step("Evaluate STT Whisper subprocess sandbox", _python_cmd("tools/eval_stt_whisper_subprocess.py")),            Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
+            Step("Evaluate STT Whisper subprocess sandbox", _python_cmd("tools/eval_stt_whisper_subprocess.py")),
+            Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
             Step("Evaluate command understanding", _python_cmd("tools/eval_command_understanding.py")),
             Step("Evaluate command outcome", _python_cmd("tools/eval_command_outcome.py")),
             Step("Evaluate command learning", _python_cmd("tools/eval_command_learning.py")),
@@ -142,6 +143,12 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "stt_runtime_report": [
             Step("STT runtime report", _python_cmd("tools/stt_runtime_report.py", "--only-problems")),
+        ],
+        "stt_quality": [
+            Step("Run STT quality baseline", _python_cmd("tools/stt_quality_session.py", "run",), interactive=True,),
+        ],
+        "stt_quality_report": [
+            Step("Show latest STT quality baseline", _python_cmd("tools/stt_quality_session.py", "report", )),
         ],
         "reply": [
             Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
@@ -294,6 +301,8 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  registry   Run entity registry eval only", log_file)
     _emit("  actions_registry Run actions registry integration eval only", log_file)
     _emit("  registry_cleanup Run registry cleanup eval only", log_file)
+    _emit("  stt_quality Run interactive STT quality baseline", log_file)
+    _emit("  stt_quality_report Show latest STT quality baseline", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
