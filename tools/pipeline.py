@@ -48,7 +48,8 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
-            Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
+            Step("Evaluate STT missing slots trigger", _python_cmd("tools/eval_stt_missing_slots_trigger.py")),
+            Step("Evaluate STT Whisper subprocess sandbox", _python_cmd("tools/eval_stt_whisper_subprocess.py")),            Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
             Step("Evaluate command understanding", _python_cmd("tools/eval_command_understanding.py")),
             Step("Evaluate command outcome", _python_cmd("tools/eval_command_outcome.py")),
             Step("Evaluate command learning", _python_cmd("tools/eval_command_learning.py")),
@@ -132,6 +133,15 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "stt_diagnostics": [
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
+        ],
+        "stt_missing_slots": [
+            Step("Evaluate STT missing slots trigger", _python_cmd("tools/eval_stt_missing_slots_trigger.py")),
+        ],
+        "stt_whisper_subprocess": [
+            Step("Evaluate STT Whisper subprocess sandbox", _python_cmd("tools/eval_stt_whisper_subprocess.py")),
+        ],
+        "stt_runtime_report": [
+            Step("STT runtime report", _python_cmd("tools/stt_runtime_report.py", "--only-problems")),
         ],
         "reply": [
             Step("Evaluate reply builder", _python_cmd("tools/eval_reply_builder.py")),
@@ -265,6 +275,9 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  main_inventory Run main.py structure inventory", log_file)
     _emit("  stt_refinement Run STT refinement eval only", log_file)
     _emit("  stt_diagnostics Run STT diagnostics eval only", log_file)
+    _emit("  stt_missing_slots Run STT missing-slots refinement trigger eval only", log_file)
+    _emit("  stt_whisper_subprocess Run STT Whisper subprocess sandbox eval only", log_file)
+    _emit("  stt_runtime_report Show recent STT runtime diagnostic problems", log_file)
     _emit("  reply      Run reply builder eval only", log_file)
     _emit("  understanding Run command understanding eval only", log_file)
     _emit("  outcome    Run command outcome eval only", log_file)

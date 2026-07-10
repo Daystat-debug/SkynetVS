@@ -78,6 +78,7 @@ def build_stt_diagnostic_payload(
     Не пишет audio bytes, только размер/длительность.
     """
     reason = getattr(refinement, "reason", "")
+    trigger_reason = getattr(refinement, "trigger_reason", "")
     changed = bool(getattr(refinement, "changed", False))
     candidate_text = getattr(refinement, "candidate_text", None)
     candidate_meta = getattr(refinement, "candidate_meta", None)
@@ -89,6 +90,7 @@ def build_stt_diagnostic_payload(
         "final_text": final_text,
         "changed_by_refinement": changed,
         "refinement_reason": reason,
+        "refinement_trigger_reason": trigger_reason,
         "refinement_candidate_text": candidate_text,
         "refinement_candidate_meta": _safe_meta(candidate_meta),
         "refinement_error": error,

@@ -1,0 +1,3 @@
+# Optional Whisper refinement dependencies.
+# Main project can run without this file if WHISPER_ENABLE=0.
+faster-whisper==1.2.1

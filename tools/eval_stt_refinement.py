@@ -153,6 +153,42 @@ def main() -> int:
     ):
         fail_count += 1
 
+    # 2b. Force refinement even when intent is confident
+    result = maybe_refine_with_whisper(
+        original_text="открой окна и",
+        meta={
+            "intent": "OPEN_URL",
+            "confidence": 0.8,
+            "slots": {},
+        },
+        whisper=FakeWhisper(text="открой openai"),
+        stt=FakeSTT(),
+        trigger_conf=0.5,
+        predict_func=lambda text: {
+            "intent": "OPEN_URL",
+            "confidence": 0.9,
+            "slots": {"site": "openai", "url": "https://openai.com"},
+        } if text == "открой openai" else {
+            "intent": "OPEN_URL",
+            "confidence": 0.8,
+            "slots": {},
+        },
+        norm_func=norm,
+        force_refine=True,
+        trigger_reason="missing_required_slots",
+    )
+    if not _print_result(
+        "force refinement for missing required slots",
+        result,
+        {
+            "text": "открой openai",
+            "changed": True,
+            "reason": "accepted_refinement",
+            "intent": "OPEN_URL",
+        },
+    ):
+        fail_count += 1
+
     # 3. No audio
     result = maybe_refine_with_whisper(
         original_text="открой блокнат",

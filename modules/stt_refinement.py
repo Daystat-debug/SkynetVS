@@ -17,6 +17,7 @@ class SttRefinementResult:
     candidate_text: Optional[str] = None
     candidate_meta: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
+    trigger_reason: str = ""
 
 
 def maybe_refine_with_whisper(
@@ -28,29 +29,34 @@ def maybe_refine_with_whisper(
     trigger_conf: float,
     predict_func: PredictFunc,
     norm_func: NormFunc,
+    force_refine: bool = False,
+    trigger_reason: str = "",
 ) -> SttRefinementResult:
     """
     Пробует уточнить STT-текст через Whisper, если NLU не уверена.
 
     Возвращает структуру с итоговым text/meta и диагностикой.
     """
+    effective_trigger_reason = trigger_reason or "confidence"
     if whisper is None:
         return SttRefinementResult(
             text=original_text,
             meta=meta,
             changed=False,
             reason="whisper_disabled",
+            trigger_reason=effective_trigger_reason,
         )
 
     conf = float(meta.get("confidence") or 0.0)
     intent = meta.get("intent")
 
-    if intent and conf >= trigger_conf:
+    if not force_refine and intent and conf >= trigger_conf:
         return SttRefinementResult(
             text=original_text,
             meta=meta,
             changed=False,
             reason="confident_enough",
+            trigger_reason=effective_trigger_reason,
         )
 
     pcm = getattr(stt, "last_utterance_audio", b"") or b""
@@ -60,6 +66,7 @@ def maybe_refine_with_whisper(
             meta=meta,
             changed=False,
             reason="no_audio",
+            trigger_reason=effective_trigger_reason,
         )
 
     try:
@@ -75,6 +82,7 @@ def maybe_refine_with_whisper(
             changed=False,
             reason="refine_failed",
             error=f"{type(e).__name__}: {e}",
+            trigger_reason=effective_trigger_reason,
         )
 
     if not refined or refined == norm_func(original_text):
@@ -84,6 +92,7 @@ def maybe_refine_with_whisper(
             changed=False,
             reason="same_text",
             candidate_text=refined,
+            trigger_reason=effective_trigger_reason,
         )
 
     refined_meta = predict_func(refined)
@@ -97,6 +106,7 @@ def maybe_refine_with_whisper(
             reason="accepted_refinement",
             candidate_text=refined,
             candidate_meta=refined_meta,
+            trigger_reason=effective_trigger_reason,
         )
 
     return SttRefinementResult(
@@ -106,4 +116,5 @@ def maybe_refine_with_whisper(
         reason="refinement_not_better",
         candidate_text=refined,
         candidate_meta=refined_meta,
+        trigger_reason=effective_trigger_reason,
     )

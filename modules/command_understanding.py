@@ -1,15 +1,21 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Callable, Dict, Protocol
+from dataclasses import dataclass, replace
+from typing import Any, Callable, Dict, Mapping, Protocol
 
-from modules.command_decision import CommandDecision, build_command_decision
+from modules.command_decision import (
+    CommandDecision,
+    build_command_decision,
+    is_accepted,
+    missing_required_slots,
+)
 from modules.entity_resolver import resolve_entities
 from modules.hotword_utils import norm_text
 from modules.nlu import predict
 from modules.stt_refinement import maybe_refine_with_whisper
 from modules.text_normalizer import normalize_command_text
 from modules.stt_diagnostics import build_stt_diagnostic_payload
+
 from modules.understanding_helpers import (
     needs_normalization_retry,
     should_use_retry_result,
@@ -52,6 +58,102 @@ def _print(
 ) -> None:
     if print_func is not None:
         print_func(text)
+
+
+def _norm_url(value: Any) -> str:
+    return str(value or "").strip().lower().rstrip("/")
+
+
+def _registry_site_urls() -> dict[str, str]:
+    try:
+        from modules.entity_registry import SITE_URLS
+    except Exception:
+        return {}
+
+    if not isinstance(SITE_URLS, dict):
+        return {}
+
+    return {
+        str(code or "").strip().lower(): str(url or "").strip()
+        for code, url in SITE_URLS.items()
+        if str(code or "").strip() and str(url or "").strip()
+    }
+
+
+def _is_known_registry_site_candidate(meta: Mapping[str, Any]) -> bool:
+    slots = dict(meta.get("slots") or {})
+    site = str(slots.get("site") or "").strip().lower()
+    url = _norm_url(slots.get("url"))
+
+    registry_urls = _registry_site_urls()
+
+    if site and site in registry_urls:
+        return True
+
+    known_urls = {
+        _norm_url(value)
+        for value in registry_urls.values()
+        if str(value or "").strip()
+    }
+
+    return bool(url and url in known_urls)
+
+
+def _is_safe_missing_slots_refinement_candidate(meta: Mapping[str, Any]) -> bool:
+    intent = str(meta.get("intent") or "").upper().strip()
+
+    # Для сайтов не принимаем произвольные домены типа www.opanae.com.
+    # Принимаем только известные сайты из entity_registry.
+    if intent == "OPEN_URL":
+        return _is_known_registry_site_candidate(meta)
+
+    return True
+
+
+def _maybe_accept_refinement_that_fills_missing_slots(
+    refinement: Any,
+    *,
+    force_refine_missing_slots: bool,
+    accept_conf: float,
+) -> Any:
+    if not force_refine_missing_slots:
+        return refinement
+
+    if getattr(refinement, "changed", False):
+        return refinement
+
+    if getattr(refinement, "reason", "") != "refinement_not_better":
+        return refinement
+
+    candidate_text = getattr(refinement, "candidate_text", None)
+    candidate_meta_raw = getattr(refinement, "candidate_meta", None)
+
+    if not candidate_text or not isinstance(candidate_meta_raw, dict):
+        return refinement
+
+    candidate_meta = dict(candidate_meta_raw)
+    candidate_meta["_text"] = candidate_text
+
+    candidate_meta = resolve_entities(candidate_text, candidate_meta)
+
+    candidate_decision = build_command_decision(
+        candidate_meta,
+        accept_conf=accept_conf,
+    )
+
+    if not candidate_decision.runnable:
+        return refinement
+
+    if not _is_safe_missing_slots_refinement_candidate(candidate_meta):
+        return refinement
+
+    return replace(
+        refinement,
+        text=candidate_text,
+        meta=candidate_meta,
+        changed=True,
+        reason="accepted_refinement",
+    )
 
 
 def understand_command_text(
@@ -164,6 +266,18 @@ def understand_command_text(
     text_before_refinement = text_in
     meta_before_refinement = dict(meta)
 
+    missing_slots_before_refinement = missing_required_slots(meta)
+    force_refine_missing_slots = (
+            is_accepted(meta, accept_conf=accept_conf)
+            and bool(missing_slots_before_refinement)
+    )
+
+    whisper_trigger_reason = (
+        "missing_required_slots"
+        if force_refine_missing_slots
+        else "confidence"
+    )
+
     refinement = maybe_refine_with_whisper(
         original_text=text_in,
         meta=meta,
@@ -172,6 +286,14 @@ def understand_command_text(
         trigger_conf=whisper_trigger_conf,
         predict_func=predict,
         norm_func=norm_text,
+        force_refine=force_refine_missing_slots,
+        trigger_reason=whisper_trigger_reason,
+    )
+
+    refinement = _maybe_accept_refinement_that_fills_missing_slots(
+        refinement,
+        force_refine_missing_slots=force_refine_missing_slots,
+        accept_conf=accept_conf,
     )
 
     if refinement.error:
