@@ -203,6 +203,37 @@ def main() -> int:
     ):
         fail_count += 1
 
+    # Accepted and complete command must not call Whisper,
+    # even when confidence is below the Whisper threshold.
+    result = maybe_refine_with_whisper(
+        original_text="запусти музыку",
+        meta={
+            "intent": "MUSIC_PLAY",
+            "confidence": 0.39,
+            "slots": {},
+        },
+        # fail=True доказывает, что Whisper не был вызван:
+        # иначе результатом был бы refine_failed.
+        whisper=FakeWhisper(fail=True),
+        stt=FakeSTT(),
+        trigger_conf=0.45,
+        predict_func=predict_bad,
+        norm_func=norm,
+        skip_refine=True,
+        trigger_reason="accepted_complete",
+    )
+
+    if not _print_result(
+        "accepted complete command skips whisper",
+        result,
+        {
+            "text": "запусти музыку",
+            "changed": False,
+            "reason": "accepted_complete",
+            "intent": "MUSIC_PLAY",
+        },
+    ):
+        fail_count += 1
 
     # 2b. Whisper hotword is stripped before NLU
     result = maybe_refine_with_whisper(

@@ -384,23 +384,32 @@ def understand_command_text(
     text_before_refinement = text_in
     meta_before_refinement = dict(meta)
 
-    original_is_accepted = is_accepted(
+    pre_refinement_decision = build_command_decision(
         meta,
         accept_conf=accept_conf,
     )
 
-    missing_slots_before_refinement = missing_required_slots(meta)
+    original_is_accepted = pre_refinement_decision.accepted
+    missing_slots_before_refinement = list(
+        pre_refinement_decision.missing_slots
+    )
 
     force_refine_missing_slots = (
             original_is_accepted
             and bool(missing_slots_before_refinement)
     )
 
-    whisper_trigger_reason = (
-        "missing_required_slots"
-        if force_refine_missing_slots
-        else "confidence"
+    skip_refine_complete_command = (
+            original_is_accepted
+            and not missing_slots_before_refinement
     )
+
+    if force_refine_missing_slots:
+        whisper_trigger_reason = "missing_required_slots"
+    elif skip_refine_complete_command:
+        whisper_trigger_reason = "accepted_complete"
+    else:
+        whisper_trigger_reason = "confidence"
 
     refinement = maybe_refine_with_whisper(
         original_text=text_in,
@@ -417,6 +426,7 @@ def understand_command_text(
             )
         ),
         preserve_intent=original_is_accepted,
+        skip_refine=skip_refine_complete_command,
         force_refine=force_refine_missing_slots,
         trigger_reason=whisper_trigger_reason,
     )

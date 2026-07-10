@@ -32,6 +32,7 @@ def maybe_refine_with_whisper(
     norm_func: NormFunc,
     prepare_candidate_func: Optional[PrepareTextFunc] = None,
     preserve_intent: bool = False,
+    skip_refine: bool = False,
     force_refine: bool = False,
     trigger_reason: str = "",
 ) -> SttRefinementResult:
@@ -41,6 +42,14 @@ def maybe_refine_with_whisper(
     Возвращает структуру с итоговым text/meta и диагностикой.
     """
     effective_trigger_reason = trigger_reason or "confidence"
+    if skip_refine:
+        return SttRefinementResult(
+            text=original_text,
+            meta=meta,
+            changed=False,
+            reason="accepted_complete",
+            trigger_reason=effective_trigger_reason,
+        )
     if whisper is None:
         return SttRefinementResult(
             text=original_text,

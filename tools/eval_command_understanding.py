@@ -326,15 +326,15 @@ def main() -> int:
         "intent": "MUSIC_PLAY",
         "final_text": "запусти музыку",
         "accepted": True,
-        "whisper_calls": 1,
-        "refinement_reason": "same_text",
+        "whisper_calls": 0,
+        "refinement_reason": "accepted_complete",
         "changed_by_refinement": False,
     }
 
     errors = _compare(expected, actual)
 
     print()
-    print(f"{len(CASES) + 1}. whisper hotword intent stability")
+    print(f"{len(CASES) + 1}. accepted complete command skips whisper")
     print(
         json.dumps(
             {
@@ -352,7 +352,7 @@ def main() -> int:
         for error in errors:
             print(f"[FAIL] {error}")
     else:
-        print("[OK] whisper hotword intent stability")
+        print("[OK] accepted complete command skips whisper")
 
     print()
     print("=== SUMMARY ===")
