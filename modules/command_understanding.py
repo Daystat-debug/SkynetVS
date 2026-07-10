@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
-from typing import Any, Callable, Dict, Mapping, Protocol
+from typing import Any, Callable, Dict, Mapping, Protocol, Sequence
 
 from modules.command_decision import (
     CommandDecision,
@@ -110,19 +110,51 @@ def _is_safe_missing_slots_refinement_candidate(meta: Mapping[str, Any]) -> bool
     return True
 
 
+def _has_slot_value(
+    slots: Mapping[str, Any],
+    slot_name: str,
+) -> bool:
+    value = slots.get(slot_name)
+
+    if value is None:
+        return False
+
+    if isinstance(value, str):
+        return bool(value.strip())
+
+    return True
+
+
 def _maybe_accept_refinement_that_fills_missing_slots(
     refinement: Any,
     *,
+    original_text: str,
+    original_meta: Mapping[str, Any],
+    missing_slots_before_refinement: Sequence[str],
     force_refine_missing_slots: bool,
     accept_conf: float,
 ) -> Any:
+    """
+    Проверяет Whisper-кандидат для команды с отсутствующими обязательными slots.
+
+    Кандидат принимается только если он:
+      - сохраняет исходный intent;
+      - заполняет именно исходно отсутствовавшие обязательные slots;
+      - становится runnable;
+      - проходит дополнительные safety-проверки.
+
+    Если базовая refinement-логика уже приняла небезопасный кандидат,
+    исходные text/meta восстанавливаются.
+    """
     if not force_refine_missing_slots:
         return refinement
 
-    if getattr(refinement, "changed", False):
-        return refinement
+    refinement_reason = str(getattr(refinement, "reason", "") or "")
 
-    if getattr(refinement, "reason", "") != "refinement_not_better":
+    if refinement_reason not in {
+        "accepted_refinement",
+        "refinement_not_better",
+    }:
         return refinement
 
     candidate_text = getattr(refinement, "candidate_text", None)
@@ -131,10 +163,57 @@ def _maybe_accept_refinement_that_fills_missing_slots(
     if not candidate_text or not isinstance(candidate_meta_raw, dict):
         return refinement
 
+    original_meta_copy = dict(original_meta)
+    original_slots = original_meta_copy.get("slots") or {}
+    original_meta_copy["slots"] = (
+        dict(original_slots)
+        if isinstance(original_slots, Mapping)
+        else {}
+    )
+
+    original_intent = str(
+        original_meta_copy.get("intent") or ""
+    ).upper().strip()
+
     candidate_meta = dict(candidate_meta_raw)
+    candidate_slots_raw = candidate_meta.get("slots") or {}
+    candidate_meta["slots"] = (
+        dict(candidate_slots_raw)
+        if isinstance(candidate_slots_raw, Mapping)
+        else {}
+    )
     candidate_meta["_text"] = candidate_text
 
     candidate_meta = resolve_entities(candidate_text, candidate_meta)
+
+    candidate_intent = str(
+        candidate_meta.get("intent") or ""
+    ).upper().strip()
+
+    def reject_candidate() -> Any:
+        return replace(
+            refinement,
+            text=original_text,
+            meta=original_meta_copy,
+            changed=False,
+            reason="refinement_not_better",
+        )
+
+    # Missing-slots refinement не должен менять тип команды.
+    # OPEN_URL -> GREET / OPEN_APP относится уже к intent correction.
+    if not original_intent or candidate_intent != original_intent:
+        return reject_candidate()
+
+    candidate_slots = dict(candidate_meta.get("slots") or {})
+
+    unfilled_slots = [
+        slot_name
+        for slot_name in missing_slots_before_refinement
+        if not _has_slot_value(candidate_slots, slot_name)
+    ]
+
+    if unfilled_slots:
+        return reject_candidate()
 
     candidate_decision = build_command_decision(
         candidate_meta,
@@ -142,10 +221,12 @@ def _maybe_accept_refinement_that_fills_missing_slots(
     )
 
     if not candidate_decision.runnable:
-        return refinement
+        return reject_candidate()
 
+    # Для OPEN_URL принимаем только известные сайты из entity_registry.
+    # Произвольный домен, ошибочно придуманный Whisper, отклоняется.
     if not _is_safe_missing_slots_refinement_candidate(candidate_meta):
-        return refinement
+        return reject_candidate()
 
     return replace(
         refinement,
@@ -292,6 +373,9 @@ def understand_command_text(
 
     refinement = _maybe_accept_refinement_that_fills_missing_slots(
         refinement,
+        original_text=text_before_refinement,
+        original_meta=meta_before_refinement,
+        missing_slots_before_refinement=missing_slots_before_refinement,
         force_refine_missing_slots=force_refine_missing_slots,
         accept_conf=accept_conf,
     )
