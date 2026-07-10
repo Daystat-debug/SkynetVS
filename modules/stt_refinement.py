@@ -6,6 +6,7 @@ from typing import Any, Callable, Dict, Optional
 
 PredictFunc = Callable[[str], Dict[str, Any]]
 NormFunc = Callable[[str], str]
+PrepareTextFunc = Callable[[str], str]
 
 
 @dataclass(frozen=True)
@@ -29,6 +30,8 @@ def maybe_refine_with_whisper(
     trigger_conf: float,
     predict_func: PredictFunc,
     norm_func: NormFunc,
+    prepare_candidate_func: Optional[PrepareTextFunc] = None,
+    preserve_intent: bool = False,
     force_refine: bool = False,
     trigger_reason: str = "",
 ) -> SttRefinementResult:
@@ -75,6 +78,11 @@ def maybe_refine_with_whisper(
             samplerate=getattr(stt, "samplerate", 16000),
         )
         refined = norm_func(refined)
+
+        if refined and prepare_candidate_func is not None:
+            refined = norm_func(
+                prepare_candidate_func(refined)
+            )
     except Exception as e:
         return SttRefinementResult(
             text=original_text,
@@ -98,7 +106,31 @@ def maybe_refine_with_whisper(
     refined_meta = predict_func(refined)
     conf2 = float(refined_meta.get("confidence") or 0.0)
 
-    if refined_meta.get("intent") and conf2 >= conf:
+    original_intent = str(
+        meta.get("intent") or ""
+    ).upper().strip()
+
+    candidate_intent = str(
+        refined_meta.get("intent") or ""
+    ).upper().strip()
+
+    if (
+            preserve_intent
+            and original_intent
+            and candidate_intent
+            and candidate_intent != original_intent
+    ):
+        return SttRefinementResult(
+            text=original_text,
+            meta=meta,
+            changed=False,
+            reason="intent_mismatch",
+            candidate_text=refined,
+            candidate_meta=refined_meta,
+            trigger_reason=effective_trigger_reason,
+        )
+
+    if candidate_intent and conf2 >= conf:
         return SttRefinementResult(
             text=refined,
             meta=refined_meta,

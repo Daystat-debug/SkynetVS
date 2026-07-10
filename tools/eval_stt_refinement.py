@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from modules.stt_refinement import maybe_refine_with_whisper
+from modules.hotword_utils import split_hotword_prefix
 
 
 class FakeSTT:
@@ -33,6 +34,19 @@ class FakeWhisper:
 
 def norm(text: str) -> str:
     return " ".join((text or "").lower().split())
+
+
+def prepare_candidate(text: str) -> str:
+    normalized = norm(text)
+
+    found, rest = split_hotword_prefix(
+        normalized,
+        hotwords=("скайнет", "skynet"),
+    )
+
+    prepared = rest if found else normalized
+
+    return prepared.strip(" ,.!?:;—-")
 
 
 def predict_good(text: str) -> Dict[str, Any]:
@@ -153,7 +167,7 @@ def main() -> int:
     ):
         fail_count += 1
 
-    # 2b. Force refinement even when intent is confident
+    # 2a. Force refinement even when intent is confident
     result = maybe_refine_with_whisper(
         original_text="открой окна и",
         meta={
@@ -188,6 +202,78 @@ def main() -> int:
         },
     ):
         fail_count += 1
+
+
+    # 2b. Whisper hotword is stripped before NLU
+    result = maybe_refine_with_whisper(
+        original_text="запусти музыку",
+        meta={
+            "intent": "MUSIC_PLAY",
+            "confidence": 0.39,
+            "slots": {},
+        },
+        whisper=FakeWhisper(
+            text="скайнет запусти музыку."
+        ),
+        stt=FakeSTT(),
+        trigger_conf=0.45,
+        predict_func=lambda text: {
+            "intent": "GREET",
+            "confidence": 0.40,
+            "slots": {},
+        },
+        norm_func=norm,
+        prepare_candidate_func=prepare_candidate,
+        preserve_intent=True,
+    )
+
+    if not _print_result(
+        "strip whisper hotword",
+        result,
+        {
+            "text": "запусти музыку",
+            "changed": False,
+            "reason": "same_text",
+            "intent": "MUSIC_PLAY",
+        },
+    ):
+        fail_count += 1
+
+    # 2c. Accepted intent cannot be silently replaced
+    result = maybe_refine_with_whisper(
+        original_text="запусти музыку",
+        meta={
+            "intent": "MUSIC_PLAY",
+            "confidence": 0.39,
+            "slots": {},
+        },
+        whisper=FakeWhisper(
+            text="скайнет привет запусти музыку"
+        ),
+        stt=FakeSTT(),
+        trigger_conf=0.45,
+        predict_func=lambda text: {
+            "intent": "GREET",
+            "confidence": 0.40,
+            "slots": {},
+        },
+        norm_func=norm,
+        prepare_candidate_func=prepare_candidate,
+        preserve_intent=True,
+    )
+
+    if not _print_result(
+        "reject whisper intent change",
+        result,
+        {
+            "text": "запусти музыку",
+            "changed": False,
+            "reason": "intent_mismatch",
+            "intent": "MUSIC_PLAY",
+        },
+    ):
+        fail_count += 1
+
 
     # 3. No audio
     result = maybe_refine_with_whisper(

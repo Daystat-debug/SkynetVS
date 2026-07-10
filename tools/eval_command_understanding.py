@@ -48,6 +48,29 @@ class FakeSTT:
     samplerate = 16000
 
 
+class FakeSTTWithAudio:
+    last_utterance_audio = b"audio"
+    samplerate = 16000
+
+
+class FakeWhisper:
+    def __init__(self, text: str) -> None:
+        self.text = text
+        self.calls = 0
+
+    def refine_pcm(
+        self,
+        pcm: bytes,
+        *,
+        samplerate: int,
+    ) -> str:
+        _ = pcm
+        _ = samplerate
+
+        self.calls += 1
+        return self.text
+
+
 Case = Dict[str, Any]
 
 
@@ -257,12 +280,86 @@ def main() -> int:
         else:
             print("[OK] command understanding case")
 
+    logger = FakeLogger()
+    whisper = FakeWhisper(
+        "скайнет запусти музыку."
+    )
+
+    result = understand_command_text(
+        "запусти музыку",
+        router=FakeRouter(),
+        logger=logger,
+        whisper=whisper,
+        stt=FakeSTTWithAudio(),
+        accept_conf=settings.nlu_accept_conf,
+        whisper_trigger_conf=0.99,
+        hotwords=settings.hotwords,
+        print_func=None,
+    )
+
+    diagnostic_events = [
+        event
+        for event in logger.events
+        if event.get("kind") == "stt_diagnostic"
+    ]
+
+    diagnostic_payload = (
+        diagnostic_events[-1]["payload"]
+        if diagnostic_events
+        else {}
+    )
+
+    actual = {
+        "intent": result.meta.get("intent"),
+        "final_text": result.final_text,
+        "accepted": result.decision.accepted,
+        "whisper_calls": whisper.calls,
+        "refinement_reason": diagnostic_payload.get(
+            "refinement_reason"
+        ),
+        "changed_by_refinement": diagnostic_payload.get(
+            "changed_by_refinement"
+        ),
+    }
+
+    expected = {
+        "intent": "MUSIC_PLAY",
+        "final_text": "запусти музыку",
+        "accepted": True,
+        "whisper_calls": 1,
+        "refinement_reason": "same_text",
+        "changed_by_refinement": False,
+    }
+
+    errors = _compare(expected, actual)
+
+    print()
+    print(f"{len(CASES) + 1}. whisper hotword intent stability")
+    print(
+        json.dumps(
+            {
+                "actual": actual,
+                "expected": expected,
+                "diagnostic_payload": diagnostic_payload,
+            },
+            ensure_ascii=False,
+        )
+    )
+
+    if errors:
+        fail_count += 1
+
+        for error in errors:
+            print(f"[FAIL] {error}")
+    else:
+        print("[OK] whisper hotword intent stability")
+
     print()
     print("=== SUMMARY ===")
     print(
         json.dumps(
             {
-                "total_cases": len(CASES),
+                "total_cases": len(CASES) + 1,
                 "fail_count": fail_count,
             },
             ensure_ascii=False,

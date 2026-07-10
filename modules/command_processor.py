@@ -119,6 +119,7 @@ class CommandProcessor:
             stt=self._stt,
             accept_conf=self._settings.nlu_accept_conf,
             whisper_trigger_conf=self._settings.whisper_trigger_conf,
+            hotwords=self._settings.hotwords,
             print_func=self._print_func,
         )
 

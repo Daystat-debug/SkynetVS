@@ -10,7 +10,10 @@ from modules.command_decision import (
     missing_required_slots,
 )
 from modules.entity_resolver import resolve_entities
-from modules.hotword_utils import norm_text
+from modules.hotword_utils import (
+    norm_text,
+    split_hotword_prefix,
+)
 from modules.nlu import predict
 from modules.stt_refinement import maybe_refine_with_whisper
 from modules.text_normalizer import normalize_command_text
@@ -23,6 +26,12 @@ from modules.understanding_helpers import (
 
 
 PrintFunc = Callable[[str], None]
+DEFAULT_WHISPER_HOTWORDS = (
+    "скайнет",
+    "skynet",
+)
+
+WHISPER_EDGE_STRIP_CHARS = " ,.!?:;—-"
 
 
 class EventLogger(Protocol):
@@ -58,6 +67,33 @@ def _print(
 ) -> None:
     if print_func is not None:
         print_func(text)
+
+
+def _prepare_whisper_candidate_text(
+    text: str,
+    *,
+    hotwords: Sequence[str],
+) -> str:
+    """
+    Удаляет ведущий hotword, который Whisper часто возвращает
+    вместе с самой командой.
+
+    Пример:
+      "скайнет, запусти музыку."
+        -> "запусти музыку"
+    """
+    normalized = norm_text(text)
+
+    found, rest = split_hotword_prefix(
+        normalized,
+        hotwords=hotwords,
+    )
+
+    prepared = rest if found else normalized
+
+    return prepared.strip(
+        WHISPER_EDGE_STRIP_CHARS
+    )
 
 
 def _norm_url(value: Any) -> str:
@@ -246,6 +282,7 @@ def understand_command_text(
     stt: Any,
     accept_conf: float,
     whisper_trigger_conf: float,
+    hotwords: Sequence[str] = DEFAULT_WHISPER_HOTWORDS,
     print_func: PrintFunc | None = print,
 ) -> CommandUnderstandingResult:
     """
@@ -347,9 +384,15 @@ def understand_command_text(
     text_before_refinement = text_in
     meta_before_refinement = dict(meta)
 
+    original_is_accepted = is_accepted(
+        meta,
+        accept_conf=accept_conf,
+    )
+
     missing_slots_before_refinement = missing_required_slots(meta)
+
     force_refine_missing_slots = (
-            is_accepted(meta, accept_conf=accept_conf)
+            original_is_accepted
             and bool(missing_slots_before_refinement)
     )
 
@@ -367,6 +410,13 @@ def understand_command_text(
         trigger_conf=whisper_trigger_conf,
         predict_func=predict,
         norm_func=norm_text,
+        prepare_candidate_func=lambda candidate: (
+            _prepare_whisper_candidate_text(
+                candidate,
+                hotwords=hotwords,
+            )
+        ),
+        preserve_intent=original_is_accepted,
         force_refine=force_refine_missing_slots,
         trigger_reason=whisper_trigger_reason,
     )
@@ -384,10 +434,21 @@ def understand_command_text(
         _print(print_func, f"[WHISPER] refine failed: {refinement.error}")
 
     if refinement.candidate_text and refinement.candidate_meta is not None:
-        _print(print_func, f"[WHISPER] '{text_in}' -> '{refinement.candidate_text}'")
         _print(
             print_func,
-            "[NLU] refined "
+            f"[WHISPER] '{text_in}' -> "
+            f"'{refinement.candidate_text}'",
+        )
+
+        candidate_status = (
+            "accepted"
+            if refinement.changed
+            else "rejected candidate"
+        )
+
+        _print(
+            print_func,
+            f"[NLU] {candidate_status} "
             f"intent={refinement.candidate_meta.get('intent')} "
             f"conf={refinement.candidate_meta.get('confidence', 0.0):.2f} "
             f"slots={refinement.candidate_meta.get('slots')}",
