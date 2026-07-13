@@ -10,8 +10,14 @@ from pathlib import Path
 from typing import Optional, Dict, Any, Callable
 from modules.intent_rules import (
     build_incomplete_command_meta,
+    build_set_timer_meta,
     build_set_volume_meta,
     get_exact_intent,
+)
+
+from modules.duration_parser import (
+    format_duration_ru,
+    parse_duration_seconds,
 )
 
 import joblib
@@ -112,6 +118,25 @@ def _render_placeholders(s: str, slots: Dict[str, Any]) -> str:
 
     if "{time}" in out:
         out = out.replace("{time}", datetime.now().strftime("%H:%M"))
+
+    duration_value = slots.get(
+        "duration_seconds"
+    )
+
+    duration_text = ""
+
+    if duration_value is not None:
+        try:
+            duration_text = format_duration_ru(
+                int(duration_value)
+            )
+        except (TypeError, ValueError):
+            duration_text = ""
+
+    out = out.replace(
+        "{duration}",
+        duration_text,
+    )
 
     return out.strip()
 
@@ -491,6 +516,23 @@ def _extract_open_settings_slots(text: str) -> Dict[str, Any]:
     return slots
 
 
+def _extract_set_timer_slots(
+    text: str,
+) -> Dict[str, Any]:
+    slots: Dict[str, Any] = {}
+
+    duration_seconds = parse_duration_seconds(
+        text
+    )
+
+    if duration_seconds is not None:
+        slots["duration_seconds"] = (
+            duration_seconds
+        )
+
+    return slots
+
+
 _SLOT_EXTRACTORS: Dict[str, Callable[[str], Dict[str, Any]]] = {
     "OPEN_APP": _extract_open_app_slots,
     "OPEN_URL": _extract_open_url_slots,
@@ -502,6 +544,7 @@ _SLOT_EXTRACTORS: Dict[str, Callable[[str], Dict[str, Any]]] = {
     "OPEN_SETTINGS": _extract_open_settings_slots,
     "SHOW_IP": _extract_show_ip_slots,
     "CLOSE_APP": _extract_open_app_slots,
+    "SET_TIMER": _extract_set_timer_slots,
 }
 
 
@@ -586,6 +629,30 @@ def predict_candidates(
                     "source": "rule",
                     "rule": "exact_intent_rule",
                     "slots": slots,
+                    "accepted_by_threshold": True,
+                }
+            )
+
+        set_timer_meta = build_set_timer_meta(
+            t,
+            extract_duration=(
+                parse_duration_seconds
+            ),
+        )
+
+        if set_timer_meta:
+            rows.append(
+                {
+                    "intent": "SET_TIMER",
+                    "confidence": 1.0,
+                    "source": "rule",
+                    "rule": "set_timer_rule",
+                    "slots": dict(
+                        set_timer_meta.get(
+                            "slots"
+                        )
+                        or {}
+                    ),
                     "accepted_by_threshold": True,
                 }
             )
@@ -695,6 +762,23 @@ def predict(text: str) -> Dict[str, Any]:
             "say": _pick_response(rule_intent, slots),
             "_rule": "exact_intent_rule",
         }
+
+    set_timer_meta = build_set_timer_meta(
+        t,
+        extract_duration=(
+            parse_duration_seconds
+        ),
+    )
+
+    if set_timer_meta:
+        slots = dict(
+            set_timer_meta.get("slots") or {}
+        )
+        set_timer_meta["say"] = _pick_response(
+            "SET_TIMER",
+            slots,
+        )
+        return set_timer_meta
 
     set_volume_meta = build_set_volume_meta(t, extract_volume=_extract_volume)
     if set_volume_meta:

@@ -584,6 +584,61 @@ NEGATIVE_CASES: List[Case] = [
             "AUDIO_OUTPUT_SPEAKERS",
         ],
     },
+    {
+        "text": "таймер",
+        "intent": None,
+        "forbidden_intents": [
+            "SET_TIMER",
+            "TIMER_STATUS",
+            "CANCEL_TIMER",
+        ],
+    },
+]
+
+
+TIMER_CASES: List[Case] = [
+    {
+        "text": "поставь таймер на 30 секунд",
+        "intent": "SET_TIMER",
+        "required_slots": {
+            "duration_seconds": 30,
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "таймер на 5 минут",
+        "intent": "SET_TIMER",
+        "required_slots": {
+            "duration_seconds": 300,
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": (
+            "запусти таймер "
+            "на 1 час 20 минут"
+        ),
+        "intent": "SET_TIMER",
+        "required_slots": {
+            "duration_seconds": 4800,
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "поставь таймер",
+        "intent": "SET_TIMER",
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "сколько осталось на таймере",
+        "intent": "TIMER_STATUS",
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "отмени таймер",
+        "intent": "CANCEL_TIMER",
+        "recommended_conf": 0.90,
+    },
 ]
 
 
@@ -598,6 +653,7 @@ CASE_GROUPS: List[tuple[str, List[Case]]] = [
     ("window_system", WINDOW_SYSTEM_CASES),
     ("tts", TTS_CASES),
     ("negative", NEGATIVE_CASES),
+    ("timer", TIMER_CASES),
 ]
 
 

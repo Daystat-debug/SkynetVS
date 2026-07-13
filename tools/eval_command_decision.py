@@ -124,6 +124,27 @@ TEXT_CASE_GROUPS: List[tuple[str, List[Case]]] = [
                 "text": "заблокируй компьютер",
                 "expected": expected_runnable(),
             },
+            {
+                "name": "set timer is runnable",
+                "text": (
+                    "поставь таймер "
+                    "на 30 секунд"
+                ),
+                "expected": expected_runnable(),
+            },
+            {
+                "name": "timer status is runnable",
+                "text": (
+                    "сколько осталось "
+                    "на таймере"
+                ),
+                "expected": expected_runnable(),
+            },
+            {
+                "name": "cancel timer is runnable",
+                "text": "отмени таймер",
+                "expected": expected_runnable(),
+            },
         ],
     ),
     (
@@ -259,6 +280,22 @@ META_CASE_GROUPS: List[tuple[str, List[Case]]] = [
                     "slots": {},
                 },
                 "expected": expected_missing_slots("query"),
+            },
+            {
+                "name": (
+                    "SET_TIMER without duration "
+                    "is blocked"
+                ),
+                "meta": {
+                    "intent": "SET_TIMER",
+                    "confidence": 1.0,
+                    "slots": {},
+                },
+                "expected": (
+                    expected_missing_slots(
+                        "duration_seconds"
+                    )
+                ),
             },
         ],
     ),

@@ -296,20 +296,76 @@ def format_duration_ru(
     total_seconds: int,
     *,
     max_parts: int = 3,
+    grammatical_case: str = "nominative",
 ) -> str:
     seconds = max(0, int(total_seconds))
 
     hours, remainder = divmod(seconds, 3600)
-    minutes, seconds_left = divmod(remainder, 60)
+    minutes, seconds_left = divmod(
+        remainder,
+        60,
+    )
 
-    rows: list[tuple[int, tuple[str, str, str]]] = [
-        (hours, ("час", "часа", "часов")),
-        (minutes, ("минута", "минуты", "минут")),
-        (
-            seconds_left,
-            ("секунда", "секунды", "секунд"),
-        ),
-    ]
+    case_name = str(
+        grammatical_case or "nominative"
+    ).strip().lower()
+
+    if case_name == "nominative":
+        rows: list[
+            tuple[
+                int,
+                tuple[str, str, str],
+            ]
+        ] = [
+            (
+                hours,
+                ("час", "часа", "часов"),
+            ),
+            (
+                minutes,
+                (
+                    "минута",
+                    "минуты",
+                    "минут",
+                ),
+            ),
+            (
+                seconds_left,
+                (
+                    "секунда",
+                    "секунды",
+                    "секунд",
+                ),
+            ),
+        ]
+    elif case_name == "accusative":
+        rows = [
+            (
+                hours,
+                ("час", "часа", "часов"),
+            ),
+            (
+                minutes,
+                (
+                    "минуту",
+                    "минуты",
+                    "минут",
+                ),
+            ),
+            (
+                seconds_left,
+                (
+                    "секунду",
+                    "секунды",
+                    "секунд",
+                ),
+            ),
+        ]
+    else:
+        raise ValueError(
+            "unsupported grammatical case: "
+            f"{grammatical_case}"
+        )
 
     rendered = [
         f"{value} {_plural_ru(value, forms)}"

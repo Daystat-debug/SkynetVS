@@ -80,6 +80,23 @@ CASES: List[Case] = [
         "expected_text": "Не понял команду. Повтори, пожалуйста.",
         "expected_router_calls": 0,
     },
+    {
+        "name": (
+            "timer status forces "
+            "dynamic base reply"
+        ),
+        "meta": {
+            "intent": "TIMER_STATUS",
+            "confidence": 0.40,
+            "slots": {},
+            "say": "META_SAY",
+        },
+        "accept_conf": 0.35,
+        "say_conf": 0.55,
+        "router_reply": "TIMER_STATUS_REPLY",
+        "expected_text": "TIMER_STATUS_REPLY",
+        "expected_router_calls": 1,
+    },
 ]
 
 

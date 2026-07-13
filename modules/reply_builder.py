@@ -17,6 +17,9 @@ class ReplyRouter(Protocol):
 DEFAULT_FORCE_BASE_REPLY_INTENTS = {
     "SHOW_IP",
     "WEATHER",
+    "SET_TIMER",
+    "TIMER_STATUS",
+    "CANCEL_TIMER",
 }
 
 

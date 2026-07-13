@@ -51,6 +51,10 @@ from modules.speech_io import (
     say as speech_say,
     say_interruptible as speech_say_interruptible,
 )
+from modules.timer_service import (
+    TimerFiredEvent,
+    TimerService,
+)
 
 colorama_init()
 load_dotenv()
@@ -152,6 +156,37 @@ def main():
     )
     learning_memory = LearningMemory()
 
+    event_q: queue.Queue[dict] = (
+        queue.Queue()
+    )
+
+    def emit_event(evt: dict) -> None:
+        event_q.put(evt)
+
+    def on_timer_fired(
+        event: TimerFiredEvent,
+    ) -> None:
+        emit_event(
+            {
+                "type": "timer_fired",
+                "timer": {
+                    "token": event.token,
+                    "duration_seconds": (
+                        event.duration_seconds
+                    ),
+                    "started_at": (
+                        event.started_at
+                    ),
+                    "deadline": event.deadline,
+                    "fired_at": event.fired_at,
+                },
+            }
+        )
+
+    timer_service = TimerService(
+        on_fired=on_timer_fired,
+    )
+
     whisper = None
     if SETTINGS.whisper_enable:
         try:
@@ -191,6 +226,7 @@ def main():
         weather_service=weather_service,
         typing_service=typing_service,
         window_context_service=window_context_service,
+        timer_service=timer_service,
     )
     router = Router(actions, settings=SETTINGS)
 
@@ -208,7 +244,6 @@ def main():
     last_tts_end = 0.0
     ack_ignore_until = 0.0
     pending_command_wait_sec = 1.2
-    event_q: queue.Queue[dict] = queue.Queue()
     cmd_timer: threading.Timer | None = None
     cmd_window_token = 0
     mode_manager = ModeManager()
@@ -219,9 +254,6 @@ def main():
         if mode_manager.is_command_window_open():
             return "command_window"
         return "direct"
-
-    def emit_event(evt: dict) -> None:
-        event_q.put(evt)
 
     def cancel_cmd_timer() -> None:
         nonlocal cmd_timer
@@ -358,6 +390,51 @@ def main():
         if result.ack_ignore_until is not None:
             ack_ignore_until = result.ack_ignore_until
 
+    def handle_timer_fired_event(
+        evt: dict,
+    ) -> None:
+        nonlocal last_tts_end
+
+        payload = dict(
+            evt.get("timer") or {}
+        )
+
+        event_token = int(
+            payload.get("token") or -1
+        )
+
+        current_token = (
+            timer_service.status().token
+        )
+
+        # Callback мог уже положить событие в queue,
+        # после чего пользователь отменил или
+        # заменил timer.
+        if event_token != current_token:
+            logger.event(
+                "timer_fired_stale_ignored",
+                {
+                    **payload,
+                    "current_token": (
+                        current_token
+                    ),
+                },
+            )
+            return
+
+        print("⏰ [TIMER] Таймер завершён")
+
+        logger.event(
+            "timer_fired",
+            payload,
+        )
+
+        last_tts_end = say(
+            stt,
+            tts,
+            "Таймер завершён",
+        )
+
     while True:
         evt = event_q.get()
 
@@ -368,6 +445,10 @@ def main():
 
         if evt.get("type") == "cmd_timeout":
             handle_cmd_timeout_event(evt)
+            continue
+
+        if evt.get("type") == "timer_fired":
+            handle_timer_fired_event(evt)
             continue
 
         if evt.get("type") == "phrase":

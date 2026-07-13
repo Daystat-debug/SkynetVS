@@ -47,6 +47,8 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate command fragments", _python_cmd("tools/eval_command_fragments.py")),
             Step("Evaluate duration parser", _python_cmd("tools/eval_duration_parser.py")),
             Step("Evaluate timer service", _python_cmd("tools/eval_timer_service.py")),
+            Step("Evaluate timer actions", _python_cmd("tools/eval_timer_actions.py")),
+            Step("Evaluate timer command runtime", _python_cmd("tools/eval_timer_command_runtime.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
@@ -202,20 +204,16 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate registry cleanup", _python_cmd("tools/eval_registry_cleanup.py")),
         ],
         "duration": [
-            Step(
-                "Evaluate duration parser",
-                _python_cmd(
-                    "tools/eval_duration_parser.py"
-                ),
-            ),
+            Step("Evaluate duration parser", _python_cmd("tools/eval_duration_parser.py")),
         ],
         "timer_service": [
-            Step(
-                "Evaluate timer service",
-                _python_cmd(
-                    "tools/eval_timer_service.py"
-                ),
-            ),
+            Step("Evaluate timer service", _python_cmd("tools/eval_timer_service.py")),
+        ],
+        "timer_actions": [
+            Step("Evaluate timer actions", _python_cmd("tools/eval_timer_actions.py" )),
+        ],
+        "timer_command_runtime": [
+            Step("Evaluate timer command runtime", _python_cmd("tools/eval_timer_command_runtime.py")),
         ],
     }
 
@@ -324,6 +322,8 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  stt_quality_report Show latest STT quality baseline", log_file)
     _emit("  duration   Run duration parser eval only", log_file)
     _emit("  timer_service Run timer service eval only", log_file)
+    _emit("  timer_actions Run timer actions eval only", log_file,)
+    _emit("  timer_command_runtime Run timer command runtime eval only", log_file,)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)

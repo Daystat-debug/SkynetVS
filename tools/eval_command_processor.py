@@ -200,6 +200,79 @@ CASES: List[Case] = [
             "last_tts_end": 200.0,
         },
     },
+    {
+        "name": "set timer command",
+        "text": "поставь таймер на 30 секунд",
+        "expected": {
+            "intent": "SET_TIMER",
+            "reason": "executed",
+            "router_events": [
+                "execute:SET_TIMER"
+            ],
+            "mode_events": [],
+            "learning_events": [
+                "log_command"
+            ],
+            "speech_events": ["say"],
+            "cancel_calls": 0,
+            "last_tts_end": 100.0,
+        },
+    },
+    {
+        "name": "set timer missing duration",
+        "text": "поставь таймер",
+        "expected": {
+            "intent": "SET_TIMER",
+            "reason": "missing_required_slots",
+            "router_events": [
+                "reply:SET_TIMER"
+            ],
+            "mode_events": [],
+            "learning_events": [
+                "log_command",
+                "log_resolver_candidate",
+            ],
+            "speech_events": ["say"],
+            "cancel_calls": 0,
+            "last_tts_end": 100.0,
+        },
+    },
+    {
+        "name": "timer status command",
+        "text": "сколько осталось на таймере",
+        "expected": {
+            "intent": "TIMER_STATUS",
+            "reason": "executed",
+            "router_events": [
+                "execute:TIMER_STATUS"
+            ],
+            "mode_events": [],
+            "learning_events": [
+                "log_command"
+            ],
+            "speech_events": ["say"],
+            "cancel_calls": 0,
+            "last_tts_end": 100.0,
+        },
+    },
+    {
+        "name": "cancel timer command",
+        "text": "отмени таймер",
+        "expected": {
+            "intent": "CANCEL_TIMER",
+            "reason": "executed",
+            "router_events": [
+                "execute:CANCEL_TIMER"
+            ],
+            "mode_events": [],
+            "learning_events": [
+                "log_command"
+            ],
+            "speech_events": ["say"],
+            "cancel_calls": 0,
+            "last_tts_end": 100.0,
+        },
+    },
 ]
 
 

@@ -13,6 +13,7 @@ DEFAULT_REQUIRED_SLOTS: Dict[str, Sequence[str]] = {
     "SEARCH_WEB": ("query",),
     "SEARCH_YOUTUBE": ("query",),
     "SET_VOLUME": ("volume",),
+    "SET_TIMER": ("duration_seconds",),
 }
 
 

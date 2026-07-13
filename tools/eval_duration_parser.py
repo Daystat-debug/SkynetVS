@@ -133,6 +133,23 @@ FORMAT_CASES: list[dict[str, Any]] = [
         "seconds": 18000,
         "expected": "5 часов",
     },
+    {
+        "seconds": 60,
+        "grammatical_case": "nominative",
+        "expected": "1 минута",
+    },
+    {
+        "seconds": 60,
+        "grammatical_case": "accusative",
+        "expected": "1 минуту",
+    },
+    {
+        "seconds": 3661,
+        "grammatical_case": "accusative",
+        "expected": (
+            "1 час 1 минуту 1 секунду"
+        ),
+    },
 ]
 
 
@@ -183,7 +200,11 @@ def main() -> int:
 
     for index, case in enumerate(FORMAT_CASES, start=1):
         actual = format_duration_ru(
-            int(case["seconds"])
+            int(case["seconds"]),
+            grammatical_case=str(
+                case.get("grammatical_case")
+                or "nominative"
+            ),
         )
         expected = str(case["expected"])
         ok = actual == expected

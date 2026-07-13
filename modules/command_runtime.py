@@ -27,6 +27,12 @@ ModeNameFunc = Callable[[], str]
 CancelTimerFunc = Callable[[], None]
 
 
+PRE_SPEECH_EXECUTE_INTENTS = {
+    "SET_TIMER",
+    "CANCEL_TIMER",
+}
+
+
 class LoggerLike(Protocol):
     def event(self, kind: str, payload: dict[str, Any]) -> None:
         ...
@@ -71,6 +77,10 @@ def handle_command_runtime(
       - universal command observation logging.
     """
     meta_dict = dict(meta)
+
+    intent = str(
+        meta_dict.get("intent") or ""
+    ).upper().strip()
 
     if outcome.kind == OUTCOME_NOT_ACCEPTED:
         log_not_accepted_command(
@@ -165,7 +175,37 @@ def handle_command_runtime(
             last_tts_end=last_tts_end,
         )
 
-    last_tts_end = say_func(stt, tts, text_out)
+    if intent in PRE_SPEECH_EXECUTE_INTENTS:
+        try:
+            router.execute(meta_dict)
+        except Exception as e:
+            log_command_action_failure(
+                learning_memory=learning_memory,
+                raw_text=raw_text,
+                final_text=final_text,
+                meta=meta_dict,
+                mode=current_mode_name_func(),
+                error=e,
+            )
+            raise
+
+        last_tts_end = say_func(
+            stt,
+            tts,
+            text_out,
+        )
+
+        return CommandRuntimeResult(
+            meta=meta_dict,
+            reason="executed",
+            last_tts_end=last_tts_end,
+        )
+
+    last_tts_end = say_func(
+        stt,
+        tts,
+        text_out,
+    )
 
     try:
         router.execute(meta_dict)

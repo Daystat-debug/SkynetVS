@@ -5,6 +5,8 @@ from typing import Any, Callable, Dict, Optional
 
 VolumeExtractor = Callable[[str], Optional[int]]
 
+DurationExtractor = Callable[[str], Optional[int]]
+
 
 def _norm(text: str) -> str:
     return " ".join((text or "").lower().split())
@@ -105,6 +107,27 @@ EXACT_INTENT_RULES: Dict[str, str] = {
     "уменьши громкость": "VOLUME_DOWN",
     "громкость вниз": "VOLUME_DOWN",
     "сделай звук тише": "VOLUME_DOWN",
+
+    # timer set without duration:
+    # intent распознан, но command_decision заблокирует
+    # выполнение из-за отсутствующего duration_seconds.
+    "поставь таймер": "SET_TIMER",
+    "установи таймер": "SET_TIMER",
+    "запусти таймер": "SET_TIMER",
+
+    # timer status
+    "сколько осталось на таймере": "TIMER_STATUS",
+    "сколько осталось до конца таймера": "TIMER_STATUS",
+    "сколько времени осталось на таймере": "TIMER_STATUS",
+    "покажи таймер": "TIMER_STATUS",
+    "статус таймера": "TIMER_STATUS",
+
+    # timer cancel
+    "отмени таймер": "CANCEL_TIMER",
+    "останови таймер": "CANCEL_TIMER",
+    "выключи таймер": "CANCEL_TIMER",
+    "сбрось таймер": "CANCEL_TIMER",
+    "удали таймер": "CANCEL_TIMER",
 }
 
 
@@ -123,6 +146,7 @@ INCOMPLETE_COMMAND_STARTERS = {
     "выключи",
     "громкость",
     "звук",
+    "таймер",
 }
 
 
@@ -194,4 +218,53 @@ def build_set_volume_meta(
         "confidence": 1.0,
         "slots": {"volume": volume},
         "_rule": "set_volume_rule",
+    }
+
+
+def build_set_timer_meta(
+    text: str,
+    *,
+    extract_duration: DurationExtractor,
+) -> Dict[str, Any] | None:
+    """
+    Детерминированное правило SET_TIMER.
+
+    Примеры:
+      - поставь таймер на 30 секунд
+      - таймер на 5 минут
+      - запусти таймер на 1 час 20 минут
+    """
+    t = _norm(text)
+
+    if "таймер" not in t:
+        return None
+
+    # Эти команды принадлежат другим timer-intents.
+    forbidden_markers = (
+        "сколько осталось",
+        "сколько времени",
+        "статус таймера",
+        "покажи таймер",
+        "отмени таймер",
+        "останови таймер",
+        "выключи таймер",
+        "сбрось таймер",
+        "удали таймер",
+    )
+
+    if any(marker in t for marker in forbidden_markers):
+        return None
+
+    duration_seconds = extract_duration(t)
+
+    if duration_seconds is None:
+        return None
+
+    return {
+        "intent": "SET_TIMER",
+        "confidence": 1.0,
+        "slots": {
+            "duration_seconds": duration_seconds,
+        },
+        "_rule": "set_timer_rule",
     }

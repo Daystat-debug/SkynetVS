@@ -29,6 +29,10 @@ from modules.entity_registry import (
     get_folder_path_kind,
     get_settings_section_uri,
 )
+from modules.duration_parser import (
+    format_duration_ru,
+)
+from modules.timer_service import TimerService
 
 
 class Actions:
@@ -52,12 +56,14 @@ class Actions:
         weather_service: Optional[WeatherService] = None,
         typing_service: Optional[TypingService] = None,
         window_context_service: Optional[WindowContextService] = None,
+        timer_service: Optional[TimerService] = None,
     ):
         self._audio = audio
         self._audio_output = audio_output
         self._screenshot_service = screenshot_service or ScreenshotService()
         self._weather_service = weather_service or WeatherService()
         self._volume_step = int(volume_step)
+        self._timer_service = timer_service
         self._music_prev_double = os.getenv("MUSIC_PREV_DOUBLE", "1").strip() == "1"
         self._music_prev_double_delay = float(os.getenv("MUSIC_PREV_DOUBLE_DELAY", "0.15"))
         self._typing_service = typing_service or TypingService()
@@ -92,6 +98,8 @@ class Actions:
             "PRESS_ENTER": self._exec_press_enter,
             "PRESS_BACKSPACE": self._exec_press_backspace,
             "PRESS_TAB": self._exec_press_tab,
+            "SET_TIMER": self._exec_set_timer,
+            "CANCEL_TIMER": self._exec_cancel_timer,
 
         }
         self._reply_handlers: Dict[str, Callable[[Dict[str, Any], Dict[str, Any]], str]] = {
@@ -126,6 +134,9 @@ class Actions:
             "PRESS_BACKSPACE": self._reply_press_backspace,
             "PRESS_TAB": self._reply_press_tab,
             "ACTIVE_WINDOW_INFO": self._reply_active_window_info,
+            "SET_TIMER": self._reply_set_timer,
+            "TIMER_STATUS": self._reply_timer_status,
+            "CANCEL_TIMER": self._reply_cancel_timer,
         }
 
     def _reply_volume_up(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
@@ -315,6 +326,101 @@ class Actions:
             parts.append(f"класс окна {class_name}")
 
         return "Сейчас " + ". ".join(parts) + "."
+
+    def _reply_set_timer(
+        self,
+        meta: Dict[str, Any],
+        slots: Dict[str, Any],
+    ) -> str:
+        if self._timer_service is None:
+            return "Таймер недоступен."
+
+        duration_value = slots.get(
+            "duration_seconds"
+        )
+
+        if duration_value is None:
+            return (
+                "Скажи, на какое время "
+                "поставить таймер."
+            )
+
+        try:
+            duration_seconds = int(
+                duration_value
+            )
+        except (TypeError, ValueError):
+            return (
+                "Скажи, на какое время "
+                "поставить таймер."
+            )
+
+        duration_text = format_duration_ru(
+            duration_seconds,
+            grammatical_case="accusative",
+        )
+
+        try:
+            replacing = (
+                self._timer_service
+                .status()
+                .active
+            )
+        except Exception:
+            replacing = False
+
+        if replacing:
+            return (
+                "Заменяю активный таймер. "
+                f"Новый таймер на "
+                f"{duration_text}."
+            )
+
+        return (
+            f"Ставлю таймер на "
+            f"{duration_text}."
+        )
+
+    def _reply_timer_status(
+        self,
+        meta: Dict[str, Any],
+        slots: Dict[str, Any],
+    ) -> str:
+        _ = meta
+        _ = slots
+
+        if self._timer_service is None:
+            return "Таймер недоступен."
+
+        snapshot = self._timer_service.status()
+
+        if not snapshot.active:
+            return "Активного таймера нет."
+
+        remaining_text = format_duration_ru(
+            snapshot.remaining_seconds
+        )
+
+        return (
+            "До окончания таймера осталось "
+            f"{remaining_text}."
+        )
+
+    def _reply_cancel_timer(
+        self,
+        meta: Dict[str, Any],
+        slots: Dict[str, Any],
+    ) -> str:
+        _ = meta
+        _ = slots
+
+        if self._timer_service is None:
+            return "Таймер недоступен."
+
+        if not self._timer_service.status().active:
+            return "Активного таймера нет."
+
+        return "Отменяю таймер."
 
     def handle(self, meta: Dict[str, Any]) -> str:
         """
@@ -845,6 +951,42 @@ class Actions:
             self._typing_service.press_tab()
         except Exception:
             pass
+
+    def _exec_set_timer(
+        self,
+        slots: Dict[str, Any],
+    ) -> None:
+        if self._timer_service is None:
+            return
+
+        duration_value = slots.get(
+            "duration_seconds"
+        )
+
+        if duration_value is None:
+            return
+
+        duration_seconds = int(
+            duration_value
+        )
+
+        # Ошибку намеренно не подавляем:
+        # command_runtime должен записать
+        # action failure и не произнести ложный успех.
+        self._timer_service.start(
+            duration_seconds
+        )
+
+    def _exec_cancel_timer(
+        self,
+        slots: Dict[str, Any],
+    ) -> None:
+        _ = slots
+
+        if self._timer_service is None:
+            return
+
+        self._timer_service.cancel()
 
     def execute(self, meta: Dict[str, Any]) -> None:
         """
