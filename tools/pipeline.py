@@ -45,6 +45,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate dictation commands", _python_cmd("tools/eval_dictation_commands.py")),
             Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
             Step("Evaluate command fragments", _python_cmd("tools/eval_command_fragments.py")),
+            Step("Evaluate duration parser", _python_cmd("tools/eval_duration_parser.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
@@ -63,6 +64,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate command runtime", _python_cmd("tools/eval_command_runtime.py")),
             Step("Evaluate command processor", _python_cmd("tools/eval_command_processor.py")),
             Step("Evaluate phrase event processor", _python_cmd("tools/eval_phrase_event_processor.py")),
+
         ],
         "decision": [
             Step("Evaluate command decision", _python_cmd("tools/eval_command_decision.py")),
@@ -198,6 +200,14 @@ def available_flows() -> dict[str, list[Step]]:
         "registry_cleanup": [
             Step("Evaluate registry cleanup", _python_cmd("tools/eval_registry_cleanup.py")),
         ],
+        "duration": [
+            Step(
+                "Evaluate duration parser",
+                _python_cmd(
+                    "tools/eval_duration_parser.py"
+                ),
+            ),
+        ],
     }
 
 
@@ -303,6 +313,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  registry_cleanup Run registry cleanup eval only", log_file)
     _emit("  stt_quality Run interactive STT quality baseline", log_file)
     _emit("  stt_quality_report Show latest STT quality baseline", log_file)
+    _emit("  duration   Run duration parser eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
