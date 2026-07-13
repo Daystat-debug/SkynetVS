@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from difflib import SequenceMatcher
-from typing import Dict, Iterable
+from typing import Dict, Iterable, Sequence
 
 
 @dataclass(frozen=True)
@@ -17,6 +17,7 @@ class AppSpec:
     code: str
     title: str
     aliases: tuple[str, ...]
+    rescue_aliases: tuple[str, ...] = ()
     open_command: tuple[str, ...] = ()
     image_names: tuple[str, ...] = ()
     title_patterns: tuple[str, ...] = ()
@@ -29,6 +30,7 @@ class SiteSpec:
     title: str
     aliases: tuple[str, ...]
     url: str
+    rescue_aliases: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -45,6 +47,16 @@ class SettingsSectionSpec:
     title: str
     aliases: tuple[str, ...]
     uri: str
+
+
+@dataclass(frozen=True)
+class RescueMatch:
+    code: str
+    score: float
+    margin: float
+    source_text: str
+    candidate_text: str
+    alias: str
 
 
 APP_REGISTRY: Dict[str, AppSpec] = {
@@ -187,6 +199,11 @@ SITE_REGISTRY: Dict[str, SiteSpec] = {
             "чат гбдд",
         ),
         url="https://chatgpt.com",
+        rescue_aliases=(
+            "чат пяти",
+            "чад же пяти",
+            "charge gpt",
+        ),
     ),
     "habr": SiteSpec(
         code="habr",
@@ -220,7 +237,25 @@ SITE_REGISTRY: Dict[str, SiteSpec] = {
             "опен аи точка ком",
         ),
         url="https://openai.com",
+        rescue_aliases=(
+            "оп анаид",
+            "опы на и",
+            "опыт аи",
+            "опыт а и",
+            "опыт ай",
+            "о пан аи",
+        ),
     ),
+}
+
+
+SITE_DOMAIN_RESCUE_MAP: Dict[str, str] = {
+    "openi.com": "openai",
+
+    # Подтверждённые русские STT-варианты фразы
+    # "openai точка com".
+    "опыт ай точка ком": "openai",
+    "опыт а и точка ком": "openai",
 }
 
 
@@ -329,12 +364,291 @@ def compact_entity_text(text: str) -> str:
     return re.sub(r"[^a-zа-яё0-9]+", "", normalize_entity_text(text))
 
 
+_RESCUE_COMMAND_WORDS = {
+    "открой",
+    "открыть",
+    "открою",
+    "открывай",
+    "запусти",
+    "запустить",
+    "запускай",
+    "закрой",
+    "закрыть",
+    "закрывай",
+    "перейди",
+    "зайди",
+}
+
+_RESCUE_LEADING_NOISE = {
+    "в",
+    "ну",
+    "эй",
+    "пожалуйста",
+    "скайнет",
+    "skynet",
+}
+
+
+def _entity_rescue_candidates(text: str) -> list[str]:
+    """
+    Выделяет вероятную часть с именем сущности.
+
+    Примеры:
+      "открой openi.com"          -> "openi.com"
+      "открой чад же пяти"        -> "чад же пяти"
+      "в скайнет открой open ai"  -> "open ai"
+    """
+    text_norm = normalize_entity_text(text)
+
+    if not text_norm:
+        return []
+
+    candidates: list[str] = []
+    seen: set[str] = set()
+
+    def add(value: str) -> None:
+        value_norm = normalize_entity_text(value)
+
+        if not value_norm or value_norm in seen:
+            return
+
+        seen.add(value_norm)
+        candidates.append(value_norm)
+
+    add(text_norm)
+
+    tokens = re.findall(
+        r"[a-zа-яё0-9]+(?:\.[a-zа-яё0-9]+)*",
+        text_norm,
+    )
+
+    trimmed = list(tokens)
+
+    while (
+        trimmed
+        and trimmed[0] in _RESCUE_LEADING_NOISE
+    ):
+        trimmed.pop(0)
+
+    if trimmed:
+        add(" ".join(trimmed))
+
+    for index, token in enumerate(tokens):
+        if (
+            token in _RESCUE_COMMAND_WORDS
+            and index + 1 < len(tokens)
+        ):
+            add(" ".join(tokens[index + 1:]))
+
+    # Домен полезно проверять отдельно от остальной фразы.
+    for token in tokens:
+        if "." in token:
+            add(token)
+
+    return candidates
+
+
+def _looks_domain_like(text: str) -> bool:
+    text_norm = normalize_entity_text(text)
+
+    return (
+        "." in text_norm
+        or bool(
+            re.search(
+                r"\b(?:точка|dot)\b",
+                text_norm,
+            )
+        )
+    )
+
+
+def find_alias_rescue_match(
+    texts: Sequence[str],
+    alias_map: Dict[str, list[str]],
+    *,
+    min_ratio: float = 0.88,
+    domain_min_ratio: float = 0.92,
+    min_margin: float = 0.08,
+    min_compact_len: int = 5,
+    domain_rescue_map: Dict[str, str] | None = None,
+) -> RescueMatch | None:
+    """
+    Консервативно восстанавливает сущность только среди registry aliases.
+
+    В отличие от обычного fuzzy-поиска:
+      - анализирует сущностную часть команды;
+      - требует высокий score;
+      - требует отрыв от второго registry-кандидата;
+      - для доменов применяет повышенный порог.
+    """
+    # score, required_score, source, candidate, alias
+    best_by_code: Dict[
+        str,
+        tuple[float, float, str, str, str],
+    ] = {}
+
+    for source_text in texts:
+        source_text = str(source_text or "").strip()
+
+        if not source_text:
+            continue
+
+        for candidate in _entity_rescue_candidates(
+            source_text
+        ):
+            candidate_compact = compact_entity_text(
+                candidate
+            )
+
+            if len(candidate_compact) < min_compact_len:
+                continue
+
+            # Для доменов общий fuzzy небезопасен:
+            # openapi.com / open-air.com могут оказаться слишком
+            # похожими на openai.com.
+            #
+            # Поэтому домен разрешается восстановить только через
+            # явный registry rescue-map.
+            if _looks_domain_like(candidate):
+                candidate_norm = normalize_entity_text(
+                    candidate
+                )
+
+                rescue_code = (
+                    domain_rescue_map or {}
+                ).get(candidate_norm)
+
+                if (
+                    rescue_code
+                    and rescue_code in alias_map
+                ):
+                    previous = best_by_code.get(
+                        rescue_code
+                    )
+
+                    exact_data = (
+                        1.0,
+                        1.0,
+                        source_text,
+                        candidate,
+                        candidate_norm,
+                    )
+
+                    if (
+                        previous is None
+                        or exact_data[0] > previous[0]
+                    ):
+                        best_by_code[rescue_code] = (
+                            exact_data
+                        )
+
+                # Любой неизвестный domain-like кандидат
+                # не участвует в общем fuzzy-поиске.
+                continue
+
+            required_score = min_ratio
+
+            for code, aliases in alias_map.items():
+                for alias in aliases:
+                    alias_compact = compact_entity_text(
+                        alias
+                    )
+
+                    if not alias_compact:
+                        continue
+
+                    score = SequenceMatcher(
+                        None,
+                        candidate_compact,
+                        alias_compact,
+                    ).ratio()
+
+                    previous = best_by_code.get(code)
+
+                    if (
+                        previous is None
+                        or score > previous[0]
+                    ):
+                        best_by_code[code] = (
+                            score,
+                            required_score,
+                            source_text,
+                            candidate,
+                            alias,
+                        )
+
+    if not best_by_code:
+        return None
+
+    ranked = sorted(
+        best_by_code.items(),
+        key=lambda item: item[1][0],
+        reverse=True,
+    )
+
+    best_code, best_data = ranked[0]
+
+    (
+        best_score,
+        required_score,
+        source_text,
+        candidate_text,
+        alias,
+    ) = best_data
+
+    second_score = (
+        ranked[1][1][0]
+        if len(ranked) > 1
+        else 0.0
+    )
+
+    margin = best_score - second_score
+
+    if best_score < required_score:
+        return None
+
+    if margin < min_margin:
+        return None
+
+    return RescueMatch(
+        code=best_code,
+        score=best_score,
+        margin=margin,
+        source_text=source_text,
+        candidate_text=candidate_text,
+        alias=alias,
+    )
+
+
 def _specs_to_aliases(specs: Dict[str, object]) -> Dict[str, list[str]]:
     result: Dict[str, list[str]] = {}
 
     for code, spec in specs.items():
         aliases = getattr(spec, "aliases", ())
         result[code] = list(aliases)
+
+    return result
+
+
+def _specs_to_rescue_aliases(
+    specs: Dict[str, object],
+) -> Dict[str, list[str]]:
+    result: Dict[str, list[str]] = {}
+
+    for code, spec in specs.items():
+        aliases = tuple(
+            getattr(spec, "aliases", ())
+        )
+        rescue_aliases = tuple(
+            getattr(spec, "rescue_aliases", ())
+        )
+
+        # dict.fromkeys сохраняет порядок и убирает дубли.
+        result[code] = list(
+            dict.fromkeys(
+                (*aliases, *rescue_aliases)
+            )
+        )
 
     return result
 
@@ -363,6 +677,14 @@ FOLDER_TITLES: Dict[str, str] = _titles_from_specs(FOLDER_REGISTRY)
 
 SETTINGS_SECTION_ALIASES: Dict[str, list[str]] = _specs_to_aliases(SETTINGS_SECTION_REGISTRY)
 SETTINGS_SECTION_TITLES: Dict[str, str] = _titles_from_specs(SETTINGS_SECTION_REGISTRY)
+
+APP_RESCUE_ALIASES: Dict[str, list[str]] = (
+    _specs_to_rescue_aliases(APP_REGISTRY)
+)
+
+SITE_RESCUE_ALIASES: Dict[str, list[str]] = (
+    _specs_to_rescue_aliases(SITE_REGISTRY)
+)
 
 
 def _iter_alias_hits(
@@ -464,6 +786,19 @@ def match_app_code(text: str, *, fuzzy: bool = False) -> str | None:
     return match.code if match else None
 
 
+def match_app_rescue(
+    texts: Sequence[str],
+) -> RescueMatch | None:
+    return find_alias_rescue_match(
+        texts,
+        APP_RESCUE_ALIASES,
+        min_ratio=0.90,
+        domain_min_ratio=0.90,
+        min_margin=0.08,
+        min_compact_len=5,
+    )
+
+
 def match_site(text: str, *, fuzzy: bool = False) -> AliasMatch | None:
     return find_alias_match(text, SITE_ALIASES, fuzzy=fuzzy)
 
@@ -471,6 +806,20 @@ def match_site(text: str, *, fuzzy: bool = False) -> AliasMatch | None:
 def match_site_code(text: str, *, fuzzy: bool = False) -> str | None:
     match = match_site(text, fuzzy=fuzzy)
     return match.code if match else None
+
+
+def match_site_rescue(
+    texts: Sequence[str],
+) -> RescueMatch | None:
+    return find_alias_rescue_match(
+        texts,
+        SITE_RESCUE_ALIASES,
+        min_ratio=0.88,
+        domain_min_ratio=0.92,
+        min_margin=0.08,
+        min_compact_len=5,
+        domain_rescue_map=SITE_DOMAIN_RESCUE_MAP,
+    )
 
 
 def match_folder(text: str, *, fuzzy: bool = False) -> AliasMatch | None:

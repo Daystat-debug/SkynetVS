@@ -28,6 +28,8 @@ from modules.entity_registry import (
     match_settings_section_code,
     match_site_code,
     normalize_entity_text,
+    match_app_rescue,
+    match_site_rescue,
 )
 
 
@@ -151,6 +153,126 @@ MATCH_CASES: List[Case] = [
         "expected": "system",
     },
 ]
+
+
+RESCUE_CASES: List[Case] = [
+    {
+        "kind": "site",
+        "texts": [
+            "открой окна и",
+            "открой openi.com",
+        ],
+        "expected": "openai",
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой чад же пяти",
+            "аппетим",
+        ],
+        "expected": "chatgpt",
+    },
+    {
+        "kind": "app",
+        "texts": [
+            "открой ди сковороду",
+            "открой дискорды",
+        ],
+        "expected": "discord",
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой окна и",
+            "открой openae.com",
+        ],
+        "expected": None,
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой случайный сайт",
+            "random-example.com",
+        ],
+        "expected": None,
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой openapi.com",
+        ],
+        "expected": None,
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой open-air.com",
+        ],
+        "expected": None,
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой openaii.com",
+        ],
+        "expected": None,
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой оп анаид",
+            "открой опы на и",
+        ],
+        "expected": "openai",
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой опыт ай точка ком",
+        ],
+        "expected": "openai",
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой чат пяти",
+            "sky-net открой charge-gpt",
+        ],
+        "expected": "chatgpt",
+    },
+
+    # Негативные ограничения.
+    {
+        "kind": "site",
+        "texts": [
+            "открой опытной",
+        ],
+        "expected": None,
+    },
+    {
+        "kind": "site",
+        "texts": [
+            "открой окна и",
+        ],
+        "expected": None,
+    },
+]
+
+
+def _rescue_match(
+    kind: str,
+    texts: List[str],
+) -> str | None:
+    if kind == "site":
+        match = match_site_rescue(texts)
+    elif kind == "app":
+        match = match_app_rescue(texts)
+    else:
+        raise ValueError(
+            f"Unknown rescue kind: {kind}"
+        )
+
+    return match.code if match else None
 
 
 def _match(kind: str, text: str) -> str | None:
@@ -343,12 +465,54 @@ def main() -> int:
             print("[FAIL] registry match mismatch")
 
     print()
+    print("--- registry rescue cases ---")
+
+    for idx, case in enumerate(
+        RESCUE_CASES,
+        start=1,
+    ):
+        kind = str(case["kind"])
+        texts = list(case["texts"])
+        expected = case.get("expected")
+
+        actual = _rescue_match(
+            kind,
+            texts,
+        )
+
+        ok = actual == expected
+
+        print()
+        print(f"{idx}. {kind}: {texts}")
+        print(
+            json.dumps(
+                {
+                    "kind": kind,
+                    "texts": texts,
+                    "expected": expected,
+                    "actual": actual,
+                    "ok": ok,
+                },
+                ensure_ascii=False,
+            )
+        )
+
+        if ok:
+            print("[OK] registry rescue case")
+        else:
+            fail_count += 1
+            print(
+                "[FAIL] registry rescue mismatch"
+            )
+
+    print()
     print("=== SUMMARY ===")
     print(
         json.dumps(
             {
                 "match_cases": len(MATCH_CASES),
                 "fail_count": fail_count,
+                "rescue_cases": len(RESCUE_CASES),
             },
             ensure_ascii=False,
             indent=2,

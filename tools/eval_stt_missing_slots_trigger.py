@@ -7,11 +7,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from modules.stt_refinement import SttRefinementResult
 from modules.command_understanding import (
     _maybe_accept_refinement_that_fills_missing_slots,
+    _maybe_accept_registry_entity_rescue,
     understand_command_text,
 )
-from modules.stt_refinement import SttRefinementResult
 
 
 class FakeLogger:
@@ -303,6 +304,99 @@ def _run_rejected_policy_case(
     return errors
 
 
+def _run_registry_rescue_case(
+    *,
+    name: str,
+    original_text: str,
+    candidate_text: str,
+    expected_site: str | None,
+) -> List[str]:
+    original_meta = {
+        "intent": "OPEN_URL",
+        "confidence": 0.60,
+        "slots": {},
+        "_text": original_text,
+    }
+
+    refinement = SttRefinementResult(
+        text=original_text,
+        meta=original_meta,
+        changed=False,
+        reason="refinement_not_better",
+        candidate_text=candidate_text,
+        candidate_meta={
+            "intent": "OPEN_URL",
+            "confidence": 0.50,
+            "slots": {},
+        },
+        trigger_reason="missing_required_slots",
+    )
+
+    result, rescue = (
+        _maybe_accept_registry_entity_rescue(
+            refinement,
+            original_text=original_text,
+            original_meta=original_meta,
+            missing_slots_before_refinement=["url"],
+            force_refine_missing_slots=True,
+            accept_conf=0.35,
+        )
+    )
+
+    slots = result.meta.get("slots") or {}
+
+    actual = {
+        "changed": result.changed,
+        "reason": result.reason,
+        "intent": result.meta.get("intent"),
+        "site": slots.get("site"),
+        "url": slots.get("url"),
+        "rescue_found": rescue is not None,
+    }
+
+    should_accept = expected_site is not None
+
+    expected = {
+        "changed": should_accept,
+        "reason": (
+            "accepted_registry_rescue"
+            if should_accept
+            else "refinement_not_better"
+        ),
+        "intent": "OPEN_URL",
+        "site": expected_site,
+        "url": (
+            "https://openai.com"
+            if expected_site == "openai"
+            else (
+                "https://chatgpt.com"
+                if expected_site == "chatgpt"
+                else None
+            )
+        ),
+        "rescue_found": should_accept,
+    }
+
+    errors: List[str] = []
+
+    for key, expected_value in expected.items():
+        _check_equal(
+            errors,
+            name=key,
+            actual=actual.get(key),
+            expected=expected_value,
+        )
+
+    _print_case(
+        name,
+        actual=actual,
+        expected=expected,
+        errors=errors,
+    )
+
+    return errors
+
+
 def main() -> int:
     all_errors: List[str] = []
 
@@ -353,12 +447,84 @@ def main() -> int:
         )
     )
 
+    all_errors.extend(
+        _run_registry_rescue_case(
+            name="OPENI DOMAIN RESCUED AS OPENAI",
+            original_text="открой окна и",
+            candidate_text="открой openi.com",
+            expected_site="openai",
+        )
+    )
+
+    all_errors.extend(
+        _run_registry_rescue_case(
+            name="CHATGPT RAW TEXT RESCUED",
+            original_text="открой чад же пяти",
+            candidate_text="аппетим",
+            expected_site="chatgpt",
+        )
+    )
+
+    all_errors.extend(
+        _run_registry_rescue_case(
+            name="OPENAE DOMAIN REMAINS REJECTED",
+            original_text="открой окна и",
+            candidate_text="открой openae.com",
+            expected_site=None,
+        )
+    )
+
+    all_errors.extend(
+        _run_registry_rescue_case(
+            name="OPENAPI DOMAIN REMAINS REJECTED",
+            original_text="открой окна и",
+            candidate_text="открой openapi.com",
+            expected_site=None,
+        )
+    )
+
+    all_errors.extend(
+        _run_registry_rescue_case(
+            name="OPENAI SPOKEN DISTORTION RESCUED",
+            original_text="открой оп анаид",
+            candidate_text="открой опы на и",
+            expected_site="openai",
+        )
+    )
+
+    all_errors.extend(
+        _run_registry_rescue_case(
+            name="OPENAI DOT COM SPOKEN DISTORTION RESCUED",
+            original_text="открой опыт ай точка ком",
+            candidate_text="аи.ком",
+            expected_site="openai",
+        )
+    )
+
+    all_errors.extend(
+        _run_registry_rescue_case(
+            name="CHATGPT CHARGE GPT RESCUED",
+            original_text="открой чат пяти",
+            candidate_text="sky-net открой charge-gpt",
+            expected_site="chatgpt",
+        )
+    )
+
+    all_errors.extend(
+        _run_registry_rescue_case(
+            name="COMMON WORD EXPERIENCE REMAINS REJECTED",
+            original_text="открой опытной",
+            candidate_text="",
+            expected_site=None,
+        )
+    )
+
     print()
     print("=== SUMMARY ===")
     print(
         json.dumps(
             {
-                "case_count": 5,
+                "case_count": 13,
                 "error_count": len(all_errors),
                 "ok": not all_errors,
             },

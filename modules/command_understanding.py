@@ -6,10 +6,12 @@ from typing import Any, Callable, Dict, Mapping, Protocol, Sequence
 from modules.command_decision import (
     CommandDecision,
     build_command_decision,
-    is_accepted,
-    missing_required_slots,
 )
-from modules.entity_resolver import resolve_entities
+from modules.entity_resolver import (
+    EntityRescueResult,
+    resolve_entities,
+    rescue_missing_entities,
+)
 from modules.hotword_utils import (
     norm_text,
     split_hotword_prefix,
@@ -273,6 +275,114 @@ def _maybe_accept_refinement_that_fills_missing_slots(
     )
 
 
+def _maybe_accept_registry_entity_rescue(
+    refinement: Any,
+    *,
+    original_text: str,
+    original_meta: Mapping[str, Any],
+    missing_slots_before_refinement: Sequence[str],
+    force_refine_missing_slots: bool,
+    accept_conf: float,
+) -> tuple[Any, EntityRescueResult | None]:
+    """
+    Последний безопасный rescue-pass после обычного Whisper refinement.
+
+    Анализирует:
+      - Whisper candidate;
+      - исходный Vosk text.
+
+    Принимает только известную registry-сущность и не меняет intent.
+    """
+    if not force_refine_missing_slots:
+        return refinement, None
+
+    current_decision = build_command_decision(
+        refinement.meta,
+        accept_conf=accept_conf,
+    )
+
+    if current_decision.runnable:
+        return refinement, None
+
+    candidate_text = str(
+        getattr(
+            refinement,
+            "candidate_text",
+            "",
+        )
+        or ""
+    ).strip()
+
+    rescue_texts = []
+
+    if candidate_text:
+        rescue_texts.append(candidate_text)
+
+    rescue_texts.append(original_text)
+
+    rescue = rescue_missing_entities(
+        rescue_texts,
+        dict(original_meta),
+    )
+
+    if not rescue.changed:
+        return refinement, None
+
+    original_intent = str(
+        original_meta.get("intent") or ""
+    ).upper().strip()
+
+    rescued_intent = str(
+        rescue.meta.get("intent") or ""
+    ).upper().strip()
+
+    if (
+        not original_intent
+        or rescued_intent != original_intent
+    ):
+        return refinement, None
+
+    rescued_slots = dict(
+        rescue.meta.get("slots") or {}
+    )
+
+    still_missing = [
+        slot_name
+        for slot_name in missing_slots_before_refinement
+        if not _has_slot_value(
+            rescued_slots,
+            slot_name,
+        )
+    ]
+
+    if still_missing:
+        return refinement, None
+
+    rescued_decision = build_command_decision(
+        rescue.meta,
+        accept_conf=accept_conf,
+    )
+
+    if not rescued_decision.runnable:
+        return refinement, None
+
+    rescued_refinement = replace(
+        refinement,
+        text=original_text,
+        meta=rescue.meta,
+        changed=True,
+        reason="accepted_registry_rescue",
+        candidate_text=(
+            rescue.source_text
+            or candidate_text
+            or original_text
+        ),
+        candidate_meta=rescue.meta,
+    )
+
+    return rescued_refinement, rescue
+
+
 def understand_command_text(
     command_text: str,
     *,
@@ -440,13 +550,35 @@ def understand_command_text(
         accept_conf=accept_conf,
     )
 
+    refinement, registry_rescue = (
+        _maybe_accept_registry_entity_rescue(
+            refinement,
+            original_text=text_before_refinement,
+            original_meta=meta_before_refinement,
+            missing_slots_before_refinement=(
+                missing_slots_before_refinement
+            ),
+            force_refine_missing_slots=(
+                force_refine_missing_slots
+            ),
+            accept_conf=accept_conf,
+        )
+    )
+
     if refinement.error:
         _print(print_func, f"[WHISPER] refine failed: {refinement.error}")
 
     if refinement.candidate_text and refinement.candidate_meta is not None:
+        candidate_source = (
+            "REGISTRY RESCUE"
+            if refinement.reason
+            == "accepted_registry_rescue"
+            else "WHISPER"
+        )
+
         _print(
             print_func,
-            f"[WHISPER] '{text_in}' -> "
+            f"[{candidate_source}] '{text_in}' -> "
             f"'{refinement.candidate_text}'",
         )
 
@@ -462,6 +594,29 @@ def understand_command_text(
             f"intent={refinement.candidate_meta.get('intent')} "
             f"conf={refinement.candidate_meta.get('confidence', 0.0):.2f} "
             f"slots={refinement.candidate_meta.get('slots')}",
+        )
+
+    if registry_rescue is not None:
+        _log_event(
+            logger,
+            "entity_registry_rescue",
+            {
+                "text": text_before_refinement,
+                "intent": refinement.meta.get("intent"),
+                "kind": registry_rescue.kind,
+                "code": registry_rescue.code,
+                "score": registry_rescue.score,
+                "margin": registry_rescue.margin,
+                "source_text": registry_rescue.source_text,
+                "candidate_text": (
+                    registry_rescue.candidate_text
+                ),
+                "matched_alias": registry_rescue.alias,
+                "slots": (
+                    refinement.meta.get("slots")
+                    or {}
+                ),
+            },
         )
 
     _log_event(

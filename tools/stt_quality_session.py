@@ -241,8 +241,12 @@ def _evaluate(
     if semantic_match and not policy_match:
         outcome = "policy_mismatch"
 
+
     elif passed:
-        if changed:
+
+        if reason == "accepted_registry_rescue":
+            outcome = "registry_rescue_success"
+        elif changed:
             outcome = "refined_success"
         elif reason == "accepted_complete":
             outcome = "accepted_complete_success"
