@@ -4,7 +4,7 @@ import argparse
 import json
 import sys
 import time
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
@@ -32,8 +32,9 @@ class Case:
     code: str
     phrase: str
     intent: str
-    slot: str
-    value: str
+    slot: str = ""
+    value: str = ""
+    expected_refinement_reason: str | None = None
 
 
 def _cases() -> list[Case]:
@@ -79,6 +80,18 @@ def _cases() -> list[Case]:
             "OPEN_URL",
             "url",
             get_site_url("youtube"),
+        ),
+        Case(
+            code="music_play",
+            phrase="скайнет запусти музыку",
+            intent="MUSIC_PLAY",
+            expected_refinement_reason="accepted_complete",
+        ),
+        Case(
+            code="music_pause",
+            phrase="скайнет останови музыку",
+            intent="MUSIC_PAUSE",
+            expected_refinement_reason="accepted_complete",
         ),
     ]
 
@@ -169,28 +182,39 @@ def _matches(
     meta: dict[str, Any],
     case: Case,
 ) -> bool:
+    actual_intent = str(
+        meta.get("intent") or ""
+    ).upper().strip()
+
+    if actual_intent != case.intent:
+        return False
+
+    # У некоторых команд, например MUSIC_PLAY,
+    # обязательные slots отсутствуют.
+    if not case.slot:
+        return True
+
     slots = _dict(meta.get("slots"))
 
-    return (
-        str(meta.get("intent") or "").upper() == case.intent
-        and _norm(
-            case.slot,
-            slots.get(case.slot),
-        )
-        == _norm(
-            case.slot,
-            case.value,
-        )
+    return _norm(
+        case.slot,
+        slots.get(case.slot),
+    ) == _norm(
+        case.slot,
+        case.value,
     )
 
 
 def _evaluate(
     case: Case,
     event: dict[str, Any] | None,
+    *,
+    attempt: int,
 ) -> dict[str, Any]:
     if event is None:
         return {
             "case": asdict(case),
+            "attempt": attempt,
             "passed": False,
             "outcome": "no_event",
         }
@@ -203,14 +227,27 @@ def _evaluate(
 
     changed = bool(event.get("changed_by_refinement"))
     reason = str(event.get("refinement_reason") or "")
-    passed = _matches(final_meta, case)
 
-    if passed:
-        outcome = (
-            "refined_success"
-            if changed
-            else "direct_success"
-        )
+    semantic_match = _matches(final_meta, case)
+
+    expected_reason = case.expected_refinement_reason
+    policy_match = (
+        expected_reason is None
+        or reason == expected_reason
+    )
+
+    passed = semantic_match and policy_match
+
+    if semantic_match and not policy_match:
+        outcome = "policy_mismatch"
+
+    elif passed:
+        if changed:
+            outcome = "refined_success"
+        elif reason == "accepted_complete":
+            outcome = "accepted_complete_success"
+        else:
+            outcome = "direct_success"
 
     elif reason == "refine_failed":
         outcome = "refine_failed"
@@ -229,7 +266,7 @@ def _evaluate(
     ):
         outcome = "intent_mismatch"
 
-    elif not _norm(
+    elif case.slot and not _norm(
         case.slot,
         final_slots.get(case.slot),
     ):
@@ -242,6 +279,7 @@ def _evaluate(
 
     return {
         "case": asdict(case),
+        "attempt": attempt,
         "passed": passed,
         "outcome": outcome,
         "raw_text": event.get("raw_text"),
@@ -260,17 +298,94 @@ def _evaluate(
     }
 
 
+def _success_rate(
+    passed: int,
+    total: int,
+) -> float:
+    if total <= 0:
+        return 0.0
+
+    return round(
+        passed * 100.0 / total,
+        1,
+    )
+
+
+def _aggregate_cases(
+    results: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    grouped: dict[
+        str,
+        list[dict[str, Any]],
+    ] = defaultdict(list)
+
+    for item in results:
+        case = _dict(item.get("case"))
+        code = str(case.get("code") or "unknown")
+        grouped[code].append(item)
+
+    summaries: list[dict[str, Any]] = []
+
+    for code, attempts in grouped.items():
+        passed = sum(
+            bool(item.get("passed"))
+            for item in attempts
+        )
+
+        outcomes = Counter(
+            str(item.get("outcome") or "unknown")
+            for item in attempts
+        )
+
+        models = Counter(
+            str(
+                item.get("active_model_path")
+                or "unknown"
+            )
+            for item in attempts
+        )
+
+        first_case = _dict(
+            attempts[0].get("case")
+        )
+
+        summaries.append(
+            {
+                "code": code,
+                "phrase": first_case.get("phrase"),
+                "intent": first_case.get("intent"),
+                "attempts": len(attempts),
+                "passed": passed,
+                "failed": len(attempts) - passed,
+                "success_rate": _success_rate(
+                    passed,
+                    len(attempts),
+                ),
+                "by_outcome": dict(
+                    sorted(outcomes.items())
+                ),
+                "by_model": dict(
+                    sorted(models.items())
+                ),
+            }
+        )
+
+    return summaries
+
+
 def _make_report(
     results: list[dict[str, Any]],
     log_path: Path,
 ) -> dict[str, Any]:
     passed = sum(
-        bool(item["passed"])
+        bool(item.get("passed"))
         for item in results
     )
 
+    failed = len(results) - passed
+
     outcomes = Counter(
-        item["outcome"]
+        str(item.get("outcome") or "unknown")
         for item in results
     )
 
@@ -282,16 +397,36 @@ def _make_report(
         for item in results
     )
 
+    case_summaries = _aggregate_cases(results)
+
+    cases_all_passed = sum(
+        int(item["failed"] == 0)
+        for item in case_summaries
+    )
+
     return {
-        "version": 1,
+        "version": 2,
         "created_at": datetime.now().isoformat(
             timespec="seconds"
         ),
         "log_path": str(log_path),
         "summary": {
-            "total_cases": len(results),
+            "total_cases": len(case_summaries),
+            "total_attempts": len(results),
+            # Оставляем для совместимости с --strict.
             "passed": passed,
-            "failed": len(results) - passed,
+            "failed": failed,
+            "passed_attempts": passed,
+            "failed_attempts": failed,
+            "overall_success_rate": _success_rate(
+                passed,
+                len(results),
+            ),
+            "cases_all_passed": cases_all_passed,
+            "cases_with_failures": (
+                len(case_summaries)
+                - cases_all_passed
+            ),
             "by_outcome": dict(
                 sorted(outcomes.items())
             ),
@@ -299,6 +434,7 @@ def _make_report(
                 sorted(models.items())
             ),
         },
+        "cases": case_summaries,
         "results": results,
     }
 
@@ -337,20 +473,60 @@ def _save(report: dict[str, Any]) -> None:
 
 
 def _print(report: dict[str, Any]) -> None:
-    summary = report["summary"]
+    summary = _dict(report.get("summary"))
+    results = list(report.get("results") or [])
+
+    case_summaries = list(
+        report.get("cases")
+        or _aggregate_cases(results)
+    )
+
+    total_attempts = int(
+        summary.get("total_attempts")
+        or len(results)
+    )
+
+    passed_attempts = int(
+        summary.get(
+            "passed_attempts",
+            summary.get("passed", 0),
+        )
+        or 0
+    )
+
+    failed_attempts = int(
+        summary.get(
+            "failed_attempts",
+            summary.get("failed", 0),
+        )
+        or 0
+    )
+
+    overall_rate = summary.get(
+        "overall_success_rate"
+    )
+
+    if overall_rate is None:
+        overall_rate = _success_rate(
+            passed_attempts,
+            total_attempts,
+        )
 
     print()
-    print("=== STT QUALITY BASELINE V1 ===")
+    print("=== STT QUALITY BASELINE V2 ===")
     print(
-        f"Passed: "
-        f"{summary['passed']}/"
-        f"{summary['total_cases']}"
+        f"Attempts: {passed_attempts}/"
+        f"{total_attempts} passed "
+        f"({overall_rate}%)"
+    )
+    print(
+        f"Failed attempts: {failed_attempts}"
     )
 
     print(
         "Outcomes:",
         json.dumps(
-            summary["by_outcome"],
+            summary.get("by_outcome") or {},
             ensure_ascii=False,
         ),
     )
@@ -358,38 +534,65 @@ def _print(report: dict[str, Any]) -> None:
     print(
         "Models:",
         json.dumps(
-            summary["by_model"],
+            summary.get("by_model") or {},
             ensure_ascii=False,
         ),
     )
 
     print()
+    print("=== CASE RELIABILITY ===")
 
-    for item in report["results"]:
-        case = item["case"]
+    for item in case_summaries:
         status = (
             "PASS"
-            if item["passed"]
+            if int(item.get("failed") or 0) == 0
             else "FAIL"
         )
 
-        model = Path(
-            str(
-                item.get("active_model_path")
-                or "unknown"
+        print(
+            f"[{status}] {item.get('code')}: "
+            f"{item.get('passed')}/"
+            f"{item.get('attempts')} "
+            f"({item.get('success_rate')}%)"
+        )
+
+        print(
+            "       outcomes="
+            + json.dumps(
+                item.get("by_outcome") or {},
+                ensure_ascii=False,
             )
-        ).name
-
-        print(
-            f"[{status}] {case['code']}: "
-            f"{item['outcome']} | "
-            f"model={model}"
         )
 
-        print(
-            f"       raw={item.get('raw_text')!r} "
-            f"-> final={item.get('final_text')!r}"
-        )
+    failed_results = [
+        item
+        for item in results
+        if not item.get("passed")
+    ]
+
+    if failed_results:
+        print()
+        print("=== FAILED ATTEMPTS ===")
+
+        for item in failed_results:
+            case = _dict(item.get("case"))
+
+            print(
+                f"[FAIL] {case.get('code')} "
+                f"attempt={item.get('attempt', 1)}: "
+                f"{item.get('outcome')}"
+            )
+
+            print(
+                f"       raw={item.get('raw_text')!r} "
+                f"-> final={item.get('final_text')!r}"
+            )
+
+            candidate = item.get("candidate_text")
+            if candidate:
+                print(
+                    f"       candidate={candidate!r}"
+                )
 
     print()
     print(
@@ -403,7 +606,7 @@ def run(args: argparse.Namespace) -> int:
     baseline = _cases()
     results: list[dict[str, Any]] = []
 
-    print("=== STT QUALITY BASELINE V1 ===")
+    print("=== STT QUALITY BASELINE V2 ===")
     print(
         "SkynetVS должен работать "
         "в другом терминале."
@@ -416,56 +619,86 @@ def run(args: argparse.Namespace) -> int:
         f"Runtime log: {log_path}"
     )
 
-    for index, case in enumerate(
-        baseline,
-        start=1,
-    ):
-        event = None
+    attempts_per_case = max(
+        1,
+        int(args.attempts),
+    )
 
-        for attempt in range(
-            args.retries + 1
+    if args.case_codes:
+        selected_codes = set(args.case_codes)
+        baseline = [
+            case
+            for case in baseline
+            if case.code in selected_codes
+        ]
+
+    total_runs = (
+        len(baseline)
+        * attempts_per_case
+    )
+    run_index = 0
+
+    for case in baseline:
+        for case_attempt in range(
+            1,
+            attempts_per_case + 1,
         ):
-            print()
-            print(
-                f"[{index}/{len(baseline)}] "
-                f"Произнеси: {case.phrase}"
-            )
+            run_index += 1
+            event = None
 
-            input(
-                "Нажми Enter непосредственно "
-                "перед произнесением..."
-            )
-
-            event = _wait_event(
-                log_path,
-                _size(log_path),
-                args.timeout,
-            )
-
-            if event is not None:
-                break
-
-            print(
-                f"[TIMEOUT] Нет stt_diagnostic "
-                f"за {args.timeout} сек."
-            )
-
-            if attempt < args.retries:
+            for retry_index in range(
+                max(0, int(args.retries)) + 1
+            ):
+                print()
                 print(
-                    "[INFO] Повторяем кейс."
+                    f"[{run_index}/{total_runs}] "
+                    f"{case.code}, "
+                    f"attempt "
+                    f"{case_attempt}/"
+                    f"{attempts_per_case}"
+                )
+                print(
+                    f"Произнеси: {case.phrase}"
                 )
 
-        result = _evaluate(
-            case,
-            event,
-        )
+                input(
+                    "Нажми Enter непосредственно "
+                    "перед произнесением..."
+                )
 
-        results.append(result)
+                event = _wait_event(
+                    log_path,
+                    _size(log_path),
+                    args.timeout,
+                )
 
-        print(
-            f"[CAPTURED] {case.code}: "
-            f"{result['outcome']}"
-        )
+                if event is not None:
+                    break
+
+                print(
+                    f"[TIMEOUT] Нет stt_diagnostic "
+                    f"за {args.timeout} сек."
+                )
+
+                if retry_index < args.retries:
+                    print(
+                        "[INFO] Повторяем попытку "
+                        "из-за таймаута."
+                    )
+
+            result = _evaluate(
+                case,
+                event,
+                attempt=case_attempt,
+            )
+
+            results.append(result)
+
+            print(
+                f"[CAPTURED] {case.code} "
+                f"attempt={case_attempt}: "
+                f"{result['outcome']}"
+            )
 
     report = _make_report(
         results,
@@ -530,6 +763,25 @@ def main() -> int:
 
     run_parser = commands.add_parser("run")
     run_parser.add_argument("--log-path")
+    run_parser.add_argument(
+        "--attempts",
+        type=int,
+        default=3,
+        help="Количество успешных захватов каждого кейса",
+    )
+    run_parser.add_argument(
+        "--case",
+        dest="case_codes",
+        action="append",
+        choices=[
+            case.code
+            for case in _cases()
+        ],
+        help=(
+            "Запустить только выбранный кейс. "
+            "Параметр можно повторять."
+        ),
+    )
     run_parser.add_argument(
         "--timeout",
         type=float,
