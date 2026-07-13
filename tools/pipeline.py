@@ -46,6 +46,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate hotword utils", _python_cmd("tools/eval_hotword_utils.py")),
             Step("Evaluate command fragments", _python_cmd("tools/eval_command_fragments.py")),
             Step("Evaluate duration parser", _python_cmd("tools/eval_duration_parser.py")),
+            Step("Evaluate timer service", _python_cmd("tools/eval_timer_service.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
@@ -208,6 +209,14 @@ def available_flows() -> dict[str, list[Step]]:
                 ),
             ),
         ],
+        "timer_service": [
+            Step(
+                "Evaluate timer service",
+                _python_cmd(
+                    "tools/eval_timer_service.py"
+                ),
+            ),
+        ],
     }
 
 
@@ -314,6 +323,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  stt_quality Run interactive STT quality baseline", log_file)
     _emit("  stt_quality_report Show latest STT quality baseline", log_file)
     _emit("  duration   Run duration parser eval only", log_file)
+    _emit("  timer_service Run timer service eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
