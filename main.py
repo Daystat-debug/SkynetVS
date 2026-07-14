@@ -55,6 +55,15 @@ from modules.timer_service import (
     TimerFiredEvent,
     TimerService,
 )
+from modules.reminder_repository import ReminderRepository
+from modules.reminder_runtime import (
+    build_reminder_fired_message,
+    build_reminder_fired_queue_event,
+)
+from modules.reminder_service import (
+    ReminderFiredEvent,
+    ReminderService,
+)
 
 colorama_init()
 load_dotenv()
@@ -187,6 +196,42 @@ def main():
         on_fired=on_timer_fired,
     )
 
+    def on_reminder_fired(event: ReminderFiredEvent) -> None:
+        emit_event(build_reminder_fired_queue_event(event))
+
+    reminder_service: ReminderService | None = None
+    reminder_path = Path(__file__).resolve().parent / "data" / "reminders.json"
+
+    try:
+        reminder_path.parent.mkdir(parents=True, exist_ok=True)
+
+        reminder_repository = ReminderRepository(reminder_path)
+        reminder_service = ReminderService(
+            repository=reminder_repository,
+            on_fired=on_reminder_fired,
+        )
+
+        snapshot = reminder_service.status()
+
+        print(f"[REMINDER] enabled: active={snapshot.count}")
+        logger.event(
+            "reminder_service_started",
+            {
+                "path": str(reminder_path),
+                "active_count": snapshot.count,
+                "scheduled_reminder_id": snapshot.scheduled_reminder_id,
+            },
+        )
+    except Exception as e:
+        print(f"[REMINDER] disabled: {e}")
+        logger.event(
+            "reminder_service_init_failed",
+            {
+                "path": str(reminder_path),
+                "error": str(e),
+            },
+        )
+
     whisper = None
     if SETTINGS.whisper_enable:
         try:
@@ -227,6 +272,7 @@ def main():
         typing_service=typing_service,
         window_context_service=window_context_service,
         timer_service=timer_service,
+        reminder_service=reminder_service,
     )
     router = Router(actions, settings=SETTINGS)
 
@@ -435,26 +481,58 @@ def main():
             "Таймер завершён",
         )
 
-    while True:
-        evt = event_q.get()
+    def handle_reminder_fired_event(evt: dict) -> None:
+        nonlocal last_tts_end
 
-        if evt.get("type") == "stt_error":
-            print(f"[STT] producer error: {evt.get('error')}")
-            logger.event("stt_error", {"error": evt.get("error")})
-            continue
+        payload = dict(evt.get("reminder") or {})
+        message = build_reminder_fired_message(payload)
 
-        if evt.get("type") == "cmd_timeout":
-            handle_cmd_timeout_event(evt)
-            continue
+        print(f"⏰ [REMINDER] {message}")
+        logger.event("reminder_fired", payload)
 
-        if evt.get("type") == "timer_fired":
-            handle_timer_fired_event(evt)
-            continue
+        last_tts_end = say(stt, tts, message)
 
-        if evt.get("type") == "phrase":
-            handle_phrase_event(evt)
-            continue
+    try:
+        while True:
+            evt = event_q.get()
+            event_type = evt.get("type")
 
+            if event_type == "stt_error":
+                print(f"[STT] producer error: {evt.get('error')}")
+                logger.event("stt_error", {"error": evt.get("error")})
+                continue
+
+            if event_type == "cmd_timeout":
+                handle_cmd_timeout_event(evt)
+                continue
+
+            if event_type == "timer_fired":
+                handle_timer_fired_event(evt)
+                continue
+
+            if event_type == "reminder_fired":
+                handle_reminder_fired_event(evt)
+                continue
+
+            if event_type == "phrase":
+                handle_phrase_event(evt)
+                continue
+    except KeyboardInterrupt:
+        print("\n[STOP] SkynetVS")
+    finally:
+        cancel_cmd_timer()
+        timer_service.cancel()
+
+        if reminder_service is not None:
+            reminder_service.shutdown()
+            snapshot = reminder_service.status()
+
+            logger.event(
+                "reminder_service_stopped",
+                {
+                    "remaining_count": snapshot.count,
+                },
+            )
 
 if __name__ == "__main__":
     main()

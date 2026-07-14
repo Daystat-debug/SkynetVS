@@ -54,6 +54,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate reminder service", _python_cmd("tools/eval_reminder_service.py")),
             Step("Evaluate reminder command parser", _python_cmd("tools/eval_reminder_command_parser.py")),
             Step("Evaluate reminder actions", _python_cmd("tools/eval_reminder_actions.py")),
+            Step("Evaluate reminder runtime wiring", _python_cmd("tools/eval_reminder_runtime.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
@@ -235,6 +236,9 @@ def available_flows() -> dict[str, list[Step]]:
         "reminder_actions": [
             Step("Evaluate reminder actions", _python_cmd("tools/eval_reminder_actions.py")),
         ],
+        "reminder_runtime": [
+            Step("Evaluate reminder runtime wiring", _python_cmd("tools/eval_reminder_runtime.py")),
+        ],
     }
 
 
@@ -349,7 +353,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  reminder_service Run reminder service eval only", log_file)
     _emit("  reminder_command_parser Run reminder command parser eval only", log_file)
     _emit("  reminder_actions Run reminder actions eval only", log_file)
-
+    _emit("  reminder_runtime Run reminder runtime wiring eval only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
