@@ -666,6 +666,26 @@ REMINDER_CASES: List[Case] = [
         "recommended_conf": 0.90,
     },
     {
+        "text": "напомню через двадцать секунд проверить духовку",
+        "intent": "CREATE_REMINDER",
+        "required_slots": {
+            "reminder_text": "проверить духовку",
+            "reminder_time_kind": "relative",
+            "matched_time_text": "через двадцать секунд",
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "напомнить через минуту купить хлеб",
+        "intent": "CREATE_REMINDER",
+        "required_slots": {
+            "reminder_text": "купить хлеб",
+            "reminder_time_kind": "relative",
+            "matched_time_text": "через минуту",
+        },
+        "recommended_conf": 0.90,
+    },
+    {
         "text": (
             "создай напоминание завтра "
             "в 9 купить хлеб"

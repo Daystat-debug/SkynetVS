@@ -34,6 +34,34 @@ CASES: list[dict[str, Any]] = [
         },
     },
     {
+        "name": "vosk create alias",
+        "text": "напомню через двадцать секунд проверить духовку",
+        "expected": {
+            "intent": "CREATE_REMINDER",
+            "error": None,
+            "slots": {
+                "due_at_epoch": datetime(2026, 7, 13, 15, 0, 20, tzinfo=TZ).timestamp(),
+                "reminder_text": "проверить духовку",
+                "reminder_time_kind": "relative",
+                "matched_time_text": "через двадцать секунд",
+            },
+        },
+    },
+    {
+        "name": "infinitive create alias",
+        "text": "напомнить через минуту купить хлеб",
+        "expected": {
+            "intent": "CREATE_REMINDER",
+            "error": None,
+            "slots": {
+                "due_at_epoch": datetime(2026, 7, 13, 15, 1, tzinfo=TZ).timestamp(),
+                "reminder_text": "купить хлеб",
+                "reminder_time_kind": "relative",
+                "matched_time_text": "через минуту",
+            },
+        },
+    },
+    {
         "name": "create reminder alias",
         "text": "создай напоминание завтра в 9 купить хлеб",
         "expected": {
@@ -160,6 +188,15 @@ CASES: list[dict[str, Any]] = [
     {
         "name": "bare reminder is not a command",
         "text": "напоминание",
+        "expected": {
+            "intent": None,
+            "error": None,
+            "slots": {},
+        },
+    },
+    {
+        "name": "alias outside command prefix is ignored",
+        "text": "я напомню через двадцать секунд проверить духовку",
         "expected": {
             "intent": None,
             "error": None,
