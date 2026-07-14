@@ -593,6 +593,15 @@ NEGATIVE_CASES: List[Case] = [
             "CANCEL_TIMER",
         ],
     },
+    {
+        "text": "напоминание",
+        "intent": None,
+        "forbidden_intents": [
+            "CREATE_REMINDER",
+            "LIST_REMINDERS",
+            "CANCEL_REMINDER",
+        ],
+    },
 ]
 
 
@@ -642,6 +651,111 @@ TIMER_CASES: List[Case] = [
 ]
 
 
+REMINDER_CASES: List[Case] = [
+    {
+        "text": (
+            "напомни через 20 минут "
+            "проверить духовку"
+        ),
+        "intent": "CREATE_REMINDER",
+        "required_slots": {
+            "reminder_text": "проверить духовку",
+            "reminder_time_kind": "relative",
+            "matched_time_text": "через 20 минут",
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": (
+            "создай напоминание завтра "
+            "в 9 купить хлеб"
+        ),
+        "intent": "CREATE_REMINDER",
+        "required_slots": {
+            "reminder_text": "купить хлеб",
+            "reminder_time_kind": "tomorrow",
+            "matched_time_text": "завтра в 9",
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "напомни купить хлеб",
+        "intent": "CREATE_REMINDER",
+        "required_slots": {
+            "reminder_error": (
+                "missing_reminder_time"
+            ),
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "напомни завтра в 9",
+        "intent": "CREATE_REMINDER",
+        "required_slots": {
+            "reminder_error": (
+                "missing_reminder_text"
+            ),
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": (
+            "напомни завтра в 25:00 "
+            "проверить духовку"
+        ),
+        "intent": "CREATE_REMINDER",
+        "required_slots": {
+            "reminder_error": (
+                "invalid_reminder_time"
+            ),
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "покажи мои напоминания",
+        "intent": "LIST_REMINDERS",
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "отмени последнее напоминание",
+        "intent": "CANCEL_REMINDER",
+        "required_slots": {
+            "cancel_mode": "latest",
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "отмени напоминание про хлеб",
+        "intent": "CANCEL_REMINDER",
+        "required_slots": {
+            "cancel_mode": "query",
+            "reminder_query": "хлеб",
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "отмени напоминание",
+        "intent": "CANCEL_REMINDER",
+        "required_slots": {
+            "reminder_error": (
+                "missing_reminder_target"
+            ),
+        },
+        "recommended_conf": 0.90,
+    },
+    {
+        "text": "удали все напоминания",
+        "intent": "CANCEL_REMINDER",
+        "required_slots": {
+            "reminder_error": (
+                "bulk_cancel_not_supported"
+            ),
+        },
+        "recommended_conf": 0.90,
+    },
+]
+
+
 CASE_GROUPS: List[tuple[str, List[Case]]] = [
     ("base", BASE_CASES),
     ("app", APP_CASES),
@@ -654,6 +768,8 @@ CASE_GROUPS: List[tuple[str, List[Case]]] = [
     ("tts", TTS_CASES),
     ("negative", NEGATIVE_CASES),
     ("timer", TIMER_CASES),
+    ("reminder", REMINDER_CASES),
+
 ]
 
 

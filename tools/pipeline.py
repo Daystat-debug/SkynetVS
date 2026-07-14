@@ -53,6 +53,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate reminder datetime parser", _python_cmd("tools/eval_reminder_datetime.py")),
             Step("Evaluate reminder service", _python_cmd("tools/eval_reminder_service.py")),
             Step("Evaluate reminder command parser", _python_cmd("tools/eval_reminder_command_parser.py")),
+            Step("Evaluate reminder actions", _python_cmd("tools/eval_reminder_actions.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
@@ -231,6 +232,9 @@ def available_flows() -> dict[str, list[Step]]:
         "reminder_command_parser": [
             Step("Evaluate reminder command parser", _python_cmd("tools/eval_reminder_command_parser.py")),
         ],
+        "reminder_actions": [
+            Step("Evaluate reminder actions", _python_cmd("tools/eval_reminder_actions.py")),
+        ],
     }
 
 
@@ -338,12 +342,14 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  stt_quality_report Show latest STT quality baseline", log_file)
     _emit("  duration   Run duration parser eval only", log_file)
     _emit("  timer_service Run timer service eval only", log_file)
-    _emit("  timer_actions Run timer actions eval only", log_file,)
-    _emit("  timer_command_runtime Run timer command runtime eval only", log_file,)
-    _emit("  reminder_repository Run reminder repository eval only", log_file,)
+    _emit("  timer_actions Run timer actions eval only", log_file)
+    _emit("  timer_command_runtime Run timer command runtime eval only", log_file)
+    _emit("  reminder_repository Run reminder repository eval only", log_file)
     _emit("  reminder_datetime Run reminder datetime parser eval only", log_file)
     _emit("  reminder_service Run reminder service eval only", log_file)
-    _emit("  reminder_command_parser Run reminder command parser eval only", log_file,)
+    _emit("  reminder_command_parser Run reminder command parser eval only", log_file)
+    _emit("  reminder_actions Run reminder actions eval only", log_file)
+
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)

@@ -361,5 +361,23 @@
   ],
   "CANCEL_TIMER_UNCERTAIN": [
     "Похоже, ты хотел отменить таймер."
+  ],
+  "CREATE_REMINDER": [
+    "Создаю напоминание."
+  ],
+  "CREATE_REMINDER_UNCERTAIN": [
+    "Похоже, ты хотел создать напоминание."
+  ],
+  "LIST_REMINDERS": [
+    "Проверяю напоминания."
+  ],
+  "LIST_REMINDERS_UNCERTAIN": [
+    "Похоже, ты хотел посмотреть напоминания."
+  ],
+  "CANCEL_REMINDER": [
+    "Отменяю напоминание."
+  ],
+  "CANCEL_REMINDER_UNCERTAIN": [
+    "Похоже, ты хотел отменить напоминание."
   ]
 }

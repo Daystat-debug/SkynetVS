@@ -97,6 +97,23 @@ CASES: List[Case] = [
         "expected_text": "TIMER_STATUS_REPLY",
         "expected_router_calls": 1,
     },
+    {
+        "name": (
+            "reminder list forces "
+            "dynamic base reply"
+        ),
+        "meta": {
+            "intent": "LIST_REMINDERS",
+            "confidence": 0.40,
+            "slots": {},
+            "say": "META_SAY",
+        },
+        "accept_conf": 0.35,
+        "say_conf": 0.55,
+        "router_reply": "REMINDER_LIST_REPLY",
+        "expected_text": "REMINDER_LIST_REPLY",
+        "expected_router_calls": 1,
+    },
 ]
 
 

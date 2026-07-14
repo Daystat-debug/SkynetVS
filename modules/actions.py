@@ -33,6 +33,12 @@ from modules.duration_parser import (
     format_duration_ru,
 )
 from modules.timer_service import TimerService
+from modules.reminder_actions import (
+    ReminderActions,
+)
+from modules.reminder_service import (
+    ReminderService,
+)
 
 
 class Actions:
@@ -57,6 +63,7 @@ class Actions:
         typing_service: Optional[TypingService] = None,
         window_context_service: Optional[WindowContextService] = None,
         timer_service: Optional[TimerService] = None,
+        reminder_service: Optional[ReminderService] = None,
     ):
         self._audio = audio
         self._audio_output = audio_output
@@ -64,6 +71,11 @@ class Actions:
         self._weather_service = weather_service or WeatherService()
         self._volume_step = int(volume_step)
         self._timer_service = timer_service
+        self._reminder_actions = (
+            ReminderActions(reminder_service)
+            if reminder_service is not None
+            else None
+        )
         self._music_prev_double = os.getenv("MUSIC_PREV_DOUBLE", "1").strip() == "1"
         self._music_prev_double_delay = float(os.getenv("MUSIC_PREV_DOUBLE_DELAY", "0.15"))
         self._typing_service = typing_service or TypingService()
@@ -100,6 +112,8 @@ class Actions:
             "PRESS_TAB": self._exec_press_tab,
             "SET_TIMER": self._exec_set_timer,
             "CANCEL_TIMER": self._exec_cancel_timer,
+            "CREATE_REMINDER": (self._exec_create_reminder),
+            "CANCEL_REMINDER": (self._exec_cancel_reminder),
 
         }
         self._reply_handlers: Dict[str, Callable[[Dict[str, Any], Dict[str, Any]], str]] = {
@@ -137,6 +151,9 @@ class Actions:
             "SET_TIMER": self._reply_set_timer,
             "TIMER_STATUS": self._reply_timer_status,
             "CANCEL_TIMER": self._reply_cancel_timer,
+            "CREATE_REMINDER": (self._reply_create_reminder),
+            "LIST_REMINDERS": (self._reply_list_reminders),
+            "CANCEL_REMINDER": (self._reply_cancel_reminder),
         }
 
     def _reply_volume_up(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
@@ -421,6 +438,48 @@ class Actions:
             return "Активного таймера нет."
 
         return "Отменяю таймер."
+
+    def _reply_create_reminder(
+        self,
+        meta: Dict[str, Any],
+        slots: Dict[str, Any],
+    ) -> str:
+        _ = meta
+
+        if self._reminder_actions is None:
+            return "Напоминания недоступны."
+
+        return self._reminder_actions.reply_create(
+            slots
+        )
+
+    def _reply_list_reminders(
+        self,
+        meta: Dict[str, Any],
+        slots: Dict[str, Any],
+    ) -> str:
+        _ = meta
+
+        if self._reminder_actions is None:
+            return "Напоминания недоступны."
+
+        return self._reminder_actions.reply_list(
+            slots
+        )
+
+    def _reply_cancel_reminder(
+        self,
+        meta: Dict[str, Any],
+        slots: Dict[str, Any],
+    ) -> str:
+        _ = meta
+
+        if self._reminder_actions is None:
+            return "Напоминания недоступны."
+
+        return self._reminder_actions.reply_cancel(
+            slots
+        )
 
     def handle(self, meta: Dict[str, Any]) -> str:
         """
@@ -987,6 +1046,28 @@ class Actions:
             return
 
         self._timer_service.cancel()
+
+    def _exec_create_reminder(
+        self,
+        slots: Dict[str, Any],
+    ) -> None:
+        if self._reminder_actions is None:
+            return
+
+        self._reminder_actions.execute_create(
+            slots
+        )
+
+    def _exec_cancel_reminder(
+        self,
+        slots: Dict[str, Any],
+    ) -> None:
+        if self._reminder_actions is None:
+            return
+
+        self._reminder_actions.execute_cancel(
+            slots
+        )
 
     def execute(self, meta: Dict[str, Any]) -> None:
         """

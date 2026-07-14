@@ -14,6 +14,11 @@ DEFAULT_REQUIRED_SLOTS: Dict[str, Sequence[str]] = {
     "SEARCH_YOUTUBE": ("query",),
     "SET_VOLUME": ("volume",),
     "SET_TIMER": ("duration_seconds",),
+    "CREATE_REMINDER": (
+        "due_at_epoch",
+        "reminder_text",
+    ),
+    "CANCEL_REMINDER": ("cancel_mode",),
 }
 
 

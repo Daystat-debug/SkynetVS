@@ -145,6 +145,26 @@ TEXT_CASE_GROUPS: List[tuple[str, List[Case]]] = [
                 "text": "отмени таймер",
                 "expected": expected_runnable(),
             },
+            {
+                "name": "create reminder is runnable",
+                "text": (
+                    "напомни через 20 минут "
+                    "проверить духовку"
+                ),
+                "expected": expected_runnable(),
+            },
+            {
+                "name": "list reminders is runnable",
+                "text": "покажи мои напоминания",
+                "expected": expected_runnable(),
+            },
+            {
+                "name": "cancel reminder is runnable",
+                "text": (
+                    "отмени последнее напоминание"
+                ),
+                "expected": expected_runnable(),
+            },
         ],
     ),
     (
@@ -295,6 +315,35 @@ META_CASE_GROUPS: List[tuple[str, List[Case]]] = [
                     expected_missing_slots(
                         "duration_seconds"
                     )
+                ),
+            },
+            {
+                "name": (
+                    "CREATE_REMINDER without "
+                    "time and text is blocked"
+                ),
+                "meta": {
+                    "intent": "CREATE_REMINDER",
+                    "confidence": 1.0,
+                    "slots": {},
+                },
+                "expected": expected_missing_slots(
+                    "due_at_epoch",
+                    "reminder_text",
+                ),
+            },
+            {
+                "name": (
+                    "CANCEL_REMINDER without "
+                    "mode is blocked"
+                ),
+                "meta": {
+                    "intent": "CANCEL_REMINDER",
+                    "confidence": 1.0,
+                    "slots": {},
+                },
+                "expected": expected_missing_slots(
+                    "cancel_mode"
                 ),
             },
         ],

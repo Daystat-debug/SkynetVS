@@ -37,6 +37,9 @@ from modules.entity_registry import (
     match_settings_section_code,
     match_site_code,
 )
+from modules.reminder_command_parser import (
+    parse_reminder_command,
+)
 
 _MODEL = None
 _MODEL_PATH = Path("models/nlu_intent.joblib")
@@ -516,6 +519,17 @@ def _extract_open_settings_slots(text: str) -> Dict[str, Any]:
     return slots
 
 
+def _extract_reminder_slots(
+    text: str,
+) -> Dict[str, Any]:
+    result = parse_reminder_command(text)
+
+    if not result.recognized:
+        return {}
+
+    return dict(result.slots)
+
+
 def _extract_set_timer_slots(
     text: str,
 ) -> Dict[str, Any]:
@@ -545,6 +559,9 @@ _SLOT_EXTRACTORS: Dict[str, Callable[[str], Dict[str, Any]]] = {
     "SHOW_IP": _extract_show_ip_slots,
     "CLOSE_APP": _extract_open_app_slots,
     "SET_TIMER": _extract_set_timer_slots,
+    "CREATE_REMINDER": _extract_reminder_slots,
+    "LIST_REMINDERS": _extract_reminder_slots,
+    "CANCEL_REMINDER": _extract_reminder_slots,
 }
 
 
@@ -672,6 +689,23 @@ def predict_candidates(
                 }
             )
 
+    reminder_result = parse_reminder_command(t)
+    reminder_meta = reminder_result.to_meta()
+
+    if reminder_meta:
+        rows.append(
+            {
+                "intent": reminder_meta.get("intent"),
+                "confidence": 1.0,
+                "source": "rule",
+                "rule": reminder_meta.get("_rule"),
+                "slots": dict(
+                    reminder_meta.get("slots") or {}
+                ),
+                "accepted_by_threshold": True,
+            }
+        )
+
     pipe = _load_model()
     if not pipe:
         return rows[:limit]
@@ -746,6 +780,20 @@ def predict(text: str) -> Dict[str, Any]:
     incomplete_meta = build_incomplete_command_meta(t)
     if incomplete_meta:
         return incomplete_meta
+
+    reminder_result = parse_reminder_command(t)
+    reminder_meta = reminder_result.to_meta()
+
+    if reminder_meta:
+        slots = dict(
+            reminder_meta.get("slots") or {}
+        )
+        reminder_meta["slots"] = slots
+        reminder_meta["say"] = _pick_response(
+            str(reminder_meta.get("intent") or ""),
+            slots,
+        )
+        return reminder_meta
 
     rule_intent = get_exact_intent(t)
     if rule_intent:
