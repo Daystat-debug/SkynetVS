@@ -155,7 +155,12 @@ def main():
         blocksize = 1024,
         device = SETTINGS.stt_input_device,
     )
-    tts = EdgeTTS()
+    tts = EdgeTTS(
+        voice=SETTINGS.tts_voice,
+        rate=SETTINGS.tts_rate,
+        volume=SETTINGS.tts_volume,
+        pitch=SETTINGS.tts_pitch,
+    )
     logger = JsonlLogger(
         LoggerConfig(
             enabled = SETTINGS.log_enable,

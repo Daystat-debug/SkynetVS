@@ -103,16 +103,21 @@ class EdgeTTS:
     """
 
     def __init__(
-        self,
-        voice: str = "ru-RU-SvetlanaNeural",
-        rate: str = "+0%",
-        volume: str | None = None,
-        ducking_enable: bool | None = None,
-        ducking_level: float | None = None,
+            self,
+            voice: str = "ru-RU-SvetlanaNeural",
+            rate: str = "+0%",
+            volume: str = "+20%",
+            pitch: str = "+0Hz",
+            ducking_enable: bool | None = None,
+            ducking_level: float | None = None,
     ):
-        self.voice = voice
-        self.rate = rate
-        self.volume = (volume or os.getenv("TTS_VOLUME", "+20%")).strip()
+        self.voice = (voice or "ru-RU-SvetlanaNeural").strip()
+        self.rate = (rate or "+0%").strip()
+        self.volume = (volume or "+20%").strip()
+        self.pitch = (pitch or "+0Hz").strip()
+
+        if ducking_enable is None:
+            ducking_enable = os.getenv("AUDIO_DUCKING_ENABLE", "1").strip() == "1"
 
         if ducking_enable is None:
             ducking_enable = os.getenv("AUDIO_DUCKING_ENABLE", "1").strip() == "1"
@@ -135,6 +140,7 @@ class EdgeTTS:
             voice=self.voice,
             rate=self.rate,
             volume=self.volume,
+            pitch=self.pitch,
         )
         await communicate.save(out_path)
 

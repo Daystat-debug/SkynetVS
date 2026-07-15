@@ -28,6 +28,12 @@ class Settings:
     nlu_accept_conf: float
     nlu_say_conf: float
 
+    # TTS
+    tts_voice: str
+    tts_rate: str
+    tts_volume: str
+    tts_pitch: str
+
     # Audio
     volume_step: int
     audio_output_headphones: str
@@ -69,6 +75,11 @@ class Settings:
 
             nlu_accept_conf=float(os.getenv("NLU_ACCEPT_CONF", str(DEFAULT_NLU_ACCEPT_CONF))),
             nlu_say_conf=float(os.getenv("NLU_SAY_CONF", "0.55")),
+
+            tts_voice=os.getenv("TTS_VOICE", "ru-RU-SvetlanaNeural").strip() or "ru-RU-SvetlanaNeural",
+            tts_rate=os.getenv("TTS_RATE", "+0%").strip() or "+0%",
+            tts_volume=os.getenv("TTS_VOLUME", "+20%").strip() or "+20%",
+            tts_pitch=os.getenv("TTS_PITCH", "+0Hz").strip() or "+0Hz",
 
             volume_step=int(os.getenv("VOLUME_STEP", "10")),
             audio_output_headphones=os.getenv("AUDIO_OUTPUT_HEADPHONES", "Динамики (6- USB Audio Device)").strip(),

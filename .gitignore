@@ -88,3 +88,6 @@ temp/
 # =========================
 build/
 dist/
+
+data/reminders.json
+data/reminders.json.tmp
