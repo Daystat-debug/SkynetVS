@@ -278,6 +278,7 @@ def main():
         window_context_service=window_context_service,
         timer_service=timer_service,
         reminder_service=reminder_service,
+        event_func=logger.event,
     )
     router = Router(actions, settings=SETTINGS)
 

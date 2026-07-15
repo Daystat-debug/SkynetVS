@@ -58,6 +58,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate TTS settings", _python_cmd("tools/eval_tts_settings.py")),
             Step("Evaluate TTS runtime", _python_cmd("tools/eval_tts_runtime.py")),
             Step("Evaluate audio output", _python_cmd("tools/eval_audio_output.py")),
+            Step("Evaluate audio output actions", _python_cmd("tools/eval_audio_output_actions.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
@@ -251,6 +252,9 @@ def available_flows() -> dict[str, list[Step]]:
         "audio_output": [
             Step("Evaluate audio output", _python_cmd("tools/eval_audio_output.py")),
         ],
+        "audio_output_actions": [
+            Step("Evaluate audio output actions", _python_cmd("tools/eval_audio_output_actions.py")),
+        ],
     }
 
 
@@ -369,6 +373,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  tts_settings Run TTS settings eval only", log_file)
     _emit("  tts_runtime  Run TTS runtime eval only", log_file)
     _emit("  audio_output Evaluate audio output only", log_file)
+    _emit("  audio_output_actions  Evaluate audio output actions only", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)

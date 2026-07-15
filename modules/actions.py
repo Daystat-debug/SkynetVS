@@ -12,7 +12,13 @@ import urllib.request
 
 from typing import Optional, Dict, Any, Callable
 from modules.audio_control import AudioControl
-from modules.audio_output import AudioOutputControl
+from modules.audio_output import (
+    AudioOutputControl,
+    AudioOutputError,
+    AudioOutputResult,
+    STATUS_ALREADY_ACTIVE,
+    STATUS_SWITCHED,
+)
 from modules.media_control import MediaControl
 from modules.screenshot import ScreenshotService
 from modules.error_log import log_exception
@@ -64,9 +70,11 @@ class Actions:
         window_context_service: Optional[WindowContextService] = None,
         timer_service: Optional[TimerService] = None,
         reminder_service: Optional[ReminderService] = None,
+        event_func: Optional[Callable[[str, Dict[str, Any]], None]] = None,
     ):
         self._audio = audio
         self._audio_output = audio_output
+        self._event_func = event_func
         self._screenshot_service = screenshot_service or ScreenshotService()
         self._weather_service = weather_service or WeatherService()
         self._volume_step = int(volume_step)
@@ -847,29 +855,105 @@ class Actions:
         except Exception as e:
             log_exception("actions.screenshot", e, intent="SCREENSHOT")
 
-    def _exec_audio_output_toggle(self, slots: Dict[str, Any]) -> None:
+    def _emit_event(self, name: str, payload: Dict[str, Any]) -> None:
+        if self._event_func is None:
+            return
+
         try:
-            if self._audio_output is not None:
-                self._audio_output.toggle()
-        except Exception as e:
+            self._event_func(name, payload)
+        except Exception:
+            pass
+
+    def _audio_output_payload(
+        self,
+        intent: str,
+        result: AudioOutputResult,
+        *,
+        error: str = "",
+    ) -> Dict[str, Any]:
+        return {
+            "intent": intent,
+            "status": result.status,
+            "changed": result.changed,
+            "requested_name": result.requested_name,
+            "target_name": result.target.name if result.target else "",
+            "before_name": result.before.name if result.before else "",
+            "after_name": result.after.name if result.after else "",
+            "error": error,
+        }
+
+    def _execute_audio_output(
+        self,
+        intent: str,
+        action: Callable[[], AudioOutputResult],
+    ) -> None:
+        try:
+            result = action()
+
+            if result.status == STATUS_ALREADY_ACTIVE:
+                event_name = "audio_output_already_active"
+            elif result.status == STATUS_SWITCHED:
+                event_name = "audio_output_switched"
+            else:
+                error = RuntimeError(f"Unexpected audio output status: {result.status}")
+                self._emit_event(
+                    "audio_output_failed",
+                    self._audio_output_payload(intent, result, error=str(error)),
+                )
+                raise error
+
+            self._emit_event(event_name, self._audio_output_payload(intent, result))
+
+            before_name = result.before.name if result.before else "unknown"
+            after_name = result.after.name if result.after else "unknown"
+            print(f"[AUDIO_OUTPUT] {result.status}: '{before_name}' -> '{after_name}'")
+        except AudioOutputError as e:
+            self._emit_event(
+                "audio_output_failed",
+                self._audio_output_payload(intent, e.result, error=str(e)),
+            )
             print(f"[AUDIO_OUTPUT] execute failed: {e}")
-            log_exception("actions.audio_output_execute", e, intent="AUDIO_OUTPUT_TOGGLE", slots=slots)
+            raise
+        except Exception as e:
+            self._emit_event(
+                "audio_output_failed",
+                {
+                    "intent": intent,
+                    "status": "unexpected_error",
+                    "changed": False,
+                    "requested_name": "",
+                    "target_name": "",
+                    "before_name": "",
+                    "after_name": "",
+                    "error": str(e),
+                },
+            )
+            print(f"[AUDIO_OUTPUT] execute failed: {e}")
+            raise
+
+    def _exec_audio_output_toggle(self, slots: Dict[str, Any]) -> None:
+        _ = slots
+
+        if self._audio_output is None:
+            return
+
+        self._execute_audio_output("AUDIO_OUTPUT_TOGGLE", self._audio_output.toggle)
 
     def _exec_audio_output_headphones(self, slots: Dict[str, Any]) -> None:
-        try:
-            if self._audio_output is not None:
-                self._audio_output.set_headphones()
-        except Exception as e:
-            print(f"[AUDIO_OUTPUT] execute failed: {e}")
-            log_exception("actions.audio_output_execute", e, intent="AUDIO_OUTPUT_HEADPHONES", slots=slots)
+        _ = slots
+
+        if self._audio_output is None:
+            return
+
+        self._execute_audio_output("AUDIO_OUTPUT_HEADPHONES", self._audio_output.set_headphones)
 
     def _exec_audio_output_speakers(self, slots: Dict[str, Any]) -> None:
-        try:
-            if self._audio_output is not None:
-                self._audio_output.set_speakers()
-        except Exception as e:
-            print(f"[AUDIO_OUTPUT] execute failed: {e}")
-            log_exception("actions.audio_output_execute", e, intent="AUDIO_OUTPUT_SPEAKERS", slots=slots)
+        _ = slots
+
+        if self._audio_output is None:
+            return
+
+        self._execute_audio_output("AUDIO_OUTPUT_SPEAKERS", self._audio_output.set_speakers)
 
     def _exec_music_play(self, slots: Dict[str, Any]) -> None:
         try:
