@@ -64,6 +64,10 @@ from modules.reminder_service import (
     ReminderFiredEvent,
     ReminderService,
 )
+from modules.runtime_service_health_runtime import (
+    collect_runtime_service_health,
+    publish_runtime_service_health,
+)
 
 colorama_init()
 load_dotenv()
@@ -205,6 +209,7 @@ def main():
         emit_event(build_reminder_fired_queue_event(event))
 
     reminder_service: ReminderService | None = None
+    reminder_error = ""
     reminder_path = Path(__file__).resolve().parent / "data" / "reminders.json"
 
     try:
@@ -228,6 +233,7 @@ def main():
             },
         )
     except Exception as e:
+        reminder_error = str(e)
         print(f"[REMINDER] disabled: {e}")
         logger.event(
             "reminder_service_init_failed",
@@ -247,11 +253,16 @@ def main():
             whisper = None
             print(f"[WHISPER] disabled: {e}")
 
+    audio_error = ""
+
     try:
         audio = AudioControl()
     except Exception as e:
         audio = None
+        audio_error = str(e)
         print(f"[AUDIO] disabled: {e}")
+
+    audio_output_error = ""
 
     try:
         audio_output = AudioOutputControl(
@@ -261,6 +272,7 @@ def main():
         audio_output.debug_dump_devices()
     except Exception as e:
         audio_output = None
+        audio_output_error = str(e)
         print(f"[AUDIO_OUTPUT] disabled: {e}")
 
     screenshot_service = ScreenshotService()
@@ -285,6 +297,22 @@ def main():
     print("[BOOT] SkynetVS")
     print("[INFO] Скажи: 'Скайнет' / 'Skynet'")
     print(f"[STT] small model: {SETTINGS.stt_model_small}")
+
+    runtime_health_report = collect_runtime_service_health(
+        stt=stt,
+        stt_model_path=SETTINGS.stt_model_small,
+        tts=tts,
+        audio=audio,
+        audio_output=audio_output,
+        weather_service=weather_service,
+        timer_service=timer_service,
+        reminder_service=reminder_service,
+        audio_error=audio_error,
+        audio_output_error=audio_output_error,
+        reminder_error=reminder_error,
+        reminder_path=str(reminder_path),
+    )
+    publish_runtime_service_health(runtime_health_report, event_func=logger.event)
 
     if SETTINGS.stt_model_large:
         print(f"[STT] loading large model in background: {SETTINGS.stt_model_large}")
