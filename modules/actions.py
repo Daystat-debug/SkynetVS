@@ -27,6 +27,8 @@ from pathlib import Path
 from modules.weather_service import WeatherService
 from modules.typing_service import TypingService
 from modules.window_context_service import WindowContextService
+from modules.runtime_service_health import RuntimeServiceHealthReport
+from modules.runtime_service_health_command import build_runtime_service_health_reply
 from modules.entity_registry import (
     get_app_close_strategy,
     get_app_image_names,
@@ -71,10 +73,12 @@ class Actions:
         timer_service: Optional[TimerService] = None,
         reminder_service: Optional[ReminderService] = None,
         event_func: Optional[Callable[[str, Dict[str, Any]], None]] = None,
+        runtime_health_provider: Optional[Callable[[], RuntimeServiceHealthReport]] = None,
     ):
         self._audio = audio
         self._audio_output = audio_output
         self._event_func = event_func
+        self._runtime_health_provider = runtime_health_provider
         self._screenshot_service = screenshot_service or ScreenshotService()
         self._weather_service = weather_service or WeatherService()
         self._volume_step = int(volume_step)
@@ -148,6 +152,7 @@ class Actions:
             "OPEN_SETTINGS": self._reply_open_settings,
             "OPEN_TASK_MANAGER": self._reply_open_task_manager,
             "SHOW_IP": self._reply_show_ip,
+            "SYSTEM_STATUS": self._reply_system_status,
             "EMPTY_RECYCLE_BIN": self._reply_empty_recycle_bin,
             "WEATHER": self._reply_weather,
             "CLOSE_ACTIVE_WINDOW": self._reply_close_active_window,
@@ -261,6 +266,21 @@ class Actions:
 
     def _reply_open_task_manager(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
         return meta.get("say") or "Открываю диспетчер задач."
+
+    def _reply_system_status(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
+        _ = meta
+        _ = slots
+
+        if self._runtime_health_provider is None:
+            return "Проверка состояния системы недоступна."
+
+        try:
+            report = self._runtime_health_provider()
+        except Exception as e:
+            log_exception("actions.system_status", e, intent="SYSTEM_STATUS")
+            return "Не получилось проверить состояние системы."
+
+        return build_runtime_service_health_reply(report)
 
     def _reply_show_ip(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
         scope = str(slots.get("ip_scope") or "local").strip().lower()

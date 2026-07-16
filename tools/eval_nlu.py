@@ -517,6 +517,26 @@ WINDOW_SYSTEM_CASES: List[Case] = [
         "intent": "LOCK_SCREEN",
         "recommended_conf": 0.35,
     },
+    {
+        "text": "состояние системы",
+        "intent": "SYSTEM_STATUS",
+        "recommended_conf": 0.40,
+    },
+    {
+        "text": "проверь сервисы",
+        "intent": "SYSTEM_STATUS",
+        "recommended_conf": 0.40,
+    },
+    {
+        "text": "покажи текущий статус системы",
+        "intent": "SYSTEM_STATUS",
+        "recommended_conf": 0.40,
+    },
+    {
+        "text": "есть ли сейчас проблемы с сервисами",
+        "intent": "SYSTEM_STATUS",
+        "recommended_conf": 0.40,
+    },
 ]
 
 

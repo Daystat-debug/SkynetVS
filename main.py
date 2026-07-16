@@ -280,6 +280,28 @@ def main():
     typing_service = TypingService()
     window_context_service = WindowContextService()
 
+    def collect_and_publish_runtime_health(*, print_report: bool):
+        report = collect_runtime_service_health(
+            stt=stt,
+            stt_model_path=SETTINGS.stt_model_small,
+            tts=tts,
+            audio=audio,
+            audio_output=audio_output,
+            weather_service=weather_service,
+            timer_service=timer_service,
+            reminder_service=reminder_service,
+            audio_error=audio_error,
+            audio_output_error=audio_output_error,
+            reminder_error=reminder_error,
+            reminder_path=str(reminder_path),
+        )
+        publish_runtime_service_health(
+            report,
+            event_func=logger.event,
+            print_func=print if print_report else None,
+        )
+        return report
+
     actions = Actions(
         audio=audio,
         volume_step=SETTINGS.volume_step,
@@ -291,6 +313,7 @@ def main():
         timer_service=timer_service,
         reminder_service=reminder_service,
         event_func=logger.event,
+        runtime_health_provider=lambda: collect_and_publish_runtime_health(print_report=False),
     )
     router = Router(actions, settings=SETTINGS)
 
@@ -298,21 +321,7 @@ def main():
     print("[INFO] Скажи: 'Скайнет' / 'Skynet'")
     print(f"[STT] small model: {SETTINGS.stt_model_small}")
 
-    runtime_health_report = collect_runtime_service_health(
-        stt=stt,
-        stt_model_path=SETTINGS.stt_model_small,
-        tts=tts,
-        audio=audio,
-        audio_output=audio_output,
-        weather_service=weather_service,
-        timer_service=timer_service,
-        reminder_service=reminder_service,
-        audio_error=audio_error,
-        audio_output_error=audio_output_error,
-        reminder_error=reminder_error,
-        reminder_path=str(reminder_path),
-    )
-    publish_runtime_service_health(runtime_health_report, event_func=logger.event)
+    collect_and_publish_runtime_health(print_report=True)
 
     if SETTINGS.stt_model_large:
         print(f"[STT] loading large model in background: {SETTINGS.stt_model_large}")

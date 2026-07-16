@@ -33,6 +33,7 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "check": [
             Step("Command audit", _python_cmd("tools/command_audit.py")),
+            Step("Evaluate intent rule policy", _python_cmd("tools/eval_intent_rule_policy.py")),
             Step("Evaluate entity registry", _python_cmd("tools/eval_entity_registry.py")),
             Step("Evaluate actions registry integration", _python_cmd("tools/eval_actions_registry.py")),
             Step("Evaluate registry cleanup", _python_cmd("tools/eval_registry_cleanup.py")),
@@ -62,6 +63,8 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
             Step("Evaluate runtime service health runtime",
                  _python_cmd("tools/eval_runtime_service_health_runtime.py")),
+            Step("Evaluate runtime service health command",
+                 _python_cmd("tools/eval_runtime_service_health_command.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
@@ -261,6 +264,10 @@ def available_flows() -> dict[str, list[Step]]:
         "runtime_service_health": [
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
             Step("Evaluate runtime service health runtime", _python_cmd("tools/eval_runtime_service_health_runtime.py")),
+            Step("Evaluate runtime service health command", _python_cmd("tools/eval_runtime_service_health_command.py")),
+        ],
+        "intent_rule_policy": [
+            Step("Evaluate intent rule policy", _python_cmd("tools/eval_intent_rule_policy.py")),
         ],
     }
 
@@ -382,6 +389,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  audio_output Evaluate audio output only", log_file)
     _emit("  audio_output_actions  Evaluate audio output actions only", log_file)
     _emit("  runtime_service_health  Evaluate runtime service health only", log_file)
+    _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
