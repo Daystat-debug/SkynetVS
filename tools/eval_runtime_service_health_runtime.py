@@ -261,7 +261,7 @@ def main() -> int:
         },
         {
             "first_line": "[HEALTH] Runtime services",
-            "last_line": "[HEALTH] summary: status=ready ready=7 degraded=0 disabled=0 total=7",
+            "last_line": "[HEALTH] summary: status=ready ready=7 degraded=0 disabled=0 unknown=0 total=7",
             "event_name": "runtime_service_health",
             "event_status": STATUS_READY,
             "payload_status": STATUS_READY,

@@ -7,11 +7,13 @@ from typing import Any, Mapping
 STATUS_READY = "ready"
 STATUS_DEGRADED = "degraded"
 STATUS_DISABLED = "disabled"
+STATUS_UNKNOWN = "unknown"
 
 _ALLOWED_STATUSES = {
     STATUS_READY,
     STATUS_DEGRADED,
     STATUS_DISABLED,
+    STATUS_UNKNOWN,
 }
 
 
@@ -29,6 +31,7 @@ class RuntimeServiceHealthReport:
     ready_count: int
     degraded_count: int
     disabled_count: int
+    unknown_count: int = 0
 
     @property
     def total_count(self) -> int:
@@ -38,6 +41,10 @@ class RuntimeServiceHealthReport:
     def status(self) -> str:
         if self.degraded_count or self.disabled_count:
             return STATUS_DEGRADED
+
+        if self.unknown_count or self.total_count == 0:
+            return STATUS_UNKNOWN
+
         return STATUS_READY
 
 
@@ -96,6 +103,14 @@ class RuntimeServiceHealth:
     ) -> ServiceHealth:
         return self.add(name, STATUS_DISABLED, details=details, error=error)
 
+    def unknown(
+        self,
+        name: str,
+        *,
+        details: Mapping[str, Any] | None = None,
+    ) -> ServiceHealth:
+        return self.add(name, STATUS_UNKNOWN, details=details)
+
     def build(self) -> RuntimeServiceHealthReport:
         services = tuple(self._services)
 
@@ -104,6 +119,7 @@ class RuntimeServiceHealth:
             ready_count=sum(item.status == STATUS_READY for item in services),
             degraded_count=sum(item.status == STATUS_DEGRADED for item in services),
             disabled_count=sum(item.status == STATUS_DISABLED for item in services),
+            unknown_count=sum(item.status == STATUS_UNKNOWN for item in services),
         )
 
 
@@ -124,6 +140,7 @@ def runtime_service_health_payload(report: RuntimeServiceHealthReport) -> dict[s
             "ready_count": report.ready_count,
             "degraded_count": report.degraded_count,
             "disabled_count": report.disabled_count,
+            "unknown_count": report.unknown_count,
         },
     }
 
@@ -150,6 +167,7 @@ def format_runtime_service_health_lines(report: RuntimeServiceHealthReport) -> l
         f"ready={report.ready_count} "
         f"degraded={report.degraded_count} "
         f"disabled={report.disabled_count} "
+        f"unknown={report.unknown_count} "
         f"total={report.total_count}"
     )
 

@@ -9,6 +9,7 @@ from modules.runtime_service_health import (
     STATUS_DEGRADED,
     STATUS_DISABLED,
     STATUS_READY,
+    STATUS_UNKNOWN,
     format_runtime_service_health_lines,
     runtime_service_health_payload,
 )
@@ -54,13 +55,38 @@ def main() -> int:
             "ready": report.ready_count,
             "degraded": report.degraded_count,
             "disabled": report.disabled_count,
+            "unknown": report.unknown_count,
         },
         {
-            "status": STATUS_READY,
+            "status": STATUS_UNKNOWN,
             "total": 0,
             "ready": 0,
             "degraded": 0,
             "disabled": 0,
+            "unknown": 0,
+        },
+    )
+
+    health = RuntimeServiceHealth()
+    health.ready("stt")
+    health.unknown("weather", details={"reason": "not_checked"})
+    report = health.build()
+
+    check(
+        "UNKNOWN SERVICE STATUS",
+        {
+            "status": report.status,
+            "ready": report.ready_count,
+            "unknown": report.unknown_count,
+            "total": report.total_count,
+            "weather_status": report.services[1].status,
+        },
+        {
+            "status": STATUS_UNKNOWN,
+            "ready": 1,
+            "unknown": 1,
+            "total": 2,
+            "weather_status": STATUS_UNKNOWN,
         },
     )
 
@@ -80,6 +106,7 @@ def main() -> int:
             "degraded": report.degraded_count,
             "disabled": report.disabled_count,
             "total": report.total_count,
+            "unknown": report.unknown_count,
         },
         {
             "status": STATUS_DEGRADED,
@@ -88,6 +115,7 @@ def main() -> int:
             "degraded": 1,
             "disabled": 1,
             "total": 4,
+            "unknown": 0,
         },
     )
 
@@ -137,6 +165,7 @@ def main() -> int:
                 "ready_count": 2,
                 "degraded_count": 1,
                 "disabled_count": 1,
+                "unknown_count": 0,
             },
         },
     )
@@ -152,7 +181,7 @@ def main() -> int:
             "[HEALTH] READY tts: engine=EdgeTTS, voice=ru-RU-SvetlanaNeural",
             "[HEALTH] DEGRADED audio_output: current=; error=Current device unavailable",
             "[HEALTH] DISABLED reminders: error=Broken repository",
-            "[HEALTH] summary: status=degraded ready=2 degraded=1 disabled=1 total=4",
+            "[HEALTH] summary: status=degraded ready=2 degraded=1 disabled=1 unknown=0 total=4",
         ],
     )
 
@@ -174,9 +203,9 @@ def main() -> int:
     invalid_count = 0
 
     for name, status in (
-        ("", STATUS_READY),
-        ("stt", ""),
-        ("stt", "unknown"),
+            ("", STATUS_READY),
+            ("stt", ""),
+            ("stt", "unsupported"),
     ):
         try:
             RuntimeServiceHealth().add(name, status)

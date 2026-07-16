@@ -70,7 +70,7 @@ def main() -> int:
     check(
         "ALL SERVICES READY REPLY",
         build_runtime_service_health_reply(ready_report),
-        "Все основные сервисы работают нормально.",
+        "Все проверенные сервисы работают нормально.",
     )
 
     health = RuntimeServiceHealth()
@@ -113,6 +113,27 @@ def main() -> int:
         "EMPTY REPORT REPLY",
         build_runtime_service_health_reply(empty_report),
         "Нет данных о состоянии системы.",
+    )
+
+    health = RuntimeServiceHealth()
+    health.ready("stt")
+    health.unknown("weather", details={"reason": "not_checked"})
+    unknown_report = health.build()
+
+    check(
+        "UNKNOWN SERVICE REPLY",
+        build_runtime_service_health_reply(unknown_report),
+        "Проверенные сервисы работают нормально. Сервис «погода» ещё не проверялся.",
+    )
+
+    health = RuntimeServiceHealth()
+    health.unknown("tts", details={"stale": True})
+    stale_report = health.build()
+
+    check(
+        "STALE SERVICE REPLY",
+        build_runtime_service_health_reply(stale_report),
+        "Работоспособность сервисов пока не подтверждена. Данные о сервисе «синтез речи» устарели.",
     )
 
     model_phrases = (
@@ -175,8 +196,8 @@ def main() -> int:
         },
         {
             "calls": 2,
-            "first_reply": "Все основные сервисы работают нормально.",
-            "second_reply": "Все основные сервисы работают нормально.",
+            "first_reply": "Все проверенные сервисы работают нормально.",
+            "second_reply": "Все проверенные сервисы работают нормально.",
         },
     )
 
