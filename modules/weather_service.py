@@ -1,13 +1,30 @@
 from __future__ import annotations
 
 import json
+import math
+import time
+
 from dataclasses import dataclass
-from typing import Any, Dict
+from typing import Any, Callable, Dict
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
+from modules.operation_telemetry import OperationTelemetry, OperationTelemetrySnapshot
 
-@dataclass
+
+class WeatherServiceError(RuntimeError):
+    pass
+
+
+class WeatherLocationNotFoundError(WeatherServiceError):
+    pass
+
+
+class WeatherResponseError(WeatherServiceError):
+    pass
+
+
+@dataclass(frozen=True)
 class WeatherResult:
     place: str
     temperature_c: float
@@ -52,10 +69,80 @@ class WeatherService:
         99: "сильная гроза с градом",
     }
 
+    def __init__(
+        self,
+        *,
+        request_timeout_sec: float = 8.0,
+        health_ttl_sec: float = 1800.0,
+        time_func: Callable[[], float] = time.time,
+        monotonic_func: Callable[[], float] = time.monotonic,
+    ):
+        self._request_timeout_sec = max(0.1, float(request_timeout_sec))
+        self._health_ttl_sec = max(1.0, float(health_ttl_sec))
+        self._monotonic_func = monotonic_func
+        self._telemetry = OperationTelemetry(time_func=time_func)
+
+    @property
+    def health_ttl_sec(self) -> float:
+        return self._health_ttl_sec
+
+    def get_operation_telemetry(self) -> OperationTelemetrySnapshot:
+        return self._telemetry.snapshot()
+
+    def _duration_ms(self, started_at: float) -> int:
+        elapsed = max(0.0, float(self._monotonic_func()) - float(started_at))
+        return int(round(elapsed * 1000.0))
+
     def _get_json(self, base_url: str, params: Dict[str, Any]) -> Dict[str, Any]:
         url = f"{base_url}?{urlencode(params)}"
-        with urlopen(url, timeout=8) as resp:
-            return json.loads(resp.read().decode("utf-8"))
+
+        with urlopen(url, timeout=self._request_timeout_sec) as response:
+            raw = response.read().decode("utf-8")
+
+        try:
+            payload = json.loads(raw)
+        except Exception as e:
+            raise WeatherResponseError(f"Invalid weather JSON: {e}") from e
+
+        if not isinstance(payload, dict):
+            raise WeatherResponseError("Weather API response is not an object")
+
+        if payload.get("error") is True:
+            reason = str(payload.get("reason") or "Weather API returned an error").strip()
+            raise WeatherResponseError(reason)
+
+        return payload
+
+    def _require_float(self, payload: Dict[str, Any], key: str) -> float:
+        if key not in payload:
+            raise WeatherResponseError(f"Weather response field is missing: {key}")
+
+        value = payload.get(key)
+
+        if isinstance(value, bool):
+            raise WeatherResponseError(f"Weather response field is not numeric: {key}")
+
+        try:
+            number = float(value)
+        except (TypeError, ValueError) as e:
+            raise WeatherResponseError(f"Weather response field is not numeric: {key}") from e
+
+        if not math.isfinite(number):
+            raise WeatherResponseError(f"Weather response field is not finite: {key}")
+
+        return number
+
+    def _coordinates(self, place: Dict[str, Any]) -> tuple[float, float]:
+        latitude = self._require_float(place, "latitude")
+        longitude = self._require_float(place, "longitude")
+
+        if not -90.0 <= latitude <= 90.0:
+            raise WeatherResponseError("Weather latitude is outside the valid range")
+
+        if not -180.0 <= longitude <= 180.0:
+            raise WeatherResponseError("Weather longitude is outside the valid range")
+
+        return latitude, longitude
 
     def _weather_description(self, code: int) -> str:
         return self._WMO_RU.get(int(code), "неизвестная погода")
@@ -83,25 +170,22 @@ class WeatherService:
         variants: list[str] = []
         seen: set[str] = set()
 
-        def add(v: str) -> None:
-            v = str(v or "").strip()
-            if v and v.lower() not in seen:
-                seen.add(v.lower())
-                variants.append(v)
+        def add(value: str) -> None:
+            value = str(value or "").strip()
+            if value and value.lower() not in seen:
+                seen.add(value.lower())
+                variants.append(value)
 
         add(city)
+        city_lower = city.lower()
 
-        c = city.lower()
-
-        # Частый случай: "амстердаме" -> "амстердам", "берлине" -> "берлин"
-        if c.endswith("е") and len(city) > 3:
+        if city_lower.endswith("е") and len(city) > 3:
             stem = city[:-1]
             add(stem)
             add(stem + "а")
             add(stem + "я")
 
-        # Мягкий fallback для форм на "и"
-        if c.endswith("и") and len(city) > 3:
+        if city_lower.endswith("и") and len(city) > 3:
             stem = city[:-1]
             add(stem)
             add(stem + "а")
@@ -111,6 +195,7 @@ class WeatherService:
 
     def _find_place(self, city: str) -> Dict[str, Any]:
         last_error: Exception | None = None
+        valid_response_received = False
 
         for variant in self._city_variants(city):
             try:
@@ -126,43 +211,91 @@ class WeatherService:
                 last_error = e
                 continue
 
-            results = geo.get("results") or []
-            if results:
-                return results[0]
+            results = geo.get("results")
+
+            if results is None:
+                valid_response_received = True
+                continue
+
+            if not isinstance(results, list):
+                last_error = WeatherResponseError("Geocoding response field 'results' is not a list")
+                continue
+
+            valid_response_received = True
+
+            if not results:
+                continue
+
+            place = results[0]
+
+            if not isinstance(place, dict):
+                last_error = WeatherResponseError("Geocoding result is not an object")
+                continue
+
+            try:
+                self._coordinates(place)
+            except WeatherResponseError as e:
+                last_error = e
+                continue
+
+            return place
+
+        if valid_response_received:
+            raise WeatherLocationNotFoundError(f"City not found: {city}")
 
         if last_error is not None:
             raise last_error
 
-        raise RuntimeError(f"City not found: {city}")
+        raise WeatherLocationNotFoundError(f"City not found: {city}")
 
     def get_current_weather(self, city: str) -> WeatherResult:
         city = str(city or "").strip()
         if not city:
             raise ValueError("City is empty")
 
-        place = self._find_place(city)
-        latitude = place["latitude"]
-        longitude = place["longitude"]
+        started_at = float(self._monotonic_func())
 
-        forecast = self._get_json(
-            self.FORECAST_URL,
-            {
-                "latitude": latitude,
-                "longitude": longitude,
-                "current": "temperature_2m,apparent_temperature,weather_code,wind_speed_10m",
-                "wind_speed_unit": "ms",
-                "timezone": "auto",
-            },
-        )
+        try:
+            place = self._find_place(city)
+            latitude, longitude = self._coordinates(place)
 
-        current = forecast.get("current") or {}
-        weather_code = int(current.get("weather_code", -1))
+            forecast = self._get_json(
+                self.FORECAST_URL,
+                {
+                    "latitude": latitude,
+                    "longitude": longitude,
+                    "current": "temperature_2m,apparent_temperature,weather_code,wind_speed_10m",
+                    "wind_speed_unit": "ms",
+                    "timezone": "auto",
+                },
+            )
 
-        return WeatherResult(
-            place=self._format_place(place),
-            temperature_c=float(current.get("temperature_2m", 0.0)),
-            apparent_temperature_c=float(current.get("apparent_temperature", 0.0)),
-            wind_speed_ms=float(current.get("wind_speed_10m", 0.0)),
-            weather_code=weather_code,
-            description=self._weather_description(weather_code),
-        )
+            current = forecast.get("current")
+            if not isinstance(current, dict):
+                raise WeatherResponseError("Weather response field is missing or invalid: current")
+
+            temperature_c = self._require_float(current, "temperature_2m")
+            apparent_temperature_c = self._require_float(current, "apparent_temperature")
+            wind_speed_ms = self._require_float(current, "wind_speed_10m")
+            weather_code_value = self._require_float(current, "weather_code")
+
+            if not weather_code_value.is_integer():
+                raise WeatherResponseError("Weather response field is not an integer: weather_code")
+
+            weather_code = int(weather_code_value)
+            result = WeatherResult(
+                place=self._format_place(place),
+                temperature_c=temperature_c,
+                apparent_temperature_c=apparent_temperature_c,
+                wind_speed_ms=wind_speed_ms,
+                weather_code=weather_code,
+                description=self._weather_description(weather_code),
+            )
+        except WeatherLocationNotFoundError:
+            raise
+        except Exception as e:
+            self._telemetry.record_failure(e, duration_ms=self._duration_ms(started_at))
+            raise
+
+        self._telemetry.record_success(duration_ms=self._duration_ms(started_at))
+        return result

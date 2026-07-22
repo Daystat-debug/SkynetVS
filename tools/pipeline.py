@@ -60,9 +60,9 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate TTS runtime", _python_cmd("tools/eval_tts_runtime.py")),
             Step("Evaluate audio output", _python_cmd("tools/eval_audio_output.py")),
             Step("Evaluate audio output actions", _python_cmd("tools/eval_audio_output_actions.py")),
+            Step("Evaluate operation telemetry", _python_cmd("tools/eval_operation_telemetry.py")),
+            Step("Evaluate weather service", _python_cmd("tools/eval_weather_service.py")),
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
-            Step("Evaluate runtime service health runtime",
-                 _python_cmd("tools/eval_runtime_service_health_runtime.py")),
             Step("Evaluate runtime service health command",
                  _python_cmd("tools/eval_runtime_service_health_command.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
@@ -261,6 +261,10 @@ def available_flows() -> dict[str, list[Step]]:
         "audio_output_actions": [
             Step("Evaluate audio output actions", _python_cmd("tools/eval_audio_output_actions.py")),
         ],
+        "weather_telemetry": [
+            Step("Evaluate operation telemetry", _python_cmd("tools/eval_operation_telemetry.py")),
+            Step("Evaluate weather service", _python_cmd("tools/eval_weather_service.py")),
+        ],
         "runtime_service_health": [
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
             Step("Evaluate runtime service health runtime", _python_cmd("tools/eval_runtime_service_health_runtime.py")),
@@ -388,6 +392,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  tts_runtime  Run TTS runtime eval only", log_file)
     _emit("  audio_output Evaluate audio output only", log_file)
     _emit("  audio_output_actions  Evaluate audio output actions only", log_file)
+    _emit("  weather_telemetry  Evaluate operation telemetry and weather service", log_file)
     _emit("  runtime_service_health  Evaluate runtime service health only", log_file)
     _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
     _emit("", log_file)
