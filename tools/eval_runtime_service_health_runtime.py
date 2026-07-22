@@ -12,6 +12,7 @@ from modules.runtime_service_health_runtime import (
     collect_runtime_service_health,
     publish_runtime_service_health,
 )
+from modules.operation_telemetry import OUTCOME_SUCCESS, OperationTelemetrySnapshot
 
 
 class FakeAudioOutput:
@@ -34,6 +35,20 @@ class FakeStatusService:
         if self.error is not None:
             raise self.error
         return self.snapshot
+
+
+class FakeWeatherService:
+    def __init__(
+        self,
+        snapshot: OperationTelemetrySnapshot,
+        *,
+        ttl_seconds: float = 1800.0,
+    ):
+        self._snapshot = snapshot
+        self.health_ttl_sec = float(ttl_seconds)
+
+    def get_operation_telemetry(self) -> OperationTelemetrySnapshot:
+        return self._snapshot
 
 
 def _service_map(report: Any) -> dict[str, Any]:
@@ -80,16 +95,34 @@ def main() -> int:
     timer_snapshot = SimpleNamespace(active=False, remaining_seconds=0, token=3)
     reminder_snapshot = SimpleNamespace(count=2, scheduled_reminder_id="r2")
 
+    now_value = 1000.0
+
+    def now_func() -> float:
+        return now_value
+
+    weather_service = FakeWeatherService(
+        OperationTelemetrySnapshot(
+            last_outcome=OUTCOME_SUCCESS,
+            last_attempt_at=990.0,
+            last_success_at=990.0,
+            last_failure_at=None,
+            last_duration_ms=120,
+            last_error="",
+            consecutive_failures=0,
+        )
+    )
+
     ready_report = collect_runtime_service_health(
         stt=stt,
         stt_model_path="models/model_small",
         tts=tts,
         audio=object(),
         audio_output=FakeAudioOutput(current_device),
-        weather_service=object(),
+        weather_service=weather_service,
         timer_service=FakeStatusService(timer_snapshot),
         reminder_service=FakeStatusService(reminder_snapshot),
         reminder_path="data/reminders.json",
+        now_func=now_func,
     )
     ready_services = _service_map(ready_report)
 
@@ -135,13 +168,14 @@ def main() -> int:
         tts=tts,
         audio=None,
         audio_output=None,
-        weather_service=object(),
+        weather_service=weather_service,
         timer_service=FakeStatusService(timer_snapshot),
         reminder_service=None,
         audio_error="audio failed",
         audio_output_error="output failed",
         reminder_error="repository failed",
         reminder_path="data/reminders.json",
+        now_func=now_func,
     )
     disabled_services = _service_map(disabled_report)
 
@@ -185,9 +219,10 @@ def main() -> int:
         tts=tts,
         audio=object(),
         audio_output=FakeAudioOutput(None),
-        weather_service=object(),
+        weather_service=weather_service,
         timer_service=FakeStatusService(timer_snapshot),
         reminder_service=FakeStatusService(reminder_snapshot),
+        now_func=now_func,
     )
     unavailable_audio = _service_map(unavailable_report)["audio_output"]
 
@@ -209,9 +244,10 @@ def main() -> int:
         tts=tts,
         audio=object(),
         audio_output=FakeAudioOutput(error=RuntimeError("output probe failed")),
-        weather_service=object(),
+        weather_service=weather_service,
         timer_service=FakeStatusService(error=RuntimeError("timer probe failed")),
         reminder_service=FakeStatusService(error=RuntimeError("reminder probe failed")),
+        now_func=now_func,
     )
     probe_services = _service_map(probe_report)
 

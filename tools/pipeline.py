@@ -62,6 +62,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate audio output actions", _python_cmd("tools/eval_audio_output_actions.py")),
             Step("Evaluate operation telemetry", _python_cmd("tools/eval_operation_telemetry.py")),
             Step("Evaluate weather service", _python_cmd("tools/eval_weather_service.py")),
+            Step("Evaluate weather health integration", _python_cmd("tools/eval_weather_health_runtime.py")),
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
             Step("Evaluate runtime service health command",
                  _python_cmd("tools/eval_runtime_service_health_command.py")),
@@ -264,10 +265,12 @@ def available_flows() -> dict[str, list[Step]]:
         "weather_telemetry": [
             Step("Evaluate operation telemetry", _python_cmd("tools/eval_operation_telemetry.py")),
             Step("Evaluate weather service", _python_cmd("tools/eval_weather_service.py")),
+            Step("Evaluate weather health integration", _python_cmd("tools/eval_weather_health_runtime.py")),
         ],
         "runtime_service_health": [
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
             Step("Evaluate runtime service health runtime", _python_cmd("tools/eval_runtime_service_health_runtime.py")),
+            Step("Evaluate weather health integration", _python_cmd("tools/eval_weather_health_runtime.py")),
             Step("Evaluate runtime service health command", _python_cmd("tools/eval_runtime_service_health_command.py")),
         ],
         "intent_rule_policy": [
