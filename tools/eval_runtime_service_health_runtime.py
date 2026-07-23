@@ -13,6 +13,7 @@ from modules.runtime_service_health_runtime import (
     publish_runtime_service_health,
 )
 from modules.operation_telemetry import OUTCOME_SUCCESS, OperationTelemetrySnapshot
+from modules.tts_edge import TTSLifecycleSnapshot
 
 
 class FakeAudioOutput:
@@ -51,6 +52,24 @@ class FakeWeatherService:
         return self._snapshot
 
 
+class FakeTTSService:
+    def __init__(
+        self,
+        lifecycle: TTSLifecycleSnapshot,
+        *,
+        ttl_seconds: float = 1800.0,
+    ):
+        self._lifecycle = lifecycle
+        self.health_ttl_sec = float(ttl_seconds)
+        self.voice = "ru-RU-SvetlanaNeural"
+        self.rate = "+0%"
+        self.volume = "+20%"
+        self.pitch = "+0Hz"
+
+    def get_lifecycle_telemetry(self) -> TTSLifecycleSnapshot:
+        return self._lifecycle
+
+
 def _service_map(report: Any) -> dict[str, Any]:
     return {item.name: item for item in report.services}
 
@@ -85,11 +104,26 @@ def main() -> int:
             print(f"[FAIL] {name}")
 
     stt = SimpleNamespace(samplerate=16000, device=1)
-    tts = SimpleNamespace(
-        voice="ru-RU-SvetlanaNeural",
-        rate="+0%",
-        volume="+20%",
-        pitch="+0Hz",
+    tts = FakeTTSService(
+        TTSLifecycleSnapshot(
+            operation=OperationTelemetrySnapshot(
+                last_outcome=OUTCOME_SUCCESS,
+                last_attempt_at=990.0,
+                last_success_at=990.0,
+                last_failure_at=None,
+                last_duration_ms=150,
+                last_error="",
+                consecutive_failures=0,
+            ),
+            active_operation_id=None,
+            active=False,
+            active_mode="",
+            active_phase="",
+            last_cancelled_at=None,
+            last_cancelled_duration_ms=None,
+            last_cancel_reason="",
+            cancellation_count=0,
+        )
     )
     current_device = SimpleNamespace(id="device-1", name="Наушники")
     timer_snapshot = SimpleNamespace(active=False, remaining_seconds=0, token=3)

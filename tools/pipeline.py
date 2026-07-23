@@ -59,6 +59,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate TTS settings", _python_cmd("tools/eval_tts_settings.py")),
             Step("Evaluate TTS runtime", _python_cmd("tools/eval_tts_runtime.py")),
             Step("Evaluate TTS lifecycle", _python_cmd("tools/eval_tts_lifecycle.py")),
+            Step("Evaluate TTS health integration", _python_cmd("tools/eval_tts_health_runtime.py")),
             Step("Evaluate audio output", _python_cmd("tools/eval_audio_output.py")),
             Step("Evaluate audio output actions", _python_cmd("tools/eval_audio_output_actions.py")),
             Step("Evaluate operation telemetry", _python_cmd("tools/eval_operation_telemetry.py")),
@@ -257,6 +258,7 @@ def available_flows() -> dict[str, list[Step]]:
         "tts_runtime": [
             Step("Evaluate TTS runtime", _python_cmd("tools/eval_tts_runtime.py")),
             Step("Evaluate TTS lifecycle", _python_cmd("tools/eval_tts_lifecycle.py")),
+            Step("Evaluate TTS health integration", _python_cmd("tools/eval_tts_health_runtime.py")),
         ],
         "audio_output": [
             Step("Evaluate audio output", _python_cmd("tools/eval_audio_output.py")),
@@ -394,7 +396,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  reminder_actions Run reminder actions eval only", log_file)
     _emit("  reminder_runtime Run reminder runtime wiring eval only", log_file)
     _emit("  tts_settings Run TTS settings eval only", log_file)
-    _emit("  tts_runtime  Run TTS runtime and lifecycle evals", log_file)
+    _emit("  tts_runtime  Run TTS runtime, lifecycle, and health evals", log_file)
     _emit("  audio_output Evaluate audio output only", log_file)
     _emit("  audio_output_actions  Evaluate audio output actions only", log_file)
     _emit("  weather_telemetry  Evaluate operation telemetry and weather service", log_file)

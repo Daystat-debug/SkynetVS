@@ -56,6 +56,42 @@ class FakeWeatherService:
         return self._snapshot
 
 
+class FakeTTSService:
+    def __init__(
+        self,
+        *,
+        attempt_at: float,
+        ttl_seconds: float = 30.0,
+    ):
+        self._attempt_at = float(attempt_at)
+        self.health_ttl_sec = float(ttl_seconds)
+        self.voice = "ru-RU-SvetlanaNeural"
+        self.rate = "+0%"
+        self.volume = "+20%"
+        self.pitch = "+0Hz"
+
+    def get_lifecycle_telemetry(self) -> Any:
+        return SimpleNamespace(
+            operation=OperationTelemetrySnapshot(
+                last_outcome=OUTCOME_SUCCESS,
+                last_attempt_at=self._attempt_at,
+                last_success_at=self._attempt_at,
+                last_failure_at=None,
+                last_duration_ms=120,
+                last_error="",
+                consecutive_failures=0,
+            ),
+            active_operation_id=None,
+            active=False,
+            active_mode="",
+            active_phase="",
+            last_cancelled_at=None,
+            last_cancelled_duration_ms=None,
+            last_cancel_reason="",
+            cancellation_count=0,
+        )
+
+
 def _snapshot(
     *,
     outcome: str = "",
@@ -88,11 +124,8 @@ def _collect_weather(
     report = collect_runtime_service_health(
         stt=SimpleNamespace(samplerate=16000, device=1),
         stt_model_path="models/model_small",
-        tts=SimpleNamespace(
-            voice="ru-RU-SvetlanaNeural",
-            rate="+0%",
-            volume="+20%",
-            pitch="+0Hz",
+        tts=FakeTTSService(
+            attempt_at=now_value - 5.0,
         ),
         audio=object(),
         audio_output=FakeAudioOutput(),
