@@ -8,6 +8,7 @@ import re
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any, Callable
+from modules.config import DEFAULT_NLU_ACCEPT_CONF
 from modules.intent_rules import (
     build_incomplete_command_meta,
     build_set_timer_meta,
@@ -58,7 +59,7 @@ def _env_float(name: str, default: str) -> float:
 def _nlu_min_conf() -> float:
     return _env_float(
         "NLU_ACCEPT_CONF",
-        os.getenv("NLU_MIN_CONF", "0.35"),
+        str(DEFAULT_NLU_ACCEPT_CONF),
     )
 
 

@@ -34,6 +34,7 @@ def available_flows() -> dict[str, list[Step]]:
         "check": [
             Step("Command audit", _python_cmd("tools/command_audit.py")),
             Step("Evaluate intent rule policy", _python_cmd("tools/eval_intent_rule_policy.py")),
+            Step("Evaluate NLU config contract", _python_cmd("tools/eval_nlu_config_contract.py")),
             Step("Evaluate entity registry", _python_cmd("tools/eval_entity_registry.py")),
             Step("Evaluate actions registry integration", _python_cmd("tools/eval_actions_registry.py")),
             Step("Evaluate registry cleanup", _python_cmd("tools/eval_registry_cleanup.py")),
@@ -293,6 +294,9 @@ def available_flows() -> dict[str, list[Step]]:
         "intent_rule_policy": [
             Step("Evaluate intent rule policy", _python_cmd("tools/eval_intent_rule_policy.py")),
         ],
+        "nlu_config_contract": [
+            Step("Evaluate NLU config contract", _python_cmd("tools/eval_nlu_config_contract.py")),
+        ],
     }
 
 
@@ -417,6 +421,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  runtime_health_monitor  Run runtime health transition monitor eval", log_file)
     _emit("  runtime_service_health  Run runtime service health integration evals", log_file)
     _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
+    _emit("  nlu_config_contract  Evaluate NLU environment configuration contract", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
