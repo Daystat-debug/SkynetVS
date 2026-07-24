@@ -25,7 +25,39 @@ class FakeSTT:
             "last_utterance_text": self.last_utterance_text,
             "last_utterance_audio_bytes": len(self.last_utterance_audio),
             "last_utterance_duration_sec": 0.001,
+            "lifecycle": {
+                "stream_started": True,
+                "stream_active": True,
+                "stream_generation": 1,
+                "stream_phase": "active",
+                "paused": False,
+                "last_audio_block_age_sec": 0.01,
+                "audio_block_count": 10,
+                "audio_bytes_total": 20480,
+                "last_processed_audio_block_age_sec": 0.02,
+                "processed_audio_block_count": 10,
+                "queue_size": 0,
+                "phrase_count": 1,
+                "last_callback_status": "",
+                "callback_status_count": 0,
+                "last_error": "",
+                "failure_count": 0,
+                "consecutive_failures": 0,
+            },
         }
+
+
+def _contains_binary(value: Any) -> bool:
+    if isinstance(value, (bytes, bytearray, memoryview)):
+        return True
+
+    if isinstance(value, dict):
+        return any(_contains_binary(item) for item in value.values())
+
+    if isinstance(value, (list, tuple, set)):
+        return any(_contains_binary(item) for item in value)
+
+    return False
 
 
 def _check_payload(name: str, payload: Dict[str, Any], expected: Dict[str, Any]) -> bool:
@@ -48,13 +80,16 @@ def _check_payload(name: str, payload: Dict[str, Any], expected: Dict[str, Any])
     if "final_meta" not in payload or not isinstance(payload["final_meta"], dict):
         errors.append("missing final_meta")
 
-    # В payload не должны попасть сырые audio bytes.
-    if "audio" in json.dumps(payload, ensure_ascii=False).lower():
-        # Допускаем только поля с названием *_audio_bytes.
-        raw = json.dumps(payload, ensure_ascii=False).lower()
-        raw_without_safe_field = raw.replace("last_utterance_audio_bytes", "")
-        if "audio" in raw_without_safe_field:
-            errors.append("payload appears to contain raw audio data")
+    stt_payload = payload.get("stt")
+
+    if isinstance(stt_payload, dict):
+        lifecycle = stt_payload.get("lifecycle")
+
+        if not isinstance(lifecycle, dict):
+            errors.append("missing stt lifecycle diagnostics")
+
+    if _contains_binary(payload):
+        errors.append("payload contains raw binary audio data")
 
     print()
     print(f"--- {name} ---")
