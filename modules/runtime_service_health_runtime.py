@@ -12,6 +12,11 @@ from modules.runtime_service_health import (
     format_runtime_service_health_lines,
     runtime_service_health_payload,
 )
+from modules.runtime_service_health_stt import (
+    DEFAULT_STT_HEALTH_POLICY,
+    STTHealthPolicy,
+    add_stt_health,
+)
 
 
 EventFunc = Callable[[str, dict[str, Any]], None]
@@ -471,21 +476,17 @@ def collect_runtime_service_health(
     reminder_error: str = "",
     reminder_path: str = "",
     now_func: Callable[[], float] = time.time,
+    stt_health_policy: STTHealthPolicy = DEFAULT_STT_HEALTH_POLICY,
 ) -> RuntimeServiceHealthReport:
     health = RuntimeServiceHealth()
 
-    if stt is None:
-        health.disabled("stt", error="STT service unavailable")
-    else:
-        health.ready(
-            "stt",
-            details={
-                "engine": _engine(stt),
-                "model_path": str(stt_model_path or ""),
-                "samplerate": _int_value(getattr(stt, "samplerate", 0)),
-                "device": str(getattr(stt, "device", "") or ""),
-            },
-        )
+    add_stt_health(
+        health,
+        stt,
+        stt_model_path=stt_model_path,
+        now_func=now_func,
+        policy=stt_health_policy,
+    )
 
     _add_tts_health(
         health,

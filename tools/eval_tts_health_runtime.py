@@ -17,6 +17,7 @@ from modules.runtime_service_health import (
 )
 from modules.runtime_service_health_runtime import collect_runtime_service_health
 from modules.tts_edge import TTSLifecycleSnapshot
+from tools.stt_health_test_support import healthy_stt_service
 
 
 class FakeAudioOutput:
@@ -128,7 +129,7 @@ def _collect_tts(
         return now_value
 
     report = collect_runtime_service_health(
-        stt=SimpleNamespace(samplerate=16000, device=1),
+        stt=healthy_stt_service(now_value),
         stt_model_path="models/model_small",
         tts=tts,
         audio=object(),

@@ -73,6 +73,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT lifecycle", _python_cmd("tools/eval_stt_lifecycle.py")),
+            Step("Evaluate STT health integration", _python_cmd("tools/eval_stt_health_runtime.py")),
             Step("Evaluate STT diagnostics", _python_cmd("tools/eval_stt_diagnostics.py")),
             Step("Evaluate STT missing slots trigger", _python_cmd("tools/eval_stt_missing_slots_trigger.py")),
             Step("Evaluate STT Whisper subprocess sandbox", _python_cmd("tools/eval_stt_whisper_subprocess.py")),
@@ -164,6 +165,7 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "stt_lifecycle": [
             Step("Evaluate STT lifecycle", _python_cmd("tools/eval_stt_lifecycle.py")),
+            Step("Evaluate STT health integration", _python_cmd("tools/eval_stt_health_runtime.py")),
         ],
         "stt_missing_slots": [
             Step("Evaluate STT missing slots trigger", _python_cmd("tools/eval_stt_missing_slots_trigger.py")),
@@ -280,6 +282,7 @@ def available_flows() -> dict[str, list[Step]]:
         "runtime_service_health": [
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
             Step("Evaluate runtime service health runtime", _python_cmd("tools/eval_runtime_service_health_runtime.py")),
+            Step("Evaluate STT health integration", _python_cmd("tools/eval_stt_health_runtime.py")),
             Step("Evaluate TTS health integration", _python_cmd("tools/eval_tts_health_runtime.py")),
             Step("Evaluate weather health integration", _python_cmd("tools/eval_weather_health_runtime.py")),
             Step("Evaluate runtime service health command", _python_cmd("tools/eval_runtime_service_health_command.py")),
@@ -370,7 +373,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  speech     Run speech IO eval only", log_file)
     _emit("  main_inventory Run main.py structure inventory", log_file)
     _emit("  stt_refinement Run STT refinement eval only", log_file)
-    _emit("  stt_lifecycle Run STT runtime lifecycle eval only", log_file)
+    _emit("  stt_lifecycle Run STT lifecycle and health evals", log_file)
     _emit("  stt_diagnostics Run STT diagnostics eval only", log_file)
     _emit("  stt_missing_slots Run STT missing-slots refinement trigger eval only", log_file)
     _emit("  stt_whisper_subprocess Run STT Whisper subprocess sandbox eval only", log_file)
@@ -408,7 +411,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  audio_output Evaluate audio output only", log_file)
     _emit("  audio_output_actions  Evaluate audio output actions only", log_file)
     _emit("  weather_telemetry  Evaluate operation telemetry and weather service", log_file)
-    _emit("  runtime_service_health  Evaluate runtime service health only", log_file)
+    _emit("  runtime_service_health  Run runtime service health integration evals", log_file)
     _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
     _emit("", log_file)
     _emit("Options:", log_file)

@@ -14,6 +14,7 @@ from modules.runtime_service_health_runtime import (
 )
 from modules.operation_telemetry import OUTCOME_SUCCESS, OperationTelemetrySnapshot
 from modules.tts_edge import TTSLifecycleSnapshot
+from tools.stt_health_test_support import healthy_stt_service
 
 
 class FakeAudioOutput:
@@ -103,7 +104,7 @@ def main() -> int:
             fail_count += 1
             print(f"[FAIL] {name}")
 
-    stt = SimpleNamespace(samplerate=16000, device=1)
+    stt = healthy_stt_service()
     tts = FakeTTSService(
         TTSLifecycleSnapshot(
             operation=OperationTelemetrySnapshot(
