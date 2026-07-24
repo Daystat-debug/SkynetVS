@@ -68,6 +68,10 @@ from modules.runtime_service_health_runtime import (
     collect_runtime_service_health,
     publish_runtime_service_health,
 )
+from modules.runtime_service_health_monitor import (
+    RuntimeServiceHealthMonitor,
+    publish_runtime_service_health_transition,
+)
 
 colorama_init()
 load_dotenv()
@@ -280,8 +284,8 @@ def main():
     typing_service = TypingService()
     window_context_service = WindowContextService()
 
-    def collect_and_publish_runtime_health(*, print_report: bool):
-        report = collect_runtime_service_health(
+    def collect_runtime_health():
+        return collect_runtime_service_health(
             stt=stt,
             stt_model_path=SETTINGS.stt_model_small,
             tts=tts,
@@ -295,6 +299,9 @@ def main():
             reminder_error=reminder_error,
             reminder_path=str(reminder_path),
         )
+
+    def collect_and_publish_runtime_health(*, print_report: bool):
+        report = collect_runtime_health()
         publish_runtime_service_health(
             report,
             event_func=logger.event,
@@ -316,12 +323,22 @@ def main():
         runtime_health_provider=lambda: collect_and_publish_runtime_health(print_report=False),
     )
     router = Router(actions, settings=SETTINGS)
+    runtime_health_monitor = RuntimeServiceHealthMonitor(
+        enabled=SETTINGS.runtime_health_monitor_enable,
+        interval_sec=SETTINGS.runtime_health_monitor_interval_sec,
+    )
 
     print("[BOOT] SkynetVS")
     print("[INFO] Скажи: 'Скайнет' / 'Skynet'")
     print(f"[STT] small model: {SETTINGS.stt_model_small}")
 
-    collect_and_publish_runtime_health(print_report=True)
+    runtime_health_report = collect_and_publish_runtime_health(print_report=True)
+    runtime_health_monitor.set_baseline(runtime_health_report)
+
+    if runtime_health_monitor.enabled:
+        print(f"[HEALTH] monitor enabled: interval={runtime_health_monitor.interval_sec:.1f}s")
+    else:
+        print("[HEALTH] monitor disabled")
 
     if SETTINGS.stt_model_large:
         print(f"[STT] loading large model in background: {SETTINGS.stt_model_large}")
@@ -535,9 +552,63 @@ def main():
 
         last_tts_end = say(stt, tts, message)
 
+    def log_runtime_health_monitor_event(
+        kind: str,
+        payload: dict[str, Any],
+    ) -> None:
+        try:
+            logger.event(kind, payload)
+        except Exception as e:
+            print(f"[HEALTH] monitor log failed: {e}")
+
+    def handle_runtime_health_monitor_poll() -> None:
+        result = runtime_health_monitor.poll_if_due(
+            collect_runtime_health
+        )
+
+        if not result.attempted:
+            return
+
+        if result.error:
+            if result.error_changed:
+                print(f"[HEALTH] monitor failed: {result.error}")
+                log_runtime_health_monitor_event(
+                    "runtime_service_health_monitor_failed",
+                    {
+                        "error": result.error,
+                        "interval_sec": runtime_health_monitor.interval_sec,
+                    },
+                )
+            return
+
+        if result.recovered_from_error:
+            print("[HEALTH] monitor recovered")
+            log_runtime_health_monitor_event(
+                "runtime_service_health_monitor_recovered",
+                {
+                    "previous_error": result.recovered_from_error,
+                    "interval_sec": runtime_health_monitor.interval_sec,
+                },
+            )
+
+        if result.transition is not None:
+            publish_runtime_service_health_transition(
+                result.transition,
+                event_func=logger.event,
+                print_func=print,
+            )
+
     try:
         while True:
-            evt = event_q.get()
+            handle_runtime_health_monitor_poll()
+
+            try:
+                evt = event_q.get(
+                    timeout=runtime_health_monitor.seconds_until_poll()
+                )
+            except queue.Empty:
+                continue
+
             event_type = evt.get("type")
 
             if event_type == "stt_error":

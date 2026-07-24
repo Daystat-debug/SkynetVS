@@ -66,10 +66,9 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate weather service", _python_cmd("tools/eval_weather_service.py")),
             Step("Evaluate weather health integration", _python_cmd("tools/eval_weather_health_runtime.py")),
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
-            Step("Evaluate runtime service health runtime",
-                 _python_cmd("tools/eval_runtime_service_health_runtime.py")),
-            Step("Evaluate runtime service health command",
-                 _python_cmd("tools/eval_runtime_service_health_command.py")),
+            Step("Evaluate runtime service health runtime", _python_cmd("tools/eval_runtime_service_health_runtime.py")),
+            Step("Evaluate runtime health monitor", _python_cmd("tools/eval_runtime_service_health_monitor.py")),
+            Step("Evaluate runtime service health command", _python_cmd("tools/eval_runtime_service_health_command.py")),
             Step("Evaluate speech IO", _python_cmd("tools/eval_speech_io.py")),
             Step("Evaluate STT refinement", _python_cmd("tools/eval_stt_refinement.py")),
             Step("Evaluate STT lifecycle", _python_cmd("tools/eval_stt_lifecycle.py")),
@@ -279,9 +278,13 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate weather service", _python_cmd("tools/eval_weather_service.py")),
             Step("Evaluate weather health integration", _python_cmd("tools/eval_weather_health_runtime.py")),
         ],
+        "runtime_health_monitor": [
+            Step("Evaluate runtime health monitor", _python_cmd("tools/eval_runtime_service_health_monitor.py")),
+        ],
         "runtime_service_health": [
             Step("Evaluate runtime service health", _python_cmd("tools/eval_runtime_service_health.py")),
             Step("Evaluate runtime service health runtime", _python_cmd("tools/eval_runtime_service_health_runtime.py")),
+            Step("Evaluate runtime health monitor", _python_cmd("tools/eval_runtime_service_health_monitor.py")),
             Step("Evaluate STT health integration", _python_cmd("tools/eval_stt_health_runtime.py")),
             Step("Evaluate TTS health integration", _python_cmd("tools/eval_tts_health_runtime.py")),
             Step("Evaluate weather health integration", _python_cmd("tools/eval_weather_health_runtime.py")),
@@ -411,6 +414,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  audio_output Evaluate audio output only", log_file)
     _emit("  audio_output_actions  Evaluate audio output actions only", log_file)
     _emit("  weather_telemetry  Evaluate operation telemetry and weather service", log_file)
+    _emit("  runtime_health_monitor  Run runtime health transition monitor eval", log_file)
     _emit("  runtime_service_health  Run runtime service health integration evals", log_file)
     _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
     _emit("", log_file)

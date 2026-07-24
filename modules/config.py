@@ -54,6 +54,10 @@ class Settings:
     exec_mode: str
     repeat_context_sec: float
 
+    # Runtime health
+    runtime_health_monitor_enable: bool = True
+    runtime_health_monitor_interval_sec: float = 5.0
+
     @staticmethod
     def _hotwords_from_env() -> Tuple[str, ...]:
         raw = os.getenv("HOTWORDS", "скайнет,skynet")
@@ -97,4 +101,6 @@ class Settings:
 
             exec_mode=os.getenv("EXEC_MODE", "direct").strip().lower(),
             repeat_context_sec=float(os.getenv("REPEAT_CONTEXT_SEC", "15")),
+            runtime_health_monitor_enable=os.getenv("RUNTIME_HEALTH_MONITOR_ENABLE", "1").strip() == "1",
+            runtime_health_monitor_interval_sec=float(os.getenv("RUNTIME_HEALTH_MONITOR_INTERVAL_SEC", "5.0")),
         )
