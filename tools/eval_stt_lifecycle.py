@@ -209,6 +209,22 @@ def main() -> int:
     )
 
     stt.resume()
+    resumed_snapshot = stt.get_lifecycle_telemetry()
+
+    check(
+        "RESUME STARTS PROCESSING GRACE",
+        {
+            "paused": resumed_snapshot.paused,
+            "last_resumed_at": resumed_snapshot.last_resumed_at,
+            "resume_pending": resumed_snapshot.resume_pending,
+        },
+        {
+            "paused": False,
+            "last_resumed_at": 1000.2,
+            "resume_pending": True,
+        },
+    )
+
     clock.advance(0.1)
     stt._callback(b"90", 1, None, StatusObject(), _generation=generation)
     snapshot = stt.get_lifecycle_telemetry()
@@ -220,6 +236,7 @@ def main() -> int:
             "status": snapshot.last_callback_status,
             "status_at": round(snapshot.last_callback_status_at or 0.0, 1),
             "status_count": snapshot.callback_status_count,
+            "resume_pending": snapshot.resume_pending,
             "failures": snapshot.failure_count,
         },
         {
@@ -227,7 +244,44 @@ def main() -> int:
             "status": "input overflow",
             "status_at": 1000.3,
             "status_count": 1,
+            "resume_pending": True,
             "failures": 0,
+        },
+    )
+
+    stt._record_processed_audio_block(generation)
+    processed_snapshot = stt.get_lifecycle_telemetry()
+
+    check(
+        "FIRST PROCESSED BLOCK COMPLETES RESUME",
+        {
+            "processed_at": round(
+                processed_snapshot.last_processed_audio_block_at or 0.0,
+                1,
+            ),
+            "processed_blocks": processed_snapshot.processed_audio_block_count,
+            "resume_pending": processed_snapshot.resume_pending,
+        },
+        {
+            "processed_at": 1000.3,
+            "processed_blocks": 1,
+            "resume_pending": False,
+        },
+    )
+
+    clock.advance(0.1)
+    stt.resume()
+    redundant_snapshot = stt.get_lifecycle_telemetry()
+
+    check(
+        "REDUNDANT RESUME DOES NOT EXTEND GRACE",
+        {
+            "last_resumed_at": redundant_snapshot.last_resumed_at,
+            "resume_pending": redundant_snapshot.resume_pending,
+        },
+        {
+            "last_resumed_at": 1000.2,
+            "resume_pending": False,
         },
     )
 
@@ -254,6 +308,8 @@ def main() -> int:
             "queue_size": stt._q.qsize(),
             "old_queue_drained": queue_before == 0,
             "duplicate_rejected": duplicate_rejected,
+            "last_resumed_at": snapshot.last_resumed_at,
+            "resume_pending": snapshot.resume_pending,
         },
         {
             "generation": 2,
@@ -261,6 +317,8 @@ def main() -> int:
             "queue_size": 0,
             "old_queue_drained": True,
             "duplicate_rejected": True,
+            "last_resumed_at": None,
+            "resume_pending": False,
         },
     )
 
@@ -388,6 +446,8 @@ def main() -> int:
             "phrases": lifecycle.get("phrase_count"),
             "failures": lifecycle.get("failure_count"),
             "contains_binary": _contains_binary(diagnostics),
+            "last_resumed_age": lifecycle.get("last_resumed_age_sec"),
+            "resume_pending": lifecycle.get("resume_pending"),
         },
         {
             "has_lifecycle": True,
@@ -399,6 +459,8 @@ def main() -> int:
             "phrases": 1,
             "failures": 1,
             "contains_binary": False,
+            "last_resumed_age": None,
+            "resume_pending": False,
         },
     )
 

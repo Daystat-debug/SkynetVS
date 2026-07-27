@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 
+from dataclasses import replace
 from types import SimpleNamespace
 from typing import Any
 
@@ -323,6 +324,93 @@ def main() -> int:
         details={
             "reason": "paused_before_processing",
         },
+    )
+
+    check_health(
+        "RECENT RESUME GRACE PRESERVES READY",
+        FakeSTTService(
+            replace(
+                _active_snapshot(
+                    last_processed_audio_block_at=990.0,
+                ),
+                last_resumed_at=999.0,
+                resume_pending=True,
+            )
+        ),
+        status=STATUS_READY,
+        details={
+            "resume_pending": True,
+            "last_resumed_age_seconds": 1.0,
+            "resume_grace_active": True,
+        },
+    )
+
+    check_health(
+        "RESUME GRACE WITHOUT PRIOR PROCESSING IS UNKNOWN",
+        FakeSTTService(
+            replace(
+                _active_snapshot(
+                    last_processed_audio_block_at=None,
+                    processed_audio_block_count=0,
+                    last_phrase_at=None,
+                    phrase_count=0,
+                ),
+                last_resumed_at=999.0,
+                resume_pending=True,
+            )
+        ),
+        status=STATUS_UNKNOWN,
+        details={
+            "reason": "waiting_for_processing_after_resume",
+            "resume_pending": True,
+        },
+    )
+
+    check_health(
+        "RESUME PROCESSING TIMEOUT IS DEGRADED",
+        FakeSTTService(
+            replace(
+                _active_snapshot(
+                    last_processed_audio_block_at=990.0,
+                ),
+                last_resumed_at=995.0,
+                resume_pending=True,
+            )
+        ),
+        status=STATUS_DEGRADED,
+        error="STT recognizer did not resume processing",
+        details={
+            "last_resumed_age_seconds": 5.0,
+            "resume_pending": True,
+        },
+    )
+
+    check_health(
+        "PROCESSED BLOCK AFTER RESUME IS READY",
+        FakeSTTService(
+            replace(
+                _active_snapshot(),
+                last_resumed_at=999.0,
+                resume_pending=False,
+            )
+        ),
+        status=STATUS_READY,
+        details={
+            "resume_pending": False,
+            "last_resumed_age_seconds": 1.0,
+        },
+    )
+
+    check_health(
+        "INCONSISTENT RESUME TELEMETRY IS DEGRADED",
+        FakeSTTService(
+            replace(
+                _active_snapshot(),
+                resume_pending=True,
+            )
+        ),
+        status=STATUS_DEGRADED,
+        error="STT resume telemetry is inconsistent",
     )
 
     check_health(

@@ -37,6 +37,8 @@ class STTLifecycleSnapshot:
     last_error: str
     failure_count: int
     consecutive_failures: int
+    last_resumed_at: float | None = None
+    resume_pending: bool = False
 
 
 class VoskSTT:
@@ -87,6 +89,8 @@ class VoskSTT:
         self._audio_bytes_total = 0
         self._last_processed_audio_block_at: float | None = None
         self._processed_audio_block_count = 0
+        self._last_resumed_at: float | None = None
+        self._resume_pending = False
         self._last_phrase_at: float | None = None
         self._phrase_count = 0
         self._last_callback_status_at: float | None = None
@@ -139,6 +143,8 @@ class VoskSTT:
             self._stream_active = False
             self._stream_phase = "starting"
             self._last_stream_started_at = now
+            self._last_resumed_at = None
+            self._resume_pending = False
 
         # Новый stream не должен обработать аудио, оставшееся от старого поколения.
         self._drain_queue(max_items=500)
@@ -166,6 +172,7 @@ class VoskSTT:
             self._stream_active = False
             self._stream_phase = "stopped"
             self._last_stream_stopped_at = now
+            self._resume_pending = False
 
     def _mark_stream_failed(self, generation: int, error: BaseException | str) -> None:
         now = self._now()
@@ -181,6 +188,7 @@ class VoskSTT:
             self._last_error = self._error_text(error)
             self._failure_count += 1
             self._consecutive_failures += 1
+            self._resume_pending = False
 
     def _record_audio_block(
         self,
@@ -225,6 +233,7 @@ class VoskSTT:
 
             self._last_processed_audio_block_at = now
             self._processed_audio_block_count += 1
+            self._resume_pending = False
 
         return True
 
@@ -282,6 +291,8 @@ class VoskSTT:
                 last_error=self._last_error,
                 failure_count=self._failure_count,
                 consecutive_failures=self._consecutive_failures,
+                last_resumed_at=self._last_resumed_at,
+                resume_pending=self._resume_pending,
             )
 
     @staticmethod
@@ -360,15 +371,26 @@ class VoskSTT:
             return None
 
     def pause(self) -> None:
-        self._paused.set()
+        with self._lifecycle_lock:
+            self._paused.set()
+
         self._drain_queue(max_items=200)
         # при паузе сбрасываем “накапливаемую” речь в listen_phrases()
 
     def resume(self) -> None:
-        self._drain_queue(max_items=50)
-        # попросим цикл распознавания пересоздать recognizer (сброс хвостов)
-        self._reset_event.set()
-        self._paused.clear()
+        with self._lifecycle_lock:
+            if not self._paused.is_set():
+                return
+
+            self._drain_queue(max_items=50)
+            # попросим цикл распознавания пересоздать recognizer (сброс хвостов)
+            self._reset_event.set()
+
+            if self._stream_phase == "active":
+                self._last_resumed_at = self._now()
+                self._resume_pending = True
+
+            self._paused.clear()
 
     def _callback(
             self,
@@ -477,6 +499,11 @@ class VoskSTT:
                 "stream_generation": lifecycle.stream_generation,
                 "stream_phase": lifecycle.stream_phase,
                 "paused": lifecycle.paused,
+                "last_resumed_age_sec": self._age_seconds(
+                    lifecycle.last_resumed_at,
+                    now,
+                ),
+                "resume_pending": lifecycle.resume_pending,
                 "last_stream_started_age_sec": self._age_seconds(
                     lifecycle.last_stream_started_at,
                     now,

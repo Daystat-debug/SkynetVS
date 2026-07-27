@@ -20,6 +20,7 @@ _STT_PHASES = {
 @dataclass(frozen=True)
 class STTHealthPolicy:
     startup_grace_sec: float = 5.0
+    resume_grace_sec: float = 2.0
     audio_heartbeat_timeout_sec: float = 3.0
     processing_heartbeat_timeout_sec: float = 3.0
     max_queue_backlog_sec: float = 3.0
@@ -189,6 +190,10 @@ def add_stt_health(
             policy.startup_grace_sec,
             "STT startup grace",
         )
+        resume_grace_sec = _positive_float(
+            policy.resume_grace_sec,
+            "STT resume grace",
+        )
         audio_timeout_sec = _positive_float(
             policy.audio_heartbeat_timeout_sec,
             "STT audio heartbeat timeout",
@@ -247,6 +252,14 @@ def add_stt_health(
                 None,
             ),
             "STT processing heartbeat timestamp",
+        )
+        last_resumed_at = _finite_float(
+            getattr(snapshot, "last_resumed_at", None),
+            "STT resume timestamp",
+        )
+        resume_pending = _required_bool(
+            getattr(snapshot, "resume_pending", None),
+            "STT resume_pending",
         )
         last_callback_status_at = _finite_float(
             getattr(
@@ -336,6 +349,25 @@ def add_stt_health(
         if stream_active != (stream_phase == "active"):
             raise RuntimeError(
                 "STT lifecycle telemetry is inconsistent"
+            )
+
+        if resume_pending and (
+            stream_phase != "active"
+            or last_resumed_at is None
+        ):
+            raise RuntimeError(
+                "STT resume telemetry is inconsistent"
+            )
+
+        if last_resumed_at is not None and (
+            not stream_started
+            or (
+                stream_started_at is not None
+                and last_resumed_at < stream_started_at
+            )
+        ):
+            raise RuntimeError(
+                "STT resume telemetry is inconsistent"
             )
 
         if (
@@ -451,6 +483,7 @@ def add_stt_health(
             "stream_generation": stream_generation,
             "stream_phase": stream_phase,
             "paused": paused,
+            "resume_pending": resume_pending,
             "audio_block_count": audio_block_count,
             "audio_bytes_total": audio_bytes_total,
             "processed_audio_block_count": (
@@ -471,6 +504,10 @@ def add_stt_health(
             ),
             "startup_grace_seconds": round(
                 startup_grace_sec,
+                1,
+            ),
+            "resume_grace_seconds": round(
+                resume_grace_sec,
                 1,
             ),
             "audio_timeout_seconds": round(
@@ -498,6 +535,18 @@ def add_stt_health(
             )
         else:
             stream_age_seconds = None
+
+        if last_resumed_at is not None:
+            resume_age_seconds = _age_seconds(
+                now_value,
+                last_resumed_at,
+            )
+            details["last_resumed_age_seconds"] = round(
+                resume_age_seconds or 0.0,
+                3,
+            )
+        else:
+            resume_age_seconds = None
 
         if last_callback_status_at is not None:
             details["last_callback_status"] = (
@@ -642,9 +691,7 @@ def add_stt_health(
 
         if paused:
             if current_processed_audio_block_at is None:
-                details[
-                    "reason"
-                ] = "paused_before_processing"
+                details["reason"] = "paused_before_processing"
                 health.unknown(
                     "stt",
                     details=details,
@@ -657,11 +704,46 @@ def add_stt_health(
 
             return
 
+        if queue_backlog_seconds > max_queue_backlog_sec:
+            health.degraded(
+                "stt",
+                details=details,
+                error="STT audio queue backlog is too large",
+            )
+            return
+
+        if resume_pending:
+            if resume_age_seconds is None:
+                raise RuntimeError(
+                    "STT resume telemetry is inconsistent"
+                )
+
+            if resume_age_seconds <= resume_grace_sec:
+                if current_processed_audio_block_at is None:
+                    details["reason"] = "waiting_for_processing_after_resume"
+                    health.unknown(
+                        "stt",
+                        details=details,
+                    )
+                else:
+                    details["resume_grace_active"] = True
+                    health.ready(
+                        "stt",
+                        details=details,
+                    )
+
+                return
+
+            health.degraded(
+                "stt",
+                details=details,
+                error="STT recognizer did not resume processing",
+            )
+            return
+
         if current_processed_audio_block_at is None:
             if stream_age_seconds <= startup_grace_sec:
-                details[
-                    "reason"
-                ] = "waiting_for_processing"
+                details["reason"] = "waiting_for_processing"
                 health.unknown(
                     "stt",
                     details=details,
@@ -670,34 +752,19 @@ def add_stt_health(
                 health.degraded(
                     "stt",
                     details=details,
-                    error=(
-                        "STT recognizer has not processed audio"
-                    ),
+                    error="STT recognizer has not processed audio",
                 )
 
             return
 
         if (
             processed_age_seconds is None
-            or processed_age_seconds
-            > processing_timeout_sec
+            or processed_age_seconds > processing_timeout_sec
         ):
             health.degraded(
                 "stt",
                 details=details,
-                error=(
-                    "STT recognizer heartbeat is stale"
-                ),
-            )
-            return
-
-        if queue_backlog_seconds > max_queue_backlog_sec:
-            health.degraded(
-                "stt",
-                details=details,
-                error=(
-                    "STT audio queue backlog is too large"
-                ),
+                error="STT recognizer heartbeat is stale",
             )
             return
 
