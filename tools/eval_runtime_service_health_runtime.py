@@ -14,6 +14,7 @@ from modules.runtime_service_health_runtime import (
 )
 from modules.operation_telemetry import OUTCOME_SUCCESS, OperationTelemetrySnapshot
 from modules.tts_edge import TTSLifecycleSnapshot
+from tools.audio_control_health_test_support import healthy_audio_control_service
 from tools.stt_health_test_support import healthy_stt_service
 
 
@@ -105,6 +106,12 @@ def main() -> int:
             print(f"[FAIL] {name}")
 
     stt = healthy_stt_service()
+    audio = healthy_audio_control_service(
+        device_id="device-1",
+        device_name="Наушники",
+        volume=35,
+        muted=False,
+    )
     tts = FakeTTSService(
         TTSLifecycleSnapshot(
             operation=OperationTelemetrySnapshot(
@@ -151,7 +158,7 @@ def main() -> int:
         stt=stt,
         stt_model_path="models/model_small",
         tts=tts,
-        audio=object(),
+        audio=audio,
         audio_output=FakeAudioOutput(current_device),
         weather_service=weather_service,
         timer_service=FakeStatusService(timer_snapshot),
@@ -168,6 +175,8 @@ def main() -> int:
             "names": [item.name for item in ready_report.services],
             "statuses": {name: item.status for name, item in ready_services.items()},
             "current_name": ready_services["audio_output"].details["current_name"],
+            "audio_volume": ready_services["audio_control"].details["volume"],
+            "audio_muted": ready_services["audio_control"].details["muted"],
             "reminder_count": ready_services["reminders"].details["active_count"],
             "total": ready_report.total_count,
         },
@@ -192,6 +201,8 @@ def main() -> int:
                 "reminders": STATUS_READY,
             },
             "current_name": "Наушники",
+            "audio_volume": 35,
+            "audio_muted": False,
             "reminder_count": 2,
             "total": 7,
         },
@@ -252,7 +263,7 @@ def main() -> int:
         stt=stt,
         stt_model_path="models/model_small",
         tts=tts,
-        audio=object(),
+        audio=audio,
         audio_output=FakeAudioOutput(None),
         weather_service=weather_service,
         timer_service=FakeStatusService(timer_snapshot),
@@ -277,7 +288,7 @@ def main() -> int:
         stt=stt,
         stt_model_path="models/model_small",
         tts=tts,
-        audio=object(),
+        audio=audio,
         audio_output=FakeAudioOutput(error=RuntimeError("output probe failed")),
         weather_service=weather_service,
         timer_service=FakeStatusService(error=RuntimeError("timer probe failed")),

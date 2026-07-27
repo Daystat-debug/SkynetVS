@@ -18,6 +18,7 @@ from modules.runtime_service_health import (
 from modules.runtime_service_health_runtime import collect_runtime_service_health
 from modules.tts_edge import TTSLifecycleSnapshot
 from tools.stt_health_test_support import healthy_stt_service
+from tools.audio_control_health_test_support import healthy_audio_control_service
 
 
 class FakeAudioOutput:
@@ -132,7 +133,7 @@ def _collect_tts(
         stt=healthy_stt_service(now_value),
         stt_model_path="models/model_small",
         tts=tts,
-        audio=object(),
+        audio=healthy_audio_control_service(),
         audio_output=FakeAudioOutput(),
         weather_service=FakeWeatherService(),
         timer_service=FakeStatusService(

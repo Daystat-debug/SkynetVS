@@ -12,6 +12,7 @@ from modules.runtime_service_health import (
     format_runtime_service_health_lines,
     runtime_service_health_payload,
 )
+from modules.runtime_service_health_audio_control import add_audio_control_health
 from modules.runtime_service_health_stt import (
     DEFAULT_STT_HEALTH_POLICY,
     STTHealthPolicy,
@@ -494,13 +495,11 @@ def collect_runtime_service_health(
         now_func=now_func,
     )
 
-    if audio is None:
-        health.disabled(
-            "audio_control",
-            error=_error_text(audio_error, "Audio control unavailable"),
-        )
-    else:
-        health.ready("audio_control", details={"engine": _engine(audio)})
+    add_audio_control_health(
+        health,
+        audio,
+        audio_error=audio_error,
+    )
 
     if audio_output is None:
         health.disabled(

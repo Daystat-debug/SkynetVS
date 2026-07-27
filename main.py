@@ -260,7 +260,7 @@ def main():
     audio_error = ""
 
     try:
-        audio = AudioControl()
+        audio = AudioControl(validate_on_init=False)
     except Exception as e:
         audio = None
         audio_error = str(e)

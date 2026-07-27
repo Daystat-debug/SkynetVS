@@ -64,6 +64,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate audio control", _python_cmd("tools/eval_audio_control.py")),
             Step("Evaluate audio control Windows smoke", _python_cmd("tools/eval_audio_control_windows.py")),
             Step("Evaluate audio control actions", _python_cmd("tools/eval_audio_control_actions.py")),
+            Step("Evaluate audio control health integration", _python_cmd("tools/eval_audio_control_health_runtime.py")),
             Step("Evaluate audio output", _python_cmd("tools/eval_audio_output.py")),
             Step("Evaluate audio output actions", _python_cmd("tools/eval_audio_output_actions.py")),
             Step("Evaluate operation telemetry", _python_cmd("tools/eval_operation_telemetry.py")),
@@ -275,9 +276,14 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate audio control", _python_cmd("tools/eval_audio_control.py")),
             Step("Evaluate audio control Windows smoke", _python_cmd("tools/eval_audio_control_windows.py")),
             Step("Evaluate audio control actions", _python_cmd("tools/eval_audio_control_actions.py")),
+            Step("Evaluate audio control health integration", _python_cmd("tools/eval_audio_control_health_runtime.py")),
         ],
         "audio_control_actions": [
             Step("Evaluate audio control actions", _python_cmd("tools/eval_audio_control_actions.py")),
+        ],
+        "audio_control_health": [
+            Step("Evaluate audio control health integration",
+                 _python_cmd("tools/eval_audio_control_health_runtime.py")),
         ],
         "audio_output": [
             Step("Evaluate audio output", _python_cmd("tools/eval_audio_output.py")),
@@ -299,6 +305,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate runtime health monitor", _python_cmd("tools/eval_runtime_service_health_monitor.py")),
             Step("Evaluate STT health integration", _python_cmd("tools/eval_stt_health_runtime.py")),
             Step("Evaluate TTS health integration", _python_cmd("tools/eval_tts_health_runtime.py")),
+            Step("Evaluate audio control health integration", _python_cmd("tools/eval_audio_control_health_runtime.py")),
             Step("Evaluate weather health integration", _python_cmd("tools/eval_weather_health_runtime.py")),
             Step("Evaluate runtime service health command", _python_cmd("tools/eval_runtime_service_health_command.py")),
         ],
@@ -428,6 +435,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  tts_runtime  Run TTS runtime, lifecycle, and health evals", log_file)
     _emit("  audio_control  Evaluate active endpoint volume control", log_file)
     _emit("  audio_control_actions  Evaluate audio control action integration", log_file)
+    _emit("  audio_control_health  Evaluate audio control health integration", log_file)
     _emit("  audio_output Evaluate audio output only", log_file)
     _emit("  audio_output_actions  Evaluate audio output actions only", log_file)
     _emit("  weather_telemetry  Evaluate operation telemetry and weather service", log_file)

@@ -22,6 +22,7 @@ from tools.stt_health_test_support import (
     FakeSTTService,
     build_stt_lifecycle_snapshot,
 )
+from tools.audio_control_health_test_support import healthy_audio_control_service
 
 
 class FakeAudioOutput:
@@ -98,7 +99,7 @@ def _collect_stt(
         stt=stt,
         stt_model_path="models/model_small",
         tts=FakeTTSService(),
-        audio=object(),
+        audio=healthy_audio_control_service(),
         audio_output=FakeAudioOutput(),
         weather_service=FakeWeatherService(),
         timer_service=FakeStatusService(
