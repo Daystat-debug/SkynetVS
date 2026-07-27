@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from modules.action_error import ActionExecutionError
 from modules.command_decision import build_command_decision
 from modules.command_outcome import classify_command_outcome
 from modules.command_runtime import handle_command_runtime
@@ -27,9 +28,15 @@ class FakeLogger:
 
 
 class FakeRouter:
-    def __init__(self, *, fail_execute: bool = False) -> None:
+    def __init__(
+        self,
+        *,
+        fail_execute: bool = False,
+        execute_error: Exception | None = None,
+    ) -> None:
         self.events: List[str] = []
         self.fail_execute = fail_execute
+        self.execute_error = execute_error
 
     def reply(self, meta: Mapping[str, Any]) -> str:
         intent = str(meta.get("intent") or "")
@@ -39,6 +46,9 @@ class FakeRouter:
     def execute(self, meta: Mapping[str, Any]) -> None:
         intent = str(meta.get("intent") or "")
         self.events.append(f"execute:{intent}")
+
+        if self.execute_error is not None:
+            raise self.execute_error
 
         if self.fail_execute:
             raise RuntimeError("fake execute failure")
@@ -258,15 +268,44 @@ CASES: List[Case] = [
         },
         "fail_execute": True,
         "expected": {
-            "reason": None,
-            "logger_events": [],
+            "reason": "action_failed",
+            "logger_events": ["event:command_action_failed"],
             "router_events": ["execute:OPEN_URL"],
             "mode_events": [],
             "learning_events": ["log_action_failure"],
-            "speech_events": ["say:REPLY:OPEN_URL"],
+            "speech_events": [
+                "say:REPLY:OPEN_URL",
+                "say:Не получилось выполнить команду.",
+            ],
             "cancel_calls": 0,
-            "last_tts_end": None,
-            "raised": True,
+            "last_tts_end": 100.0,
+            "raised": False,
+        },
+    },
+    {
+        "name": "pre speech structured action failure runtime",
+        "meta": {
+            "intent": "CANCEL_TIMER",
+            "confidence": 1.0,
+            "slots": {},
+        },
+        "execute_error": ActionExecutionError(
+            intent="CANCEL_TIMER",
+            operation="cancel_timer",
+            detail="fake timer failure",
+            user_message="Не получилось отменить таймер.",
+            error_code="timer_cancel_failed",
+        ),
+        "expected": {
+            "reason": "action_failed",
+            "logger_events": ["event:command_action_failed"],
+            "router_events": ["execute:CANCEL_TIMER"],
+            "mode_events": [],
+            "learning_events": ["log_action_failure"],
+            "speech_events": ["say:Не получилось отменить таймер."],
+            "cancel_calls": 0,
+            "last_tts_end": 100.0,
+            "raised": False,
         },
     },
 ]
@@ -279,7 +318,11 @@ def main() -> int:
 
     for idx, case in enumerate(CASES, start=1):
         logger = FakeLogger()
-        router = FakeRouter(fail_execute=bool(case.get("fail_execute") or False))
+        execute_error = case.get("execute_error")
+        router = FakeRouter(
+            fail_execute=bool(case.get("fail_execute") or False),
+            execute_error=execute_error if isinstance(execute_error, Exception) else None,
+        )
         mode_manager = FakeModeManager()
         learning_memory = FakeLearningMemory()
         cancel_timer = FakeCancelTimer()
@@ -314,7 +357,7 @@ def main() -> int:
             )
             result_reason = result.reason
             result_last_tts_end = result.last_tts_end
-        except RuntimeError:
+        except Exception:
             raised = True
 
         actual = {

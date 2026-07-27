@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from modules.action_error import ActionExecutionError
 from modules.command_processor import CommandProcessor
 from modules.config import Settings
 
@@ -26,8 +27,9 @@ class FakeLogger:
 
 
 class FakeRouter:
-    def __init__(self) -> None:
+    def __init__(self, *, fail_intent: str = "") -> None:
         self.events: List[str] = []
+        self.fail_intent = str(fail_intent or "").upper().strip()
 
     def preprocess(self, meta: dict[str, Any]) -> dict[str, Any]:
         return meta
@@ -40,6 +42,14 @@ class FakeRouter:
     def execute(self, meta: Mapping[str, Any]) -> None:
         intent = str(meta.get("intent") or "NONE")
         self.events.append(f"execute:{intent}")
+
+        if intent == self.fail_intent:
+            raise ActionExecutionError(
+                intent=intent,
+                operation="fake_execute",
+                detail="fake processor action failure",
+                user_message="Не получилось выполнить команду.",
+            )
 
 
 class FakeModeManager:
@@ -256,17 +266,19 @@ CASES: List[Case] = [
         },
     },
     {
-        "name": "cancel timer command",
+        "name": "cancel timer action failure",
         "text": "отмени таймер",
+        "fail_intent": "CANCEL_TIMER",
         "expected": {
             "intent": "CANCEL_TIMER",
-            "reason": "executed",
+            "reason": "action_failed",
             "router_events": [
                 "execute:CANCEL_TIMER"
             ],
             "mode_events": [],
             "learning_events": [
-                "log_command"
+                "log_command",
+                "log_action_failure",
             ],
             "speech_events": ["say"],
             "cancel_calls": 0,
@@ -284,7 +296,7 @@ def main() -> int:
 
     for idx, case in enumerate(CASES, start=1):
         logger = FakeLogger()
-        router = FakeRouter()
+        router = FakeRouter(fail_intent=str(case.get("fail_intent") or ""))
         mode_manager = FakeModeManager()
         learning_memory = FakeLearningMemory()
         cancel_timer = CancelTimer()

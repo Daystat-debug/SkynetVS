@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Callable, Mapping, Protocol
 
+from modules.action_error import ActionExecutionError, DEFAULT_ACTION_FAILURE_MESSAGE
 from modules.command_decision import CommandDecision
 from modules.command_learning import (
     log_command_action_failure,
@@ -48,6 +49,120 @@ class CommandRuntimeResult:
     meta: dict[str, Any]
     reason: str
     last_tts_end: float | None = None
+
+
+def _error_text(error: BaseException) -> str:
+    return str(error).strip() or type(error).__name__
+
+
+def _safe_logger_event(logger: LoggerLike, kind: str, payload: dict[str, Any]) -> None:
+    try:
+        logger.event(kind, payload)
+    except Exception:
+        pass
+
+
+def _action_failure_payload(
+    *,
+    intent: str,
+    raw_text: str,
+    final_text: str,
+    error: BaseException,
+    success_reply_spoken: bool,
+) -> dict[str, Any]:
+    if isinstance(error, ActionExecutionError):
+        payload = error.to_payload()
+    else:
+        payload = {
+            "intent": intent,
+            "operation": "execute",
+            "error_code": "unexpected_action_error",
+            "error_type": type(error).__name__,
+            "error": _error_text(error),
+            "user_message": DEFAULT_ACTION_FAILURE_MESSAGE,
+            "context": {},
+        }
+
+    payload["intent"] = str(payload.get("intent") or intent).upper().strip()
+    payload["raw_text"] = raw_text
+    payload["final_text"] = final_text
+    payload["success_reply_spoken"] = bool(success_reply_spoken)
+
+    return payload
+
+
+def _handle_action_failure(
+    *,
+    raw_text: str,
+    final_text: str,
+    meta: dict[str, Any],
+    intent: str,
+    error: BaseException,
+    learning_memory: Any,
+    logger: LoggerLike,
+    stt: Any,
+    tts: Any,
+    say_func: SayFunc,
+    current_mode_name_func: ModeNameFunc,
+    previous_last_tts_end: float | None,
+    success_reply_spoken: bool,
+) -> CommandRuntimeResult:
+    try:
+        mode = current_mode_name_func()
+    except Exception:
+        mode = "unknown"
+
+    try:
+        log_command_action_failure(
+            learning_memory=learning_memory,
+            raw_text=raw_text,
+            final_text=final_text,
+            meta=meta,
+            mode=mode,
+            error=error,
+        )
+    except Exception as logging_error:
+        _safe_logger_event(
+            logger,
+            "command_action_failure_logging_failed",
+            {
+                "intent": intent,
+                "error_type": type(logging_error).__name__,
+                "error": _error_text(logging_error),
+            },
+        )
+
+    payload = _action_failure_payload(
+        intent=intent,
+        raw_text=raw_text,
+        final_text=final_text,
+        error=error,
+        success_reply_spoken=success_reply_spoken,
+    )
+    _safe_logger_event(logger, "command_action_failed", payload)
+
+    last_tts_end = previous_last_tts_end
+    failure_text = str(payload.get("user_message") or DEFAULT_ACTION_FAILURE_MESSAGE).strip()
+
+    try:
+        last_tts_end = say_func(stt, tts, failure_text)
+    except Exception as speech_error:
+        _safe_logger_event(
+            logger,
+            "command_action_failure_reply_failed",
+            {
+                "intent": intent,
+                "action_error_code": payload.get("error_code"),
+                "error_type": type(speech_error).__name__,
+                "error": _error_text(speech_error),
+            },
+        )
+
+    return CommandRuntimeResult(
+        meta=meta,
+        reason="action_failed",
+        last_tts_end=last_tts_end,
+    )
 
 
 def handle_command_runtime(
@@ -181,21 +296,23 @@ def handle_command_runtime(
         try:
             router.execute(meta_dict)
         except Exception as e:
-            log_command_action_failure(
-                learning_memory=learning_memory,
+            return _handle_action_failure(
                 raw_text=raw_text,
                 final_text=final_text,
                 meta=meta_dict,
-                mode=current_mode_name_func(),
+                intent=intent,
                 error=e,
+                learning_memory=learning_memory,
+                logger=logger,
+                stt=stt,
+                tts=tts,
+                say_func=say_func,
+                current_mode_name_func=current_mode_name_func,
+                previous_last_tts_end=None,
+                success_reply_spoken=False,
             )
-            raise
 
-        last_tts_end = say_func(
-            stt,
-            tts,
-            text_out,
-        )
+        last_tts_end = say_func(stt, tts, text_out)
 
         return CommandRuntimeResult(
             meta=meta_dict,
@@ -203,24 +320,26 @@ def handle_command_runtime(
             last_tts_end=last_tts_end,
         )
 
-    last_tts_end = say_func(
-        stt,
-        tts,
-        text_out,
-    )
+    last_tts_end = say_func(stt, tts, text_out)
 
     try:
         router.execute(meta_dict)
     except Exception as e:
-        log_command_action_failure(
-            learning_memory=learning_memory,
+        return _handle_action_failure(
             raw_text=raw_text,
             final_text=final_text,
             meta=meta_dict,
-            mode=current_mode_name_func(),
+            intent=intent,
             error=e,
+            learning_memory=learning_memory,
+            logger=logger,
+            stt=stt,
+            tts=tts,
+            say_func=say_func,
+            current_mode_name_func=current_mode_name_func,
+            previous_last_tts_end=last_tts_end,
+            success_reply_spoken=True,
         )
-        raise
 
     return CommandRuntimeResult(
         meta=meta_dict,
