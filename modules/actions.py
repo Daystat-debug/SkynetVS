@@ -11,7 +11,13 @@ import socket
 import urllib.request
 
 from typing import Optional, Dict, Any, Callable
-from modules.audio_control import AudioControl
+from modules.action_error import ActionExecutionError
+from modules.audio_control import (
+    AudioControl,
+    AudioControlError,
+    AudioControlUnavailableError,
+    AudioState,
+)
 from modules.audio_output import (
     AudioOutputControl,
     AudioOutputError,
@@ -789,54 +795,238 @@ class Actions:
 
         return ok_any
 
-    def _exec_volume_up(self, slots: Dict[str, Any]) -> None:
-        if self._audio is None:
-            return
+    def _audio_control_payload(
+        self,
+        *,
+        intent: str,
+        operation: str,
+        request: Dict[str, Any],
+        state: Optional[AudioState] = None,
+        error_code: str = "",
+        error_type: str = "",
+        error: str = "",
+        retry_attempted: bool = False,
+    ) -> Dict[str, Any]:
+        return {
+            "intent": intent,
+            "operation": operation,
+            "request": dict(request),
+            "volume": state.volume if state is not None else None,
+            "muted": state.muted if state is not None else None,
+            "error_code": error_code,
+            "error_type": error_type,
+            "error": error,
+            "retry_attempted": retry_attempted,
+        }
+
+    def _safe_log_audio_control_error(
+        self,
+        error: BaseException,
+        *,
+        intent: str,
+        operation: str,
+        slots: Dict[str, Any],
+    ) -> None:
+        try:
+            log_exception(
+                "actions.audio_control",
+                error,
+                intent=intent,
+                operation=operation,
+                slots=slots,
+            )
+        except Exception:
+            pass
+
+    def _make_audio_control_action_error(
+        self,
+        *,
+        intent: str,
+        operation: str,
+        request: Dict[str, Any],
+        detail: str,
+        error_code: str,
+        error_type: str,
+        user_message: str,
+        retry_attempted: bool = False,
+    ) -> ActionExecutionError:
+        payload = self._audio_control_payload(
+            intent=intent,
+            operation=operation,
+            request=request,
+            error_code=error_code,
+            error_type=error_type,
+            error=detail,
+            retry_attempted=retry_attempted,
+        )
+        self._emit_event("audio_control_failed", payload)
+
+        return ActionExecutionError(
+            intent=intent,
+            operation=f"audio_control.{operation}",
+            detail=detail,
+            user_message=user_message,
+            error_code=error_code,
+            context=payload,
+        )
+
+    def _execute_audio_control(
+        self,
+        *,
+        intent: str,
+        operation: str,
+        request: Dict[str, Any],
+        slots: Dict[str, Any],
+        action: Callable[[AudioControl], AudioState],
+    ) -> AudioState:
+        audio = self._audio
+
+        if audio is None:
+            raise self._make_audio_control_action_error(
+                intent=intent,
+                operation=operation,
+                request=request,
+                detail="Audio control service is unavailable",
+                error_code="audio_control_unavailable",
+                error_type="AudioControlUnavailable",
+                user_message="Управление звуком сейчас недоступно.",
+            )
 
         try:
-            self._audio.change_volume(+self._volume_step)
+            state = action(audio)
+
+            if not isinstance(state, AudioState):
+                raise TypeError(
+                    "AudioControl returned an invalid state"
+                )
+        except AudioControlError as e:
+            self._safe_log_audio_control_error(
+                e,
+                intent=intent,
+                operation=operation,
+                slots=slots,
+            )
+
+            error_code = (
+                "audio_control_unavailable"
+                if isinstance(e, AudioControlUnavailableError)
+                else "audio_control_failed"
+            )
+            user_message = (
+                "Управление звуком сейчас недоступно."
+                if isinstance(e, AudioControlUnavailableError)
+                else "Не получилось изменить звук."
+            )
+
+            raise self._make_audio_control_action_error(
+                intent=intent,
+                operation=operation,
+                request=request,
+                detail=e.detail,
+                error_code=error_code,
+                error_type=type(e).__name__,
+                user_message=user_message,
+                retry_attempted=e.retry_attempted,
+            ) from e
+        except ValueError as e:
+            self._safe_log_audio_control_error(
+                e,
+                intent=intent,
+                operation=operation,
+                slots=slots,
+            )
+
+            user_message = (
+                "Не понял, какую громкость установить."
+                if intent == "SET_VOLUME"
+                else "Не получилось изменить звук."
+            )
+
+            raise self._make_audio_control_action_error(
+                intent=intent,
+                operation=operation,
+                request=request,
+                detail=str(e).strip() or type(e).__name__,
+                error_code="audio_control_invalid_request",
+                error_type=type(e).__name__,
+                user_message=user_message,
+            ) from e
         except Exception as e:
-            log_exception("actions.volume_up", e, intent="VOLUME_UP", slots=slots)
+            self._safe_log_audio_control_error(
+                e,
+                intent=intent,
+                operation=operation,
+                slots=slots,
+            )
+
+            raise self._make_audio_control_action_error(
+                intent=intent,
+                operation=operation,
+                request=request,
+                detail=str(e).strip() or type(e).__name__,
+                error_code="audio_control_unexpected_error",
+                error_type=type(e).__name__,
+                user_message="Не получилось изменить звук.",
+            ) from e
+
+        self._emit_event(
+            "audio_control_applied",
+            self._audio_control_payload(
+                intent=intent,
+                operation=operation,
+                request=request,
+                state=state,
+            ),
+        )
+
+        return state
+
+    def _exec_volume_up(self, slots: Dict[str, Any]) -> None:
+        self._execute_audio_control(
+            intent="VOLUME_UP",
+            operation="change_volume",
+            request={"delta": self._volume_step},
+            slots=slots,
+            action=lambda audio: audio.change_volume(self._volume_step),
+        )
 
     def _exec_volume_down(self, slots: Dict[str, Any]) -> None:
-        if self._audio is None:
-            return
-
-        try:
-            self._audio.change_volume(-self._volume_step)
-        except Exception as e:
-            log_exception("actions.volume_down", e, intent="VOLUME_DOWN", slots=slots)
+        self._execute_audio_control(
+            intent="VOLUME_DOWN",
+            operation="change_volume",
+            request={"delta": -self._volume_step},
+            slots=slots,
+            action=lambda audio: audio.change_volume(-self._volume_step),
+        )
 
     def _exec_mute(self, slots: Dict[str, Any]) -> None:
-        if self._audio is None:
-            return
-
-        try:
-            self._audio.mute()
-        except Exception as e:
-            log_exception("actions.mute", e, intent="MUTE", slots=slots)
+        self._execute_audio_control(
+            intent="MUTE",
+            operation="mute",
+            request={},
+            slots=slots,
+            action=lambda audio: audio.mute(),
+        )
 
     def _exec_unmute(self, slots: Dict[str, Any]) -> None:
-        if self._audio is None:
-            return
-
-        try:
-            self._audio.unmute()
-        except Exception as e:
-            log_exception("actions.unmute", e, intent="UNMUTE", slots=slots)
+        self._execute_audio_control(
+            intent="UNMUTE",
+            operation="unmute",
+            request={},
+            slots=slots,
+            action=lambda audio: audio.unmute(),
+        )
 
     def _exec_set_volume(self, slots: Dict[str, Any]) -> None:
-        if self._audio is None:
-            return
+        volume = slots.get("volume")
 
-        v = slots.get("volume")
-        if v is None:
-            return
-
-        try:
-            self._audio.set_volume(int(v))
-        except Exception as e:
-            log_exception("actions.set_volume", e, intent="SET_VOLUME", slots=slots)
+        self._execute_audio_control(
+            intent="SET_VOLUME",
+            operation="set_volume",
+            request={"volume": volume},
+            slots=slots,
+            action=lambda audio: audio.set_volume(volume),
+        )
 
     def _exec_open_app(self, slots: Dict[str, Any]) -> None:
         app = (slots.get("app") or "").lower().strip()
