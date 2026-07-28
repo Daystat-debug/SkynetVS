@@ -85,8 +85,8 @@ class Actions:
         self._audio_output = audio_output
         self._event_func = event_func
         self._runtime_health_provider = runtime_health_provider
-        self._screenshot_service = screenshot_service or ScreenshotService()
-        self._weather_service = weather_service or WeatherService()
+        self._screenshot_service = screenshot_service
+        self._weather_service = weather_service
         self._volume_step = int(volume_step)
         self._timer_service = timer_service
         self._reminder_actions = (
@@ -96,8 +96,8 @@ class Actions:
         )
         self._music_prev_double = os.getenv("MUSIC_PREV_DOUBLE", "1").strip() == "1"
         self._music_prev_double_delay = float(os.getenv("MUSIC_PREV_DOUBLE_DELAY", "0.15"))
-        self._typing_service = typing_service or TypingService()
-        self._window_context_service = window_context_service or WindowContextService()
+        self._typing_service = typing_service
+        self._window_context_service = window_context_service
         self._execute_handlers: Dict[str, Callable[[Dict[str, Any]], None]] = {
             "VOLUME_UP": self._exec_volume_up,
             "VOLUME_DOWN": self._exec_volume_down,
@@ -795,6 +795,28 @@ class Actions:
 
         return ok_any
 
+    def _make_service_unavailable_action_error(
+        self,
+        *,
+        intent: str,
+        operation: str,
+        service: str,
+        error_code: str,
+        user_message: str,
+    ) -> ActionExecutionError:
+        detail = f"{service} service is unavailable"
+
+        return ActionExecutionError(
+            intent=intent,
+            operation=operation,
+            detail=detail,
+            user_message=user_message,
+            error_code=error_code,
+            context={
+                "service": service,
+            },
+        )
+
     def _audio_control_payload(
         self,
         *,
@@ -1074,6 +1096,37 @@ class Actions:
         except Exception:
             pass
 
+    def _require_audio_output(
+        self,
+        intent: str,
+    ) -> AudioOutputControl:
+        audio_output = self._audio_output
+
+        if audio_output is not None:
+            return audio_output
+
+        error = self._make_service_unavailable_action_error(
+            intent=intent,
+            operation="audio_output.switch",
+            service="audio_output",
+            error_code="audio_output_unavailable",
+            user_message="Переключение устройства вывода звука сейчас недоступно.",
+        )
+        self._emit_event(
+            "audio_output_failed",
+            {
+                "intent": intent,
+                "status": "unavailable",
+                "changed": False,
+                "requested_name": "",
+                "target_name": "",
+                "before_name": "",
+                "after_name": "",
+                "error": error.detail,
+            },
+        )
+        raise error
+
     def _audio_output_payload(
         self,
         intent: str,
@@ -1105,12 +1158,9 @@ class Actions:
             elif result.status == STATUS_SWITCHED:
                 event_name = "audio_output_switched"
             else:
-                error = RuntimeError(f"Unexpected audio output status: {result.status}")
-                self._emit_event(
-                    "audio_output_failed",
-                    self._audio_output_payload(intent, result, error=str(error)),
+                raise RuntimeError(
+                    f"Unexpected audio output status: {result.status}"
                 )
-                raise error
 
             self._emit_event(event_name, self._audio_output_payload(intent, result))
 
@@ -1143,27 +1193,18 @@ class Actions:
 
     def _exec_audio_output_toggle(self, slots: Dict[str, Any]) -> None:
         _ = slots
-
-        if self._audio_output is None:
-            return
-
-        self._execute_audio_output("AUDIO_OUTPUT_TOGGLE", self._audio_output.toggle)
+        audio_output = self._require_audio_output("AUDIO_OUTPUT_TOGGLE")
+        self._execute_audio_output("AUDIO_OUTPUT_TOGGLE", audio_output.toggle)
 
     def _exec_audio_output_headphones(self, slots: Dict[str, Any]) -> None:
         _ = slots
-
-        if self._audio_output is None:
-            return
-
-        self._execute_audio_output("AUDIO_OUTPUT_HEADPHONES", self._audio_output.set_headphones)
+        audio_output = self._require_audio_output("AUDIO_OUTPUT_HEADPHONES")
+        self._execute_audio_output("AUDIO_OUTPUT_HEADPHONES", audio_output.set_headphones)
 
     def _exec_audio_output_speakers(self, slots: Dict[str, Any]) -> None:
         _ = slots
-
-        if self._audio_output is None:
-            return
-
-        self._execute_audio_output("AUDIO_OUTPUT_SPEAKERS", self._audio_output.set_speakers)
+        audio_output = self._require_audio_output("AUDIO_OUTPUT_SPEAKERS")
+        self._execute_audio_output("AUDIO_OUTPUT_SPEAKERS", audio_output.set_speakers)
 
     def _exec_music_play(self, slots: Dict[str, Any]) -> None:
         try:
@@ -1310,7 +1351,13 @@ class Actions:
         slots: Dict[str, Any],
     ) -> None:
         if self._timer_service is None:
-            return
+            raise self._make_service_unavailable_action_error(
+                intent="SET_TIMER",
+                operation="timer.start",
+                service="timer",
+                error_code="timer_unavailable",
+                user_message="Таймер сейчас недоступен.",
+            )
 
         duration_value = slots.get(
             "duration_seconds"
@@ -1337,7 +1384,13 @@ class Actions:
         _ = slots
 
         if self._timer_service is None:
-            return
+            raise self._make_service_unavailable_action_error(
+                intent="CANCEL_TIMER",
+                operation="timer.cancel",
+                service="timer",
+                error_code="timer_unavailable",
+                user_message="Таймер сейчас недоступен.",
+            )
 
         self._timer_service.cancel()
 
@@ -1346,7 +1399,13 @@ class Actions:
         slots: Dict[str, Any],
     ) -> None:
         if self._reminder_actions is None:
-            return
+            raise self._make_service_unavailable_action_error(
+                intent="CREATE_REMINDER",
+                operation="reminder.create",
+                service="reminder",
+                error_code="reminder_unavailable",
+                user_message="Напоминания сейчас недоступны.",
+            )
 
         self._reminder_actions.execute_create(
             slots
@@ -1357,7 +1416,13 @@ class Actions:
         slots: Dict[str, Any],
     ) -> None:
         if self._reminder_actions is None:
-            return
+            raise self._make_service_unavailable_action_error(
+                intent="CANCEL_REMINDER",
+                operation="reminder.cancel",
+                service="reminder",
+                error_code="reminder_unavailable",
+                user_message="Напоминания сейчас недоступны.",
+            )
 
         self._reminder_actions.execute_cancel(
             slots
@@ -1365,7 +1430,8 @@ class Actions:
 
     def execute(self, meta: Dict[str, Any]) -> None:
         """
-        Фактическое выполнение действия ПОСЛЕ TTS.
+        Фактическое выполнение действия.
+        Порядок относительно TTS задаёт command_runtime.
         """
         intent = (meta.get("intent") or "").upper()
         slots = meta.get("slots") or {}

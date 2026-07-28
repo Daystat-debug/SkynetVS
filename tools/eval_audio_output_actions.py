@@ -13,6 +13,7 @@ from modules.audio_output import (
     STATUS_DEVICE_NOT_FOUND,
     STATUS_SWITCHED,
 )
+from modules.action_error import ActionExecutionError
 
 
 HEADPHONES = OutputDevice(
@@ -279,12 +280,36 @@ def main() -> int:
 
     events = []
     actions = _new_actions(None, events)
-    actions._exec_audio_output_toggle({})
+    error_info: Dict[str, Any] = {}
+
+    try:
+        actions.execute({
+            "intent": "AUDIO_OUTPUT_HEADPHONES",
+            "slots": {},
+        })
+    except ActionExecutionError as e:
+        error_info = {
+            "error_type": type(e).__name__,
+            "error_code": e.error_code,
+            "operation": e.operation,
+            "user_message": e.user_message,
+            "event_name": events[0]["name"],
+            "event_status": events[0]["payload"]["status"],
+            "event_count": len(events),
+        }
 
     check(
-        "UNAVAILABLE SERVICE IS IGNORED",
-        events,
-        [],
+        "UNAVAILABLE SERVICE IS ACTION FAILURE",
+        error_info,
+        {
+            "error_type": "ActionExecutionError",
+            "error_code": "audio_output_unavailable",
+            "operation": "audio_output.switch",
+            "user_message": "Переключение устройства вывода звука сейчас недоступно.",
+            "event_name": "audio_output_failed",
+            "event_status": "unavailable",
+            "event_count": 1,
+        },
     )
 
     events = []

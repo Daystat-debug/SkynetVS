@@ -282,8 +282,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate audio control actions", _python_cmd("tools/eval_audio_control_actions.py")),
         ],
         "audio_control_health": [
-            Step("Evaluate audio control health integration",
-                 _python_cmd("tools/eval_audio_control_health_runtime.py")),
+            Step("Evaluate audio control health integration", _python_cmd("tools/eval_audio_control_health_runtime.py")),
         ],
         "audio_output": [
             Step("Evaluate audio output", _python_cmd("tools/eval_audio_output.py")),

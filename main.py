@@ -561,6 +561,27 @@ def main():
         except Exception as e:
             print(f"[HEALTH] monitor log failed: {e}")
 
+    def log_runtime_shutdown_failure(
+        service: str,
+        operation: str,
+        error: BaseException,
+    ) -> None:
+        error_text = str(error).strip() or type(error).__name__
+        print(f"[SHUTDOWN] {service}.{operation} failed: {error_text}")
+
+        try:
+            logger.event(
+                "runtime_shutdown_failed",
+                {
+                    "service": service,
+                    "operation": operation,
+                    "error_type": type(error).__name__,
+                    "error": error_text,
+                },
+            )
+        except Exception:
+            pass
+
     def handle_runtime_health_monitor_poll() -> None:
         result = runtime_health_monitor.poll_if_due(
             collect_runtime_health
@@ -635,18 +656,38 @@ def main():
         print("\n[STOP] SkynetVS")
     finally:
         cancel_cmd_timer()
-        timer_service.cancel()
+
+        try:
+            if not tts.stop():
+                raise RuntimeError("TTS stop returned false")
+        except Exception as e:
+            log_runtime_shutdown_failure("tts", "stop", e)
+
+        try:
+            timer_service.cancel()
+        except Exception as e:
+            log_runtime_shutdown_failure("timer", "cancel", e)
 
         if reminder_service is not None:
-            reminder_service.shutdown()
-            snapshot = reminder_service.status()
+            reminder_shutdown_ok = False
 
-            logger.event(
-                "reminder_service_stopped",
-                {
-                    "remaining_count": snapshot.count,
-                },
-            )
+            try:
+                reminder_service.shutdown()
+                reminder_shutdown_ok = True
+            except Exception as e:
+                log_runtime_shutdown_failure("reminders", "shutdown", e)
+
+            if reminder_shutdown_ok:
+                try:
+                    snapshot = reminder_service.status()
+                    logger.event(
+                        "reminder_service_stopped",
+                        {
+                            "remaining_count": snapshot.count,
+                        },
+                    )
+                except Exception as e:
+                    log_runtime_shutdown_failure("reminders", "report_stopped", e)
 
 if __name__ == "__main__":
     main()
