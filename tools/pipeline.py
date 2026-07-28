@@ -94,6 +94,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate command runtime", _python_cmd("tools/eval_command_runtime.py")),
             Step("Evaluate command processor", _python_cmd("tools/eval_command_processor.py")),
             Step("Evaluate phrase event processor", _python_cmd("tools/eval_phrase_event_processor.py")),
+            Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
         "decision": [
@@ -311,6 +312,9 @@ def available_flows() -> dict[str, list[Step]]:
         "runtime_architecture_audit": [
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
+        "developer_task_contract": [
+            Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
+        ],
         "intent_rule_policy": [
             Step("Evaluate intent rule policy", _python_cmd("tools/eval_intent_rule_policy.py")),
         ],
@@ -444,6 +448,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  runtime_health_monitor  Run runtime health transition monitor eval", log_file)
     _emit("  runtime_service_health  Run runtime service health integration evals", log_file)
     _emit("  runtime_architecture_audit  Run final runtime ownership and fault-injection audit", log_file)
+    _emit("  developer_task_contract  Validate the safe developer task manifest contract", log_file)
     _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
     _emit("  nlu_config_contract  Evaluate NLU environment configuration contract", log_file)
     _emit("", log_file)
