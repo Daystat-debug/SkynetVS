@@ -191,8 +191,12 @@ def main() -> int:
     )
 
     check(
-        "MAIN SHUTS DOWN REMINDER SERVICE",
-        "shutdown" in call_names,
+        "MAIN DELEGATES REMINDER SERVICE SHUTDOWN",
+        (
+            "shutdown_runtime_services" in imported
+            and "shutdown_runtime_services" in call_names
+            and _call_has_keyword(tree, "shutdown_runtime_services", "reminder_service")
+        ),
         True,
     )
 
