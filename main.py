@@ -15,16 +15,16 @@ from modules.tts_edge import EdgeTTS
 from modules.nlu import predict, pick_named_response
 from modules.audio_control import AudioControl
 from modules.audio_output import AudioOutputControl
-from modules.screenshot import ScreenshotService
+from modules.desktop.screenshot import ScreenshotService
 from modules.actions import Actions
 from modules.router import Router
 from modules.core.logger import JsonlLogger, LoggerConfig
 from modules.core.config import Settings
 from modules.weather_service import WeatherService
-from modules.typing_service import TypingService
+from modules.desktop.typing_service import TypingService
 from modules.text_normalizer import normalize_command_text
 from modules.runtime.mode_manager import ModeManager
-from modules.window_context_service import WindowContextService
+from modules.desktop.window_context_service import WindowContextService
 from modules.learning.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase

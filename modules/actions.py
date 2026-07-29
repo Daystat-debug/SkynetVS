@@ -26,13 +26,13 @@ from modules.audio_output import (
     STATUS_SWITCHED,
 )
 from modules.media_control import MediaControl
-from modules.screenshot import ScreenshotService
+from modules.desktop.screenshot import ScreenshotService
 from modules.core.error_log import log_exception
 from urllib.parse import quote_plus
 from pathlib import Path
 from modules.weather_service import WeatherService
-from modules.typing_service import TypingService
-from modules.window_context_service import WindowContextService
+from modules.desktop.typing_service import TypingService
+from modules.desktop.window_context_service import WindowContextService
 from modules.runtime_service_health import RuntimeServiceHealthReport
 from modules.runtime_service_health_command import build_runtime_service_health_reply
 from modules.entity_registry import (

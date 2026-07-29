@@ -1,4 +1,4 @@
-from modules.typing_service import TypingService
+from modules.desktop.typing_service import TypingService
 import time
 
 time.sleep(3)

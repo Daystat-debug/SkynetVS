@@ -1,4 +1,4 @@
-# modules/screenshot.py
+# modules/desktop/screenshot.py
 
 from __future__ import annotations
 

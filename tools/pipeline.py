@@ -343,6 +343,14 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Promotion report", _python_cmd("tools/promotion_report.py")),
             Step("Import main composition root", _python_cmd("-c", "import main; print('[OK] main import')")),
         ],
+        "desktop_package": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Import desktop package", _python_cmd("-c",
+                                                       "from modules.desktop.screenshot import ScreenshotService; from modules.desktop.typing_service import TypingService; from modules.desktop.window_context_service import ActiveWindowInfo, WindowContextService; print('[OK] desktop package imports')")),
+            Step("Compile root desktop consumer", _python_cmd("-m", "py_compile", "test.py")),
+            Step("Import main composition root", _python_cmd("-c", "import main; print('[OK] main import')")),
+            Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
+        ],
         "intent_rule_policy": [
             Step("Evaluate intent rule policy", _python_cmd("tools/eval_intent_rule_policy.py")),
         ],
@@ -481,6 +489,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  core_package  Run core infrastructure package migration checks", log_file)
     _emit("  runtime_package  Run runtime coordination package migration checks", log_file)
     _emit("  learning_package  Run learning infrastructure package migration checks", log_file)
+    _emit("  desktop_package  Run desktop interaction package migration checks", log_file)
     _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
     _emit("  nlu_config_contract  Evaluate NLU environment configuration contract", log_file)
     _emit("", log_file)

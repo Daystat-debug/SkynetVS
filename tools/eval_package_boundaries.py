@@ -105,11 +105,36 @@ LEGACY_LEARNING_REFERENCES = {
     r"modules\promotion_engine.py",
 }
 
+EXPECTED_DESKTOP_FILES = {
+    "modules/desktop/__init__.py",
+    "modules/desktop/screenshot.py",
+    "modules/desktop/typing_service.py",
+    "modules/desktop/window_context_service.py",
+}
+
+LEGACY_DESKTOP_FILES = {
+    "modules/screenshot.py",
+    "modules/typing_service.py",
+    "modules/window_context_service.py",
+}
+
+LEGACY_DESKTOP_REFERENCES = {
+    "modules.screenshot",
+    "modules.typing_service",
+    "modules.window_context_service",
+    "modules/screenshot.py",
+    "modules/typing_service.py",
+    "modules/window_context_service.py",
+    r"modules\screenshot.py",
+    r"modules\typing_service.py",
+    r"modules\window_context_service.py",
+}
+
 
 def _project_python_files() -> tuple[Path, ...]:
-    paths = [PROJECT_ROOT / "main.py"]
+    paths = list(PROJECT_ROOT.glob("*.py"))
 
-    for root_name in ("modules", "tools"):
+    for root_name in ("modules", "tools", "train"):
         root = PROJECT_ROOT / root_name
 
         if root.is_dir():
@@ -292,12 +317,41 @@ def main() -> int:
         },
     )
 
+    desktop_expected_presence = {
+        path: (PROJECT_ROOT / path).is_file()
+        for path in sorted(EXPECTED_DESKTOP_FILES)
+    }
+
+    check(
+        "DESKTOP PACKAGE FILES EXIST",
+        desktop_expected_presence,
+        {
+            path: True
+            for path in sorted(EXPECTED_DESKTOP_FILES)
+        },
+    )
+
+    desktop_legacy_presence = {
+        path: (PROJECT_ROOT / path).exists()
+        for path in sorted(LEGACY_DESKTOP_FILES)
+    }
+
+    check(
+        "LEGACY DESKTOP FILES ARE ABSENT",
+        desktop_legacy_presence,
+        {
+            path: False
+            for path in sorted(LEGACY_DESKTOP_FILES)
+        },
+    )
+
     python_files = _project_python_files()
     this_file = Path(__file__).resolve()
     developer_legacy_references: list[str] = []
     core_legacy_references: list[str] = []
     runtime_legacy_references: list[str] = []
     learning_legacy_references: list[str] = []
+    desktop_legacy_references: list[str] = []
 
     for path in python_files:
         if path == this_file:
@@ -330,6 +384,12 @@ def main() -> int:
                     f"{relative}: {legacy}"
                 )
 
+        for legacy in sorted(LEGACY_DESKTOP_REFERENCES):
+            if legacy in text:
+                desktop_legacy_references.append(
+                    f"{relative}: {legacy}"
+                )
+
     check(
         "LEGACY DEVELOPER MODULE REFERENCES ARE ABSENT",
         developer_legacy_references,
@@ -351,6 +411,12 @@ def main() -> int:
     check(
         "LEGACY LEARNING REFERENCES ARE ABSENT",
         learning_legacy_references,
+        [],
+    )
+
+    check(
+        "LEGACY DESKTOP REFERENCES ARE ABSENT",
+        desktop_legacy_references,
         [],
     )
 
@@ -515,6 +581,58 @@ def main() -> int:
         [],
     )
 
+    desktop_external_imports: list[str] = []
+
+    for path in sorted((PROJECT_ROOT / "modules" / "desktop").glob("*.py")):
+        tree = ast.parse(
+            path.read_text(encoding="utf-8"),
+            filename=str(path),
+        )
+        relative = path.relative_to(PROJECT_ROOT).as_posix()
+
+        for imported in _module_imports(tree):
+            if imported == "__future__":
+                continue
+
+            normalized = imported.lstrip(".")
+
+            if imported.startswith("."):
+                desktop_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if normalized == "main" or normalized.startswith("main."):
+                desktop_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if normalized == "tools" or normalized.startswith("tools."):
+                desktop_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if (
+                normalized == "modules"
+                or normalized.startswith("modules.")
+            ) and not (
+                normalized == "modules.core"
+                or normalized.startswith("modules.core.")
+                or normalized == "modules.desktop"
+                or normalized.startswith("modules.desktop.")
+            ):
+                desktop_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+
+    check(
+        "DESKTOP PACKAGE DEPENDS ONLY ON CORE AND ITSELF",
+        desktop_external_imports,
+        [],
+    )
+
     modules_to_tools: list[str] = []
 
     for path in sorted((PROJECT_ROOT / "modules").rglob("*.py")):
@@ -589,6 +707,23 @@ def main() -> int:
         [],
     )
 
+    desktop_init_path = PROJECT_ROOT / "modules" / "desktop" / "__init__.py"
+    desktop_init_tree = ast.parse(
+        desktop_init_path.read_text(encoding="utf-8"),
+        filename=str(desktop_init_path),
+    )
+    desktop_init_imports = [
+        item
+        for item in _module_imports(desktop_init_tree)
+        if item != "__future__"
+    ]
+
+    check(
+        "DESKTOP PACKAGE INIT HAS NO REEXPORTS",
+        desktop_init_imports,
+        [],
+    )
+
     validator_path = PROJECT_ROOT / "modules" / "developer" / "developer_task_validator.py"
     validator_tree = ast.parse(validator_path.read_text(encoding="utf-8"), filename=str(validator_path))
     protected_exact = _assignment_strings(validator_tree, "_PROTECTED_EXACT_PATHS")
@@ -625,6 +760,7 @@ def main() -> int:
             "core_flow": '"core_package"' in pipeline_text,
             "runtime_flow": '"runtime_package"' in pipeline_text,
             "learning_flow": '"learning_package"' in pipeline_text,
+            "desktop_flow": '"desktop_package"' in pipeline_text,
         },
         {
             "pipeline": True,
@@ -632,6 +768,7 @@ def main() -> int:
             "core_flow": True,
             "runtime_flow": True,
             "learning_flow": True,
+            "desktop_flow": True,
         },
     )
 
