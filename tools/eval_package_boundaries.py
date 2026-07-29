@@ -55,6 +55,26 @@ LEGACY_CORE_REFERENCES = {
     r"modules\operation_telemetry.py",
 }
 
+EXPECTED_RUNTIME_FILES = {
+    "modules/runtime/__init__.py",
+    "modules/runtime/mode_manager.py",
+    "modules/runtime/runtime_shutdown.py",
+}
+
+LEGACY_RUNTIME_FILES = {
+    "modules/mode_manager.py",
+    "modules/runtime_shutdown.py",
+}
+
+LEGACY_RUNTIME_REFERENCES = {
+    "modules.mode_manager",
+    "modules.runtime_shutdown",
+    "modules/mode_manager.py",
+    "modules/runtime_shutdown.py",
+    r"modules\mode_manager.py",
+    r"modules\runtime_shutdown.py",
+}
+
 
 def _project_python_files() -> tuple[Path, ...]:
     paths = [PROJECT_ROOT / "main.py"]
@@ -186,10 +206,39 @@ def main() -> int:
         },
     )
 
+    runtime_expected_presence = {
+        path: (PROJECT_ROOT / path).is_file()
+        for path in sorted(EXPECTED_RUNTIME_FILES)
+    }
+
+    check(
+        "RUNTIME PACKAGE FILES EXIST",
+        runtime_expected_presence,
+        {
+            path: True
+            for path in sorted(EXPECTED_RUNTIME_FILES)
+        },
+    )
+
+    runtime_legacy_presence = {
+        path: (PROJECT_ROOT / path).exists()
+        for path in sorted(LEGACY_RUNTIME_FILES)
+    }
+
+    check(
+        "LEGACY RUNTIME FILES ARE ABSENT",
+        runtime_legacy_presence,
+        {
+            path: False
+            for path in sorted(LEGACY_RUNTIME_FILES)
+        },
+    )
+
     python_files = _project_python_files()
     this_file = Path(__file__).resolve()
     developer_legacy_references: list[str] = []
     core_legacy_references: list[str] = []
+    runtime_legacy_references: list[str] = []
 
     for path in python_files:
         if path == this_file:
@@ -210,6 +259,12 @@ def main() -> int:
                     f"{relative}: {legacy}"
                 )
 
+        for legacy in sorted(LEGACY_RUNTIME_REFERENCES):
+            if legacy in text:
+                runtime_legacy_references.append(
+                    f"{relative}: {legacy}"
+                )
+
     check(
         "LEGACY DEVELOPER MODULE REFERENCES ARE ABSENT",
         developer_legacy_references,
@@ -219,6 +274,12 @@ def main() -> int:
     check(
         "LEGACY CORE REFERENCES ARE ABSENT",
         core_legacy_references,
+        [],
+    )
+
+    check(
+        "LEGACY RUNTIME REFERENCES ARE ABSENT",
+        runtime_legacy_references,
         [],
     )
 
@@ -279,6 +340,58 @@ def main() -> int:
         [],
     )
 
+    runtime_external_imports: list[str] = []
+
+    for path in sorted((PROJECT_ROOT / "modules" / "runtime").glob("*.py")):
+        tree = ast.parse(
+            path.read_text(encoding="utf-8"),
+            filename=str(path),
+        )
+        relative = path.relative_to(PROJECT_ROOT).as_posix()
+
+        for imported in _module_imports(tree):
+            if imported == "__future__":
+                continue
+
+            normalized = imported.lstrip(".")
+
+            if imported.startswith("."):
+                runtime_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if normalized == "main" or normalized.startswith("main."):
+                runtime_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if normalized == "tools" or normalized.startswith("tools."):
+                runtime_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if (
+                normalized == "modules"
+                or normalized.startswith("modules.")
+            ) and not (
+                normalized == "modules.core"
+                or normalized.startswith("modules.core.")
+                or normalized == "modules.runtime"
+                or normalized.startswith("modules.runtime.")
+            ):
+                runtime_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+
+    check(
+        "RUNTIME PACKAGE DEPENDS ONLY ON CORE AND ITSELF",
+        runtime_external_imports,
+        [],
+    )
+
     modules_to_tools: list[str] = []
 
     for path in sorted((PROJECT_ROOT / "modules").rglob("*.py")):
@@ -319,6 +432,23 @@ def main() -> int:
         [],
     )
 
+    runtime_init_path = PROJECT_ROOT / "modules" / "runtime" / "__init__.py"
+    runtime_init_tree = ast.parse(
+        runtime_init_path.read_text(encoding="utf-8"),
+        filename=str(runtime_init_path),
+    )
+    runtime_init_imports = [
+        item
+        for item in _module_imports(runtime_init_tree)
+        if item != "__future__"
+    ]
+
+    check(
+        "RUNTIME PACKAGE INIT HAS NO REEXPORTS",
+        runtime_init_imports,
+        [],
+    )
+
     validator_path = PROJECT_ROOT / "modules" / "developer" / "developer_task_validator.py"
     validator_tree = ast.parse(validator_path.read_text(encoding="utf-8"), filename=str(validator_path))
     protected_exact = _assignment_strings(validator_tree, "_PROTECTED_EXACT_PATHS")
@@ -353,11 +483,13 @@ def main() -> int:
             "pipeline": "tools/eval_package_boundaries.py" in pipeline_text,
             "runtime_audit": "tools/eval_package_boundaries.py" in audit_text,
             "core_flow": '"core_package"' in pipeline_text,
+            "runtime_flow": '"runtime_package"' in pipeline_text,
         },
         {
             "pipeline": True,
             "runtime_audit": True,
             "core_flow": True,
+            "runtime_flow": True,
         },
     )
 

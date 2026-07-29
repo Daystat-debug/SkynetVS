@@ -329,6 +329,12 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate weather service", _python_cmd("tools/eval_weather_service.py")),
             Step("Evaluate runtime service health runtime", _python_cmd("tools/eval_runtime_service_health_runtime.py")),
         ],
+        "runtime_package": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Import runtime package", _python_cmd("-c", "from modules.runtime.mode_manager import ModeManager; from modules.runtime.runtime_shutdown import shutdown_runtime_services; print('[OK] runtime package imports')")),
+            Step("Import main composition root", _python_cmd("-c", "import main; print('[OK] main import')")),
+            Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
+        ],
         "intent_rule_policy": [
             Step("Evaluate intent rule policy", _python_cmd("tools/eval_intent_rule_policy.py")),
         ],
@@ -465,6 +471,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  developer_task_contract  Validate the safe developer task manifest contract", log_file)
     _emit("  package_boundaries  Validate production package layout boundaries", log_file)
     _emit("  core_package  Run core infrastructure package migration checks", log_file)
+    _emit("  runtime_package  Run runtime coordination package migration checks", log_file)
     _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
     _emit("  nlu_config_contract  Evaluate NLU environment configuration contract", log_file)
     _emit("", log_file)

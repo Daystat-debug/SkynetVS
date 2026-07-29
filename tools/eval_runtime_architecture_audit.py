@@ -12,7 +12,7 @@ from modules.actions import Actions
 from modules.router import Router
 from modules.runtime_service_health import RuntimeServiceHealth
 from modules.runtime_service_health_monitor import RuntimeServiceHealthMonitor
-from modules.runtime_shutdown import shutdown_runtime_services
+from modules.runtime.runtime_shutdown import shutdown_runtime_services
 
 
 class DummyService:

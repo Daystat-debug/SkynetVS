@@ -23,7 +23,7 @@ from modules.core.config import Settings
 from modules.weather_service import WeatherService
 from modules.typing_service import TypingService
 from modules.text_normalizer import normalize_command_text
-from modules.mode_manager import ModeManager
+from modules.runtime.mode_manager import ModeManager
 from modules.window_context_service import WindowContextService
 from modules.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
@@ -72,7 +72,7 @@ from modules.runtime_service_health_monitor import (
     RuntimeServiceHealthMonitor,
     publish_runtime_service_health_transition,
 )
-from modules.runtime_shutdown import shutdown_runtime_services
+from modules.runtime.runtime_shutdown import shutdown_runtime_services
 
 colorama_init()
 load_dotenv()
