@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
-from modules.config import DEFAULT_NLU_ACCEPT_CONF, Settings
+from modules.core.config import DEFAULT_NLU_ACCEPT_CONF, Settings
 from modules.nlu import _nlu_min_conf
 
 
@@ -139,7 +139,7 @@ def main() -> int:
     )
 
     nlu_source = Path("modules/nlu.py").read_text(encoding="utf-8")
-    config_source = Path("modules/config.py").read_text(encoding="utf-8")
+    config_source = Path("modules/core/config.py").read_text(encoding="utf-8")
 
     check(
         "PRODUCTION CODE HAS NO LEGACY NLU VARIABLE",

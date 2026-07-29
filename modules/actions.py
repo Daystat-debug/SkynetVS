@@ -27,7 +27,7 @@ from modules.audio_output import (
 )
 from modules.media_control import MediaControl
 from modules.screenshot import ScreenshotService
-from modules.error_log import log_exception
+from modules.core.error_log import log_exception
 from urllib.parse import quote_plus
 from pathlib import Path
 from modules.weather_service import WeatherService

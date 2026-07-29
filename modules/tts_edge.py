@@ -13,7 +13,7 @@ from typing import Callable
 
 import edge_tts
 
-from modules.operation_telemetry import OperationTelemetry, OperationTelemetrySnapshot
+from modules.core.operation_telemetry import OperationTelemetry, OperationTelemetrySnapshot
 
 
 class TTSSynthesisError(RuntimeError):

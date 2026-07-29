@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
-from modules.operation_telemetry import OUTCOME_FAILURE, OUTCOME_SUCCESS
+from modules.core.operation_telemetry import OUTCOME_FAILURE, OUTCOME_SUCCESS
 from modules.tts_edge import EdgeTTS, TTSPlaybackError
 
 

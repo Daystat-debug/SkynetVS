@@ -320,6 +320,15 @@ def available_flows() -> dict[str, list[Step]]:
         "package_boundaries": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
         ],
+        "core_package": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate NLU config contract", _python_cmd("tools/eval_nlu_config_contract.py")),
+            Step("Evaluate operation telemetry", _python_cmd("tools/eval_operation_telemetry.py")),
+            Step("Evaluate TTS settings", _python_cmd("tools/eval_tts_settings.py")),
+            Step("Evaluate TTS lifecycle", _python_cmd("tools/eval_tts_lifecycle.py")),
+            Step("Evaluate weather service", _python_cmd("tools/eval_weather_service.py")),
+            Step("Evaluate runtime service health runtime", _python_cmd("tools/eval_runtime_service_health_runtime.py")),
+        ],
         "intent_rule_policy": [
             Step("Evaluate intent rule policy", _python_cmd("tools/eval_intent_rule_policy.py")),
         ],
@@ -455,6 +464,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  runtime_architecture_audit  Run final runtime ownership and fault-injection audit", log_file)
     _emit("  developer_task_contract  Validate the safe developer task manifest contract", log_file)
     _emit("  package_boundaries  Validate production package layout boundaries", log_file)
+    _emit("  core_package  Run core infrastructure package migration checks", log_file)
     _emit("  intent_rule_policy  Evaluate exact intent rule architecture policy", log_file)
     _emit("  nlu_config_contract  Evaluate NLU environment configuration contract", log_file)
     _emit("", log_file)

@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from modules.command_understanding import understand_command_text
-from modules.config import Settings
+from modules.core.config import Settings
 
 
 class FakeLogger:

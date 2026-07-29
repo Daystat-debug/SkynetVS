@@ -1,4 +1,4 @@
-# modules/config.py
+# modules/core/config.py
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-# modules/error_log.py
+# modules/core/error_log.py
 from __future__ import annotations
 
 import json

@@ -25,6 +25,36 @@ LEGACY_DEVELOPER_MODULES = {
     "modules.developer_task_validator",
 }
 
+EXPECTED_CORE_FILES = {
+    "modules/core/__init__.py",
+    "modules/core/config.py",
+    "modules/core/error_log.py",
+    "modules/core/logger.py",
+    "modules/core/operation_telemetry.py",
+}
+
+LEGACY_CORE_FILES = {
+    "modules/config.py",
+    "modules/error_log.py",
+    "modules/logger.py",
+    "modules/operation_telemetry.py",
+}
+
+LEGACY_CORE_REFERENCES = {
+    "modules.config",
+    "modules.error_log",
+    "modules.logger",
+    "modules.operation_telemetry",
+    "modules/config.py",
+    "modules/error_log.py",
+    "modules/logger.py",
+    "modules/operation_telemetry.py",
+    r"modules\config.py",
+    r"modules\error_log.py",
+    r"modules\logger.py",
+    r"modules\operation_telemetry.py",
+}
+
 
 def _project_python_files() -> tuple[Path, ...]:
     paths = [PROJECT_ROOT / "main.py"]
@@ -128,9 +158,38 @@ def main() -> int:
         {path: False for path in sorted(LEGACY_DEVELOPER_FILES)},
     )
 
+    core_expected_presence = {
+        path: (PROJECT_ROOT / path).is_file()
+        for path in sorted(EXPECTED_CORE_FILES)
+    }
+
+    check(
+        "CORE PACKAGE FILES EXIST",
+        core_expected_presence,
+        {
+            path: True
+            for path in sorted(EXPECTED_CORE_FILES)
+        },
+    )
+
+    core_legacy_presence = {
+        path: (PROJECT_ROOT / path).exists()
+        for path in sorted(LEGACY_CORE_FILES)
+    }
+
+    check(
+        "LEGACY CORE FILES ARE ABSENT",
+        core_legacy_presence,
+        {
+            path: False
+            for path in sorted(LEGACY_CORE_FILES)
+        },
+    )
+
     python_files = _project_python_files()
     this_file = Path(__file__).resolve()
-    legacy_references: list[str] = []
+    developer_legacy_references: list[str] = []
+    core_legacy_references: list[str] = []
 
     for path in python_files:
         if path == this_file:
@@ -141,9 +200,27 @@ def main() -> int:
 
         for legacy in sorted(LEGACY_DEVELOPER_MODULES):
             if legacy in text:
-                legacy_references.append(f"{relative}: {legacy}")
+                developer_legacy_references.append(
+                    f"{relative}: {legacy}"
+                )
 
-    check("LEGACY DEVELOPER MODULE REFERENCES ARE ABSENT", legacy_references, [])
+        for legacy in sorted(LEGACY_CORE_REFERENCES):
+            if legacy in text:
+                core_legacy_references.append(
+                    f"{relative}: {legacy}"
+                )
+
+    check(
+        "LEGACY DEVELOPER MODULE REFERENCES ARE ABSENT",
+        developer_legacy_references,
+        [],
+    )
+
+    check(
+        "LEGACY CORE REFERENCES ARE ABSENT",
+        core_legacy_references,
+        [],
+    )
 
     developer_external_imports: list[str] = []
 
@@ -165,6 +242,40 @@ def main() -> int:
     check(
         "DEVELOPER PACKAGE DEPENDS ONLY ON ITSELF AND STDLIB",
         developer_external_imports,
+        [],
+    )
+
+    core_project_imports: list[str] = []
+
+    for path in sorted((PROJECT_ROOT / "modules" / "core").glob("*.py")):
+        tree = ast.parse(
+            path.read_text(encoding="utf-8"),
+            filename=str(path),
+        )
+        relative = path.relative_to(PROJECT_ROOT).as_posix()
+
+        for imported in _module_imports(tree):
+            if imported == "__future__":
+                continue
+
+            normalized = imported.lstrip(".")
+
+            if (
+                imported.startswith(".")
+                or normalized == "main"
+                or normalized.startswith("main.")
+                or normalized == "modules"
+                or normalized.startswith("modules.")
+                or normalized == "tools"
+                or normalized.startswith("tools.")
+            ):
+                core_project_imports.append(
+                    f"{relative}: {imported}"
+                )
+
+    check(
+        "CORE PACKAGE HAS NO PROJECT LAYER DEPENDENCIES",
+        core_project_imports,
         [],
     )
 
@@ -190,6 +301,23 @@ def main() -> int:
     init_imports = [item for item in _module_imports(init_tree) if item != "__future__"]
 
     check("DEVELOPER PACKAGE INIT HAS NO REEXPORTS", init_imports, [])
+
+    core_init_path = PROJECT_ROOT / "modules" / "core" / "__init__.py"
+    core_init_tree = ast.parse(
+        core_init_path.read_text(encoding="utf-8"),
+        filename=str(core_init_path),
+    )
+    core_init_imports = [
+        item
+        for item in _module_imports(core_init_tree)
+        if item != "__future__"
+    ]
+
+    check(
+        "CORE PACKAGE INIT HAS NO REEXPORTS",
+        core_init_imports,
+        [],
+    )
 
     validator_path = PROJECT_ROOT / "modules" / "developer" / "developer_task_validator.py"
     validator_tree = ast.parse(validator_path.read_text(encoding="utf-8"), filename=str(validator_path))
@@ -224,10 +352,12 @@ def main() -> int:
         {
             "pipeline": "tools/eval_package_boundaries.py" in pipeline_text,
             "runtime_audit": "tools/eval_package_boundaries.py" in audit_text,
+            "core_flow": '"core_package"' in pipeline_text,
         },
         {
             "pipeline": True,
             "runtime_audit": True,
+            "core_flow": True,
         },
     )
 

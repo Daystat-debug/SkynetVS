@@ -5,7 +5,7 @@ import time
 
 from typing import Any, Callable
 
-from modules.operation_telemetry import OUTCOME_FAILURE, OUTCOME_SUCCESS
+from modules.core.operation_telemetry import OUTCOME_FAILURE, OUTCOME_SUCCESS
 from modules.runtime_service_health import (
     RuntimeServiceHealth,
     RuntimeServiceHealthReport,

@@ -18,8 +18,8 @@ from modules.audio_output import AudioOutputControl
 from modules.screenshot import ScreenshotService
 from modules.actions import Actions
 from modules.router import Router
-from modules.logger import JsonlLogger, LoggerConfig
-from modules.config import Settings
+from modules.core.logger import JsonlLogger, LoggerConfig
+from modules.core.config import Settings
 from modules.weather_service import WeatherService
 from modules.typing_service import TypingService
 from modules.text_normalizer import normalize_command_text

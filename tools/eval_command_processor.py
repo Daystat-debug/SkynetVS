@@ -9,7 +9,7 @@ load_dotenv()
 
 from modules.action_error import ActionExecutionError
 from modules.command_processor import CommandProcessor
-from modules.config import Settings
+from modules.core.config import Settings
 
 
 class FakeLogger:

@@ -12,7 +12,7 @@ import comtypes
 from comtypes import CLSCTX_ALL, COMMETHOD, GUID
 from pycaw.pycaw import AudioUtilities
 
-from modules.error_log import log_exception
+from modules.core.error_log import log_exception
 
 
 # Windows audio roles

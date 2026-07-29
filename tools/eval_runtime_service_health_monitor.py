@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
-from modules.config import Settings
+from modules.core.config import Settings
 from modules.runtime_service_health import (
     RuntimeServiceHealth,
     STATUS_DEGRADED,

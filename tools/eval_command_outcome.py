@@ -9,7 +9,7 @@ load_dotenv()
 
 from modules.command_decision import build_command_decision
 from modules.command_outcome import classify_command_outcome
-from modules.config import Settings
+from modules.core.config import Settings
 
 
 Case = Dict[str, Any]

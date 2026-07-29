@@ -8,7 +8,7 @@ import re
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any, Callable
-from modules.config import DEFAULT_NLU_ACCEPT_CONF
+from modules.core.config import DEFAULT_NLU_ACCEPT_CONF
 from modules.intent_rules import (
     build_incomplete_command_meta,
     build_set_timer_meta,

@@ -19,7 +19,7 @@ if str(ROOT) not in sys.path:
 
 load_dotenv(ROOT / ".env")
 
-from modules.config import Settings
+from modules.core.config import Settings
 from modules.entity_registry import get_site_url
 
 

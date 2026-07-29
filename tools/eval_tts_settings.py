@@ -12,7 +12,7 @@ from unittest.mock import patch
 
 import modules.tts_edge as tts_edge_module
 
-from modules.config import Settings
+from modules.core.config import Settings
 from modules.tts_edge import EdgeTTS
 
 

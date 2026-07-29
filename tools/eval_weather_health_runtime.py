@@ -5,7 +5,7 @@ import json
 from types import SimpleNamespace
 from typing import Any
 
-from modules.operation_telemetry import (
+from modules.core.operation_telemetry import (
     OUTCOME_FAILURE,
     OUTCOME_SUCCESS,
     OperationTelemetrySnapshot,

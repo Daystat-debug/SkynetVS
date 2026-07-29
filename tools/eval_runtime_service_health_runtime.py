@@ -12,7 +12,7 @@ from modules.runtime_service_health_runtime import (
     collect_runtime_service_health,
     publish_runtime_service_health,
 )
-from modules.operation_telemetry import OUTCOME_SUCCESS, OperationTelemetrySnapshot
+from modules.core.operation_telemetry import OUTCOME_SUCCESS, OperationTelemetrySnapshot
 from modules.tts_edge import TTSLifecycleSnapshot
 from tools.audio_control_health_test_support import healthy_audio_control_service
 from tools.stt_health_test_support import healthy_stt_service

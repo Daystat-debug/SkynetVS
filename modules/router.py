@@ -7,7 +7,7 @@ from typing import Dict, Any, Optional
 
 from modules.actions import Actions
 from modules.dialog_state import DialogState
-from modules.config import Settings
+from modules.core.config import Settings
 
 
 class Router:

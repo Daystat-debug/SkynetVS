@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from modules.command_decision import build_command_decision
-from modules.config import Settings
+from modules.core.config import Settings
 from modules.nlu import predict
 
 

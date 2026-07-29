@@ -9,7 +9,7 @@ from typing import Any, Callable, Dict
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
-from modules.operation_telemetry import OperationTelemetry, OperationTelemetrySnapshot
+from modules.core.operation_telemetry import OperationTelemetry, OperationTelemetrySnapshot
 
 
 class WeatherServiceError(RuntimeError):
