@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 
-from modules.feedback_analyzer import FeedbackAnalyzer
+from modules.learning.feedback_analyzer import FeedbackAnalyzer
 
 
 def _print_block(title: str, rows: list[dict]) -> None:

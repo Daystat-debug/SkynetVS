@@ -75,6 +75,36 @@ LEGACY_RUNTIME_REFERENCES = {
     r"modules\runtime_shutdown.py",
 }
 
+EXPECTED_LEARNING_FILES = {
+    "modules/learning/__init__.py",
+    "modules/learning/correction_memory.py",
+    "modules/learning/feedback_analyzer.py",
+    "modules/learning/learning_memory.py",
+    "modules/learning/promotion_engine.py",
+}
+
+LEGACY_LEARNING_FILES = {
+    "modules/correction_memory.py",
+    "modules/feedback_analyzer.py",
+    "modules/learning_memory.py",
+    "modules/promotion_engine.py",
+}
+
+LEGACY_LEARNING_REFERENCES = {
+    "modules.correction_memory",
+    "modules.feedback_analyzer",
+    "modules.learning_memory",
+    "modules.promotion_engine",
+    "modules/correction_memory.py",
+    "modules/feedback_analyzer.py",
+    "modules/learning_memory.py",
+    "modules/promotion_engine.py",
+    r"modules\correction_memory.py",
+    r"modules\feedback_analyzer.py",
+    r"modules\learning_memory.py",
+    r"modules\promotion_engine.py",
+}
+
 
 def _project_python_files() -> tuple[Path, ...]:
     paths = [PROJECT_ROOT / "main.py"]
@@ -234,11 +264,40 @@ def main() -> int:
         },
     )
 
+    learning_expected_presence = {
+        path: (PROJECT_ROOT / path).is_file()
+        for path in sorted(EXPECTED_LEARNING_FILES)
+    }
+
+    check(
+        "LEARNING PACKAGE FILES EXIST",
+        learning_expected_presence,
+        {
+            path: True
+            for path in sorted(EXPECTED_LEARNING_FILES)
+        },
+    )
+
+    learning_legacy_presence = {
+        path: (PROJECT_ROOT / path).exists()
+        for path in sorted(LEGACY_LEARNING_FILES)
+    }
+
+    check(
+        "LEGACY LEARNING FILES ARE ABSENT",
+        learning_legacy_presence,
+        {
+            path: False
+            for path in sorted(LEGACY_LEARNING_FILES)
+        },
+    )
+
     python_files = _project_python_files()
     this_file = Path(__file__).resolve()
     developer_legacy_references: list[str] = []
     core_legacy_references: list[str] = []
     runtime_legacy_references: list[str] = []
+    learning_legacy_references: list[str] = []
 
     for path in python_files:
         if path == this_file:
@@ -265,6 +324,12 @@ def main() -> int:
                     f"{relative}: {legacy}"
                 )
 
+        for legacy in sorted(LEGACY_LEARNING_REFERENCES):
+            if legacy in text:
+                learning_legacy_references.append(
+                    f"{relative}: {legacy}"
+                )
+
     check(
         "LEGACY DEVELOPER MODULE REFERENCES ARE ABSENT",
         developer_legacy_references,
@@ -280,6 +345,12 @@ def main() -> int:
     check(
         "LEGACY RUNTIME REFERENCES ARE ABSENT",
         runtime_legacy_references,
+        [],
+    )
+
+    check(
+        "LEGACY LEARNING REFERENCES ARE ABSENT",
+        learning_legacy_references,
         [],
     )
 
@@ -392,6 +463,58 @@ def main() -> int:
         [],
     )
 
+    learning_external_imports: list[str] = []
+
+    for path in sorted((PROJECT_ROOT / "modules" / "learning").glob("*.py")):
+        tree = ast.parse(
+            path.read_text(encoding="utf-8"),
+            filename=str(path),
+        )
+        relative = path.relative_to(PROJECT_ROOT).as_posix()
+
+        for imported in _module_imports(tree):
+            if imported == "__future__":
+                continue
+
+            normalized = imported.lstrip(".")
+
+            if imported.startswith("."):
+                learning_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if normalized == "main" or normalized.startswith("main."):
+                learning_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if normalized == "tools" or normalized.startswith("tools."):
+                learning_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+                continue
+
+            if (
+                normalized == "modules"
+                or normalized.startswith("modules.")
+            ) and not (
+                normalized == "modules.core"
+                or normalized.startswith("modules.core.")
+                or normalized == "modules.learning"
+                or normalized.startswith("modules.learning.")
+            ):
+                learning_external_imports.append(
+                    f"{relative}: {imported}"
+                )
+
+    check(
+        "LEARNING PACKAGE DEPENDS ONLY ON CORE AND ITSELF",
+        learning_external_imports,
+        [],
+    )
+
     modules_to_tools: list[str] = []
 
     for path in sorted((PROJECT_ROOT / "modules").rglob("*.py")):
@@ -449,6 +572,23 @@ def main() -> int:
         [],
     )
 
+    learning_init_path = PROJECT_ROOT / "modules" / "learning" / "__init__.py"
+    learning_init_tree = ast.parse(
+        learning_init_path.read_text(encoding="utf-8"),
+        filename=str(learning_init_path),
+    )
+    learning_init_imports = [
+        item
+        for item in _module_imports(learning_init_tree)
+        if item != "__future__"
+    ]
+
+    check(
+        "LEARNING PACKAGE INIT HAS NO REEXPORTS",
+        learning_init_imports,
+        [],
+    )
+
     validator_path = PROJECT_ROOT / "modules" / "developer" / "developer_task_validator.py"
     validator_tree = ast.parse(validator_path.read_text(encoding="utf-8"), filename=str(validator_path))
     protected_exact = _assignment_strings(validator_tree, "_PROTECTED_EXACT_PATHS")
@@ -484,12 +624,14 @@ def main() -> int:
             "runtime_audit": "tools/eval_package_boundaries.py" in audit_text,
             "core_flow": '"core_package"' in pipeline_text,
             "runtime_flow": '"runtime_package"' in pipeline_text,
+            "learning_flow": '"learning_package"' in pipeline_text,
         },
         {
             "pipeline": True,
             "runtime_audit": True,
             "core_flow": True,
             "runtime_flow": True,
+            "learning_flow": True,
         },
     )
 

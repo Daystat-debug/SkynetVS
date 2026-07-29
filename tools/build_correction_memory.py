@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.correction_memory import CorrectionMemory
-from modules.feedback_analyzer import FeedbackAnalyzer
+from modules.learning.correction_memory import CorrectionMemory
+from modules.learning.feedback_analyzer import FeedbackAnalyzer
 
 
 def main() -> None:

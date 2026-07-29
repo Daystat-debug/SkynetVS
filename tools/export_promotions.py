@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List, Set, Tuple
 
-from modules.promotion_engine import build_report, read_jsonl, norm
+from modules.learning.promotion_engine import build_report, read_jsonl, norm
 
 
 CORRECTION_MEMORY_PATH = Path("data/learning/correction_memory.jsonl")

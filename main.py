@@ -25,7 +25,7 @@ from modules.typing_service import TypingService
 from modules.text_normalizer import normalize_command_text
 from modules.runtime.mode_manager import ModeManager
 from modules.window_context_service import WindowContextService
-from modules.learning_memory import LearningMemory
+from modules.learning.learning_memory import LearningMemory
 from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
 from modules.reply_builder import build_reply_text
