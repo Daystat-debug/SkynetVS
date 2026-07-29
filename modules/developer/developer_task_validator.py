@@ -6,7 +6,7 @@ from collections.abc import Mapping
 from pathlib import PurePosixPath
 from typing import Any
 
-from modules.developer_task_contract import (
+from modules.developer.developer_task_contract import (
     DEVELOPER_CHECK_GIT_DIFF,
     DEVELOPER_CHECK_PIPELINE,
     DEVELOPER_CHECK_PY_COMPILE,
@@ -85,9 +85,11 @@ _PROTECTED_EXACT_PATHS = {
     "tools/pipeline.py",
     "tools/eval_runtime_architecture_audit.py",
     "tools/eval_audio_control_windows.py",
+    "tools/eval_package_boundaries.py",
 }
 
 _PROTECTED_PATH_PREFIXES = (
+    "modules/developer/",
     "modules/developer_",
     "tools/developer_",
     "tools/eval_developer_",

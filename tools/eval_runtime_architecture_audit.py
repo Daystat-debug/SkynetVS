@@ -953,6 +953,7 @@ def main() -> int:
         "tools/eval_stt_health_runtime.py",
         "tools/eval_runtime_service_health_monitor.py",
         "tools/eval_command_runtime.py",
+        "tools/eval_package_boundaries.py",
         "tools/eval_developer_task_contract.py",
         "tools/eval_runtime_architecture_audit.py",
     )

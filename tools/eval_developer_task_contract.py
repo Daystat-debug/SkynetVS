@@ -4,11 +4,11 @@ import json
 
 from typing import Any
 
-from modules.developer_task_contract import (
+from modules.developer.developer_task_contract import (
     DeveloperTaskValidationError,
     developer_task_manifest_fingerprint,
 )
-from modules.developer_task_validator import (
+from modules.developer.developer_task_validator import (
     require_valid_developer_task_manifest,
     validate_developer_task_manifest,
 )
@@ -263,6 +263,22 @@ def main() -> int:
                 "forbidden_path": True,
                 "protected_path": True,
                 "forbidden_file_type": True,
+            },
+        },
+    )
+
+    payload = _valid_manifest()
+    payload["allowed_files"] = [
+        "modules/developer/worktree_executor.py",
+    ]
+
+    check(
+        "DEVELOPER PACKAGE IS PROTECTED",
+        _issue_presence(payload, ("protected_path",)),
+        {
+            "ok": False,
+            "contains": {
+                "protected_path": True,
             },
         },
     )
