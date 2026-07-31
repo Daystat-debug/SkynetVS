@@ -98,6 +98,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
             Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
             Step("Evaluate developer task patch integrity preflight", _python_cmd("tools/eval_developer_task_patch_integrity.py")),
+            Step("Evaluate developer task isolated patch index preflight", _python_cmd("tools/eval_developer_task_patch_index.py")),
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
         "decision": [
@@ -324,6 +325,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
             Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
             Step("Evaluate developer task patch integrity preflight", _python_cmd("tools/eval_developer_task_patch_integrity.py")),
+            Step("Evaluate developer task isolated patch index preflight", _python_cmd("tools/eval_developer_task_patch_index.py")),
         ],
         "package_boundaries": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
@@ -493,7 +495,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  runtime_service_health  Run runtime service health integration evals", log_file)
     _emit("  runtime_architecture_audit  Run final runtime ownership and fault-injection audit", log_file)
     _emit("  developer_task_contract  Validate the safe developer task manifest contract", log_file)
-    _emit("  developer_task_preflight  Validate developer task repository preflight", log_file)
+    _emit("  developer_task_preflight  Validate developer task preflight safety gates", log_file)
     _emit("  package_boundaries  Validate production package layout boundaries", log_file)
     _emit("  core_package  Run core infrastructure package migration checks", log_file)
     _emit("  runtime_package  Run runtime coordination package migration checks", log_file)
