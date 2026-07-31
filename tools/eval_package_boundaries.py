@@ -12,18 +12,21 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 EXPECTED_DEVELOPER_FILES = {
     "modules/developer/__init__.py",
     "modules/developer/developer_task_contract.py",
+    "modules/developer/developer_task_patch_integrity.py",
     "modules/developer/developer_task_preflight.py",
     "modules/developer/developer_task_validator.py",
 }
 
 LEGACY_DEVELOPER_FILES = {
     "modules/developer_task_contract.py",
+    "modules/developer_task_patch_integrity.py",
     "modules/developer_task_preflight.py",
     "modules/developer_task_validator.py",
 }
 
 LEGACY_DEVELOPER_MODULES = {
     "modules.developer_task_contract",
+    "modules.developer_task_patch_integrity",
     "modules.developer_task_preflight",
     "modules.developer_task_validator",
 }
@@ -766,6 +769,7 @@ def main() -> int:
             "desktop_flow": '"desktop_package"' in pipeline_text,
             "developer_preflight_flow": '"developer_task_preflight"' in pipeline_text,
             "developer_preflight_eval": "tools/eval_developer_task_preflight.py" in pipeline_text,
+            "developer_patch_integrity_eval": "tools/eval_developer_task_patch_integrity.py" in pipeline_text,
         },
         {
             "pipeline": True,
@@ -776,6 +780,7 @@ def main() -> int:
             "desktop_flow": True,
             "developer_preflight_flow": True,
             "developer_preflight_eval": True,
+            "developer_patch_integrity_eval": True,
         },
     )
 
