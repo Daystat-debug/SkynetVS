@@ -1,6 +1,6 @@
 # SkynetVS Current State
 
-**Дата обновления:** 2026-07-30, снимок на 03:08 по локальному времени рабочей машины  
+**Дата обновления:** 2026-07-31  
 **Модель статусов:** `VERIFIED`, `PLANNED`, `DEFERRED`, `UNVERIFIED`
 
 ---
@@ -19,36 +19,22 @@
 
 ---
 
-## 2. VERIFIED — снимок репозитория
-
-Следующие значения получены из `SkynetVS_Preflight_Context_20260730_030824.zip` до документационного коммита:
+## 2. VERIFIED — текущее состояние репозитория
 
 - Ветка: `main`.
-- Проверенный code baseline HEAD: `09f8708f67f4cf1681801ea41498815cf7df5948`.
-- Название HEAD: `refactor: move desktop interaction services into package`.
-- `origin/main`: `09f8708f67f4cf1681801ea41498815cf7df5948`.
-- Стабильный тег на code baseline: `skynet-runtime-foundation-v1`.
-- Тег намеренно остаётся на `09f8708` как точка до появления developer-task runtime.
-- В снимке не было unstaged-изменений отслеживаемых файлов.
-- Staged-изменение на момент снимка:
-  - `A  docs/architecture/SkynetVS_ARCHITECTURE_ROADMAP_V1.md`.
-- `docs/architecture/SKYNETVS_CURRENT_STATE.md` на момент снимка отсутствовал.
+- Проверенный code HEAD до этого documentation update, сокращённый SHA: `6e2aa78`.
+- Название code HEAD: `feat: add developer task repository preflight`.
+- `origin/main` до этого documentation update: указывает на тот же commit `6e2aa78`.
+- После коммита обновлённого current-state файла фактический HEAD станет новым documentation commit; его всегда нужно брать напрямую из Git.
+- Рабочее дерево: чистое; `git status --short` ничего не выводит.
+- Стабильный foundation-тег: `skynet-runtime-foundation-v1`.
+- Тег намеренно остаётся на `09f8708` как проверенная runtime-база до начала Developer Safety Kernel.
+- Roadmap присутствует по каноническому пути:
+  - `docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md`.
+- Этот current-state файл присутствует по каноническому пути:
+  - `docs/architecture/SKYNETVS_CURRENT_STATE.md`.
 
-### Проблема регистра имени roadmap
-
-Канонический путь:
-
-```text
-docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
-```
-
-В Git index снимка записан путь со смешанным регистром:
-
-```text
-docs/architecture/SkynetVS_ARCHITECTURE_ROADMAP_V1.md
-```
-
-Перед документационным коммитом необходимо выполнить двухшаговый `git mv`, чтобы Windows и Git зафиксировали каноническое имя в верхнем регистре.
+Полный SHA code commit `6e2aa78` не был включён в последний присланный вывод. При необходимости его нужно брать напрямую из Git. После documentation commit команда `git rev-parse HEAD` вернёт уже SHA документационного коммита, поэтому code commit следует находить через `git log --oneline --decorate`. Git остаётся источником истины.
 
 ---
 
@@ -69,7 +55,7 @@ docs/architecture/SkynetVS_ARCHITECTURE_ROADMAP_V1.md
 
 ---
 
-## 4. VERIFIED — завершённые этапы
+## 4. VERIFIED — завершённые архитектурные этапы
 
 - Runtime Ownership and Fault Injection Audit.
 - Safe Developer Task Contract V1.
@@ -78,6 +64,7 @@ docs/architecture/SkynetVS_ARCHITECTURE_ROADMAP_V1.md
 - Runtime Package Structure V1.
 - Learning Package Structure V1.
 - Desktop Package Structure V1.
+- Roadmap Lock V1.
 - Стабильный foundation-тег `skynet-runtime-foundation-v1` на `09f8708`.
 
 `Desktop Package Structure V1` включал только:
@@ -90,289 +77,302 @@ docs/architecture/SkynetVS_ARCHITECTURE_ROADMAP_V1.md
 
 ---
 
-## 5. VERIFIED — последний полный pipeline
+## 5. VERIFIED — Developer Task Preflight V1A
 
-Последний приложенный лог:
+### Repository Gate
+
+**Статус:** завершён, проверен, закоммичен и отправлен в `origin/main`.
+
+Commit:
 
 ```text
-data/logs/pipeline/20260730_015314_check.log
+6e2aa78 feat: add developer task repository preflight
 ```
 
-Результат:
+Состав commit:
 
-- flow: `check`;
-- pipeline-этапов: `65`;
-- записей `[OK]`: `866`;
-- записей `[FAIL]`: `0`;
-- финал: `Flow 'check' completed successfully`.
+```text
+A  modules/developer/developer_task_preflight.py
+A  tools/eval_developer_task_preflight.py
+M  tools/eval_package_boundaries.py
+M  tools/pipeline.py
+```
 
-Ключевые подтверждённые секции:
+Статистика commit:
 
-- package boundaries: `28` кейсов, `0` ошибок;
-- developer task contract: `18` кейсов, `0` ошибок;
-- runtime architecture audit: `9` кейсов, `0` ошибок.
+```text
+4 files changed, 1047 insertions(+)
+```
+
+V1A реализует read-only проверку:
+
+- точного корня Git-репозитория;
+- non-bare worktree;
+- разрешения `HEAD` в commit;
+- разрешения `manifest.base_commit` в commit;
+- совпадения `HEAD == base_commit`;
+- чистоты index и worktree;
+- staged, unstaged, untracked, conflict и dirty-submodule состояний;
+- безопасного поведения при Git timeout, отсутствии Git и ошибке запуска;
+- нейтрализации унаследованных Git redirection/trace переменных;
+- immutable структурированного отчёта и стабильных issue codes.
 
 ---
 
-## 6. Текущий организационный gate
+## 6. VERIFIED — проверки V1A
 
-### Roadmap Lock V1
+Targeted flow `developer_task_preflight`:
 
-**Статус:** готов к документационному коммиту.
+- package boundaries: `28/28`, ошибок `0`;
+- developer task contract: `18/18`, ошибок `0`;
+- developer task repository preflight: `22/22`, ошибок `0`;
+- финал: `Flow 'developer_task_preflight' completed successfully`.
 
-Содержимое roadmap подготовлено и добавлено в index, но приложенный Git-снимок доказывает, что оно ещё не было закоммичено и отправлено в `origin`.
+Полный flow `check`:
 
-Roadmap Lock V1 считается завершённым только когда:
+- завершён успешно;
+- новый repository preflight включён в общий pipeline;
+- регрессий в NLU, STT, TTS, audio, reminders, runtime и package boundaries не обнаружено.
 
-1. roadmap имеет каноническое имя в верхнем регистре;
-2. этот current-state файл присутствует;
-3. оба файла закоммичены;
-4. commit отправлен в `origin/main`;
-5. после этого `git status --short` пуст.
+Подтверждающие логи:
+
+```text
+data/logs/pipeline/20260730_133532_developer_task_preflight.log
+data/logs/pipeline/20260730_133618_check.log
+```
 
 ---
 
 ## 7. PLANNED — текущий программный этап
 
-# Developer Task Preflight V1
+# Developer Task Preflight V1B — Patch Integrity Gate
 
-**Статус:** архитектура проаудирована; реализация не начата.
+**Статус:** архитектурная граница утверждена; патч подготовлен; в проект ещё не применён.
 
 ### Почему этот этап выполняется сейчас
 
-Существующий manifest validator доказывает корректность схемы задачи и полей политики. Он ещё не доказывает, что реальный репозиторий, commit, worktree, байты patch, scope patch и применимость patch соответствуют manifest.
+V1A доказал состояние репозитория, но ещё не доказывает, что фактический patch-файл:
 
-`Developer Task Preflight V1` закрывает этот разрыв до того, как patch сможет попасть даже в изолированное рабочее окружение.
+- находится в разрешённом task artifact directory;
+- не подменён symlink, junction или reparse point;
+- является обычным файлом;
+- имеет допустимый размер;
+- прочитан без текстовых преобразований;
+- не был заменён во время чтения;
+- точно соответствует `manifest.patch_sha256`.
 
----
-
-## 8. In scope — Developer Task Preflight V1
-
-- Убедиться, что `project_root` является точным корнем non-bare Git worktree.
-- Разрешить `HEAD` до commit-объекта.
-- Разрешить `manifest.base_commit` до commit-объекта.
-- Потребовать `resolved HEAD == resolved base_commit`.
-- Потребовать чистый index и worktree, включая staged, unstaged, untracked, conflict и dirty-submodule состояния.
-- Получать task artifact directory явно и отдельно от `project_root`.
-- Проверить, что patch — обычный файл, а не symlink.
-- Ограничить максимальный размер patch.
-- Прочитать байты patch один раз и вычислить SHA-256 именно от этих байтов.
-- Сравнить вычисленный hash с `manifest.patch_sha256`.
-- Проверить применимость patch без изменения реального index и worktree.
-- Получить точные изменяемые пути и file modes средствами Git через временный disposable index.
-- Сравнить каждый затронутый путь с `manifest.allowed_files` с точной и case-insensitive проверкой.
-- Отклонять case-collision и неоднозначность регистра.
-- Отклонять symlink, gitlink/submodule, небезопасные типы файлов и пути вне разрешённого scope.
-- Вернуть immutable структурированный report со стабильными issue codes.
+V1B должен сформировать immutable snapshot проверенных байтов patch. Именно эти байты будут передаваться следующим preflight-слоям.
 
 ---
 
-## 9. Out of scope — Developer Task Preflight V1
+## 8. In scope — V1B
 
-- Применение patch к реальному worktree.
-- Изменение реального Git index.
-- `git reset`, `git clean`, `git stash`, checkout, merge, commit или push.
-- Создание isolated worktree для реального выполнения.
-- Запуск manifest checks: `py_compile`, `python_module`, pipeline flow.
+- Принимать уже валидированный `DeveloperTaskManifest`.
+- Принимать успешный `DeveloperTaskRepositoryPreflightReport` из V1A.
+- Проверять согласованность repository report и manifest fingerprint.
+- Получать `task_root` явно как `pathlib.Path`.
+- Требовать, чтобы `task_root` существовал и являлся каталогом.
+- Отклонять symlink, junction и Windows reparse point для `task_root`.
+- Требовать, чтобы `task_root` и project repository были непересекающимися деревьями.
+- Разрешать только валидированное basename-имя patch с расширением `.patch`.
+- Отклонять отсутствующий patch.
+- Отклонять symlink/reparse point для patch-файла.
+- Требовать обычный файл.
+- Отклонять пустой patch.
+- Ограничивать размер patch значением V1: `5 MiB`.
+- Читать patch в бинарном режиме в immutable `bytes`.
+- Сравнивать metadata до открытия, после открытия и после чтения.
+- Обнаруживать подмену или изменение файла во время чтения.
+- Вычислять SHA-256 именно от прочитанных байтов.
+- Сравнивать hash с `manifest.patch_sha256`.
+- Не включать patch bytes в `repr` и `to_dict()`.
+- Возвращать immutable структурированный report со стабильными issue codes.
+
+---
+
+## 9. Out of scope — V1B
+
+- `git apply` и `git apply --check`.
+- Разбор затронутых путей.
+- Проверка `manifest.allowed_files`.
+- Анализ rename/copy/delete/add.
+- Анализ Git file modes `120000` и `160000`.
+- Создание disposable Git index.
+- Изменение реального Git index или worktree.
+- Создание isolated worktree.
+- Запуск manifest checks.
 - Установка зависимостей.
-- Автоматическое исправление manifest.
-- Автоматическое расширение `allowed_files`.
-- Автоматический promotion или merge.
-- Проверка `source_sha256`, поскольку текущий manifest не содержит локального пути к source artifact, который preflight мог бы прочитать.
+- Commit, merge, promotion или push результата developer-task.
+
+Эти обязанности остаются V1C, V1D и последующим этапам Developer Safety Kernel.
 
 ---
 
-## 10. Принятые архитектурные решения
-
-- `DeveloperTaskManifest` остаётся валидированным входным контрактом.
-- Preflight принимает уже валидированный `DeveloperTaskManifest`, а не raw JSON object.
-- Manifest schema validation и runtime preflight остаются разными ответственностями.
-- Первый preflight-патч не изменяет `developer_task_contract.py` и `developer_task_validator.py`, если тест не докажет реальный пробел контракта.
-- Публичный API preflight:
-
-```python
-run_developer_task_preflight(
-    manifest: DeveloperTaskManifest,
-    *,
-    project_root: Path,
-    task_root: Path,
-) -> DeveloperTaskPreflightReport
-```
-
-- Ожидаемые операционные ошибки возвращаются как структурированные issues, а не как одна общая exception.
-- Ошибки использования API разработчиком могут оставаться `TypeError` или `ValueError`.
-- Реальный project index и worktree всегда остаются нетронутыми.
-- Нельзя заново реализовывать parser Git patch через хрупкий разбор строк.
-- После вычисления hash те же байты patch передаются Git через standard input, чтобы проверялись именно верифицированные байты.
-- Симуляция patch выполняется с disposable `GIT_INDEX_FILE` во временном каталоге и сравнивается с разрешённым base commit.
-- Rename detection отключается при извлечении scope: rename консервативно представляется как deletion плюс addition, поэтому оба пути обязаны быть разрешены.
-- `modules/developer/` и `tools/eval_developer_*` остаются protected.
-- В `modules/developer/__init__.py` не добавляются reexports.
-
----
-
-## 11. PLANNED — публичные типы
+## 10. Принятый API V1B
 
 Файл:
 
 ```text
-modules/developer/developer_task_preflight.py
+modules/developer/developer_task_patch_integrity.py
 ```
 
-Планируемые immutable-типы:
+Публичная функция:
 
 ```python
-@dataclass(frozen=True)
-class DeveloperTaskPreflightIssue:
-    code: str
-    check: str
-    message: str
-    expected: str = ""
-    actual: str = ""
-
-
-@dataclass(frozen=True)
-class DeveloperTaskPreflightReport:
-    manifest_fingerprint: str
-    project_root: str
-    repository_root: str
-    task_root: str
-    patch_path: str
-    head_commit: str
-    resolved_base_commit: str
-    actual_patch_sha256: str
-    changed_files: tuple[str, ...]
-    issues: tuple[DeveloperTaskPreflightIssue, ...]
+run_developer_task_patch_integrity_preflight(
+    manifest: DeveloperTaskManifest,
+    *,
+    repository_report: DeveloperTaskRepositoryPreflightReport,
+    task_root: Path,
+) -> DeveloperTaskPatchIntegrityPreflightReport
 ```
 
-Report должен предоставлять:
+Публичные immutable-типы:
 
-- `ok`;
-- `issue_codes`;
-- `to_dict()`.
+```python
+DeveloperTaskPatchSnapshot
+DeveloperTaskPatchIntegrityPreflightReport
+```
 
-Точные имена полей можно изменить только до первого implementation commit preflight; после этого интерфейс фиксируется eval.
-
----
-
-## 12. Threat model
-
-Preflight обязан безопасно отклонять как минимум:
-
-- неправильный каталог или неправильный репозиторий;
-- bare repository;
-- `project_root`, указывающий на подкаталог репозитория;
-- отсутствующий или невалидный `HEAD`;
-- отсутствующий, неоднозначный или не являющийся commit-объектом `base_commit`;
-- несовпадение `HEAD` и base commit;
-- staged, unstaged, untracked, conflict или dirty-submodule состояние;
-- отсутствующий task directory;
-- task directory или patch path через symlink/reparse point;
-- отсутствующий patch;
-- patch, не являющийся обычным файлом;
-- oversized patch;
-- несовпадение patch hash;
-- подмену patch после вычисления hash;
-- malformed, empty или неприменимый patch;
-- path traversal или unsafe Git path;
-- путь вне `allowed_files`;
-- case-only mismatch или duplicate casefold path;
-- создание или изменение symbolic link;
-- создание или изменение gitlink/submodule;
-- patch, изменяющий больше путей, чем объявлено;
-- Git command timeout или неожиданную ошибку Git;
-- ошибку очистки временных analysis artifacts.
-
----
-
-## 13. Первый implementation slice
-
-### Developer Task Preflight V1A — Repository Gate
-
-Ожидаемые файлы:
+Snapshot содержит:
 
 ```text
-modules/developer/developer_task_preflight.py
-tools/eval_developer_task_preflight.py
-tools/eval_package_boundaries.py
-tools/pipeline.py
+path
+size_bytes
+sha256
+content: bytes
 ```
 
-Первый slice реализует и проверяет:
-
-- immutable report и issue types;
-- exact Git root validation;
-- non-bare worktree validation;
-- разрешение `HEAD`;
-- разрешение base commit;
-- `HEAD == base_commit`;
-- clean status через machine-readable porcelain;
-- структурированные Git failures и timeouts;
-- pipeline flow `developer_task_preflight`;
-- регистрацию нового protected-модуля в package-boundary eval.
-
-Patch integrity и disposable-index simulation выполняются следующими slices внутри того же этапа `Developer Task Preflight V1`.
+`content` исключается из `repr` и сериализованного `to_dict()`.
 
 ---
 
-## 14. PLANNED — targeted checks для V1A
+## 11. Ожидаемые файлы V1B
 
-Планируемый порядок:
+```text
+A  modules/developer/developer_task_patch_integrity.py
+A  tools/eval_developer_task_patch_integrity.py
+M  tools/eval_package_boundaries.py
+M  tools/pipeline.py
+```
+
+Не должны изменяться:
+
+```text
+modules/developer/developer_task_contract.py
+modules/developer/developer_task_validator.py
+modules/developer/developer_task_preflight.py
+main.py
+docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
+```
+
+---
+
+## 12. Threat model V1B
+
+V1B обязан безопасно отклонять как минимум:
+
+- неуспешный или внутренне противоречивый V1A-report;
+- report от другого manifest;
+- отсутствующий `task_root`;
+- `task_root`, являющийся файлом;
+- `task_root` через symlink, junction или reparse point;
+- `task_root` внутри project repository;
+- project repository внутри `task_root`;
+- небезопасное имя patch;
+- отсутствующий patch;
+- patch-каталог или другой не regular file;
+- patch через symlink/reparse point;
+- пустой patch;
+- patch больше `5 MiB`;
+- ошибку чтения metadata;
+- ошибку открытия;
+- ошибку бинарного чтения;
+- замену patch между `lstat` и `open`;
+- изменение patch во время чтения;
+- несовпадение SHA-256;
+- случайное попадание patch bytes в JSON/report logs.
+
+---
+
+## 13. PLANNED — targeted checks V1B
+
+Порядок запуска из корня проекта:
 
 ```powershell
+python -m py_compile `
+    .\modules\developer\developer_task_patch_integrity.py `
+    .\tools\eval_developer_task_patch_integrity.py `
+    .\tools\eval_package_boundaries.py `
+    .\tools\pipeline.py
+
 python -m tools.eval_package_boundaries
 python -m tools.eval_developer_task_contract
 python -m tools.eval_developer_task_preflight
+python -m tools.eval_developer_task_patch_integrity
 python tools/pipeline.py developer_task_preflight
 python tools/pipeline.py check
 ```
 
-Инструменты запускаются из корня проекта.
+Ожидаемый targeted результат нового eval:
+
+```text
+case_count: 28
+fail_count: 0
+```
 
 ---
 
-## 15. Критерии завершения полного Developer Task Preflight V1
+## 14. Критерии завершения V1B
 
-- Реализованы repository, base, cleanliness, artifact, hash, scope, mode и applicability checks.
-- Каждая ожидаемая ошибка имеет стабильный issue code и eval-case.
-- Реальный project index и worktree одинаковы до и после каждого eval-case.
-- Новые developer-файлы защищены существующей safety policy.
-- Package-boundary eval проходит.
-- Targeted preflight flow проходит.
-- Полный flow `check` проходит.
-- Этап имеет отдельный commit, после чего обновлён этот файл.
+- Production-модуль и eval добавлены только в утверждённые пути.
+- Package boundaries включают новый developer-модуль и исключают legacy-путь.
+- Pipeline включает новый eval в targeted flow и полный `check`.
+- Patch snapshot immutable.
+- Patch bytes не выводятся через `repr` или `to_dict()`.
+- Все позитивные и негативные V1B-кейсы проходят.
+- Старые contract и V1A eval продолжают проходить.
+- `git diff --check` пуст.
+- Targeted flow проходит.
+- Полный `check` проходит.
+- Commit содержит только четыре файла V1B.
+- После commit рабочее дерево чистое и `origin/main` синхронизирован.
+
+Предлагаемое имя commit:
+
+```text
+feat: add developer task patch integrity preflight
+```
 
 ---
 
-## 16. Запрещённые скрытые изменения
+## 15. Запрещённые скрытые изменения
 
-- Нельзя расширять Preflight V1 до isolated worktree execution.
+- Нельзя расширять V1B до patch scope analysis.
+- Нельзя применять patch к project worktree.
 - Нельзя добавлять automatic patch installation.
+- Нельзя менять manifest schema без доказанного пробела и Roadmap Change.
 - Нельзя переносить несвязанные production- или tool-файлы.
-- Нельзя менять manifest schema без доказанного пробела и явного Roadmap Change.
-- Нельзя добавлять произвольные shell-команды.
-- Нельзя вручную парсить Git patch headers, если Git может выдать machine-readable результат.
 - Нельзя переносить `skynet-runtime-foundation-v1` с `09f8708`.
-- Нельзя считать зелёный полный pipeline доказательством поведения, для которого нет targeted eval.
+- Нельзя считать зелёный полный pipeline доказательством поведения без targeted eval.
+- Нельзя передавать будущему Git-анализатору повторно прочитанный файл вместо snapshot bytes из V1B.
 
 ---
 
-## 17. UNVERIFIED — открытые решения
+## 16. UNVERIFIED — открытые вопросы
 
-Следующее должно быть подтверждено реализацией, а не принято на веру:
-
-- Финальное runtime-место task artifacts: вне репозитория или в отдельном ignored task inbox.
-- Точная стратегия обнаружения Windows reparse points для task directory и patch file.
-- Финальный предел размера patch; предлагаемое значение V1: `5 MiB`.
-- Точные Git timeouts; предлагаемое значение V1: `10 секунд` на команду.
-- Нужно ли дополнительно нейтрализовать local repository config сверх явных Git flags и безопасных environment variables.
-
-Эти решения не должны молча менять manifest schema.
+- Полный SHA текущего HEAD нужно брать из Git при формировании следующего handoff.
+- Поведение Windows junction/reparse-point должно быть подтверждено на реальной Windows-машине targeted eval.
+- Runtime-размещение task artifacts окончательно не зафиксировано; текущая безопасная модель требует `task_root` вне repository tree.
+- Ограничение `5 MiB` утверждено для V1, но может быть изменено только отдельным осознанным решением и тестами.
+- V1C ещё должен доказать, что проверенные байты patch затрагивают только разрешённые пути и безопасные Git file modes.
 
 ---
 
-## 18. DEFERRED
+## 17. DEFERRED
 
+- Developer Task Preflight V1C — Patch Scope Gate.
+- Developer Task Preflight V1D — Applicability and Audit.
 - Developer Task Isolated Workspace V1.
 - Developer Task Patch Apply V1.
 - Developer Task Typed Check Runner V1.
@@ -385,45 +385,45 @@ python tools/pipeline.py check
 
 ---
 
-## 19. Next Exact Action
+## 18. Next Exact Action
 
-До изменения production-кода:
-
-1. Исправить регистр имени roadmap в Git.
-2. Добавить этот файл в `docs/architecture/`.
-3. Проверить staged documentation diff.
-4. Создать документационный commit roadmap и current-state protocol.
-5. Отправить commit в `origin`.
-6. Подтвердить чистое рабочее дерево.
-7. Начать Developer Task Preflight V1A.
-
----
-
-## 20. Планируемые commits
-
-Документационный gate:
+1. Заменить `docs/architecture/SKYNETVS_CURRENT_STATE.md` этим обновлённым содержимым.
+2. Проверить документационный diff.
+3. Создать отдельный documentation commit:
 
 ```text
-docs: lock SkynetVS architecture roadmap and current state
+docs: update SkynetVS state after repository preflight
 ```
 
-Первый программный slice:
-
-```text
-feat: add developer task repository preflight
-```
+4. Отправить documentation commit в `origin/main`.
+5. Убедиться, что рабочее дерево чистое.
+6. Проверить SHA-256 подготовленного V1B patch.
+7. Выполнить `git apply --check`.
+8. Применить V1B patch.
+9. Запустить targeted checks.
+10. Только после targeted checks запускать полный `check`.
 
 ---
 
-## 21. Рекомендованный режим модели
+## 19. Следующие действия после Next Exact Action
 
-- Текущий threat-model и API: `Pro Standard`.
-- Механическая реализация после фиксации интерфейса V1A: `Очень высокий`.
-- Disposable-index scope analysis и финальный security audit: снова `Pro Standard`.
+1. Зафиксировать V1B отдельным commit `feat: add developer task patch integrity preflight`.
+2. Обновить этот current-state файл: V1B → `VERIFIED`, V1C → текущий этап.
+3. Спроектировать disposable-index анализ для V1C на Pro Standard.
+4. Реализовать извлечение patch scope средствами Git без самописного parser заголовков.
+5. Проверить `allowed_files`, casefold collision, symlink mode `120000` и gitlink mode `160000`.
 
 ---
 
-## 22. Файлы для нового чата
+## 20. Рекомендованный режим модели
+
+- Текущий V1B threat model и Windows filesystem boundary: `Pro Standard`.
+- Механическое применение уже утверждённого V1B patch и обычные проверки: допустим режим `Очень высокий`.
+- Проектирование V1C disposable-index scope analysis: `Pro Standard`.
+
+---
+
+## 21. Файлы для нового чата
 
 Всегда прикладывать:
 
@@ -432,17 +432,22 @@ docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
 docs/architecture/SKYNETVS_CURRENT_STATE.md
 ```
 
-Для архитектурной работы или закрытия этапа дополнительно прикладывать:
+Для текущего этапа дополнительно прикладывать:
 
 ```text
-последний data/logs/pipeline/*_check.log
+modules/developer/developer_task_preflight.py
+modules/developer/developer_task_patch_integrity.py
+tools/eval_developer_task_preflight.py
+tools/eval_developer_task_patch_integrity.py
+tools/eval_package_boundaries.py
+tools/pipeline.py
+последний targeted pipeline log
+последний *_check.log
 ```
-
-Для активной разработки Developer Task Preflight дополнительно прикладывать текущие изменённые developer/preflight-файлы и targeted eval.
 
 ---
 
-## 23. Стартовый текст нового чата
+## 22. Стартовый текст нового чата
 
 ```text
 Продолжаем разработку SkynetVS.
