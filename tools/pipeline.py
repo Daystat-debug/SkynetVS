@@ -99,6 +99,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
             Step("Evaluate developer task patch integrity preflight", _python_cmd("tools/eval_developer_task_patch_integrity.py")),
             Step("Evaluate developer task isolated patch index preflight", _python_cmd("tools/eval_developer_task_patch_index.py")),
+            Step("Evaluate developer task patch scope policy preflight", _python_cmd("tools/eval_developer_task_patch_scope.py")),
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
         "decision": [
@@ -326,6 +327,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
             Step("Evaluate developer task patch integrity preflight", _python_cmd("tools/eval_developer_task_patch_integrity.py")),
             Step("Evaluate developer task isolated patch index preflight", _python_cmd("tools/eval_developer_task_patch_index.py")),
+            Step("Evaluate developer task patch scope policy preflight", _python_cmd("tools/eval_developer_task_patch_scope.py")),
         ],
         "package_boundaries": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
