@@ -2,13 +2,14 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-03`
+- Дата обновления: `2026-08-04`
 - Ветка: `main`
-- HEAD: `4861934`
-- Название HEAD: `feat: add isolated developer task repository workspace`
-- `origin/main`: `4861934`
+- Проверенный code baseline перед этим documentation commit: `892e175`
+- Название code baseline: `feat: add developer task workspace cleanup audit`
+- `origin/main` на проверенной code-точке: `892e175`
+- Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
-- Рабочее дерево: чистое
+- Рабочее дерево после documentation commit должно быть чистым.
 
 ## 2. Приоритет источников истины
 
@@ -170,19 +171,15 @@ full check:                     completed successfully
 
 Подтверждена Windows-регрессия `core.autocrlf=true`: source line-ending policy больше не создаёт ложный `source_repository_stale`.
 
-## 8. CURRENT — Isolated Repository Workspace V1B
+## 8. VERIFIED — Isolated Repository Workspace V1B
 
-### Этап
+### Commit
 
 ```text
-Workspace Cleanup and Lifecycle Audit
+892e175 feat: add developer task workspace cleanup audit
 ```
 
-### Почему сейчас
-
-V1A умеет безопасно создавать независимый workspace и очищать только частично созданный workspace при ошибке. Для полноценного lifecycle нужен отдельный публичный API, который удаляет уже успешно созданный workspace только по проверяемой цепочке evidence.
-
-### Утверждённый API
+### Публичный API
 
 ```python
 cleanup_developer_task_workspace(
@@ -194,80 +191,117 @@ cleanup_developer_task_workspace(
 ) -> DeveloperTaskWorkspaceCleanupReport
 ```
 
+### Подтверждено
+
+- cleanup принимает только typed manifest, успешный полный Preflight report и успешный Workspace report;
+- explicit `workspace_parent`, fixed layout, workspace ID и marker evidence сверяются до удаления;
+- non-serialized cleanup capability связана с canonical marker через SHA-256;
+- marker читается как bounded immutable binary snapshot с TOCTOU-проверками;
+- source repository, task root, workspace parent, sibling paths и пересекающиеся пути не удаляются;
+- root/marker/descendants с symlink, junction, reparse point или special-file блокируются;
+- transient Windows filesystem failures повторяются ограниченно;
+- permanent failure и directory identity change возвращаются структурированно;
+- повторный cleanup после успеха идемпотентен;
+- source HEAD/status/refs/index/config до и после cleanup совпадают;
+- уже существовавшие source changes сохраняются;
+- cleanup capability отсутствует в `repr()` и `to_dict()`;
+- applied или staged workspace может быть удалён тем же verified cleanup lifecycle.
+
+### Проверки
+
+```text
+Workspace V1A:                     39/39
+Workspace Cleanup V1B:             41/41
+developer_task_workspace_cleanup:  completed successfully
+full check:                        completed successfully
+```
+
+## 9. CURRENT — Developer Task Patch Apply V1
+
+### Назначение
+
+Применить точные verified patch bytes только внутри независимого repository workspace, повторно доказать итоговое Git-состояние и не допустить частичного или неподтверждённого результата.
+
+### Утверждённый API
+
+```python
+apply_developer_task_patch(
+    manifest: DeveloperTaskManifest,
+    *,
+    preflight_report: DeveloperTaskPreflightReport,
+    workspace_report: DeveloperTaskWorkspaceReport,
+    workspace_parent: Path,
+) -> DeveloperTaskPatchApplyReport
+```
+
 ### Разделение ответственности
 
 ```text
-modules/developer/developer_task_workspace_cleanup.py
-    orchestration, evidence chain, immutable final report
+modules/developer/developer_task_patch_apply.py
+    evidence orchestration, filesystem/marker boundary, source snapshots, final report
 
-modules/developer/developer_task_workspace_cleanup_fs.py
-    no-follow filesystem validation, marker read, tree scan, bounded removal
-
-modules/developer/developer_task_workspace_source.py
-    read-only source Git snapshots before and after cleanup
+modules/developer/developer_task_patch_apply_git.py
+    hardened Git apply, staged-state audit, rollback to clean base
 ```
 
 ### In scope
 
-- принимать только typed manifest, полный успешный Preflight report и успешный Workspace report;
-- требовать явный `workspace_parent` и сверять его с immutable evidence;
-- проверять manifest fingerprint, source/task/base commit и точную workspace layout;
-- требовать корректный workspace ID, содержащий task ID, fingerprint prefix и random suffix;
-- расширить immutable Workspace report non-serialized 32-byte cleanup capability;
-- сверять SHA-256 cleanup capability с canonical marker;
-- читать marker как bounded immutable binary snapshot с TOCTOU-проверками;
-- требовать точный SHA-256 и canonical UTF-8 JSON marker без неизвестных полей;
-- запрещать удаление source repository, task root, workspace parent и пересекающихся путей;
-- запрещать root/marker/tree symlink, junction, reparse point и special-file traversal;
-- удалять только подтверждённый workspace root;
-- использовать bounded Windows retries и read-only handling;
-- обнаруживать подмену directory identity между retry;
-- быть идемпотентным: повторный cleanup отсутствующего подтверждённого workspace возвращает `already_absent`;
-- делать read-only source Git snapshots до и после cleanup;
-- сохранять и доказывать неизменность source HEAD/status/refs/index/config;
-- возвращать immutable structured cleanup report;
-- не сериализовать cleanup capability.
+- повторно проверить manifest fingerprint, полный Preflight report и Workspace report;
+- требовать явный `workspace_parent` и fixed workspace layout;
+- проверить workspace marker, cleanup capability, tree safety и directory identity;
+- снять read-only source Git snapshot до mutation;
+- использовать только immutable patch bytes из Preflight V1;
+- применять patch через stdin с `git apply --index`;
+- не использовать `--3way`, `--reject` или `--unsafe-paths`;
+- оставить `HEAD` detached на `base_commit`;
+- требовать staged-only state без unstaged/untracked/conflict;
+- повторно извлечь raw diff, modes и result-index paths;
+- точно сравнить их с Preflight V1C1/V1C2 evidence;
+- вычислить result tree и SHA-256 canonical staged diff;
+- принудительно привязать каждую mutating Git-команду к ожидаемым `--git-dir` и `--work-tree`;
+- проверить local Git config без includes, запретить `core.worktree`, external filters и другие execution/redirection keys;
+- повторно проверить remotes, refs, alternates, shallow state, hooks path и config fingerprint;
+- повторно проверить workspace marker и source snapshot после apply;
+- при любом failure после начала mutation восстановить workspace через bounded reset/clean;
+- различать `applied`, `rejected_clean` и `failed_dirty`;
+- записать canonical `control/patch_apply.json`;
+- создать non-serialized 32-byte check capability для следующего Typed Check Runner;
+- сохранить совместимость verified cleanup после успешного apply.
 
 ### Out of scope
 
-- применение developer patch;
-- исполнение изменённого кода;
-- commit, merge, push или promotion;
-- удаление произвольного пути без typed report и capability;
-- автоматический recovery после потери in-memory cleanup capability;
-- cleanup orphan workspace после crash/restart;
-- OS/process/network sandboxing;
-- изменение source repository.
+- запуск `py_compile`, Python modules или pipeline внутри изменённого workspace;
+- произвольный shell;
+- установка зависимостей;
+- commit, branch, merge, push или promotion;
+- изменение основного repository;
+- OS/process/network sandbox;
+- автоматический перенос результата в `main`;
+- orphan recovery после потери in-memory capabilities.
 
-### Важная lifecycle-граница
-
-Cleanup capability намеренно отсутствует в `to_dict()`. Поэтому V1B обслуживает явный cleanup в том же доверенном lifecycle, где доступен оригинальный immutable `DeveloperTaskWorkspaceReport`.
-
-Crash recovery и orphan cleanup требуют отдельного будущего контракта и не должны незаметно ослаблять V1B.
-
-## 9. Ожидаемые файлы V1B
+## 10. Ожидаемые файлы Patch Apply V1
 
 ```text
-M  modules/developer/developer_task_workspace.py
-A  modules/developer/developer_task_workspace_cleanup.py
-A  modules/developer/developer_task_workspace_cleanup_fs.py
-A  modules/developer/developer_task_workspace_source.py
-A  tools/eval_developer_task_workspace_cleanup.py
+A  modules/developer/developer_task_patch_apply.py
+A  modules/developer/developer_task_patch_apply_git.py
+M  modules/developer/developer_task_patch_index.py
+M  modules/developer/developer_task_workspace_git.py
+A  tools/eval_developer_task_patch_apply.py
 M  tools/eval_package_boundaries.py
 M  tools/pipeline.py
 ```
 
-`developer_task_workspace.py` изменяется только для выпуска non-serialized cleanup capability и записи её SHA-256 в marker. Git creation boundary `developer_task_workspace_git.py`, Preflight V1, `main.py` и пользовательские команды не изменяются.
+Стабильные Preflight/Workspace APIs, `main.py` и пользовательские голосовые команды не изменяются.
 
-## 10. PLANNED — targeted checks V1B
+## 11. PLANNED — targeted checks Patch Apply V1
 
 ```text
 python -m py_compile \
-    modules/developer/developer_task_workspace.py \
-    modules/developer/developer_task_workspace_cleanup.py \
-    modules/developer/developer_task_workspace_cleanup_fs.py \
-    modules/developer/developer_task_workspace_source.py \
-    tools/eval_developer_task_workspace_cleanup.py \
+    modules/developer/developer_task_patch_apply.py \
+    modules/developer/developer_task_patch_apply_git.py \
+    modules/developer/developer_task_patch_index.py \
+    modules/developer/developer_task_workspace_git.py \
+    tools/eval_developer_task_patch_apply.py \
     tools/eval_package_boundaries.py \
     tools/pipeline.py
 
@@ -275,7 +309,8 @@ python -m tools.eval_package_boundaries
 python -m tools.eval_developer_task_preflight_composition
 python -m tools.eval_developer_task_workspace
 python -m tools.eval_developer_task_workspace_cleanup
-python tools/pipeline.py developer_task_workspace_cleanup
+python -m tools.eval_developer_task_patch_apply
+python tools/pipeline.py developer_task_patch_apply
 python tools/pipeline.py check
 ```
 
@@ -286,90 +321,91 @@ Package boundaries:             28/28
 Preflight composition:          19/19
 Workspace V1A:                  39/39
 Workspace cleanup V1B:          41/41
+Patch Apply V1:                 30/30
 ```
 
-## 11. Критерии завершения V1B
+## 12. Критерии завершения Patch Apply V1
 
-V1B завершён только если:
-
-1. forged/raw/failed reports не могут инициировать удаление;
-2. явный parent и все workspace paths совпадают с evidence;
-3. cleanup capability и canonical marker совпадают;
-4. marker hash, schema, fields и bytes проверены;
-5. source/task/parent и sibling paths не удаляются;
-6. root и descendants с reparse/symlink/special-file блокируются;
-7. transient Windows cleanup failure повторяется ограниченно;
-8. permanent failure возвращает structured report и не скрывается;
-9. directory identity change между retries блокируется;
-10. повторный cleanup после успеха идемпотентен;
+1. raw/failed/forged reports не могут инициировать mutation;
+2. source/task/workspace paths и canonical marker совпадают с evidence;
+3. dirty, attached, linked или повторно applied workspace блокируется до mutation;
+4. exact patch bytes передаются Git только через stdin;
+5. apply использует index + worktree и не использует unsafe recovery options;
+6. фактические changes/modes/result-index paths точно совпадают с Preflight facts;
+7. staged state не содержит unstaged/untracked/conflict/submodule changes;
+8. `HEAD`, refs, remotes, alternates, hooks и shallow boundary не меняются;
+9. Git root/git-dir/common-dir явно совпадают с isolated workspace evidence;
+10. local config не содержит includes, worktree redirection или external filter commands и сохраняет isolated policy fingerprint;
 11. source Git snapshot до и после совпадает;
-12. pre-existing source changes сохраняются и не мешают безопасному cleanup;
-13. cleanup report immutable и не содержит capability;
-14. eval проходит на Windows: `41/41`;
-15. package boundary и новый targeted flow подключены;
-16. полный `check` проходит;
-17. code-коммит содержит только семь ожидаемых файлов;
-18. `origin/main` обновлён;
-19. current-state обновлён после code-коммита.
+12. apply marker canonical и связан с result tree/diff/config/check capability;
+13. capability отсутствует в serialization и repr;
+14. apply/fact/marker/source/postcondition failure откатывает workspace к чистому base;
+15. rollback failure возвращает `failed_dirty` и запрещает reuse;
+16. patch, удаляющий последний tracked file, корректно поддерживает пустой resulting index;
+17. successful applied workspace удаляется verified cleanup API;
+18. eval проходит на Windows: `30/30`;
+19. новый targeted flow и полный `check` проходят;
+20. code-коммит содержит только семь ожидаемых файлов;
+21. `origin/main` обновлён;
+22. current-state обновлён после code-коммита.
 
-## 12. DEFERRED
+## 13. DEFERRED
 
-- Workspace crash recovery / orphan cleanup.
-- Developer Task Patch Apply V1.
 - Developer Task Typed Check Runner V1.
 - Execution isolation policy для checks, выполняющих изменённый код.
 - Developer Task Result and Evidence V1.
 - Developer Task Manual Promotion V1.
 - Developer Safety Kernel Audit V1.
+- Workspace crash recovery / orphan cleanup.
 - Domain Package Structure V2.
 - Tools Package Structure V1.
 
-## 13. Решения, которые нельзя пересматривать молча
+## 14. Решения, которые нельзя пересматривать молча
 
 - `skynet-runtime-foundation-v1` остаётся на `09f8708`.
-- Gates Preflight V1 и их ответственности остаются раздельными.
 - Основной worktree никогда не используется как developer-task sandbox.
-- Workspace V1 использует независимый clone, а не linked worktree.
-- Repository isolation нельзя описывать как sandbox произвольного кода.
-- Patch не применяется без полного успешного evidence Preflight V1.
-- Изменённый код не исполняется до отдельного решения по execution isolation.
-- Удаление workspace требует capability + canonical marker + explicit parent.
-- Отсутствие serialized cleanup capability не обходится автоматическим force-delete.
-- Автоматические merge, commit, push и promotion запрещены в Developer Safety Kernel V1.
-- Package migration не смешивается с этим этапом.
+- Patch применяется только после полного Preflight V1 и Workspace V1 evidence.
+- Применяются immutable bytes, а не повторно прочитанный patch-файл.
+- Partial apply или post-apply mismatch не разрешает продолжение.
+- Rollback failure делает workspace непригодным для checks.
+- Изменённый код не исполняется до отдельного execution isolation решения.
+- Apply marker/check capability не сериализуются как секрет для восстановления.
+- Автоматические commit/merge/push/promotion запрещены.
+- Package migration не смешивается с Developer Safety Kernel.
 
-## 14. Следующее точное действие
+## 15. Следующее точное действие
 
-1. Обновить этот current-state документ после commit `4861934`.
-2. Закоммитить только architecture-документы.
-3. Убедиться, что рабочее дерево чистое.
-4. Проверить SHA-256 подготовленного V1B patch.
-5. Выполнить `git apply --check`; использовать CRLF fallback только при контекстном несовпадении.
-6. Применить V1B patch.
-7. Запустить compilation, targeted eval, новый flow и полный `check`.
-8. Не создавать code-коммит до успешного `41/41` и полного pipeline.
+1. Закоммитить это обновление architecture-документов отдельно.
+2. Убедиться, что working tree чистый.
+3. Проверить SHA-256 Patch Apply V1 patch.
+4. Выполнить `git apply --check`; CRLF fallback применять только при контекстном несовпадении.
+5. Применить code patch.
+6. Запустить compilation и targeted eval.
+7. Запустить `developer_task_patch_apply` flow.
+8. Запустить полный `check`.
+9. Не создавать code-коммит до успешного `30/30`, targeted flow и полного pipeline.
 
-## 15. Планируемые коммиты
+## 16. Планируемые коммиты
 
 Документация:
 
 ```text
-docs: update SkynetVS state after isolated repository workspace
+docs: close workspace lifecycle and start developer task patch apply
 ```
 
-V1B code:
+Code:
 
 ```text
-feat: add developer task workspace cleanup audit
+feat: add verified developer task patch apply
 ```
 
-## 16. Режим модели
+## 17. Режим модели
 
-До реального Windows-прогона V1B остаёмся на **Pro Standard**, потому что этап задаёт destructive filesystem boundary.
+До реального Windows-прогона Patch Apply V1 остаёмся на **Pro Standard**, потому что это первая изменяющая Git-граница Developer Safety Kernel.
 
-После успешного `41/41`, полного `check`, commit и обновления current-state можно вернуться на **«Очень высокий»** для механической части следующего этапа. Перед утверждением `Patch Apply V1` security-контракта снова потребуется Pro Standard.
+После успешного `30/30`, полного `check`, commit и обновления current-state можно вернуться на **«Очень высокий»** для механической реализации уже утверждённого Typed Check Runner. Перед утверждением process/OS execution isolation снова потребуется Pro Standard.
 
-## 17. Файлы для будущего handoff
+## 18. Файлы для будущего handoff
 
 Обязательно:
 
@@ -381,7 +417,7 @@ docs/architecture/SKYNETVS_CURRENT_STATE.md
 Дополнительно приложить последние:
 
 ```text
-data/logs/pipeline/*_developer_task_workspace_cleanup.log
+data/logs/pipeline/*_developer_task_patch_apply.log
 data/logs/pipeline/*_check.log
 ```
 

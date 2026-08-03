@@ -230,10 +230,18 @@ full check:                     completed successfully
 
 ## 1.3 Developer Task Patch Apply V1
 
-- patch применяется только внутри isolated workspace;
-- повторно вычисляется фактический Git diff;
-- проверяется итоговый scope;
-- частичное применение запрещено.
+- принимаются только успешные typed-доказательства Preflight V1 и Workspace V1;
+- применяются точные immutable patch bytes из Preflight V1, а не повторно прочитанный файл;
+- patch применяется через Git только внутри независимого repository workspace;
+- index и worktree изменяются вместе, а `HEAD` остаётся detached на `base_commit`;
+- фактические changed paths, modes и resulting index повторно сравниваются с Preflight V1;
+- Git принудительно привязывается к ожидаемым `--git-dir` и `--work-tree`;
+- local config проверяется без includes: запрещены redirection/execution keys, критичные значения должны совпасть с isolated policy;
+- remotes, refs, alternates, hooks boundary, config fingerprint и source repository повторно проверяются;
+- при любом apply/postcondition failure выполняется bounded rollback к чистому `base_commit`;
+- rollback failure делает workspace непригодным для дальнейшего использования;
+- успешный результат получает canonical apply marker и non-serialized capability для Typed Check Runner;
+- исполнение Python-кода, commit, merge, push и promotion в этот этап не входят.
 
 ## 1.4 Developer Task Typed Check Runner V1
 
@@ -525,11 +533,13 @@ Roadmap Change N
 
 [VERIFIED CODE] 4861934 — Isolated Repository Workspace V1A
 
+[VERIFIED CODE] 892e175 — Workspace Cleanup and Lifecycle Audit V1B
+
 [CURRENT CODE STAGE]
-Developer Task Isolated Repository Workspace V1B — Workspace Cleanup and Lifecycle Audit.
+Developer Task Patch Apply V1 — Verified Workspace Mutation and Rollback Gate.
 
 [NEXT]
-Patch Apply V1 → Typed Check Runner V1.
+Typed Check Runner V1 → Result and Evidence V1.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
