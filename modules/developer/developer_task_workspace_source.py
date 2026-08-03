@@ -13,7 +13,8 @@ from pathlib import Path
 from modules.developer.developer_task_workspace_git import (
     GIT_TIMEOUT_SECONDS,
     DeveloperTaskWorkspaceGitError,
-    build_probe_environment,
+    build_source_probe_environment,
+    source_git_command_prefix,
 )
 
 
@@ -82,10 +83,7 @@ def _compact_git_error(stderr: bytes, stdout: bytes) -> str:
 def _run_source_git(root: Path, *args: str) -> bytes:
     command = [
         "git",
-        "--no-optional-locks",
-        "--no-replace-objects",
-        "-c",
-        "core.fsmonitor=false",
+        *source_git_command_prefix(),
         "-C",
         str(root),
         *args,
@@ -94,7 +92,7 @@ def _run_source_git(root: Path, *args: str) -> bytes:
     try:
         completed = subprocess.run(
             command,
-            env=build_probe_environment(),
+            env=build_source_probe_environment(),
             stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

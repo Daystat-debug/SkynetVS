@@ -172,6 +172,26 @@ def _build_workspace_environment(request: DeveloperTaskWorkspaceGitRequest) -> d
     return environment
 
 
+def build_workspace_git_environment(
+    request: DeveloperTaskWorkspaceGitRequest,
+) -> dict[str, str]:
+    """Return the isolated Git environment used by a verified workspace."""
+    if not isinstance(request, DeveloperTaskWorkspaceGitRequest):
+        raise TypeError("request must be DeveloperTaskWorkspaceGitRequest")
+
+    return _build_workspace_environment(request)
+
+
+def workspace_git_command_prefix(
+    request: DeveloperTaskWorkspaceGitRequest,
+) -> tuple[str, ...]:
+    """Return the hardened Git command prefix for workspace operations."""
+    if not isinstance(request, DeveloperTaskWorkspaceGitRequest):
+        raise TypeError("request must be DeveloperTaskWorkspaceGitRequest")
+
+    return _git_command_prefix(request)
+
+
 def _build_source_probe_environment() -> dict[str, str]:
     environment = _build_git_environment()
     environment.update({
@@ -190,6 +210,16 @@ def _source_git_command_prefix() -> tuple[str, ...]:
         "-c",
         "core.fsmonitor=false",
     )
+
+
+def build_source_probe_environment() -> dict[str, str]:
+    """Return a scrubbed source probe environment that preserves Git policy."""
+    return _build_source_probe_environment()
+
+
+def source_git_command_prefix() -> tuple[str, ...]:
+    """Return the read-only Git prefix used for source repository probes."""
+    return _source_git_command_prefix()
 
 
 def _git_command_prefix(request: DeveloperTaskWorkspaceGitRequest) -> tuple[str, ...]:

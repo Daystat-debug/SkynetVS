@@ -428,6 +428,27 @@ def _parse_index_paths(payload: bytes) -> tuple[str, ...]:
     return tuple(paths)
 
 
+def parse_developer_task_patch_changes(
+    payload: bytes,
+) -> tuple[DeveloperTaskPatchIndexChange, ...]:
+    """Parse machine-readable staged diff facts using the V1C1 contract."""
+    if not isinstance(payload, bytes):
+        raise TypeError("payload must be bytes")
+
+    return _parse_raw_diff(payload)
+
+
+def parse_developer_task_result_index_paths(
+    payload: bytes,
+) -> tuple[str, ...]:
+    """Parse and canonically sort machine-readable result-index paths."""
+    if not isinstance(payload, bytes):
+        raise TypeError("payload must be bytes")
+
+    paths = _parse_index_paths(payload)
+    return tuple(sorted(paths, key=lambda item: (_path_key(item), item)))
+
+
 def _check_prerequisites(context: _PatchIndexContext) -> bool:
     repository_report = context.repository_report
     patch_report = context.patch_integrity_report

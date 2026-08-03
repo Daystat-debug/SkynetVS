@@ -12,6 +12,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 EXPECTED_DEVELOPER_FILES = {
     "modules/developer/__init__.py",
     "modules/developer/developer_task_contract.py",
+    "modules/developer/developer_task_patch_apply.py",
+    "modules/developer/developer_task_patch_apply_git.py",
     "modules/developer/developer_task_patch_index.py",
     "modules/developer/developer_task_patch_integrity.py",
     "modules/developer/developer_task_patch_scope.py",
@@ -27,6 +29,8 @@ EXPECTED_DEVELOPER_FILES = {
 
 LEGACY_DEVELOPER_FILES = {
     "modules/developer_task_contract.py",
+    "modules/developer_task_patch_apply.py",
+    "modules/developer_task_patch_apply_git.py",
     "modules/developer_task_patch_index.py",
     "modules/developer_task_patch_integrity.py",
     "modules/developer_task_patch_scope.py",
@@ -42,6 +46,8 @@ LEGACY_DEVELOPER_FILES = {
 
 LEGACY_DEVELOPER_MODULES = {
     "modules.developer_task_contract",
+    "modules.developer_task_patch_apply",
+    "modules.developer_task_patch_apply_git",
     "modules.developer_task_patch_index",
     "modules.developer_task_patch_integrity",
     "modules.developer_task_patch_scope",
@@ -801,6 +807,8 @@ def main() -> int:
             "developer_workspace_eval": "tools/eval_developer_task_workspace.py" in pipeline_text,
             "developer_workspace_cleanup_flow": '"developer_task_workspace_cleanup"' in pipeline_text,
             "developer_workspace_cleanup_eval": "tools/eval_developer_task_workspace_cleanup.py" in pipeline_text,
+            "developer_patch_apply_flow": '"developer_task_patch_apply"' in pipeline_text,
+            "developer_patch_apply_eval": "tools/eval_developer_task_patch_apply.py" in pipeline_text,
         },
         {
             "pipeline": True,
@@ -819,6 +827,8 @@ def main() -> int:
             "developer_workspace_eval": True,
             "developer_workspace_cleanup_flow": True,
             "developer_workspace_cleanup_eval": True,
+            "developer_patch_apply_flow": True,
+            "developer_patch_apply_eval": True,
         },
     )
 
