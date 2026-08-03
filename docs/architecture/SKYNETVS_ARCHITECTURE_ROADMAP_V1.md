@@ -1,8 +1,9 @@
 # SkynetVS Architecture Roadmap V1
 
-**Дата фиксации:** 2026-07-30  
-**Статус:** LOCKED  
-**Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`  
+**Дата фиксации:** 2026-07-30
+**Последнее обновление:** 2026-08-03
+**Статус:** LOCKED
+**Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
 
 ---
@@ -38,6 +39,7 @@ SkynetVS должен со временем превзойти обычный ч
 10. **Большой перенос файлов начинается только после Architecture Inventory и карты зависимостей.**
 11. **`__init__.py` не превращаются в скрытые реэкспортирующие фасады без отдельного решения.**
 12. **Для тестовых инструментов сохраняется запуск из корня проекта через `python -m tools.<module>` либо совместимый стабильный фасад.**
+13. **Repository isolation не равна OS sandbox.** Независимый Git-клон защищает Git-состояние проекта, но не даёт права запускать недоверенный код без отдельной process/OS isolation policy.
 
 ---
 
@@ -116,15 +118,14 @@ skynet-runtime-foundation-v1
 
 # PHASE 0 — Roadmap Lock V1
 
-**Статус:** текущий организационный шаг.
+**Статус:** VERIFIED / завершён.
 
 Результат:
 
-- этот документ добавлен в репозиторий;
+- roadmap добавлен в репозиторий;
+- `SKYNETVS_CURRENT_STATE.md` используется как оперативная точка handoff;
 - дальнейшие этапы имеют фиксированный scope;
 - любое изменение порядка оформляется как отдельное `Roadmap Change`.
-
-Следующий программный этап после фиксации документа — `Developer Task Preflight V1`.
 
 ---
 
@@ -134,29 +135,80 @@ skynet-runtime-foundation-v1
 
 ## 1.1 Developer Task Preflight V1
 
-Полностью read-only:
+**Статус:** VERIFIED / завершён на `1035de4`.
 
-- проверка правильного Git-репозитория;
-- совпадение project root;
-- проверка `HEAD` против `base_commit`;
-- проверка чистоты worktree/index;
-- существование и тип patch-файла;
-- пересчёт SHA-256;
-- извлечение изменяемых путей;
-- сравнение с `allowed_files`;
-- защита от case-collision, symlink, gitlink/submodule и `.git`;
-- `git apply --check`;
-- структурированный immutable report.
+Полностью read-only цепочка:
 
-**Запрещено:** применять patch, clean/reset/stash, менять индекс, запускать произвольные команды.
+- V1A — Repository Gate;
+- V1B — Patch Integrity Gate;
+- V1C1 — Isolated Patch Index Gate;
+- V1C2 — Patch Scope Policy Gate;
+- V1D — Composition and Audit.
 
-## 1.2 Developer Task Isolated Workspace V1
+Подтверждено:
 
-- временный `git worktree`;
-- строго от `base_commit`;
-- уникальная папка задачи;
-- основной worktree не изменяется;
-- гарантированная очистка после завершения.
+- правильный Git repository root;
+- `HEAD == base_commit`;
+- чистые worktree и index;
+- точные immutable patch bytes и SHA-256;
+- фактическая применимость patch во временном изолированном Git index;
+- реальные changed paths и object modes;
+- `allowed_files`, case-collision, symlink и gitlink policy;
+- единый fail-closed immutable report;
+- отсутствие изменений основного worktree, index и object store.
+
+**Запрещено:** применять patch, clean/reset/stash, менять основной index или запускать команды из manifest.
+
+## 1.2 Developer Task Isolated Repository Workspace V1
+
+**Статус:** CURRENT.
+
+### V1A — Independent Repository Creation Gate
+
+- отдельный локальный clone с самостоятельным `.git`;
+- `--no-local`, `--no-hardlinks`, `--no-checkout`, `--no-tags`, `--single-branch`, `--depth=1`;
+- shallow history boundary только от verified `base_commit`;
+- detached `HEAD`;
+- отсутствие remotes, branch/tag refs и alternate object directories;
+- изолированные Git config, system attributes, HOME/XDG, hooks и template directory;
+- deterministic line-ending and filesystem protection policy (`autocrlf=false`, LF, protectNTFS/protectHFS);
+- запрет workspace parent внутри worktree/Git-dir/bare repository;
+- запрет baseline symlink, gitlink, unsafe Windows paths и case-collision;
+- immutable workspace evidence и marker;
+- доказательство неизменности source repository;
+- cleanup частично созданного workspace при отказе.
+
+### V1B — Workspace Cleanup and Audit
+
+- удаление только workspace, подтверждённого marker/evidence;
+- запрет удаления project root, task root и их родителей;
+- Windows retry/read-only handling;
+- structured cleanup report;
+- fault injection и доказательство неизменности source repository.
+
+Независимый clone создаёт **Git/repository isolation**, но не является OS sandbox. До запуска изменённого Python-кода или других проверок требуется отдельная execution isolation policy.
+
+## Roadmap Change 001 — Linked worktree → independent repository clone
+
+**Причина:** linked worktree имеет отдельные `HEAD` и index, но разделяет common Git directory, часть конфигурации, refs и object storage с основным repository. Для будущего developer-task runtime это недостаточная граница Git-изоляции.
+
+**Что меняется:**
+
+- механизм `Developer Task Isolated Workspace V1`;
+- вместо `git worktree` используется независимый локальный clone с отдельным `.git`;
+- этап получает уточнённое имя `Developer Task Isolated Repository Workspace V1`;
+- создание и cleanup разделяются на V1A/V1B.
+
+**Что не меняется:**
+
+- порядок PHASE 1;
+- verified Preflight V1;
+- patch применяется только вне основного repository;
+- checks остаются типизированными;
+- promotion остаётся ручным;
+- foundation-тег не переносится.
+
+**Новая граница:** независимый clone защищает Git-состояние, но не даёт разрешения исполнять недоверенный код без будущего process/OS sandbox.
 
 ## 1.3 Developer Task Patch Apply V1
 
@@ -205,7 +257,7 @@ skynet-runtime-foundation-v1
 - interrupted checks;
 - отсутствие изменений основного worktree.
 
-**Критерий завершения PHASE 1:** задача проходит путь manifest → preflight → isolated apply → checks → report, при этом основной worktree остаётся неизменным.
+**Критерий завершения PHASE 1:** задача проходит путь manifest → preflight → independent repository workspace → isolated apply → typed checks → report, при этом основной repository остаётся неизменным и исполнение изменённого кода не выходит за утверждённую execution isolation policy.
 
 ---
 
@@ -451,11 +503,13 @@ Roadmap Change N
 ```text
 [LOCKED BASELINE] skynet-runtime-foundation-v1 → 09f8708
 
-[NEXT ORGANIZATIONAL ACTION]
-Добавить этот roadmap в репозиторий.
+[VERIFIED CODE] 1035de4 — complete Developer Task Preflight V1
 
-[NEXT CODE STAGE]
-Developer Task Preflight V1.
+[CURRENT CODE STAGE]
+Developer Task Isolated Repository Workspace V1A — Independent Repository Creation Gate.
+
+[NEXT]
+V1B Workspace Cleanup and Audit → Patch Apply V1 → Typed Check Runner V1.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
@@ -464,4 +518,4 @@ Domain Package Structure V2.
 Tools Package Structure V1.
 ```
 
-До начала `Developer Task Preflight V1` никакие дополнительные файлы по пакетам не переносятся.
+До завершения Developer Safety Kernel дополнительные production-файлы по пакетам не переносятся.
