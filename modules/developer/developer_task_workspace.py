@@ -11,7 +11,7 @@ import stat
 import subprocess
 import time
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -68,6 +68,7 @@ class DeveloperTaskWorkspaceReport:
     alternate_object_directories: tuple[str, ...]
     hooks_path: str
     source_repository_unchanged: bool
+    cleanup_token: bytes = field(repr=False)
     issues: tuple[DeveloperTaskPreflightIssue, ...]
 
     @property
@@ -93,6 +94,7 @@ class DeveloperTaskWorkspaceReport:
             and not self.alternate_object_directories
             and bool(self.hooks_path)
             and self.source_repository_unchanged
+            and len(self.cleanup_token) == 32
             and not self.issues
         )
 
@@ -124,6 +126,7 @@ class DeveloperTaskWorkspaceReport:
             "alternate_object_directories": list(self.alternate_object_directories),
             "hooks_path": self.hooks_path,
             "source_repository_unchanged": self.source_repository_unchanged,
+            "cleanup_capability_present": len(self.cleanup_token) == 32,
             "issues": [item.to_dict() for item in self.issues],
             "issue_codes": list(self.issue_codes),
         }
@@ -153,6 +156,7 @@ class _WorkspaceContext:
         self.global_config_path: Path | None = None
         self.marker_path: Path | None = None
         self.marker_sha256 = ""
+        self.cleanup_token = b""
         self.base_commit = ""
         self.git_evidence: DeveloperTaskWorkspaceGitEvidence | None = None
         self.issues: list[DeveloperTaskPreflightIssue] = []
@@ -207,6 +211,7 @@ class _WorkspaceContext:
             source_repository_unchanged=(
                 evidence.source_repository_unchanged if evidence is not None else False
             ),
+            cleanup_token=self.cleanup_token,
             issues=tuple(self.issues),
         )
 
@@ -581,6 +586,7 @@ def _create_workspace_container(context: _WorkspaceContext) -> bool:
         )
         return False
 
+    context.cleanup_token = secrets.token_bytes(32)
     return True
 
 
@@ -621,6 +627,7 @@ def _write_marker(context: _WorkspaceContext) -> bool:
         "control_root": str(context.control_root),
         "base_commit": context.base_commit,
         "head_commit": context.git_evidence.head_commit,
+        "cleanup_token_sha256": hashlib.sha256(context.cleanup_token).hexdigest(),
     }
     data = json.dumps(
         payload,

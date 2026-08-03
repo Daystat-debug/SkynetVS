@@ -102,6 +102,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task patch scope policy preflight", _python_cmd("tools/eval_developer_task_patch_scope.py")),
             Step("Evaluate developer task complete preflight composition", _python_cmd("tools/eval_developer_task_preflight_composition.py")),
             Step("Evaluate developer task independent repository workspace", _python_cmd("tools/eval_developer_task_workspace.py")),
+            Step("Evaluate developer task workspace cleanup lifecycle", _python_cmd("tools/eval_developer_task_workspace_cleanup.py")),
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
         "decision": [
@@ -341,6 +342,17 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task patch scope policy preflight", _python_cmd("tools/eval_developer_task_patch_scope.py")),
             Step("Evaluate developer task complete preflight composition", _python_cmd("tools/eval_developer_task_preflight_composition.py")),
             Step("Evaluate developer task independent repository workspace", _python_cmd("tools/eval_developer_task_workspace.py")),
+        ],
+        "developer_task_workspace_cleanup": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
+            Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
+            Step("Evaluate developer task patch integrity preflight", _python_cmd("tools/eval_developer_task_patch_integrity.py")),
+            Step("Evaluate developer task isolated patch index preflight", _python_cmd("tools/eval_developer_task_patch_index.py")),
+            Step("Evaluate developer task patch scope policy preflight", _python_cmd("tools/eval_developer_task_patch_scope.py")),
+            Step("Evaluate developer task complete preflight composition", _python_cmd("tools/eval_developer_task_preflight_composition.py")),
+            Step("Evaluate developer task independent repository workspace", _python_cmd("tools/eval_developer_task_workspace.py")),
+            Step("Evaluate developer task workspace cleanup lifecycle", _python_cmd("tools/eval_developer_task_workspace_cleanup.py")),
         ],
         "package_boundaries": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),

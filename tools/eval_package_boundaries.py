@@ -19,7 +19,10 @@ EXPECTED_DEVELOPER_FILES = {
     "modules/developer/developer_task_preflight_composition.py",
     "modules/developer/developer_task_validator.py",
     "modules/developer/developer_task_workspace.py",
+    "modules/developer/developer_task_workspace_cleanup.py",
+    "modules/developer/developer_task_workspace_cleanup_fs.py",
     "modules/developer/developer_task_workspace_git.py",
+    "modules/developer/developer_task_workspace_source.py",
 }
 
 LEGACY_DEVELOPER_FILES = {
@@ -31,7 +34,10 @@ LEGACY_DEVELOPER_FILES = {
     "modules/developer_task_preflight_composition.py",
     "modules/developer_task_validator.py",
     "modules/developer_task_workspace.py",
+    "modules/developer_task_workspace_cleanup.py",
+    "modules/developer_task_workspace_cleanup_fs.py",
     "modules/developer_task_workspace_git.py",
+    "modules/developer_task_workspace_source.py",
 }
 
 LEGACY_DEVELOPER_MODULES = {
@@ -43,7 +49,10 @@ LEGACY_DEVELOPER_MODULES = {
     "modules.developer_task_preflight_composition",
     "modules.developer_task_validator",
     "modules.developer_task_workspace",
+    "modules.developer_task_workspace_cleanup",
+    "modules.developer_task_workspace_cleanup_fs",
     "modules.developer_task_workspace_git",
+    "modules.developer_task_workspace_source",
 }
 
 EXPECTED_CORE_FILES = {
@@ -790,6 +799,8 @@ def main() -> int:
             "developer_preflight_composition_eval": "tools/eval_developer_task_preflight_composition.py" in pipeline_text,
             "developer_workspace_flow": '"developer_task_workspace"' in pipeline_text,
             "developer_workspace_eval": "tools/eval_developer_task_workspace.py" in pipeline_text,
+            "developer_workspace_cleanup_flow": '"developer_task_workspace_cleanup"' in pipeline_text,
+            "developer_workspace_cleanup_eval": "tools/eval_developer_task_workspace_cleanup.py" in pipeline_text,
         },
         {
             "pipeline": True,
@@ -806,6 +817,8 @@ def main() -> int:
             "developer_preflight_composition_eval": True,
             "developer_workspace_flow": True,
             "developer_workspace_eval": True,
+            "developer_workspace_cleanup_flow": True,
+            "developer_workspace_cleanup_eval": True,
         },
     )
 
