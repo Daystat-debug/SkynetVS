@@ -161,7 +161,7 @@ skynet-runtime-foundation-v1
 
 ## 1.2 Developer Task Isolated Repository Workspace V1
 
-**Статус:** CURRENT.
+**Статус:** V1A VERIFIED на `4861934`; V1B CURRENT.
 
 ### V1A — Independent Repository Creation Gate
 
@@ -174,17 +174,35 @@ skynet-runtime-foundation-v1
 - deterministic line-ending and filesystem protection policy (`autocrlf=false`, LF, protectNTFS/protectHFS);
 - запрет workspace parent внутри worktree/Git-dir/bare repository;
 - запрет baseline symlink, gitlink, unsafe Windows paths и case-collision;
-- immutable workspace evidence и marker;
+- immutable workspace evidence и canonical marker;
 - доказательство неизменности source repository;
-- cleanup частично созданного workspace при отказе.
+- cleanup частично созданного workspace при отказе;
+- Windows `core.autocrlf=true` regression guard.
 
-### V1B — Workspace Cleanup and Audit
+Подтверждено:
 
-- удаление только workspace, подтверждённого marker/evidence;
-- запрет удаления project root, task root и их родителей;
-- Windows retry/read-only handling;
-- structured cleanup report;
-- fault injection и доказательство неизменности source repository.
+```text
+4861934  feat: add isolated developer task repository workspace
+workspace eval:                 39/39
+developer_task_workspace flow:  completed successfully
+full check:                     completed successfully
+```
+
+### V1B — Workspace Cleanup and Lifecycle Audit
+
+- явный cleanup только по typed manifest, полному Preflight report, успешному Workspace report и explicit `workspace_parent`;
+- non-serialized 32-byte cleanup capability в immutable workspace report;
+- SHA-256 capability в canonical marker без раскрытия самого token;
+- bounded binary marker read, TOCTOU, schema/hash/canonical JSON validation;
+- запрет удаления source repository, task root, workspace parent, siblings и пересекающихся путей;
+- no-follow проверка root, marker и всего descendant tree;
+- запрет symlink, junction, reparse point и special-file traversal;
+- ограниченные Windows retries, read-only handling и защита от подмены directory identity;
+- идемпотентный повторный cleanup после успешного удаления;
+- immutable structured cleanup report без capability;
+- read-only source Git snapshots до и после cleanup;
+- fault injection и доказательство неизменности source HEAD/status/refs/index/config;
+- crash recovery и orphan cleanup после потери in-memory capability остаются отдельной будущей задачей.
 
 Независимый clone создаёт **Git/repository isolation**, но не является OS sandbox. До запуска изменённого Python-кода или других проверок требуется отдельная execution isolation policy.
 
@@ -505,11 +523,13 @@ Roadmap Change N
 
 [VERIFIED CODE] 1035de4 — complete Developer Task Preflight V1
 
+[VERIFIED CODE] 4861934 — Isolated Repository Workspace V1A
+
 [CURRENT CODE STAGE]
-Developer Task Isolated Repository Workspace V1A — Independent Repository Creation Gate.
+Developer Task Isolated Repository Workspace V1B — Workspace Cleanup and Lifecycle Audit.
 
 [NEXT]
-V1B Workspace Cleanup and Audit → Patch Apply V1 → Typed Check Runner V1.
+Patch Apply V1 → Typed Check Runner V1.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
