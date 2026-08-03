@@ -16,6 +16,7 @@ EXPECTED_DEVELOPER_FILES = {
     "modules/developer/developer_task_patch_integrity.py",
     "modules/developer/developer_task_patch_scope.py",
     "modules/developer/developer_task_preflight.py",
+    "modules/developer/developer_task_preflight_composition.py",
     "modules/developer/developer_task_validator.py",
 }
 
@@ -25,6 +26,7 @@ LEGACY_DEVELOPER_FILES = {
     "modules/developer_task_patch_integrity.py",
     "modules/developer_task_patch_scope.py",
     "modules/developer_task_preflight.py",
+    "modules/developer_task_preflight_composition.py",
     "modules/developer_task_validator.py",
 }
 
@@ -34,6 +36,7 @@ LEGACY_DEVELOPER_MODULES = {
     "modules.developer_task_patch_integrity",
     "modules.developer_task_patch_scope",
     "modules.developer_task_preflight",
+    "modules.developer_task_preflight_composition",
     "modules.developer_task_validator",
 }
 
@@ -778,6 +781,7 @@ def main() -> int:
             "developer_patch_integrity_eval": "tools/eval_developer_task_patch_integrity.py" in pipeline_text,
             "developer_patch_index_eval": "tools/eval_developer_task_patch_index.py" in pipeline_text,
             "developer_patch_scope_eval": "tools/eval_developer_task_patch_scope.py" in pipeline_text,
+            "developer_preflight_composition_eval": "tools/eval_developer_task_preflight_composition.py" in pipeline_text,
         },
         {
             "pipeline": True,
@@ -791,6 +795,7 @@ def main() -> int:
             "developer_patch_integrity_eval": True,
             "developer_patch_index_eval": True,
             "developer_patch_scope_eval": True,
+            "developer_preflight_composition_eval": True,
         },
     )
 

@@ -754,6 +754,39 @@ def main() -> int:
             )
         check("TEMPORARY WORKSPACE PREPARATION FAILURE IS STRUCTURED", list(report.issue_codes), ["temporary_workspace_failed"])
 
+        cleanup_retry_scratch = temp_root / f"{patch_index._TEMP_WORKSPACE_PREFIX}retry"
+        cleanup_retry_scratch.mkdir()
+        with patch(
+            "modules.developer.developer_task_patch_index._create_temporary_workspace",
+            return_value=cleanup_retry_scratch,
+        ), patch(
+            "modules.developer.developer_task_patch_index.shutil.rmtree",
+            side_effect=[PermissionError("fake transient cleanup lock"), None],
+        ) as cleanup_retry, patch(
+            "modules.developer.developer_task_patch_index.time.sleep",
+        ) as cleanup_sleep:
+            report = run_developer_task_patch_index_preflight(
+                manifest,
+                repository_report=repository_report,
+                patch_integrity_report=patch_report,
+            )
+        check(
+            "TRANSIENT TEMPORARY WORKSPACE CLEANUP FAILURE IS RETRIED",
+            {
+                "ok": report.ok,
+                "issue_codes": list(report.issue_codes),
+                "cleanup_calls": cleanup_retry.call_count,
+                "sleep_calls": cleanup_sleep.call_count,
+            },
+            {
+                "ok": True,
+                "issue_codes": [],
+                "cleanup_calls": 2,
+                "sleep_calls": 1,
+            },
+        )
+        shutil.rmtree(cleanup_retry_scratch)
+
         cleanup_scratch = temp_root / f"{patch_index._TEMP_WORKSPACE_PREFIX}cleanup"
         cleanup_scratch.mkdir()
         with patch(
@@ -762,13 +795,27 @@ def main() -> int:
         ), patch(
             "modules.developer.developer_task_patch_index.shutil.rmtree",
             side_effect=PermissionError("fake cleanup failure"),
-        ):
+        ) as cleanup_failure, patch(
+            "modules.developer.developer_task_patch_index.time.sleep",
+        ) as cleanup_sleep:
             report = run_developer_task_patch_index_preflight(
                 manifest,
                 repository_report=repository_report,
                 patch_integrity_report=patch_report,
             )
-        check("TEMPORARY WORKSPACE CLEANUP FAILURE IS STRUCTURED", list(report.issue_codes), ["temporary_workspace_cleanup_failed"])
+        check(
+            "TEMPORARY WORKSPACE CLEANUP FAILURE IS STRUCTURED",
+            {
+                "issue_codes": list(report.issue_codes),
+                "cleanup_calls": cleanup_failure.call_count,
+                "sleep_calls": cleanup_sleep.call_count,
+            },
+            {
+                "issue_codes": ["temporary_workspace_cleanup_failed"],
+                "cleanup_calls": 5,
+                "sleep_calls": 4,
+            },
+        )
         shutil.rmtree(cleanup_scratch)
 
         with patch(

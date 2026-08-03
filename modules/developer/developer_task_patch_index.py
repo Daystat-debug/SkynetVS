@@ -11,6 +11,7 @@ import shutil
 import stat
 import subprocess
 import tempfile
+import time
 
 from dataclasses import dataclass
 from pathlib import Path
@@ -46,6 +47,7 @@ _WINDOWS_RESERVED_RE = re.compile(
 _MAX_PATH_LENGTH = 240
 _MAX_SEGMENT_LENGTH = 120
 _TEMP_WORKSPACE_PREFIX = "skynetvs_developer_patch_index_"
+_TEMP_CLEANUP_RETRY_DELAYS_SECONDS = (0.05, 0.1, 0.2, 0.4)
 _ALLOWED_CHANGE_STATUSES = frozenset({"A", "D", "M", "T"})
 _ALLOWED_FILE_MODES = frozenset({"000000", "100644", "100755", "120000", "160000"})
 
@@ -685,6 +687,79 @@ def _safe_temporary_cleanup_target(
     return candidate
 
 
+def _rmtree_windows_readonly_handler(
+    function: Any,
+    path: str,
+    exc_info: tuple[type[BaseException], BaseException, Any],
+) -> None:
+    error = exc_info[1]
+
+    if os.name != "nt" or not isinstance(error, PermissionError):
+        raise error
+
+    metadata = os.lstat(path)
+    attributes = int(getattr(metadata, "st_file_attributes", 0))
+    reparse_flag = int(getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0))
+
+    if stat.S_ISLNK(metadata.st_mode) or bool(attributes & reparse_flag):
+        raise error
+
+    os.chmod(path, stat.S_IWRITE)
+    function(path)
+
+
+def _remove_temporary_workspace(
+    candidate: Path | None,
+    repository_root: Path,
+) -> OSError | None:
+    cleanup_target = _safe_temporary_cleanup_target(
+        candidate,
+        repository_root,
+    )
+
+    if cleanup_target is None:
+        return None
+
+    last_error: OSError | None = None
+    attempt_count = len(_TEMP_CLEANUP_RETRY_DELAYS_SECONDS) + 1
+
+    for attempt in range(attempt_count):
+        try:
+            shutil.rmtree(
+                cleanup_target,
+                onerror=_rmtree_windows_readonly_handler,
+            )
+            return None
+        except FileNotFoundError:
+            return None
+        except OSError as exc:
+            last_error = exc
+
+        if attempt >= len(_TEMP_CLEANUP_RETRY_DELAYS_SECONDS):
+            break
+
+        try:
+            os.lstat(cleanup_target)
+        except FileNotFoundError:
+            return None
+        except OSError as exc:
+            return exc
+
+        cleanup_target = _safe_temporary_cleanup_target(
+            cleanup_target,
+            repository_root,
+        )
+
+        if cleanup_target is None:
+            return OSError(
+                "Temporary workspace is no longer a safe cleanup target"
+            )
+
+        time.sleep(_TEMP_CLEANUP_RETRY_DELAYS_SECONDS[attempt])
+
+    return last_error or OSError("Temporary workspace cleanup failed")
+
+
 def _prepare_temporary_git_environment(
     scratch_root: Path,
     real_object_directory: Path,
@@ -929,20 +1004,17 @@ def run_developer_task_patch_index_preflight(
                     scratch_root,
                 )
     finally:
-        cleanup_target = _safe_temporary_cleanup_target(
+        cleanup_error = _remove_temporary_workspace(
             scratch_candidate,
             repository_root,
         )
 
-        if cleanup_target is not None:
-            try:
-                shutil.rmtree(cleanup_target)
-            except OSError as exc:
-                context.add(
-                    "temporary_workspace_cleanup_failed",
-                    "temporary_workspace_cleanup",
-                    "Temporary Git workspace could not be removed.",
-                    actual=f"{type(exc).__name__}: {exc}",
-                )
+        if cleanup_error is not None:
+            context.add(
+                "temporary_workspace_cleanup_failed",
+                "temporary_workspace_cleanup",
+                "Temporary Git workspace could not be removed.",
+                actual=f"{type(cleanup_error).__name__}: {cleanup_error}",
+            )
 
     return context.report()
