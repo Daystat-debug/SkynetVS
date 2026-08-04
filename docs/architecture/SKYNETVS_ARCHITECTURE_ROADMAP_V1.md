@@ -161,7 +161,7 @@ skynet-runtime-foundation-v1
 
 ## 1.2 Developer Task Isolated Repository Workspace V1
 
-**Статус:** V1A VERIFIED на `4861934`; V1B CURRENT.
+**Статус:** VERIFIED / завершён на `892e175`.
 
 ### V1A — Independent Repository Creation Gate
 
@@ -189,6 +189,15 @@ full check:                     completed successfully
 ```
 
 ### V1B — Workspace Cleanup and Lifecycle Audit
+
+Подтверждено:
+
+```text
+892e175  feat: add developer task workspace cleanup audit
+workspace cleanup eval:         41/41
+developer_task_workspace_cleanup flow: completed successfully
+full check:                     completed successfully
+```
 
 - явный cleanup только по typed manifest, полному Preflight report, успешному Workspace report и explicit `workspace_parent`;
 - non-serialized 32-byte cleanup capability в immutable workspace report;
@@ -230,29 +239,75 @@ full check:                     completed successfully
 
 ## 1.3 Developer Task Patch Apply V1
 
+**Статус:** VERIFIED / завершён на `b8419f5`.
+
+Подтверждено:
+
+```text
+b8419f5  feat: add verified developer task patch apply
+patch apply eval:              30/30
+developer_task_patch_apply:    completed successfully
+full check:                    completed successfully
+```
+
 - принимаются только успешные typed-доказательства Preflight V1 и Workspace V1;
 - применяются точные immutable patch bytes из Preflight V1, а не повторно прочитанный файл;
 - patch применяется через Git только внутри независимого repository workspace;
 - index и worktree изменяются вместе, а `HEAD` остаётся detached на `base_commit`;
 - фактические changed paths, modes и resulting index повторно сравниваются с Preflight V1;
 - Git принудительно привязывается к ожидаемым `--git-dir` и `--work-tree`;
-- local config проверяется без includes: запрещены redirection/execution keys, критичные значения должны совпасть с isolated policy;
+- local config проверяется без includes: запрещены redirection/execution keys, критичные значения совпадают с isolated policy;
 - remotes, refs, alternates, hooks boundary, config fingerprint и source repository повторно проверяются;
 - при любом apply/postcondition failure выполняется bounded rollback к чистому `base_commit`;
 - rollback failure делает workspace непригодным для дальнейшего использования;
 - успешный результат получает canonical apply marker и non-serialized capability для Typed Check Runner;
+- source mutation во время apply обнаруживается, включая Windows `core.autocrlf=true` regression;
 - исполнение Python-кода, commit, merge, push и promotion в этот этап не входят.
+
+## Roadmap Change 002 — Static Checks и Executable Checks разделены
+
+**Причина:** independent repository clone защищает Git, но не является OS/process sandbox. Обычный host subprocess, Python isolated mode и Job Object не дают достаточной filesystem/network isolation для изменённого кода.
+
+**Что меняется:**
+
+```text
+Typed Check Runner V1A — Static Evidence Gate
+Typed Check Runner V1B — Execution Backend Capability and Evidence
+Typed Check Runner V1C — Sandboxed Executable Checks
+```
+
+**Что не меняется:**
+
+- разрешённые manifest check types;
+- `git_diff_check` первый;
+- full `pipeline check` последний;
+- arbitrary shell и dependency installation запрещены;
+- основной repository не используется для checks;
+- promotion остаётся ручным.
 
 ## 1.4 Developer Task Typed Check Runner V1
 
-Разрешённые типы:
+### V1A — Static Evidence Gate
+
+Проверки без исполнения изменённого кода:
 
 - `git_diff_check`;
-- `py_compile`;
+- `py_compile` через trusted host-side parser/compiler без imports, без запуска workspace module и без записи `.pyc`.
+
+### V1B — Execution Backend Capability and Evidence
+
+- аттестует OS sandbox backend и его policy fingerprint;
+- fail-closed блокирует executable checks при отсутствии подходящей изоляции;
+- не запускает изменённый код.
+
+### V1C — Sandboxed Executable Checks
+
+Только через аттестованный backend:
+
 - `python_module`;
 - `pipeline`.
 
-Без `shell=True`, без произвольных строк команд и без установки зависимостей.
+Без `shell=True`, без произвольных строк команд, без сети по умолчанию и без установки зависимостей.
 
 ## 1.5 Developer Task Result & Evidence V1
 
@@ -535,11 +590,13 @@ Roadmap Change N
 
 [VERIFIED CODE] 892e175 — Workspace Cleanup and Lifecycle Audit V1B
 
-[CURRENT CODE STAGE]
-Developer Task Patch Apply V1 — Verified Workspace Mutation and Rollback Gate.
+[VERIFIED CODE] b8419f5 — Developer Task Patch Apply V1
+
+[CURRENT ARCHITECTURE STAGE]
+Typed Check Runner V1A — Static Evidence Gate and execution-backend capability audit.
 
 [NEXT]
-Typed Check Runner V1 → Result and Evidence V1.
+Typed Check Runner V1B/V1C → Result and Evidence V1.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.

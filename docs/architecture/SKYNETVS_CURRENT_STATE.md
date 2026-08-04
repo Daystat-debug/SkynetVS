@@ -4,9 +4,9 @@
 
 - Дата обновления: `2026-08-04`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `892e175`
-- Название code baseline: `feat: add developer task workspace cleanup audit`
-- `origin/main` на проверенной code-точке: `892e175`
+- Проверенный code baseline перед этим documentation commit: `b8419f5`
+- Название code baseline: `feat: add verified developer task patch apply`
+- `origin/main` на проверенной code-точке: `b8419f5`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -216,13 +216,15 @@ developer_task_workspace_cleanup:  completed successfully
 full check:                        completed successfully
 ```
 
-## 9. CURRENT — Developer Task Patch Apply V1
+## 9. VERIFIED — Developer Task Patch Apply V1
 
-### Назначение
+### Commit
 
-Применить точные verified patch bytes только внутри независимого repository workspace, повторно доказать итоговое Git-состояние и не допустить частичного или неподтверждённого результата.
+```text
+b8419f5 feat: add verified developer task patch apply
+```
 
-### Утверждённый API
+### Публичный API
 
 ```python
 apply_developer_task_patch(
@@ -234,87 +236,28 @@ apply_developer_task_patch(
 ) -> DeveloperTaskPatchApplyReport
 ```
 
-### Разделение ответственности
+### Подтверждено
 
-```text
-modules/developer/developer_task_patch_apply.py
-    evidence orchestration, filesystem/marker boundary, source snapshots, final report
+- принимаются только typed manifest, успешный полный Preflight report и успешный Workspace report;
+- explicit `workspace_parent`, fixed layout, workspace marker, cleanup capability и directory identity сверяются до mutation;
+- применяются только immutable patch bytes из Preflight V1;
+- patch передаётся Git через stdin и применяется только к независимому workspace;
+- mutating Git-команды явно привязаны к ожидаемым `--git-dir` и `--work-tree`;
+- запрещены `--3way`, `--reject`, `--unsafe-paths`, remotes, alternates, attached HEAD и повторный apply;
+- local Git config проверяется без includes; `core.worktree`, filters и execution/redirection keys блокируются;
+- фактические changed paths, statuses, modes и resulting index повторно совпадают с Preflight evidence;
+- после apply разрешено только staged-only состояние без unstaged, untracked, conflicts и submodule changes;
+- `HEAD` остаётся detached на verified `base_commit`;
+- canonical staged diff, result tree и config fingerprint привязаны к `control/patch_apply.json`;
+- non-serialized check capability не раскрывается через `repr()` и `to_dict()`;
+- apply/postcondition/marker/source failure выполняет bounded rollback к чистому base;
+- rollback failure возвращает `failed_dirty` и запрещает reuse workspace;
+- patch, удаляющий последний tracked file, корректно поддерживает пустой resulting index;
+- applied workspace остаётся совместим с verified cleanup lifecycle;
+- source mutation во время apply обнаруживается даже при Windows `core.autocrlf=true`, а workspace откатывается к чистой базе;
+- основной repository, его index, refs, objects, files и status не изменяются.
 
-modules/developer/developer_task_patch_apply_git.py
-    hardened Git apply, staged-state audit, rollback to clean base
-```
-
-### In scope
-
-- повторно проверить manifest fingerprint, полный Preflight report и Workspace report;
-- требовать явный `workspace_parent` и fixed workspace layout;
-- проверить workspace marker, cleanup capability, tree safety и directory identity;
-- снять read-only source Git snapshot до mutation;
-- использовать только immutable patch bytes из Preflight V1;
-- применять patch через stdin с `git apply --index`;
-- не использовать `--3way`, `--reject` или `--unsafe-paths`;
-- оставить `HEAD` detached на `base_commit`;
-- требовать staged-only state без unstaged/untracked/conflict;
-- повторно извлечь raw diff, modes и result-index paths;
-- точно сравнить их с Preflight V1C1/V1C2 evidence;
-- вычислить result tree и SHA-256 canonical staged diff;
-- принудительно привязать каждую mutating Git-команду к ожидаемым `--git-dir` и `--work-tree`;
-- проверить local Git config без includes, запретить `core.worktree`, external filters и другие execution/redirection keys;
-- повторно проверить remotes, refs, alternates, shallow state, hooks path и config fingerprint;
-- повторно проверить workspace marker и source snapshot после apply;
-- при любом failure после начала mutation восстановить workspace через bounded reset/clean;
-- различать `applied`, `rejected_clean` и `failed_dirty`;
-- записать canonical `control/patch_apply.json`;
-- создать non-serialized 32-byte check capability для следующего Typed Check Runner;
-- сохранить совместимость verified cleanup после успешного apply.
-
-### Out of scope
-
-- запуск `py_compile`, Python modules или pipeline внутри изменённого workspace;
-- произвольный shell;
-- установка зависимостей;
-- commit, branch, merge, push или promotion;
-- изменение основного repository;
-- OS/process/network sandbox;
-- автоматический перенос результата в `main`;
-- orphan recovery после потери in-memory capabilities.
-
-## 10. Ожидаемые файлы Patch Apply V1
-
-```text
-A  modules/developer/developer_task_patch_apply.py
-A  modules/developer/developer_task_patch_apply_git.py
-M  modules/developer/developer_task_patch_index.py
-M  modules/developer/developer_task_workspace_git.py
-A  tools/eval_developer_task_patch_apply.py
-M  tools/eval_package_boundaries.py
-M  tools/pipeline.py
-```
-
-Стабильные Preflight/Workspace APIs, `main.py` и пользовательские голосовые команды не изменяются.
-
-## 11. PLANNED — targeted checks Patch Apply V1
-
-```text
-python -m py_compile \
-    modules/developer/developer_task_patch_apply.py \
-    modules/developer/developer_task_patch_apply_git.py \
-    modules/developer/developer_task_patch_index.py \
-    modules/developer/developer_task_workspace_git.py \
-    tools/eval_developer_task_patch_apply.py \
-    tools/eval_package_boundaries.py \
-    tools/pipeline.py
-
-python -m tools.eval_package_boundaries
-python -m tools.eval_developer_task_preflight_composition
-python -m tools.eval_developer_task_workspace
-python -m tools.eval_developer_task_workspace_cleanup
-python -m tools.eval_developer_task_patch_apply
-python tools/pipeline.py developer_task_patch_apply
-python tools/pipeline.py check
-```
-
-Ожидаемые summaries:
+### Проверки
 
 ```text
 Package boundaries:             28/28
@@ -322,37 +265,165 @@ Preflight composition:          19/19
 Workspace V1A:                  39/39
 Workspace cleanup V1B:          41/41
 Patch Apply V1:                 30/30
+developer_task_patch_apply:     completed successfully
+full check:                     completed successfully
 ```
 
-## 12. Критерии завершения Patch Apply V1
+## 10. Roadmap Change 002 — Static Checks и Executable Checks разделены
 
-1. raw/failed/forged reports не могут инициировать mutation;
-2. source/task/workspace paths и canonical marker совпадают с evidence;
-3. dirty, attached, linked или повторно applied workspace блокируется до mutation;
-4. exact patch bytes передаются Git только через stdin;
-5. apply использует index + worktree и не использует unsafe recovery options;
-6. фактические changes/modes/result-index paths точно совпадают с Preflight facts;
-7. staged state не содержит unstaged/untracked/conflict/submodule changes;
-8. `HEAD`, refs, remotes, alternates, hooks и shallow boundary не меняются;
-9. Git root/git-dir/common-dir явно совпадают с isolated workspace evidence;
-10. local config не содержит includes, worktree redirection или external filter commands и сохраняет isolated policy fingerprint;
-11. source Git snapshot до и после совпадает;
-12. apply marker canonical и связан с result tree/diff/config/check capability;
-13. capability отсутствует в serialization и repr;
-14. apply/fact/marker/source/postcondition failure откатывает workspace к чистому base;
-15. rollback failure возвращает `failed_dirty` и запрещает reuse;
-16. patch, удаляющий последний tracked file, корректно поддерживает пустой resulting index;
-17. successful applied workspace удаляется verified cleanup API;
-18. eval проходит на Windows: `30/30`;
-19. новый targeted flow и полный `check` проходят;
-20. code-коммит содержит только семь ожидаемых файлов;
-21. `origin/main` обновлён;
-22. current-state обновлён после code-коммита.
+### Причина
 
-## 13. DEFERRED
+Независимый repository clone защищает Git-состояние основного проекта, но не является OS/process sandbox. Обычный `subprocess`, Python isolated mode и Windows Job Object сами по себе не создают полноценную filesystem/network boundary для кода из patch.
 
-- Developer Task Typed Check Runner V1.
-- Execution isolation policy для checks, выполняющих изменённый код.
+Поэтому `python_module` и `pipeline` нельзя запускать на host только потому, что workspace является отдельным clone.
+
+### Что меняется
+
+`Developer Task Typed Check Runner V1` делится на три внутренних среза:
+
+```text
+V1A — Static Evidence Gate
+V1B — Execution Backend Capability and Evidence Gate
+V1C — Sandboxed Executable Checks
+```
+
+#### V1A — Static Evidence Gate
+
+Разрешает только проверки, которые не исполняют изменённый код:
+
+- `git_diff_check`;
+- `py_compile` как trusted host-side compilation/parsing без imports, без `python -m` из workspace и без записи `.pyc` в workspace.
+
+#### V1B — Execution Backend Capability and Evidence Gate
+
+- обнаруживает и аттестует доступный OS sandbox backend;
+- фиксирует backend version/capabilities/policy fingerprint;
+- fail-closed блокирует executable checks при отсутствии подходящей изоляции;
+- не запускает изменённый код.
+
+#### V1C — Sandboxed Executable Checks
+
+Только через аттестованный backend выполняет:
+
+- `python_module`;
+- `pipeline`.
+
+### Что не меняется
+
+- manifest по-прежнему использует только типизированные check types;
+- `git_diff_check` остаётся первым;
+- `pipeline` flow `check` остаётся последним;
+- arbitrary shell запрещён;
+- установка зависимостей запрещена;
+- основной worktree не используется для checks;
+- commit, merge, push и promotion остаются запрещены.
+
+## 11. CURRENT — Typed Check Runner V1A / Execution Backend Capability Audit
+
+### Назначение
+
+Сначала закрыть безопасную статическую часть check runner и доказательно определить, доступен ли на текущем Windows-хосте backend, пригодный для запуска изменённого кода.
+
+### In scope V1A
+
+- повторно проверить typed manifest, полный Preflight report, успешный Workspace report и успешный Patch Apply report;
+- проверить apply marker, check capability, workspace identity и source snapshot freshness;
+- выполнить read-only `git_diff_check` и точно сверить Git evidence с Patch Apply report;
+- определить изменённые Python-файлы по verified changed-file facts;
+- читать только обычные файлы внутри workspace без symlink/junction/reparse traversal;
+- ограничить размер одного Python-файла и общий объём compilation input;
+- компилировать trusted host-side через встроенный Python parser/compiler без imports и без исполнения module top-level;
+- не писать `.pyc` и не изменять index/worktree;
+- вернуть immutable structured static-check report;
+- проверить, что source repository и apply evidence не изменились;
+- выполнить capability audit Windows Sandbox / `wsb` CLI и сохранить результат как вход для V1B.
+
+### Out of scope V1A
+
+- запуск `python_module`;
+- запуск `pipeline`;
+- любой child process из изменённого workspace;
+- произвольный shell;
+- сеть;
+- установка или скачивание зависимостей;
+- commit, branch, merge, push, promotion;
+- изменение source repository;
+- объявление всего Typed Check Runner завершённым.
+
+## 12. Требования к будущему execution backend
+
+Backend для V1C должен доказать:
+
+- отдельную OS/kernel boundary, а не только отдельный каталог или Git clone;
+- отключённую сеть по умолчанию;
+- отсутствие доступа к host clipboard, audio/video input, printers и пользовательским секретам;
+- read-only input boundary;
+- отдельный пустой output boundary без данных пользователя;
+- bounded timeout, memory и process-tree termination;
+- отсутствие доступа к source repository и task artifacts вне явно переданного input;
+- trusted Python/runtime bundle с проверенным hash;
+- structured result marker и полный cleanup;
+- fail-closed поведение при недоступности или несовместимости backend.
+
+Windows Sandbox рассматривается как основной кандидат, но его доступность, версия CLI и возможности должны быть проверены на фактическом компьютере до фиксации реализации V1B/V1C.
+
+## 13. Предварительные файлы Typed Check Runner V1A
+
+```text
+A  modules/developer/developer_task_check_static.py
+A  modules/developer/developer_task_check_static_git.py
+A  modules/developer/developer_task_check_static_python.py
+A  tools/eval_developer_task_check_static.py
+M  tools/eval_package_boundaries.py
+M  tools/pipeline.py
+```
+
+Окончательный состав утверждается после capability audit и проверки актуальных API.
+
+## 14. Критерии завершения V1A
+
+1. raw/failed/forged reports не инициируют checks;
+2. static checks работают только на successful `applied` workspace;
+3. `git_diff_check` повторно подтверждает apply evidence и отсутствие post-apply mutation;
+4. `py_compile` не импортирует и не исполняет код из workspace;
+5. deleted Python files обрабатываются без попытки чтения;
+6. unsafe/reparse/special paths блокируются;
+7. input size limits fail closed;
+8. syntax/encoding errors возвращаются структурированно;
+9. no `.pyc`, untracked files или index changes не появляются;
+10. source repository snapshot до и после совпадает;
+11. report immutable и не раскрывает capabilities;
+12. targeted eval и полный `check` проходят;
+13. capability audit Windows Sandbox сохранён и разобран;
+14. executable checks остаются blocked до V1B/V1C.
+
+## 15. Следующее точное действие
+
+1. Закоммитить это обновление architecture-документов отдельно.
+2. Убедиться, что working tree чистый.
+3. Выполнить Windows execution-backend capability audit из нового чата/инструкции.
+4. Сохранить полный вывод audit в файл и приложить его.
+5. По результату зафиксировать backend policy V1B.
+6. После этого подготовить хирургический patch V1A Static Evidence Gate.
+
+## 16. Планируемые коммиты
+
+Документация:
+
+```text
+docs: close patch apply and split typed check execution boundaries
+```
+
+V1A code:
+
+```text
+feat: add developer task static check evidence gate
+```
+
+## 17. DEFERRED
+
+- Typed Check Runner V1B — Execution Backend Capability and Evidence.
+- Typed Check Runner V1C — Sandboxed `python_module` and `pipeline`.
 - Developer Task Result and Evidence V1.
 - Developer Task Manual Promotion V1.
 - Developer Safety Kernel Audit V1.
@@ -360,52 +431,25 @@ Patch Apply V1:                 30/30
 - Domain Package Structure V2.
 - Tools Package Structure V1.
 
-## 14. Решения, которые нельзя пересматривать молча
+## 18. Решения, которые нельзя пересматривать молча
 
 - `skynet-runtime-foundation-v1` остаётся на `09f8708`.
 - Основной worktree никогда не используется как developer-task sandbox.
 - Patch применяется только после полного Preflight V1 и Workspace V1 evidence.
-- Применяются immutable bytes, а не повторно прочитанный patch-файл.
-- Partial apply или post-apply mismatch не разрешает продолжение.
-- Rollback failure делает workspace непригодным для checks.
-- Изменённый код не исполняется до отдельного execution isolation решения.
-- Apply marker/check capability не сериализуются как секрет для восстановления.
-- Автоматические commit/merge/push/promotion запрещены.
+- Изменённый код не запускается обычным host subprocess.
+- Python isolated mode и Job Object не считаются достаточной OS sandbox boundary.
+- Executable checks fail closed без аттестованного backend.
+- Static checks не могут молча перейти к `python_module` или `pipeline`.
+- Arbitrary shell, dependency installation, commit, merge, push и promotion запрещены.
 - Package migration не смешивается с Developer Safety Kernel.
 
-## 15. Следующее точное действие
+## 19. Режим модели
 
-1. Закоммитить это обновление architecture-документов отдельно.
-2. Убедиться, что working tree чистый.
-3. Проверить SHA-256 Patch Apply V1 patch.
-4. Выполнить `git apply --check`; CRLF fallback применять только при контекстном несовпадении.
-5. Применить code patch.
-6. Запустить compilation и targeted eval.
-7. Запустить `developer_task_patch_apply` flow.
-8. Запустить полный `check`.
-9. Не создавать code-коммит до успешного `30/30`, targeted flow и полного pipeline.
+До фиксации execution backend остаёмся на **Pro Standard**, потому что определяется новая OS/process security boundary.
 
-## 16. Планируемые коммиты
+После утверждения backend policy и интерфейса V1A/V1B механическую реализацию отдельных срезов можно вести в режиме **«Очень высокий»**.
 
-Документация:
-
-```text
-docs: close workspace lifecycle and start developer task patch apply
-```
-
-Code:
-
-```text
-feat: add verified developer task patch apply
-```
-
-## 17. Режим модели
-
-До реального Windows-прогона Patch Apply V1 остаёмся на **Pro Standard**, потому что это первая изменяющая Git-граница Developer Safety Kernel.
-
-После успешного `30/30`, полного `check`, commit и обновления current-state можно вернуться на **«Очень высокий»** для механической реализации уже утверждённого Typed Check Runner. Перед утверждением process/OS execution isolation снова потребуется Pro Standard.
-
-## 18. Файлы для будущего handoff
+## 20. Файлы для будущего handoff
 
 Обязательно:
 
@@ -419,6 +463,7 @@ docs/architecture/SKYNETVS_CURRENT_STATE.md
 ```text
 data/logs/pipeline/*_developer_task_patch_apply.log
 data/logs/pipeline/*_check.log
+execution backend capability audit
 ```
 
 Новый чат должен продолжать с раздела **«Следующее точное действие»**, а не восстанавливать roadmap по памяти.
