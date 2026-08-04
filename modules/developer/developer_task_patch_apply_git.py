@@ -791,6 +791,179 @@ def _status_is_staged_only(payload: bytes) -> bool:
     return saw_change
 
 
+
+def inspect_applied_independent_workspace(
+    request: DeveloperTaskWorkspaceGitRequest,
+    *,
+    expected_changes: tuple[DeveloperTaskPatchIndexChange, ...],
+    expected_result_index_paths: tuple[str, ...],
+) -> DeveloperTaskPatchApplyGitEvidence:
+    """Inspect an already-applied workspace without changing its staged state."""
+
+    if not isinstance(request, DeveloperTaskWorkspaceGitRequest):
+        raise TypeError("request must be DeveloperTaskWorkspaceGitRequest")
+
+    if not isinstance(expected_changes, tuple) or not all(
+        isinstance(item, DeveloperTaskPatchIndexChange)
+        for item in expected_changes
+    ):
+        raise TypeError("expected_changes must be tuple[DeveloperTaskPatchIndexChange, ...]")
+
+    if not isinstance(expected_result_index_paths, tuple) or not all(
+        isinstance(item, str)
+        for item in expected_result_index_paths
+    ):
+        raise TypeError("expected_result_index_paths must be tuple[str, ...]")
+
+    try:
+        state = _repository_state(request)
+        expected_hooks = os.path.normcase(os.path.normpath(request.hooks_path)).casefold()
+        actual_hooks = os.path.normcase(os.path.normpath(state.hooks_path)).casefold()
+
+        if state.head_commit != request.base_commit:
+            raise _ApplyFailure(
+                "workspace_head_mismatch",
+                "Workspace HEAD no longer matches the verified base commit.",
+                actual=state.head_commit,
+            )
+
+        if not state.detached_head:
+            raise _ApplyFailure(
+                "workspace_head_not_detached",
+                "Workspace HEAD must remain detached during static checks.",
+            )
+
+        if not state.shallow_repository:
+            raise _ApplyFailure(
+                "workspace_not_shallow",
+                "Workspace must remain a shallow repository.",
+            )
+
+        if state.remote_names or state.ref_names or state.alternate_object_directories:
+            raise _ApplyFailure(
+                "workspace_repository_links_present",
+                "Workspace must remain remote-free, ref-free, and alternate-free.",
+                actual=(
+                    f"remotes={state.remote_names};refs={state.ref_names};"
+                    f"alternates={state.alternate_object_directories}"
+                ),
+            )
+
+        if not state.hooks_path or actual_hooks != expected_hooks:
+            raise _ApplyFailure(
+                "workspace_hooks_path_mismatch",
+                "Workspace hooks path no longer matches isolated workspace evidence.",
+                actual=state.hooks_path,
+            )
+
+        staged_only = _status_is_staged_only(state.status)
+
+        if not staged_only or not state.index_matches_worktree:
+            raise _ApplyFailure(
+                "workspace_patch_state_invalid",
+                "Workspace must contain only exact staged changes with worktree matching index.",
+                actual=(
+                    f"status_bytes={len(state.status)};"
+                    f"index_matches_worktree={state.index_matches_worktree};"
+                    f"staged_only={staged_only}"
+                ),
+            )
+
+        raw_diff = _run_checked(
+            request,
+            "diff",
+            "--cached",
+            "--raw",
+            "-z",
+            "--no-renames",
+            "--no-abbrev",
+            "--no-ext-diff",
+            "--no-textconv",
+            "--ignore-submodules=none",
+            request.base_commit,
+            "--",
+            code="workspace_patch_diff_failed",
+            message="Applied workspace diff could not be inspected.",
+        )
+        index_listing = _run_checked(
+            request,
+            "ls-files",
+            "--stage",
+            "-z",
+            code="workspace_patch_index_failed",
+            message="Applied workspace index could not be inspected.",
+        )
+
+        try:
+            changes = parse_developer_task_patch_changes(raw_diff)
+            result_index_paths = parse_developer_task_result_index_paths(index_listing)
+        except (TypeError, ValueError) as exc:
+            raise _ApplyFailure(
+                "workspace_patch_facts_invalid",
+                "Applied workspace Git facts are invalid.",
+                actual=str(exc),
+            ) from exc
+
+        if changes != expected_changes:
+            raise _ApplyFailure(
+                "workspace_patch_facts_mismatch",
+                "Applied workspace changes differ from verified patch evidence.",
+                actual=(
+                    f"expected={[item.to_dict() for item in expected_changes]};"
+                    f"actual={[item.to_dict() for item in changes]}"
+                )[:500],
+            )
+
+        if result_index_paths != expected_result_index_paths:
+            raise _ApplyFailure(
+                "workspace_patch_index_paths_mismatch",
+                "Applied workspace index differs from verified patch evidence.",
+                actual=(
+                    f"expected={expected_result_index_paths};"
+                    f"actual={result_index_paths}"
+                )[:500],
+            )
+
+        staged_diff = _run_checked(
+            request,
+            "diff",
+            "--cached",
+            "--binary",
+            "--full-index",
+            "--no-renames",
+            "--no-ext-diff",
+            "--no-textconv",
+            request.base_commit,
+            "--",
+            code="workspace_staged_diff_failed",
+            message="Applied staged diff could not be captured.",
+        )
+
+        return DeveloperTaskPatchApplyGitEvidence(
+            head_commit=state.head_commit,
+            detached_head=state.detached_head,
+            shallow_repository=state.shallow_repository,
+            hooks_path=state.hooks_path,
+            remote_names=state.remote_names,
+            ref_names=state.ref_names,
+            alternate_object_directories=state.alternate_object_directories,
+            changed_files=tuple(item.path for item in changes),
+            changes=changes,
+            result_index_paths=result_index_paths,
+            result_tree=state.index_tree,
+            staged_diff_sha256=hashlib.sha256(staged_diff).hexdigest(),
+            workspace_config_sha256=state.local_config_sha256,
+            index_matches_worktree=state.index_matches_worktree,
+            staged_only=staged_only,
+        )
+    except _ApplyFailure as exc:
+        raise DeveloperTaskPatchApplyGitError(
+            exc.code,
+            str(exc),
+            actual=exc.actual,
+        ) from exc
+
+
 def _rollback_to_base(
     request: DeveloperTaskWorkspaceGitRequest,
 ) -> tuple[bool, bool, str]:

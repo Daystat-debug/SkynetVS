@@ -11,6 +11,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 EXPECTED_DEVELOPER_FILES = {
     "modules/developer/__init__.py",
+    "modules/developer/developer_task_check_static.py",
+    "modules/developer/developer_task_check_static_git.py",
+    "modules/developer/developer_task_check_static_python.py",
     "modules/developer/developer_task_contract.py",
     "modules/developer/developer_task_patch_apply.py",
     "modules/developer/developer_task_patch_apply_git.py",
@@ -28,6 +31,9 @@ EXPECTED_DEVELOPER_FILES = {
 }
 
 LEGACY_DEVELOPER_FILES = {
+    "modules/developer_task_check_static.py",
+    "modules/developer_task_check_static_git.py",
+    "modules/developer_task_check_static_python.py",
     "modules/developer_task_contract.py",
     "modules/developer_task_patch_apply.py",
     "modules/developer_task_patch_apply_git.py",
@@ -45,6 +51,9 @@ LEGACY_DEVELOPER_FILES = {
 }
 
 LEGACY_DEVELOPER_MODULES = {
+    "modules.developer_task_check_static",
+    "modules.developer_task_check_static_git",
+    "modules.developer_task_check_static_python",
     "modules.developer_task_contract",
     "modules.developer_task_patch_apply",
     "modules.developer_task_patch_apply_git",
@@ -809,6 +818,8 @@ def main() -> int:
             "developer_workspace_cleanup_eval": "tools/eval_developer_task_workspace_cleanup.py" in pipeline_text,
             "developer_patch_apply_flow": '"developer_task_patch_apply"' in pipeline_text,
             "developer_patch_apply_eval": "tools/eval_developer_task_patch_apply.py" in pipeline_text,
+            "developer_static_check_flow": '"developer_task_check_static"' in pipeline_text,
+            "developer_static_check_eval": "tools/eval_developer_task_check_static.py" in pipeline_text,
         },
         {
             "pipeline": True,
@@ -829,6 +840,8 @@ def main() -> int:
             "developer_workspace_cleanup_eval": True,
             "developer_patch_apply_flow": True,
             "developer_patch_apply_eval": True,
+            "developer_static_check_flow": True,
+            "developer_static_check_eval": True,
         },
     )
 
