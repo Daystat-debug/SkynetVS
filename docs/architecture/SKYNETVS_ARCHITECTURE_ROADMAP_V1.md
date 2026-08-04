@@ -1,7 +1,7 @@
 # SkynetVS Architecture Roadmap V1
 
 **Дата фиксации:** 2026-07-30
-**Последнее обновление:** 2026-08-03
+**Последнее обновление:** 2026-08-04
 **Статус:** LOCKED
 **Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
@@ -289,16 +289,36 @@ Typed Check Runner V1C — Sandboxed Executable Checks
 
 ### V1A — Static Evidence Gate
 
-Проверки без исполнения изменённого кода:
+**Статус:** VERIFIED / завершён на `6a7b08e`.
 
-- `git_diff_check`;
-- `py_compile` через trusted host-side parser/compiler без imports, без запуска workspace module и без записи `.pyc`.
+Подтверждено:
+
+```text
+6a7b08e  feat: add developer task static check evidence gate
+static check eval:               25/25
+developer_task_check_static:     completed successfully
+full check:                      completed successfully
+runtime architecture audit:      9/9
+```
+
+- `git_diff_check` повторно подтверждает immutable Patch Apply evidence;
+- trusted host-side Python compilation не импортирует и не исполняет workspace modules;
+- `.pyc` и `__pycache__` не создаются;
+- changed/deleted Python paths обрабатываются по verified Git facts;
+- size, no-follow и TOCTOU guards работают fail-closed;
+- source repository и workspace Git state/object stores не изменяются;
+- `python_module` и `pipeline` остаются pending и не запускаются на host.
 
 ### V1B — Execution Backend Capability and Evidence
 
-- аттестует OS sandbox backend и его policy fingerprint;
+**Статус:** CURRENT / требуется security architecture audit.
+
+- аттестует production OS sandbox backend и canonical policy fingerprint;
+- проверяет freshness и пригодность active-attestation evidence;
+- создаёт immutable capability evidence для будущего V1C;
+- закрывает request/result authenticity, timeout, lifecycle, IPv6 и trusted runtime strategy;
 - fail-closed блокирует executable checks при отсутствии подходящей изоляции;
-- не запускает изменённый код.
+- не запускает изменённый код и не имеет host fallback.
 
 **Аттестованный backend-кандидат на текущем Windows-хосте:**
 
@@ -309,18 +329,21 @@ WindowsSandbox.exe 10.0.26100.8875
 read-only input mapping
 dedicated writable result mapping
 network disabled
+wsb CLI отсутствует
 ```
 
-Активный trusted probe подтвердил выполнение `LogonCommand`, read-only input, writable output, отсутствие IPv4 default route и недоступность TCP `1.1.1.1:443`. Это подтверждает capability backend, но не разрешает `python_module` или `pipeline` до production V1B/V1C.
+Активный trusted probe подтвердил выполнение `LogonCommand`, read-only input, writable output, отсутствие IPv4 default route и недоступность TCP `1.1.1.1:443`. Это подтверждает backend-кандидат, но не разрешает `python_module` или `pipeline` до production V1B/V1C.
 
 ### V1C — Sandboxed Executable Checks
 
-Только через аттестованный backend:
+**Статус:** PLANNED / BLOCKED до V1B.
+
+Только через production-attested backend:
 
 - `python_module`;
 - `pipeline`.
 
-Без `shell=True`, без произвольных строк команд, без сети по умолчанию и без установки зависимостей.
+Без `shell=True`, без произвольных строк команд, без сети по умолчанию, без установки зависимостей и без host fallback.
 
 ## 1.5 Developer Task Result & Evidence V1
 

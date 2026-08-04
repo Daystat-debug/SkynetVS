@@ -4,9 +4,9 @@
 
 - Дата обновления: `2026-08-04`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `b8419f5`
-- Название code baseline: `feat: add verified developer task patch apply`
-- `origin/main` на проверенной code-точке: `b8419f5`
+- Проверенный code baseline перед этим documentation commit: `6a7b08e`
+- Название code baseline: `feat: add developer task static check evidence gate`
+- `origin/main` на проверенной code-точке: `6a7b08e`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -342,112 +342,139 @@ wsb CLI отсутствует
 
 Это capability evidence, но не разрешение исполнять изменённый код: `python_module` и `pipeline` остаются заблокированы до V1B/V1C.
 
-## 12. CURRENT — Typed Check Runner V1A — Static Evidence Gate
+## 12. VERIFIED — Typed Check Runner V1A — Static Evidence Gate
+
+### Commit
+
+```text
+6a7b08e feat: add developer task static check evidence gate
+```
+
+### Публичный API
+
+```python
+run_developer_task_static_checks(
+    manifest: DeveloperTaskManifest,
+    *,
+    preflight_report: DeveloperTaskPreflightReport,
+    workspace_report: DeveloperTaskWorkspaceReport,
+    patch_apply_report: DeveloperTaskPatchApplyReport,
+    workspace_parent: Path,
+) -> DeveloperTaskStaticCheckReport
+```
+
+### Подтверждено
+
+- принимаются только typed manifest и успешная evidence-chain `Preflight → Workspace → Patch Apply`;
+- explicit `workspace_parent`, canonical markers, workspace identity и non-serialized check capability повторно сверяются до checks;
+- `git_diff_check` read-only подтверждает detached `HEAD`, `base_commit`, shallow boundary, отсутствие remotes/refs/alternates и неизменность hardened Git config;
+- changed paths, statuses, resulting index, result tree и staged diff SHA-256 повторно совпадают с Patch Apply evidence;
+- trusted Python static compiler читает только изменённые существующие `*.py` и не импортирует workspace modules;
+- module top-level не выполняется, `python -m`, `runpy`, `importlib`, `exec()` и `eval()` не используются;
+- удалённые Python-файлы учитываются без попытки чтения;
+- один Python-файл ограничен 2 MiB, общий compilation input — 8 MiB;
+- symlink, junction, reparse point, special-file и TOCTOU-подмена блокируются fail-closed;
+- syntax/read/compiler/Git failures возвращаются структурированно;
+- `.pyc`, `__pycache__`, untracked files и изменения index/worktree не создаются;
+- source repository и workspace Git object stores/status до и после совпадают;
+- source mutation до или во время static checks обнаруживается fail-closed;
+- `python_module` и `pipeline` остаются в `pending_executable_checks` и на host не запускаются;
+- host fallback отсутствует.
+
+### Проверки
+
+```text
+Package boundaries:               28/28
+Preflight composition:            19/19
+Workspace V1A:                    39/39
+Workspace cleanup V1B:            41/41
+Patch Apply V1:                   30/30
+Static Evidence Gate V1A:         25/25
+developer_task_check_static flow: completed successfully
+full check:                       completed successfully
+runtime architecture audit:       9/9
+```
+
+## 13. CURRENT — Typed Check Runner V1B — Execution Backend Capability and Evidence Gate
 
 ### Назначение
 
-Сначала закрыть безопасную статическую часть check runner и доказательно определить, доступен ли на текущем Windows-хосте backend, пригодный для запуска изменённого кода.
+Создать production-grade capability boundary вокруг уже аттестованного Windows Sandbox backend, не исполняя код из patch.
 
-### In scope V1A
+### Подтверждённый backend-кандидат
 
-- повторно проверить typed manifest, полный Preflight report, успешный Workspace report и успешный Patch Apply report;
-- проверить apply marker, check capability, workspace identity и source snapshot freshness;
-- выполнить read-only `git_diff_check` и точно сверить Git evidence с Patch Apply report;
-- определить изменённые Python-файлы по verified changed-file facts;
-- читать только обычные файлы внутри workspace без symlink/junction/reparse traversal;
-- ограничить размер одного Python-файла и общий объём compilation input;
-- компилировать trusted host-side через встроенный Python parser/compiler без imports и без исполнения module top-level;
-- не писать `.pyc` и не изменять index/worktree;
-- вернуть immutable structured static-check report;
-- проверить, что source repository и apply evidence не изменились;
-- использовать уже сохранённую активную аттестацию Windows Sandbox как подтверждённый вход для будущего V1B.
+```text
+traditional_wsb_logoncommand_v1
+WindowsSandbox.exe 10.0.26100.8875
+.wsb + LogonCommand
+read-only input mapping
+dedicated writable result mapping
+network disabled
+wsb CLI отсутствует
+```
 
-### Out of scope V1A
+Активный trusted probe уже подтвердил запуск `.wsb`, выполнение `LogonCommand`, read-only input, writable output, отсутствие IPv4 default route и недоступность TCP `1.1.1.1:443`.
 
-- запуск `python_module`;
-- запуск `pipeline`;
-- любой child process из изменённого workspace;
+### Архитектурные вопросы, которые V1B обязан закрыть до реализации V1C
+
+- точный публичный API capability/evidence gate;
+- срок действия и freshness active-attestation evidence;
+- canonical backend policy fingerprint;
+- проверка Windows Sandbox executable/version и optional feature без повышения прав во время обычного запуска;
+- IPv4 и IPv6 network isolation evidence;
+- trusted input bundle и его hash-chain;
+- отдельный пустой output boundary на каждый запуск;
+- canonical request/result schemas, nonce и bounded result size;
+- защита host-side result validation от подделки изменённым кодом;
+- timeout и deterministic lifecycle/termination традиционного `WindowsSandbox.exe` без `wsb` CLI;
+- trusted Python runtime strategy внутри гостя;
+- cleanup временных host artifacts;
+- отсутствие любого автоматического fallback на host subprocess;
+- immutable capability report и non-serialized capability для будущего V1C.
+
+### Жёсткий scope V1B
+
+V1B может запускать только доверенный backend probe/attestation code. Он не запускает:
+
+- `python_module` из manifest;
+- `pipeline` из manifest;
 - произвольный shell;
-- сеть;
-- установка или скачивание зависимостей;
-- commit, branch, merge, push, promotion;
-- изменение source repository;
-- объявление всего Typed Check Runner завершённым.
+- код из изменённого workspace;
+- установку или скачивание зависимостей;
+- commit, merge, push или promotion.
 
-## 13. Требования к будущему execution backend
+## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
-Backend для V1C должен доказать:
-
-- отдельную OS/kernel boundary, а не только отдельный каталог или Git clone;
-- отключённую сеть по умолчанию;
-- отсутствие доступа к host clipboard, audio/video input, printers и пользовательским секретам;
-- read-only input boundary;
-- отдельный пустой output boundary без данных пользователя;
-- bounded timeout, memory и process-tree termination;
-- отсутствие доступа к source repository и task artifacts вне явно переданного input;
-- trusted Python/runtime bundle с проверенным hash;
-- structured result marker и полный cleanup;
-- fail-closed поведение при недоступности или несовместимости backend.
-
-Windows Sandbox рассматривается как основной кандидат, но его доступность, версия CLI и возможности должны быть проверены на фактическом компьютере до фиксации реализации V1B/V1C.
-
-## 14. Файлы Typed Check Runner V1A
+До завершения V1B запрещены:
 
 ```text
-A  modules/developer/developer_task_check_static.py
-A  modules/developer/developer_task_check_static_git.py
-A  modules/developer/developer_task_check_static_python.py
-M  modules/developer/developer_task_patch_apply_git.py
-A  tools/eval_developer_task_check_static.py
-M  tools/eval_package_boundaries.py
-M  tools/pipeline.py
+python_module
+pipeline
+host fallback
 ```
 
-Окончательный состав утверждается после capability audit и проверки актуальных API.
+V1C сможет выполнять их только через успешно аттестованный production backend и отдельную result-evidence boundary.
 
-## 15. Критерии завершения V1A
+## 15. Следующее точное действие
 
-1. raw/failed/forged reports не инициируют checks;
-2. static checks работают только на successful `applied` workspace;
-3. `git_diff_check` повторно подтверждает apply evidence и отсутствие post-apply mutation;
-4. `py_compile` не импортирует и не исполняет код из workspace;
-5. deleted Python files обрабатываются без попытки чтения;
-6. unsafe/reparse/special paths блокируются;
-7. input size limits fail closed;
-8. syntax/encoding errors возвращаются структурированно;
-9. no `.pyc`, untracked files или index changes не появляются;
-10. source repository snapshot до и после совпадает;
-11. report immutable и не раскрывает capabilities;
-12. targeted eval и полный `check` проходят;
-13. capability audit Windows Sandbox сохранён и разобран;
-14. executable checks остаются blocked до V1B/V1C.
+1. Переключиться на **Pro Standard**.
+2. Провести архитектурный аудит `Typed Check Runner V1B`.
+3. Зафиксировать threat model, exact API, lifecycle и result-authenticity model до code patch.
+4. Разделить V1B на минимальные внутренние срезы, если production backend нельзя безопасно реализовать одним commit.
+5. Не разрешать `python_module`, `pipeline` или host fallback.
 
-## 16. Следующее точное действие
-
-1. Добавить `SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md` отдельным documentation commit.
-2. Применить хирургический patch `Typed Check Runner V1A — Static Evidence Gate`.
-3. Запустить targeted eval `tools.eval_developer_task_check_static`.
-4. Запустить flow `developer_task_check_static`.
-5. После зелёного targeted-flow запустить полный `check`.
-6. Не разрешать `python_module` и `pipeline`: они остаются pending executable checks до V1B/V1C.
-
-## 17. Планируемые коммиты
-
-Документация:
+## 16. Зафиксированные коммиты текущего перехода
 
 ```text
-docs: close patch apply and split typed check execution boundaries
+70e1813 docs: close patch apply and split typed check execution boundaries
+97cd502 docs: record sandbox attestation and start static checks
+6a7b08e feat: add developer task static check evidence gate
 ```
 
-V1A code:
+Следующий documentation commit должен только закрыть V1A и перевести `CURRENT` на V1B.
 
-```text
-feat: add developer task static check evidence gate
-```
+## 17. DEFERRED
 
-## 18. DEFERRED
-
-- Typed Check Runner V1B — Execution Backend Capability and Evidence.
 - Typed Check Runner V1C — Sandboxed `python_module` and `pipeline`.
 - Developer Task Result and Evidence V1.
 - Developer Task Manual Promotion V1.
@@ -456,23 +483,24 @@ feat: add developer task static check evidence gate
 - Domain Package Structure V2.
 - Tools Package Structure V1.
 
-## 19. Решения, которые нельзя пересматривать молча
+## 18. Решения, которые нельзя пересматривать молча
 
 - `skynet-runtime-foundation-v1` остаётся на `09f8708`.
 - Основной worktree никогда не используется как developer-task sandbox.
 - Patch применяется только после полного Preflight V1 и Workspace V1 evidence.
 - Изменённый код не запускается обычным host subprocess.
 - Python isolated mode и Job Object не считаются достаточной OS sandbox boundary.
-- Executable checks fail closed без аттестованного backend.
+- Executable checks fail closed без production-attested backend.
 - Static checks не могут молча перейти к `python_module` или `pipeline`.
+- Active attestation trusted probe не считается разрешением запускать код из patch.
 - Arbitrary shell, dependency installation, commit, merge, push и promotion запрещены.
 - Package migration не смешивается с Developer Safety Kernel.
 
 ## 19. Режим модели
 
-До фиксации execution backend остаёмся на **Pro Standard**, потому что определяется новая OS/process security boundary.
+Для архитектурного аудита и фиксации security-контракта V1B требуется **Pro Standard**.
 
-После утверждения backend policy и интерфейса V1A/V1B механическую реализацию отдельных срезов можно вести в режиме **«Очень высокий»**.
+После утверждения threat model, API и внутренних срезов механическую реализацию отдельных частей можно снова вести в режиме **«Очень высокий»**. Перед V1C потребуется повторная проверка режима.
 
 ## 20. Файлы для будущего handoff
 
@@ -481,14 +509,15 @@ feat: add developer task static check evidence gate
 ```text
 docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
 docs/architecture/SKYNETVS_CURRENT_STATE.md
+docs/architecture/SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md
 ```
 
 Дополнительно приложить последние:
 
 ```text
-data/logs/pipeline/*_developer_task_patch_apply.log
+data/logs/pipeline/*_developer_task_check_static.log
 data/logs/pipeline/*_check.log
-execution backend capability audit
+active Windows Sandbox attestation result
 ```
 
 Новый чат должен продолжать с раздела **«Следующее точное действие»**, а не восстанавливать roadmap по памяти.
