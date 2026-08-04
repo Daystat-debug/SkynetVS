@@ -300,6 +300,19 @@ Typed Check Runner V1C — Sandboxed Executable Checks
 - fail-closed блокирует executable checks при отсутствии подходящей изоляции;
 - не запускает изменённый код.
 
+**Аттестованный backend-кандидат на текущем Windows-хосте:**
+
+```text
+traditional_wsb_logoncommand_v1
+WindowsSandbox.exe 10.0.26100.8875
+.wsb + LogonCommand
+read-only input mapping
+dedicated writable result mapping
+network disabled
+```
+
+Активный trusted probe подтвердил выполнение `LogonCommand`, read-only input, writable output, отсутствие IPv4 default route и недоступность TCP `1.1.1.1:443`. Это подтверждает capability backend, но не разрешает `python_module` или `pipeline` до production V1B/V1C.
+
 ### V1C — Sandboxed Executable Checks
 
 Только через аттестованный backend:
@@ -593,7 +606,7 @@ Roadmap Change N
 [VERIFIED CODE] b8419f5 — Developer Task Patch Apply V1
 
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1A — Static Evidence Gate and execution-backend capability audit.
+Typed Check Runner V1A — Static Evidence Gate. Windows Sandbox backend capability уже активно аттестована.
 
 [NEXT]
 Typed Check Runner V1B/V1C → Result and Evidence V1.

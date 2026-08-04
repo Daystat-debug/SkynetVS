@@ -318,7 +318,31 @@ V1C — Sandboxed Executable Checks
 - основной worktree не используется для checks;
 - commit, merge, push и promotion остаются запрещены.
 
-## 11. CURRENT — Typed Check Runner V1A / Execution Backend Capability Audit
+## 11. VERIFIED — Windows Sandbox Active Attestation V1
+
+На фактическом хосте подтверждён backend-кандидат:
+
+```text
+traditional_wsb_logoncommand_v1
+WindowsSandbox.exe 10.0.26100.8875
+wsb CLI отсутствует
+```
+
+Активный trusted probe подтвердил:
+
+- `.wsb + LogonCommand` запускается;
+- guest выполняется как `WDAGUtilityAccount`;
+- input mapping присутствует и реально read-only;
+- отдельный output mapping writable;
+- IPv4 default route отсутствует;
+- TCP к `1.1.1.1:443` недоступен;
+- host-side schema и `request_id` validation успешны.
+
+Доказательство хранится в `docs/architecture/SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md`.
+
+Это capability evidence, но не разрешение исполнять изменённый код: `python_module` и `pipeline` остаются заблокированы до V1B/V1C.
+
+## 12. CURRENT — Typed Check Runner V1A — Static Evidence Gate
 
 ### Назначение
 
@@ -336,7 +360,7 @@ V1C — Sandboxed Executable Checks
 - не писать `.pyc` и не изменять index/worktree;
 - вернуть immutable structured static-check report;
 - проверить, что source repository и apply evidence не изменились;
-- выполнить capability audit Windows Sandbox / `wsb` CLI и сохранить результат как вход для V1B.
+- использовать уже сохранённую активную аттестацию Windows Sandbox как подтверждённый вход для будущего V1B.
 
 ### Out of scope V1A
 
@@ -350,7 +374,7 @@ V1C — Sandboxed Executable Checks
 - изменение source repository;
 - объявление всего Typed Check Runner завершённым.
 
-## 12. Требования к будущему execution backend
+## 13. Требования к будущему execution backend
 
 Backend для V1C должен доказать:
 
@@ -367,12 +391,13 @@ Backend для V1C должен доказать:
 
 Windows Sandbox рассматривается как основной кандидат, но его доступность, версия CLI и возможности должны быть проверены на фактическом компьютере до фиксации реализации V1B/V1C.
 
-## 13. Предварительные файлы Typed Check Runner V1A
+## 14. Файлы Typed Check Runner V1A
 
 ```text
 A  modules/developer/developer_task_check_static.py
 A  modules/developer/developer_task_check_static_git.py
 A  modules/developer/developer_task_check_static_python.py
+M  modules/developer/developer_task_patch_apply_git.py
 A  tools/eval_developer_task_check_static.py
 M  tools/eval_package_boundaries.py
 M  tools/pipeline.py
@@ -380,7 +405,7 @@ M  tools/pipeline.py
 
 Окончательный состав утверждается после capability audit и проверки актуальных API.
 
-## 14. Критерии завершения V1A
+## 15. Критерии завершения V1A
 
 1. raw/failed/forged reports не инициируют checks;
 2. static checks работают только на successful `applied` workspace;
@@ -397,16 +422,16 @@ M  tools/pipeline.py
 13. capability audit Windows Sandbox сохранён и разобран;
 14. executable checks остаются blocked до V1B/V1C.
 
-## 15. Следующее точное действие
+## 16. Следующее точное действие
 
-1. Закоммитить это обновление architecture-документов отдельно.
-2. Убедиться, что working tree чистый.
-3. Выполнить Windows execution-backend capability audit из нового чата/инструкции.
-4. Сохранить полный вывод audit в файл и приложить его.
-5. По результату зафиксировать backend policy V1B.
-6. После этого подготовить хирургический patch V1A Static Evidence Gate.
+1. Добавить `SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md` отдельным documentation commit.
+2. Применить хирургический patch `Typed Check Runner V1A — Static Evidence Gate`.
+3. Запустить targeted eval `tools.eval_developer_task_check_static`.
+4. Запустить flow `developer_task_check_static`.
+5. После зелёного targeted-flow запустить полный `check`.
+6. Не разрешать `python_module` и `pipeline`: они остаются pending executable checks до V1B/V1C.
 
-## 16. Планируемые коммиты
+## 17. Планируемые коммиты
 
 Документация:
 
@@ -420,7 +445,7 @@ V1A code:
 feat: add developer task static check evidence gate
 ```
 
-## 17. DEFERRED
+## 18. DEFERRED
 
 - Typed Check Runner V1B — Execution Backend Capability and Evidence.
 - Typed Check Runner V1C — Sandboxed `python_module` and `pipeline`.
@@ -431,7 +456,7 @@ feat: add developer task static check evidence gate
 - Domain Package Structure V2.
 - Tools Package Structure V1.
 
-## 18. Решения, которые нельзя пересматривать молча
+## 19. Решения, которые нельзя пересматривать молча
 
 - `skynet-runtime-foundation-v1` остаётся на `09f8708`.
 - Основной worktree никогда не используется как developer-task sandbox.
