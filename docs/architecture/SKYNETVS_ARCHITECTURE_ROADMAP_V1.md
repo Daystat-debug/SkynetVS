@@ -356,9 +356,9 @@ inspect_developer_task_execution_backend_host(
 
 #### V1B2 — Active Trusted Lifecycle Gate
 
-**Статус:** CURRENT / сначала active lifecycle experiment, затем production slice.
+**Статус:** CURRENT / active lifecycle experiment VERIFIED; production slice готов к реализации.
 
-Публичный API остаётся:
+Публичный API:
 
 ```python
 attest_developer_task_execution_backend_lifecycle(
@@ -368,16 +368,36 @@ attest_developer_task_execution_backend_lifecycle(
 ) -> DeveloperTaskExecutionBackendLifecycleReport
 ```
 
-Перед production-реализацией требуется один benign active experiment на реальном хосте. Он должен установить фактический lifecycle traditional `.wsb` runtime:
+Trusted active experiment от `2026-08-05` подтвердил traditional `.wsb` lifecycle:
 
-- сохраняется ли process handle, возвращённый `WindowsSandbox.exe`;
-- какие Sandbox process names/PID реально появляются;
-- закрывает ли guest `shutdown.exe /s` host window/process tree;
-- сколько занимает startup, result propagation и shutdown;
-- исчезают ли все Sandbox processes в bounded grace period;
-- требуется ли best-effort cleanup после failed run.
+```text
+status:                       lifecycle_attested
+launcher PID:                 21544
+WindowsSandbox.exe observed:  yes
+RemoteSession observed:       yes
+result received:              13 514 ms
+all Sandbox processes exited: 23 157 ms
+result → exit:                9 643 ms
+forced cleanup attempted:     no
+execution_authorized:         false
+```
 
-Production V1B2 затем:
+Фактическая process-модель:
+
+```text
+WindowsSandbox.exe
+    transient launcher; завершился вскоре после старта
+        ↓
+WindowsSandboxRemoteSession.exe
+    удерживал активную host-сессию до guest self-shutdown
+        ↓
+empty known Sandbox process set
+    единственное допустимое доказательство полного exit
+```
+
+Эксперимент также подтвердил strict request/result evidence, read-only input, writable output, отсутствие IPv4/IPv6 default routes, недоступность внешнего TCP для обеих семейств и успешный `shutdown.exe /s /t 5 /f`. Полный evidence зафиксирован в `SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md`.
+
+Production V1B2:
 
 - повторно проверяет свежесть typed V1B1 host report;
 - создаёт fresh per-run input/output roots и canonical `.wsb`;
@@ -385,11 +405,11 @@ Production V1B2 затем:
 - подтверждает read-only input, writable output, IPv4 и IPv6 isolation;
 - проверяет request/result nonce, bounded strict JSON и policy fingerprint;
 - требует successful guest self-shutdown;
-- требует host-observed завершение Sandbox process/window в bounded grace period;
-- принудительное завершение может использоваться только как best-effort cleanup и никогда не превращает run в успешный;
+- требует host-observed завершение всего известного Sandbox process set в bounded grace period;
+- повторно читает result после доказанного exit и отклоняет изменение bytes/hash;
+- принудительное завершение использует только exact process identity как best-effort cleanup и никогда не превращает run в успешный;
 - не удаляет mapped artifacts, пока отсутствие активного Sandbox не доказано;
 - возвращает `execution_authorized = false` и не запускает код из patch.
-
 #### V1B3 — Signed Result Authenticity and Privilege Separation Gate
 
 Output mapping считается недоверенным: будущий код из patch сможет видеть и изменять его. Поэтому простого `request_id` недостаточно.
@@ -750,10 +770,10 @@ Roadmap Change N
 [VERIFIED CODE] 368c25f — Typed Check Runner V1B1 Host Capability Gate
 
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1B2 — Active Trusted Lifecycle Gate.
+Typed Check Runner V1B2 — Production Active Trusted Lifecycle Gate.
 
 [NEXT]
-V1B2 lifecycle experiment → V1B2 production gate → V1B3 Signed Result Boundary → V1B4 Trusted Runtime → V1C Sandboxed Checks → Result and Evidence V1.
+V1B2 production gate → V1B3 Signed Result Boundary → V1B4 Trusted Runtime → V1C Sandboxed Checks → Result and Evidence V1.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.

@@ -467,7 +467,48 @@ V1B1:
 - блокирует уже запущенный Sandbox и fail-closed реагирует на невозможность проверить process state;
 - намеренно возвращает `execution_authorized=false`.
 
-### V1B2 — CURRENT / Active Trusted Lifecycle
+### V1B2 — CURRENT / Production Active Trusted Lifecycle
+
+Trusted lifecycle experiment от `2026-08-05` завершён:
+
+```text
+status:                       lifecycle_attested
+failure:                      empty
+backend:                      traditional_wsb_logoncommand_v1
+policy fingerprint:           5c731d5f246929aa1b59f614d2a01371b086244cc09f2c5846d93531b194af21
+launcher PID:                 21544
+process observed:             true
+all Sandbox processes exited: true
+forced cleanup attempted:     false
+result received:              13 514 ms
+all processes exited:         23 157 ms
+result → exit:                9 643 ms
+execution_authorized:         false
+```
+
+Все validation fields подтверждены: strict UTF-8, exact schemas, backend/policy/request/nonce/hash chain, trusted guest identity, self-shutdown, read-only input, writable output, IPv4 isolation и IPv6 isolation.
+
+Измеренная host process-модель:
+
+```text
+before_launch
+    no known Sandbox processes
+        ↓
+after_launch
+    WindowsSandbox.exe PID 21544
+        ↓
+waiting_for_result
+    launcher already exited
+    WindowsSandboxRemoteSession.exe PID 15548 remains
+        ↓
+result_detected at 13 514 ms
+    RemoteSession still active
+        ↓
+waiting_for_shutdown at 23 157 ms
+    no known Sandbox processes
+```
+
+Следствие: `launcher_pid` не является session handle. Production success требует наблюдения хотя бы одного известного Sandbox process, валидного trusted result, successful guest self-shutdown и доказанного исчезновения всего известного process set в bounded grace period.
 
 Публичный API:
 
@@ -479,32 +520,21 @@ attest_developer_task_execution_backend_lifecycle(
 ) -> DeveloperTaskExecutionBackendLifecycleReport
 ```
 
-До production patch выполняется один trusted active lifecycle experiment. Он не запускает manifest checks или код из patch и должен измерить:
+Production gate обязан:
 
-- launcher PID/handle traditional `WindowsSandbox.exe`;
-- реально появляющиеся Sandbox process names/PID;
-- время появления guest result;
-- результат IPv4 и IPv6 isolation probes;
-- guest `shutdown.exe /s` request;
-- исчезновение host Sandbox process/window tree;
-- startup/result/shutdown durations;
-- необходимость best-effort cleanup при failure.
+- повторно проверять свежесть typed V1B1 host report до и после run;
+- создавать fresh per-run input/output roots и exact canonical `.wsb`;
+- запускать только trusted PowerShell probe;
+- валидировать request/result nonce, bounded strict JSON и полный hash-chain;
+- требовать read-only input, writable output, IPv4 и IPv6 isolation;
+- ждать guest self-shutdown и исчезновения всего известного Sandbox process set;
+- повторно читать result после доказанного exit и отклонять изменение bytes/hash;
+- удалять artifacts только после доказанного exit;
+- при failure использовать только exact-identity best-effort termination;
+- никогда не превращать forced cleanup в success;
+- всегда возвращать `execution_authorized=false`.
 
-Обязательные production-доказательства после эксперимента:
-
-- fresh input/output roots;
-- exact `.wsb` policy;
-- trusted probe only;
-- read-only input и writable output;
-- отсутствие IPv4 default route и IPv4 external TCP;
-- отсутствие IPv6 default route и IPv6 external TCP;
-- request/result nonce и bounded strict JSON;
-- guest self-shutdown;
-- host process/window exit в bounded grace period;
-- безопасный cleanup artifacts только после доказанного exit.
-
-Traditional runtime без `wsb stop` считается пригодным только если self-shutdown и host-observed exit доказаны. Forced termination допускается лишь как best-effort cleanup после failure и никогда не делает report успешным. V1B2 всегда оставляет `execution_authorized=false`.
-
+Полный experiment evidence: `docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md`.
 ### V1B3 — Signed Result Authenticity and Privilege Separation
 
 Writable output mapping нельзя считать доверенным после запуска кода из patch. Утверждена двухфазная модель:
@@ -546,7 +576,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-Security architecture V1B зафиксирована в Pro Standard. После documentation commit реализацию механического V1B1 можно вести в режиме **«Очень высокий»**. Перед V1B2/V1B3 требуется возврат на **Pro Standard**.
+Production state machine V1B2 зафиксирована в Pro Standard по реальному experiment evidence. Механическую реализацию и Windows regression можно вести в режиме **«Очень высокий»**. Перед V1B3 требуется возврат на **Pro Standard**.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -562,12 +592,13 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-1. Зафиксировать V1B1 как `VERIFIED` и перевести `CURRENT` на V1B2.
-2. Выполнить trusted active lifecycle experiment на реальном Windows-хосте.
-3. Зафиксировать фактические process names/PID, startup/result/shutdown timings и self-shutdown behavior.
-4. Только после результата эксперимента утвердить production state machine V1B2 и подготовить code patch.
-5. Не разрешать `python_module`, `pipeline`, код из patch или host fallback.
-
+1. Добавить immutable lifecycle request/result/report contracts.
+2. Реализовать exact `.wsb` generation и trusted guest probe.
+3. Реализовать Windows process evidence для transient launcher и persistent RemoteSession.
+4. Реализовать bounded self-shutdown wait, exact-identity best-effort cleanup и safe artifact cleanup.
+5. Добавить unit eval и отдельный real Windows active smoke.
+6. Подключить targeted flow `developer_task_execution_backend_lifecycle`.
+7. Не разрешать `python_module`, `pipeline`, код из patch или host fallback.
 ## 16. Зафиксированные коммиты текущего перехода
 
 ```text
@@ -608,7 +639,7 @@ d67501c docs: split sandbox capability gate into verified boundaries
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-V1B1 является механическим read-only host gate, поэтому после documentation commit можно вернуться на **«Очень высокий»**. Перед V1B2/V1B3 и перед V1C требуется **Pro Standard**.
+V1B2 production state machine утверждена в **Pro Standard**. После documentation commit реализацию V1B2 можно вести в режиме **«Очень высокий»**. Перед V1B3 и перед V1C требуется **Pro Standard**.
 
 ## 20. Файлы для будущего handoff
 
@@ -618,6 +649,7 @@ V1B1 является механическим read-only host gate, поэтом
 docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
 docs/architecture/SKYNETVS_CURRENT_STATE.md
 docs/architecture/SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md
+docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md
 ```
 
 Дополнительно приложить последние:
