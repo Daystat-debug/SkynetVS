@@ -429,7 +429,23 @@ V1B4  Trusted Python Runtime Bundle
 
 Out of scope текущей модели: kernel/hypervisor escape и эксплуатация неизвестной local privilege escalation внутри гостя. Такие события не могут быть безопасно компенсированы прикладным Python-кодом.
 
-### V1B1 — NEXT CODE SLICE
+### V1B1 — VERIFIED
+
+Зафиксированная code-точка:
+
+```text
+368c25f feat: add developer task execution backend host gate
+```
+
+Реальный Windows-прогон подтверждён:
+
+```text
+Host gate unit eval:                         30/30
+Real Windows host smoke:                    ok=true
+developer_task_execution_backend_host flow: completed successfully
+full check:                                 completed successfully
+git diff --check:                           exit code 0
+```
 
 Публичный API:
 
@@ -442,18 +458,18 @@ V1B1:
 
 - не принимает developer-task manifest или workspace evidence;
 - не запускает Sandbox и не исполняет код из patch;
-- фиксирует canonical policy fingerprint;
+- фиксирует canonical policy fingerprint `5c731d5f246929aa1b59f614d2a01371b086244cc09f2c5846d93531b194af21`;
 - получает Windows/System directories через WinAPI, а не через inherited `PATH`;
 - требует Windows build не ниже `26100`, AMD64 host и 64-bit Python process;
 - проверяет `WindowsSandbox.exe` как regular non-reparse file с TOCTOU-safe SHA-256 и version resource;
 - допускает `feature_state=unknown`, если обычный пользователь не может выполнить elevated DISM probe, но блокирует явные `disabled`/`pending` states;
 - не требует `wsb` CLI;
 - блокирует уже запущенный Sandbox и fail-closed реагирует на невозможность проверить process state;
-- возвращает `execution_authorized=false`.
+- намеренно возвращает `execution_authorized=false`.
 
-### V1B2 — Active Trusted Lifecycle
+### V1B2 — CURRENT / Active Trusted Lifecycle
 
-Публичный API будет зафиксирован как:
+Публичный API:
 
 ```python
 attest_developer_task_execution_backend_lifecycle(
@@ -463,7 +479,18 @@ attest_developer_task_execution_backend_lifecycle(
 ) -> DeveloperTaskExecutionBackendLifecycleReport
 ```
 
-Обязательные доказательства:
+До production patch выполняется один trusted active lifecycle experiment. Он не запускает manifest checks или код из patch и должен измерить:
+
+- launcher PID/handle traditional `WindowsSandbox.exe`;
+- реально появляющиеся Sandbox process names/PID;
+- время появления guest result;
+- результат IPv4 и IPv6 isolation probes;
+- guest `shutdown.exe /s` request;
+- исчезновение host Sandbox process/window tree;
+- startup/result/shutdown durations;
+- необходимость best-effort cleanup при failure.
+
+Обязательные production-доказательства после эксперимента:
 
 - fresh input/output roots;
 - exact `.wsb` policy;
@@ -471,12 +498,12 @@ attest_developer_task_execution_backend_lifecycle(
 - read-only input и writable output;
 - отсутствие IPv4 default route и IPv4 external TCP;
 - отсутствие IPv6 default route и IPv6 external TCP;
-- request/result nonce и bounded canonical JSON;
+- request/result nonce и bounded strict JSON;
 - guest self-shutdown;
 - host process/window exit в bounded grace period;
-- безопасный cleanup artifacts.
+- безопасный cleanup artifacts только после доказанного exit.
 
-Traditional runtime без `wsb stop` считается пригодным только если self-shutdown и host-observed exit доказаны. `Stop-Process`/`taskkill` допускаются лишь как best-effort cleanup после failure и никогда не делают report успешным.
+Traditional runtime без `wsb stop` считается пригодным только если self-shutdown и host-observed exit доказаны. Forced termination допускается лишь как best-effort cleanup после failure и никогда не делает report успешным. V1B2 всегда оставляет `execution_authorized=false`.
 
 ### V1B3 — Signed Result Authenticity and Privilege Separation
 
@@ -535,12 +562,11 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-1. Зафиксировать этот architecture audit отдельным documentation commit.
-2. Переключиться на **«Очень высокий»** для механической реализации V1B1.
-3. Добавить canonical backend policy и read-only host capability gate.
-4. Пройти unit eval, реальный Windows host smoke, targeted flow и полный `check`.
-5. После V1B1 commit вернуться на **Pro Standard** перед V1B2 lifecycle experiment.
-6. Не разрешать `python_module`, `pipeline` или host fallback.
+1. Зафиксировать V1B1 как `VERIFIED` и перевести `CURRENT` на V1B2.
+2. Выполнить trusted active lifecycle experiment на реальном Windows-хосте.
+3. Зафиксировать фактические process names/PID, startup/result/shutdown timings и self-shutdown behavior.
+4. Только после результата эксперимента утвердить production state machine V1B2 и подготовить code patch.
+5. Не разрешать `python_module`, `pipeline`, код из patch или host fallback.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -548,9 +574,12 @@ V1C сможет выполнять их только через успешно 
 70e1813 docs: close patch apply and split typed check execution boundaries
 97cd502 docs: record sandbox attestation and start static checks
 6a7b08e feat: add developer task static check evidence gate
+cb0e4f4 docs: close static checks and start sandbox capability gate
+d67501c docs: split sandbox capability gate into verified boundaries
+368c25f feat: add developer task execution backend host gate
 ```
 
-Следующий documentation commit фиксирует V1B architecture audit и переводит `CURRENT` на V1B1.
+Следующий documentation commit закрывает V1B1 и переводит `CURRENT` на V1B2 lifecycle experiment.
 
 ## 17. DEFERRED
 

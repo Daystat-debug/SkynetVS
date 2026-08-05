@@ -317,7 +317,24 @@ Windows Sandbox поддерживает только один активный 
 
 #### V1B1 — Canonical Backend Policy and Host Capability Gate
 
-**Статус:** NEXT CODE SLICE.
+**Статус:** VERIFIED.
+
+Зафиксированная code-точка:
+
+```text
+368c25f feat: add developer task execution backend host gate
+```
+
+Подтверждено на реальном Windows-хосте:
+
+```text
+Host gate unit eval:                         30/30
+Real Windows host smoke:                    ok=true
+execution_authorized:                       false
+developer_task_execution_backend_host flow: completed successfully
+full check:                                 completed successfully
+git diff --check:                           exit code 0
+```
 
 Публичный API:
 
@@ -339,14 +356,39 @@ inspect_developer_task_execution_backend_host(
 
 #### V1B2 — Active Trusted Lifecycle Gate
 
+**Статус:** CURRENT / сначала active lifecycle experiment, затем production slice.
+
+Публичный API остаётся:
+
+```python
+attest_developer_task_execution_backend_lifecycle(
+    host_report: DeveloperTaskExecutionBackendHostReport,
+    *,
+    artifact_parent: Path,
+) -> DeveloperTaskExecutionBackendLifecycleReport
+```
+
+Перед production-реализацией требуется один benign active experiment на реальном хосте. Он должен установить фактический lifecycle traditional `.wsb` runtime:
+
+- сохраняется ли process handle, возвращённый `WindowsSandbox.exe`;
+- какие Sandbox process names/PID реально появляются;
+- закрывает ли guest `shutdown.exe /s` host window/process tree;
+- сколько занимает startup, result propagation и shutdown;
+- исчезают ли все Sandbox processes в bounded grace period;
+- требуется ли best-effort cleanup после failed run.
+
+Production V1B2 затем:
+
+- повторно проверяет свежесть typed V1B1 host report;
 - создаёт fresh per-run input/output roots и canonical `.wsb`;
 - запускает только доверенный PowerShell probe;
 - подтверждает read-only input, writable output, IPv4 и IPv6 isolation;
-- проверяет request/result nonce, bounded canonical JSON и policy fingerprint;
-- guest выполняет self-shutdown;
-- host требует завершения Sandbox process/window в bounded grace period;
+- проверяет request/result nonce, bounded strict JSON и policy fingerprint;
+- требует successful guest self-shutdown;
+- требует host-observed завершение Sandbox process/window в bounded grace period;
 - принудительное завершение может использоваться только как best-effort cleanup и никогда не превращает run в успешный;
-- host artifacts удаляются только по immutable lifecycle evidence.
+- не удаляет mapped artifacts, пока отсутствие активного Sandbox не доказано;
+- возвращает `execution_authorized = false` и не запускает код из patch.
 
 #### V1B3 — Signed Result Authenticity and Privilege Separation Gate
 
@@ -703,11 +745,15 @@ Roadmap Change N
 
 [VERIFIED CODE] b8419f5 — Developer Task Patch Apply V1
 
+[VERIFIED CODE] 6a7b08e — Typed Check Runner V1A Static Evidence Gate
+
+[VERIFIED CODE] 368c25f — Typed Check Runner V1B1 Host Capability Gate
+
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1B1 — Canonical Backend Policy and Host Capability Gate.
+Typed Check Runner V1B2 — Active Trusted Lifecycle Gate.
 
 [NEXT]
-V1B2 Active Lifecycle → V1B3 Signed Result Boundary → V1B4 Trusted Runtime → V1C Sandboxed Checks → Result and Evidence V1.
+V1B2 lifecycle experiment → V1B2 production gate → V1B3 Signed Result Boundary → V1B4 Trusted Runtime → V1C Sandboxed Checks → Result and Evidence V1.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
