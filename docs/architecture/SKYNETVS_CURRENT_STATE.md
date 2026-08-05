@@ -2,11 +2,11 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-04`
+- Дата обновления: `2026-08-05`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `6a7b08e`
-- Название code baseline: `feat: add developer task static check evidence gate`
-- `origin/main` на проверенной code-точке: `6a7b08e`
+- Проверенный code baseline перед этим documentation commit: `4ea2e0c`
+- Название code baseline: `fix: isolate Windows Sandbox launch environment`
+- `origin/main` на проверенной code-точке: `4ea2e0c`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -395,7 +395,7 @@ full check:                       completed successfully
 runtime architecture audit:       9/9
 ```
 
-## 13. CURRENT — Typed Check Runner V1B — Execution Backend Capability and Evidence Gate
+## 13. CURRENT — Typed Check Runner V1B — V1B1/V1B2 VERIFIED, V1B3 NEXT
 
 ### Архитектурный аудит — VERIFIED решение
 
@@ -467,7 +467,14 @@ V1B1:
 - блокирует уже запущенный Sandbox и fail-closed реагирует на невозможность проверить process state;
 - намеренно возвращает `execution_authorized=false`.
 
-### V1B2 — CURRENT / Production Active Trusted Lifecycle
+### V1B2 — VERIFIED / Production Active Trusted Lifecycle
+
+Code-точки:
+
+```text
+eb2a476 feat: add trusted Windows Sandbox lifecycle gate
+4ea2e0c fix: isolate Windows Sandbox launch environment
+```
 
 Trusted lifecycle experiment от `2026-08-05` завершён:
 
@@ -520,21 +527,33 @@ attest_developer_task_execution_backend_lifecycle(
 ) -> DeveloperTaskExecutionBackendLifecycleReport
 ```
 
-Production gate обязан:
+Production gate:
 
-- повторно проверять свежесть typed V1B1 host report до и после run;
-- создавать fresh per-run input/output roots и exact canonical `.wsb`;
-- запускать только trusted PowerShell probe;
-- валидировать request/result nonce, bounded strict JSON и полный hash-chain;
-- требовать read-only input, writable output, IPv4 и IPv6 isolation;
-- ждать guest self-shutdown и исчезновения всего известного Sandbox process set;
-- повторно читать result после доказанного exit и отклонять изменение bytes/hash;
-- удалять artifacts только после доказанного exit;
-- при failure использовать только exact-identity best-effort termination;
-- никогда не превращать forced cleanup в success;
-- всегда возвращать `execution_authorized=false`.
+- повторно проверяет свежесть typed V1B1 host report до и после run;
+- создаёт fresh per-run input/output roots и exact canonical `.wsb`;
+- запускает только trusted PowerShell probe;
+- валидирует request/result nonce, bounded strict JSON и полный hash-chain;
+- требует read-only input, writable output, IPv4 и IPv6 isolation;
+- ждёт guest self-shutdown и исчезновения всего известного Sandbox process set;
+- повторно читает result после доказанного exit и отклоняет изменение bytes/hash;
+- удаляет artifacts только после доказанного exit;
+- при failure использует только exact-identity best-effort termination;
+- никогда не превращает forced cleanup в success;
+- явно передаёт `SystemDrive=C:` в изолированное launch environment;
+- запускает `WindowsSandbox.exe` с фиксированным trusted `cwd=C:\Windows\System32`;
+- не использует project root или удаляемый lifecycle artifact root как process working directory;
+- всегда возвращает `execution_authorized=false`.
 
-Полный experiment evidence: `docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md`.
+Финальные проверки после hardening:
+
+```text
+Lifecycle unit eval:                         39/39
+Real Windows active lifecycle smoke:        3/3
+developer_task_execution_backend_lifecycle: completed successfully
+full check:                                 completed successfully
+```
+
+Полный experiment evidence и production closure: `docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md`.
 ### V1B3 — Signed Result Authenticity and Privilege Separation
 
 Writable output mapping нельзя считать доверенным после запуска кода из patch. Утверждена двухфазная модель:
@@ -592,13 +611,16 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-1. Добавить immutable lifecycle request/result/report contracts.
-2. Реализовать exact `.wsb` generation и trusted guest probe.
-3. Реализовать Windows process evidence для transient launcher и persistent RemoteSession.
-4. Реализовать bounded self-shutdown wait, exact-identity best-effort cleanup и safe artifact cleanup.
-5. Добавить unit eval и отдельный real Windows active smoke.
-6. Подключить targeted flow `developer_task_execution_backend_lifecycle`.
-7. Не разрешать `python_module`, `pipeline`, код из patch или host fallback.
+После восстановления **Pro Standard** начать V1B3 — Signed Result Authenticity and Privilege Separation:
+
+1. Зафиксировать immutable contracts для `request`, `ready`, `authorize` и signed terminal result.
+2. Реализовать trusted controller с ephemeral ECDSA P-256 private key только в памяти.
+3. Реализовать standard non-admin worker без inherited controller handles/environment.
+4. Поместить worker process tree в kill-on-close Job Object.
+5. Связать подпись с transcript `request + ready + authorize + payload`.
+6. Добавить fail-closed проверки replay, substitution, unsigned/early/late result и background writer.
+7. Использовать только benign trusted worker probe; код из patch по-прежнему не запускать.
+8. Сохранить `execution_authorized=false` до завершения V1B4 и V1C.
 ## 16. Зафиксированные коммиты текущего перехода
 
 ```text
@@ -608,9 +630,13 @@ V1C сможет выполнять их только через успешно 
 cb0e4f4 docs: close static checks and start sandbox capability gate
 d67501c docs: split sandbox capability gate into verified boundaries
 368c25f feat: add developer task execution backend host gate
+54c2673 docs: close host gate and start sandbox lifecycle experiment
+54ac331 docs: record sandbox lifecycle attestation and start production gate
+eb2a476 feat: add trusted Windows Sandbox lifecycle gate
+4ea2e0c fix: isolate Windows Sandbox launch environment
 ```
 
-Следующий documentation commit закрывает V1B1 и переводит `CURRENT` на V1B2 lifecycle experiment.
+Следующий documentation commit закрывает V1B2 и переводит `CURRENT` на V1B3.
 
 ## 17. DEFERRED
 
@@ -639,7 +665,7 @@ d67501c docs: split sandbox capability gate into verified boundaries
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-V1B2 production state machine утверждена в **Pro Standard**. После documentation commit реализацию V1B2 можно вести в режиме **«Очень высокий»**. Перед V1B3 и перед V1C требуется **Pro Standard**.
+V1B2 production state machine утверждена в **Pro Standard**, реализована и подтверждена на `eb2a476` + `4ea2e0c`. Текущая точка может сопровождаться в режиме **«Очень высокий»**. Перед реализацией V1B3 и перед V1C требуется **Pro Standard**.
 
 ## 20. Файлы для будущего handoff
 
@@ -655,9 +681,9 @@ docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md
 Дополнительно приложить последние:
 
 ```text
-data/logs/pipeline/*_developer_task_check_static.log
+data/logs/pipeline/*_developer_task_execution_backend_lifecycle.log
 data/logs/pipeline/*_check.log
-active Windows Sandbox attestation result
+latest lifecycle attestation evidence
 ```
 
 Новый чат должен продолжать с раздела **«Следующее точное действие»**, а не восстанавливать roadmap по памяти.

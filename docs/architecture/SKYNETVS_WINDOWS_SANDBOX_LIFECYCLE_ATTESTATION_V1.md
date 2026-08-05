@@ -170,3 +170,42 @@ arbitrary shell
 dependency installation
 patched-code execution
 ```
+
+## 8. Production closure — V1B2
+
+Экспериментальная state machine была реализована в production:
+
+```text
+eb2a476 feat: add trusted Windows Sandbox lifecycle gate
+4ea2e0c fix: isolate Windows Sandbox launch environment
+```
+
+Финальная проверенная точка:
+
+```text
+Lifecycle unit eval:                         39/39
+Real Windows active lifecycle smoke:        3/3
+developer_task_execution_backend_lifecycle: completed successfully
+full check:                                 completed successfully
+execution_authorized:                       false
+```
+
+Production hardening после первого запуска:
+
+- `SystemDrive` передаётся явно и не остаётся буквальным `%SystemDrive%`;
+- `WindowsSandbox.exe` запускается с фиксированным trusted working directory
+  `C:\Windows\System32`;
+- project root не используется как current working directory Sandbox-процесса;
+- удаляемый lifecycle artifact root не используется как process working directory;
+- временные lifecycle-каталоги удаляются после успешного exit без
+  `TemporaryDirectory` cleanup race;
+- успешный run по-прежнему требует полного исчезновения известного Sandbox
+  process set;
+- patched-code execution, `python_module`, `pipeline` и host fallback остаются
+  заблокированы.
+
+Текущий следующий этап:
+
+```text
+V1B3 — Signed Result Authenticity and Privilege Separation
+```

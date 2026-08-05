@@ -1,5 +1,11 @@
 # SkynetVS Windows Sandbox Active Attestation V1
 
+> **Historical precursor evidence.** This document records the `2026-08-04`
+> pre-production capability attestation. It is preserved as evidence of the
+> original `.wsb + LogonCommand` experiment. Current project status is defined
+> by `SKYNETVS_CURRENT_STATE.md`; production V1B2 was later verified on
+> `eb2a476` and hardened on `4ea2e0c`.
+
 ## Metadata
 
 - Attestation date: `2026-08-04`
@@ -7,8 +13,8 @@
 - Host report status: `attested`
 - Host report SHA-256: `6cdc600e9d5a0a16c6080132f243e5953742dc654dad0462db41ef8b1fdad9ae`
 - Backend candidate: `traditional_wsb_logoncommand_v1`
-- Backend implementation status: `PLANNED`
-- Executable checks status: `BLOCKED until production capability gate is implemented`
+- Backend implementation status at attestation time: `PLANNED`
+- Executable checks status at attestation time: `BLOCKED until production capability gate is implemented`
 
 ## VERIFIED — Host-side result validation
 
@@ -85,7 +91,7 @@ The active attestation proves that the traditional `.wsb` path works on this hos
 
 It does **not** yet make executable developer-task checks production-ready.
 
-Before `python_module` or `pipeline` may run, the production backend must still implement and evaluate:
+At the time of this attestation, the following gaps still had to be implemented and evaluated before `python_module` or `pipeline` could run:
 
 1. per-run request/result evidence;
 2. strict host-side schema and path validation;
@@ -119,20 +125,24 @@ Active .wsb + LogonCommand execution:  VERIFIED
 Read-only input mapping:               VERIFIED
 Writable result mapping:               VERIFIED
 IPv4 network isolation probe:          VERIFIED
-Production backend module:             PLANNED
+Production backend module at this run: PLANNED
 Executable checks:                     BLOCKED
 ```
 
-## Next stage
+## Historical next stage and current follow-up
+
+At the time of this attestation, the next stages were V1A and V1B.
+
+Those stages later progressed as follows:
 
 ```text
-Developer Task Typed Check Runner V1A — Static Evidence Gate
+V1A Static Evidence Gate:                 VERIFIED
+V1B1 Host Capability Gate:                VERIFIED
+V1B2 Active Trusted Lifecycle Gate:       VERIFIED
+V1B2 launch-environment hardening:        VERIFIED
+Current stage:                            V1B3 Signed Result Authenticity
 ```
 
-After V1A:
-
-```text
-Developer Task Typed Check Runner V1B — Windows Sandbox Capability and Evidence Gate
-```
-
-Only after V1B is implemented and passes its full eval may V1C execute `python_module` and `pipeline` inside Sandbox.
+This historical document alone never authorizes executable checks.
+`python_module`, `pipeline` and patched-code execution remain blocked until
+V1B3, V1B4 and V1C are complete.

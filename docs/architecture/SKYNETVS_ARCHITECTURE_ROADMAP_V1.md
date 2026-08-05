@@ -1,7 +1,7 @@
 # SkynetVS Architecture Roadmap V1
 
 **Дата фиксации:** 2026-07-30
-**Последнее обновление:** 2026-08-04
+**Последнее обновление:** 2026-08-05
 **Статус:** LOCKED
 **Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** CURRENT / security architecture audit завершён; реализация разделена на четыре доказуемых среза.
+**Статус:** CURRENT / V1B1 и V1B2 VERIFIED; следующий срез — V1B3.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -356,7 +356,7 @@ inspect_developer_task_execution_backend_host(
 
 #### V1B2 — Active Trusted Lifecycle Gate
 
-**Статус:** CURRENT / active lifecycle experiment VERIFIED; production slice готов к реализации.
+**Статус:** VERIFIED / production gate `eb2a476`; launch-environment hardening `4ea2e0c`.
 
 Публичный API:
 
@@ -397,7 +397,20 @@ empty known Sandbox process set
 
 Эксперимент также подтвердил strict request/result evidence, read-only input, writable output, отсутствие IPv4/IPv6 default routes, недоступность внешнего TCP для обеих семейств и успешный `shutdown.exe /s /t 5 /f`. Полный evidence зафиксирован в `SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md`.
 
-Production V1B2:
+Production V1B2 реализован и подтверждён:
+
+```text
+eb2a476  feat: add trusted Windows Sandbox lifecycle gate
+4ea2e0c  fix: isolate Windows Sandbox launch environment
+
+Lifecycle unit eval:                         39/39
+Real Windows active lifecycle smoke:        3/3
+developer_task_execution_backend_lifecycle: completed successfully
+full check:                                 completed successfully
+execution_authorized:                       false
+```
+
+Production gate:
 
 - повторно проверяет свежесть typed V1B1 host report;
 - создаёт fresh per-run input/output roots и canonical `.wsb`;
@@ -409,6 +422,8 @@ Production V1B2:
 - повторно читает result после доказанного exit и отклоняет изменение bytes/hash;
 - принудительное завершение использует только exact process identity как best-effort cleanup и никогда не превращает run в успешный;
 - не удаляет mapped artifacts, пока отсутствие активного Sandbox не доказано;
+- явно передаёт `SystemDrive` в изолированное launch environment;
+- использует фиксированный trusted working directory `C:\Windows\System32`, а не project root или удаляемый lifecycle artifact root;
 - возвращает `execution_authorized = false` и не запускает код из patch.
 #### V1B3 — Signed Result Authenticity and Privilege Separation Gate
 
@@ -769,11 +784,15 @@ Roadmap Change N
 
 [VERIFIED CODE] 368c25f — Typed Check Runner V1B1 Host Capability Gate
 
+[VERIFIED CODE] eb2a476 — Typed Check Runner V1B2 Active Trusted Lifecycle Gate
+
+[VERIFIED CODE] 4ea2e0c — Windows Sandbox launch environment hardening
+
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1B2 — Production Active Trusted Lifecycle Gate.
+Typed Check Runner V1B3 — Signed Result Authenticity and Privilege Separation Gate.
 
 [NEXT]
-V1B2 production gate → V1B3 Signed Result Boundary → V1B4 Trusted Runtime → V1C Sandboxed Checks → Result and Evidence V1.
+V1B3 Signed Result Boundary → V1B4 Trusted Runtime → V1C Sandboxed Checks → Result and Evidence V1.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
