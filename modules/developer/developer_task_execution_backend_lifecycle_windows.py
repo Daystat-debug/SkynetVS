@@ -449,7 +449,15 @@ def _terminate_exact_process(
 def build_windows_sandbox_environment(executable: Path) -> dict[str, str]:
     system32 = executable.parent
     windows = system32.parent
+    system_drive = PureWindowsPath(str(windows)).drive
+    if not system_drive:
+        raise DeveloperTaskExecutionBackendLifecycleWindowsError(
+            "sandbox_system_drive_unresolved",
+            "Windows system drive could not be resolved for Sandbox launch.",
+            actual=str(windows),
+        )
     return {
+        "SystemDrive": system_drive,
         "SystemRoot": str(windows),
         "WINDIR": str(windows),
         "ComSpec": str(system32 / "cmd.exe"),
@@ -468,6 +476,7 @@ def launch_windows_sandbox(
     """Launch the fixed WindowsSandbox.exe without shell or PATH resolution."""
 
     _require_windows()
+    launch_root = executable.parent
     try:
         return subprocess.Popen(
             [str(executable), str(config_path)],
@@ -475,6 +484,7 @@ def launch_windows_sandbox(
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             env=build_windows_sandbox_environment(executable),
+            cwd=str(launch_root),
             close_fds=True,
             shell=False,
         )

@@ -766,6 +766,69 @@ def main() -> int:
         {"main": True, "remote": True, "untrusted": False},
     )
 
+    sandbox_executable = Path(r"C:\Windows\System32\WindowsSandbox.exe")
+    sandbox_environment = lifecycle_windows_module.build_windows_sandbox_environment(
+        sandbox_executable
+    )
+    check(
+        "SANDBOX ENVIRONMENT DEFINES FIXED SYSTEM DRIVE",
+        {
+            "system_drive": sandbox_environment.get("SystemDrive"),
+            "system_root": sandbox_environment.get("SystemRoot"),
+            "windir": sandbox_environment.get("WINDIR"),
+            "path": sandbox_environment.get("PATH"),
+        },
+        {
+            "system_drive": "C:",
+            "system_root": r"C:\Windows",
+            "windir": r"C:\Windows",
+            "path": r"C:\Windows\System32",
+        },
+    )
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        artifact_root = Path(temp_dir) / "lifecycle-run"
+        input_root = artifact_root / "input"
+        input_root.mkdir(parents=True)
+        config_path = input_root / "SkynetVS_Lifecycle.wsb"
+        config_path.write_text("<Configuration />", encoding="utf-8")
+
+        popen_call: dict[str, Any] = {}
+
+        class _FakePopen:
+            pid = 12345
+
+            def poll(self):
+                return None
+
+        def _fake_popen(*args, **kwargs):
+            popen_call["args"] = args
+            popen_call["kwargs"] = kwargs
+            return _FakePopen()
+
+        with (
+            patch.object(lifecycle_windows_module, "_require_windows"),
+            patch.object(lifecycle_windows_module.subprocess, "Popen", side_effect=_fake_popen),
+        ):
+            lifecycle_windows_module.launch_windows_sandbox(
+                sandbox_executable,
+                config_path,
+            )
+
+        check(
+            "SANDBOX LAUNCH USES FIXED TRUSTED WORKING DIRECTORY",
+            {
+                "cwd": popen_call["kwargs"].get("cwd"),
+                "system_drive": popen_call["kwargs"]["env"].get("SystemDrive"),
+                "shell": popen_call["kwargs"].get("shell"),
+            },
+            {
+                "cwd": str(sandbox_executable.parent),
+                "system_drive": "C:",
+                "shell": False,
+            },
+        )
+
     windows_text = Path(lifecycle_windows_module.__file__).read_text(encoding="utf-8")
     check(
         "FORCED CLEANUP USES EXACT PROCESS HANDLE IDENTITY",
