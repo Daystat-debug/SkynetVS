@@ -397,44 +397,118 @@ runtime architecture audit:       9/9
 
 ## 13. CURRENT — Typed Check Runner V1B — Execution Backend Capability and Evidence Gate
 
-### Назначение
+### Архитектурный аудит — VERIFIED решение
 
-Создать production-grade capability boundary вокруг уже аттестованного Windows Sandbox backend, не исполняя код из patch.
-
-### Подтверждённый backend-кандидат
+V1B разделён на четыре внутренних среза. Один commit не может одновременно доказать host capability, lifecycle traditional `.wsb`, result authenticity и trusted Python runtime.
 
 ```text
-traditional_wsb_logoncommand_v1
-WindowsSandbox.exe 10.0.26100.8875
-.wsb + LogonCommand
-read-only input mapping
-dedicated writable result mapping
-network disabled
-wsb CLI отсутствует
+V1B1  Canonical Backend Policy and Host Capability
+V1B2  Active Trusted Lifecycle
+V1B3  Signed Result Authenticity and Privilege Separation
+V1B4  Trusted Python Runtime Bundle
 ```
 
-Активный trusted probe уже подтвердил запуск `.wsb`, выполнение `LogonCommand`, read-only input, writable output, отсутствие IPv4 default route и недоступность TCP `1.1.1.1:443`.
+### Threat model
 
-### Архитектурные вопросы, которые V1B обязан закрыть до реализации V1C
+Доверенные компоненты:
 
-- точный публичный API capability/evidence gate;
-- срок действия и freshness active-attestation evidence;
-- canonical backend policy fingerprint;
-- проверка Windows Sandbox executable/version и optional feature без повышения прав во время обычного запуска;
-- IPv4 и IPv6 network isolation evidence;
-- trusted input bundle и его hash-chain;
-- отдельный пустой output boundary на каждый запуск;
-- canonical request/result schemas, nonce и bounded result size;
-- защита host-side result validation от подделки изменённым кодом;
-- timeout и deterministic lifecycle/termination традиционного `WindowsSandbox.exe` без `wsb` CLI;
-- trusted Python runtime strategy внутри гостя;
-- cleanup временных host artifacts;
-- отсутствие любого автоматического fallback на host subprocess;
-- immutable capability report и non-serialized capability для будущего V1C.
+- host-side SkynetVS Developer Safety Kernel;
+- canonical backend policy;
+- trusted PowerShell/SYSTEM controller из read-only input bundle;
+- pinned Python runtime bundle после V1B4;
+- Windows Sandbox / Hyper-V boundary.
 
-### Жёсткий scope V1B
+Недоверенные компоненты:
 
-V1B может запускать только доверенный backend probe/attestation code. Он не запускает:
+- patch bytes после передачи в executable stage;
+- код и процессы изменённого workspace;
+- stdout/stderr worker;
+- весь writable output mapping;
+- любые unsigned guest markers;
+- inherited host environment и PATH.
+
+Out of scope текущей модели: kernel/hypervisor escape и эксплуатация неизвестной local privilege escalation внутри гостя. Такие события не могут быть безопасно компенсированы прикладным Python-кодом.
+
+### V1B1 — NEXT CODE SLICE
+
+Публичный API:
+
+```python
+inspect_developer_task_execution_backend_host(
+) -> DeveloperTaskExecutionBackendHostReport
+```
+
+V1B1:
+
+- не принимает developer-task manifest или workspace evidence;
+- не запускает Sandbox и не исполняет код из patch;
+- фиксирует canonical policy fingerprint;
+- получает Windows/System directories через WinAPI, а не через inherited `PATH`;
+- требует Windows build не ниже `26100`, AMD64 host и 64-bit Python process;
+- проверяет `WindowsSandbox.exe` как regular non-reparse file с TOCTOU-safe SHA-256 и version resource;
+- допускает `feature_state=unknown`, если обычный пользователь не может выполнить elevated DISM probe, но блокирует явные `disabled`/`pending` states;
+- не требует `wsb` CLI;
+- блокирует уже запущенный Sandbox и fail-closed реагирует на невозможность проверить process state;
+- возвращает `execution_authorized=false`.
+
+### V1B2 — Active Trusted Lifecycle
+
+Публичный API будет зафиксирован как:
+
+```python
+attest_developer_task_execution_backend_lifecycle(
+    host_report: DeveloperTaskExecutionBackendHostReport,
+    *,
+    artifact_parent: Path,
+) -> DeveloperTaskExecutionBackendLifecycleReport
+```
+
+Обязательные доказательства:
+
+- fresh input/output roots;
+- exact `.wsb` policy;
+- trusted probe only;
+- read-only input и writable output;
+- отсутствие IPv4 default route и IPv4 external TCP;
+- отсутствие IPv6 default route и IPv6 external TCP;
+- request/result nonce и bounded canonical JSON;
+- guest self-shutdown;
+- host process/window exit в bounded grace period;
+- безопасный cleanup artifacts.
+
+Traditional runtime без `wsb stop` считается пригодным только если self-shutdown и host-observed exit доказаны. `Stop-Process`/`taskkill` допускаются лишь как best-effort cleanup после failure и никогда не делают report успешным.
+
+### V1B3 — Signed Result Authenticity and Privilege Separation
+
+Writable output mapping нельзя считать доверенным после запуска кода из patch. Утверждена двухфазная модель:
+
+1. trusted SYSTEM controller генерирует ephemeral ECDSA P-256 key только в памяти;
+2. controller публикует `ready.json` с public key и host nonce;
+3. host валидирует ready и создаёт `authorize.json`, связанный с public-key hash;
+4. controller запускает standard non-admin worker в kill-on-close Job Object;
+5. worker не наследует controller handles/environment и не имеет доступа к private key;
+6. controller завершает весь worker process tree;
+7. terminal canonical result подписывается по transcript `request + ready + authorize + payload`;
+8. host доверяет только подписи по public key, сохранённому до authorization.
+
+Подмена, replay, unsigned marker, early/late result или background writer приводят к fail-closed failure. V1B3 выполняет только benign trusted worker probe.
+
+### V1B4 — Trusted Python Runtime Bundle
+
+```python
+attest_developer_task_python_runtime(
+    boundary_report: DeveloperTaskExecutionBoundaryReport,
+    *,
+    runtime_bundle_root: Path,
+    artifact_parent: Path,
+) -> DeveloperTaskExecutionCapabilityReport
+```
+
+Runtime должен быть pinned, read-only и полностью связан canonical manifest/hash-chain. Download/install во время task запрещён. Final capability получает non-serialized single-use token, TTL `300` секунд и привязку к host boot, Windows build, Sandbox executable hash/version, policy fingerprint и runtime fingerprint.
+
+### Текущий жёсткий scope
+
+V1B может запускать только trusted probe/controller/benign worker. Он не запускает:
 
 - `python_module` из manifest;
 - `pipeline` из manifest;
@@ -442,6 +516,10 @@ V1B может запускать только доверенный backend prob
 - код из изменённого workspace;
 - установку или скачивание зависимостей;
 - commit, merge, push или promotion.
+
+### Mode decision
+
+Security architecture V1B зафиксирована в Pro Standard. После documentation commit реализацию механического V1B1 можно вести в режиме **«Очень высокий»**. Перед V1B2/V1B3 требуется возврат на **Pro Standard**.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -457,11 +535,12 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-1. Переключиться на **Pro Standard**.
-2. Провести архитектурный аудит `Typed Check Runner V1B`.
-3. Зафиксировать threat model, exact API, lifecycle и result-authenticity model до code patch.
-4. Разделить V1B на минимальные внутренние срезы, если production backend нельзя безопасно реализовать одним commit.
-5. Не разрешать `python_module`, `pipeline` или host fallback.
+1. Зафиксировать этот architecture audit отдельным documentation commit.
+2. Переключиться на **«Очень высокий»** для механической реализации V1B1.
+3. Добавить canonical backend policy и read-only host capability gate.
+4. Пройти unit eval, реальный Windows host smoke, targeted flow и полный `check`.
+5. После V1B1 commit вернуться на **Pro Standard** перед V1B2 lifecycle experiment.
+6. Не разрешать `python_module`, `pipeline` или host fallback.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -471,7 +550,7 @@ V1C сможет выполнять их только через успешно 
 6a7b08e feat: add developer task static check evidence gate
 ```
 
-Следующий documentation commit должен только закрыть V1A и перевести `CURRENT` на V1B.
+Следующий documentation commit фиксирует V1B architecture audit и переводит `CURRENT` на V1B1.
 
 ## 17. DEFERRED
 
@@ -498,9 +577,9 @@ V1C сможет выполнять их только через успешно 
 
 ## 19. Режим модели
 
-Для архитектурного аудита и фиксации security-контракта V1B требуется **Pro Standard**.
+Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-После утверждения threat model, API и внутренних срезов механическую реализацию отдельных частей можно снова вести в режиме **«Очень высокий»**. Перед V1C потребуется повторная проверка режима.
+V1B1 является механическим read-only host gate, поэтому после documentation commit можно вернуться на **«Очень высокий»**. Перед V1B2/V1B3 и перед V1C требуется **Pro Standard**.
 
 ## 20. Файлы для будущего handoff
 

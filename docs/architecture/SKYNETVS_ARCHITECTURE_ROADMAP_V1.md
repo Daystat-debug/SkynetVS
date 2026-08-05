@@ -311,14 +311,91 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** CURRENT / требуется security architecture audit.
+**Статус:** CURRENT / security architecture audit завершён; реализация разделена на четыре доказуемых среза.
 
-- аттестует production OS sandbox backend и canonical policy fingerprint;
-- проверяет freshness и пригодность active-attestation evidence;
-- создаёт immutable capability evidence для будущего V1C;
-- закрывает request/result authenticity, timeout, lifecycle, IPv6 и trusted runtime strategy;
-- fail-closed блокирует executable checks при отсутствии подходящей изоляции;
-- не запускает изменённый код и не имеет host fallback.
+Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
+
+#### V1B1 — Canonical Backend Policy and Host Capability Gate
+
+**Статус:** NEXT CODE SLICE.
+
+Публичный API:
+
+```python
+inspect_developer_task_execution_backend_host(
+) -> DeveloperTaskExecutionBackendHostReport
+```
+
+Свойства:
+
+- не принимает manifest, workspace или patch;
+- не запускает Windows Sandbox;
+- использует только фиксированный `%SystemRoot%\System32\WindowsSandbox.exe`;
+- проверяет Windows build, AMD64/x64 process, executable version, exact SHA-256 и отсутствие reparse/TOCTOU;
+- optional feature state является advisory, если обычный пользователь не может прочитать его без elevation;
+- отсутствие `wsb` CLI разрешено для `traditional_wsb_logoncommand_v1`;
+- уже запущенный Sandbox или невозможность проверить process state блокирует gate;
+- report всегда содержит `execution_authorized = false`.
+
+#### V1B2 — Active Trusted Lifecycle Gate
+
+- создаёт fresh per-run input/output roots и canonical `.wsb`;
+- запускает только доверенный PowerShell probe;
+- подтверждает read-only input, writable output, IPv4 и IPv6 isolation;
+- проверяет request/result nonce, bounded canonical JSON и policy fingerprint;
+- guest выполняет self-shutdown;
+- host требует завершения Sandbox process/window в bounded grace period;
+- принудительное завершение может использоваться только как best-effort cleanup и никогда не превращает run в успешный;
+- host artifacts удаляются только по immutable lifecycle evidence.
+
+#### V1B3 — Signed Result Authenticity and Privilege Separation Gate
+
+Output mapping считается недоверенным: будущий код из patch сможет видеть и изменять его. Поэтому простого `request_id` недостаточно.
+
+Утверждённая модель:
+
+```text
+SYSTEM trusted controller
+        ↓ generates ephemeral ECDSA P-256 key in memory
+ready.json with public key + host nonce
+        ↓ host validates and writes authorize.json
+standard non-admin worker in kill-on-close Job Object
+        ↓
+SYSTEM controller terminates worker tree
+        ↓
+signed canonical result.json
+        ↓
+host verifies signature and original handshake transcript
+```
+
+- private key и signing secret не записываются в shared folders;
+- worker не наследует controller environment/handles;
+- worker не имеет administrative token;
+- background process tree уничтожается до формирования terminal result;
+- unsigned, replaced, replayed или late result блокируется fail-closed;
+- V1B3 использует только trusted benign worker probe, а не код из patch.
+
+#### V1B4 — Trusted Python Runtime Bundle Gate
+
+- принимает только pinned read-only runtime bundle;
+- проверяет canonical file manifest и aggregate SHA-256;
+- не скачивает и не устанавливает зависимости;
+- аттестует Python version, stdlib и разрешённые dependency imports внутри guest;
+- связывает runtime fingerprint с host/policy/lifecycle/result-boundary evidence;
+- создаёт immutable final capability report и non-serialized single-use token для V1C.
+
+#### Freshness и использование capability
+
+Final execution capability действителен не более 300 секунд и только при совпадении:
+
+- host boot identity;
+- Windows build;
+- Sandbox executable path/version/SHA-256;
+- canonical backend policy fingerprint;
+- runtime bundle fingerprint;
+- one-time capability token.
+
+V1C всё равно повторяет network, privilege и signed-result checks в том же Sandbox instance до исполнения изменённого кода. Старый active-attestation JSON или documentation evidence самостоятельно не разрешает executable checks.
 
 **Аттестованный backend-кандидат на текущем Windows-хосте:**
 
@@ -331,8 +408,6 @@ dedicated writable result mapping
 network disabled
 wsb CLI отсутствует
 ```
-
-Активный trusted probe подтвердил выполнение `LogonCommand`, read-only input, writable output, отсутствие IPv4 default route и недоступность TCP `1.1.1.1:443`. Это подтверждает backend-кандидат, но не разрешает `python_module` или `pipeline` до production V1B/V1C.
 
 ### V1C — Sandboxed Executable Checks
 
@@ -629,10 +704,10 @@ Roadmap Change N
 [VERIFIED CODE] b8419f5 — Developer Task Patch Apply V1
 
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1A — Static Evidence Gate. Windows Sandbox backend capability уже активно аттестована.
+Typed Check Runner V1B1 — Canonical Backend Policy and Host Capability Gate.
 
 [NEXT]
-Typed Check Runner V1B/V1C → Result and Evidence V1.
+V1B2 Active Lifecycle → V1B3 Signed Result Boundary → V1B4 Trusted Runtime → V1C Sandboxed Checks → Result and Evidence V1.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
