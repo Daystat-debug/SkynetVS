@@ -2,7 +2,7 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-05`
+- Дата обновления: `2026-08-06`
 - Ветка: `main`
 - Проверенный code baseline перед этим documentation commit: `4ea2e0c`
 - Название code baseline: `fix: isolate Windows Sandbox launch environment`
@@ -554,20 +554,34 @@ full check:                                 completed successfully
 ```
 
 Полный experiment evidence и production closure: `docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md`.
-### V1B3 — Signed Result Authenticity and Privilege Separation
+### V1B3 — CURRENT / Signed Result Authenticity and Privilege Separation
 
-Writable output mapping нельзя считать доверенным после запуска кода из patch. Утверждена двухфазная модель:
+Writable output mapping нельзя считать доверенным после запуска кода из patch. Архитектурный аудит текущего `HEAD 7efcf76` уточнил boundary:
 
-1. trusted SYSTEM controller генерирует ephemeral ECDSA P-256 key только в памяти;
-2. controller публикует `ready.json` с public key и host nonce;
-3. host валидирует ready и создаёт `authorize.json`, связанный с public-key hash;
-4. controller запускает standard non-admin worker в kill-on-close Job Object;
-5. worker не наследует controller handles/environment и не имеет доступа к private key;
-6. controller завершает весь worker process tree;
-7. terminal canonical result подписывается по transcript `request + ready + authorize + payload`;
-8. host доверяет только подписи по public key, сохранённому до authorization.
+1. `.wsb LogonCommand` запускает trusted bootstrap под `WDAGUtilityAccount`, а не под SYSTEM;
+2. bootstrap должен доказать возможность одноразового запуска controller через Scheduled Task с `S-1-5-18`;
+3. SYSTEM controller создаёт ephemeral ECDSA P-256 key без имени и сохраняет private key только в памяти;
+4. controller публикует `ready.json` с public key, host nonce и identity evidence;
+5. host фиксирует exact ready bytes/public-key hash и создаёт read-only для guest `authorize.json`;
+6. controller создаёт fresh local standard user через `NetUserAdd` и получает primary token через `LogonUserW`;
+7. worker запускается через `CreateProcessAsUserW` с `CREATE_SUSPENDED`, без inherited environment/handles;
+8. worker помещается в kill-on-close Job Object и возобновляется только после `IsProcessInJob=true`;
+9. controller завершает worker tree, доказывает пустой worker-SID process set и удаляет account;
+10. terminal payload подписывается только после этих доказательств;
+11. host повторно читает bytes после полного Sandbox exit и проверяет ECDSA signature по public key, закреплённому до authorization.
 
-Подмена, replay, unsigned marker, early/late result или background writer приводят к fail-closed failure. V1B3 выполняет только benign trusted worker probe.
+`CreateProcessWithLogonW` для SYSTEM-controller не используется. Подмена, replay, unsigned marker, early/late result, worker escape или background writer приводят к fail-closed failure.
+
+V1B3 разделён на четыре среза:
+
+```text
+V1B3A  SYSTEM Controller Bootstrap Capability Experiment
+V1B3B  Canonical Transcript and Host Signature Verifier
+V1B3C  Standard-User Worker Isolation Gate
+V1B3D  Active Signed Boundary Composition
+```
+
+V1B3A использует только trusted bootstrap/controller и benign compiled worker probe. Код из patch не запускается. Historical V1B2 policy fingerprint не меняется до разбора V1B3A evidence.
 
 ### V1B4 — Trusted Python Runtime Bundle
 
@@ -611,16 +625,20 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-После восстановления **Pro Standard** начать V1B3 — Signed Result Authenticity and Privilege Separation:
+Выполнить `V1B3A — SYSTEM Controller Bootstrap Capability Experiment` на реальном Windows Sandbox:
 
-1. Зафиксировать immutable contracts для `request`, `ready`, `authorize` и signed terminal result.
-2. Реализовать trusted controller с ephemeral ECDSA P-256 private key только в памяти.
-3. Реализовать standard non-admin worker без inherited controller handles/environment.
-4. Поместить worker process tree в kill-on-close Job Object.
-5. Связать подпись с transcript `request + ready + authorize + payload`.
-6. Добавить fail-closed проверки replay, substitution, unsigned/early/late result и background writer.
-7. Использовать только benign trusted worker probe; код из patch по-прежнему не запускать.
-8. Сохранить `execution_authorized=false` до завершения V1B4 и V1C.
+1. Запустить trusted bootstrap через `.wsb LogonCommand` под `WDAGUtilityAccount`.
+2. Создать и запустить одноразовую Scheduled Task под `NT AUTHORITY\SYSTEM`.
+3. Доказать controller SID `S-1-5-18`, administrator token и SYSTEM integrity.
+4. Доказать доступ SYSTEM controller к input/control/output mappings и read-only enforcement input/control.
+5. Создать ephemeral CNG ECDSA P-256 key и экспортировать только `EccPublicBlob`.
+6. Выполнить host `ready → authorize` handshake с exact-byte pinning.
+7. Создать fresh standard user и benign worker через `LogonUserW + CreateProcessAsUserW`.
+8. Доказать suspended-before-job launch, Job Object membership and kill-on-close.
+9. Доказать отсутствующее inheritance controller secret/event handle and blocked controller memory read.
+10. Доказать empty worker-SID process set, account deletion, signed terminal payload and host signature verification.
+11. Повторно проверить bytes после Sandbox exit; сохранить `execution_authorized=false`.
+12. Только после разбора experiment report переходить к production V1B3B/V1B3C.
 ## 16. Зафиксированные коммиты текущего перехода
 
 ```text

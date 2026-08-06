@@ -1,7 +1,7 @@
 # SkynetVS Architecture Roadmap V1
 
 **Дата фиксации:** 2026-07-30
-**Последнее обновление:** 2026-08-05
+**Последнее обновление:** 2026-08-06
 **Статус:** LOCKED
 **Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
@@ -427,30 +427,85 @@ Production gate:
 - возвращает `execution_authorized = false` и не запускает код из patch.
 #### V1B3 — Signed Result Authenticity and Privilege Separation Gate
 
+**Статус:** CURRENT / security architecture reviewed; implementation split into four evidence slices.
+
 Output mapping считается недоверенным: будущий код из patch сможет видеть и изменять его. Поэтому простого `request_id` недостаточно.
 
-Утверждённая модель:
+Зафиксированная модель:
 
 ```text
+WDAGUtilityAccount trusted bootstrap
+        ↓ starts one-time SYSTEM scheduled task
 SYSTEM trusted controller
         ↓ generates ephemeral ECDSA P-256 key in memory
 ready.json with public key + host nonce
-        ↓ host validates and writes authorize.json
-standard non-admin worker in kill-on-close Job Object
-        ↓
-SYSTEM controller terminates worker tree
-        ↓
-signed canonical result.json
-        ↓
-host verifies signature and original handshake transcript
+        ↓ host pins exact ready bytes and writes authorize.json
+standard non-admin worker created suspended
+        ↓ assigned to kill-on-close Job Object
+        ↓ resumed only after job membership is proven
+SYSTEM controller terminates worker tree and proves worker-SID process set empty
+        ↓ signs canonical terminal payload
+host verifies signature and original handshake transcript after Sandbox exit
 ```
 
-- private key и signing secret не записываются в shared folders;
-- worker не наследует controller environment/handles;
-- worker не имеет administrative token;
-- background process tree уничтожается до формирования terminal result;
-- unsigned, replaced, replayed или late result блокируется fail-closed;
-- V1B3 использует только trusted benign worker probe, а не код из patch.
+Security corrections fixed before implementation:
+
+- `.wsb LogonCommand` runs under the container account, not under SYSTEM;
+- SYSTEM bootstrap is a measured capability, not an assumed property;
+- `CreateProcessWithLogonW` is forbidden from LocalSystem;
+- worker launch uses `NetUserAdd → LogonUserW → CreateEnvironmentBlock(false) → CreateProcessAsUserW`;
+- worker is created with `CREATE_SUSPENDED`, assigned to the Job Object, checked with `IsProcessInJob`, and only then resumed;
+- Job Object uses `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` without breakaway flags;
+- private key and signing secret are never written to mapped folders;
+- worker inherits neither controller environment nor handles;
+- worker has no administrative token and cannot read controller process memory under the declared threat model;
+- worker Job Object is empty and the worker-SID process set is empty before terminal signing;
+- unsigned, replaced, replayed, early, late or post-exit-mutated results fail closed;
+- V1B3 uses only trusted benign probes and does not execute code from patch.
+
+V1B3 is divided into:
+
+##### V1B3A — SYSTEM Controller Bootstrap Capability Experiment
+
+- proves WDAGUtilityAccount administrator bootstrap;
+- proves one-time Scheduled Task execution as `S-1-5-18`;
+- proves SYSTEM access to the three mapped roots;
+- proves ephemeral ECDSA P-256 key generation and public-only export;
+- proves local standard-user token creation and suspended worker launch;
+- proves Job Object membership, kill-on-close and worker-SID process sweep;
+- returns `execution_authorized=false`.
+
+##### V1B3B — Canonical Transcript and Host Signature Verifier
+
+- immutable schemas for `request`, `ready`, `authorize` and signed terminal payload;
+- exact-byte pinning and hash-chain validation;
+- ECDSA P-256/SHA-256 verification with the public key pinned before authorization;
+- replay, substitution, duplicate/unknown field and post-exit mutation guards.
+
+##### V1B3C — Standard-User Worker Isolation Gate
+
+- fresh local standard account per run;
+- non-inherited environment and handles;
+- suspended `CreateProcessAsUserW` launch;
+- kill-on-close Job Object with no breakaway;
+- worker-SID process sweep and account cleanup;
+- benign worker only.
+
+##### V1B3D — Active Signed Boundary Composition
+
+- composes V1B2 lifecycle, V1B3B transcript verification and V1B3C worker isolation in one Sandbox instance;
+- signs only after worker tree termination and worker-SID process absence are proven;
+- preserves `execution_authorized=false` until V1B4 and V1C.
+
+The V1B2 policy fingerprint remains the historical lifecycle baseline. A production V1B3 policy schema/fingerprint is not changed until V1B3A experiment evidence is reviewed.
+
+## Roadmap Change 003 — V1B3 split into measured security slices
+
+**Причина:** traditional `.wsb` proves the container lifecycle but does not directly provide a SYSTEM controller, authenticated writable output or a standard-user worker boundary. Those properties must be independently measured before production composition.
+
+**Что меняется:** V1B3 is implemented as V1B3A/V1B3B/V1B3C/V1B3D.
+
+**Что не меняется:** V1B4 and V1C remain blocked; patched code is not executed; host fallback, arbitrary shell and dependency installation remain forbidden; `execution_authorized=false`.
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
