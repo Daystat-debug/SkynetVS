@@ -581,7 +581,50 @@ V1B3C  Standard-User Worker Isolation Gate
 V1B3D  Active Signed Boundary Composition
 ```
 
-V1B3A использует только trusted bootstrap/controller и benign compiled worker probe. Код из patch не запускается. Historical V1B2 policy fingerprint не меняется до разбора V1B3A evidence.
+### V1B3A — VERIFIED / Active Signed Boundary Experiment
+
+Active experiment от `2026-08-06` завершён:
+
+```text
+Git HEAD:                       e18e309
+status:                         signed_boundary_attested
+SYSTEM controller SID:          S-1-5-18
+SYSTEM integrity RID:           16384 / 0x4000
+ECDSA P-256 key ephemeral:      true
+ready → authorize handshake:    verified
+standard worker administrator:  false
+standard worker integrity RID:  8192 / 0x2000
+worker assigned before resume:  true
+Job Object kill-on-close:       verified
+worker-SID process set empty:   true
+worker account deleted:         true
+signature valid after exit:     true
+all Sandbox processes exited:   true
+execution_authorized:           false
+```
+
+Evidence ZIP SHA-256:
+
+```text
+a65c9f5a3e6b21a862e05417e17e205b2efb141f1a41f0ffef75d65616387cef
+```
+
+Полный evidence: `docs/architecture/SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md`.
+
+### V1B3B — CURRENT / Canonical Transcript and Host Signature Verifier
+
+Production scope:
+
+- canonical immutable boundary policy with fingerprint `9eb7a1373d1814eea37c8213dfeaeb4f4e7d40e7fdb5d8ec40f91f3e2fd8db72`;
+- strict UTF-8 canonical JSON contracts with exact field order and duplicate/unknown-field rejection;
+- exact-byte pinning for request, ready and authorize evidence;
+- trusted input and full transcript SHA-256 chain validation;
+- replay, substitution, authorization-window and post-pin mutation guards;
+- ECDSA P-256/SHA-256 verification through Windows CNG;
+- worker/controller/control evidence consistency validation;
+- `execution_authorized=false` in every report.
+
+V1B3B does not launch Sandbox, create users, run workers or execute code from patch. Active composition remains V1B3D.
 
 ### V1B4 — Trusted Python Runtime Bundle
 
@@ -609,7 +652,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-Production state machine V1B2 зафиксирована в Pro Standard по реальному experiment evidence. Механическую реализацию и Windows regression можно вести в режиме **«Очень высокий»**. Перед V1B3 требуется возврат на **Pro Standard**.
+V1B3A active security experiment спроектирован и разобран в **Pro Standard**. V1B3B contract/verifier implementation после фиксации архитектуры можно применять и проверять в режиме **«Очень высокий»**. Перед V1B3C/V1B3D и перед V1C требуется **Pro Standard**.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -625,20 +668,18 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-Выполнить `V1B3A — SYSTEM Controller Bootstrap Capability Experiment` на реальном Windows Sandbox:
+Реализовать и проверить `V1B3B — Canonical Transcript and Host Signature Verifier`:
 
-1. Запустить trusted bootstrap через `.wsb LogonCommand` под `WDAGUtilityAccount`.
-2. Создать и запустить одноразовую Scheduled Task под `NT AUTHORITY\SYSTEM`.
-3. Доказать controller SID `S-1-5-18`, administrator token и SYSTEM integrity.
-4. Доказать доступ SYSTEM controller к input/control/output mappings и read-only enforcement input/control.
-5. Создать ephemeral CNG ECDSA P-256 key и экспортировать только `EccPublicBlob`.
-6. Выполнить host `ready → authorize` handshake с exact-byte pinning.
-7. Создать fresh standard user и benign worker через `LogonUserW + CreateProcessAsUserW`.
-8. Доказать suspended-before-job launch, Job Object membership and kill-on-close.
-9. Доказать отсутствующее inheritance controller secret/event handle and blocked controller memory read.
-10. Доказать empty worker-SID process set, account deletion, signed terminal payload and host signature verification.
-11. Повторно проверить bytes после Sandbox exit; сохранить `execution_authorized=false`.
-12. Только после разбора experiment report переходить к production V1B3B/V1B3C.
+1. Добавить canonical boundary policy и fingerprint.
+2. Добавить strict immutable contracts для request/ready/authorize/worker/terminal documents.
+3. Добавить exact-byte pin report до worker authorization.
+4. Добавить post-exit transcript verifier с full SHA-256 chain validation.
+5. Добавить Windows CNG ECDSA P-256 verifier без external dependencies.
+6. Добавить replay/substitution/corruption/post-pin mutation regression eval.
+7. Добавить отдельный Windows CNG smoke и targeted pipeline flow.
+8. Не запускать Sandbox, worker или код из patch в V1B3B.
+9. Сохранить `execution_authorized=false`.
+
 ## 16. Зафиксированные коммиты текущего перехода
 
 ```text
@@ -652,9 +693,11 @@ d67501c docs: split sandbox capability gate into verified boundaries
 54ac331 docs: record sandbox lifecycle attestation and start production gate
 eb2a476 feat: add trusted Windows Sandbox lifecycle gate
 4ea2e0c fix: isolate Windows Sandbox launch environment
+7efcf76 docs: close sandbox lifecycle gate and start signed result boundary
+e18e309 docs: split signed result boundary into measured security slices
 ```
 
-Следующий documentation commit закрывает V1B2 и переводит `CURRENT` на V1B3.
+Следующий documentation commit фиксирует успешный V1B3A experiment и переводит `CURRENT` на V1B3B.
 
 ## 17. DEFERRED
 
@@ -683,7 +726,7 @@ eb2a476 feat: add trusted Windows Sandbox lifecycle gate
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-V1B2 production state machine утверждена в **Pro Standard**, реализована и подтверждена на `eb2a476` + `4ea2e0c`. Текущая точка может сопровождаться в режиме **«Очень высокий»**. Перед реализацией V1B3 и перед V1C требуется **Pro Standard**.
+Зафиксированное правило: текущую механическую реализацию V1B3B можно вести в режиме **«Очень высокий»**; перед V1B3C/V1B3D и V1C требуется **Pro Standard**.
 
 ## 20. Файлы для будущего handoff
 
@@ -694,14 +737,15 @@ docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
 docs/architecture/SKYNETVS_CURRENT_STATE.md
 docs/architecture/SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md
 docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md
+docs/architecture/SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md
 ```
 
 Дополнительно приложить последние:
 
 ```text
-data/logs/pipeline/*_developer_task_execution_backend_lifecycle.log
+data/logs/pipeline/*_developer_task_execution_boundary_verifier.log
 data/logs/pipeline/*_check.log
-latest lifecycle attestation evidence
+latest signed-boundary attestation evidence
 ```
 
 Новый чат должен продолжать с раздела **«Следующее точное действие»**, а не восстанавливать roadmap по памяти.

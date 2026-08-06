@@ -467,15 +467,32 @@ V1B3 is divided into:
 
 ##### V1B3A — SYSTEM Controller Bootstrap Capability Experiment
 
-- proves WDAGUtilityAccount administrator bootstrap;
-- proves one-time Scheduled Task execution as `S-1-5-18`;
-- proves SYSTEM access to the three mapped roots;
-- proves ephemeral ECDSA P-256 key generation and public-only export;
-- proves local standard-user token creation and suspended worker launch;
-- proves Job Object membership, kill-on-close and worker-SID process sweep;
-- returns `execution_authorized=false`.
+**Статус:** VERIFIED / active experiment `2026-08-06`.
+
+Подтверждено на реальном Windows Sandbox:
+
+```text
+status:                         signed_boundary_attested
+SYSTEM controller SID:          S-1-5-18
+SYSTEM integrity RID:           0x4000
+ECDSA P-256 key ephemeral:      true
+ready → authorize handshake:    verified
+standard worker administrator:  false
+standard worker integrity RID:  0x2000
+worker assigned before resume:  true
+Job kill-on-close:              verified
+worker-SID process set empty:   true
+worker account deleted:         true
+signature valid after exit:     true
+all Sandbox processes exited:   true
+execution_authorized:           false
+```
+
+Evidence: `SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md`.
 
 ##### V1B3B — Canonical Transcript and Host Signature Verifier
+
+**Статус:** CURRENT / production contract and host verifier implementation.
 
 - immutable schemas for `request`, `ready`, `authorize` and signed terminal payload;
 - exact-byte pinning and hash-chain validation;
@@ -843,11 +860,13 @@ Roadmap Change N
 
 [VERIFIED CODE] 4ea2e0c — Windows Sandbox launch environment hardening
 
+[VERIFIED ACTIVE EVIDENCE] V1B3A — SYSTEM Controller Bootstrap Capability Experiment
+
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1B3 — Signed Result Authenticity and Privilege Separation Gate.
+Typed Check Runner V1B3B — Canonical Transcript and Host Signature Verifier.
 
 [NEXT]
-V1B3 Signed Result Boundary → V1B4 Trusted Runtime → V1C Sandboxed Checks → Result and Evidence V1.
+V1B3B verifier → V1B3C worker isolation production gate → V1B3D active composition → V1B4 Trusted Runtime → V1C Sandboxed Checks.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
