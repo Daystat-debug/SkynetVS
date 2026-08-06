@@ -4,9 +4,9 @@
 
 - Дата обновления: `2026-08-06`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `4ea2e0c`
-- Название code baseline: `fix: isolate Windows Sandbox launch environment`
-- `origin/main` на проверенной code-точке: `4ea2e0c`
+- Проверенный code baseline перед этим documentation commit: `674dd5f`
+- Название code baseline: `feat: add signed execution transcript verifier`
+- `origin/main` на проверенной code-точке: `674dd5f`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -611,7 +611,13 @@ a65c9f5a3e6b21a862e05417e17e205b2efb141f1a41f0ffef75d65616387cef
 
 Полный evidence: `docs/architecture/SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md`.
 
-### V1B3B — CURRENT / Canonical Transcript and Host Signature Verifier
+### V1B3B — VERIFIED / Canonical Transcript and Host Signature Verifier
+
+Code-точка:
+
+```text
+674dd5f feat: add signed execution transcript verifier
+```
 
 Production scope:
 
@@ -624,7 +630,36 @@ Production scope:
 - worker/controller/control evidence consistency validation;
 - `execution_authorized=false` in every report.
 
+Подтверждено:
+
+```text
+verifier unit eval:                         45/45
+Windows CNG smoke:                          3/3
+real V1B3A evidence:                        signed_transcript_verified
+developer_task_execution_boundary_verifier: completed successfully
+full check:                                 completed successfully
+```
+
 V1B3B does not launch Sandbox, create users, run workers or execute code from patch. Active composition remains V1B3D.
+
+### V1B3C — CURRENT / Standard-User Worker Isolation Production Gate
+
+V1B3C creates the exact deterministic trusted payload that V1B3D will actively execute. It does not duplicate lifecycle or signature orchestration and does not launch Windows Sandbox.
+
+Production requirements:
+
+- immutable worker bundle built only from canonical V1B3 policy;
+- fixed trusted native helper and fixed benign worker probe;
+- fresh standard account with collision check, exact SID binding and exact deletion guard;
+- memory-only password and explicit secret clearing;
+- protected controller-owned staging ACLs with least-privilege worker access;
+- validated primary token, non-administrator membership and medium integrity;
+- non-inherited environment and handles;
+- suspended `CreateProcessAsUserW`, Job assignment before resume and no breakaway;
+- fail-closed `WTSEnumerateProcessesEx` process sweep by primary-token SID, bounded quiescence and account cleanup;
+- no manifest, workspace, patch bytes, arbitrary executable or shell command accepted as input;
+- unit/static audit plus Windows compile smoke only; exact active production execution is deferred to V1B3D;
+- every report and bundle keeps `execution_authorized=false`.
 
 ### V1B4 — Trusted Python Runtime Bundle
 
@@ -652,7 +687,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A active security experiment спроектирован и разобран в **Pro Standard**. V1B3B contract/verifier implementation после фиксации архитектуры можно применять и проверять в режиме **«Очень высокий»**. Перед V1B3C/V1B3D и перед V1C требуется **Pro Standard**.
+V1B3A/V1B3B security architecture and evidence were reviewed in **Pro Standard**. V1B3C architecture is fixed in **Pro Standard**; after the documentation commit, the bounded payload implementation and local checks may be performed in **«Очень высокий»**. Before V1B3D active composition and before V1C, return to **Pro Standard**.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -668,17 +703,18 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-Реализовать и проверить `V1B3B — Canonical Transcript and Host Signature Verifier`:
+Реализовать и проверить `V1B3C — Standard-User Worker Isolation Production Gate`:
 
-1. Добавить canonical boundary policy и fingerprint.
-2. Добавить strict immutable contracts для request/ready/authorize/worker/terminal documents.
-3. Добавить exact-byte pin report до worker authorization.
-4. Добавить post-exit transcript verifier с full SHA-256 chain validation.
-5. Добавить Windows CNG ECDSA P-256 verifier без external dependencies.
-6. Добавить replay/substitution/corruption/post-pin mutation regression eval.
-7. Добавить отдельный Windows CNG smoke и targeted pipeline flow.
-8. Не запускать Sandbox, worker или код из patch в V1B3B.
-9. Сохранить `execution_authorized=false`.
+1. Добавить immutable `DeveloperTaskExecutionBoundaryWorkerBundle` without payload bytes in `repr()`/`to_dict()`.
+2. Добавить deterministic C# native helper for account/token/environment/process/Job/SID-sweep lifecycle.
+3. Добавить fixed benign worker probe compatible with the existing V1B3B worker-result contract.
+4. Reject raw task, manifest, workspace, patch, executable and command-line inputs.
+5. Add account collision, exact SID deletion, password secrecy/clearing and bounded cleanup guards.
+6. Add static source audit for exact APIs/flags and forbidden shell/breakaway APIs.
+7. Add Windows compile smoke for the exact helper and worker bytes without executing them.
+8. Add targeted flow `developer_task_execution_boundary_worker`.
+9. Run full `check`; preserve `execution_authorized=false`.
+10. Do not launch Sandbox or perform active worker execution until V1B3D.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -695,9 +731,11 @@ eb2a476 feat: add trusted Windows Sandbox lifecycle gate
 4ea2e0c fix: isolate Windows Sandbox launch environment
 7efcf76 docs: close sandbox lifecycle gate and start signed result boundary
 e18e309 docs: split signed result boundary into measured security slices
+61de548 docs: record signed boundary attestation and start transcript verifier
+674dd5f feat: add signed execution transcript verifier
 ```
 
-Следующий documentation commit фиксирует успешный V1B3A experiment и переводит `CURRENT` на V1B3B.
+Следующий documentation commit закрывает V1B3B и переводит `CURRENT` на V1B3C.
 
 ## 17. DEFERRED
 
@@ -726,7 +764,7 @@ e18e309 docs: split signed result boundary into measured security slices
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-Зафиксированное правило: текущую механическую реализацию V1B3B можно вести в режиме **«Очень высокий»**; перед V1B3C/V1B3D и V1C требуется **Pro Standard**.
+V1B3C architecture is fixed in **Pro Standard**. After the documentation commit, the bounded V1B3C payload implementation may be performed in **«Очень высокий»**. Before V1B3D active composition and V1C, **Pro Standard** is required.
 
 ## 20. Файлы для будущего handoff
 
@@ -743,6 +781,7 @@ docs/architecture/SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md
 Дополнительно приложить последние:
 
 ```text
+data/logs/pipeline/*_developer_task_execution_boundary_worker.log
 data/logs/pipeline/*_developer_task_execution_boundary_verifier.log
 data/logs/pipeline/*_check.log
 latest signed-boundary attestation evidence

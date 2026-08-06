@@ -195,8 +195,24 @@ host fallback          FORBIDDEN
 execution_authorized   false
 ```
 
-## 11. Next stage
+## 11. VERIFIED — Production V1B3B host verifier closure
 
 ```text
-V1B3B — Canonical Transcript and Host Signature Verifier
+674dd5f feat: add signed execution transcript verifier
+verifier unit eval:                         45/45
+Windows CNG smoke:                          3/3
+real preserved evidence:                    signed_transcript_verified
+developer_task_execution_boundary_verifier: completed successfully
+full check:                                 completed successfully
+execution_authorized:                       false
 ```
+
+The production verifier pinned the exact pre-authorization public key and transcript bytes, verified the preserved V1B3A signature through Windows CNG and retained fail-closed replay/substitution/post-pin mutation guards. It does not launch Sandbox or run a worker.
+
+## 12. Next stage
+
+```text
+V1B3C — Standard-User Worker Isolation Production Gate
+```
+
+V1B3C productionizes the exact trusted worker payload and compile/static evidence. Active one-Sandbox composition remains V1B3D.

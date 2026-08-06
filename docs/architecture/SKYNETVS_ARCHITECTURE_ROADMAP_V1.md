@@ -492,7 +492,19 @@ Evidence: `SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md`.
 
 ##### V1B3B — Canonical Transcript and Host Signature Verifier
 
-**Статус:** CURRENT / production contract and host verifier implementation.
+**Статус:** VERIFIED / production host verifier `674dd5f`.
+
+Подтверждено:
+
+```text
+674dd5f feat: add signed execution transcript verifier
+verifier unit eval:                         45/45
+Windows CNG smoke:                          3/3
+real V1B3A evidence:                        signed_transcript_verified
+developer_task_execution_boundary_verifier: completed successfully
+full check:                                 completed successfully
+execution_authorized:                       false
+```
 
 - immutable schemas for `request`, `ready`, `authorize` and signed terminal payload;
 - exact-byte pinning and hash-chain validation;
@@ -501,18 +513,37 @@ Evidence: `SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md`.
 
 ##### V1B3C — Standard-User Worker Isolation Gate
 
-- fresh local standard account per run;
-- non-inherited environment and handles;
-- suspended `CreateProcessAsUserW` launch;
-- kill-on-close Job Object with no breakaway;
-- worker-SID process sweep and account cleanup;
-- benign worker only.
+**Статус:** CURRENT / architecture locked; production payload implementation not started.
+
+V1B3C productionizes the trusted guest worker boundary without duplicating the V1B2 lifecycle or V1B3B signature verifier. Active one-Sandbox composition remains exclusively V1B3D.
+
+- deterministic immutable bundle containing the trusted native helper and fixed benign worker probe;
+- fresh local standard account per run with pre-creation collision check, exact SID binding and exact-account deletion guard;
+- password exists only in controller memory, is never serialized, logged, placed in environment or command line, and is cleared after logon;
+- controller-owned staging paths use protected ACLs: worker receives only the fixed read/execute and designated result-write access required by the benign probe;
+- `LogonUserW` primary-token validation: exact worker SID, non-administrator token and medium integrity;
+- `CreateEnvironmentBlock(..., false)` and `CreateProcessAsUserW(..., bInheritHandles=false)`;
+- explicit application path, fixed arguments and fixed working directory; arbitrary commands and shell resolution are absent;
+- worker is created with `CREATE_SUSPENDED`, assigned to an unnamed Job Object, verified with `IsProcessInJob`, and only then resumed;
+- Job Object uses `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` and never enables breakaway flags;
+- process-set verification is based on the primary-token SID returned by `WTSEnumerateProcessesEx`; probe failure is fail-closed and bounded quiescence is required before exact account cleanup;
+- only a fixed benign self-child probe is allowed; patch/workspace code is not accepted as input;
+- V1B3C Windows smoke compiles the exact C# payloads but does not launch Sandbox or execute the worker;
+- the first active run of the exact production payload occurs in V1B3D.
 
 ##### V1B3D — Active Signed Boundary Composition
 
 - composes V1B2 lifecycle, V1B3B transcript verification and V1B3C worker isolation in one Sandbox instance;
 - signs only after worker tree termination and worker-SID process absence are proven;
 - preserves `execution_authorized=false` until V1B4 and V1C.
+
+## Roadmap Change 004 — V1B3C payload gate separated from V1B3D active composition
+
+**Причина:** a standalone active V1B3C run would either trust writable unsigned output or duplicate the lifecycle/signature composition that belongs to V1B3D. Both options weaken the evidence model.
+
+**Что меняется:** V1B3C builds and statically/compile-verifies the exact trusted worker-isolation payload and immutable bundle; V1B3D performs the first active production run of those exact bytes together with V1B2 lifecycle and V1B3B transcript verification.
+
+**Что не меняется:** V1B3A remains capability evidence; V1B3B remains the host verifier; V1B4 and V1C remain blocked; no patch code, arbitrary shell, dependency installation or host fallback is allowed; `execution_authorized=false`.
 
 The V1B2 policy fingerprint remains the historical lifecycle baseline. A production V1B3 policy schema/fingerprint is not changed until V1B3A experiment evidence is reviewed.
 
