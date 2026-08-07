@@ -209,10 +209,25 @@ execution_authorized:                       false
 
 The production verifier pinned the exact pre-authorization public key and transcript bytes, verified the preserved V1B3A signature through Windows CNG and retained fail-closed replay/substitution/post-pin mutation guards. It does not launch Sandbox or run a worker.
 
-## 12. Next stage
+## 12. VERIFIED — Production V1B3C worker isolation bundle closure
 
 ```text
-V1B3C — Standard-User Worker Isolation Production Gate
+74f543a feat: add standard-user worker isolation bundle
+worker bundle unit/static eval:                28/28
+exact Windows helper/worker compile smoke:     2/2
+worker executable created:                     true
+worker executable executed:                    false
+developer_task_execution_boundary_worker:      completed successfully
+full check:                                    completed successfully
+execution_authorized:                          false
 ```
 
-V1B3C productionizes the exact trusted worker payload and compile/static evidence. Active one-Sandbox composition remains V1B3D.
+The production V1B3C bundle locks the exact native helper, fixed benign worker source and bundle fingerprint. Its public builder accepts no manifest, workspace, patch, executable or command input. The Windows smoke compiled the exact source bytes but deliberately did not execute the worker.
+
+## 13. Next stage
+
+```text
+V1B3D — Active Signed Boundary Composition
+```
+
+V1B3D performs the first production one-Sandbox run of the exact V1B3C bytes together with V1B2 process lifecycle and V1B3B pre-authorization pinning/post-exit verification. Only the benign worker is allowed and `execution_authorized=false` remains mandatory.

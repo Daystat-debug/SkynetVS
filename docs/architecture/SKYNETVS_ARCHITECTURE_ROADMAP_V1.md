@@ -513,7 +513,7 @@ execution_authorized:                       false
 
 ##### V1B3C — Standard-User Worker Isolation Gate
 
-**Статус:** CURRENT / architecture locked; production payload implementation not started.
+**Статус:** VERIFIED / production bundle `74f543a`.
 
 V1B3C productionizes the trusted guest worker boundary without duplicating the V1B2 lifecycle or V1B3B signature verifier. Active one-Sandbox composition remains exclusively V1B3D.
 
@@ -531,11 +531,40 @@ V1B3C productionizes the trusted guest worker boundary without duplicating the V
 - V1B3C Windows smoke compiles the exact C# payloads but does not launch Sandbox or execute the worker;
 - the first active run of the exact production payload occurs in V1B3D.
 
+Verification closure:
+
+```text
+74f543a  feat: add standard-user worker isolation bundle
+worker bundle unit/static eval:                28/28
+exact Windows helper/worker compile smoke:     2/2
+worker executable created:                     true
+worker executable executed:                    false
+developer_task_execution_boundary_worker:      completed successfully
+full check:                                    completed successfully
+execution_authorized:                          false
+```
+
 ##### V1B3D — Active Signed Boundary Composition
 
-- composes V1B2 lifecycle, V1B3B transcript verification and V1B3C worker isolation in one Sandbox instance;
-- signs only after worker tree termination and worker-SID process absence are proven;
+**Статус:** CURRENT / architecture audited against `HEAD 74f543a`; bounded benign-worker implementation next.
+
+- composes V1B1 host evidence, V1B2 process lifecycle, V1B3B transcript pinning/verification and the exact V1B3C worker bundle in one Sandbox instance;
+- receives `ready.json`, constructs the exact canonical `authorize.json` in host memory, pins `request + ready + authorize` through V1B3B, and publishes authorization only after the pin report succeeds;
+- treats mapped output as untrusted while Sandbox is active and accepts success only after every known Sandbox process exits;
+- re-reads trusted input, control and output artifacts after proven exit and requires exact byte/hash stability before V1B3B post-exit verification;
+- binds the V1B3C bundle fingerprint in the pinned controller bytes and verifies the locked native-helper and worker-source hashes inside the trusted controller;
+- compiles and executes only the fixed benign V1B3C worker in a protected local guest staging tree; patch/workspace bytes are never mapped or accepted;
+- closes the Job Object, proves worker-SID process quiescence, deletes the exact worker account, and only then signs the terminal payload;
+- removes host artifacts only after Sandbox process absence is proven; forced cleanup is always failure-only;
 - preserves `execution_authorized=false` until V1B4 and V1C.
+
+## Roadmap Change 005 — V1B3D authorization is pinned before publication and success is post-exit only
+
+**Причина:** `ready.json`, `worker_result.json`, `terminal_payload.json` and the signature reside in writable shared output. Their existence while Sandbox is active is only a progress signal, not trusted evidence.
+
+**Что меняется:** the host builds canonical authorization bytes in memory, successfully pins the exact `request + ready + authorize` transcript before writing `authorize.json`, then defers terminal trust until all Sandbox processes have exited and all pinned artifacts have been re-read as exact unchanged bytes.
+
+**Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
 ## Roadmap Change 004 — V1B3C payload gate separated from V1B3D active composition
 
@@ -893,11 +922,15 @@ Roadmap Change N
 
 [VERIFIED ACTIVE EVIDENCE] V1B3A — SYSTEM Controller Bootstrap Capability Experiment
 
+[VERIFIED CODE] 674dd5f — V1B3B Canonical Transcript and Host Signature Verifier
+
+[VERIFIED CODE] 74f543a — V1B3C Standard-User Worker Isolation Bundle
+
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1B3B — Canonical Transcript and Host Signature Verifier.
+Typed Check Runner V1B3D — Active Signed Boundary Composition.
 
 [NEXT]
-V1B3B verifier → V1B3C worker isolation production gate → V1B3D active composition → V1B4 Trusted Runtime → V1C Sandboxed Checks.
+V1B3D active composition → V1B4 Trusted Runtime → V1C Sandboxed Checks.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
