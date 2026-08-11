@@ -185,7 +185,7 @@ post-exit host verification
 
 It does not yet prove the full production boundary implementation or patched-code execution.
 
-Until V1B3B, V1B3C, V1B3D, V1B4 and V1C are complete:
+Until V1B4 and V1C are complete:
 
 ```text
 python_module          BLOCKED
@@ -224,10 +224,28 @@ execution_authorized:                          false
 
 The production V1B3C bundle locks the exact native helper, fixed benign worker source and bundle fingerprint. Its public builder accepts no manifest, workspace, patch, executable or command input. The Windows smoke compiled the exact source bytes but deliberately did not execute the worker.
 
-## 13. Next stage
+## 13. VERIFIED — Production V1B3D active signed composition closure
 
 ```text
-V1B3D — Active Signed Boundary Composition
+f3f5607 feat: add active signed boundary composition
+V1B3D unit/failure gate:                  40/40
+active Windows composition:                3/3
+status:                    active_signed_boundary_attested
+signature valid:                           true
+all Sandbox processes exited:              true
+forced cleanup attempted:                  false
+artifacts removed:                          true
+developer_task_execution_boundary_composition: completed successfully
+full check:                                 completed successfully
+execution_authorized:                       false
 ```
 
-V1B3D performs the first production one-Sandbox run of the exact V1B3C bytes together with V1B2 process lifecycle and V1B3B pre-authorization pinning/post-exit verification. Only the benign worker is allowed and `execution_authorized=false` remains mandatory.
+The production one-Sandbox run used pre-authorization transcript pinning, direct `authorize.json` plus verified `authorize.sha256` commit, exact V1B3C worker bytes, standard-user/Job/SID cleanup, signed terminal output and post-exit exact-byte verification. The full Signed Result Authenticity and Privilege Separation boundary is now verified.
+
+## 14. Next stage
+
+```text
+V1B4A — Runtime Source Provenance Gate
+```
+
+V1B4A is host-only and does not execute the candidate interpreter. It establishes exact official archive/SPDX provenance before any deterministic runtime bundle or active Python attestation is built. `execution_authorized=false` remains mandatory.

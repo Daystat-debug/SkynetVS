@@ -2,11 +2,11 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-07`
+- Дата обновления: `2026-08-11`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `74f543a`
-- Название code baseline: `feat: add standard-user worker isolation bundle`
-- `origin/main` на проверенной code-точке: `74f543a`
+- Проверенный code baseline перед этим documentation commit: `f3f5607`
+- Название code baseline: `feat: add active signed boundary composition`
+- `origin/main` на проверенной code-точке: `f3f5607`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -395,7 +395,7 @@ full check:                       completed successfully
 runtime architecture audit:       9/9
 ```
 
-## 13. CURRENT — Typed Check Runner V1B — V1B1/V1B2 VERIFIED, V1B3 NEXT
+## 13. CURRENT — Typed Check Runner V1B4 — Trusted Python Runtime
 
 ### Архитектурный аудит — VERIFIED решение
 
@@ -554,7 +554,7 @@ full check:                                 completed successfully
 ```
 
 Полный experiment evidence и production closure: `docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md`.
-### V1B3 — CURRENT / Signed Result Authenticity and Privilege Separation
+### V1B3 — VERIFIED / Signed Result Authenticity and Privilege Separation
 
 Writable output mapping нельзя считать доверенным после запуска кода из patch. Архитектурный аудит текущего `HEAD 7efcf76` уточнил boundary:
 
@@ -640,7 +640,7 @@ developer_task_execution_boundary_verifier: completed successfully
 full check:                                 completed successfully
 ```
 
-V1B3B does not launch Sandbox, create users, run workers or execute code from patch. Active composition remains V1B3D.
+V1B3B does not launch Sandbox, create users, run workers or execute code from patch. Active composition was implemented separately in V1B3D.
 
 ### V1B3C — VERIFIED / Standard-User Worker Isolation Production Gate
 
@@ -650,7 +650,7 @@ Code-point:
 74f543a feat: add standard-user worker isolation bundle
 ```
 
-V1B3C created the exact deterministic trusted payload that V1B3D will actively execute. It does not duplicate lifecycle or signature orchestration and does not launch Windows Sandbox.
+V1B3C created the exact deterministic trusted payload that V1B3D later executed in the verified production composition. It does not duplicate lifecycle or signature orchestration and does not launch Windows Sandbox.
 
 Verified production properties:
 
@@ -678,9 +678,15 @@ full check:                                    completed successfully
 runtime architecture audit:                    9/9
 ```
 
-### V1B3D — CURRENT / Active Signed Boundary Composition
+### V1B3D — VERIFIED / Active Signed Boundary Composition
 
-V1B3D is the first production run that composes the already verified slices in one Windows Sandbox instance:
+Code closure:
+
+```text
+f3f5607 feat: add active signed boundary composition
+```
+
+One production Windows Sandbox run composed:
 
 ```text
 V1B1 host capability
@@ -692,32 +698,56 @@ V1B3B request/ready/authorize pinning and post-exit signature verification
 V1B3C exact benign worker bundle
 ```
 
-Locked composition rules:
+Verified evidence:
 
-- a separate V1B2 attestation run is not reused as authorization; lifecycle evidence is repeated inside the same V1B3D Sandbox run;
-- host builds canonical `authorize.json` bytes in memory and publishes them only after V1B3B pinning succeeds;
-- writable output is never trusted while Sandbox is active;
-- all trusted input/control and output artifacts are re-read after proven Sandbox exit and must remain byte-identical to pinned evidence;
-- V1B3C bundle identity is embedded in the pinned controller bytes, while the controller explicitly verifies the locked native-helper and worker-source hashes;
-- the worker executable and result channel are staged under protected local guest ACLs; the worker does not receive broad write access to mapped output;
-- Job close, exact worker-SID process quiescence and exact account deletion precede terminal signing;
-- host artifacts are removed only after no known Sandbox process remains;
-- forced cleanup never becomes success;
-- only the fixed benign worker runs; patch/workspace code remains blocked;
-- `execution_authorized=false` remains mandatory.
-
-### V1B4 — Trusted Python Runtime Bundle
-
-```python
-attest_developer_task_python_runtime(
-    boundary_report: DeveloperTaskExecutionBoundaryReport,
-    *,
-    runtime_bundle_root: Path,
-    artifact_parent: Path,
-) -> DeveloperTaskExecutionCapabilityReport
+```text
+V1B3D unit/failure gate:                  40/40
+active Windows composition:                3/3
+status:                    active_signed_boundary_attested
+ready received:                         14 516 ms
+authorization published:                14 530 ms
+terminal detected:                      23 438 ms
+all Sandbox processes exited:           34 375 ms
+total:                                  35 047 ms
+signature valid:                           true
+forced cleanup attempted:                  false
+artifacts removed:                          true
+execution_authorized:                       false
+developer_task_execution_boundary_composition: completed successfully
+full check:                                 completed successfully
+runtime architecture audit:                  9/9
 ```
 
-Runtime должен быть pinned, read-only и полностью связан canonical manifest/hash-chain. Download/install во время task запрещён. Final capability получает non-serialized single-use token, TTL `300` секунд и привязку к host boot, Windows build, Sandbox executable hash/version, policy fingerprint и runtime fingerprint.
+The production boundary publishes `authorize.json` only after pinning and commits it with verified `authorize.sha256`; closes the Job Object, proves worker-SID quiescence and exact account deletion before signing; trusts output only after full Sandbox exit; and removes artifacts without forced cleanup.
+
+Signed Result Authenticity and Privilege Separation is complete. Patch/workspace Python execution remains blocked until V1B4 and V1C.
+
+### V1B4 — CURRENT / Trusted Python Runtime
+
+V1B4 is split into four evidence boundaries:
+
+```text
+V1B4A  Runtime Source Provenance Gate
+V1B4B  Deterministic Runtime Bundle Gate
+V1B4C  Active Trusted Runtime Attestation
+V1B4D  Same-Run Runtime Capability Lease
+```
+
+The current host `.venv` is not accepted as the trusted bundle: it depends on a host-installed base interpreter, contains mutable `site-packages` and pip, and has no canonical archive provenance.
+
+Initial V1B4A compatibility candidate:
+
+```text
+CPython 3.12.10 Windows embeddable AMD64
+python-3.12.10-embed-amd64.zip
+SHA-256 4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3
+```
+
+V1B4A is host-only and does not execute that interpreter. It verifies the exact archive/SPDX pair, safe ZIP structure, required embeddable files, AMD64 PE identity, upstream `_pth` isolation and absence of pip/site-package surfaces.
+
+V1B4B derives exact application-local bytes. V1B4C executes only a fixed benign probe through explicit `python.exe -I -S -B -E -s -P -X utf8` inside the existing signed standard-user/Job boundary. V1B4D creates a non-serialized single-use lease with TTL `300` seconds but does not carry active trust across Sandbox runs.
+
+Full contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
 
 ### Текущий жёсткий scope
 
@@ -732,7 +762,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A/V1B3B security architecture and evidence were reviewed in **Pro Standard**. V1B3C architecture was fixed in **Pro Standard** and its bounded implementation was completed in **«Очень высокий»**. V1B3D active composition is a critical security integration and must be designed and audited in **Pro Standard**.
+V1B3A–V1B3D are VERIFIED. V1B4 threat model, runtime version/provenance choice, active runtime composition and same-run V1C handoff require **Pro Standard**. Bounded host-only V1B4A/V1B4B implementation may return to **«Очень высокий»** only after the architecture/provenance decision is recorded.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -748,20 +778,17 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-Реализовать и проверить `V1B3D — Active Signed Boundary Composition`:
+Выполнить `V1B4A — Runtime Source Provenance Gate`:
 
-1. Добавить deterministic request/bootstrap/controller/WSB payload builder that binds the exact V1B3C bundle.
-2. Add one-run composition report and state machine; do not call V1B2 as a separate Sandbox run.
-3. Reuse V1B2 trusted process identity, launch, bounded wait and failure-only cleanup primitives.
-4. Receive exact `ready.json`, construct canonical authorization in host memory, pin through V1B3B, then publish `authorize.json` atomically.
-5. Execute only the fixed benign V1B3C worker from a protected local guest staging tree.
-6. Require Job close, exact worker-SID process quiescence and exact account deletion before terminal signing.
-7. Wait for all Sandbox processes to exit before trusting terminal output.
-8. Re-read every pinned artifact after exit and run the V1B3B verifier over the exact final bytes.
-9. Add fail-closed unit cases for ready/authorize/terminal/signature/bundle mutation, active-process timeout, host drift and cleanup failure.
-10. Add one real Windows active smoke and targeted flow `developer_task_execution_boundary_composition`.
-11. Run full `check`; preserve `execution_authorized=false`.
-12. Do not map or execute patch/workspace/Python code until V1B4 and V1C.
+1. Зафиксировать V1B3 closure и V1B4 four-slice architecture отдельным documentation commit.
+2. Скачать только официальный `python-3.12.10-embed-amd64.zip` и matching SPDX document.
+3. Проверить exact source SHA-256 `4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3`.
+4. Запустить standalone host-only provenance experiment; candidate interpreter не исполнять.
+5. Проверить official SPDX identity/hash, safe ZIP/path model, required files, AMD64 PE headers, `_pth` contract and forbidden package-management surfaces.
+6. Получить structured report with source fingerprint, `interpreter_executed=false` and `execution_authorized=false`.
+7. Провести Pro-review lifecycle-risk: 3.12.10 is the final 3.12 binary release while later security releases are source-only.
+8. Only after that decision begin bounded production V1B4A/V1B4B modules.
+9. Do not create V1B4C active code, map workspace, or execute patch/Python checks in this slice.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -782,9 +809,11 @@ e18e309 docs: split signed result boundary into measured security slices
 674dd5f feat: add signed execution transcript verifier
 e53a8e5 docs: close transcript verifier and start worker isolation gate
 74f543a feat: add standard-user worker isolation bundle
+be7470f docs: close worker isolation gate and start active signed composition
+f3f5607 feat: add active signed boundary composition
 ```
 
-Следующий documentation commit закрывает V1B3C и переводит `CURRENT` на V1B3D.
+Следующий documentation commit закрывает V1B3 и переводит `CURRENT` на V1B4A.
 
 ## 17. DEFERRED
 
@@ -813,7 +842,7 @@ e53a8e5 docs: close transcript verifier and start worker isolation gate
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-V1B3C architecture and implementation are VERIFIED. V1B3D active composition and V1C require **Pro Standard**.
+V1B3A–V1B3D are VERIFIED. V1B4 runtime provenance/version choice and V1C active execution boundaries require **Pro Standard**.
 
 ## 20. Файлы для будущего handoff
 
@@ -825,6 +854,7 @@ docs/architecture/SKYNETVS_CURRENT_STATE.md
 docs/architecture/SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md
 docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md
 docs/architecture/SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md
+docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md
 ```
 
 Дополнительно приложить последние:

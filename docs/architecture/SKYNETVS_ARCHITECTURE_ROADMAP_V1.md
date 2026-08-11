@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** CURRENT / V1B1 и V1B2 VERIFIED; следующий срез — V1B3.
+**Статус:** V1B1–V1B3 VERIFIED; CURRENT — V1B4 Trusted Python Runtime.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -427,7 +427,7 @@ Production gate:
 - возвращает `execution_authorized = false` и не запускает код из patch.
 #### V1B3 — Signed Result Authenticity and Privilege Separation Gate
 
-**Статус:** CURRENT / security architecture reviewed; implementation split into four evidence slices.
+**Статус:** VERIFIED / V1B3A–V1B3D completed; production closure `f3f5607`.
 
 Output mapping считается недоверенным: будущий код из patch сможет видеть и изменять его. Поэтому простого `request_id` недостаточно.
 
@@ -515,7 +515,7 @@ execution_authorized:                       false
 
 **Статус:** VERIFIED / production bundle `74f543a`.
 
-V1B3C productionizes the trusted guest worker boundary without duplicating the V1B2 lifecycle or V1B3B signature verifier. Active one-Sandbox composition remains exclusively V1B3D.
+V1B3C productionized the trusted guest worker boundary without duplicating the V1B2 lifecycle or V1B3B signature verifier. The first active one-Sandbox execution of those exact bytes was performed exclusively by V1B3D.
 
 - deterministic immutable bundle containing the trusted native helper and fixed benign worker probe;
 - fresh local standard account per run with pre-creation collision check, exact SID binding and exact-account deletion guard;
@@ -529,7 +529,7 @@ V1B3C productionizes the trusted guest worker boundary without duplicating the V
 - process-set verification is based on the primary-token SID returned by `WTSEnumerateProcessesEx`; probe failure is fail-closed and bounded quiescence is required before exact account cleanup;
 - only a fixed benign self-child probe is allowed; patch/workspace code is not accepted as input;
 - V1B3C Windows smoke compiles the exact C# payloads but does not launch Sandbox or execute the worker;
-- the first active run of the exact production payload occurs in V1B3D.
+- the first active run of the exact production payload was completed in V1B3D.
 
 Verification closure:
 
@@ -546,17 +546,45 @@ execution_authorized:                          false
 
 ##### V1B3D — Active Signed Boundary Composition
 
-**Статус:** CURRENT / architecture audited against `HEAD 74f543a`; bounded benign-worker implementation next.
+**Статус:** VERIFIED / production closure `f3f5607`; active evidence `2026-08-11`.
 
 - composes V1B1 host evidence, V1B2 process lifecycle, V1B3B transcript pinning/verification and the exact V1B3C worker bundle in one Sandbox instance;
-- receives `ready.json`, constructs the exact canonical `authorize.json` in host memory, pins `request + ready + authorize` through V1B3B, and publishes authorization only after the pin report succeeds;
+- receives `ready.json`, constructs canonical authorization in host memory, pins `request + ready + authorize`, and publishes `authorize.json` followed by the verified `authorize.sha256` commit marker;
 - treats mapped output as untrusted while Sandbox is active and accepts success only after every known Sandbox process exits;
 - re-reads trusted input, control and output artifacts after proven exit and requires exact byte/hash stability before V1B3B post-exit verification;
-- binds the V1B3C bundle fingerprint in the pinned controller bytes and verifies the locked native-helper and worker-source hashes inside the trusted controller;
+- binds the V1B3C bundle fingerprint in pinned controller bytes and verifies locked native-helper and worker-source hashes inside the trusted controller;
 - compiles and executes only the fixed benign V1B3C worker in a protected local guest staging tree; patch/workspace bytes are never mapped or accepted;
 - closes the Job Object, proves worker-SID process quiescence, deletes the exact worker account, and only then signs the terminal payload;
 - removes host artifacts only after Sandbox process absence is proven; forced cleanup is always failure-only;
 - preserves `execution_authorized=false` until V1B4 and V1C.
+
+Verification closure:
+
+```text
+f3f5607 feat: add active signed boundary composition
+V1B3D unit/failure gate:                  40/40
+active Windows composition:                3/3
+status:                    active_signed_boundary_attested
+ready received:                         14 516 ms
+authorization published:                14 530 ms
+terminal detected:                      23 438 ms
+all Sandbox processes exited:           34 375 ms
+total:                                  35 047 ms
+signature valid:                           true
+forced cleanup attempted:                  false
+artifacts removed:                          true
+developer_task_execution_boundary_composition: completed successfully
+full check:                                 completed successfully
+execution_authorized:                       false
+```
+
+## Roadmap Change 006 — V1B4 source, derived bundle, active attestation and V1C lease are separate boundaries
+
+**Причина:** source archive provenance, deterministic runtime bytes, active interpreter behavior and permission to enter a future same-run V1C state machine are different claims. Combining them would let an old active report or mutable host environment masquerade as current execution authority.
+
+**Что меняется:** V1B4 is implemented as V1B4A/V1B4B/V1B4C/V1B4D. Historical V1B3 policy fingerprints remain immutable. The first active runtime run executes only a fixed benign probe; a non-serialized lease never carries active trust across Sandbox runs.
+
+**Что не меняется:** patch/workspace execution, `python_module`, `pipeline`, arbitrary shell, dependency installation and host fallback remain forbidden; `execution_authorized=false` until V1C same-run gates explicitly succeed.
 
 ## Roadmap Change 005 — V1B3D authorization is pinned before publication and success is post-exit only
 
@@ -586,37 +614,58 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-- принимает только pinned read-only runtime bundle;
-- проверяет canonical file manifest и aggregate SHA-256;
-- не скачивает и не устанавливает зависимости;
-- аттестует Python version, stdlib и разрешённые dependency imports внутри guest;
-- связывает runtime fingerprint с host/policy/lifecycle/result-boundary evidence;
-- создаёт immutable final capability report и non-serialized single-use token для V1C.
+**Статус:** CURRENT / architecture split into measured slices; V1B4A provenance experiment next.
+
+Host `.venv` не является trusted runtime bundle. V1B4 uses a separate application-local distribution with exact source provenance, deterministic derived bytes, fixed launch contract and active same-boundary evidence.
+
+##### V1B4A — Runtime Source Provenance Gate
+
+- host-only; does not execute the candidate interpreter;
+- verifies exact official source archive and SPDX evidence;
+- rejects unsafe ZIP paths, duplicates/case collisions, symlinks, encryption, unbounded expansion and mutable/reparse input;
+- verifies required embeddable files, AMD64 PE machine, upstream `python312._pth`, and absence of `pip`, `ensurepip`, `site-packages`, `Scripts` and `pyvenv.cfg`;
+- produces immutable source report and source fingerprint with `execution_authorized=false`.
+
+Initial compatibility candidate:
+
+```text
+CPython 3.12.10 Windows embeddable AMD64
+python-3.12.10-embed-amd64.zip
+SHA-256 4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3
+```
+
+The candidate matches the current host patch version but is not silently approved for V1C because `3.12.10` was the final 3.12 regular release with binary installers; later 3.12 security releases are source-only.
+
+##### V1B4B — Deterministic Runtime Bundle Gate
+
+- derives an application-local runtime only from verified V1B4A bytes;
+- locks `python312._pth`, trusted probe/runner, canonical file manifest and fixed launch contract;
+- rejects extra/missing files, path collisions, reparse points, ADS, arbitrary `.pth`, `import site`, `sitecustomize`, `usercustomize`, pip and mutable package roots;
+- exposes exact bytes only through a non-serialized capability;
+- never accepts manifest/workspace/patch/shell/arbitrary executable input;
+- returns `execution_authorized=false`.
+
+##### V1B4C — Active Trusted Runtime Attestation
+
+- performs one production Windows Sandbox run with the exact V1B4B bundle;
+- executes only a fixed benign Python probe under the standard-user/Job/SID boundary;
+- launches explicit `python.exe -I -S -B -E -s -P -X utf8`;
+- attests exact version/architecture, isolated flags, exact `sys.path`, ignored `PYTHON*` poison, absent user-site/pip/ensurepip and non-writable runtime root;
+- binds runtime source/bundle/probe/launch fingerprints into the signed post-exit transcript;
+- remains capability evidence only with `execution_authorized=false`.
+
+##### V1B4D — Same-Run Runtime Capability Lease
+
+- creates a non-serialized one-time lease with TTL `300` seconds;
+- binds host boot/build, Sandbox binary identity, backend/signed-boundary policies and runtime source/bundle fingerprints;
+- never treats a completed V1B4C run as cross-run execution authority;
+- allows one future V1C combined run to repeat runtime, network, privilege, Job and signed-handshake evidence before changed code starts.
+
+Detailed contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
 
 #### Freshness и использование capability
 
-Final execution capability действителен не более 300 секунд и только при совпадении:
-
-- host boot identity;
-- Windows build;
-- Sandbox executable path/version/SHA-256;
-- canonical backend policy fingerprint;
-- runtime bundle fingerprint;
-- one-time capability token.
-
-V1C всё равно повторяет network, privilege и signed-result checks в том же Sandbox instance до исполнения изменённого кода. Старый active-attestation JSON или documentation evidence самостоятельно не разрешает executable checks.
-
-**Аттестованный backend-кандидат на текущем Windows-хосте:**
-
-```text
-traditional_wsb_logoncommand_v1
-WindowsSandbox.exe 10.0.26100.8875
-.wsb + LogonCommand
-read-only input mapping
-dedicated writable result mapping
-network disabled
-wsb CLI отсутствует
-```
+Runtime capability/lease действителен не более `300` секунд, single-use, and only while every bound host/backend/runtime identity remains unchanged. A Sandbox exit consumes active evidence; a new task requires a new same-run preflight.
 
 ### V1C — Sandboxed Executable Checks
 
@@ -926,11 +975,13 @@ Roadmap Change N
 
 [VERIFIED CODE] 74f543a — V1B3C Standard-User Worker Isolation Bundle
 
+[VERIFIED CODE] f3f5607 — V1B3D Active Signed Boundary Composition
+
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1B3D — Active Signed Boundary Composition.
+Typed Check Runner V1B4A — Runtime Source Provenance Gate.
 
 [NEXT]
-V1B3D active composition → V1B4 Trusted Runtime → V1C Sandboxed Checks.
+V1B4A provenance → V1B4B deterministic bundle → V1B4C active runtime → V1B4D same-run lease → V1C Sandboxed Checks.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
