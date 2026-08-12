@@ -2,11 +2,11 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-11`
+- Дата обновления: `2026-08-12`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `f3f5607`
-- Название code baseline: `feat: add active signed boundary composition`
-- `origin/main` на проверенной code-точке: `f3f5607`
+- Проверенный code baseline перед этим documentation commit: `05e0e00`
+- Название code baseline: `feat: add deterministic trusted runtime bundle`
+- `origin/main` на проверенной code-точке: `05e0e00`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -684,6 +684,8 @@ Code closure:
 
 ```text
 f3f5607 feat: add active signed boundary composition
+e6d00f2 docs: close signed boundary and start trusted runtime provenance
+05e0e00 feat: add deterministic trusted runtime bundle
 ```
 
 One production Windows Sandbox run composed:
@@ -724,28 +726,88 @@ Signed Result Authenticity and Privilege Separation is complete. Patch/workspace
 
 ### V1B4 — CURRENT / Trusted Python Runtime
 
-V1B4 is split into four evidence boundaries:
+V1B4 is split into four top-level evidence boundaries:
 
 ```text
-V1B4A  Runtime Source Provenance Gate
-V1B4B  Deterministic Runtime Bundle Gate
-V1B4C  Active Trusted Runtime Attestation
-V1B4D  Same-Run Runtime Capability Lease
+V1B4A  Runtime Source Provenance Gate                 VERIFIED
+V1B4B  Deterministic Runtime Bundle Gate              VERIFIED
+V1B4C  Active Trusted Runtime Attestation             CURRENT
+V1B4D  Same-Run Runtime Capability Lease              PLANNED
 ```
 
-The current host `.venv` is not accepted as the trusted bundle: it depends on a host-installed base interpreter, contains mutable `site-packages` and pip, and has no canonical archive provenance.
+#### V1B4A — VERIFIED / Runtime source provenance
 
-Initial V1B4A compatibility candidate:
+The host `.venv` was rejected as a trust source. Two official CPython embeddable archives were measured without executing either interpreter:
 
 ```text
-CPython 3.12.10 Windows embeddable AMD64
-python-3.12.10-embed-amd64.zip
-SHA-256 4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3
+CPython 3.12.10 AMD64  provenance reference   VERIFIED
+CPython 3.13.15 AMD64  execution candidate    VERIFIED
 ```
 
-V1B4A is host-only and does not execute that interpreter. It verifies the exact archive/SPDX pair, safe ZIP structure, required embeddable files, AMD64 PE identity, upstream `_pth` isolation and absence of pip/site-package surfaces.
+Pinned CPython 3.13.15 identities:
 
-V1B4B derives exact application-local bytes. V1B4C executes only a fixed benign probe through explicit `python.exe -I -S -B -E -s -P -X utf8` inside the existing signed standard-user/Job boundary. V1B4D creates a non-serialized single-use lease with TTL `300` seconds but does not carry active trust across Sandbox runs.
+```text
+runtime ZIP SHA-256:         d1f04d990aee1253d8569e8e5104e30fa9f5fa830899f14843448872d936a2cf
+SPDX SHA-256:                ba428f93acb06764f0005246f8ca48bb1c04feef64ce7db0b177fb2fd371c423
+outer manifest:              808b0be8715e1f5d61ef1802010a9d6cab23504a786405d7c490b223c96d3640
+stdlib manifest:             89066e5e62decc5b0e96b2593e319fbc2338ef3b0e362ac107fa2b117a7480a2
+source fingerprint:          6027ca87d35d94fa131d64c8210e5c6f5002f801274752421e480a9a180dba45
+provenance policy:           232d65ce4fdb9d990e588f15133db3593cb69f31c5d4e3dfece28b79b827c503
+interpreter_executed:        false
+execution_authorized:        false
+```
+
+#### V1B4B — VERIFIED / Deterministic runtime bundle
+
+Code closure:
+
+```text
+05e0e00 feat: add deterministic trusted runtime bundle
+```
+
+Verified derived identity:
+
+```text
+source files:                34
+bundle files:                37
+bundle bytes:                21 346 903
+tree manifest:               ab35bf73bf387d28cd14bdcf85c545706ae7522212f466bf10afbaf1e14ac7ed
+runtime manifest:            41503dc1b9c109b6cfb652e6ff320b5011c78f529f3559720ad1788f4787967d
+bundle fingerprint:          1c98ad24ec3e4bb1b8b4bcd530ffedcf6ff62a6fee5b94cb795f6c84fb1c8c4b
+locked python313._pth:       44b7d2b931284d125d88b833eaa28c711504aafd49415bd5bcc7c076a4d18006
+trusted probe:               33b74a058990ae4f9f0077cb6cbfaa60ad266050d04cf670121d96db929e5c9d
+trusted runner:              d03e21a1867914b87dec61de67bfd0f80637ab5b15948e8d8e6d73839a322de1
+launch contract:             8fedb32153b6227a61b699dd5a34d610c430883b4ddafc96f931f0757138cef6
+interpreter_executed:        false
+execution_authorized:        false
+```
+
+Verification closure:
+
+```text
+portable runtime-bundle gate:                    31/31
+real Windows exact-source bundle gate:            5/5
+developer_task_execution_runtime_bundle flow:     completed successfully
+full check:                                        completed successfully
+runtime architecture audit:                        9/9
+```
+
+The builder re-verifies the exact CPython source, creates a fresh flat staging tree, rereads exact bytes from disk, rejects reparse/special entries, removes staging, and returns only a non-serialized exact-byte capability. It does not launch `python.exe`, Sandbox, worker code, patch code or dependency installation.
+
+#### V1B4C — CURRENT / Active Trusted Runtime Attestation
+
+Architecture review split V1B4C into two reviewable slices:
+
+```text
+V1B4C1  Runtime Attestation Contract and Payload Gate   CURRENT
+V1B4C2  Active Trusted Runtime Composition              PLANNED
+```
+
+V1B4C1 introduces a new runtime-attestation policy/schema lineage and exact guest payload without changing historical V1B3 fingerprints. It defines canonical request/ready/authorize/runtime-result/terminal documents, binds all V1B4B identities, creates a fixed SYSTEM-controller/native-helper payload and a four-folder `.wsb` contract, and performs static/compile evidence only. It launches neither Windows Sandbox nor the pinned interpreter.
+
+V1B4C2 will be the first active execution of CPython 3.13.15. One Sandbox run will map the exact runtime read-only, launch only the fixed benign runner through an explicit absolute `python.exe -I -S -B -E -s -P -X utf8` command under the standard-user/Job/SID boundary, sign the terminal transcript only after Job/account cleanup, require full Sandbox exit, and verify exact post-exit bytes through Windows CNG.
+
+V1B4C still accepts no manifest, workspace, patch, module name, pipeline flow, arbitrary argv, environment additions or shell command. Every report remains `execution_authorized=false`.
 
 Full contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
 
@@ -762,7 +824,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D are VERIFIED. V1B4 threat model, runtime version/provenance choice, active runtime composition and same-run V1C handoff require **Pro Standard**. Bounded host-only V1B4A/V1B4B implementation may return to **«Очень высокий»** only after the architecture/provenance decision is recorded.
+V1B3A–V1B3D and V1B4A–V1B4B are VERIFIED. V1B4C1 may be implemented on **«Очень высокий»** after this architecture split is committed. V1B4C2 active execution and the V1B4D/V1C handoff require **Pro Standard**.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -778,17 +840,18 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-Выполнить `V1B4A — Runtime Source Provenance Gate`:
+Выполнить `V1B4C1 — Runtime Attestation Contract and Payload Gate`:
 
-1. Зафиксировать V1B3 closure и V1B4 four-slice architecture отдельным documentation commit.
-2. Скачать только официальный `python-3.12.10-embed-amd64.zip` и matching SPDX document.
-3. Проверить exact source SHA-256 `4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3`.
-4. Запустить standalone host-only provenance experiment; candidate interpreter не исполнять.
-5. Проверить official SPDX identity/hash, safe ZIP/path model, required files, AMD64 PE headers, `_pth` contract and forbidden package-management surfaces.
-6. Получить structured report with source fingerprint, `interpreter_executed=false` and `execution_authorized=false`.
-7. Провести Pro-review lifecycle-risk: 3.12.10 is the final 3.12 binary release while later security releases are source-only.
-8. Only after that decision begin bounded production V1B4A/V1B4B modules.
-9. Do not create V1B4C active code, map workspace, or execute patch/Python checks in this slice.
+1. Add a new immutable V1B4C runtime-attestation policy/schema without modifying V1B3 policy, contract or verifier fingerprints.
+2. Define strict canonical request, ready, authorize, runtime-result and terminal documents with duplicate/unknown/noncanonical JSON rejection.
+3. Bind the exact V1B4B source, tree, bundle, runtime-manifest, `python313._pth`, probe, runner and launch-contract fingerprints.
+4. Build a fixed V1B4C native helper and SYSTEM-controller payload that can launch only the pinned runtime probe shape.
+5. Lock a four-folder `.wsb` contract: Input read-only, Runtime read-only, Control read-only and Output writable.
+6. Require a sanitized non-inherited environment, explicit `lpApplicationName`, `CREATE_SUSPENDED`, Job assignment before resume and no breakaway.
+7. Add portable failure tests and a real Windows compile-only smoke for exact helper/payload bytes.
+8. Do not launch Windows Sandbox or `python.exe` in V1B4C1.
+9. Only after V1B4C1 is VERIFIED begin `V1B4C2` active Windows composition on Pro Standard.
+10. Keep patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback blocked; `execution_authorized=false`.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -813,7 +876,7 @@ be7470f docs: close worker isolation gate and start active signed composition
 f3f5607 feat: add active signed boundary composition
 ```
 
-Следующий documentation commit закрывает V1B3 и переводит `CURRENT` на V1B4A.
+Следующий documentation commit фиксирует V1B4A/V1B4B closure и переводит `CURRENT` на V1B4C1.
 
 ## 17. DEFERRED
 
@@ -842,7 +905,7 @@ f3f5607 feat: add active signed boundary composition
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-V1B3A–V1B3D are VERIFIED. V1B4 runtime provenance/version choice and V1C active execution boundaries require **Pro Standard**.
+V1B3A–V1B3D and V1B4A–V1B4B are VERIFIED. V1B4C1 may be implemented on **«Очень высокий»** after this architecture split is committed. V1B4C2 active execution and the V1B4D/V1C handoff require **Pro Standard**.
 
 ## 20. Файлы для будущего handoff
 

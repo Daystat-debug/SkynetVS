@@ -1,7 +1,7 @@
 # SkynetVS Architecture Roadmap V1
 
 **Дата фиксации:** 2026-07-30
-**Последнее обновление:** 2026-08-06
+**Последнее обновление:** 2026-08-12
 **Статус:** LOCKED
 **Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
@@ -594,6 +594,14 @@ execution_authorized:                       false
 
 **Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
+## Roadmap Change 007 — V1B4C contract/payload gate separated from the active runtime run
+
+**Причина:** one commit must not simultaneously introduce a new signed transcript lineage, a new fixed native launch helper, a fourth read-only runtime mapping and the first execution of the pinned Python interpreter. That would make review and failure attribution too broad.
+
+**Что меняется:** V1B4C1 locks and verifies the canonical runtime-attestation contracts and exact guest payload without launching Sandbox or Python. V1B4C2 performs the first active production run of those exact bytes inside the already verified lifecycle, privilege and signature boundary.
+
+**Что не меняется:** V1B3 fingerprints remain immutable; V1B4B bytes remain the only accepted runtime; patch/workspace code, `python_module`, `pipeline`, arbitrary shell, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
+
 ## Roadmap Change 004 — V1B3C payload gate separated from V1B3D active composition
 
 **Причина:** a standalone active V1B3C run would either trust writable unsigned output or duplicate the lifecycle/signature composition that belongs to V1B3D. Both options weaken the evidence model.
@@ -614,44 +622,65 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** CURRENT / architecture split into measured slices; V1B4A provenance experiment next.
+**Статус:** V1B4A and V1B4B VERIFIED; CURRENT — V1B4C1 Runtime Attestation Contract and Payload Gate.
 
-Host `.venv` не является trusted runtime bundle. V1B4 uses a separate application-local distribution with exact source provenance, deterministic derived bytes, fixed launch contract and active same-boundary evidence.
+Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
 ##### V1B4A — Runtime Source Provenance Gate
 
-- host-only; does not execute the candidate interpreter;
-- verifies exact official source archive and SPDX evidence;
-- rejects unsafe ZIP paths, duplicates/case collisions, symlinks, encryption, unbounded expansion and mutable/reparse input;
-- verifies required embeddable files, AMD64 PE machine, upstream `python312._pth`, and absence of `pip`, `ensurepip`, `site-packages`, `Scripts` and `pyvenv.cfg`;
-- produces immutable source report and source fingerprint with `execution_authorized=false`.
+**Статус:** VERIFIED / CPython 3.12.10 reference and CPython 3.13.15 execution candidate.
 
-Initial compatibility candidate:
+- host-only; candidate interpreters were not executed;
+- exact official archive and SPDX bytes were verified;
+- unsafe ZIP paths, duplicate/case collisions, symlinks, encryption, unbounded expansion and mutable/reparse input are rejected;
+- required embeddable files, AMD64 PE machine, upstream `_pth`, stdlib manifest and absence of executable package-management surfaces are pinned;
+- the accepted execution candidate is `python-3.13.15-embed-amd64.zip` with SHA-256 `d1f04d990aee1253d8569e8e5104e30fa9f5fa830899f14843448872d936a2cf`;
+- source fingerprint is `6027ca87d35d94fa131d64c8210e5c6f5002f801274752421e480a9a180dba45`;
+- strict provenance policy fingerprint is `232d65ce4fdb9d990e588f15133db3593cb69f31c5d4e3dfece28b79b827c503`;
+- every report keeps `interpreter_executed=false` and `execution_authorized=false`.
 
-```text
-CPython 3.12.10 Windows embeddable AMD64
-python-3.12.10-embed-amd64.zip
-SHA-256 4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3
-```
-
-The candidate matches the current host patch version but is not silently approved for V1C because `3.12.10` was the final 3.12 regular release with binary installers; later 3.12 security releases are source-only.
+CPython 3.12.10 remains a verified provenance reference only. CPython 3.13.15 is the pinned execution candidate for V1B4B–V1B4D.
 
 ##### V1B4B — Deterministic Runtime Bundle Gate
 
-- derives an application-local runtime only from verified V1B4A bytes;
-- locks `python312._pth`, trusted probe/runner, canonical file manifest and fixed launch contract;
+**Статус:** VERIFIED / production closure `05e0e00`.
+
+- derives an application-local runtime only from exact CPython 3.13.15 source bytes;
+- replaces upstream `python313._pth` with a project-owned locked site-free file;
+- adds only a fixed trusted probe, fixed trusted runner and canonical `runtime_manifest.json`;
 - rejects extra/missing files, path collisions, reparse points, ADS, arbitrary `.pth`, `import site`, `sitecustomize`, `usercustomize`, pip and mutable package roots;
-- exposes exact bytes only through a non-serialized capability;
-- never accepts manifest/workspace/patch/shell/arbitrary executable input;
-- returns `execution_authorized=false`.
+- verifies exact bytes again after disk staging and removes staging before returning;
+- exposes exact bytes only through a non-serialized capability and accepts no manifest/workspace/patch/command input;
+- verified bundle identity: 37 files, 21,346,903 bytes, tree manifest `ab35bf73bf387d28cd14bdcf85c545706ae7522212f466bf10afbaf1e14ac7ed`, bundle fingerprint `1c98ad24ec3e4bb1b8b4bcd530ffedcf6ff62a6fee5b94cb795f6c84fb1c8c4b`;
+- portable gate `31/31`, real Windows source gate `5/5`, targeted flow and full `check` completed successfully;
+- candidate interpreter was not executed and `execution_authorized=false`.
 
 ##### V1B4C — Active Trusted Runtime Attestation
 
-- performs one production Windows Sandbox run with the exact V1B4B bundle;
-- executes only a fixed benign Python probe under the standard-user/Job/SID boundary;
-- launches explicit `python.exe -I -S -B -E -s -P -X utf8`;
-- attests exact version/architecture, isolated flags, exact `sys.path`, ignored `PYTHON*` poison, absent user-site/pip/ensurepip and non-writable runtime root;
-- binds runtime source/bundle/probe/launch fingerprints into the signed post-exit transcript;
+V1B4C is internally split so the new signed runtime schema and exact guest payload are reviewed before any active Sandbox launch.
+
+###### V1B4C1 — Runtime Attestation Contract and Payload Gate
+
+**Статус:** CURRENT.
+
+- introduces a new V1B4 runtime-attestation policy/schema lineage without mutating historical V1B3 fingerprints;
+- defines canonical request, ready, authorize, runtime-result and terminal documents;
+- binds the exact V1B4B source, tree, bundle, `_pth`, probe, runner and launch-contract fingerprints;
+- builds the fixed SYSTEM-controller/native-helper payload and four-folder `.wsb` configuration;
+- audits and compile-checks exact payload bytes without launching Windows Sandbox or `python.exe`;
+- accepts no task, patch, workspace, module, pipeline flow, arbitrary command, executable or environment input;
+- returns only fail-closed metadata with `execution_authorized=false`.
+
+###### V1B4C2 — Active Trusted Runtime Composition
+
+**Статус:** PLANNED / blocked until V1B4C1 is VERIFIED.
+
+- performs one production Windows Sandbox run with the exact V1B4B bundle mapped read-only;
+- executes only the fixed benign Python probe under the standard-user/Job/SID boundary;
+- launches explicit `python.exe -I -S -B -E -s -P -X utf8` with a sanitized non-inherited environment;
+- attests exact version/architecture, isolated flags, exact runtime-local `sys.path`, ignored `PYTHON*` poison, absent user-site/pip/ensurepip and non-writable runtime root;
+- closes the Job, proves worker-SID quiescence and deletes the exact account before terminal signing;
+- trusts writable output only after full Sandbox exit and post-exit CNG signature verification;
 - remains capability evidence only with `execution_authorized=false`.
 
 ##### V1B4D — Same-Run Runtime Capability Lease

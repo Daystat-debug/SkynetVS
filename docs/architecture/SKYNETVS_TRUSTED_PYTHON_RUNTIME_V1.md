@@ -3,9 +3,12 @@
 ## 1. Статус
 
 ```text
-V1B3 — VERIFIED
-V1B4 — CURRENT
-V1C  — BLOCKED
+V1B3  — VERIFIED
+V1B4A — VERIFIED
+V1B4B — VERIFIED
+V1B4C — CURRENT
+V1B4D — PLANNED
+V1C   — BLOCKED
 ```
 
 Этот документ фиксирует threat model, source-provenance model, deterministic bundle model, active attestation и handoff-контракт для `Typed Check Runner V1B4 — Trusted Python Runtime`.
@@ -24,8 +27,10 @@ execution_authorized    false
 ## 2. Проверенная стартовая точка
 
 ```text
-f3f5607 feat: add active signed boundary composition
+05e0e00 feat: add deterministic trusted runtime bundle
 ```
+
+The active signed boundary beneath V1B4 remains the verified `f3f5607` composition. V1B4B adds exact CPython 3.13.15 source verification and deterministic bundle construction without executing the interpreter.
 
 Подтверждено одним production Windows Sandbox run:
 
@@ -65,150 +70,148 @@ Host `.venv` не принимается как V1B4 source, потому что
 
 V1B4 использует отдельный application-local runtime artifact, а не копию host virtual environment.
 
-## 4. Runtime source candidate и нерешённый lifecycle-риск
+## 4. Runtime source provenance and selected execution candidate
 
-Первый совместимый candidate для V1B4A:
+V1B4A verified two official Windows embeddable distributions without executing either candidate:
+
+```text
+CPython 3.12.10 AMD64  provenance reference
+CPython 3.13.15 AMD64  selected execution candidate
+```
+
+Pinned CPython 3.13.15 source:
 
 ```text
 kind:            CPython Windows embeddable package
-version:         3.12.10
+version:         3.13.15
 architecture:    AMD64
-file:            python-3.12.10-embed-amd64.zip
-source SHA-256:  4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3
+file:            python-3.13.15-embed-amd64.zip
+source SHA-256:  d1f04d990aee1253d8569e8e5104e30fa9f5fa830899f14843448872d936a2cf
+SPDX SHA-256:    ba428f93acb06764f0005246f8ca48bb1c04feef64ce7db0b177fb2fd371c423
+source fingerprint:
+6027ca87d35d94fa131d64c8210e5c6f5002f801274752421e480a9a180dba45
+provenance policy fingerprint:
+232d65ce4fdb9d990e588f15133db3593cb69f31c5d4e3dfece28b79b827c503
 ```
 
-Причина выбора candidate — exact patch-version parity с текущим SkynetVS host interpreter.
-
-Это ещё не окончательное разрешение для V1C. Python `3.12.10` был последним regular bugfix release серии 3.12 с Windows binaries; последующие 3.12 security releases являются source-only. Поэтому V1B4A сначала фиксирует exact provenance и compatibility evidence, а отдельный Pro-review решает один из вариантов:
-
-1. принять `3.12.10` только как benign-attestation runtime и оставить patched-code execution заблокированным;
-2. перевести SkynetVS baseline на поддерживаемую binary line и построить новый runtime bundle;
-3. воспроизводимо собрать более новый security release 3.12 из source и отдельно аттестовать toolchain/provenance.
-
-Ни один вариант не выбирается молча.
+CPython 3.12.10 remains useful historical provenance evidence but is not the V1B4 execution candidate. No provenance run launched either interpreter, and every report retained `execution_authorized=false`.
 
 ## 5. V1B4 разделён на четыре evidence-среза
 
 ### V1B4A — Runtime Source Provenance Gate
 
-Host-only gate, который не запускает `python.exe` из bundle.
+**Status:** VERIFIED.
 
-Он проверяет:
+The host-only gate did not launch the candidate interpreter. It verified exact official archive/SPDX bytes, safe ZIP structure, required embeddable files, AMD64 PE identity, upstream `_pth`, outer and stdlib manifests, the sole inert `site-packages/README.txt` placeholder and absence of executable package-management surfaces.
 
-- exact source archive filename, regular-file/no-reparse state и bounded size;
-- exact source archive SHA-256;
-- official SPDX document, CPython package name/version/filename и matching SHA-256;
-- ZIP path safety, duplicate/case-collision guards, encryption/symlink rejection и bounded expansion;
-- mandatory embeddable files;
-- отсутствие `pip`, `ensurepip`, `site-packages`, `Scripts` и `pyvenv.cfg`;
-- AMD64 PE machine for executable/DLL/PYD entries;
-- upstream `python312._pth` без active `import site`;
-- deterministic source-manifest fingerprint.
-
-Результат:
+Result:
 
 ```text
-DeveloperTaskPythonRuntimeSourceReport
+CPython 3.13.15 source fingerprint:
+6027ca87d35d94fa131d64c8210e5c6f5002f801274752421e480a9a180dba45
+interpreter_executed=false
 execution_authorized=false
 ```
 
 ### V1B4B — Deterministic Runtime Bundle Gate
 
-Строит derived application-local bundle только из успешно проверенного V1B4A source.
+**Status:** VERIFIED / `05e0e00`.
 
-Derived bundle содержит:
-
-```text
-exact CPython embeddable files
-locked python312._pth
-fixed trusted runtime probe
-fixed trusted runtime launcher/runner
-canonical file manifest
-canonical launch contract
-```
-
-Правила:
-
-- download/install во время task отсутствуют;
-- `pip` и `ensurepip` отсутствуют;
-- `import site` отсутствует;
-- нет arbitrary `.pth`, `sitecustomize.py`, `usercustomize.py` или writable package directory;
-- extra/missing file, case collision, reparse point, ADS или hash mismatch fail closed;
-- source fingerprint и derived bundle fingerprint хранятся раздельно;
-- exact bytes доступны только через non-serialized capability внутри процесса;
-- public builder не принимает manifest, workspace, patch, shell command или arbitrary executable.
-
-Результат:
+Derived bundle contains:
 
 ```text
-DeveloperTaskPythonRuntimeBundle
-DeveloperTaskPythonRuntimeBundleReport
-execution_authorized=false
+33 exact upstream passthrough files
+1 project-owned locked python313._pth
+1 fixed trusted runtime probe
+1 fixed trusted runtime runner
+1 canonical runtime_manifest.json
+37 files total
 ```
+
+Verified identity:
+
+```text
+tree manifest:          ab35bf73bf387d28cd14bdcf85c545706ae7522212f466bf10afbaf1e14ac7ed
+bundle fingerprint:     1c98ad24ec3e4bb1b8b4bcd530ffedcf6ff62a6fee5b94cb795f6c84fb1c8c4b
+runtime manifest:       41503dc1b9c109b6cfb652e6ff320b5011c78f529f3559720ad1788f4787967d
+locked python313._pth:  44b7d2b931284d125d88b833eaa28c711504aafd49415bd5bcc7c076a4d18006
+trusted probe:          33b74a058990ae4f9f0077cb6cbfaa60ad266050d04cf670121d96db929e5c9d
+trusted runner:         d03e21a1867914b87dec61de67bfd0f80637ab5b15948e8d8e6d73839a322de1
+launch contract:        8fedb32153b6227a61b699dd5a34d610c430883b4ddafc96f931f0757138cef6
+```
+
+The builder re-verifies source bytes, uses fresh exclusive staging, rereads exact disk bytes, rejects reparse/special entries, removes staging and returns a non-serialized exact-byte capability. It never accepts task/patch/workspace/command input and never launches Python, Sandbox or dependencies.
 
 ### V1B4C — Active Trusted Runtime Attestation
 
-Один production Windows Sandbox run выполняет только fixed benign Python probe.
+V1B4C is split internally:
 
-State machine:
+```text
+V1B4C1  Runtime Attestation Contract and Payload Gate   CURRENT
+V1B4C2  Active Trusted Runtime Composition              PLANNED
+```
+
+#### V1B4C1 — Runtime Attestation Contract and Payload Gate
+
+This non-active slice:
+
+- introduces a new immutable V1B4C policy/schema lineage while historical V1B3 fingerprints remain unchanged;
+- defines strict canonical request, ready, authorize, runtime-result and terminal documents;
+- binds source, provenance, tree, bundle, runtime-manifest, `_pth`, probe, runner and launch-contract identities;
+- builds exact SYSTEM-controller/native-helper/bootstrap/`.wsb` payload bytes;
+- locks four mapped roots: Input read-only, Runtime read-only, Control read-only and Output writable;
+- statically audits and compile-checks the payload without launching Windows Sandbox or `python.exe`;
+- accepts no manifest, workspace, patch, module, pipeline, caller argv, caller environment or arbitrary executable;
+- keeps `execution_authorized=false`.
+
+#### V1B4C2 — Active Trusted Runtime Composition
+
+One production Windows Sandbox run will:
 
 ```text
 fresh host/backend evidence
     ↓
-exact V1B4B bundle staged read-only
+exact V1B4B capability materialized and mapped read-only
     ↓
-SYSTEM controller verifies source + bundle manifest
+SYSTEM controller verifies every runtime byte and manifest
     ↓
-fresh standard-user token
+fresh standard-user token with sanitized environment
     ↓
 explicit runtime\python.exe
     ↓
 CREATE_SUSPENDED → Job Object → ResumeThread
     ↓
-fixed trusted runtime probe
+fixed trusted runtime runner/probe only
     ↓
-Job close + worker-SID process quiescence + account deletion
+Job close + worker-SID quiescence + exact account deletion
     ↓
 signed terminal transcript
     ↓
 all Sandbox processes exited
     ↓
-post-exit exact-byte + CNG signature verification
+post-exit exact-byte and CNG signature verification
 ```
 
 Probe attests at minimum:
 
 ```text
-CPython identity/version/AMD64
+CPython 3.13.15 / AMD64
 sys.flags.isolated == 1
 sys.flags.ignore_environment == 1
 sys.flags.no_user_site == 1
 sys.flags.safe_path == true
 sys.flags.dont_write_bytecode == 1
+sys.flags.utf8_mode == 1
 site not imported
-exact sys.path
-PYTHONHOME/PYTHONPATH poison ignored
-user site absent
+exact runtime-local sys.path
+no PYTHON*/PIP_*/VIRTUAL_ENV variables
 pip/ensurepip absent
-runtime root not writable by worker
-fixed probe/result schema
-network disabled
+runtime root not writable
 standard-user/Job/SID cleanup evidence
+network isolation evidence
 ```
 
-Locked interpreter invocation begins with an explicit executable path and fixed flags:
-
-```text
-python.exe -I -S -B -E -s -P -X utf8
-```
-
-Redundant flags are intentional evidence; no `-m`, `-c`, stdin program, shell resolution or caller-supplied argument is accepted in V1B4C.
-
-Standalone active attestation is capability evidence only:
-
-```text
-execution_authorized=false
-```
+V1B4C2 remains benign capability evidence. It does not execute patch/workspace code and returns `execution_authorized=false`.
 
 ### V1B4D — Same-Run Runtime Capability Lease
 
@@ -247,9 +250,9 @@ runtime/
     python.exe
     pythonw.exe
     python3.dll
-    python312.dll
-    python312.zip
-    python312._pth
+    python313.dll
+    python313.zip
+    python313._pth
     *.pyd
     required runtime DLLs
     LICENSE.txt
@@ -258,7 +261,7 @@ runtime/
     runtime_manifest.json
 ```
 
-`python312._pth` — project-owned locked file. Допустимые active path entries ограничены runtime-local paths; `import site` запрещён.
+`python313._pth` — project-owned locked file. Допустимые active path entries ограничены runtime-local paths; `import site` запрещён.
 
 `runtime_manifest.json` не является источником доверия сам по себе. Host policy и source report определяют expected entries/hashes; manifest лишь сериализует уже проверенное canonical evidence.
 
@@ -304,7 +307,7 @@ runtime source SHA-256
 runtime source fingerprint
 runtime bundle fingerprint
 runtime file-manifest SHA-256
-python312._pth SHA-256
+python313._pth SHA-256
 runtime probe SHA-256
 runtime runner SHA-256
 launch-contract fingerprint
@@ -352,4 +355,4 @@ full check                                 green
 
 Threat model, runtime version/provenance choice, active runtime state machine and same-run V1C handoff require **Pro Standard**.
 
-После фиксации архитектуры bounded host-only implementation V1B4A/V1B4B может выполняться на **«Очень высокий»**. Перед V1B4C active Windows composition нужно вернуться на **Pro Standard**.
+V1B4C1 bounded contract/payload implementation may run on **«Очень высокий»** after this split is committed. V1B4C2 active Windows composition, V1B4D lease design and the V1C handoff require **Pro Standard**.
