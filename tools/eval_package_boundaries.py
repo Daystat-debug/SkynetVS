@@ -26,6 +26,7 @@ EXPECTED_DEVELOPER_FILES = {
     "modules/developer/developer_task_execution_runtime_attestation_contract.py",
     "modules/developer/developer_task_execution_runtime_attestation_payload.py",
     "modules/developer/developer_task_execution_runtime_attestation_policy.py",
+    "modules/developer/developer_task_execution_runtime_attestation_verifier.py",
     "modules/developer/developer_task_execution_runtime_bundle.py",
     "modules/developer/developer_task_execution_runtime_policy.py",
     "modules/developer/developer_task_execution_backend_host.py",
@@ -65,6 +66,7 @@ LEGACY_DEVELOPER_FILES = {
     "modules/developer_task_execution_runtime_attestation_contract.py",
     "modules/developer_task_execution_runtime_attestation_payload.py",
     "modules/developer_task_execution_runtime_attestation_policy.py",
+    "modules/developer_task_execution_runtime_attestation_verifier.py",
     "modules/developer_task_execution_runtime_bundle.py",
     "modules/developer_task_execution_runtime_policy.py",
     "modules/developer_task_execution_backend_host.py",
@@ -104,6 +106,7 @@ LEGACY_DEVELOPER_MODULES = {
     "modules.developer_task_execution_runtime_attestation_contract",
     "modules.developer_task_execution_runtime_attestation_payload",
     "modules.developer_task_execution_runtime_attestation_policy",
+    "modules.developer_task_execution_runtime_attestation_verifier",
     "modules.developer_task_execution_runtime_bundle",
     "modules.developer_task_execution_runtime_policy",
     "modules.developer_task_execution_backend_host",
@@ -898,6 +901,9 @@ def main() -> int:
             "developer_runtime_attestation_flow": '"developer_task_execution_runtime_attestation"' in pipeline_text,
             "developer_runtime_attestation_eval": "tools/eval_developer_task_execution_runtime_attestation.py" in pipeline_text,
             "developer_runtime_attestation_windows_smoke": "tools/eval_developer_task_execution_runtime_attestation_windows.py" in pipeline_text,
+            "developer_runtime_attestation_verifier_flow": '"developer_task_execution_runtime_attestation_verifier"' in pipeline_text,
+            "developer_runtime_attestation_verifier_eval": "tools/eval_developer_task_execution_runtime_attestation_verifier.py" in pipeline_text,
+            "developer_runtime_attestation_crypto_windows_smoke": "tools/eval_developer_task_execution_runtime_attestation_crypto_windows.py" in pipeline_text,
         },
         {
             "pipeline": True,
@@ -941,6 +947,9 @@ def main() -> int:
             "developer_runtime_attestation_flow": True,
             "developer_runtime_attestation_eval": True,
             "developer_runtime_attestation_windows_smoke": True,
+            "developer_runtime_attestation_verifier_flow": True,
+            "developer_runtime_attestation_verifier_eval": True,
+            "developer_runtime_attestation_crypto_windows_smoke": True,
         },
     )
 
