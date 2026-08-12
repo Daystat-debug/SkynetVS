@@ -6,7 +6,9 @@
 V1B3  — VERIFIED
 V1B4A — VERIFIED
 V1B4B — VERIFIED
-V1B4C — CURRENT
+V1B4C1 — VERIFIED
+V1B4C2A — CURRENT
+V1B4C2B — PLANNED
 V1B4D — PLANNED
 V1C   — BLOCKED
 ```
@@ -144,44 +146,106 @@ The builder re-verifies source bytes, uses fresh exclusive staging, rereads exac
 
 ### V1B4C — Active Trusted Runtime Attestation
 
-V1B4C is split internally:
+V1B4C is split into three independently reviewable claims:
 
 ```text
-V1B4C1  Runtime Attestation Contract and Payload Gate   CURRENT
-V1B4C2  Active Trusted Runtime Composition              PLANNED
+V1B4C1   Runtime Attestation Contract and Payload Gate   VERIFIED
+V1B4C2A  Signed Runtime Transcript Verifier              CURRENT
+V1B4C2B  Active Trusted Runtime Composition              PLANNED
 ```
 
 #### V1B4C1 — Runtime Attestation Contract and Payload Gate
 
-This non-active slice:
+Verified code closure:
 
-- introduces a new immutable V1B4C policy/schema lineage while historical V1B3 fingerprints remain unchanged;
-- defines strict canonical request, ready, authorize, runtime-result and terminal documents;
-- binds source, provenance, tree, bundle, runtime-manifest, `_pth`, probe, runner and launch-contract identities;
-- builds exact SYSTEM-controller/native-helper/bootstrap/`.wsb` payload bytes;
-- locks four mapped roots: Input read-only, Runtime read-only, Control read-only and Output writable;
-- statically audits and compile-checks the payload without launching Windows Sandbox or `python.exe`;
-- accepts no manifest, workspace, patch, module, pipeline, caller argv, caller environment or arbitrary executable;
-- keeps `execution_authorized=false`.
+```text
+9a85bb1 feat: add trusted runtime attestation contract payload
+```
 
-#### V1B4C2 — Active Trusted Runtime Composition
+Verified evidence:
+
+```text
+portable contract/payload gate:       32/32
+Windows compile/parse-only smoke:       3/3
+targeted flow:          completed successfully
+full check:             completed successfully
+Sandbox launched:                     false
+interpreter executed:                 false
+execution_authorized:                 false
+```
+
+V1B4C1 introduced the immutable runtime-attestation policy/schema, strict canonical documents and exact SYSTEM-controller/native-helper/bootstrap/four-folder `.wsb` payload. It binds all V1B4B identities and preserves the standard-user/Job/SID cleanup boundary without performing an active run.
+
+#### V1B4C2A — Signed Runtime Transcript Verifier
+
+This pure host-side boundary verifies two phases.
+
+Pin phase:
+
+```text
+exact request bytes
+    + exact ready bytes
+    + host timing facts
+    + exact public-key identity
+    + canonical authorize bytes
+    ↓
+immutable redacted transcript pin
+```
+
+Final phase:
+
+```text
+pinned request/ready/authorize unchanged
+    + exact runtime_result bytes
+    + exact terminal bytes
+    + exact 64-byte signature
+    ↓
+Windows CNG ECDSA P-256 verification
+    ↓
+immutable signed-runtime report
+```
+
+The verifier must enforce:
+
+- strict C1 contract types and exact canonical bytes;
+- request ID, host nonce and authorization nonce anti-replay binding;
+- exact backend, C1 policy, payload, runtime source/tree/bundle/manifest, Python, `_pth`, stdlib, probe, runner and launch-contract identities;
+- SYSTEM controller, ephemeral key and four mapping controls in ready evidence;
+- bounded ready/authorization windows and monotonic phase ordering;
+- exact request/ready/authorize/runtime-result hashes in terminal evidence;
+- exact public-key hash and valid P-256 point;
+- raw 64-byte signature verification over exact terminal bytes;
+- post-pin mutation rejection;
+- immutable redacted reports with `execution_authorized=false`.
+
+V1B4C2A must not import or invoke Sandbox lifecycle, filesystem staging, process launch, runtime materialization or candidate Python execution.
+
+#### V1B4C2B — Active Trusted Runtime Composition
 
 One production Windows Sandbox run will:
 
 ```text
 fresh host/backend evidence
     ↓
-exact V1B4B capability materialized and mapped read-only
+rebuild exact V1B4B capability from pinned source ZIP
+    ↓
+materialize and reread exactly 37 runtime files
+    ↓
+prepare exact C1 Input/Runtime/Control/Output roots
+    ↓
+launch one Windows Sandbox instance
     ↓
 SYSTEM controller verifies every runtime byte and manifest
     ↓
+V1B4C2A pins request + ready + authorize before publication
+    ↓
 fresh standard-user token with sanitized environment
     ↓
-explicit runtime\python.exe
+explicit C:\SkynetVSRuntime\python.exe
     ↓
 CREATE_SUSPENDED → Job Object → ResumeThread
     ↓
-fixed trusted runtime runner/probe only
+fixed trusted runner/probe only
     ↓
 Job close + worker-SID quiescence + exact account deletion
     ↓
@@ -189,8 +253,22 @@ signed terminal transcript
     ↓
 all Sandbox processes exited
     ↓
-post-exit exact-byte and CNG signature verification
+post-exit exact-byte reread + V1B4C2A/CNG verification
+    ↓
+fresh host evidence revalidation + safe artifact cleanup
 ```
+
+Writable Output is untrusted while Sandbox is active. `ready.json`, `runtime_result.json`, `terminal_payload.json` and the signature are progress signals only until complete process exit and exact post-exit verification.
+
+The active API may accept only:
+
+```text
+verified host report
+pinned CPython source ZIP path
+validated artifact parent
+```
+
+It must not accept task, patch, workspace, module, pipeline, arbitrary executable, argv, environment additions or shell commands.
 
 Probe attests at minimum:
 
@@ -208,10 +286,32 @@ no PYTHON*/PIP_*/VIRTUAL_ENV variables
 pip/ensurepip absent
 runtime root not writable
 standard-user/Job/SID cleanup evidence
-network isolation evidence
+IPv4 and IPv6 isolation evidence
 ```
 
-V1B4C2 remains benign capability evidence. It does not execute patch/workspace code and returns `execution_authorized=false`.
+Failure-only forced cleanup never becomes success. Unproven process state, host drift, byte mutation or cleanup failure is terminal. V1B4C2B remains benign capability evidence and returns `execution_authorized=false`.
+
+#### V1B4C threat model
+
+In scope:
+
+- forged/stale host evidence and pre-existing Sandbox processes;
+- writable-output substitution, replay and post-pin mutation;
+- inherited environment, registry, user-site, pip and path poisoning;
+- wrong runtime/payload bytes, unsafe artifact roots and observable TOCTOU changes;
+- Sandbox launcher/remote-session handoff races, timeouts and cleanup failures;
+- worker process escape attempts within the measured Job/SID controls.
+
+Trusted assumptions:
+
+- the Windows kernel, Windows Sandbox/hypervisor boundary and current host process/session are trusted;
+- the pinned CPython source ZIP and repository code at the verified commits are trusted inputs after exact verification.
+
+Out of scope:
+
+- compromised host kernel or administrator;
+- a hostile host-local process with an equivalent user token that can mutate private host artifacts during the run;
+- hypervisor/Sandbox escape and unknown guest privilege-escalation vulnerabilities.
 
 ### V1B4D — Same-Run Runtime Capability Lease
 
@@ -340,6 +440,7 @@ source archive exact hash                  verified
 safe ZIP/file manifest                     verified
 deterministic derived bundle               verified
 host/non-exec bundle eval                  green
+host signed-runtime verifier               green
 active benign runtime attestation          green
 post-exit signed verification              green
 runtime root write attempt                 blocked
@@ -355,4 +456,4 @@ full check                                 green
 
 Threat model, runtime version/provenance choice, active runtime state machine and same-run V1C handoff require **Pro Standard**.
 
-V1B4C1 bounded contract/payload implementation may run on **«Очень высокий»** after this split is committed. V1B4C2 active Windows composition, V1B4D lease design and the V1C handoff require **Pro Standard**.
+V1B4C2A host-only verifier may run on **«Очень высокий»** after this split is committed. V1B4C2B active Windows composition, V1B4D lease design and the V1C handoff require **Pro Standard**.

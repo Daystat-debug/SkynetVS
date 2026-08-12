@@ -594,6 +594,14 @@ execution_authorized:                       false
 
 **Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
+## Roadmap Change 008 — V1B4C2 verifier separated from the first active Python run
+
+**Причина:** V1B4C1 фиксирует canonical documents и exact guest payload, но следующий этап всё ещё содержит два независимых доказательства: корректность host-side transcript pinning/CNG verification и корректность первого active Windows Sandbox запуска pinned CPython. Если вводить их одним commit, дефект verifier и дефект lifecycle/materialization невозможно локализовать независимо.
+
+**Что меняется:** V1B4C2 is split into V1B4C2A and V1B4C2B. V1B4C2A implements a pure host-side signed-runtime transcript verifier and Windows CNG evidence without launching Sandbox or Python. V1B4C2B performs the first active production run only after the verifier is independently VERIFIED.
+
+**Что не меняется:** V1B4C1 policy/contract/payload fingerprints remain immutable; V1B4B remains the only accepted runtime capability; patch/workspace code, `python_module`, `pipeline`, arbitrary shell, dependency installation and host fallback remain forbidden; every report keeps `execution_authorized=false`.
+
 ## Roadmap Change 007 — V1B4C contract/payload gate separated from the active runtime run
 
 **Причина:** one commit must not simultaneously introduce a new signed transcript lineage, a new fixed native launch helper, a fourth read-only runtime mapping and the first execution of the pinned Python interpreter. That would make review and failure attribution too broad.
@@ -622,7 +630,7 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** V1B4A and V1B4B VERIFIED; CURRENT — V1B4C1 Runtime Attestation Contract and Payload Gate.
+**Статус:** V1B4A–V1B4C1 VERIFIED; CURRENT — V1B4C2A Signed Runtime Transcript Verifier.
 
 Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
@@ -661,27 +669,77 @@ V1B4C is internally split so the new signed runtime schema and exact guest paylo
 
 ###### V1B4C1 — Runtime Attestation Contract and Payload Gate
 
-**Статус:** CURRENT.
+**Статус:** VERIFIED / production closure `9a85bb1`.
 
-- introduces a new V1B4 runtime-attestation policy/schema lineage without mutating historical V1B3 fingerprints;
-- defines canonical request, ready, authorize, runtime-result and terminal documents;
-- binds the exact V1B4B source, tree, bundle, `_pth`, probe, runner and launch-contract fingerprints;
-- builds the fixed SYSTEM-controller/native-helper payload and four-folder `.wsb` configuration;
-- audits and compile-checks exact payload bytes without launching Windows Sandbox or `python.exe`;
-- accepts no task, patch, workspace, module, pipeline flow, arbitrary command, executable or environment input;
-- returns only fail-closed metadata with `execution_authorized=false`.
+- introduced a separate immutable V1B4 runtime-attestation policy/schema lineage without mutating historical V1B3 fingerprints;
+- defined strict canonical request, ready, authorize, runtime-result and terminal documents;
+- bound the exact V1B4B source, tree, bundle, runtime-manifest, `_pth`, probe, runner and launch-contract identities;
+- locked the exact SYSTEM-controller/native-helper/bootstrap/four-folder `.wsb` payload;
+- preserved fresh standard-user, medium-integrity, Job-before-resume, no-breakaway, SID-quiescence and exact-account-deletion controls;
+- portable contract/payload gate completed `32/32`;
+- real Windows compile/parse-only smoke completed `3/3`;
+- targeted flow and full `check` completed successfully;
+- Windows Sandbox and candidate `python.exe` were not launched; `execution_authorized=false`.
 
-###### V1B4C2 — Active Trusted Runtime Composition
+Verified identities:
 
-**Статус:** PLANNED / blocked until V1B4C1 is VERIFIED.
+```text
+runtime-attestation policy: 31c4f8de17e999db2d064a8aca4e95d3e2400f21a229317e83b1d5700d1e3c48
+payload bundle:             22a2aed03e87ddee2f6b3e38f15ea6b7afb0130c73ecde1511b321bb8598b801
+historical V1B3 boundary:   9eb7a1373d1814eea37c8213dfeaeb4f4e7d40e7fdb5d8ec40f91f3e2fd8db72
+```
 
-- performs one production Windows Sandbox run with the exact V1B4B bundle mapped read-only;
-- executes only the fixed benign Python probe under the standard-user/Job/SID boundary;
-- launches explicit `python.exe -I -S -B -E -s -P -X utf8` with a sanitized non-inherited environment;
-- attests exact version/architecture, isolated flags, exact runtime-local `sys.path`, ignored `PYTHON*` poison, absent user-site/pip/ensurepip and non-writable runtime root;
-- closes the Job, proves worker-SID quiescence and deletes the exact account before terminal signing;
-- trusts writable output only after full Sandbox exit and post-exit CNG signature verification;
-- remains capability evidence only with `execution_authorized=false`.
+###### V1B4C2 — Signed Verification and Active Trusted Runtime Composition
+
+V1B4C2 is split again so a new verifier is independently proven before the first interpreter execution:
+
+```text
+V1B4C2A  Signed Runtime Transcript Verifier   CURRENT
+V1B4C2B  Active Trusted Runtime Composition   PLANNED
+```
+
+####### V1B4C2A — Signed Runtime Transcript Verifier
+
+**Статус:** CURRENT / host-only.
+
+- implements pure cross-document and temporal verification for exact V1B4C1 request/ready/authorize/runtime-result/terminal bytes;
+- pins request ID, host nonce, payload hashes, runtime identities, SYSTEM/ephemeral-key evidence, mapping controls, public-key identity and authorization deadline before any active publication can be trusted;
+- verifies that pinned request/ready/authorize bytes remain exact and that terminal hashes bind the exact runtime result and all trusted inputs;
+- verifies the raw 64-byte ECDSA P-256 signature over exact terminal bytes through Windows CNG;
+- rejects replay, nonce/key/hash/policy/runtime substitution, out-of-window evidence, post-pin mutation, invalid signatures and forged reports;
+- produces immutable reports that hide nonce/public-key material and always return `execution_authorized=false`;
+- imports no lifecycle/process/filesystem execution layer and launches neither Windows Sandbox nor Python.
+
+####### V1B4C2B — Active Trusted Runtime Composition
+
+**Статус:** PLANNED / blocked until V1B4C2A is VERIFIED.
+
+- accepts only a verified host report, the pinned CPython source ZIP path and a validated artifact parent;
+- rebuilds V1B4B internally, materializes exactly 37 runtime files into a fresh private host root, rereads exact bytes and maps that root read-only;
+- prepares exact V1B4C1 Input/Runtime/Control/Output roots and performs one production Windows Sandbox run;
+- treats writable Output artifacts as progress signals while active, pins ready before publishing authorization, and delegates all signed transcript trust to V1B4C2A;
+- executes only the fixed benign `python.exe -I -S -B -E -s -P -X utf8 skynetvs_runtime_runner.py` shape under the standard-user/Job/SID boundary;
+- requires Job close, worker-SID quiescence and exact account deletion before terminal signing;
+- requires all known Sandbox processes to exit, re-reads exact pinned/runtime/payload bytes, verifies the signature and revalidates fresh host evidence before success;
+- forced cleanup, unproven process state, host drift, artifact mutation or cleanup failure can never become success;
+- remains benign capability evidence only and returns `execution_authorized=false`.
+
+C2 threat boundary:
+
+```text
+in scope:
+  stale/forged host evidence, pre-existing Sandbox, guest/output tampering,
+  inherited environment/registry/user-site poison, path/hash substitution,
+  process handoff races, timeout and cleanup failure
+
+trusted host assumptions:
+  Windows kernel/Windows Sandbox boundary and the current host process/session
+
+out of scope:
+  compromised host kernel or administrator, a hostile host process with an
+  equivalent user token that can mutate private host artifacts during the run,
+  hypervisor/Sandbox escape, and unknown guest privilege-escalation exploits
+```
 
 ##### V1B4D — Same-Run Runtime Capability Lease
 

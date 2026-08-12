@@ -4,9 +4,9 @@
 
 - Дата обновления: `2026-08-12`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `05e0e00`
-- Название code baseline: `feat: add deterministic trusted runtime bundle`
-- `origin/main` на проверенной code-точке: `05e0e00`
+- Проверенный code baseline перед этим documentation commit: `9a85bb1`
+- Название code baseline: `feat: add trusted runtime attestation contract payload`
+- `origin/main` на проверенной code-точке: `9a85bb1`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -796,18 +796,60 @@ The builder re-verifies the exact CPython source, creates a fresh flat staging t
 
 #### V1B4C — CURRENT / Active Trusted Runtime Attestation
 
-Architecture review split V1B4C into two reviewable slices:
+Architecture review now separates the verified payload, pure host verifier and first active interpreter run:
 
 ```text
-V1B4C1  Runtime Attestation Contract and Payload Gate   CURRENT
-V1B4C2  Active Trusted Runtime Composition              PLANNED
+V1B4C1   Runtime Attestation Contract and Payload Gate   VERIFIED
+V1B4C2A  Signed Runtime Transcript Verifier              CURRENT
+V1B4C2B  Active Trusted Runtime Composition              PLANNED
 ```
 
-V1B4C1 introduces a new runtime-attestation policy/schema lineage and exact guest payload without changing historical V1B3 fingerprints. It defines canonical request/ready/authorize/runtime-result/terminal documents, binds all V1B4B identities, creates a fixed SYSTEM-controller/native-helper payload and a four-folder `.wsb` contract, and performs static/compile evidence only. It launches neither Windows Sandbox nor the pinned interpreter.
+##### V1B4C1 — VERIFIED
 
-V1B4C2 will be the first active execution of CPython 3.13.15. One Sandbox run will map the exact runtime read-only, launch only the fixed benign runner through an explicit absolute `python.exe -I -S -B -E -s -P -X utf8` command under the standard-user/Job/SID boundary, sign the terminal transcript only after Job/account cleanup, require full Sandbox exit, and verify exact post-exit bytes through Windows CNG.
+Code closure:
 
-V1B4C still accepts no manifest, workspace, patch, module name, pipeline flow, arbitrary argv, environment additions or shell command. Every report remains `execution_authorized=false`.
+```text
+9a85bb1 feat: add trusted runtime attestation contract payload
+```
+
+Verification closure:
+
+```text
+portable contract/payload gate:                 32/32
+real Windows compile/parse-only smoke:            3/3
+mapped folders:                                     4
+read-only mappings:                                 3
+writable mappings:                                  1
+native helper compiled:                          true
+bootstrap/controller/WSB parsed:                 true
+Windows Sandbox launched:                       false
+candidate interpreter executed:                 false
+targeted flow:                    completed successfully
+full check:                       completed successfully
+runtime architecture audit:                       9/9
+execution_authorized:                            false
+```
+
+The exact policy fingerprint is `31c4f8de17e999db2d064a8aca4e95d3e2400f21a229317e83b1d5700d1e3c48`; the exact payload fingerprint is `22a2aed03e87ddee2f6b3e38f15ea6b7afb0130c73ecde1511b321bb8598b801`. Historical V1B3 fingerprints remain unchanged.
+
+##### V1B4C2A — CURRENT / Signed Runtime Transcript Verifier
+
+This host-only slice must independently prove:
+
+- strict request/ready/authorize/runtime-result/terminal cross-document binding;
+- request/ready/authorization/terminal temporal windows;
+- request ID, host nonce, policy, payload, runtime, public-key and authorization-nonce anti-replay binding;
+- exact post-pin byte stability;
+- exact runtime-result and terminal hash chain;
+- raw 64-byte ECDSA P-256 verification through Windows CNG;
+- immutable redacted reports with `execution_authorized=false`;
+- no filesystem, process, Sandbox or candidate-Python launch surface.
+
+##### V1B4C2B — PLANNED / Active Trusted Runtime Composition
+
+Only after V1B4C2A is VERIFIED, one production Windows Sandbox run may materialize the exact V1B4B capability, map it read-only, execute the fixed benign runtime probe under the standard-user/Job/SID boundary, wait for complete Sandbox exit and delegate post-exit signed trust to the verified V1B4C2A verifier.
+
+Writable output remains untrusted while active. Forced cleanup, process-state ambiguity, host evidence drift, byte mutation or artifact-cleanup failure are terminal failures. The active run still accepts no developer-task manifest, workspace, patch, module, pipeline flow, caller argv/environment or shell command and returns `execution_authorized=false`.
 
 Full contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
 
@@ -824,7 +866,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4B are VERIFIED. V1B4C1 may be implemented on **«Очень высокий»** after this architecture split is committed. V1B4C2 active execution and the V1B4D/V1C handoff require **Pro Standard**.
+V1B3A–V1B3D and V1B4A–V1B4C1 are VERIFIED. V1B4C2A host-only verifier may be implemented on **«Очень высокий»** after this split is committed. V1B4C2B active execution and the V1B4D/V1C handoff require **Pro Standard**.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -840,17 +882,17 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-Выполнить `V1B4C1 — Runtime Attestation Contract and Payload Gate`:
+Выполнить `V1B4C2A — Signed Runtime Transcript Verifier`:
 
-1. Add a new immutable V1B4C runtime-attestation policy/schema without modifying V1B3 policy, contract or verifier fingerprints.
-2. Define strict canonical request, ready, authorize, runtime-result and terminal documents with duplicate/unknown/noncanonical JSON rejection.
-3. Bind the exact V1B4B source, tree, bundle, runtime-manifest, `python313._pth`, probe, runner and launch-contract fingerprints.
-4. Build a fixed V1B4C native helper and SYSTEM-controller payload that can launch only the pinned runtime probe shape.
-5. Lock a four-folder `.wsb` contract: Input read-only, Runtime read-only, Control read-only and Output writable.
-6. Require a sanitized non-inherited environment, explicit `lpApplicationName`, `CREATE_SUSPENDED`, Job assignment before resume and no breakaway.
-7. Add portable failure tests and a real Windows compile-only smoke for exact helper/payload bytes.
-8. Do not launch Windows Sandbox or `python.exe` in V1B4C1.
-9. Only after V1B4C1 is VERIFIED begin `V1B4C2` active Windows composition on Pro Standard.
+1. Add a pure host-side verifier module without modifying V1B4C1 policy, contract or exact payload bytes.
+2. Pin exact request/ready/authorize bytes and bind request ID, host nonce, public key, runtime identity, payload hashes and authorization deadline.
+3. Enforce bounded ready and authorization windows using supplied host timing facts; reject replay and temporal inversion.
+4. Verify exact post-pin byte stability and the terminal hash chain over request, ready, authorize and runtime-result bytes.
+5. Verify the exact 64-byte ECDSA P-256 terminal signature through Windows CNG.
+6. Reject policy/runtime/payload/key/nonce/hash substitution, post-pin mutation, invalid signatures, forged pin reports and non-boolean verifier results.
+7. Keep verifier reports immutable, JSON-serializable and redacted; never expose nonce or public-key bytes through `repr`/serialization.
+8. Add portable failure tests and a Windows CNG smoke with no Windows Sandbox or candidate-Python launch.
+9. Do not add artifact materialization, process lifecycle or active composition code in V1B4C2A.
 10. Keep patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback blocked; `execution_authorized=false`.
 
 ## 16. Зафиксированные коммиты текущего перехода
@@ -874,9 +916,12 @@ e53a8e5 docs: close transcript verifier and start worker isolation gate
 74f543a feat: add standard-user worker isolation bundle
 be7470f docs: close worker isolation gate and start active signed composition
 f3f5607 feat: add active signed boundary composition
+05e0e00 feat: add deterministic trusted runtime bundle
+c63e519 docs: close runtime bundle and split active runtime attestation
+9a85bb1 feat: add trusted runtime attestation contract payload
 ```
 
-Следующий documentation commit фиксирует V1B4A/V1B4B closure и переводит `CURRENT` на V1B4C1.
+Следующий documentation commit фиксирует V1B4C1 closure, разделяет V1B4C2 verifier/active run и переводит `CURRENT` на V1B4C2A.
 
 ## 17. DEFERRED
 
@@ -905,7 +950,7 @@ f3f5607 feat: add active signed boundary composition
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-V1B3A–V1B3D and V1B4A–V1B4B are VERIFIED. V1B4C1 may be implemented on **«Очень высокий»** after this architecture split is committed. V1B4C2 active execution and the V1B4D/V1C handoff require **Pro Standard**.
+V1B3A–V1B3D and V1B4A–V1B4C1 are VERIFIED. V1B4C2A host-only verifier may be implemented on **«Очень высокий»** after this split is committed. V1B4C2B active execution and the V1B4D/V1C handoff require **Pro Standard**.
 
 ## 20. Файлы для будущего handoff
 
@@ -926,6 +971,8 @@ docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md
 data/logs/pipeline/*_developer_task_execution_boundary_verifier.log
 data/logs/pipeline/*_developer_task_execution_boundary_worker.log
 data/logs/pipeline/*_developer_task_execution_boundary_composition.log
+data/logs/pipeline/*_developer_task_execution_runtime_bundle.log
+data/logs/pipeline/*_developer_task_execution_runtime_attestation.log
 data/logs/pipeline/*_check.log
 latest signed-boundary and active-composition evidence
 ```
