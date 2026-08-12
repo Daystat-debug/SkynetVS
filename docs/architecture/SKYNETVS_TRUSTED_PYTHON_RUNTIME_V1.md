@@ -7,8 +7,8 @@ V1B3  — VERIFIED
 V1B4A — VERIFIED
 V1B4B — VERIFIED
 V1B4C1 — VERIFIED
-V1B4C2A — CURRENT
-V1B4C2B — PLANNED
+V1B4C2A — VERIFIED
+V1B4C2B — CURRENT
 V1B4D — PLANNED
 V1C   — BLOCKED
 ```
@@ -29,10 +29,10 @@ execution_authorized    false
 ## 2. Проверенная стартовая точка
 
 ```text
-05e0e00 feat: add deterministic trusted runtime bundle
+4a68c3c feat: add signed runtime transcript verifier
 ```
 
-The active signed boundary beneath V1B4 remains the verified `f3f5607` composition. V1B4B adds exact CPython 3.13.15 source verification and deterministic bundle construction without executing the interpreter.
+The active signed boundary beneath V1B4 remains the verified `f3f5607` composition. V1B4B adds the exact CPython 3.13.15 runtime capability, V1B4C1 locks the guest payload, and V1B4C2A independently verifies the signed runtime transcript without launching Sandbox or Python.
 
 Подтверждено одним production Windows Sandbox run:
 
@@ -150,8 +150,8 @@ V1B4C is split into three independently reviewable claims:
 
 ```text
 V1B4C1   Runtime Attestation Contract and Payload Gate   VERIFIED
-V1B4C2A  Signed Runtime Transcript Verifier              CURRENT
-V1B4C2B  Active Trusted Runtime Composition              PLANNED
+V1B4C2A  Signed Runtime Transcript Verifier              VERIFIED
+V1B4C2B  Active Trusted Runtime Composition              CURRENT
 ```
 
 #### V1B4C1 — Runtime Attestation Contract and Payload Gate
@@ -178,49 +178,28 @@ V1B4C1 introduced the immutable runtime-attestation policy/schema, strict canoni
 
 #### V1B4C2A — Signed Runtime Transcript Verifier
 
-This pure host-side boundary verifies two phases.
+**Status:** VERIFIED / `4a68c3c`.
 
-Pin phase:
-
-```text
-exact request bytes
-    + exact ready bytes
-    + host timing facts
-    + exact public-key identity
-    + canonical authorize bytes
-    ↓
-immutable redacted transcript pin
-```
-
-Final phase:
+Verification closure:
 
 ```text
-pinned request/ready/authorize unchanged
-    + exact runtime_result bytes
-    + exact terminal bytes
-    + exact 64-byte signature
-    ↓
-Windows CNG ECDSA P-256 verification
-    ↓
-immutable signed-runtime report
+portable signed-runtime verifier:             44/44
+Windows CNG signed-runtime verification:       3/3
+targeted verifier flow:         completed successfully
+full check:                      completed successfully
+runtime architecture audit:                    9/9
+Windows Sandbox launched:                     false
+candidate interpreter executed:               false
+execution_authorized:                         false
 ```
 
-The verifier must enforce:
+The verified host-only boundary enforces strict C1 contract types and canonical bytes, request/ready/authorize/runtime-result/terminal cross-document binding, anti-replay nonces, bounded phase windows, exact post-pin stability, P-256 public-key validation, exact runtime-result/terminal hash chains and Windows CNG verification of the raw 64-byte ECDSA signature.
 
-- strict C1 contract types and exact canonical bytes;
-- request ID, host nonce and authorization nonce anti-replay binding;
-- exact backend, C1 policy, payload, runtime source/tree/bundle/manifest, Python, `_pth`, stdlib, probe, runner and launch-contract identities;
-- SYSTEM controller, ephemeral key and four mapping controls in ready evidence;
-- bounded ready/authorization windows and monotonic phase ordering;
-- exact request/ready/authorize/runtime-result hashes in terminal evidence;
-- exact public-key hash and valid P-256 point;
-- raw 64-byte signature verification over exact terminal bytes;
-- post-pin mutation rejection;
-- immutable redacted reports with `execution_authorized=false`.
-
-V1B4C2A must not import or invoke Sandbox lifecycle, filesystem staging, process launch, runtime materialization or candidate Python execution.
+The verifier contains no filesystem staging, process launch, Sandbox lifecycle, runtime-builder, workspace or candidate-Python execution surface. Its successful pin and final reports remain immutable, redacted and non-authorizing.
 
 #### V1B4C2B — Active Trusted Runtime Composition
+
+**Status:** CURRENT.
 
 One production Windows Sandbox run will:
 
@@ -231,13 +210,17 @@ rebuild exact V1B4B capability from pinned source ZIP
     ↓
 materialize and reread exactly 37 runtime files
     ↓
-prepare exact C1 Input/Runtime/Control/Output roots
+materialize exact V1B4C1 Input/Control payload bytes
+    ↓
+prepare private Input/Runtime/Control/Output roots
     ↓
 launch one Windows Sandbox instance
     ↓
-SYSTEM controller verifies every runtime byte and manifest
+SYSTEM controller verifies every runtime and payload byte
     ↓
-V1B4C2A pins request + ready + authorize before publication
+V1B4C2A pins request + ready + authorize in memory
+    ↓
+host re-reads pinned bytes before publishing authorize.sha256
     ↓
 fresh standard-user token with sanitized environment
     ↓
@@ -258,38 +241,59 @@ post-exit exact-byte reread + V1B4C2A/CNG verification
 fresh host evidence revalidation + safe artifact cleanup
 ```
 
-Writable Output is untrusted while Sandbox is active. `ready.json`, `runtime_result.json`, `terminal_payload.json` and the signature are progress signals only until complete process exit and exact post-exit verification.
+The production API is limited to:
 
-The active API may accept only:
-
-```text
-verified host report
-pinned CPython source ZIP path
-validated artifact parent
+```python
+attest_developer_task_execution_runtime_composition(
+    host_report: DeveloperTaskExecutionBackendHostReport,
+    runtime_zip: Path,
+    *,
+    artifact_parent: Path,
+) -> DeveloperTaskExecutionRuntimeCompositionReport
 ```
 
 It must not accept task, patch, workspace, module, pipeline, arbitrary executable, argv, environment additions or shell commands.
 
-Probe attests at minimum:
+The exact implementation scope is locked to:
 
 ```text
-CPython 3.13.15 / AMD64
-sys.flags.isolated == 1
-sys.flags.ignore_environment == 1
-sys.flags.no_user_site == 1
-sys.flags.safe_path == true
-sys.flags.dont_write_bytecode == 1
-sys.flags.utf8_mode == 1
-site not imported
-exact runtime-local sys.path
-no PYTHON*/PIP_*/VIRTUAL_ENV variables
-pip/ensurepip absent
-runtime root not writable
-standard-user/Job/SID cleanup evidence
-IPv4 and IPv6 isolation evidence
+A modules/developer/developer_task_execution_runtime_composition.py
+A modules/developer/developer_task_execution_runtime_composition_fs.py
+A tools/eval_developer_task_execution_runtime_composition.py
+A tools/eval_developer_task_execution_runtime_composition_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
 ```
 
-Failure-only forced cleanup never becomes success. Unproven process state, host drift, byte mutation or cleanup failure is terminal. V1B4C2B remains benign capability evidence and returns `execution_authorized=false`.
+`developer_task_execution_runtime_composition_fs.py` owns no-follow path validation, exclusive materialization, exact disk reread and bounded cleanup. `developer_task_execution_runtime_composition.py` owns only typed orchestration, state transitions, transcript pinning/verification and immutable evidence. Existing V1B4C1 payload, V1B4C2A verifier and V1B2 Windows Sandbox process primitives remain unchanged and are reused.
+
+Writable Output is untrusted while Sandbox is active. `ready.json`, `runtime_result.json`, `terminal_payload.json` and `terminal_signature.bin` are progress signals only until every known Sandbox process has exited and the exact bytes have been read again and accepted by V1B4C2A.
+
+Success requires all of the following:
+
+```text
+fresh host capability                           true
+pre-existing Sandbox process set                empty
+exact CPython source and V1B4B capability       verified
+37-file runtime materialization and reread      exact
+C1 payload materialization and reread           exact
+Input/Runtime/Control mappings                  read-only
+Output mapping                                  writable
+request/ready/authorize pin                      valid before commit
+fixed CPython probe process                     standard-user + Job
+runtime result                                  canonical and bound
+all Sandbox processes exited                    true
+post-exit pinned bytes unchanged                true
+Windows CNG signature verification              true
+post-run host evidence unchanged                true
+forced cleanup attempted                        false
+all private artifacts removed                   true
+execution_authorized                            false
+```
+
+Failure-only forced cleanup can never convert a run into success. Unproven process state, pre-existing output, host drift, byte mutation, authorization publication failure, invalid runtime evidence, signature failure, account/SID cleanup failure or host artifact cleanup failure is terminal.
+
+V1B4C2B produces benign capability evidence only. It does not create the V1B4D lease and cannot authorize a later Sandbox run.
 
 #### V1B4C threat model
 
@@ -456,4 +460,4 @@ full check                                 green
 
 Threat model, runtime version/provenance choice, active runtime state machine and same-run V1C handoff require **Pro Standard**.
 
-V1B4C2A host-only verifier may run on **«Очень высокий»** after this split is committed. V1B4C2B active Windows composition, V1B4D lease design and the V1C handoff require **Pro Standard**.
+V1B4C2A is VERIFIED. V1B4C2B active Windows composition is CURRENT and remains on **Pro Standard** through the first successful real Sandbox run and post-exit evidence review.
