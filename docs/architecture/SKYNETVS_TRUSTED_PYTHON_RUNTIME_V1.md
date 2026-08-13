@@ -8,8 +8,8 @@ V1B4A — VERIFIED
 V1B4B — VERIFIED
 V1B4C1 — VERIFIED
 V1B4C2A — VERIFIED
-V1B4C2B — CURRENT
-V1B4D — PLANNED
+V1B4C2B — VERIFIED
+V1B4D — CURRENT
 V1C   — BLOCKED
 ```
 
@@ -29,7 +29,7 @@ execution_authorized    false
 ## 2. Проверенная стартовая точка
 
 ```text
-4a68c3c feat: add signed runtime transcript verifier
+049e4ca feat: add active trusted runtime composition
 ```
 
 The active signed boundary beneath V1B4 remains the verified `f3f5607` composition. V1B4B adds the exact CPython 3.13.15 runtime capability, V1B4C1 locks the guest payload, and V1B4C2A independently verifies the signed runtime transcript without launching Sandbox or Python.
@@ -151,7 +151,8 @@ V1B4C is split into three independently reviewable claims:
 ```text
 V1B4C1   Runtime Attestation Contract and Payload Gate   VERIFIED
 V1B4C2A  Signed Runtime Transcript Verifier              VERIFIED
-V1B4C2B  Active Trusted Runtime Composition              CURRENT
+V1B4C2B  Active Trusted Runtime Composition              VERIFIED
+V1B4D    Same-Run Runtime Capability Lease                CURRENT
 ```
 
 #### V1B4C1 — Runtime Attestation Contract and Payload Gate
@@ -165,7 +166,7 @@ Verified code closure:
 Verified evidence:
 
 ```text
-portable contract/payload gate:       32/32
+portable contract/payload gate:       33/33
 Windows compile/parse-only smoke:       3/3
 targeted flow:          completed successfully
 full check:             completed successfully
@@ -183,7 +184,7 @@ V1B4C1 introduced the immutable runtime-attestation policy/schema, strict canoni
 Verification closure:
 
 ```text
-portable signed-runtime verifier:             44/44
+portable signed-runtime verifier:             46/46
 Windows CNG signed-runtime verification:       3/3
 targeted verifier flow:         completed successfully
 full check:                      completed successfully
@@ -199,9 +200,29 @@ The verifier contains no filesystem staging, process launch, Sandbox lifecycle, 
 
 #### V1B4C2B — Active Trusted Runtime Composition
 
-**Status:** CURRENT.
+**Status:** VERIFIED / `049e4ca`.
 
-One production Windows Sandbox run will:
+Verification evidence:
+
+```text
+portable state/failure gate:                   42/42
+active Windows composition:                     3/3
+status:                    active_trusted_runtime_attested
+runtime bundle fingerprint: 1c98ad24ec3e4bb1b8b4bcd530ffedcf6ff62a6fee5b94cb795f6c84fb1c8c4b
+payload fingerprint:        47820f76e8fb0c5542592057c8a4258f968841b12aff6d1c3ee9d69a3e4c1e13
+pin/signature/runtime/terminal verified:          true
+all Sandbox processes exited:                    true
+forced cleanup attempted:                        false
+artifacts removed:                                true
+interpreter_executed:                             true
+reusable_lease_issued:                            false
+execution_authorized:                             false
+targeted flow:                     completed successfully
+full check:                        completed successfully
+runtime architecture audit:                        9/9
+```
+
+The verified production run performed:
 
 ```text
 fresh host/backend evidence
@@ -252,7 +273,7 @@ attest_developer_task_execution_runtime_composition(
 ) -> DeveloperTaskExecutionRuntimeCompositionReport
 ```
 
-It must not accept task, patch, workspace, module, pipeline, arbitrary executable, argv, environment additions or shell commands.
+It accepts no task, patch, workspace, module, pipeline, arbitrary executable, argv, environment additions or shell commands.
 
 The exact implementation scope is locked to:
 
@@ -319,20 +340,40 @@ Out of scope:
 
 ### V1B4D — Same-Run Runtime Capability Lease
 
-Создаёт non-serialized single-use lease с TTL `300` секунд, связанный с:
+**Status:** CURRENT.
 
-- host boot identity;
-- Windows build;
-- Sandbox executable path/version/SHA-256;
-- backend policy fingerprint;
-- signed-boundary policy fingerprint;
-- runtime source fingerprint;
-- runtime bundle fingerprint;
-- one-time random token.
+V1B4D is deliberately host-only. It does not use the completed C2B report as authority, does not launch Sandbox or Python and does not accept changed-code inputs.
 
-Lease не доказывает прошлый Sandbox run и не разрешает cross-run execution. Он только разрешает V1C orchestrator начать один combined run с exact runtime bundle.
+Planned public issuance API:
 
-Внутри этого же V1C Sandbox instance до первого changed-code instruction повторно выполняются:
+```python
+issue_developer_task_execution_runtime_lease(
+    host_report: DeveloperTaskExecutionBackendHostReport,
+    runtime_bundle: DeveloperTaskPythonRuntimeBundle,
+) -> DeveloperTaskExecutionRuntimeLease
+```
+
+The returned capability is process-local, non-serialized, non-copyable/non-pickleable, thread-safe and single-use. Its fixed TTL is exactly `300` seconds and is enforced only with a monotonic clock. Caller-controlled TTL, clock, token, policy, runtime identity or execution mode is forbidden.
+
+The lease privately retains the exact V1B4B capability and binds:
+
+- full backend/host executable identity and boot identity;
+- runtime source, provenance policy, bundle policy, tree/runtime manifests and bundle fingerprint;
+- Python executable/DLL/`._pth`/stdlib/probe/runner/launch contract;
+- V1B4C policy fingerprint and exact payload fingerprint `47820f76e8fb0c5542592057c8a4258f968841b12aff6d1c3ee9d69a3e4c1e13`;
+- issuer instance and a one-time 32-byte cryptographic secret.
+
+The state machine is atomic:
+
+```text
+issued
+  ├─ first valid claim ─→ claimed/consumed
+  ├─ TTL elapsed ───────→ expired
+  ├─ host/runtime drift ─→ invalidated
+  └─ concurrent/replay ─→ rejected
+```
+
+A valid claim is only an entry capability for one future V1C combined run. It is not guest evidence and does not set `execution_authorized=true`. Before any changed-code instruction, that same Sandbox instance must repeat:
 
 ```text
 runtime manifest verification
@@ -343,7 +384,18 @@ Job membership evidence
 signed transcript handshake
 ```
 
-Если Sandbox завершился после runtime attestation, lease считается использованным/недействительным; новый task требует нового lease и нового same-run attestation.
+Locked code scope:
+
+```text
+A modules/developer/developer_task_execution_runtime_lease_policy.py
+A modules/developer/developer_task_execution_runtime_lease.py
+A tools/eval_developer_task_execution_runtime_lease.py
+A tools/eval_developer_task_execution_runtime_lease_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
+The targeted Windows smoke may inspect the real host and build/claim the pinned runtime capability, but it must not launch Windows Sandbox or `python.exe`. Full `check` remains portable and non-active.
 
 ## 6. Canonical derived bundle layout
 
@@ -447,6 +499,7 @@ host/non-exec bundle eval                  green
 host signed-runtime verifier               green
 active benign runtime attestation          green
 post-exit signed verification              green
+process-local single-use lease gate         pending
 runtime root write attempt                 blocked
 PYTHON*/site/user-site injection           blocked
 pip/ensurepip                              absent
@@ -460,4 +513,4 @@ full check                                 green
 
 Threat model, runtime version/provenance choice, active runtime state machine and same-run V1C handoff require **Pro Standard**.
 
-V1B4C2A is VERIFIED. V1B4C2B active Windows composition is CURRENT and remains on **Pro Standard** through the first successful real Sandbox run and post-exit evidence review.
+V1B4C2B is VERIFIED. V1B4D lease architecture is CURRENT and remains on **Pro Standard** through this contract/policy review. The bounded host-only implementation may then return to **Очень высокий**; V1C changed-code execution requires **Pro Standard** again.

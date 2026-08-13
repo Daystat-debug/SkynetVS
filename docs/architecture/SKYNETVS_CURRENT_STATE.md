@@ -2,11 +2,11 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-12`
+- Дата обновления: `2026-08-13`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `4a68c3c`
-- Название code baseline: `feat: add signed runtime transcript verifier`
-- `origin/main` на проверенной code-точке: `4a68c3c`
+- Проверенный code baseline перед этим documentation commit: `049e4ca`
+- Название code baseline: `feat: add active trusted runtime composition`
+- `origin/main` на проверенной code-точке: `049e4ca`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -731,8 +731,8 @@ V1B4 is split into four top-level evidence boundaries:
 ```text
 V1B4A  Runtime Source Provenance Gate                 VERIFIED
 V1B4B  Deterministic Runtime Bundle Gate              VERIFIED
-V1B4C  Active Trusted Runtime Attestation             CURRENT
-V1B4D  Same-Run Runtime Capability Lease              PLANNED
+V1B4C  Active Trusted Runtime Attestation             VERIFIED
+V1B4D  Same-Run Runtime Capability Lease              CURRENT
 ```
 
 #### V1B4A — VERIFIED / Runtime source provenance
@@ -794,14 +794,14 @@ runtime architecture audit:                        9/9
 
 The builder re-verifies the exact CPython source, creates a fresh flat staging tree, rereads exact bytes from disk, rejects reparse/special entries, removes staging, and returns only a non-serialized exact-byte capability. It does not launch `python.exe`, Sandbox, worker code, patch code or dependency installation.
 
-#### V1B4C — CURRENT / Active Trusted Runtime Attestation
+#### V1B4C — VERIFIED / Active Trusted Runtime Attestation
 
 Architecture review now separates the verified payload, pure host verifier and first active interpreter run:
 
 ```text
 V1B4C1   Runtime Attestation Contract and Payload Gate   VERIFIED
 V1B4C2A  Signed Runtime Transcript Verifier              VERIFIED
-V1B4C2B  Active Trusted Runtime Composition              CURRENT
+V1B4C2B  Active Trusted Runtime Composition              VERIFIED
 ```
 
 ##### V1B4C1 — VERIFIED
@@ -815,7 +815,7 @@ Code closure:
 Verification closure:
 
 ```text
-portable contract/payload gate:                 32/32
+portable contract/payload gate:                 33/33
 real Windows compile/parse-only smoke:            3/3
 mapped folders:                                     4
 read-only mappings:                                 3
@@ -830,7 +830,7 @@ runtime architecture audit:                       9/9
 execution_authorized:                            false
 ```
 
-The exact policy fingerprint is `31c4f8de17e999db2d064a8aca4e95d3e2400f21a229317e83b1d5700d1e3c48`; the exact payload fingerprint is `22a2aed03e87ddee2f6b3e38f15ea6b7afb0130c73ecde1511b321bb8598b801`. Historical V1B3 fingerprints remain unchanged.
+The exact policy fingerprint is `31c4f8de17e999db2d064a8aca4e95d3e2400f21a229317e83b1d5700d1e3c48`; after the true-ephemeral-key hardening the exact payload fingerprint is `47820f76e8fb0c5542592057c8a4258f968841b12aff6d1c3ee9d69a3e4c1e13`. Historical V1B3 fingerprints remain unchanged.
 
 ##### V1B4C2A — VERIFIED / Signed Runtime Transcript Verifier
 
@@ -843,7 +843,7 @@ Code closure:
 Verification closure:
 
 ```text
-portable verifier gate:                          44/44
+portable verifier gate:                          46/46
 real Windows CNG verification:                    3/3
 exact signed transcript:                     accepted
 mutated terminal message/signature:          rejected
@@ -857,24 +857,64 @@ execution_authorized:                           false
 
 The verifier independently binds request ID, host nonce, authorization nonce, timing windows, C1 policy/payload, every V1B4B runtime identity, public key, request/ready/authorize/runtime-result hashes and exact terminal bytes. Windows CNG is the production final signature path. The verifier has no filesystem, process, Sandbox, runtime-builder or workspace execution surface.
 
-##### V1B4C2B — CURRENT / Active Trusted Runtime Composition
+##### V1B4C2B — VERIFIED / Active Trusted Runtime Composition
 
-The first active pinned-CPython run is now the only current code slice. It must rebuild and materialize the exact V1B4B capability, materialize the exact V1B4C1 payload, launch one Windows Sandbox instance, pin request/ready/authorize through V1B4C2A before authorization commit, execute only the fixed benign runtime probe as the fresh standard user inside the Job Object, wait for full process exit, reread every signed artifact, verify through V1B4C2A/CNG and remove all private artifacts.
+Code closure:
+
+```text
+049e4ca feat: add active trusted runtime composition
+```
+
+Verification closure:
+
+```text
+V1B4C1 portable gate:                         33/33
+V1B4C2A portable verifier:                    46/46
+V1B4C2B portable state/failure gate:           42/42
+V1B4C1 Windows compile-only smoke:              3/3
+V1B4C2A Windows CNG smoke:                      3/3
+V1B4C2B active Windows composition:             3/3
+status:                   active_trusted_runtime_attested
+payload fingerprint:      47820f76e8fb0c5542592057c8a4258f968841b12aff6d1c3ee9d69a3e4c1e13
+ready received:                              18 250 ms
+authorization published:                     18 297 ms
+runtime result detected:                     23 875 ms
+terminal detected:                           26 172 ms
+all Sandbox processes exited:                37 860 ms
+total:                                       39 641 ms
+pin/signature/runtime/terminal verified:         true
+forced cleanup attempted:                        false
+artifacts removed:                                true
+interpreter_executed:                             true
+reusable_lease_issued:                            false
+execution_authorized:                             false
+targeted flow:                    completed successfully
+full check:                       completed successfully
+runtime architecture audit:                       9/9
+```
+
+The run rebuilt and materialized the exact 37-file CPython 3.13.15 capability, used a true-ephemeral ECDSA P-256 key, preserved subsecond authorization timing, executed only the fixed benign probe as the fresh standard user inside the Job Object, trusted writable output only after full Sandbox exit, verified the exact signed transcript through Windows CNG and removed every private artifact without forced cleanup.
+
+It accepts no developer-task manifest, workspace, patch, module, pipeline flow, caller argv/environment or shell command. The successful report is evidence only and does not create a reusable lease or execution authority.
+
+Full contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
+
+#### V1B4D — CURRENT / Same-Run Runtime Capability Lease
+
+V1B4D is the only current code slice. It creates a process-local, non-serialized, non-copyable, single-use capability with a fixed monotonic `300`-second TTL. Issuance requires fresh successful host evidence, an empty Sandbox process set and the exact in-memory V1B4B bundle capability. A completed V1B4C2B report is not an input and cannot authorize a new run.
 
 Locked implementation scope:
 
 ```text
-A modules/developer/developer_task_execution_runtime_composition.py
-A modules/developer/developer_task_execution_runtime_composition_fs.py
-A tools/eval_developer_task_execution_runtime_composition.py
-A tools/eval_developer_task_execution_runtime_composition_windows.py
+A modules/developer/developer_task_execution_runtime_lease_policy.py
+A modules/developer/developer_task_execution_runtime_lease.py
+A tools/eval_developer_task_execution_runtime_lease.py
+A tools/eval_developer_task_execution_runtime_lease_windows.py
 M tools/eval_package_boundaries.py
 M tools/pipeline.py
 ```
 
-Writable output remains untrusted while active. Any process-state ambiguity, host evidence drift, byte mutation, invalid runtime result, invalid signature, forced cleanup or artifact-cleanup failure invalidates success. The run accepts no developer-task manifest, workspace, patch, module, pipeline flow, caller argv/environment or shell command and returns `execution_authorized=false`. It does not create a reusable lease.
-
-Full contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
+The lease binds exact backend, host, runtime and V1B4C identities plus a one-time secret; one atomic claim is allowed. Expiry, replay, concurrent second claim, host drift, runtime substitution or policy mismatch invalidates it. V1B4D itself launches neither Sandbox nor Python, accepts no changed-code input and returns `execution_authorized=false`.
 
 ### Текущий жёсткий scope
 
@@ -889,7 +929,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4C2A are VERIFIED. V1B4C2B active execution is CURRENT and requires **Pro Standard** through the first real Sandbox run and evidence review.
+V1B3A–V1B3D and V1B4A–V1B4C2B are VERIFIED. V1B4D lease architecture is CURRENT. Keep **Pro Standard** through this architecture/documentation boundary; the bounded host-only implementation may return to **Очень высокий**, while the first V1C changed-code run requires **Pro Standard** again.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -905,20 +945,20 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-Выполнить `V1B4C2B — Active Trusted Runtime Composition`:
+Выполнить `V1B4D — Same-Run Runtime Capability Lease`:
 
-1. Add the two production modules and two eval modules from the locked six-file scope; do not modify V1B4C1 or V1B4C2A exact bytes.
-2. Accept only a verified host report, pinned CPython source ZIP path and explicit artifact parent.
-3. Rebuild the exact V1B4B capability and materialize exactly 37 files into a private non-reparse runtime root with exact disk reread.
-4. Materialize exact C1 Input/Control bytes, create a fresh empty Output root and build the exact four-folder WSB configuration.
-5. Launch one Windows Sandbox instance only after fresh host evidence and an empty Sandbox process set.
-6. Read canonical ready evidence, build authorization in memory, pin request/ready/authorize through V1B4C2A, re-read every pinned input and only then publish `authorize.json` plus `authorize.sha256`.
-7. Execute only the fixed pinned CPython runner/probe under the fresh standard-user, medium-integrity, Job-before-resume and SID-cleanup boundary.
-8. Treat active output as progress only; wait for complete Sandbox process exit before final trust.
-9. Re-read exact request/ready/authorize/runtime-result/terminal/signature bytes and verify through V1B4C2A with Windows CNG.
-10. Revalidate host evidence, remove all private artifacts, reject forced-cleanup success and return `execution_authorized=false`.
-11. Add portable state-machine/failure tests and one real Windows active smoke; ordinary full `check` must remain non-active.
-12. Keep patch/workspace execution, `python_module`, `pipeline`, dependency installation, arbitrary shell, host fallback and V1B4D lease creation blocked.
+1. Add only the two production modules and two eval modules from the locked six-file scope.
+2. Define a fixed lease policy ID, exact `300`-second TTL and canonical identity binding; callers cannot override policy or TTL.
+3. Issue only from typed successful host evidence, a fresh host reinspection, an empty Sandbox process set and the exact `DeveloperTaskPythonRuntimeBundle` capability.
+4. Retain the exact runtime capability in memory; do not retain or serialize the source ZIP path, staging path, raw secret or monotonic anchors.
+5. Use `time.monotonic_ns()` for expiry and a cryptographically random 32-byte secret for capability identity.
+6. Implement atomic thread-safe state transitions: issued → claimed/expired/invalidated; exactly one claim may succeed.
+7. Revalidate host evidence on claim with strict field comparison and the measured one-second boot-epoch quantization rule.
+8. Bind C1 policy and updated payload fingerprint `47820f76...`; reject runtime/policy/payload substitution, raw mappings/reports and any bundle that fails its exact canonical self-check.
+9. Reject copy, deepcopy, pickle, repr/serialization leakage, replay, claim-after-expiry and concurrent double-claim.
+10. Ensure failed validation invalidates the real lease and cannot be retried as a successful claim.
+11. Add a portable fault/race gate and one real Windows host-only integration smoke over the pinned runtime ZIP; ordinary full `check` remains ZIP-independent.
+12. Do not launch Sandbox or Python, accept task/patch/workspace/module/pipeline input, issue changed-code authority or set `execution_authorized=true`.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -946,9 +986,11 @@ c63e519 docs: close runtime bundle and split active runtime attestation
 9a85bb1 feat: add trusted runtime attestation contract payload
 192cad3 docs: close runtime payload and start signed runtime verifier
 4a68c3c feat: add signed runtime transcript verifier
+c86d8eb docs: close signed runtime verifier and start active composition
+049e4ca feat: add active trusted runtime composition
 ```
 
-Следующий documentation commit фиксирует V1B4C2A closure и переводит `CURRENT` на V1B4C2B Active Trusted Runtime Composition.
+Следующий documentation commit фиксирует V1B4C2B closure, обновлённый payload fingerprint и переводит `CURRENT` на V1B4D Same-Run Runtime Capability Lease.
 
 ## 17. DEFERRED
 
@@ -977,7 +1019,7 @@ c63e519 docs: close runtime bundle and split active runtime attestation
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-V1B3A–V1B3D and V1B4A–V1B4C2A are VERIFIED. V1B4C2B active execution is CURRENT and remains on **Pro Standard**. V1B4D/V1C handoff also requires **Pro Standard**.
+V1B3A–V1B3D and V1B4A–V1B4C2B are VERIFIED. V1B4D lease architecture is CURRENT and remains on **Pro Standard** through documentation closure. The bounded host-only lease implementation may use **Очень высокий**; V1C same-run changed-code execution returns to **Pro Standard**.
 
 ## 20. Файлы для будущего handoff
 
