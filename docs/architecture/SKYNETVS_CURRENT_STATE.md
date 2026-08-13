@@ -4,9 +4,9 @@
 
 - Дата обновления: `2026-08-13`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `049e4ca`
-- Название code baseline: `feat: add active trusted runtime composition`
-- `origin/main` на проверенной code-точке: `049e4ca`
+- Проверенный code baseline перед этим documentation commit: `18e8619`
+- Название code baseline: `feat: add same-run trusted runtime capability lease`
+- `origin/main` на проверенной code-точке: `18e8619`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -732,7 +732,7 @@ V1B4 is split into four top-level evidence boundaries:
 V1B4A  Runtime Source Provenance Gate                 VERIFIED
 V1B4B  Deterministic Runtime Bundle Gate              VERIFIED
 V1B4C  Active Trusted Runtime Attestation             VERIFIED
-V1B4D  Same-Run Runtime Capability Lease              CURRENT
+V1B4D  Same-Run Runtime Capability Lease              VERIFIED
 ```
 
 #### V1B4A — VERIFIED / Runtime source provenance
@@ -899,9 +899,39 @@ It accepts no developer-task manifest, workspace, patch, module, pipeline flow, 
 
 Full contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
 
-#### V1B4D — CURRENT / Same-Run Runtime Capability Lease
+#### V1B4D — VERIFIED / Same-Run Runtime Capability Lease
 
-V1B4D is the only current code slice. It creates a process-local, non-serialized, non-copyable, single-use capability with a fixed monotonic `300`-second TTL. Issuance requires fresh successful host evidence, an empty Sandbox process set and the exact in-memory V1B4B bundle capability. A completed V1B4C2B report is not an input and cannot authorize a new run.
+Code closure:
+
+```text
+18e8619 feat: add same-run trusted runtime capability lease
+```
+
+Verification closure:
+
+```text
+portable lease gate:                         36/36
+real Windows host-only lease smoke:            5/5
+policy fingerprint: 76ceaaf139af10814a403d24fca7455a61db78f095e80d390b360417354e8c18
+TTL:                                      300 seconds
+clock:                              time.monotonic_ns()
+same exact runtime capability claimed:          true
+replay rejected:       runtime_lease_already_claimed
+Sandbox processes after claim:                    []
+interpreter_executed:                           false
+execution_authorized:                          false
+targeted flow:                   completed successfully
+full check:                      completed successfully
+runtime architecture audit:                      9/9
+```
+
+The first real Windows claim exposed a one-second boot-epoch quantization mismatch between fresh-host equivalence and the canonical binding check. The fix keeps exact issuance-snapshot binding while allowing only the already measured one-second fresh-host equivalence rule; two-second drift and every other bound host/runtime change remain fail-closed.
+
+#### V1B4 — COMPLETE
+
+The trusted-runtime chain is now fully verified through the process-local single-use lease. This does not authorize changed-code execution. V1C remains the next security boundary and requires a new Pro Standard architecture review before implementation.
+
+V1B4D is the verified host-only lease slice. It creates a process-local, non-serialized, non-copyable, single-use capability with a fixed monotonic `300`-second TTL. Issuance requires fresh successful host evidence, an empty Sandbox process set and the exact in-memory V1B4B bundle capability. A completed V1B4C2B report is not an input and cannot authorize a new run.
 
 Locked implementation scope:
 
@@ -929,7 +959,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4C2B are VERIFIED. V1B4D lease architecture is CURRENT. Keep **Pro Standard** through this architecture/documentation boundary; the bounded host-only implementation may return to **Очень высокий**, while the first V1C changed-code run requires **Pro Standard** again.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED. V1B4 is COMPLETE. Documentation closure and stable-tag preparation may remain on **Очень высокий**. Before V1C architecture or implementation, switch to **Pro Standard**.
 
 ## 14. BLOCKED до V1C — Sandboxed Executable Checks
 
@@ -945,20 +975,15 @@ V1C сможет выполнять их только через успешно 
 
 ## 15. Следующее точное действие
 
-Выполнить `V1B4D — Same-Run Runtime Capability Lease`:
+Закрыть `V1B4` и подготовить переход к `V1C`:
 
-1. Add only the two production modules and two eval modules from the locked six-file scope.
-2. Define a fixed lease policy ID, exact `300`-second TTL and canonical identity binding; callers cannot override policy or TTL.
-3. Issue only from typed successful host evidence, a fresh host reinspection, an empty Sandbox process set and the exact `DeveloperTaskPythonRuntimeBundle` capability.
-4. Retain the exact runtime capability in memory; do not retain or serialize the source ZIP path, staging path, raw secret or monotonic anchors.
-5. Use `time.monotonic_ns()` for expiry and a cryptographically random 32-byte secret for capability identity.
-6. Implement atomic thread-safe state transitions: issued → claimed/expired/invalidated; exactly one claim may succeed.
-7. Revalidate host evidence on claim with strict field comparison and the measured one-second boot-epoch quantization rule.
-8. Bind C1 policy and updated payload fingerprint `47820f76...`; reject runtime/policy/payload substitution, raw mappings/reports and any bundle that fails its exact canonical self-check.
-9. Reject copy, deepcopy, pickle, repr/serialization leakage, replay, claim-after-expiry and concurrent double-claim.
-10. Ensure failed validation invalidates the real lease and cannot be retried as a successful claim.
-11. Add a portable fault/race gate and one real Windows host-only integration smoke over the pinned runtime ZIP; ordinary full `check` remains ZIP-independent.
-12. Do not launch Sandbox or Python, accept task/patch/workspace/module/pipeline input, issue changed-code authority or set `execution_authorized=true`.
+1. Commit only this documentation closure after verifying the three architecture files and clean diff.
+2. Verify `HEAD == origin/main` and a clean working tree.
+3. Create an annotated stable tag for the complete V1B4 trusted-runtime foundation only after the documentation commit is verified.
+4. Do not run changed code, Windows Sandbox or candidate Python as part of documentation/tag closure.
+5. Switch to **Pro Standard** before defining V1C architecture.
+6. V1C must consume one V1B4D lease and re-establish runtime/network/worker/Job/signed-handshake evidence inside the same Sandbox instance before the first changed-code instruction.
+7. Keep `python_module`, `pipeline`, arbitrary shell, dependency installation, host fallback and promotion blocked until V1C acceptance explicitly proves them.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -988,9 +1013,11 @@ c63e519 docs: close runtime bundle and split active runtime attestation
 4a68c3c feat: add signed runtime transcript verifier
 c86d8eb docs: close signed runtime verifier and start active composition
 049e4ca feat: add active trusted runtime composition
+6500fee docs: close active runtime and start capability lease
+18e8619 feat: add same-run trusted runtime capability lease
 ```
 
-Следующий documentation commit фиксирует V1B4C2B closure, обновлённый payload fingerprint и переводит `CURRENT` на V1B4D Same-Run Runtime Capability Lease.
+Следующий documentation commit фиксирует V1B4D/V1B4 closure. После его проверки создаётся отдельный stable tag перед V1C.
 
 ## 17. DEFERRED
 
@@ -1019,7 +1046,7 @@ c86d8eb docs: close signed runtime verifier and start active composition
 
 Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
 
-V1B3A–V1B3D and V1B4A–V1B4C2B are VERIFIED. V1B4D lease architecture is CURRENT and remains on **Pro Standard** through documentation closure. The bounded host-only lease implementation may use **Очень высокий**; V1C same-run changed-code execution returns to **Pro Standard**.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE. Remain on **Очень высокий** for this documentation closure and stable tag. Switch to **Pro Standard** before V1C architecture or changed-code implementation.
 
 ## 20. Файлы для будущего handoff
 

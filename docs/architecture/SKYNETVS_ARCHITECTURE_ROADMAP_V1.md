@@ -646,7 +646,7 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** V1B4A–V1B4C2B VERIFIED; CURRENT — V1B4D Same-Run Runtime Capability Lease.
+**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. NEXT — V1C Sandboxed Executable Checks architecture review.
 
 Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
@@ -740,7 +740,28 @@ V1B4C2B  Active Trusted Runtime Composition   VERIFIED
 
 ##### V1B4D — Same-Run Runtime Capability Lease
 
-**Статус:** CURRENT.
+**Статус:** VERIFIED / production closure `18e8619`.
+
+Verification closure:
+
+```text
+portable lease gate:                         36/36
+real Windows host-only lease smoke:            5/5
+policy fingerprint: 76ceaaf139af10814a403d24fca7455a61db78f095e80d390b360417354e8c18
+TTL:                                      300 seconds
+clock:                              time.monotonic_ns()
+claim returns exact runtime capability:         true
+second/replay claim rejected:                   true
+concurrent double claim:                one winner
+Sandbox process set after claim:                 []
+candidate interpreter executed:                false
+execution_authorized:                          false
+targeted flow:                   completed successfully
+full check:                      completed successfully
+runtime architecture audit:                      9/9
+```
+
+The Windows-specific boot-epoch quantization defect found during the first real claim was fixed without weakening the host boundary: fresh-host equivalence retains the measured one-second tolerance, while the lease fingerprint continues to bind the exact issuance snapshot. Drift of two seconds or any other bound host/runtime identity remains fail-closed.
 
 V1B4D is a host-only capability gate. It does not launch Windows Sandbox, does not execute `python.exe`, does not inspect a past C2B report and does not accept any developer-task, patch, workspace, module, pipeline, command or environment input.
 
@@ -800,9 +821,15 @@ If the combined run fails, exits or consumes the capability, no retry is permitt
 
 Detailed contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
 
+#### V1B4 closure
+
+V1B4 is complete only as a trusted-runtime foundation. It does **not** authorize changed-code execution. The verified chain is now source provenance → deterministic runtime bundle → active signed benign runtime attestation → process-local single-use runtime lease.
+
+Before any V1C code change or first changed-code run, perform a new Pro Standard architecture review. `python_module`, `pipeline`, patch/workspace execution, arbitrary shell, dependency installation and host fallback remain blocked until the V1C contract explicitly proves the same-run execution boundary.
+
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** PLANNED / BLOCKED до V1B.
+**Статус:** NEXT / architecture review required; execution remains BLOCKED.
 
 Только через production-attested backend:
 

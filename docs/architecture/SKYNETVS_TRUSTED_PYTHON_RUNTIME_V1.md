@@ -9,8 +9,9 @@ V1B4B — VERIFIED
 V1B4C1 — VERIFIED
 V1B4C2A — VERIFIED
 V1B4C2B — VERIFIED
-V1B4D — CURRENT
-V1C   — BLOCKED
+V1B4D — VERIFIED
+V1B4   — COMPLETE
+V1C    — NEXT / EXECUTION BLOCKED
 ```
 
 Этот документ фиксирует threat model, source-provenance model, deterministic bundle model, active attestation и handoff-контракт для `Typed Check Runner V1B4 — Trusted Python Runtime`.
@@ -29,7 +30,7 @@ execution_authorized    false
 ## 2. Проверенная стартовая точка
 
 ```text
-049e4ca feat: add active trusted runtime composition
+18e8619 feat: add same-run trusted runtime capability lease
 ```
 
 The active signed boundary beneath V1B4 remains the verified `f3f5607` composition. V1B4B adds the exact CPython 3.13.15 runtime capability, V1B4C1 locks the guest payload, and V1B4C2A independently verifies the signed runtime transcript without launching Sandbox or Python.
@@ -340,7 +341,29 @@ Out of scope:
 
 ### V1B4D — Same-Run Runtime Capability Lease
 
-**Status:** CURRENT.
+**Status:** VERIFIED / `18e8619`.
+
+Verification evidence:
+
+```text
+portable lease gate:                         36/36
+real Windows host-only lease smoke:            5/5
+policy fingerprint: 76ceaaf139af10814a403d24fca7455a61db78f095e80d390b360417354e8c18
+TTL:                                      300 seconds
+clock:                              time.monotonic_ns()
+claim exact retained runtime capability:       true
+replay rejected:       runtime_lease_already_claimed
+concurrent double claim:                one winner
+runtime staging cleaned:                       true
+Sandbox processes after claim:                    []
+interpreter_executed:                           false
+execution_authorized:                          false
+targeted flow:                   completed successfully
+full check:                      completed successfully
+runtime architecture audit:                      9/9
+```
+
+The production Windows smoke confirmed that issuance and claim remain completely host-only. The boot-epoch claim fix preserves the one-second measured quantization rule only for fresh-host equivalence; the canonical lease fingerprint remains bound to the exact issuance snapshot. Any two-second boot drift or other bound host/runtime change invalidates the lease.
 
 V1B4D is deliberately host-only. It does not use the completed C2B report as authority, does not launch Sandbox or Python and does not accept changed-code inputs.
 
@@ -499,7 +522,7 @@ host/non-exec bundle eval                  green
 host signed-runtime verifier               green
 active benign runtime attestation          green
 post-exit signed verification              green
-process-local single-use lease gate         pending
+process-local single-use lease gate         green
 runtime root write attempt                 blocked
 PYTHON*/site/user-site injection           blocked
 pip/ensurepip                              absent
@@ -513,4 +536,4 @@ full check                                 green
 
 Threat model, runtime version/provenance choice, active runtime state machine and same-run V1C handoff require **Pro Standard**.
 
-V1B4C2B is VERIFIED. V1B4D lease architecture is CURRENT and remains on **Pro Standard** through this contract/policy review. The bounded host-only implementation may then return to **Очень высокий**; V1C changed-code execution requires **Pro Standard** again.
+V1B4 is COMPLETE through the verified process-local single-use lease. Documentation closure and stable-tag preparation may remain on **Очень высокий**. Switch to **Pro Standard** before V1C architecture or changed-code implementation.
