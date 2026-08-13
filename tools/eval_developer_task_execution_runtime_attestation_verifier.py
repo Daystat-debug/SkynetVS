@@ -63,7 +63,7 @@ def _canonical(payload: dict[str, Any], *, final_lf: bool = False) -> bytes:
     return raw + (b"\n" if final_lf else b"")
 
 
-def _utc(epoch: int) -> str:
+def _utc(epoch: float) -> str:
     return datetime.fromtimestamp(epoch, timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z")
 
 
@@ -112,7 +112,12 @@ def _sample_request(bundle: Any, wsb_bytes: bytes) -> Any:
     )
 
 
-def _sample_ready(request: Any, *, public_key: bytes = _PUBLIC_KEY, ready_epoch: int = _READY_EPOCH) -> Any:
+def _sample_ready(
+    request: Any,
+    *,
+    public_key: bytes = _PUBLIC_KEY,
+    ready_epoch: float = _READY_EPOCH,
+) -> Any:
     request_payload = request.to_dict()
     public_hash = hashlib.sha256(public_key).hexdigest()
     payload = {
@@ -402,6 +407,54 @@ def main() -> int:
         },
     )
 
+    check(
+        "V1B4C2A HOST AUTHORIZATION TIMING REJECTS BOOLEAN NONFINITE AND NONPOSITIVE VALUES",
+        {
+            "boolean": _issue_code(
+                lambda: _pin(
+                    request=request,
+                    ready=ready,
+                    authorize=authorize,
+                    wsb_bytes=wsb_bytes,
+                    authorization_observed_epoch=True,
+                )
+            ),
+            "nan": _issue_code(
+                lambda: _pin(
+                    request=request,
+                    ready=ready,
+                    authorize=authorize,
+                    wsb_bytes=wsb_bytes,
+                    authorization_observed_epoch=float("nan"),
+                )
+            ),
+            "infinity": _issue_code(
+                lambda: _pin(
+                    request=request,
+                    ready=ready,
+                    authorize=authorize,
+                    wsb_bytes=wsb_bytes,
+                    authorization_observed_epoch=float("inf"),
+                )
+            ),
+            "zero": _issue_code(
+                lambda: _pin(
+                    request=request,
+                    ready=ready,
+                    authorize=authorize,
+                    wsb_bytes=wsb_bytes,
+                    authorization_observed_epoch=0.0,
+                )
+            ),
+        },
+        {
+            "boolean": "TypeError",
+            "nan": "TypeError",
+            "infinity": "TypeError",
+            "zero": "TypeError",
+        },
+    )
+
     pin = _pin(request=request, ready=ready, authorize=authorize, wsb_bytes=wsb_bytes)
     check(
         "V1B4C2A VALID CANONICAL REQUEST READY AND AUTHORIZATION ARE PINNED",
@@ -539,6 +592,36 @@ def main() -> int:
 
     observed_before_ready = _pin(request=request, ready=ready, authorize=authorize, wsb_bytes=wsb_bytes, authorization_observed_epoch=_REQUEST_EPOCH)
     check("V1B4C2A AUTHORIZATION HOST TIMING INVERSION IS REJECTED", "runtime_attestation_authorization_temporal_inversion" in observed_before_ready.issue_codes, True)
+
+    fractional_ready = _sample_ready(
+        request,
+        ready_epoch=_REQUEST_EPOCH + 1.205589,
+    )
+    fractional_authorize = _sample_authorize(request, fractional_ready)
+    fractional_observation = _pin(
+        request=request,
+        ready=fractional_ready,
+        authorize=fractional_authorize,
+        wsb_bytes=wsb_bytes,
+        authorization_observed_epoch=_REQUEST_EPOCH + 1.750001,
+    )
+    check(
+        "V1B4C2A SUBSECOND HOST AUTHORIZATION TIMING PRESERVES ORDER",
+        {
+            "ok": fractional_observation.ok,
+            "observed": (
+                fractional_observation.expectation.authorization_observed_epoch
+                if fractional_observation.expectation is not None
+                else 0.0
+            ),
+            "issue_codes": list(fractional_observation.issue_codes),
+        },
+        {
+            "ok": True,
+            "observed": _REQUEST_EPOCH + 1.750001,
+            "issue_codes": [],
+        },
+    )
 
     expired_authorize = _pin(request=request, ready=ready, authorize=authorize, wsb_bytes=wsb_bytes, authorization_observed_epoch=_AUTH_DEADLINE_EPOCH + 1)
     check("V1B4C2A EXPIRED AUTHORIZATION IS REJECTED", "runtime_attestation_authorization_expired" in expired_authorize.issue_codes, True)

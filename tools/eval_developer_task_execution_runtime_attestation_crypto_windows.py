@@ -30,7 +30,7 @@ from tools.eval_developer_task_execution_runtime_attestation_verifier import (
 
 
 _SIGNATURE = base64.b64decode(
-    "08uIzhOQg34GPcCkSKlEQMODp0wK+NgPOUAOWnDDxjcJP4xnB8o7nZ5QMg/FQh3jTMoy68Mjg23JVgTZ/gjhvw=="
+    "fcAO0sQvQQ1PAwuoZesXqbpvZcxiohJD6fSFbZhVJdxOq7Nj4C4C/SnWupC3ei3yVaGJgC1VNwfBRygp0LxDcQ=="
 )
 
 

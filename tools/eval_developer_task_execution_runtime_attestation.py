@@ -66,10 +66,10 @@ from modules.developer.developer_task_execution_runtime_policy import (
 
 
 _EXPECTED_POLICY_FINGERPRINT = "31c4f8de17e999db2d064a8aca4e95d3e2400f21a229317e83b1d5700d1e3c48"
-_EXPECTED_PAYLOAD_FINGERPRINT = "22a2aed03e87ddee2f6b3e38f15ea6b7afb0130c73ecde1511b321bb8598b801"
+_EXPECTED_PAYLOAD_FINGERPRINT = "47820f76e8fb0c5542592057c8a4258f968841b12aff6d1c3ee9d69a3e4c1e13"
 _EXPECTED_BOOTSTRAP_SHA256 = "73b65b3731f94bc6b0042848e93721877fc2f0f8a70c861e08b17e4303a534bc"
-_EXPECTED_NATIVE_SHA256 = "5857c9b42542c2690937b193361fb2057865ff121eb628c54b68fda77eb32bff"
-_EXPECTED_CONTROLLER_SHA256 = "005519e51d6edb51ed9dd720dff5f126450f006d6f8c0a6c9690adcaf0f33a85"
+_EXPECTED_NATIVE_SHA256 = "bb9e98675e742b8693da8fee270d045ef9bfa51d4440f461d19cc5b22ee4ca2e"
+_EXPECTED_CONTROLLER_SHA256 = "3ccf95e6ace6c14bb9fb697592202655da4579e76bfaf9e3a704b83cc92b7b2e"
 _EXPECTED_WSB_TEMPLATE_SHA256 = "81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416375f"
 _REQUEST_ID = "0123456789abcdef0123456789abcdef"
 _HOST_NONCE = "11" * 32
@@ -784,6 +784,28 @@ def main() -> int:
         },
     )
 
+    check(
+        "V1B4C1 ECDSA SIGNING KEY USES A TRUE NULL CNG NAME THROUGH THE NATIVE HELPER",
+        {
+            "helper": "CreateEphemeralEcdsaP256SigningKey" in native_text,
+            "null_string": "(string)null" in native_text,
+            "no_export": "creation.ExportPolicy = CngExportPolicies.None;" in native_text,
+            "signing_only": "creation.KeyUsage = CngKeyUsages.Signing;" in native_text,
+            "controller_uses_helper": "$cngKey = [V1B4CNative]::CreateEphemeralEcdsaP256SigningKey()" in controller_text,
+            "powershell_null_overload_absent": "[string]$null" not in controller_text,
+            "direct_cng_create_absent": "[System.Security.Cryptography.CngKey]::Create" not in controller_text,
+        },
+        {
+            "helper": True,
+            "null_string": True,
+            "no_export": True,
+            "signing_only": True,
+            "controller_uses_helper": True,
+            "powershell_null_overload_absent": True,
+            "direct_cng_create_absent": True,
+        },
+    )
+
     launch_body = native_text.split("public static WorkerLaunchState LaunchFixedRuntimeProbeSuspendedInJob", 1)[1].split("public static uint ResumeRuntimeWorker", 1)[0]
     check(
         "V1B4C1 NATIVE HELPER HAS A FIXED CREATEPROCESSASUSER RUNTIME LAUNCH SHAPE",
@@ -944,7 +966,7 @@ def main() -> int:
             "ipv6_route": "Test-DefaultRoute -Family IPv6" in controller_text,
             "ipv4_tcp": 'AddressFamily]::InterNetwork)' in controller_text,
             "ipv6_tcp": 'AddressFamily]::InterNetworkV6)' in controller_text,
-            "ecdsa": "ECDsaP256" in controller_text,
+            "ecdsa": "ECDsaP256" in native_text and "CreateEphemeralEcdsaP256SigningKey" in controller_text,
             "sign_hash": "$ecdsa.SignHash($terminalDigest)" in controller_text,
             "shutdown": "$shutdownScheduled = Schedule-Shutdown" in controller_text,
         },

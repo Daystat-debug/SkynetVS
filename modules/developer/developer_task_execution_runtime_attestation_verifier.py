@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import math
 
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -77,7 +78,7 @@ class DeveloperTaskRuntimeAttestationTranscriptExpectation:
     host_nonce: str = field(repr=False)
     authorization_nonce: str = field(repr=False)
     authorization_deadline_epoch: int
-    authorization_observed_epoch: int
+    authorization_observed_epoch: float
     request_sha256: str
     ready_sha256: str
     authorize_sha256: str
@@ -393,14 +394,27 @@ def pin_developer_task_execution_runtime_attestation_transcript(
     expected_host_nonce: str,
     expected_authorization_nonce: str,
     expected_request_sha256: str,
-    authorization_observed_epoch: int,
+    authorization_observed_epoch: float,
     wsb_bytes: bytes,
     request_bytes: bytes,
     ready_bytes: bytes,
     authorize_bytes: bytes,
 ) -> DeveloperTaskRuntimeAttestationTranscriptPinReport:
-    if type(authorization_observed_epoch) is not int or authorization_observed_epoch <= 0:
-        raise TypeError("authorization_observed_epoch must be a positive integer")
+    if (
+        isinstance(authorization_observed_epoch, bool)
+        or not isinstance(authorization_observed_epoch, (int, float))
+    ):
+        raise TypeError(
+            "authorization_observed_epoch must be a positive finite number"
+        )
+    authorization_observed_epoch = float(authorization_observed_epoch)
+    if (
+        not math.isfinite(authorization_observed_epoch)
+        or authorization_observed_epoch <= 0.0
+    ):
+        raise TypeError(
+            "authorization_observed_epoch must be a positive finite number"
+        )
     trusted_payload = _canonical_payload()
     artifact_hashes = _payload_artifact_hashes(trusted_payload, wsb_bytes)
     issues: list[DeveloperTaskRuntimeAttestationVerificationIssue] = []

@@ -344,6 +344,25 @@ def _replace_section(source: str, start_marker: str, end_marker: str, replacemen
 def build_runtime_attestation_native_helper_source() -> bytes:
     source = WORKER_NATIVE_HELPER_BYTES.decode("utf-8", errors="strict")
     source = source.replace("public static class V1B3CNative", "public static class V1B4CNative", 1)
+    source = source.replace(
+        "public static class V1B4CNative\n{\n",
+        r'''public static class V1B4CNative
+{
+    public static CngKey CreateEphemeralEcdsaP256SigningKey()
+    {
+        CngKeyCreationParameters creation = new CngKeyCreationParameters();
+        creation.ExportPolicy = CngExportPolicies.None;
+        creation.KeyUsage = CngKeyUsages.Signing;
+        return CngKey.Create(
+            CngAlgorithm.ECDsaP256,
+            (string)null,
+            creation
+        );
+    }
+
+''',
+        1,
+    )
     source = source.replace('public const string WORKER_EXECUTABLE_FILE_NAME = "SkynetVS_V1B3C_worker_probe.exe";', 'public const string RUNTIME_EXECUTABLE_FILE_NAME = "python.exe";', 1)
     source = source.replace('return "svb3c" + requestId.Substring(0, 12);', 'return "svb4c" + requestId.Substring(0, 12);', 1)
     source = source.replace('info.usri1_comment = "SkynetVS V1B3C benign worker";', 'info.usri1_comment = "SkynetVS V1B4C trusted runtime worker";', 1)
@@ -845,10 +864,7 @@ try {
     $expectedTaskName = $ExpectedTaskPrefix + $requestId.Substring(0, 8)
     $bootstrapTaskDeleted = Remove-BootstrapTask -TaskName $expectedTaskName
 
-    $creation = [System.Security.Cryptography.CngKeyCreationParameters]::new()
-    $creation.ExportPolicy = [System.Security.Cryptography.CngExportPolicies]::None
-    $creation.KeyUsage = [System.Security.Cryptography.CngKeyUsages]::Signing
-    $cngKey = [System.Security.Cryptography.CngKey]::Create([System.Security.Cryptography.CngAlgorithm]::ECDsaP256, [string]$null, $creation)
+    $cngKey = [V1B4CNative]::CreateEphemeralEcdsaP256SigningKey()
     $ecdsa = [System.Security.Cryptography.ECDsaCng]::new($cngKey)
     $publicBlob = $cngKey.Export([System.Security.Cryptography.CngKeyBlobFormat]::EccPublicBlob)
     $publicKeySha256 = Get-BytesSha256 -Bytes $publicBlob
