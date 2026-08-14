@@ -395,7 +395,7 @@ full check:                       completed successfully
 runtime architecture audit:       9/9
 ```
 
-## 13. CURRENT — Typed Check Runner V1B4 — Trusted Python Runtime
+## 13. VERIFIED — Typed Check Runner V1B4 — Trusted Python Runtime
 
 ### Архитектурный аудит — VERIFIED решение
 
@@ -724,7 +724,7 @@ The production boundary publishes `authorize.json` only after pinning and commit
 
 Signed Result Authenticity and Privilege Separation is complete. Patch/workspace Python execution remains blocked until V1B4 and V1C.
 
-### V1B4 — CURRENT / Trusted Python Runtime
+### V1B4 — COMPLETE / Trusted Python Runtime
 
 V1B4 is split into four top-level evidence boundaries:
 
@@ -929,7 +929,7 @@ The first real Windows claim exposed a one-second boot-epoch quantization mismat
 
 #### V1B4 — COMPLETE
 
-The trusted-runtime chain is now fully verified through the process-local single-use lease. This does not authorize changed-code execution. V1C remains the next security boundary and requires a new Pro Standard architecture review before implementation.
+The trusted-runtime chain is fully verified through the process-local single-use lease and is fixed by `skynet-trusted-runtime-v1b4` at `91d8c37`. This does not authorize changed-code execution. The Pro Standard V1C architecture review is now complete and starts with a non-executing inventory gate.
 
 V1B4D is the verified host-only lease slice. It creates a process-local, non-serialized, non-copyable, single-use capability with a fixed monotonic `300`-second TTL. Issuance requires fresh successful host evidence, an empty Sandbox process set and the exact in-memory V1B4B bundle capability. A completed V1B4C2B report is not an input and cannot authorize a new run.
 
@@ -959,31 +959,91 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED. V1B4 is COMPLETE. Documentation closure and stable-tag preparation may remain on **Очень высокий**. Before V1C architecture or implementation, switch to **Pro Standard**.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. The V1C architecture/context decision is approved in **Pro Standard**. After the documentation lock, V1C0A host-only implementation may return to **Очень высокий**. Switch back to **Pro Standard** before toolchain source selection or the V1C1/V1C2 same-run changed-workspace boundary.
 
-## 14. BLOCKED до V1C — Sandboxed Executable Checks
+## 14. CURRENT — V1C0A Canonical Executable Check Inventory Gate
 
-До завершения V1B запрещены:
+The stable-tag context archive was verified as exact input:
+
+```text
+archive SHA-256:                  627dfb80d16c97d0a4ed8ce94fcbbbb4b671b40e4e0c3d8f792123334b07a84f
+manifest payloads:                47/47 verified
+baseline/stable tag:              91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+tracked Python files:             226
+parse failures:                   0
+pipeline flows / check steps:     89 / 84
+import roots / third-party:       65 / 11
+process-launch call sites:        32
+requirements / host freeze:       11 / 61 distributions
+host / trusted Python:            3.12.10 / 3.13.15
+```
+
+Security conclusions:
+
+- host `.venv` is observation only and cannot be copied into the guest;
+- existing ranged requirement files are not a deterministic dependency lock;
+- Git tracks three `requirements*.txt` files, while the collector captured one; V1C0A must discover all tracked requirement/constraint/lock candidates itself;
+- current `check` is not an initial guest allowlist because it includes host CoreAudio smoke and Git-dependent safety evals;
+- the current pipeline uses `sys.executable`, inherited environment and inherited `PYTHONPATH`; V1C must use a new fixed guest runner contract instead;
+- a separate exact Python dependency bundle is required for import-executing checks;
+- a separate portable Git provenance/bundle is required before Git-dependent guest checks;
+- hashing only the `cmd/git.exe` launcher is not sufficient Git distribution provenance.
+
+Final slices:
+
+```text
+V1C0A  Canonical Executable Check Inventory Gate             CURRENT
+V1C0B  Host Toolchain Observation and Source Selection       PLANNED
+V1C1   Immutable Workspace Snapshot and Typed Execution Plan PLANNED
+V1C2   Active Sandboxed Compile/AST Gate                     PLANNED
+V1C3A  Python Dependency Source Provenance                   PLANNED
+V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
+V1C3C  Portable Git Source Provenance and Bundle             PLANNED
+V1C4A  Changed-Code Execution Contract and Guest Payload     PLANNED
+V1C4B  Signed Changed-Code Transcript Verifier               PLANNED
+V1C5   Active Sandboxed python_module Check                  BLOCKED
+V1C6   Active Sandboxed Guest-Safe Pipeline Check            BLOCKED
+V1C7   Composite Typed Check Runner and Result Evidence      BLOCKED
+```
+
+V1C0A is host-only. It does not launch Sandbox, claim a V1B4D lease, execute candidate CPython, import tracked modules or process changed workspace bytes.
+
+Locked first implementation scope:
+
+```text
+A modules/developer/developer_task_execution_environment_inventory_policy.py
+A modules/developer/developer_task_execution_environment_inventory.py
+A tools/eval_developer_task_execution_environment_inventory.py
+A tools/eval_developer_task_execution_environment_inventory_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
+All executable modes remain blocked:
 
 ```text
 python_module
 pipeline
+arbitrary shell
+runtime dependency installation
 host fallback
+commit / merge / push / promotion
 ```
 
-V1C сможет выполнять их только через успешно аттестованный production backend и отдельную result-evidence boundary.
+Every V1C0A report remains `execution_authorized=false` and `reusable_lease_issued=false`.
 
 ## 15. Следующее точное действие
 
-Закрыть `V1B4` и подготовить переход к `V1C`:
+Lock Roadmap Change 011 and begin the non-executing V1C0A gate:
 
-1. Commit only this documentation closure after verifying the three architecture files and clean diff.
-2. Verify `HEAD == origin/main` and a clean working tree.
-3. Create an annotated stable tag for the complete V1B4 trusted-runtime foundation only after the documentation commit is verified.
-4. Do not run changed code, Windows Sandbox or candidate Python as part of documentation/tag closure.
-5. Switch to **Pro Standard** before defining V1C architecture.
-6. V1C must consume one V1B4D lease and re-establish runtime/network/worker/Job/signed-handshake evidence inside the same Sandbox instance before the first changed-code instruction.
-7. Keep `python_module`, `pipeline`, arbitrary shell, dependency installation, host fallback and promotion blocked until V1C acceptance explicitly proves them.
+1. Apply and commit only the three architecture-document changes from the reviewed V1C0 decision.
+2. Verify a clean `HEAD == origin/main`; do not move `skynet-trusted-runtime-v1b4`.
+3. Switch from **Pro Standard** to **Очень высокий** after the documentation commit.
+4. Implement only the six-file V1C0A scope.
+5. Make inventory enumerate all tracked requirements/constraints/lock candidates rather than trusting collector hardcoding.
+6. Keep the existing `check` flow observational; do not place it on a guest allowlist.
+7. Do not launch Windows Sandbox, claim a runtime lease, execute candidate Python, import changed modules or build/install dependencies during V1C0A.
+8. Return to **Pro Standard** before V1C0B source selection or the V1C1/V1C2 same-run changed-workspace architecture.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -1015,13 +1075,15 @@ c86d8eb docs: close signed runtime verifier and start active composition
 049e4ca feat: add active trusted runtime composition
 6500fee docs: close active runtime and start capability lease
 18e8619 feat: add same-run trusted runtime capability lease
+91d8c37 docs: close trusted runtime and prepare sandboxed checks
+tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-Следующий documentation commit фиксирует V1B4D/V1B4 closure. После его проверки создаётся отдельный stable tag перед V1C.
+Roadmap Change 011 is the current documentation lock. After its commit, V1C0A is the only active implementation slice; the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 
-- Typed Check Runner V1C — Sandboxed `python_module` and `pipeline`.
+- Typed Check Runner V1C1–V1C7 — snapshot, toolchain provenance and sandboxed executable checks.
 - Developer Task Result and Evidence V1.
 - Developer Task Manual Promotion V1.
 - Developer Safety Kernel Audit V1.
@@ -1044,9 +1106,9 @@ c86d8eb docs: close signed runtime verifier and start active composition
 
 ## 19. Режим модели
 
-Threat model, result-authenticity model и четыре внутренних среза V1B утверждены в **Pro Standard**.
+Threat model, result-authenticity model, V1B4 and Roadmap Change 011 are approved in **Pro Standard**.
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE. Remain on **Очень высокий** for this documentation closure and stable tag. Switch to **Pro Standard** before V1C architecture or changed-code implementation.
+The V1C context/toolchain architecture is now locked. After its documentation commit, implement the host-only V1C0A inventory gate on **Очень высокий**. Return to **Pro Standard** before selecting dependency/Git source artifacts or defining the V1C1/V1C2 same-run changed-workspace boundary.
 
 ## 20. Файлы для будущего handoff
 

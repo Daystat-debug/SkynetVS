@@ -11,7 +11,7 @@ V1B4C2A — VERIFIED
 V1B4C2B — VERIFIED
 V1B4D — VERIFIED
 V1B4   — COMPLETE
-V1C    — NEXT / EXECUTION BLOCKED
+V1C0A  — CURRENT / EXECUTION BLOCKED
 ```
 
 Этот документ фиксирует threat model, source-provenance model, deterministic bundle model, active attestation и handoff-контракт для `Typed Check Runner V1B4 — Trusted Python Runtime`.
@@ -30,7 +30,9 @@ execution_authorized    false
 ## 2. Проверенная стартовая точка
 
 ```text
+91d8c37 docs: close trusted runtime and prepare sandboxed checks
 18e8619 feat: add same-run trusted runtime capability lease
+stable tag: skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
 The active signed boundary beneath V1B4 remains the verified `f3f5607` composition. V1B4B adds the exact CPython 3.13.15 runtime capability, V1B4C1 locks the guest payload, and V1B4C2A independently verifies the signed runtime transcript without launching Sandbox or Python.
@@ -153,7 +155,7 @@ V1B4C is split into three independently reviewable claims:
 V1B4C1   Runtime Attestation Contract and Payload Gate   VERIFIED
 V1B4C2A  Signed Runtime Transcript Verifier              VERIFIED
 V1B4C2B  Active Trusted Runtime Composition              VERIFIED
-V1B4D    Same-Run Runtime Capability Lease                CURRENT
+V1B4D    Same-Run Runtime Capability Lease                VERIFIED
 ```
 
 #### V1B4C1 — Runtime Attestation Contract and Payload Gate
@@ -497,17 +499,54 @@ Writable runtime output is never trusted while Sandbox is active. Success is acc
 
 ## 9. V1B4/V1C boundary
 
-V1B4 proves the exact interpreter and runtime boundary with a benign probe.
+V1B4 proves the exact minimal interpreter/runtime boundary with a benign probe and a process-local single-use lease. It does not prove the project dependency set, external check tools, workspace snapshot or a changed-code execution plan.
 
-V1C is the first stage allowed to add typed changed-code modes. V1C must be split at least into:
+The stable-tag V1C context review measured:
 
 ```text
-V1C1  sandboxed py_compile over verified workspace bytes
-V1C2  sandboxed python_module with explicit module allowlist
-V1C3  sandboxed pipeline flow with explicit flow allowlist
+context archive SHA-256:             627dfb80d16c97d0a4ed8ce94fcbbbb4b671b40e4e0c3d8f792123334b07a84f
+manifest payloads:                    47/47 verified
+tracked Python files / parse errors:  226 / 0
+pipeline flows / check steps:          89 / 84
+import roots / third-party roots:      65 / 11
+process-launch call sites:             32
+direct ranged requirements:            11
+installed host distributions:          61
+host Python / trusted Python:          3.12.10 / 3.13.15
 ```
 
-Dependency bundles, if needed, are separate pinned application artifacts. Runtime acquisition does not imply dependency acquisition, and no task may run `pip install`.
+The host `.venv` is not an admissible guest bundle. It is mutable CPython 3.12 state, includes resolver/install tooling and ABI-specific native extensions, and is not derived from V1B4 provenance. Runtime acquisition still does not imply dependency acquisition.
+
+The current pipeline `check` is not an initial guest allowlist. It includes host-hardware smoke, Git-dependent developer evals, child processes launched with `sys.executable`, and an inherited host environment/`PYTHONPATH`. A later V1C6 flow must be a new protected guest-safe flow with an exact reviewed step list.
+
+Final V1C split:
+
+```text
+V1C0A  Canonical Executable Check Inventory Gate
+V1C0B  Host Toolchain Observation and Source Selection
+V1C1   Immutable Workspace Snapshot and Typed Execution Plan
+V1C2   Active Sandboxed Compile/AST Gate
+V1C3A  Python Dependency Source Provenance
+V1C3B  Deterministic Python Check Dependency Bundle
+V1C3C  Portable Git Source Provenance and Bundle
+V1C4A  Changed-Code Execution Contract and Guest Payload
+V1C4B  Signed Changed-Code Transcript Verifier
+V1C5   Active Sandboxed python_module Check
+V1C6   Active Sandboxed Guest-Safe Pipeline Check
+V1C7   Composite Typed Check Runner and Result Evidence
+```
+
+Locked rules:
+
+- V1C0A is host-only inventory and grants no capability.
+- The first active changed-workspace boundary is V1C2 compile/AST only, without imports, top-level execution, Git or project dependencies.
+- Python dependencies require exact offline source/wheel provenance and a deterministic CPython 3.13 AMD64 bundle. No runtime resolver, `pip install`, network or sdist build is permitted.
+- Portable Git is a separate provenance/bundle required before any Git-dependent guest flow. The `cmd/git.exe` launcher hash alone is not full Git identity.
+- `python_module` and pipeline flow names require semantic explicit allowlists bound to exact protected baseline-owned entrypoints; regex validation is not authorization.
+- Each executable check consumes one fresh V1B4D lease, one immutable snapshot and one fresh Sandbox.
+- A successful report remains historical evidence only: `execution_authorized=false`, `reusable_lease_issued=false`.
+
+Before the first instruction from changed code, the same Sandbox instance must re-prove runtime, dependency/toolchain, snapshot, execution-plan, network, worker privilege, Job, handle/environment and signed-handshake evidence.
 
 ## 10. Acceptance criteria
 
@@ -534,6 +573,6 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime version/provenance choice, active runtime state machine and same-run V1C handoff require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Change 011 require **Pro Standard**.
 
-V1B4 is COMPLETE through the verified process-local single-use lease. Documentation closure and stable-tag preparation may remain on **Очень высокий**. Switch to **Pro Standard** before V1C architecture or changed-code implementation.
+The V1C architecture/context decision is locked. After its documentation commit, the host-only V1C0A inventory implementation may proceed on **Очень высокий**. Return to **Pro Standard** before dependency/Git source selection or the V1C1/V1C2 active changed-workspace boundary.

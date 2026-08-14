@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B3 VERIFIED; CURRENT — V1B4 Trusted Python Runtime.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. CURRENT — V1C0A Executable Check Inventory.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -594,6 +594,14 @@ execution_authorized:                       false
 
 **Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
+## Roadmap Change 011 — Executable-check inventory, compile gate and toolchain provenance are separate V1C boundaries
+
+**Причина:** V1B4 proves an exact minimal CPython 3.13.15 runtime, but the current executable-check environment is a different trust claim. The stable-tag context uses host Python 3.12.10 from `.venv`, declares 11 ranged direct requirements, contains 61 installed distributions, exposes 11 third-party import roots and 32 process-launch call sites, and defines an 84-step `check` flow that includes both host-hardware smoke and Git-dependent developer checks. The host `.venv`, inherited environment and current `check` flow therefore cannot become guest execution authority.
+
+**Что меняется:** V1C starts with host-only V1C0A canonical inventory. The first active processing of changed workspace bytes is a separate V1C2 compile/AST gate that uses only the verified V1B4 runtime and does not import or execute workspace modules. Python dependencies and portable Git are separate provenance/bundle boundaries. The existing `check` flow is not the initial guest allowlist; a later protected guest-safe flow must be built from an exact reviewed step list.
+
+**Что не меняется:** `skynet-trusted-runtime-v1b4` remains fixed at `91d8c37`; V1B4 fingerprints and evidence remain immutable; `python_module`, `pipeline`, arbitrary shell, runtime dependency installation, host `.venv` reuse, host fallback, commit, merge, push and promotion remain blocked; every serialized report keeps `execution_authorized=false` and `reusable_lease_issued=false`.
+
 ## Roadmap Change 010 — Runtime lease is a process-local entry capability, not past-run authority
 
 **Причина:** a completed V1B4C2B report is durable evidence that the benign runtime boundary worked, but it cannot authorize a later Sandbox instance. A serializable or reusable token would silently convert post-exit evidence into cross-run execution authority.
@@ -646,7 +654,7 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. NEXT — V1C Sandboxed Executable Checks architecture review.
+**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A CURRENT; changed-code execution remains BLOCKED.
 
 Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
@@ -825,18 +833,108 @@ Detailed contract: `docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
 
 V1B4 is complete only as a trusted-runtime foundation. It does **not** authorize changed-code execution. The verified chain is now source provenance → deterministic runtime bundle → active signed benign runtime attestation → process-local single-use runtime lease.
 
-Before any V1C code change or first changed-code run, perform a new Pro Standard architecture review. `python_module`, `pipeline`, patch/workspace execution, arbitrary shell, dependency installation and host fallback remain blocked until the V1C contract explicitly proves the same-run execution boundary.
+The Pro Standard V1C architecture review is complete against stable tag `skynet-trusted-runtime-v1b4` at `91d8c37`. It inserts a non-executing V1C0A inventory gate before workspace snapshot, toolchain provenance or any changed-code boundary. `python_module`, `pipeline`, patch/workspace execution, arbitrary shell, dependency installation and host fallback remain blocked.
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** NEXT / architecture review required; execution remains BLOCKED.
+**Статус:** V1C0A CURRENT; all changed-code execution remains BLOCKED.
 
-Только через production-attested backend:
+#### V1C architecture context closure
 
-- `python_module`;
-- `pipeline`.
+The exact context archive collected from `skynet-trusted-runtime-v1b4` was verified before this roadmap change:
 
-Без `shell=True`, без произвольных строк команд, без сети по умолчанию, без установки зависимостей и без host fallback.
+```text
+archive SHA-256:                     627dfb80d16c97d0a4ed8ce94fcbbbb4b671b40e4e0c3d8f792123334b07a84f
+manifest payloads verified:          47/47
+HEAD / origin/main / stable tag:     91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+tracked Python files:                226
+AST parse failures:                  0
+pipeline flows:                      89
+current check steps:                 84
+import roots:                        65
+third-party import roots:            11
+process-launch call sites:           32
+direct ranged requirements:          11
+installed host distributions:        61
+host Python:                         3.12.10
+trusted runtime Python:              3.13.15
+```
+
+The 11 third-party roots are `colorama`, `comtypes`, `dotenv`, `edge_tts`, `faster_whisper`, `joblib`, `numpy`, `pycaw`, `sklearn`, `sounddevice` and `vosk`.
+
+Git tracks `requirements.txt`, `requirements-train.txt` and `requirements-whisper.txt`, but the context collector captured exact bytes only for `requirements.txt`. This is a collector/inventory gap, not permission to infer the other files. V1C0A must discover and bind every tracked `requirements*.txt` and lock candidate itself.
+
+The current `check` flow is not guest-safe as one unit. It includes a real CoreAudio Windows smoke and Git-dependent Developer Safety Kernel evals, launches child Python processes through `sys.executable`, and inherits the host environment plus existing `PYTHONPATH`. Its current behavior is observation data only.
+
+#### Final V1C decomposition
+
+```text
+V1C0A  Canonical Executable Check Inventory Gate             CURRENT
+V1C0B  Host Toolchain Observation and Source Selection       PLANNED
+V1C1   Immutable Workspace Snapshot and Typed Execution Plan PLANNED
+V1C2   Active Sandboxed Compile/AST Gate                     PLANNED
+V1C3A  Python Dependency Source Provenance                   PLANNED
+V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
+V1C3C  Portable Git Source Provenance and Bundle             PLANNED
+V1C4A  Changed-Code Execution Contract and Guest Payload     PLANNED
+V1C4B  Signed Changed-Code Transcript Verifier               PLANNED
+V1C5   Active Sandboxed python_module Check                  BLOCKED
+V1C6   Active Sandboxed Guest-Safe Pipeline Check            BLOCKED
+V1C7   Composite Typed Check Runner and Result Evidence      BLOCKED
+```
+
+`V1C0B` observations are not authority. Exact source bytes, hashes, licenses, architecture compatibility and deterministic derived trees must be proven independently before any dependency or external tool enters a guest boundary.
+
+#### Locked toolchain decisions
+
+- The host `.venv` is never copied, mapped or treated as trusted input. It is CPython 3.12 state while V1B4 is CPython 3.13.15, contains mutable resolver/install state and includes ABI-specific native extensions.
+- Runtime `pip`, `ensurepip`, package resolution, download, sdist build and network acquisition are forbidden.
+- Python check dependencies require a separate exact offline wheel/source provenance boundary and a deterministic CPython 3.13 AMD64 bundle.
+- Portable Git is required before any guest flow containing Git-dependent checks. It is a separate provenance/bundle from CPython and Python dependencies. Hashing only `cmd/git.exe` is insufficient to identify the Git distribution.
+- The first active changed-workspace boundary is V1C2 compile/AST only. It consumes one fresh V1B4D lease and one fresh Sandbox, but imports and top-level execution remain forbidden.
+- Every `python_module` target must be selected by a semantic explicit allowlist and bound to an exact protected baseline-owned entrypoint. The existing name regex is validation only, not authorization.
+- The existing `check` flow is not the initial pipeline allowlist. V1C6 must introduce a protected guest-safe flow with an exact reviewed step list; host-hardware smoke, outer Sandbox activation and interactive/promotion flows remain excluded.
+- One executable check uses one fresh lease, one immutable workspace snapshot and one fresh Sandbox. A successful report never becomes authority for another check.
+
+#### V1C0A — first production slice
+
+V1C0A is host-only and non-authorizing. It performs read-only inventory over a typed clean repository evidence chain and never imports tracked modules.
+
+Planned public shape:
+
+```python
+inventory_developer_task_execution_environment(
+    repository_report: DeveloperTaskRepositoryPreflightReport,
+    *,
+    project_root: Path,
+) -> DeveloperTaskExecutionEnvironmentInventoryReport
+```
+
+Caller-supplied requirement lists, module allowlists, pipeline allowlists, executables, argv, environment additions and classification overrides are forbidden.
+
+Locked implementation scope:
+
+```text
+A modules/developer/developer_task_execution_environment_inventory_policy.py
+A modules/developer/developer_task_execution_environment_inventory.py
+A tools/eval_developer_task_execution_environment_inventory.py
+A tools/eval_developer_task_execution_environment_inventory_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
+Acceptance includes:
+
+- exact discovery/hash of every tracked requirements/constraint/lock candidate;
+- AST-only inventory of all tracked Python imports and process surfaces;
+- exact pipeline flow/step topology and fixed child-command shapes;
+- external-tool and host/hardware dependency classification;
+- detection of missing collector inputs and noncanonical/duplicate evidence;
+- stable canonical report fingerprint without host absolute paths as authority;
+- no repository mutation, Sandbox launch, lease claim, candidate interpreter execution, module import or changed-code execution;
+- `execution_authorized=false` and `reusable_lease_issued=false`.
+
+`python_module` and `pipeline` remain blocked until the later same-run contracts, toolchain bundles and signed post-exit evidence are independently VERIFIED.
 
 ## 1.5 Developer Task Result & Evidence V1
 
@@ -1137,11 +1235,15 @@ Roadmap Change N
 
 [VERIFIED CODE] f3f5607 — V1B3D Active Signed Boundary Composition
 
-[CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1B4A — Runtime Source Provenance Gate.
+[VERIFIED STABLE FOUNDATION]
+skynet-trusted-runtime-v1b4 → 91d8c37
+V1B4A provenance → V1B4B deterministic bundle → V1B4C active runtime → V1B4D same-run lease.
 
-[NEXT]
-V1B4A provenance → V1B4B deterministic bundle → V1B4C active runtime → V1B4D same-run lease → V1C Sandboxed Checks.
+[CURRENT ARCHITECTURE STAGE]
+Typed Check Runner V1C0A — Canonical Executable Check Inventory Gate.
+
+[NEXT AFTER V1C0A]
+V1C0B toolchain source selection → V1C1 snapshot/plan → V1C2 active compile gate.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
