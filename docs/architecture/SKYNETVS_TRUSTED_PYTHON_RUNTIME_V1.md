@@ -11,7 +11,8 @@ V1B4C2A — VERIFIED
 V1B4C2B — VERIFIED
 V1B4D — VERIFIED
 V1B4   — COMPLETE
-V1C0A  — CURRENT / EXECUTION BLOCKED
+V1C0A  — VERIFIED / EXECUTION BLOCKED
+V1C0B1 — CURRENT / EXECUTION BLOCKED
 ```
 
 Этот документ фиксирует threat model, source-provenance model, deterministic bundle model, active attestation и handoff-контракт для `Typed Check Runner V1B4 — Trusted Python Runtime`.
@@ -523,7 +524,8 @@ Final V1C split:
 
 ```text
 V1C0A  Canonical Executable Check Inventory Gate
-V1C0B  Host Toolchain Observation and Source Selection
+V1C0B1 Canonical Host Toolchain Observation Gate
+V1C0B2 External Source Authority Selection Lock
 V1C1   Immutable Workspace Snapshot and Typed Execution Plan
 V1C2   Active Sandboxed Compile/AST Gate
 V1C3A  Python Dependency Source Provenance
@@ -536,12 +538,24 @@ V1C6   Active Sandboxed Guest-Safe Pipeline Check
 V1C7   Composite Typed Check Runner and Result Evidence
 ```
 
+V1C0A is now VERIFIED at `b039ce1`. Its post-commit Windows smoke was `1/1` against the exact committed tree:
+
+```text
+tracked files / Python files: 248 / 230
+pipeline flows / check steps:  90 / 85
+process-launch call sites:      35
+inventory fingerprint:          654389970f9cdfee377138a27fee6ad6b61d3287e580f0f9ecb5f76d1efb1c3c
+execution_authorized:           false
+```
+
 Locked rules:
 
 - V1C0A is host-only inventory and grants no capability.
 - The first active changed-workspace boundary is V1C2 compile/AST only, without imports, top-level execution, Git or project dependencies.
-- Python dependencies require exact offline source/wheel provenance and a deterministic CPython 3.13 AMD64 bundle. No runtime resolver, `pip install`, network or sdist build is permitted.
-- Portable Git is a separate provenance/bundle required before any Git-dependent guest flow. The `cmd/git.exe` launcher hash alone is not full Git identity.
+- V1C0B1 observes host Python/pip, Git and fixed Windows PowerShell but grants no authority. Host installations are never copied into a guest bundle.
+- Future Python dependency source authority is limited to official PyPI repository APIs plus exact PyPI-hosted wheel bytes for CPython 3.13 AMD64 / `win_amd64`. Every direct and transitive artifact must be exactly pinned and SHA-256-bound. No runtime resolver, `pip install`, network, sdist or local-build fallback is permitted.
+- Future portable Git source authority is the official 64-bit Git for Windows MinGit release archive. The release asset and extracted tree require independent provenance. The installed host Git tree and `cmd/git.exe` launcher hash are observation only.
+- No portable PowerShell bundle is selected for the initial V1C2 compile/AST gate; the fixed guest Windows PowerShell controller remains the only PowerShell boundary.
 - `python_module` and pipeline flow names require semantic explicit allowlists bound to exact protected baseline-owned entrypoints; regex validation is not authorization.
 - Each executable check consumes one fresh V1B4D lease, one immutable snapshot and one fresh Sandbox.
 - A successful report remains historical evidence only: `execution_authorized=false`, `reusable_lease_issued=false`.
@@ -573,6 +587,6 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation and Roadmap Change 011 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation, Roadmap Change 011 and Roadmap Change 012 require **Pro Standard**.
 
-The V1C architecture/context decision is locked. After its documentation commit, the host-only V1C0A inventory implementation may proceed on **Очень высокий**. Return to **Pro Standard** before dependency/Git source selection or the V1C1/V1C2 active changed-workspace boundary.
+V1C0A is VERIFIED. Keep **Pro Standard** through the V1C0B documentation and exact host-toolchain context review. The bounded V1C0B1 host-only implementation may then proceed on **Очень высокий**. Return to **Pro Standard** before exact PyPI/MinGit artifact selection or the V1C1/V1C2 active changed-workspace boundary.

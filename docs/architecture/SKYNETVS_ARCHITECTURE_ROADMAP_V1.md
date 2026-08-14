@@ -1,7 +1,7 @@
 # SkynetVS Architecture Roadmap V1
 
 **Дата фиксации:** 2026-07-30
-**Последнее обновление:** 2026-08-13
+**Последнее обновление:** 2026-08-15
 **Статус:** LOCKED
 **Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. CURRENT — V1C0A Executable Check Inventory.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A VERIFIED; CURRENT — V1C0B1 Host Toolchain Observation.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -594,6 +594,14 @@ execution_authorized:                       false
 
 **Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
+## Roadmap Change 012 — Host observation and external source authority are separate V1C0B boundaries
+
+**Причина:** V1C0A at `b039ce1` now proves the exact committed dependency declarations, import/process topology and pipeline shape, but it intentionally does not prove where future Python wheels or Git bytes come from. The installed host `.venv`, host Git tree and host PowerShell are mutable observation surfaces. Treating host observation as source authority would silently reintroduce host fallback and ABI/configuration drift.
+
+**Что меняется:** V1C0B is split into V1C0B1 `Canonical Host Toolchain Observation Gate` and V1C0B2 `External Source Authority Selection Lock`. V1C0B1 produces a canonical non-authorizing report over exact committed dependency declarations plus host Python/pip, Git distribution and fixed Windows PowerShell identities. V1C0B2 locks source classes independently: official PyPI APIs and exact PyPI-hosted wheel bytes for the future CPython 3.13 AMD64 dependency closure, and the official 64-bit Git for Windows MinGit release archive for the future portable Git bundle. Exact package versions, release asset names and artifact hashes remain future V1C3A/V1C3C provenance evidence, not V1C0B1 outputs.
+
+**Что не меняется:** no host installation becomes authority; no package or Git artifact is downloaded, installed, resolved or copied during V1C0B1; source distributions and local wheel builds remain blocked by default; runtime network/resolver access, Sandbox launch, lease claim, candidate interpreter execution, changed-code execution, `python_module`, `pipeline`, arbitrary shell, commit, merge, push and promotion remain forbidden; every serialized report keeps `execution_authorized=false` and `reusable_lease_issued=false`.
+
 ## Roadmap Change 011 — Executable-check inventory, compile gate and toolchain provenance are separate V1C boundaries
 
 **Причина:** V1B4 proves an exact minimal CPython 3.13.15 runtime, but the current executable-check environment is a different trust claim. The stable-tag context uses host Python 3.12.10 from `.venv`, declares 11 ranged direct requirements, contains 61 installed distributions, exposes 11 third-party import roots and 32 process-launch call sites, and defines an 84-step `check` flow that includes both host-hardware smoke and Git-dependent developer checks. The host `.venv`, inherited environment and current `check` flow therefore cannot become guest execution authority.
@@ -654,7 +662,7 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A CURRENT; changed-code execution remains BLOCKED.
+**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A VERIFIED; V1C0B1 CURRENT; changed-code execution remains BLOCKED.
 
 Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
@@ -837,7 +845,7 @@ The Pro Standard V1C architecture review is complete against stable tag `skynet-
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** V1C0A CURRENT; all changed-code execution remains BLOCKED.
+**Статус:** V1C0A VERIFIED at `b039ce1`; V1C0B1 CURRENT; all changed-code execution remains BLOCKED.
 
 #### V1C architecture context closure
 
@@ -862,15 +870,37 @@ trusted runtime Python:              3.13.15
 
 The 11 third-party roots are `colorama`, `comtypes`, `dotenv`, `edge_tts`, `faster_whisper`, `joblib`, `numpy`, `pycaw`, `sklearn`, `sounddevice` and `vosk`.
 
-Git tracks `requirements.txt`, `requirements-train.txt` and `requirements-whisper.txt`, but the context collector captured exact bytes only for `requirements.txt`. This is a collector/inventory gap, not permission to infer the other files. V1C0A must discover and bind every tracked `requirements*.txt` and lock candidate itself.
+The original V1C context collector captured exact bytes only for `requirements.txt`. V1C0A closed that gap and now binds all three tracked declarations: `requirements.txt`, `requirements-train.txt` and `requirements-whisper.txt`.
 
 The current `check` flow is not guest-safe as one unit. It includes a real CoreAudio Windows smoke and Git-dependent Developer Safety Kernel evals, launches child Python processes through `sys.executable`, and inherits the host environment plus existing `PYTHONPATH`. Its current behavior is observation data only.
+
+V1C0A production and post-commit evidence are now closed:
+
+```text
+commit:                            b039ce1 feat: add canonical executable check environment inventory
+portable evaluator:                27/27
+package boundaries:                28/28
+full check:                         completed successfully
+post-commit Windows smoke:          1/1
+tracked files / Python files:       248 / 230
+Python bytes:                       3,144,023
+pipeline flows / all steps:         90 / 438
+check steps:                        85
+process-launch call sites:          35
+host-sensitive files:               23
+inventory fingerprint:              654389970f9cdfee377138a27fee6ad6b61d3287e580f0f9ecb5f76d1efb1c3c
+execution_authorized:               false
+reusable_lease_issued:              false
+```
+
+The exact committed dependency declarations remain unchanged and are independently SHA-256 bound: `requirements.txt`, `requirements-train.txt` and `requirements-whisper.txt`.
 
 #### Final V1C decomposition
 
 ```text
-V1C0A  Canonical Executable Check Inventory Gate             CURRENT
-V1C0B  Host Toolchain Observation and Source Selection       PLANNED
+V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
+V1C0B1 Canonical Host Toolchain Observation Gate             CURRENT
+V1C0B2 External Source Authority Selection Lock              PLANNED
 V1C1   Immutable Workspace Snapshot and Typed Execution Plan PLANNED
 V1C2   Active Sandboxed Compile/AST Gate                     PLANNED
 V1C3A  Python Dependency Source Provenance                   PLANNED
@@ -883,24 +913,28 @@ V1C6   Active Sandboxed Guest-Safe Pipeline Check            BLOCKED
 V1C7   Composite Typed Check Runner and Result Evidence      BLOCKED
 ```
 
-`V1C0B` observations are not authority. Exact source bytes, hashes, licenses, architecture compatibility and deterministic derived trees must be proven independently before any dependency or external tool enters a guest boundary.
+`V1C0B1` observations are not authority. V1C0B2 locks only the reviewed source classes; exact versions, source bytes, hashes, licenses, architecture compatibility and deterministic derived trees must still be proven independently in V1C3A/V1C3C before any dependency or external tool enters a guest boundary.
 
 #### Locked toolchain decisions
 
 - The host `.venv` is never copied, mapped or treated as trusted input. It is CPython 3.12 state while V1B4 is CPython 3.13.15, contains mutable resolver/install state and includes ABI-specific native extensions.
 - Runtime `pip`, `ensurepip`, package resolution, download, sdist build and network acquisition are forbidden.
-- Python check dependencies require a separate exact offline wheel/source provenance boundary and a deterministic CPython 3.13 AMD64 bundle.
-- Portable Git is required before any guest flow containing Git-dependent checks. It is a separate provenance/bundle from CPython and Python dependencies. Hashing only `cmd/git.exe` is insufficient to identify the Git distribution.
+- Future Python dependency source authority is limited to official PyPI repository APIs plus exact PyPI-hosted artifact bytes. The target is CPython 3.13 AMD64 / `win_amd64`; acquisition is wheel-only; compatible CPython, ABI3 and universal wheels may be selected; every direct and transitive artifact must be exactly version- and SHA-256-bound before offline bundle derivation.
+- Absence of a compatible wheel blocks the affected check group. It never falls back to the host `.venv`, a source distribution or a local build.
+- Future portable Git source authority is the official 64-bit Git for Windows MinGit release archive. The release asset, archive bytes, safe extraction policy and extracted tree must be independently pinned. The installed host Git tree and the `cmd/git.exe` launcher hash remain observation only.
+- No portable PowerShell bundle is selected for the initial compile/AST gate. The fixed guest Windows PowerShell controller remains the only PowerShell boundary until a later explicit allowlist/transcript contract is approved.
 - The first active changed-workspace boundary is V1C2 compile/AST only. It consumes one fresh V1B4D lease and one fresh Sandbox, but imports and top-level execution remain forbidden.
 - Every `python_module` target must be selected by a semantic explicit allowlist and bound to an exact protected baseline-owned entrypoint. The existing name regex is validation only, not authorization.
 - The existing `check` flow is not the initial pipeline allowlist. V1C6 must introduce a protected guest-safe flow with an exact reviewed step list; host-hardware smoke, outer Sandbox activation and interactive/promotion flows remain excluded.
 - One executable check uses one fresh lease, one immutable workspace snapshot and one fresh Sandbox. A successful report never becomes authority for another check.
 
-#### V1C0A — first production slice
+#### V1C0A — VERIFIED first production slice
+
+**Closure:** `b039ce1`; post-commit Windows smoke `1/1`.
 
 V1C0A is host-only and non-authorizing. It performs read-only inventory over a typed clean repository evidence chain and never imports tracked modules.
 
-Planned public shape:
+Verified public shape:
 
 ```python
 inventory_developer_task_execution_environment(
@@ -912,7 +946,7 @@ inventory_developer_task_execution_environment(
 
 Caller-supplied requirement lists, module allowlists, pipeline allowlists, executables, argv, environment additions and classification overrides are forbidden.
 
-Locked implementation scope:
+Verified implementation scope:
 
 ```text
 A modules/developer/developer_task_execution_environment_inventory_policy.py
@@ -935,6 +969,45 @@ Acceptance includes:
 - `execution_authorized=false` and `reusable_lease_issued=false`.
 
 `python_module` and `pipeline` remain blocked until the later same-run contracts, toolchain bundles and signed post-exit evidence are independently VERIFIED.
+
+#### V1C0B1 — CURRENT host-toolchain observation slice
+
+V1C0B1 is host-only and non-authorizing. It consumes a typed successful V1C0A report and observes exact committed dependency declarations plus host Python/pip, Git distribution and fixed Windows PowerShell identities without importing project modules.
+
+Planned public shape:
+
+```python
+observe_developer_task_execution_host_toolchain(
+    inventory_report: DeveloperTaskExecutionEnvironmentInventoryReport,
+    *,
+    project_root: Path,
+) -> DeveloperTaskExecutionHostToolchainReport
+```
+
+Caller-controlled executable, argv, environment addition, requirement list, package mapping, Git root, source URL and classification override are forbidden.
+
+Locked implementation scope:
+
+```text
+A modules/developer/developer_task_execution_toolchain_observation_policy.py
+A modules/developer/developer_task_execution_toolchain_observation.py
+A tools/eval_developer_task_execution_toolchain_observation.py
+A tools/eval_developer_task_execution_toolchain_observation_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
+Acceptance includes:
+
+- exact HEAD/project-root/V1C0A report binding;
+- exact committed requirement bytes and strict declaration parsing;
+- host Python/pip identity, ABI/tag and installed-distribution observation without authority;
+- import-root to host-distribution observation;
+- host Git executable/build/exec-path plus full installation-tree manifest fingerprint;
+- fixed Windows PowerShell executable/version identity;
+- no serialization of user/global Git configuration values or credentials;
+- no network, download, install, source resolution, Sandbox, lease, candidate Python, project-module import or changed-code execution;
+- `source_authority_selected=false`, `execution_authorized=false` and `reusable_lease_issued=false`.
 
 ## 1.5 Developer Task Result & Evidence V1
 
@@ -1239,11 +1312,14 @@ Roadmap Change N
 skynet-trusted-runtime-v1b4 → 91d8c37
 V1B4A provenance → V1B4B deterministic bundle → V1B4C active runtime → V1B4D same-run lease.
 
-[CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1C0A — Canonical Executable Check Inventory Gate.
+[VERIFIED V1C0A]
+b039ce1 — Canonical Executable Check Inventory Gate; post-commit Windows smoke 1/1.
 
-[NEXT AFTER V1C0A]
-V1C0B toolchain source selection → V1C1 snapshot/plan → V1C2 active compile gate.
+[CURRENT ARCHITECTURE STAGE]
+Typed Check Runner V1C0B1 — Canonical Host Toolchain Observation Gate.
+
+[NEXT AFTER V1C0B1]
+V1C0B2 source-authority lock → V1C1 snapshot/plan → V1C2 active compile gate.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
