@@ -115,6 +115,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task signed runtime transcript verifier", _python_cmd("tools/eval_developer_task_execution_runtime_attestation_verifier.py")),
             Step("Evaluate developer task active trusted runtime composition", _python_cmd("tools/eval_developer_task_execution_runtime_composition.py")),
             Step("Evaluate developer task same-run runtime capability lease", _python_cmd("tools/eval_developer_task_execution_runtime_lease.py")),
+            Step("Evaluate developer task executable environment inventory", _python_cmd("tools/eval_developer_task_execution_environment_inventory.py")),
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
         "decision": [
@@ -598,6 +599,13 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task signed runtime transcript Windows CNG", _python_cmd("tools/eval_developer_task_execution_runtime_attestation_crypto_windows.py")),
             Step("Evaluate developer task same-run runtime capability lease", _python_cmd("tools/eval_developer_task_execution_runtime_lease.py")),
             Step("Evaluate developer task same-run runtime capability lease Windows host-only smoke", _python_cmd("tools/eval_developer_task_execution_runtime_lease_windows.py")),
+        ],
+        "developer_task_execution_environment_inventory": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
+            Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
+            Step("Evaluate developer task executable environment inventory", _python_cmd("tools/eval_developer_task_execution_environment_inventory.py")),
+            Step("Evaluate developer task executable environment inventory Windows host-only smoke", _python_cmd("tools/eval_developer_task_execution_environment_inventory_windows.py")),
         ],
         "package_boundaries": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
