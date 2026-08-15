@@ -12,7 +12,9 @@ V1B4C2B — VERIFIED
 V1B4D — VERIFIED
 V1B4   — COMPLETE
 V1C0A  — VERIFIED / EXECUTION BLOCKED
-V1C0B1 — CURRENT / EXECUTION BLOCKED
+V1C0B1 — VERIFIED / EXECUTION BLOCKED
+V1C0B2 — SOURCE CLASSES LOCKED / ARTIFACTS UNPINNED
+V1C1   — CURRENT ARCHITECTURE / EXECUTION BLOCKED
 ```
 
 Этот документ фиксирует threat model, source-provenance model, deterministic bundle model, active attestation и handoff-контракт для `Typed Check Runner V1B4 — Trusted Python Runtime`.
@@ -538,23 +540,35 @@ V1C6   Active Sandboxed Guest-Safe Pipeline Check
 V1C7   Composite Typed Check Runner and Result Evidence
 ```
 
-V1C0A is now VERIFIED at `b039ce1`. Its post-commit Windows smoke was `1/1` against the exact committed tree:
+V1C0A and V1C0B1 are VERIFIED through `e090f63`. Their post-commit Windows smokes were `1/1` against the exact committed tree:
 
 ```text
-tracked files / Python files: 248 / 230
-pipeline flows / check steps:  90 / 85
-process-launch call sites:      35
-inventory fingerprint:          654389970f9cdfee377138a27fee6ad6b61d3287e580f0f9ecb5f76d1efb1c3c
-execution_authorized:           false
+tracked files / Python files: 252 / 234
+pipeline flows / check steps:  91 / 86
+process-launch call sites:      38
+inventory fingerprint:          574cdc81c154c04ade6e26aec520cac243ddf5e15f1780037c57bf3ae88d1956
+observation fingerprint:        aa2f63f41523480f4e423d57e15e02883b70709e34e1dd108c72e977b36e6035
+source_authority_selected:       false
+execution_authorized:            false
 ```
 
-Locked rules:
+Locked rules after V1C0B2:
+
+```text
+decision ID:          skynetvs-v1c0b2-external-source-authority-lock-v1
+decision fingerprint: 80da155e8de0ce9f6d17565541173b701c2d5c9c8a8c13f1fcab9a57dbdb3d5e
+```
 
 - V1C0A is host-only inventory and grants no capability.
-- The first active changed-workspace boundary is V1C2 compile/AST only, without imports, top-level execution, Git or project dependencies.
 - V1C0B1 observes host Python/pip, Git and fixed Windows PowerShell but grants no authority. Host installations are never copied into a guest bundle.
-- Future Python dependency source authority is limited to official PyPI repository APIs plus exact PyPI-hosted wheel bytes for CPython 3.13 AMD64 / `win_amd64`. Every direct and transitive artifact must be exactly pinned and SHA-256-bound. No runtime resolver, `pip install`, network, sdist or local-build fallback is permitted.
-- Future portable Git source authority is the official 64-bit Git for Windows MinGit release archive. The release asset and extracted tree require independent provenance. The installed host Git tree and `cmd/git.exe` launcher hash are observation only.
+- Python metadata authority is the PyPI Simple Repository API JSON v1 with a supported `1.x` response at API `1.4` or newer; Python byte authority is the exact `files.pythonhosted.org` wheel URL named by that response.
+- Every direct and transitive wheel must be bound to normalized name, exact version, filename/tag, size, SHA-256, `Requires-Python`, yanked state and exact CPython 3.13 AMD64 compatibility. No extra index, direct URL, pre-release, yanked file, runtime resolver, `pip install`, sdist, local build or host-cache fallback is permitted by default.
+- A version-pinned resolver can propose candidates but is not authority. Final closure is independently rebuilt from verified metadata and bytes.
+- PyPI core-metadata hashes and provenance are verified when present. Attestation is supplemental publishing-identity evidence, not a package-safety guarantee; absence is recorded.
+- Portable Git authority is an immutable official Git for Windows release tag plus the standard 64-bit MinGit ZIP, release-published SHA-256, exact archive bytes and deterministic extracted-tree manifest. `latest`, BusyBox MinGit, PortableGit, installers, host Git and a single launcher hash are not authority.
+- The measured review candidate `v2.55.0.windows.4` / `MinGit-2.55.0.4-64-bit.zip` / SHA-256 `4e03f94c2ffbf70be337e005cee02661c732dbfc81031a078bda9299b9a7d644` is not yet the production V1C3C pin.
+- Network is restricted to future dedicated host acquisition gates with exact origin/redirect allowlists and scrubbed credential/index/proxy environment; guest/runtime network remains forbidden.
+- The first active changed-workspace boundary is V1C2 compile/AST only, without imports, top-level execution, Git or project dependencies.
 - No portable PowerShell bundle is selected for the initial V1C2 compile/AST gate; the fixed guest Windows PowerShell controller remains the only PowerShell boundary.
 - `python_module` and pipeline flow names require semantic explicit allowlists bound to exact protected baseline-owned entrypoints; regex validation is not authorization.
 - Each executable check consumes one fresh V1B4D lease, one immutable snapshot and one fresh Sandbox.
@@ -587,6 +601,6 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation, Roadmap Change 011 and Roadmap Change 012 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–013 require **Pro Standard**.
 
-V1C0A is VERIFIED. Keep **Pro Standard** through the V1C0B documentation and exact host-toolchain context review. The bounded V1C0B1 host-only implementation may then proceed on **Очень высокий**. Return to **Pro Standard** before exact PyPI/MinGit artifact selection or the V1C1/V1C2 active changed-workspace boundary.
+V1C0A/V1C0B1 are VERIFIED and V1C0B2 is LOCKED. Keep **Pro Standard** for V1C1/V1C2 immutable-snapshot, lease-consumption and first active changed-workspace architecture. Bounded host-only implementation may return to **Очень высокий** only after that contract is fixed. Return to **Pro Standard** before exact PyPI wheel closure or MinGit pinning.

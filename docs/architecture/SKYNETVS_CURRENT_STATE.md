@@ -4,9 +4,9 @@
 
 - Дата обновления: `2026-08-15`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `b039ce1`
-- Название code baseline: `feat: add canonical executable check environment inventory`
-- `origin/main` на проверенной code-точке: `b039ce1`
+- Проверенный code baseline перед этим documentation commit: `e090f63`
+- Название code baseline: `feat: add canonical host toolchain observation`
+- `origin/main` на проверенной code-точке: `e090f63`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -959,37 +959,47 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A is VERIFIED at `b039ce1`. Roadmap Change 012 and the V1C0B source-authority architecture are approved in **Pro Standard**. After the V1C0B documentation/context lock, bounded V1C0B1 host-only implementation may return to **Очень высокий**. Return to **Pro Standard** before V1C0B2 final artifact selection or the V1C1/V1C2 same-run changed-workspace boundary.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A and V1C0B1 are VERIFIED through `e090f63`. Roadmap Change 013 and the V1C0B2 source-authority contract are locked in **Pro Standard**. Keep **Pro Standard** for the V1C1/V1C2 snapshot and first active changed-workspace architecture; bounded host-only implementation may return to **Очень высокий** only after that contract is fixed.
 
-## 14. VERIFIED V1C0A / CURRENT V1C0B1 — Host Toolchain Observation
+## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
-V1C0A is closed at:
+V1C0A and V1C0B1 are closed at:
 
 ```text
 b039ce1 feat: add canonical executable check environment inventory
-HEAD == origin/main:              true
-stable V1B4 tag:                  91d8c37fc4afe7ef138e36063e7bc22014da8a2c
-portable evaluator:               27/27
-package boundaries:               28/28
-full check:                        completed successfully
-post-commit Windows smoke:         1/1
+e090f63 feat: add canonical host toolchain observation
+HEAD == origin/main:                       true
+stable V1B4 tag:                           91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+V1C0A portable evaluator:                  27/27
+V1C0B1 portable evaluator:                 26/26
+package boundaries:                        28/28
+pre-commit targeted flow:                  completed successfully
+pre-commit full check:                     completed successfully
+post-commit V1C0A Windows smoke:           1/1
+post-commit V1C0B1 Windows smoke:          1/1
 ```
 
-Post-commit exact inventory:
+Post-commit exact inventory and observation at `e090f63`:
 
 ```text
-head commit:                       b039ce174cf1276247ffe47f0a81306f43e20578
-tracked files / Python files:      248 / 230
-Python bytes:                      3,144,023
-Python tree fingerprint:           42574b8baf7bf3fe916ac054fab9e9fe11d327f551e2d3e5359aa2ffb5b11af5
-pipeline flows / all steps:        90 / 438
-check steps:                       85
-process-launch call sites:         35
-host-sensitive files:              23
-inventory fingerprint:             654389970f9cdfee377138a27fee6ad6b61d3287e580f0f9ecb5f76d1efb1c3c
+tracked files / Python files:              252 / 234
+Python bytes:                              3,257,957
+Python tree fingerprint:                   235fb61106d53245d4716eaf4aa1da2defa3d684b974a8a5801ebf0cd1016f38
+pipeline flows / all steps:                91 / 445
+check steps:                               86
+process-launch call sites:                 38
+host-sensitive files:                     25
+inventory fingerprint:                    574cdc81c154c04ade6e26aec520cac243ddf5e15f1780037c57bf3ae88d1956
+observation fingerprint:                  aa2f63f41523480f4e423d57e15e02883b70709e34e1dd108c72e977b36e6035
+host Python / pip:                         3.12.10 / 25.3
+host distributions:                       61
+host Git:                                 2.45.1.windows.1
+host Git tree:                            6356 files / 419125157 bytes
+host Git tree SHA-256:                    41f001b961349b0e0e2e89b2843671a2052d176c3472de83c447919058c082d6
+host PowerShell:                          5.1.26100.9168
 ```
 
-Exact committed dependency declarations:
+Exact committed dependency declarations remain:
 
 ```text
 requirements.txt          9e283f2050b97e229b4600ca2b1339184b96d1cebc8f90730547a4fb790142b4
@@ -997,65 +1007,7 @@ requirements-train.txt    65052d0da1b23c12505497325e0064568dcd9c25b368e1cfe1e5be
 requirements-whisper.txt  c5bc4d0891d158b7e8ec5c26b6b68dfcb0b60e8414c9f1ba3040993ea390129d
 ```
 
-All non-authorizing flags remained false:
-
-```text
-sandbox_launched               false
-candidate_interpreter_executed false
-dependency_install_attempted   false
-reusable_lease_issued          false
-execution_authorized           false
-```
-
-Roadmap Change 012 splits the next boundary:
-
-```text
-V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
-V1C0B1 Canonical Host Toolchain Observation Gate             CURRENT
-V1C0B2 External Source Authority Selection Lock              PLANNED
-V1C1   Immutable Workspace Snapshot and Typed Execution Plan PLANNED
-V1C2   Active Sandboxed Compile/AST Gate                     PLANNED
-V1C3A  Python Dependency Source Provenance                   PLANNED
-V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
-V1C3C  Portable Git Source Provenance and Bundle             PLANNED
-V1C4A  Changed-Code Execution Contract and Guest Payload     PLANNED
-V1C4B  Signed Changed-Code Transcript Verifier               PLANNED
-V1C5   Active Sandboxed python_module Check                  BLOCKED
-V1C6   Active Sandboxed Guest-Safe Pipeline Check            BLOCKED
-V1C7   Composite Typed Check Runner and Result Evidence      BLOCKED
-```
-
-Source-authority architecture:
-
-- host `.venv`, host Git and host PowerShell are observation only;
-- future Python dependency authority is official PyPI repository metadata plus exact PyPI-hosted wheel bytes for CPython 3.13 AMD64 / `win_amd64`;
-- every direct and transitive dependency must be exactly version- and SHA-256-bound; runtime resolver/network/install and sdist/local-build fallback remain forbidden;
-- future portable Git authority is the official 64-bit Git for Windows MinGit release archive, independently bound by release asset hash and extracted-tree manifest;
-- no portable PowerShell bundle is selected for V1C2 compile/AST; the fixed guest Windows PowerShell controller remains the only PowerShell boundary;
-- exact versions/assets/hashes remain V1C3A/V1C3C provenance work and are not inferred from host installations.
-
-V1C0B1 planned public API:
-
-```python
-observe_developer_task_execution_host_toolchain(
-    inventory_report: DeveloperTaskExecutionEnvironmentInventoryReport,
-    *,
-    project_root: Path,
-) -> DeveloperTaskExecutionHostToolchainReport
-```
-
-Locked V1C0B1 implementation scope:
-
-```text
-A modules/developer/developer_task_execution_toolchain_observation_policy.py
-A modules/developer/developer_task_execution_toolchain_observation.py
-A tools/eval_developer_task_execution_toolchain_observation.py
-A tools/eval_developer_task_execution_toolchain_observation_windows.py
-M tools/eval_package_boundaries.py
-M tools/pipeline.py
-```
-
-V1C0B1 remains host-only and must keep:
+All V1C0A/V1C0B1 non-authorizing flags remained false:
 
 ```text
 source_authority_selected        false
@@ -1067,19 +1019,75 @@ reusable_lease_issued            false
 execution_authorized             false
 ```
 
+Roadmap Change 013 closes V1C0B2 as a source-policy lock:
+
+```text
+V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
+V1C0B1 Canonical Host Toolchain Observation Gate             VERIFIED
+V1C0B2 External Source Authority Selection Lock              LOCKED
+V1C1   Immutable Workspace Snapshot and Typed Execution Plan CURRENT / ARCHITECTURE REVIEW
+V1C2   Active Sandboxed Compile/AST Gate                     PLANNED
+V1C3A  Python Dependency Source Provenance                   PLANNED
+V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
+V1C3C  Portable Git Source Provenance and Bundle             PLANNED
+V1C4A  Changed-Code Execution Contract and Guest Payload     PLANNED
+V1C4B  Signed Changed-Code Transcript Verifier               PLANNED
+V1C5   Active Sandboxed python_module Check                  BLOCKED
+V1C6   Active Sandboxed Guest-Safe Pipeline Check            BLOCKED
+V1C7   Composite Typed Check Runner and Result Evidence      BLOCKED
+```
+
+Locked V1C0B2 source authority:
+
+```text
+decision ID:          skynetvs-v1c0b2-external-source-authority-lock-v1
+decision fingerprint: 80da155e8de0ce9f6d17565541173b701c2d5c9c8a8c13f1fcab9a57dbdb3d5e
+```
+
+- host `.venv`, host Git and host PowerShell are observation only;
+- canonical Python index metadata is PyPI Simple API JSON v1 with a supported `1.x` response at API `1.4` or newer;
+- canonical Python bytes are exact `files.pythonhosted.org` wheels named by that response and verified by filename, size and SHA-256;
+- target is CPython 3.13 AMD64 / `win_amd64`; yanked, pre-release, sdist, local-build, direct-URL, extra-index and host-cache fallback are rejected by default;
+- a version-pinned resolver can propose candidates but never becomes authority; final direct/transitive closure is independently rebuilt and fingerprinted;
+- core-metadata hashes and PyPI provenance are verified when present; attestation proves publishing identity, not package safety, and absence is recorded explicitly;
+- portable Git authority is an immutable official Git for Windows release tag plus the standard `MinGit-<version>-64-bit.zip`, release-published SHA-256, exact archive and deterministic extracted tree;
+- current review candidate only: `v2.55.0.windows.4`, `MinGit-2.55.0.4-64-bit.zip`, SHA-256 `4e03f94c2ffbf70be337e005cee02661c732dbfc81031a078bda9299b9a7d644`;
+- `latest`, BusyBox MinGit, PortableGit, installers, host Git and a single launcher hash are not authority;
+- network is allowed only in future dedicated host acquisition gates with exact origin/redirect allowlists and scrubbed credential/index/proxy environment; guest/runtime network remains forbidden;
+- exact Python wheel/version closure remains V1C3A; exact MinGit pin/tree remains V1C3C.
+
+Verified V1C0B1 public API:
+
+```python
+observe_developer_task_execution_host_toolchain(
+    inventory_report: DeveloperTaskExecutionEnvironmentInventoryReport,
+    *,
+    project_root: Path,
+) -> DeveloperTaskExecutionHostToolchainReport
+```
+
+Verified V1C0B1 implementation scope:
+
+```text
+A modules/developer/developer_task_execution_toolchain_observation_policy.py
+A modules/developer/developer_task_execution_toolchain_observation.py
+A tools/eval_developer_task_execution_toolchain_observation.py
+A tools/eval_developer_task_execution_toolchain_observation_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
 ## 15. Следующее точное действие
 
-Lock Roadmap Change 012 and collect exact host-toolchain observation context:
+Close V1C0B1/V1C0B2 in documentation, then design the first changed-workspace boundary without downloading dependencies:
 
-1. Apply and commit only the three architecture-document changes for V1C0A closure and V1C0B split.
+1. Apply and commit only the three architecture-document changes for V1C0B1 closure and Roadmap Change 013.
 2. Keep `skynet-trusted-runtime-v1b4` fixed at `91d8c37`.
-3. From the clean documentation HEAD, run the reviewed read-only `SkynetVS_Collect_V1C0B_Host_Toolchain_Context.ps1` collector.
-4. Verify the context ZIP SHA-256 and manifest before architecture review.
-5. Observe exact committed dependency declarations, host Python/pip metadata, full host Git distribution-tree identity and fixed Windows PowerShell identity.
-6. Do not access the network, resolve/download/install packages, copy host packages/Git, launch Sandbox, claim a lease, execute candidate Python or import project modules.
-7. Review the context in **Pro Standard** and lock V1C0B2 source classes separately from exact future artifacts.
-8. After the context review, switch to **Очень высокий** for the bounded six-file V1C0B1 implementation.
-9. Return to **Pro Standard** before exact PyPI wheel closure, MinGit release selection or V1C1/V1C2 same-run changed-workspace architecture.
+3. Do not run pipeline after the docs-only commit; V1C0A/V1C0B1 code and both post-commit Windows smokes are already green.
+4. Keep **Pro Standard** and perform V1C1 architecture review over immutable workspace bytes, typed compile/AST plan, lease consumption timing, path/size/encoding limits and same-run handoff.
+5. V1C1/V1C2 must remain dependency-free: no PyPI/MinGit acquisition, resolver, install, Git guest capability or project import.
+6. Only after V1C1/V1C2 contracts are fixed may bounded host-only implementation return to **Очень высокий**.
+7. Return to **Pro Standard** again before V1C3A exact wheel closure or V1C3C exact MinGit pinning.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -1114,10 +1122,12 @@ c86d8eb docs: close signed runtime verifier and start active composition
 91d8c37 docs: close trusted runtime and prepare sandboxed checks
 f36f92f docs: split sandboxed checks into inventory and execution gates
 b039ce1 feat: add canonical executable check environment inventory
+f069ca9 docs: close executable inventory and split toolchain source authority
+e090f63 feat: add canonical host toolchain observation
 tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-V1C0A is VERIFIED at `b039ce1`. Roadmap Change 012 is the current documentation lock; V1C0B1 is the only active implementation slice and the stable V1B4 tag must not move.
+V1C0A and V1C0B1 are VERIFIED through `e090f63`. Roadmap Change 013 locks V1C0B2 source classes without artifact acquisition. V1C1 architecture review is current and the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 
@@ -1144,9 +1154,9 @@ V1C0A is VERIFIED at `b039ce1`. Roadmap Change 012 is the current documentation 
 
 ## 19. Режим модели
 
-Threat model, result-authenticity model, V1B4, Roadmap Change 011 and Roadmap Change 012 are approved in **Pro Standard**.
+Threat model, result-authenticity model, V1B4, Roadmap Changes 011–013 and the V1C0B2 external-source authority contract are approved in **Pro Standard**.
 
-V1C0A is VERIFIED. Keep **Pro Standard** through the V1C0B documentation and exact host-toolchain context review. Then implement the bounded host-only V1C0B1 observation gate on **Очень высокий**. Return to **Pro Standard** before V1C0B2 exact source-artifact selection or the V1C1/V1C2 same-run changed-workspace boundary.
+V1C0A and V1C0B1 are VERIFIED; V1C0B2 is LOCKED. Keep **Pro Standard** for V1C1/V1C2 snapshot, lease-consumption and first active changed-workspace architecture. Switch back to **Очень высокий** only after the bounded host-only implementation contract is fixed. Return to **Pro Standard** before exact PyPI wheel closure or MinGit pinning.
 
 ## 20. Файлы для будущего handoff
 

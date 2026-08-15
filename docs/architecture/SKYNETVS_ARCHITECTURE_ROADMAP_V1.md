@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A VERIFIED; CURRENT — V1C0B1 Host Toolchain Observation.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1 VERIFIED; V1C0B2 source authority LOCKED; CURRENT — V1C1 snapshot/plan architecture.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -594,6 +594,14 @@ execution_authorized:                       false
 
 **Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
+## Roadmap Change 013 — External source authority is an exact metadata-and-bytes contract, never resolver output or mutable latest state
+
+**Причина:** V1C0B1 at `e090f63` now proves the exact committed dependency declarations and canonical host Python/pip, Git and PowerShell observations, but those observations intentionally grant no source authority. A resolver result, an unversioned `latest` endpoint, a host cache or an installed toolchain can change independently of the protected repository and would reintroduce dependency confusion, ABI drift, cache poisoning and host fallback.
+
+**Что меняется:** V1C0B2 locks the external source classes without downloading or authorizing artifacts. Python candidate metadata is accepted only from the PyPI Simple Repository API JSON v1 with a supported `1.x` response and at least API `1.4`; exact wheel bytes must be the `files.pythonhosted.org` artifact URLs named by that response and must match filename, size and SHA-256. Yanked, pre-release, source-distribution, local-build, direct-URL, extra-index and host-cache fallback are rejected by default. A version-pinned resolver may propose a CPython 3.13 AMD64 / `win_amd64` wheel closure, but it is never authority: the final direct and transitive manifest is independently rebuilt from verified metadata and bytes. PyPI provenance/attestation evidence is captured and cryptographically verified when present, but it proves publishing identity rather than package safety and its absence is recorded rather than silently invented. Portable Git authority is limited to an immutable Git for Windows release tag plus the standard `MinGit-<version>-64-bit.zip` asset, release-published SHA-256, exact archive bytes and a deterministic extracted-tree manifest; `latest`, BusyBox MinGit, PortableGit, installers and host Git remain non-authoritative. Network access exists only in a future dedicated host acquisition gate with exact origin/redirect allowlists and no inherited credentials, indexes or proxy variables.
+
+**Что не меняется:** V1C0B2 is a documentation/source-policy lock only. It performs no resolution, download, install, extraction, Sandbox launch, lease claim, candidate interpreter execution or changed-code execution. Exact Python versions/wheels remain V1C3A work; exact MinGit archive/tree pinning remains V1C3C work; V1C1/V1C2 remain dependency-free snapshot/compile boundaries; `python_module`, `pipeline`, arbitrary shell, commit, merge, push and promotion remain blocked; every runtime report remains non-reusable and `execution_authorized=false`.
+
 ## Roadmap Change 012 — Host observation and external source authority are separate V1C0B boundaries
 
 **Причина:** V1C0A at `b039ce1` now proves the exact committed dependency declarations, import/process topology and pipeline shape, but it intentionally does not prove where future Python wheels or Git bytes come from. The installed host `.venv`, host Git tree and host PowerShell are mutable observation surfaces. Treating host observation as source authority would silently reintroduce host fallback and ABI/configuration drift.
@@ -662,7 +670,7 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A VERIFIED; V1C0B1 CURRENT; changed-code execution remains BLOCKED.
+**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A/V1C0B1 VERIFIED; V1C0B2 LOCKED; V1C1 CURRENT; changed-code execution remains BLOCKED.
 
 Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
@@ -845,7 +853,7 @@ The Pro Standard V1C architecture review is complete against stable tag `skynet-
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** V1C0A VERIFIED at `b039ce1`; V1C0B1 CURRENT; all changed-code execution remains BLOCKED.
+**Статус:** V1C0A and V1C0B1 VERIFIED through `e090f63`; V1C0B2 external source authority LOCKED; V1C1 architecture review CURRENT; all changed-code execution remains BLOCKED.
 
 #### V1C architecture context closure
 
@@ -874,34 +882,42 @@ The original V1C context collector captured exact bytes only for `requirements.t
 
 The current `check` flow is not guest-safe as one unit. It includes a real CoreAudio Windows smoke and Git-dependent Developer Safety Kernel evals, launches child Python processes through `sys.executable`, and inherits the host environment plus existing `PYTHONPATH`. Its current behavior is observation data only.
 
-V1C0A production and post-commit evidence are now closed:
+V1C0A and V1C0B1 production/post-commit evidence are now closed:
 
 ```text
-commit:                            b039ce1 feat: add canonical executable check environment inventory
-portable evaluator:                27/27
-package boundaries:                28/28
-full check:                         completed successfully
-post-commit Windows smoke:          1/1
-tracked files / Python files:       248 / 230
-Python bytes:                       3,144,023
-pipeline flows / all steps:         90 / 438
-check steps:                        85
-process-launch call sites:          35
-host-sensitive files:               23
-inventory fingerprint:              654389970f9cdfee377138a27fee6ad6b61d3287e580f0f9ecb5f76d1efb1c3c
-execution_authorized:               false
-reusable_lease_issued:              false
+V1C0A code closure:                 b039ce1 feat: add canonical executable check environment inventory
+V1C0B1 code closure:                e090f63 feat: add canonical host toolchain observation
+V1C0A portable evaluator:           27/27
+V1C0B1 portable evaluator:          26/26
+package boundaries:                 28/28
+pre-commit full check:               completed successfully
+V1C0A post-commit Windows smoke:     1/1
+V1C0B1 post-commit Windows smoke:    1/1
+tracked files / Python files:        252 / 234
+Python bytes:                        3,257,957
+pipeline flows / all steps:          91 / 445
+check steps:                         86
+process-launch call sites:           38
+host-sensitive files:                25
+inventory fingerprint:               574cdc81c154c04ade6e26aec520cac243ddf5e15f1780037c57bf3ae88d1956
+observation fingerprint:             aa2f63f41523480f4e423d57e15e02883b70709e34e1dd108c72e977b36e6035
+host Python / pip:                    3.12.10 / 25.3
+host Git / tree:                      2.45.1.windows.1 / 6356 files / 419125157 bytes
+host PowerShell:                      5.1.26100.9168
+source_authority_selected:            false
+execution_authorized:                 false
+reusable_lease_issued:                false
 ```
 
-The exact committed dependency declarations remain unchanged and are independently SHA-256 bound: `requirements.txt`, `requirements-train.txt` and `requirements-whisper.txt`.
+The exact committed dependency declarations remain unchanged and are independently SHA-256 bound: `requirements.txt`, `requirements-train.txt` and `requirements-whisper.txt`. V1C0B1 proves only host observation; host `.venv`, host Git and host PowerShell remain non-authoritative.
 
 #### Final V1C decomposition
 
 ```text
 V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
-V1C0B1 Canonical Host Toolchain Observation Gate             CURRENT
-V1C0B2 External Source Authority Selection Lock              PLANNED
-V1C1   Immutable Workspace Snapshot and Typed Execution Plan PLANNED
+V1C0B1 Canonical Host Toolchain Observation Gate             VERIFIED
+V1C0B2 External Source Authority Selection Lock              LOCKED
+V1C1   Immutable Workspace Snapshot and Typed Execution Plan CURRENT / ARCHITECTURE REVIEW
 V1C2   Active Sandboxed Compile/AST Gate                     PLANNED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
@@ -913,15 +929,17 @@ V1C6   Active Sandboxed Guest-Safe Pipeline Check            BLOCKED
 V1C7   Composite Typed Check Runner and Result Evidence      BLOCKED
 ```
 
-`V1C0B1` observations are not authority. V1C0B2 locks only the reviewed source classes; exact versions, source bytes, hashes, licenses, architecture compatibility and deterministic derived trees must still be proven independently in V1C3A/V1C3C before any dependency or external tool enters a guest boundary.
+`V1C0B1` observations are not authority. V1C0B2 now locks the reviewed source classes and acquisition semantics, but exact versions, source bytes, hashes, licenses, architecture compatibility and deterministic derived trees must still be proven independently in V1C3A/V1C3C before any dependency or external tool enters a guest boundary.
 
 #### Locked toolchain decisions
 
 - The host `.venv` is never copied, mapped or treated as trusted input. It is CPython 3.12 state while V1B4 is CPython 3.13.15, contains mutable resolver/install state and includes ABI-specific native extensions.
 - Runtime `pip`, `ensurepip`, package resolution, download, sdist build and network acquisition are forbidden.
-- Future Python dependency source authority is limited to official PyPI repository APIs plus exact PyPI-hosted artifact bytes. The target is CPython 3.13 AMD64 / `win_amd64`; acquisition is wheel-only; compatible CPython, ABI3 and universal wheels may be selected; every direct and transitive artifact must be exactly version- and SHA-256-bound before offline bundle derivation.
+- Future Python dependency source authority is the PyPI Simple Repository API JSON v1 (`application/vnd.pypi.simple.v1+json`) with a supported `1.x` response at API `1.4` or newer, plus the exact `files.pythonhosted.org` wheel bytes named by that response. The target is CPython 3.13 AMD64 / `win_amd64`; every direct and transitive file must be bound to normalized project name, exact version, filename, size, SHA-256, `Requires-Python`, yanked state and exact wheel compatibility before offline bundle derivation.
+- A version-pinned resolver is only a candidate generator. Final closure authority is an independently verified canonical source manifest. No extra index, direct URL, local cache authority, pre-release, yanked file, sdist or local build is accepted by default.
+- PyPI core-metadata hashes are verified when published. Provenance/attestation is fetched and cryptographically verified when present, but is supplemental origin evidence rather than proof of package safety; absence is explicit evidence, not an implicit pass or fabricated signature.
 - Absence of a compatible wheel blocks the affected check group. It never falls back to the host `.venv`, a source distribution or a local build.
-- Future portable Git source authority is the official 64-bit Git for Windows MinGit release archive. The release asset, archive bytes, safe extraction policy and extracted tree must be independently pinned. The installed host Git tree and the `cmd/git.exe` launcher hash remain observation only.
+- Future portable Git source authority is an immutable official Git for Windows release tag plus the standard 64-bit MinGit ZIP, release-published SHA-256, exact archive bytes, safe extraction policy and deterministic extracted-tree manifest. The installed host Git tree, `cmd/git.exe`, `latest`, BusyBox MinGit, PortableGit and installers remain non-authoritative.
 - No portable PowerShell bundle is selected for the initial compile/AST gate. The fixed guest Windows PowerShell controller remains the only PowerShell boundary until a later explicit allowlist/transcript contract is approved.
 - The first active changed-workspace boundary is V1C2 compile/AST only. It consumes one fresh V1B4D lease and one fresh Sandbox, but imports and top-level execution remain forbidden.
 - Every `python_module` target must be selected by a semantic explicit allowlist and bound to an exact protected baseline-owned entrypoint. The existing name regex is validation only, not authorization.
@@ -970,11 +988,11 @@ Acceptance includes:
 
 `python_module` and `pipeline` remain blocked until the later same-run contracts, toolchain bundles and signed post-exit evidence are independently VERIFIED.
 
-#### V1C0B1 — CURRENT host-toolchain observation slice
+#### V1C0B1 — VERIFIED host-toolchain observation slice
 
 V1C0B1 is host-only and non-authorizing. It consumes a typed successful V1C0A report and observes exact committed dependency declarations plus host Python/pip, Git distribution and fixed Windows PowerShell identities without importing project modules.
 
-Planned public shape:
+Verified public shape:
 
 ```python
 observe_developer_task_execution_host_toolchain(
@@ -986,7 +1004,7 @@ observe_developer_task_execution_host_toolchain(
 
 Caller-controlled executable, argv, environment addition, requirement list, package mapping, Git root, source URL and classification override are forbidden.
 
-Locked implementation scope:
+Verified implementation scope:
 
 ```text
 A modules/developer/developer_task_execution_toolchain_observation_policy.py
@@ -1008,6 +1026,44 @@ Acceptance includes:
 - no serialization of user/global Git configuration values or credentials;
 - no network, download, install, source resolution, Sandbox, lease, candidate Python, project-module import or changed-code execution;
 - `source_authority_selected=false`, `execution_authorized=false` and `reusable_lease_issued=false`.
+
+Closure evidence:
+
+```text
+commit:                              e090f63 feat: add canonical host toolchain observation
+portable evaluator:                  26/26
+pre-commit targeted Windows flow:    completed successfully
+pre-commit full check:               completed successfully
+post-commit V1C0A Windows smoke:     1/1
+post-commit V1C0B1 Windows smoke:    1/1
+inventory fingerprint:               574cdc81c154c04ade6e26aec520cac243ddf5e15f1780037c57bf3ae88d1956
+observation fingerprint:             aa2f63f41523480f4e423d57e15e02883b70709e34e1dd108c72e977b36e6035
+source_authority_selected:            false
+execution_authorized:                 false
+```
+
+#### V1C0B2 — LOCKED external source authority
+
+V1C0B2 is a Pro Standard architecture/source-policy lock and performs no network operation.
+
+```text
+decision ID:          skynetvs-v1c0b2-external-source-authority-lock-v1
+decision fingerprint: 80da155e8de0ce9f6d17565541173b701c2d5c9c8a8c13f1fcab9a57dbdb3d5e
+```
+
+It fixes the only admissible future acquisition boundaries:
+
+- Python index metadata: normalized project pages from `https://pypi.org/simple/` requested as Simple API JSON v1; supported major `1`, minimum minor `4`.
+- Python artifact bytes: exact HTTPS wheel URLs under `files.pythonhosted.org` returned by the verified project response.
+- Required Python evidence: response/body identity, API version, project status, normalized name, exact version, wheel filename/tag, file size, SHA-256, `Requires-Python`, yanked state, core-metadata identity when present, and provenance identity when present.
+- Resolver role: a version-pinned isolated host resolver may propose a closure, but cannot authorize it. The final manifest is independently rebuilt from verified direct/transitive metadata and bytes.
+- PyPI attestation role: verify when present and bind it to the exact wheel; record absence. An attestation proves publishing identity, not package safety.
+- Git metadata/artifact: immutable `git-for-windows/git` release tag plus the standard `MinGit-<version>-64-bit.zip` asset, release-published SHA-256, exact archive bytes and deterministic extracted-tree manifest.
+- Current review candidate only, not a production pin: `v2.55.0.windows.4` / `MinGit-2.55.0.4-64-bit.zip` / `4e03f94c2ffbf70be337e005cee02661c732dbfc81031a078bda9299b9a7d644`.
+- Network is allowed only in future dedicated host acquisition gates with exact origin/redirect allowlists, serial bounded requests and a scrubbed credential/index/proxy environment. Guest/runtime network remains forbidden.
+- Standard lock/interchange formats may be emitted as derived output, but the SkynetVS canonical source manifest and fingerprint remain authority.
+
+No package, Git archive or resolver is selected as executable capability by this lock. Exact Python artifact closure remains V1C3A; exact MinGit pin and tree remain V1C3C.
 
 ## 1.5 Developer Task Result & Evidence V1
 
@@ -1313,13 +1369,19 @@ skynet-trusted-runtime-v1b4 → 91d8c37
 V1B4A provenance → V1B4B deterministic bundle → V1B4C active runtime → V1B4D same-run lease.
 
 [VERIFIED V1C0A]
-b039ce1 — Canonical Executable Check Inventory Gate; post-commit Windows smoke 1/1.
+b039ce1 — Canonical Executable Check Inventory Gate; current-tree post-commit Windows smoke 1/1.
+
+[VERIFIED V1C0B1]
+e090f63 — Canonical Host Toolchain Observation Gate; post-commit Windows smoke 1/1.
+
+[LOCKED SOURCE AUTHORITY]
+V1C0B2 — PyPI Simple API + exact hosted wheels; immutable standard 64-bit MinGit release asset.
 
 [CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1C0B1 — Canonical Host Toolchain Observation Gate.
+Typed Check Runner V1C1 — Immutable Workspace Snapshot and Typed Execution Plan.
 
-[NEXT AFTER V1C0B1]
-V1C0B2 source-authority lock → V1C1 snapshot/plan → V1C2 active compile gate.
+[NEXT AFTER V1C1]
+V1C2 active compile/AST gate → V1C3A Python source provenance → V1C3C MinGit provenance.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
