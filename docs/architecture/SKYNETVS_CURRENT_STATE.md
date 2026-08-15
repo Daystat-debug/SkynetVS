@@ -1025,8 +1025,8 @@ Roadmap Change 013 closes V1C0B2 as a source-policy lock:
 V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
 V1C0B1 Canonical Host Toolchain Observation Gate             VERIFIED
 V1C0B2 External Source Authority Selection Lock              LOCKED
-V1C1A  Canonical Patched Workspace Snapshot Bundle           CURRENT / HOST-ONLY IMPLEMENTATION
-V1C1B  Typed Compile/AST Plan Capability                     PLANNED / HOST-ONLY
+V1C1A  Canonical Patched Workspace Snapshot Bundle           VERIFIED
+V1C1B  Typed Compile/AST Plan Capability                     CURRENT / HOST-ONLY IMPLEMENTATION
 V1C2A  Compile/AST Guest Contract and Fixed Runner           PLANNED
 V1C2B  Signed Compile/AST Transcript Verifier                PLANNED
 V1C2C  Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
@@ -1117,6 +1117,27 @@ V1C1A snapshot rules:
 - each blob is independently SHA-256 bound; exact bytes are private, process-local, non-copyable/non-pickleable, single-use, `300` seconds with a `32`-byte secret;
 - no runtime lease, Sandbox, interpreter, network, install or changed-code execution.
 
+V1C1A verification closure:
+
+```text
+implementation commit:             7b174610e6dde4e1e28a6ae5fb1f357ac0ad93e2
+commit message:                     feat: add canonical patched workspace snapshot
+pre-commit portable gate:           37/37
+pre-commit Windows smoke:           1/1
+pre-commit full check:              completed successfully
+post-commit V1C0A Windows smoke:    1/1
+post-commit V1C1A Windows smoke:    1/1
+tracked files / Python files:       256 / 238
+Python bytes:                       3,371,260
+pipeline flows / total steps:       92 / 459
+pipeline check steps:                87
+process-launch call sites:            40
+host-sensitive files:                 26
+inventory fingerprint:               1d6df3788467909e758c172bee1289ac0fda65915c1646304b257e69ae17f96b
+```
+
+The post-commit snapshot smoke preserved exact selected bytes and all source/workspace Git evidence while every mutation, network, install, Sandbox, runtime-lease, candidate-interpreter, changed-code, reusable-authority and `execution_authorized` flag remained `false`. V1C1A is VERIFIED.
+
 V1C1B plan rules:
 
 - atomically consumes one V1C1A snapshot;
@@ -1130,13 +1151,13 @@ Future V1C2C double claim is fixed: plan capability first, fresh V1B4D runtime l
 
 ### Следующее точное действие
 
-1. Apply and commit only the three architecture-document changes for Roadmap Change 014.
+1. Commit only the three architecture-document changes that close V1C1A and mark V1C1B CURRENT.
 2. Keep `skynet-trusted-runtime-v1b4` fixed at `91d8c37`.
-3. Do not rerun pipeline after the docs-only commit.
-4. Switch to **Очень высокий** and implement V1C1A as a six-file host-only slice.
-5. Keep all V1C1 flags false: no runtime lease, Sandbox, candidate interpreter, changed-code execution or authorization.
-6. Implement V1C1B only after V1C1A code/evidence is committed.
-7. Return to **Pro Standard** before V1C2A/V1C2B/V1C2C.
+3. Do not rerun the full pipeline after this docs-only transition; V1C1A pre-commit full check and both post-commit Windows smokes are already green.
+4. Stay on **Очень высокий** and implement V1C1B as the bounded host-only typed `compile_ast_changed_python_v1` plan capability.
+5. V1C1B must atomically consume exactly one V1C1A snapshot and must not accept caller paths, executable, argv, environment, encoding, limits, module, flow or runner.
+6. Keep all V1C1 flags false: no runtime lease, Sandbox, candidate interpreter, changed-code execution or authorization.
+7. After V1C1B implementation/evidence is committed, return to **Pro Standard** before V1C2A/V1C2B/V1C2C.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -1174,10 +1195,12 @@ b039ce1 feat: add canonical executable check environment inventory
 f069ca9 docs: close executable inventory and split toolchain source authority
 e090f63 feat: add canonical host toolchain observation
 90d2bd5 docs: lock external toolchain source authority
+859be92 docs: lock immutable workspace snapshot and compile plan
+7b17461 feat: add canonical patched workspace snapshot
 tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-V1C0A and V1C0B1 are VERIFIED through `e090f63`. Roadmap Change 013 locks V1C0B2 source classes and Roadmap Change 014 locks V1C1A/V1C1B snapshot/plan architecture. V1C1A host-only implementation is current and the stable V1B4 tag must not move.
+V1C0A and V1C0B1 are VERIFIED through `e090f63`; V1C1A is VERIFIED through `7b17461`. Roadmap Change 013 locks V1C0B2 source classes and Roadmap Change 014 locks V1C1A/V1C1B snapshot/plan architecture. V1C1B host-only implementation is current and the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 

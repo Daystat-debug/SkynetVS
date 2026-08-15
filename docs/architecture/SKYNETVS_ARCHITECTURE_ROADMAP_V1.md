@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1 VERIFIED; V1C0B2 source authority LOCKED; V1C1 architecture LOCKED; CURRENT — V1C1A host-only snapshot implementation.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A VERIFIED; V1C0B2 and V1C1 architecture LOCKED; CURRENT — V1C1B host-only typed compile/AST plan implementation.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -678,7 +678,7 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A/V1C0B1 VERIFIED; V1C0B2 and V1C1 architecture LOCKED; V1C1A CURRENT; changed-code execution remains BLOCKED.
+**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A/V1C0B1/V1C1A VERIFIED; V1C0B2 and V1C1 architecture LOCKED; V1C1B CURRENT; changed-code execution remains BLOCKED.
 
 Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
@@ -861,7 +861,7 @@ The Pro Standard V1C architecture review is complete against stable tag `skynet-
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** V1C0A and V1C0B1 VERIFIED through `e090f63`; V1C0B2 external source authority LOCKED; V1C1 snapshot/plan architecture LOCKED by Roadmap Change 014; V1C1A host-only implementation CURRENT; all changed-code execution remains BLOCKED.
+**Статус:** V1C0A/V1C0B1 VERIFIED and V1C1A VERIFIED through `7b17461`; V1C0B2 external source authority and V1C1 snapshot/plan architecture are LOCKED; V1C1B host-only implementation CURRENT; all changed-code execution remains BLOCKED.
 
 #### V1C architecture context closure
 
@@ -925,8 +925,8 @@ The exact committed dependency declarations remain unchanged and are independent
 V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
 V1C0B1 Canonical Host Toolchain Observation Gate             VERIFIED
 V1C0B2 External Source Authority Selection Lock              LOCKED
-V1C1A  Canonical Patched Workspace Snapshot Bundle           CURRENT / HOST-ONLY IMPLEMENTATION
-V1C1B  Typed Compile/AST Plan Capability                     PLANNED / HOST-ONLY
+V1C1A  Canonical Patched Workspace Snapshot Bundle           VERIFIED
+V1C1B  Typed Compile/AST Plan Capability                     CURRENT / HOST-ONLY IMPLEMENTATION
 V1C2A  Compile/AST Guest Contract and Fixed Runner           PLANNED
 V1C2B  Signed Compile/AST Transcript Verifier                PLANNED
 V1C2C  Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
@@ -973,6 +973,25 @@ V1C1A locks `exact_git_result_tree_snapshot_v1`: regular `100644` blobs only, ma
 V1C1B atomically consumes one snapshot and derives only `compile_ast_changed_python_v1`. It selects `1..20` changed `.py` paths still present in the result tree, with `100644` mode, UTF-8, LF or empty input, no NUL, `2 MiB` per file and `8 MiB` total. Deleted Python and changed non-Python paths are evidence only. Caller-controlled executable, argv, path list, environment, encoding, limits, module, flow or runner are forbidden. V1C1B is also process-local, single-use and `300` seconds.
 
 V1C1 accepts no V1B4D lease. After plan issuance, the future active V1C2C call claims the plan first and a fresh runtime lease second. The original workspace and `.git` are never mapped; only fixed runtime/runner/request/manifest and selected exact source bytes may cross read-only.
+
+#### V1C1A verification closure
+
+Implementation commit `7b17461` (`feat: add canonical patched workspace snapshot`) contains exactly four new V1C1A files plus `tools/eval_package_boundaries.py` and `tools/pipeline.py`. Pre-commit evidence passed the V1C1A portable adversarial gate `37/37`, real Windows snapshot smoke `1/1` and the full `check` flow. Post-commit Windows evidence at exact HEAD `7b174610e6dde4e1e28a6ae5fb1f357ac0ad93e2` re-established the committed-tree inventory and V1C1A snapshot boundary:
+
+```text
+tracked files / Python files:   256 / 238
+Python bytes:                   3,371,260
+pipeline flows / total steps:   92 / 459
+pipeline check steps:            87
+process-launch call sites:        40
+host-sensitive files:             26
+Python tree fingerprint:         05f3e251c1a483e24bb833537a3525ff8052e39cd8da6d68bf1977b287296a0b
+inventory fingerprint:           1d6df3788467909e758c172bee1289ac0fda65915c1646304b257e69ae17f96b
+V1C0A Windows smoke:             1/1
+V1C1A Windows smoke:             1/1
+```
+
+The real V1C1A Windows smoke reissued and atomically claimed `exact_git_result_tree_snapshot_v1`, preserved exact `module.py` bytes `value = 2\n`, proved the deleted path absent, and kept source/workspace index, status and object state unchanged. `repository_mutated`, network/download/install, Sandbox, runtime-lease issue/claim, candidate interpreter, changed-code execution, reusable lease and `execution_authorized` all remained `false`. V1C1A is therefore VERIFIED; it grants only a one-shot process-local exact-byte snapshot capability to V1C1B and still grants no execution authority.
 
 #### Locked toolchain decisions
 
@@ -1423,11 +1442,14 @@ V1C0B2 — PyPI Simple API + exact hosted wheels; immutable standard 64-bit MinG
 [LOCKED V1C1 ARCHITECTURE]
 V1C1A snapshot policy → V1C1B typed compile/AST plan capability.
 
-[CURRENT IMPLEMENTATION STAGE]
+[VERIFIED]
 V1C1A — Canonical Patched Workspace Snapshot Bundle (host-only, non-authorizing).
 
+[CURRENT IMPLEMENTATION STAGE]
+V1C1B — Typed Compile/AST Plan Capability (host-only, non-authorizing).
+
 [NEXT]
-V1C1B host-only plan capability → return to Pro Standard for V1C2A/V1C2B/V1C2C active compile/AST boundary.
+Return to Pro Standard for V1C2A/V1C2B/V1C2C active compile/AST boundary after V1C1B evidence is committed.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.

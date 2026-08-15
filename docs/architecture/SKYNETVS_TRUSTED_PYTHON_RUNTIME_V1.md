@@ -14,8 +14,8 @@ V1B4   — COMPLETE
 V1C0A  — VERIFIED / EXECUTION BLOCKED
 V1C0B1 — VERIFIED / EXECUTION BLOCKED
 V1C0B2 — SOURCE CLASSES LOCKED / ARTIFACTS UNPINNED
-V1C1A  — ARCHITECTURE LOCKED / HOST-ONLY IMPLEMENTATION CURRENT
-V1C1B  — ARCHITECTURE LOCKED / HOST-ONLY PLANNED
+V1C1A  — VERIFIED / NON-AUTHORIZING
+V1C1B  — ARCHITECTURE LOCKED / HOST-ONLY IMPLEMENTATION CURRENT
 V1C2A–V1C2C — ACTIVE CHANGED-SOURCE BOUNDARY BLOCKED
 ```
 
@@ -599,6 +599,8 @@ plan policy:               f017f401254647002347802c5deba6397bdddf27eaa08d02640dc
 - Deleted Python and non-Python changes remain evidence only. Caller-controlled executable, argv, paths, environment, encoding, limits, module, flow and runner are forbidden.
 - V1C2C claims the plan capability first and a fresh V1B4D lease second. The original workspace and `.git` are never mapped.
 
+V1C1A implementation is VERIFIED at `7b174610e6dde4e1e28a6ae5fb1f357ac0ad93e2`. The post-commit committed-tree inventory is `256` files / `238` Python files, `92` pipeline flows / `459` total steps / `87` check steps, with inventory fingerprint `1d6df3788467909e758c172bee1289ac0fda65915c1646304b257e69ae17f96b`. The V1C1A Windows smoke is `1/1` and proves issued→`claimed_for_plan` exact-byte snapshot semantics while repository mutation, network/download/install, Sandbox, runtime-lease issue/claim, candidate interpreter, changed-code execution, reusable lease and authorization remain false.
+
 Before the first source parse/compile instruction, the same Sandbox instance must re-prove runtime, snapshot, execution-plan, network, worker privilege, Job, handle/environment and signed-handshake evidence. No candidate code object may be executed.
 
 ## 10. Acceptance criteria
@@ -628,4 +630,4 @@ full check                                 green
 
 Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–014 require **Pro Standard**.
 
-V1C0A/V1C0B1 are VERIFIED; V1C0B2 and V1C1 architecture are LOCKED. V1C1A/V1C1B are bounded host-only implementation and may proceed on **Очень высокий**. Return to **Pro Standard** before V1C2A/V1C2B/V1C2C active changed-source composition, exact PyPI wheel closure or MinGit pinning.
+V1C0A/V1C0B1/V1C1A are VERIFIED; V1C0B2 and V1C1 architecture are LOCKED. V1C1B is the current bounded host-only implementation and may proceed on **Очень высокий**. Return to **Pro Standard** before V1C2A/V1C2B/V1C2C active changed-source composition, exact PyPI wheel closure or MinGit pinning.
