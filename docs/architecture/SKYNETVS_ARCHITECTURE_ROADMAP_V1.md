@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1 VERIFIED; V1C0B2 source authority LOCKED; CURRENT — V1C1 snapshot/plan architecture.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1 VERIFIED; V1C0B2 source authority LOCKED; V1C1 architecture LOCKED; CURRENT — V1C1A host-only snapshot implementation.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -594,6 +594,14 @@ execution_authorized:                       false
 
 **Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
+## Roadmap Change 014 — Full result-tree snapshot and compile/AST plan are separate process-local capabilities
+
+**Причина:** `DeveloperTaskPatchApplyReport.result_tree` is an immutable Git object identity, while the applied worktree is still mutable filesystem state. The exact HEAD measurement at `90d2bd5` proves that the current result tree is small enough for a bounded in-memory exact-byte snapshot, but the 5 MiB patch limit cannot bound a compressed Git binary patch's expanded result. A generic serializable plan or a direct workspace mapping would also allow stale bytes, caller-controlled paths or cross-run reuse to become execution input.
+
+**Что меняется:** V1C1 is split into V1C1A `Canonical Patched Workspace Snapshot Bundle` and V1C1B `Typed Compile/AST Plan Capability`; V1C2 is split into guest contract/runner, signed verifier and active composition. V1C1A rebuilds exact bytes only from the verified applied `result_tree`, independently SHA-256-binds every regular blob, enforces fixed full-tree/path/mode limits and issues a process-local, non-copyable, non-pickleable, single-use 300-second snapshot capability. V1C1B atomically consumes that snapshot and derives the fixed `compile_ast_changed_python_v1` plan only from changed `.py` paths still present in the result tree. It retains only selected exact source bytes under the existing 2 MiB/file and 8 MiB/total limits. The future V1C2 active composition claims the plan capability first and a fresh V1B4D runtime lease second; either failed claim is terminal.
+
+**Что не меняется:** V1C1 accepts no runtime lease, launches no Sandbox, runs no interpreter, imports no workspace module and performs no network, resolution or install. The original workspace and `.git` are never mapped. `python_module`, `pipeline`, arbitrary shell, guest Git/network, top-level execution, commit, merge, push and promotion remain blocked; serialized reports expose no source bytes or reusable token and keep `execution_authorized=false`.
+
 ## Roadmap Change 013 — External source authority is an exact metadata-and-bytes contract, never resolver output or mutable latest state
 
 **Причина:** V1C0B1 at `e090f63` now proves the exact committed dependency declarations and canonical host Python/pip, Git and PowerShell observations, but those observations intentionally grant no source authority. A resolver result, an unversioned `latest` endpoint, a host cache or an installed toolchain can change independently of the protected repository and would reintroduce dependency confusion, ABI drift, cache poisoning and host fallback.
@@ -670,7 +678,7 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A/V1C0B1 VERIFIED; V1C0B2 LOCKED; V1C1 CURRENT; changed-code execution remains BLOCKED.
+**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A/V1C0B1 VERIFIED; V1C0B2 and V1C1 architecture LOCKED; V1C1A CURRENT; changed-code execution remains BLOCKED.
 
 Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
@@ -853,7 +861,7 @@ The Pro Standard V1C architecture review is complete against stable tag `skynet-
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** V1C0A and V1C0B1 VERIFIED through `e090f63`; V1C0B2 external source authority LOCKED; V1C1 architecture review CURRENT; all changed-code execution remains BLOCKED.
+**Статус:** V1C0A and V1C0B1 VERIFIED through `e090f63`; V1C0B2 external source authority LOCKED; V1C1 snapshot/plan architecture LOCKED by Roadmap Change 014; V1C1A host-only implementation CURRENT; all changed-code execution remains BLOCKED.
 
 #### V1C architecture context closure
 
@@ -917,8 +925,11 @@ The exact committed dependency declarations remain unchanged and are independent
 V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
 V1C0B1 Canonical Host Toolchain Observation Gate             VERIFIED
 V1C0B2 External Source Authority Selection Lock              LOCKED
-V1C1   Immutable Workspace Snapshot and Typed Execution Plan CURRENT / ARCHITECTURE REVIEW
-V1C2   Active Sandboxed Compile/AST Gate                     PLANNED
+V1C1A  Canonical Patched Workspace Snapshot Bundle           CURRENT / HOST-ONLY IMPLEMENTATION
+V1C1B  Typed Compile/AST Plan Capability                     PLANNED / HOST-ONLY
+V1C2A  Compile/AST Guest Contract and Fixed Runner           PLANNED
+V1C2B  Signed Compile/AST Transcript Verifier                PLANNED
+V1C2C  Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
 V1C3C  Portable Git Source Provenance and Bundle             PLANNED
@@ -930,6 +941,38 @@ V1C7   Composite Typed Check Runner and Result Evidence      BLOCKED
 ```
 
 `V1C0B1` observations are not authority. V1C0B2 now locks the reviewed source classes and acquisition semantics, but exact versions, source bytes, hashes, licenses, architecture compatibility and deterministic derived trees must still be proven independently in V1C3A/V1C3C before any dependency or external tool enters a guest boundary.
+
+#### Locked V1C1 snapshot/plan architecture
+
+The exact context archive `SkynetVS_V1C1_Snapshot_Plan_Context_20260815_105418.zip` was verified as `49/49` payloads with SHA-256 `fdc0ea63f8765b97c63c68d55c85bbb0cce6994bd0f0cc83036cb6febbf37d0d`. The committed tree at `90d2bd5` measured:
+
+```text
+files / total bytes:          252 / 3,528,329
+Python files / bytes:         234 / 3,257,957
+largest file / Python file:   83,256 / 71,872 bytes
+Git modes:                    252 x 100644
+non-blob / NUL files:         0 / 0
+Python encodings:             234 x UTF-8
+line endings:                 246 LF / 6 none
+max path / segment / depth:   76 / 67 / 3
+unsafe paths / collisions:    0 / 0
+full tree manifest SHA-256:   b1e82bf0a3fb8a901c0ac37825d74c8de426f34d02f67d0b05a710be2b4962ba
+```
+
+Locked decision identity:
+
+```text
+decision ID:          skynetvs-v1c1-snapshot-plan-architecture-lock-v1
+decision fingerprint: 20f26ef8728a77ea87b22d791ebf4da5940312c48e589cf6c17a89765428ad30
+snapshot policy:      601c727e9b725f1f868a144fa7b975bbb7a35a878c74c2d25bda0a7677a6cd55
+plan policy:          f017f401254647002347802c5deba6397bdddf27eaa08d02640dc8389fe80865
+```
+
+V1C1A locks `exact_git_result_tree_snapshot_v1`: regular `100644` blobs only, maximum `4096` files, `8 MiB` per blob, `16 MiB` total, `4 MiB` canonical manifest, paths `240/120/32`, NFC and Windows-safe collision rules. Exact bytes remain private in a process-local, non-serializable, single-use capability with a `300`-second `time.monotonic_ns()` TTL and `32`-byte secret. Arbitrary bounded binary blobs may be retained in the full snapshot but are never selectable by the initial compile/AST plan.
+
+V1C1B atomically consumes one snapshot and derives only `compile_ast_changed_python_v1`. It selects `1..20` changed `.py` paths still present in the result tree, with `100644` mode, UTF-8, LF or empty input, no NUL, `2 MiB` per file and `8 MiB` total. Deleted Python and changed non-Python paths are evidence only. Caller-controlled executable, argv, path list, environment, encoding, limits, module, flow or runner are forbidden. V1C1B is also process-local, single-use and `300` seconds.
+
+V1C1 accepts no V1B4D lease. After plan issuance, the future active V1C2C call claims the plan first and a fresh runtime lease second. The original workspace and `.git` are never mapped; only fixed runtime/runner/request/manifest and selected exact source bytes may cross read-only.
 
 #### Locked toolchain decisions
 
@@ -1377,11 +1420,14 @@ e090f63 — Canonical Host Toolchain Observation Gate; post-commit Windows smoke
 [LOCKED SOURCE AUTHORITY]
 V1C0B2 — PyPI Simple API + exact hosted wheels; immutable standard 64-bit MinGit release asset.
 
-[CURRENT ARCHITECTURE STAGE]
-Typed Check Runner V1C1 — Immutable Workspace Snapshot and Typed Execution Plan.
+[LOCKED V1C1 ARCHITECTURE]
+V1C1A snapshot policy → V1C1B typed compile/AST plan capability.
 
-[NEXT AFTER V1C1]
-V1C2 active compile/AST gate → V1C3A Python source provenance → V1C3C MinGit provenance.
+[CURRENT IMPLEMENTATION STAGE]
+V1C1A — Canonical Patched Workspace Snapshot Bundle (host-only, non-authorizing).
+
+[NEXT]
+V1C1B host-only plan capability → return to Pro Standard for V1C2A/V1C2B/V1C2C active compile/AST boundary.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.

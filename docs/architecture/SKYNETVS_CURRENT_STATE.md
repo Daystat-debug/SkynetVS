@@ -959,7 +959,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A and V1C0B1 are VERIFIED through `e090f63`. Roadmap Change 013 and the V1C0B2 source-authority contract are locked in **Pro Standard**. Keep **Pro Standard** for the V1C1/V1C2 snapshot and first active changed-workspace architecture; bounded host-only implementation may return to **Очень высокий** only after that contract is fixed.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A and V1C0B1 are VERIFIED through `e090f63`. Roadmap Changes 013–014 lock V1C0B2 and the V1C1 snapshot/plan contract in **Pro Standard**. V1C1A/V1C1B are now bounded host-only implementation and may run on **Очень высокий**; return to **Pro Standard** before V1C2A/V1C2B/V1C2C active changed-source architecture.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1025,8 +1025,11 @@ Roadmap Change 013 closes V1C0B2 as a source-policy lock:
 V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
 V1C0B1 Canonical Host Toolchain Observation Gate             VERIFIED
 V1C0B2 External Source Authority Selection Lock              LOCKED
-V1C1   Immutable Workspace Snapshot and Typed Execution Plan CURRENT / ARCHITECTURE REVIEW
-V1C2   Active Sandboxed Compile/AST Gate                     PLANNED
+V1C1A  Canonical Patched Workspace Snapshot Bundle           CURRENT / HOST-ONLY IMPLEMENTATION
+V1C1B  Typed Compile/AST Plan Capability                     PLANNED / HOST-ONLY
+V1C2A  Compile/AST Guest Contract and Fixed Runner           PLANNED
+V1C2B  Signed Compile/AST Transcript Verifier                PLANNED
+V1C2C  Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
 V1C3C  Portable Git Source Provenance and Bundle             PLANNED
@@ -1077,17 +1080,63 @@ M tools/eval_package_boundaries.py
 M tools/pipeline.py
 ```
 
-## 15. Следующее точное действие
+## 15. LOCKED V1C1 — Immutable Snapshot and Typed Compile/AST Plan
 
-Close V1C0B1/V1C0B2 in documentation, then design the first changed-workspace boundary without downloading dependencies:
+The read-only V1C1 context archive is verified:
 
-1. Apply and commit only the three architecture-document changes for V1C0B1 closure and Roadmap Change 013.
+```text
+archive SHA-256:                    fdc0ea63f8765b97c63c68d55c85bbb0cce6994bd0f0cc83036cb6febbf37d0d
+manifest payloads:                   49/49
+HEAD / origin/main:                  90d2bd51f57d07881725017cc92cb55cc4d7829b
+stable V1B4 tag:                     91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+tree files / bytes:                  252 / 3,528,329
+Python files / bytes:                234 / 3,257,957
+largest file / Python file:          83,256 / 71,872
+Git modes:                           252 x 100644
+non-blob / NUL / unsafe / collision: 0 / 0 / 0 / 0
+Python encodings:                    234 x UTF-8
+line endings:                        246 LF / 6 none
+tree manifest SHA-256:               b1e82bf0a3fb8a901c0ac37825d74c8de426f34d02f67d0b05a710be2b4962ba
+```
+
+Locked identity:
+
+```text
+decision:        skynetvs-v1c1-snapshot-plan-architecture-lock-v1
+decision fp:     20f26ef8728a77ea87b22d791ebf4da5940312c48e589cf6c17a89765428ad30
+V1C1A policy fp: 601c727e9b725f1f868a144fa7b975bbb7a35a878c74c2d25bda0a7677a6cd55
+V1C1B policy fp: f017f401254647002347802c5deba6397bdddf27eaa08d02640dc8389fe80865
+```
+
+V1C1A snapshot rules:
+
+- authority is exact `DeveloperTaskPatchApplyReport.result_tree`, never mutable worktree bytes;
+- typed manifest/preflight/workspace/patch-apply/static-check evidence is cross-bound and freshly re-inspected before/after capture;
+- only regular `100644` blobs; `4096` files, `8 MiB` per blob, `16 MiB` total, `4 MiB` manifest;
+- paths `240/120/32`, NFC, Windows-safe; symlink/gitlink/non-blob/collision rejected;
+- each blob is independently SHA-256 bound; exact bytes are private, process-local, non-copyable/non-pickleable, single-use, `300` seconds with a `32`-byte secret;
+- no runtime lease, Sandbox, interpreter, network, install or changed-code execution.
+
+V1C1B plan rules:
+
+- atomically consumes one V1C1A snapshot;
+- fixed operation `compile_ast_changed_python_v1`;
+- selects only changed `.py` paths still present; deletion/non-Python facts are record-only;
+- `1..20`, `2 MiB` per source, `8 MiB` total, mode `100644`, UTF-8, LF/empty, no NUL;
+- caller cannot provide executable, argv, path list, environment, encoding, limits, module, flow or runner;
+- private process-local single-use capability, `300` seconds; no runtime lease or execution.
+
+Future V1C2C double claim is fixed: plan capability first, fresh V1B4D runtime lease second. Either failure is terminal. The workspace and `.git` are never mapped.
+
+### Следующее точное действие
+
+1. Apply and commit only the three architecture-document changes for Roadmap Change 014.
 2. Keep `skynet-trusted-runtime-v1b4` fixed at `91d8c37`.
-3. Do not run pipeline after the docs-only commit; V1C0A/V1C0B1 code and both post-commit Windows smokes are already green.
-4. Keep **Pro Standard** and perform V1C1 architecture review over immutable workspace bytes, typed compile/AST plan, lease consumption timing, path/size/encoding limits and same-run handoff.
-5. V1C1/V1C2 must remain dependency-free: no PyPI/MinGit acquisition, resolver, install, Git guest capability or project import.
-6. Only after V1C1/V1C2 contracts are fixed may bounded host-only implementation return to **Очень высокий**.
-7. Return to **Pro Standard** again before V1C3A exact wheel closure or V1C3C exact MinGit pinning.
+3. Do not rerun pipeline after the docs-only commit.
+4. Switch to **Очень высокий** and implement V1C1A as a six-file host-only slice.
+5. Keep all V1C1 flags false: no runtime lease, Sandbox, candidate interpreter, changed-code execution or authorization.
+6. Implement V1C1B only after V1C1A code/evidence is committed.
+7. Return to **Pro Standard** before V1C2A/V1C2B/V1C2C.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -1124,14 +1173,15 @@ f36f92f docs: split sandboxed checks into inventory and execution gates
 b039ce1 feat: add canonical executable check environment inventory
 f069ca9 docs: close executable inventory and split toolchain source authority
 e090f63 feat: add canonical host toolchain observation
+90d2bd5 docs: lock external toolchain source authority
 tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-V1C0A and V1C0B1 are VERIFIED through `e090f63`. Roadmap Change 013 locks V1C0B2 source classes without artifact acquisition. V1C1 architecture review is current and the stable V1B4 tag must not move.
+V1C0A and V1C0B1 are VERIFIED through `e090f63`. Roadmap Change 013 locks V1C0B2 source classes and Roadmap Change 014 locks V1C1A/V1C1B snapshot/plan architecture. V1C1A host-only implementation is current and the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 
-- Typed Check Runner V1C1–V1C7 — snapshot, toolchain provenance and sandboxed executable checks.
+- Typed Check Runner V1C2–V1C7 — active compile/AST, toolchain provenance and sandboxed executable checks.
 - Developer Task Result and Evidence V1.
 - Developer Task Manual Promotion V1.
 - Developer Safety Kernel Audit V1.
@@ -1154,9 +1204,9 @@ V1C0A and V1C0B1 are VERIFIED through `e090f63`. Roadmap Change 013 locks V1C0B2
 
 ## 19. Режим модели
 
-Threat model, result-authenticity model, V1B4, Roadmap Changes 011–013 and the V1C0B2 external-source authority contract are approved in **Pro Standard**.
+Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–014 are approved in **Pro Standard**.
 
-V1C0A and V1C0B1 are VERIFIED; V1C0B2 is LOCKED. Keep **Pro Standard** for V1C1/V1C2 snapshot, lease-consumption and first active changed-workspace architecture. Switch back to **Очень высокий** only after the bounded host-only implementation contract is fixed. Return to **Pro Standard** before exact PyPI wheel closure or MinGit pinning.
+V1C0A/V1C0B1 are VERIFIED; V1C0B2 and V1C1 architecture are LOCKED. V1C1A/V1C1B are bounded host-only implementation and should run on **Очень высокий**. Return to **Pro Standard** before V1C2 active Sandbox composition, exact PyPI wheel closure or MinGit pinning.
 
 ## 20. Файлы для будущего handoff
 

@@ -14,7 +14,9 @@ V1B4   — COMPLETE
 V1C0A  — VERIFIED / EXECUTION BLOCKED
 V1C0B1 — VERIFIED / EXECUTION BLOCKED
 V1C0B2 — SOURCE CLASSES LOCKED / ARTIFACTS UNPINNED
-V1C1   — CURRENT ARCHITECTURE / EXECUTION BLOCKED
+V1C1A  — ARCHITECTURE LOCKED / HOST-ONLY IMPLEMENTATION CURRENT
+V1C1B  — ARCHITECTURE LOCKED / HOST-ONLY PLANNED
+V1C2A–V1C2C — ACTIVE CHANGED-SOURCE BOUNDARY BLOCKED
 ```
 
 Этот документ фиксирует threat model, source-provenance model, deterministic bundle model, active attestation и handoff-контракт для `Typed Check Runner V1B4 — Trusted Python Runtime`.
@@ -528,8 +530,11 @@ Final V1C split:
 V1C0A  Canonical Executable Check Inventory Gate
 V1C0B1 Canonical Host Toolchain Observation Gate
 V1C0B2 External Source Authority Selection Lock
-V1C1   Immutable Workspace Snapshot and Typed Execution Plan
-V1C2   Active Sandboxed Compile/AST Gate
+V1C1A  Canonical Patched Workspace Snapshot Bundle
+V1C1B  Typed Compile/AST Plan Capability
+V1C2A  Compile/AST Guest Contract and Fixed Runner
+V1C2B  Signed Compile/AST Transcript Verifier
+V1C2C  Active Compile/AST Sandbox Composition
 V1C3A  Python Dependency Source Provenance
 V1C3B  Deterministic Python Check Dependency Bundle
 V1C3C  Portable Git Source Provenance and Bundle
@@ -574,7 +579,27 @@ decision fingerprint: 80da155e8de0ce9f6d17565541173b701c2d5c9c8a8c13f1fcab9a57db
 - Each executable check consumes one fresh V1B4D lease, one immutable snapshot and one fresh Sandbox.
 - A successful report remains historical evidence only: `execution_authorized=false`, `reusable_lease_issued=false`.
 
-Before the first instruction from changed code, the same Sandbox instance must re-prove runtime, dependency/toolchain, snapshot, execution-plan, network, worker privilege, Job, handle/environment and signed-handshake evidence.
+Locked V1C1 decision:
+
+```text
+context archive SHA-256: fdc0ea63f8765b97c63c68d55c85bbb0cce6994bd0f0cc83036cb6febbf37d0d
+context payloads:          49/49
+tree files / bytes:        252 / 3,528,329
+Python files / bytes:      234 / 3,257,957
+tree manifest SHA-256:     b1e82bf0a3fb8a901c0ac37825d74c8de426f34d02f67d0b05a710be2b4962ba
+decision fingerprint:      20f26ef8728a77ea87b22d791ebf4da5940312c48e589cf6c17a89765428ad30
+snapshot policy:           601c727e9b725f1f868a144fa7b975bbb7a35a878c74c2d25bda0a7677a6cd55
+plan policy:               f017f401254647002347802c5deba6397bdddf27eaa08d02640dc8389fe80865
+```
+
+- V1C1A reads exact blobs from the verified patch-result tree, independently SHA-256-binds them and never trusts mutable worktree bytes.
+- Snapshot V1 permits only regular `100644` blobs and enforces `4096` files, `8 MiB` per blob, `16 MiB` total, `4 MiB` manifest and `240/120/32` path limits with NFC/Windows collision rejection.
+- Snapshot exact bytes are private, process-local, non-serializable, single-use, `300` seconds, `32`-byte secret; V1C1 accepts no runtime lease.
+- V1C1B consumes one snapshot and derives only `compile_ast_changed_python_v1`: present changed `.py`, `1..20`, `2 MiB` each, `8 MiB` total, mode `100644`, UTF-8, LF/empty, no NUL.
+- Deleted Python and non-Python changes remain evidence only. Caller-controlled executable, argv, paths, environment, encoding, limits, module, flow and runner are forbidden.
+- V1C2C claims the plan capability first and a fresh V1B4D lease second. The original workspace and `.git` are never mapped.
+
+Before the first source parse/compile instruction, the same Sandbox instance must re-prove runtime, snapshot, execution-plan, network, worker privilege, Job, handle/environment and signed-handshake evidence. No candidate code object may be executed.
 
 ## 10. Acceptance criteria
 
@@ -601,6 +626,6 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–013 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–014 require **Pro Standard**.
 
-V1C0A/V1C0B1 are VERIFIED and V1C0B2 is LOCKED. Keep **Pro Standard** for V1C1/V1C2 immutable-snapshot, lease-consumption and first active changed-workspace architecture. Bounded host-only implementation may return to **Очень высокий** only after that contract is fixed. Return to **Pro Standard** before exact PyPI wheel closure or MinGit pinning.
+V1C0A/V1C0B1 are VERIFIED; V1C0B2 and V1C1 architecture are LOCKED. V1C1A/V1C1B are bounded host-only implementation and may proceed on **Очень высокий**. Return to **Pro Standard** before V1C2A/V1C2B/V1C2C active changed-source composition, exact PyPI wheel closure or MinGit pinning.
