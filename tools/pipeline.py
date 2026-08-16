@@ -120,6 +120,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task canonical patched workspace snapshot", _python_cmd("tools/eval_developer_task_execution_workspace_snapshot.py")),
             Step("Evaluate developer task typed compile AST plan capability", _python_cmd("tools/eval_developer_task_execution_compile_ast_plan.py")),
             Step("Evaluate developer task canonical compile AST contract", _python_cmd("tools/eval_developer_task_execution_compile_ast_contract.py")),
+            Step("Evaluate developer task fixed compile AST guest runner bundle", _python_cmd("tools/eval_developer_task_execution_compile_ast_runner.py")),
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
         "decision": [
@@ -655,6 +656,12 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task typed compile AST plan capability", _python_cmd("tools/eval_developer_task_execution_compile_ast_plan.py")),
             Step("Evaluate developer task canonical compile AST contract", _python_cmd("tools/eval_developer_task_execution_compile_ast_contract.py")),
             Step("Evaluate developer task canonical compile AST contract Windows smoke", _python_cmd("tools/eval_developer_task_execution_compile_ast_contract_windows.py")),
+        ],
+        "developer_task_execution_compile_ast_runner": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate developer task canonical compile AST contract", _python_cmd("tools/eval_developer_task_execution_compile_ast_contract.py")),
+            Step("Evaluate developer task fixed compile AST guest runner bundle", _python_cmd("tools/eval_developer_task_execution_compile_ast_runner.py")),
+            Step("Evaluate developer task fixed compile AST guest runner bundle Windows smoke", _python_cmd("tools/eval_developer_task_execution_compile_ast_runner_windows.py")),
         ],
         "package_boundaries": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
