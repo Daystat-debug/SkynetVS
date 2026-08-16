@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A VERIFIED; V1C0B2 and V1C1 architecture LOCKED; CURRENT — V1C1B host-only typed compile/AST plan implementation.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B VERIFIED; V1C0B2, V1C1 and V1C2 architecture LOCKED; CURRENT — V1C2A1 canonical compile/AST contract.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -594,6 +594,23 @@ execution_authorized:                       false
 
 **Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
+## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
+
+**Причина:** V1C1B now holds exact selected source bytes in a process-local one-shot plan, but the first interpreter run adds four independent failure domains: canonical changed-source documents, fixed guest runner behavior, host-side signature/transcript verification and live Windows Sandbox lifecycle/resource isolation. A syntax error is a valid check outcome and must not be confused with an invalid signature or broken isolation boundary. Original repository paths also cannot safely become guest filesystem paths because their length and directory structure are unrelated to the fixed guest mount root.
+
+**Что меняется:** V1C2 is split into V1C2A1 canonical request/result/terminal contract, V1C2A2 fixed guest runner/payload, V1C2B signed transcript verifier and V1C2C active composition. Original paths remain signed metadata; exact source bytes are materialized as flat deterministic `source-{ordinal:04d}.py` files and diagnostics use `skynetvs://changed/<path>`. The fixed runner performs strict UTF-8 revalidation, `ast.parse` and `compile` under CPython 3.13.15, then discards every code object without `exec`, `eval`, import execution or bytecode write. Signed evidence separates `transcript_verified` from `check_passed`, so a contract-valid syntax failure is authentic evidence. V1C2C claims the V1C1B plan first and the fresh V1B4D runtime lease second, uses one fresh Sandbox, one standard-user worker and Job limits, and accepts output only after all known Sandbox processes exit and exact post-exit artifacts remain stable.
+
+**Что не меняется:** source import statements may be parsed/compiled but are never executed; the workspace, `.git`, host `.venv` and host Git are never mapped; guest network, dependencies, `python_module`, `pipeline`, arbitrary shell, commit, merge, push and promotion remain blocked. Every result keeps `changed_code_executed=false`, `execution_authorized=false` and `reusable_lease_issued=false`.
+
+Locked identity:
+
+```text
+decision ID:          skynetvs-v1c2-compile-ast-active-boundary-architecture-lock-v1
+decision fingerprint: 5382249191bcc8388d6b44862cabe7c24a586a6628814266461c0830e7dec08c
+V1C2A1 policy ID:     skynetvs-v1c2a1-compile-ast-contract-cpython-3.13.15-v1
+V1C2A1 fingerprint:   a3e7d50e92de8aa0799953874a71ce60b2d141e52791282e5fd38814aa9507bf
+```
+
 ## Roadmap Change 014 — Full result-tree snapshot and compile/AST plan are separate process-local capabilities
 
 **Причина:** `DeveloperTaskPatchApplyReport.result_tree` is an immutable Git object identity, while the applied worktree is still mutable filesystem state. The exact HEAD measurement at `90d2bd5` proves that the current result tree is small enough for a bounded in-memory exact-byte snapshot, but the 5 MiB patch limit cannot bound a compressed Git binary patch's expanded result. A generic serializable plan or a direct workspace mapping would also allow stale bytes, caller-controlled paths or cross-run reuse to become execution input.
@@ -861,7 +878,7 @@ The Pro Standard V1C architecture review is complete against stable tag `skynet-
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** V1C0A/V1C0B1 VERIFIED and V1C1A VERIFIED through `7b17461`; V1C0B2 external source authority and V1C1 snapshot/plan architecture are LOCKED; V1C1B host-only implementation CURRENT; all changed-code execution remains BLOCKED.
+**Статус:** V1C0A/V1C0B1/V1C1A/V1C1B VERIFIED through `70fc763`; V1C0B2 external source authority and V1C1/V1C2 architecture are LOCKED; V1C2A1 host-only contract CURRENT; changed-code execution remains BLOCKED.
 
 #### V1C architecture context closure
 
@@ -926,9 +943,10 @@ V1C0A  Canonical Executable Check Inventory Gate             VERIFIED
 V1C0B1 Canonical Host Toolchain Observation Gate             VERIFIED
 V1C0B2 External Source Authority Selection Lock              LOCKED
 V1C1A  Canonical Patched Workspace Snapshot Bundle           VERIFIED
-V1C1B  Typed Compile/AST Plan Capability                     CURRENT / HOST-ONLY IMPLEMENTATION
-V1C2A  Compile/AST Guest Contract and Fixed Runner           PLANNED
-V1C2B  Signed Compile/AST Transcript Verifier                PLANNED
+V1C1B  Typed Compile/AST Plan Capability                     VERIFIED
+V1C2A1 Canonical Compile/AST Request, Result and Terminal Contract CURRENT / HOST-ONLY
+V1C2A2 Fixed Guest Runner and Payload Bundle                 PLANNED / HOST-ONLY
+V1C2B  Signed Compile/AST Transcript Verifier                PLANNED / HOST-ONLY
 V1C2C  Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
@@ -1003,6 +1021,39 @@ The real V1C1A Windows smoke reissued and atomically claimed `exact_git_result_t
 - Absence of a compatible wheel blocks the affected check group. It never falls back to the host `.venv`, a source distribution or a local build.
 - Future portable Git source authority is an immutable official Git for Windows release tag plus the standard 64-bit MinGit ZIP, release-published SHA-256, exact archive bytes, safe extraction policy and deterministic extracted-tree manifest. The installed host Git tree, `cmd/git.exe`, `latest`, BusyBox MinGit, PortableGit and installers remain non-authoritative.
 - No portable PowerShell bundle is selected for the initial compile/AST gate. The fixed guest Windows PowerShell controller remains the only PowerShell boundary until a later explicit allowlist/transcript contract is approved.
+#### V1C1B verification closure
+
+Implementation commit `70fc763` (`feat: add typed compile ast plan capability`) contains exactly four new V1C1B files plus `tools/eval_package_boundaries.py` and `tools/pipeline.py`. Pre-commit evidence passed V1C1B portable `35/35`, real Windows plan smoke `1/1`, package boundaries `28/28` and the full `check` flow. Post-commit evidence at exact HEAD `70fc763ddab74da501d4988a9a0fd8269e877ddb` re-established:
+
+```text
+tracked files / Python files:       260 / 242
+Python bytes:                       3,453,149
+pipeline flows / all steps:         93 / 474
+check steps:                        88
+process-launch call sites:          40
+host-sensitive files:               27
+inventory fingerprint:              4c4316c3fdfa59ab5fc2e72e76364ae457a12c3545022300b30a486b4357d716
+V1C0A post-commit Windows smoke:     1/1
+V1C1B post-commit Windows smoke:     1/1
+```
+
+The V1C1B Windows smoke again derived only `module.py`, kept `delete.py` and `notes.txt` as non-materialized evidence, proved `issued -> claimed_for_compile_ast_gate`, preserved exact bytes `value = 2\n`, and left repository/workspace state unchanged. Network, download/install, Sandbox, runtime-lease issue/claim, interpreter execution, changed-code execution, reusable authority and `execution_authorized` all remained `false`. V1C1B is VERIFIED and grants only one typed plan to the future V1C2 active boundary.
+
+#### Locked V1C2 compile/AST active-boundary architecture
+
+```text
+V1C2A1  Canonical Compile/AST Request, Result and Terminal Contract
+V1C2A2  Fixed Guest Runner and Payload Bundle
+V1C2B   Signed Compile/AST Transcript Verifier
+V1C2C   Active Compile/AST Sandbox Composition
+```
+
+V1C2A1 locks strict canonical UTF-8/LF JSON, exact field order, duplicate/unknown/non-finite rejection, bounded request/manifest/ready/authorize/result/terminal sizes and 64-byte ECDSA-P256 signatures. Boundary authenticity and check success are separate: a signed syntax failure may be trusted evidence while `check_passed=false`.
+
+Guest materialization is flat and deterministic: original repository paths are metadata only, while sorted exact sources become `source-0001.py` through `source-0020.py` beneath the fixed read-only source root. The runner uses `skynetvs://changed/<path>` only as the compile diagnostic filename. It performs `ast.parse(mode="exec", feature_version=(3, 13), type_comments=False, optimize=0)` and `compile(mode="exec", flags=0, dont_inherit=True, optimize=0)`, then discards the code object. Import statements may compile, but imports/top-level code are never executed and the workspace is never on `sys.path`.
+
+V1C2C uses one standard-user worker assigned before resume to a kill-on-close Job with active-process limit `1`, process memory `512 MiB`, job memory `768 MiB` and a `60` second worker timeout. Success or authentic syntax failure requires the same Sandbox instance to prove runtime identity, source/request hashes, SYSTEM controller, standard-user worker, network isolation, empty worker process set, account deletion, shutdown, all host Sandbox processes exited and post-exit signature/artifact stability.
+
 - The first active changed-workspace boundary is V1C2 compile/AST only. It consumes one fresh V1B4D lease and one fresh Sandbox, but imports and top-level execution remain forbidden.
 - Every `python_module` target must be selected by a semantic explicit allowlist and bound to an exact protected baseline-owned entrypoint. The existing name regex is validation only, not authorization.
 - The existing `check` flow is not the initial pipeline allowlist. V1C6 must introduce a protected guest-safe flow with an exact reviewed step list; host-hardware smoke, outer Sandbox activation and interactive/promotion flows remain excluded.

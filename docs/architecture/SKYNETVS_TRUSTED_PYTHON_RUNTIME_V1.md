@@ -15,8 +15,10 @@ V1C0A  — VERIFIED / EXECUTION BLOCKED
 V1C0B1 — VERIFIED / EXECUTION BLOCKED
 V1C0B2 — SOURCE CLASSES LOCKED / ARTIFACTS UNPINNED
 V1C1A  — VERIFIED / NON-AUTHORIZING
-V1C1B  — ARCHITECTURE LOCKED / HOST-ONLY IMPLEMENTATION CURRENT
-V1C2A–V1C2C — ACTIVE CHANGED-SOURCE BOUNDARY BLOCKED
+V1C1B  — VERIFIED / NON-AUTHORIZING
+V1C2A1 — ARCHITECTURE LOCKED / HOST-ONLY CONTRACT CURRENT
+V1C2A2–V1C2B — PLANNED / HOST-ONLY
+V1C2C  — ACTIVE CHANGED-SOURCE BOUNDARY BLOCKED
 ```
 
 Этот документ фиксирует threat model, source-provenance model, deterministic bundle model, active attestation и handoff-контракт для `Typed Check Runner V1B4 — Trusted Python Runtime`.
@@ -532,7 +534,8 @@ V1C0B1 Canonical Host Toolchain Observation Gate
 V1C0B2 External Source Authority Selection Lock
 V1C1A  Canonical Patched Workspace Snapshot Bundle
 V1C1B  Typed Compile/AST Plan Capability
-V1C2A  Compile/AST Guest Contract and Fixed Runner
+V1C2A1 Canonical Compile/AST Request, Result and Terminal Contract
+V1C2A2 Fixed Guest Runner and Payload Bundle
 V1C2B  Signed Compile/AST Transcript Verifier
 V1C2C  Active Compile/AST Sandbox Composition
 V1C3A  Python Dependency Source Provenance
@@ -601,6 +604,26 @@ plan policy:               f017f401254647002347802c5deba6397bdddf27eaa08d02640dc
 
 V1C1A implementation is VERIFIED at `7b174610e6dde4e1e28a6ae5fb1f357ac0ad93e2`. The post-commit committed-tree inventory is `256` files / `238` Python files, `92` pipeline flows / `459` total steps / `87` check steps, with inventory fingerprint `1d6df3788467909e758c172bee1289ac0fda65915c1646304b257e69ae17f96b`. The V1C1A Windows smoke is `1/1` and proves issued→`claimed_for_plan` exact-byte snapshot semantics while repository mutation, network/download/install, Sandbox, runtime-lease issue/claim, candidate interpreter, changed-code execution, reusable lease and authorization remain false.
 
+V1C1B implementation is VERIFIED at `70fc763ddab74da501d4988a9a0fd8269e877ddb`. Its post-commit inventory is `260` files / `242` Python files, `93` flows / `474` total steps / `88` check steps, with inventory fingerprint `4c4316c3fdfa59ab5fc2e72e76364ae457a12c3545022300b30a486b4357d716`. The post-commit V1C1B Windows smoke is `1/1`, retains only exact selected bytes and keeps Sandbox, runtime-lease, interpreter, changed-code and authorization flags false.
+
+Roadmap Change 015 locks the V1C2 lineage:
+
+```text
+decision ID:          skynetvs-v1c2-compile-ast-active-boundary-architecture-lock-v1
+decision fingerprint: 5382249191bcc8388d6b44862cabe7c24a586a6628814266461c0830e7dec08c
+V1C2A1 policy ID:     skynetvs-v1c2a1-compile-ast-contract-cpython-3.13.15-v1
+V1C2A1 fingerprint:   a3e7d50e92de8aa0799953874a71ce60b2d141e52791282e5fd38814aa9507bf
+```
+
+- V1C2A1 owns strict canonical request/source-manifest/result/terminal schemas and distinguishes transcript authenticity from check pass/fail.
+- V1C2A2 owns the exact fixed guest runner and payload bytes.
+- V1C2B owns pinning, canonical parsing and post-exit ECDSA-P256 transcript verification without Sandbox launch.
+- V1C2C alone may claim the plan first and runtime lease second, materialize flat fixed source files, launch one fresh Sandbox and run the pinned interpreter.
+- Original repository paths remain metadata and virtual diagnostic filenames; they are never guest filesystem paths.
+- The runner executes `ast.parse` and `compile` only. Source import statements may compile, but no import/top-level/code object is executed and no bytecode is written.
+- A signed syntax failure is valid evidence with `check_passed=false`; it does not become a boundary-authenticity failure.
+- Every outcome keeps `changed_code_executed=false`, `execution_authorized=false` and `reusable_lease_issued=false`.
+
 Before the first source parse/compile instruction, the same Sandbox instance must re-prove runtime, snapshot, execution-plan, network, worker privilege, Job, handle/environment and signed-handshake evidence. No candidate code object may be executed.
 
 ## 10. Acceptance criteria
@@ -628,6 +651,6 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–014 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–015 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A are VERIFIED; V1C0B2 and V1C1 architecture are LOCKED. V1C1B is the current bounded host-only implementation and may proceed on **Очень высокий**. Return to **Pro Standard** before V1C2A/V1C2B/V1C2C active changed-source composition, exact PyPI wheel closure or MinGit pinning.
+V1C0A/V1C0B1/V1C1A/V1C1B are VERIFIED; V1C0B2, V1C1 and V1C2 architecture are LOCKED. V1C2A1/V1C2A2/V1C2B are bounded host-only implementation and may proceed on **Очень высокий**. Return to **Pro Standard** before V1C2C active changed-source composition, exact PyPI wheel closure or MinGit pinning.
