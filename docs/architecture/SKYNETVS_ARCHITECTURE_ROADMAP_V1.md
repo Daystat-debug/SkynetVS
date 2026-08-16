@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1 VERIFIED; V1C0B2, V1C1 and V1C2 architecture LOCKED; CURRENT — V1C2A2 fixed guest runner and payload bundle.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2 VERIFIED; V1C0B2, V1C1 and V1C2 architecture LOCKED; CURRENT — V1C2B signed compile/AST transcript verifier.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -878,7 +878,7 @@ The Pro Standard V1C architecture review is complete against stable tag `skynet-
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1 VERIFIED through `ec68dd4`; V1C0B2 external source authority and V1C1/V1C2 architecture are LOCKED; V1C2A2 host-only fixed runner/payload CURRENT; changed-code execution remains BLOCKED.
+**Статус:** V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2 VERIFIED through `b83d296`; V1C0B2 external source authority and V1C1/V1C2 architecture are LOCKED; V1C2B host-only signed transcript verifier CURRENT; changed-code execution remains BLOCKED.
 
 #### V1C architecture context closure
 
@@ -945,8 +945,8 @@ V1C0B2 External Source Authority Selection Lock              LOCKED
 V1C1A  Canonical Patched Workspace Snapshot Bundle           VERIFIED
 V1C1B  Typed Compile/AST Plan Capability                     VERIFIED
 V1C2A1 Canonical Compile/AST Request, Result and Terminal Contract VERIFIED
-V1C2A2 Fixed Guest Runner and Payload Bundle                 CURRENT / HOST-ONLY IMPLEMENTATION
-V1C2B  Signed Compile/AST Transcript Verifier                PLANNED / HOST-ONLY
+V1C2A2 Fixed Guest Runner and Payload Bundle                 VERIFIED / NON-AUTHORIZING
+V1C2B  Signed Compile/AST Transcript Verifier                CURRENT / HOST-ONLY IMPLEMENTATION
 V1C2C  Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
@@ -1072,6 +1072,26 @@ V1C2A1 post-commit Windows smoke:    1/1
 ```
 
 The post-commit contract smoke revalidated policy `a3e7d50e92de8aa0799953874a71ce60b2d141e52791282e5fd38814aa9507bf`, flat files `source-0001.py` / `source-0002.py`, virtual diagnostic paths, all three terminal statuses and bounded `SyntaxError` evidence without raw source text. `sandbox_launched`, runtime-lease issue/claim, candidate-interpreter execution, changed-code execution, reusable authority and `execution_authorized` all remained `false`. V1C2A1 is VERIFIED and grants no execution capability; V1C2A2 is now the current host-only slice.
+
+
+#### V1C2A2 verification closure
+
+Implementation commit `b83d296` (`feat: add fixed compile ast guest runner bundle`) contains exactly four new V1C2A2 files plus `tools/eval_package_boundaries.py` and `tools/pipeline.py`. Pre-commit evidence passed package boundaries `28/28`, V1C2A1 portable `45/45`, V1C2A2 portable `40/40`, real Windows bundle smoke `1/1`, Runtime Architecture Audit `9/9` and the full `check` flow. Post-commit evidence at exact HEAD `b83d2966960a23ebf6930b8ba7ea4bd100cef0b3` re-established:
+
+```text
+tracked files / Python files:       268 / 250
+Python bytes:                       3,682,203
+pipeline flows / all steps:         95 / 484
+check steps:                        90
+process-launch call sites:          40
+host-sensitive files:               29
+Python tree fingerprint:            358ecc4acdcd25163ac56e280c9c63e2d62c46f4f8ec89665bae12826e9cfb0a
+inventory fingerprint:              a39d47b9e9041dbe276cc73648fd37b57f614e9f94fbd731368f8e80b15cd5b3
+V1C0A post-commit Windows smoke:     1/1
+V1C2A2 post-commit Windows smoke:    1/1
+```
+
+The fixed bundle revalidated policy `825af298ba972e6c12ac0f85572935c7a8bd34ed4ee215cfa2af6e39a7e659c4`, bundle fingerprint `b1f182ca4ee1a9e83cb6a32ca54e45d4511c81faa27d8dd4be7817883affb9f3`, exact runner SHA-256 `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9` and payload SHA-256 `730d4108aab8246d1e6ff030a4d5a64ad25a89adf888e2b10c64ec63d56f60b6`. The bundle is deterministic, caller-independent and bound to the exact V1C2A1 contract and trusted runtime. Its runner has fixed isolated CPython flags, rehashes all trusted/source inputs, performs only strict validation plus `ast.parse`/`compile`, discards code objects and has no import execution, `exec`, `eval`, subprocess, shell, network or install surface. Both pre/post-commit Windows evidence kept Sandbox, runtime-lease, interpreter, changed-source processing/parsing/compilation, changed-code execution, reusable authority and `execution_authorized` false. V1C2A2 is VERIFIED; V1C2B is the current host-only slice.
 
 - The first active changed-workspace boundary is V1C2 compile/AST only. It consumes one fresh V1B4D lease and one fresh Sandbox, but imports and top-level execution remain forbidden.
 - Every `python_module` target must be selected by a semantic explicit allowlist and bound to an exact protected baseline-owned entrypoint. The existing name regex is validation only, not authorization.
@@ -1516,12 +1536,13 @@ V1C1A snapshot policy → V1C1B typed compile/AST plan capability.
 V1C1A — Canonical Patched Workspace Snapshot Bundle (host-only, non-authorizing).
 V1C1B — Typed Compile/AST Plan Capability (host-only, non-authorizing).
 V1C2A1 — Canonical Compile/AST Request, Result and Terminal Contract (host-only, non-authorizing).
+V1C2A2 — Fixed Guest Runner and Payload Bundle (host-only, non-authorizing).
 
 [CURRENT IMPLEMENTATION STAGE]
-V1C2A2 — Fixed Guest Runner and Payload Bundle (host-only; no Sandbox launch and no changed-source execution).
+V1C2B — Signed Compile/AST Transcript Verifier (host-only; no Sandbox launch and no changed-source execution).
 
 [NEXT]
-V1C2B signed verifier after V1C2A2 acceptance; return to Pro Standard before V1C2C active Sandbox composition.
+V1C2C active Sandbox composition after V1C2B acceptance; switch to Pro Standard before implementation.
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
