@@ -959,7 +959,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B are VERIFIED through `70fc763`. Roadmap Changes 013–015 lock V1C0B2, V1C1 and V1C2 architecture in **Pro Standard**. V1C2A1/V1C2A2/V1C2B are bounded host-only implementation and may run on **Очень высокий**; return to **Pro Standard** before V1C2C active changed-source composition.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1 are VERIFIED through `ec68dd4`. Roadmap Changes 013–015 lock V1C0B2, V1C1 and V1C2 architecture in **Pro Standard**. V1C2A2/V1C2B are bounded host-only implementation and may run on **Очень высокий**; return to **Pro Standard** before V1C2C active changed-source composition.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1027,8 +1027,8 @@ V1C0B1 Canonical Host Toolchain Observation Gate             VERIFIED
 V1C0B2 External Source Authority Selection Lock              LOCKED
 V1C1A  Canonical Patched Workspace Snapshot Bundle           VERIFIED
 V1C1B  Typed Compile/AST Plan Capability                     VERIFIED
-V1C2A1 Canonical Compile/AST Request, Result and Terminal Contract CURRENT / HOST-ONLY
-V1C2A2 Fixed Guest Runner and Payload Bundle                 PLANNED / HOST-ONLY
+V1C2A1 Canonical Compile/AST Request, Result and Terminal Contract VERIFIED
+V1C2A2 Fixed Guest Runner and Payload Bundle                 CURRENT / HOST-ONLY IMPLEMENTATION
 V1C2B  Signed Compile/AST Transcript Verifier                PLANNED / HOST-ONLY
 V1C2C  Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
@@ -1184,15 +1184,39 @@ A1 policy: a3e7d50e92de8aa0799953874a71ce60b2d141e52791282e5fd38814aa9507bf
 
 Authentic syntax failure is valid signed evidence and is distinct from a broken boundary. Original source paths are never guest filesystem paths; source bytes use flat fixed ordinal names. The runner may parse/compile import statements but never executes imports, top-level code or code objects. V1C2C remains blocked until A1/A2/B are independently verified.
 
+### V1C2A1 verification closure
+
+```text
+implementation commit:                 ec68dd4170bab82131dcf88f3aaa7b98ebaa75b8
+commit message:                         feat: add canonical compile ast transcript contract
+package boundaries:                     28/28
+V1C1B portable dependency gate:          35/35
+V1C2A1 portable evaluator:               45/45
+pre-commit Windows contract smoke:        1/1
+pre-commit full check:                   completed successfully
+Runtime Architecture Audit:               9/9
+post-commit V1C0A Windows smoke:          1/1
+post-commit V1C2A1 Windows smoke:         1/1
+tracked files / Python files:            264 / 246
+Python bytes:                            3,597,286
+pipeline flows / all steps:              94 / 479
+check steps:                             89
+process-launch call sites:               40
+host-sensitive files:                    28
+inventory fingerprint:                   9f3bd41cdc379f126751e651dbcdd71cbc3380d7ac5bf57687b46dd48b5cd268
+```
+
+The committed contract binds canonical source-manifest/request/ready/authorize/result/terminal documents, exact field order and cross-document hashes. The Windows smoke again proved `compile_ast_attested_passed`, authentic bounded `compile_ast_attested_failed` and `compile_ast_boundary_failed`, while raw source text remained absent and every Sandbox/runtime-lease/interpreter/changed-code/reusable-authority/authorization flag remained `false`. V1C2A1 is VERIFIED.
+
 ### Следующее точное действие
 
-1. Commit only the three architecture-document changes that close V1C1B and lock Roadmap Change 015.
-2. Keep stable tag `skynet-trusted-runtime-v1b4` at `91d8c37`; do not modify V1B4 policy, payload or evidence fingerprints.
-3. Do not rerun the full pipeline after this docs-only transition; V1C1B pre-commit full check and both post-commit Windows smokes are green.
-4. Switch to **Очень высокий** and implement V1C2A1 as a host-only canonical contract/policy gate; no Sandbox or Python execution is allowed in V1C2A1.
-5. V1C2A1 must lock decision `5382249191bcc8388d6b44862cabe7c24a586a6628814266461c0830e7dec08c` and policy `a3e7d50e92de8aa0799953874a71ce60b2d141e52791282e5fd38814aa9507bf`, distinguish transcript authenticity from check success and forbid raw source bytes in durable results.
-6. Implement V1C2A2 fixed runner/payload and V1C2B verifier only after V1C2A1 acceptance. Original paths remain metadata; guest source filenames are fixed flat ordinals.
-7. Return to **Pro Standard** before V1C2C, which is the first active Sandbox run processing changed source bytes.
+1. Commit only the three architecture-document changes that close V1C2A1 and mark V1C2A2 CURRENT.
+2. Keep stable tag `skynet-trusted-runtime-v1b4` at `91d8c37`; do not modify V1B4 policy, payload or historical evidence fingerprints.
+3. Do not rerun the full pipeline after this docs-only transition; V1C2A1 pre-commit full check and both post-commit Windows smokes are green.
+4. Switch to **Очень высокий** and implement V1C2A2 as a bounded host-only fixed runner/payload bundle. Production V1C2A2 may construct and hash runner bytes but must not launch Windows Sandbox or consume changed-source capabilities.
+5. The fixed runner must accept only canonical V1C2A1 request/manifest paths, verify exact source bytes, use fixed CPython 3.13 semantics, perform only strict UTF-8 decode, `ast.parse` and `compile`, discard code objects and emit bounded canonical result bytes.
+6. Keep imports, top-level code, `exec`, `eval`, bytecode writes, workspace `sys.path`, network, install, arbitrary argv/environment and caller runner paths forbidden.
+7. Implement V1C2B signed transcript verifier only after V1C2A2 acceptance. Return to **Pro Standard** before V1C2C, the first active Sandbox run processing changed source bytes.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -1232,10 +1256,14 @@ e090f63 feat: add canonical host toolchain observation
 90d2bd5 docs: lock external toolchain source authority
 859be92 docs: lock immutable workspace snapshot and compile plan
 7b17461 feat: add canonical patched workspace snapshot
+d19b85c docs: close workspace snapshot and start typed compile plan
+70fc763 feat: add typed compile ast plan capability
+8cd67ae docs: close typed compile plan and lock active compile boundary
+ec68dd4 feat: add canonical compile ast transcript contract
 tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-V1C0A/V1C0B1/V1C1A/V1C1B are VERIFIED through `70fc763`. Roadmap Changes 013–015 lock V1C0B2, V1C1 and V1C2 architecture. V1C2A1 host-only contract implementation is current and the stable V1B4 tag must not move.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1 are VERIFIED through `ec68dd4`. Roadmap Changes 013–015 lock V1C0B2, V1C1 and V1C2 architecture. V1C2A2 host-only fixed runner/payload implementation is current and the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 
@@ -1262,9 +1290,9 @@ V1C0A/V1C0B1/V1C1A/V1C1B are VERIFIED through `70fc763`. Roadmap Changes 013–0
 
 ## 19. Режим модели
 
-Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–014 are approved in **Pro Standard**.
+Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–015 are approved in **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B are VERIFIED; V1C0B2, V1C1 and V1C2 architecture are LOCKED. V1C2A1/V1C2A2/V1C2B are bounded host-only implementation and should run on **Очень высокий**. Return to **Pro Standard** before V1C2C active Sandbox composition, exact PyPI wheel closure or MinGit pinning.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1 are VERIFIED; V1C0B2, V1C1 and V1C2 architecture are LOCKED. V1C2A2/V1C2B are bounded host-only implementation and should run on **Очень высокий**. Return to **Pro Standard** before V1C2C active Sandbox composition, exact PyPI wheel closure or MinGit pinning.
 
 ## 20. Файлы для будущего handoff
 

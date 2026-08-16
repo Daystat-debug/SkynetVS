@@ -16,8 +16,9 @@ V1C0B1 — VERIFIED / EXECUTION BLOCKED
 V1C0B2 — SOURCE CLASSES LOCKED / ARTIFACTS UNPINNED
 V1C1A  — VERIFIED / NON-AUTHORIZING
 V1C1B  — VERIFIED / NON-AUTHORIZING
-V1C2A1 — ARCHITECTURE LOCKED / HOST-ONLY CONTRACT CURRENT
-V1C2A2–V1C2B — PLANNED / HOST-ONLY
+V1C2A1 — VERIFIED / NON-AUTHORIZING CONTRACT
+V1C2A2 — CURRENT / HOST-ONLY FIXED RUNNER AND PAYLOAD
+V1C2B  — PLANNED / HOST-ONLY VERIFIER
 V1C2C  — ACTIVE CHANGED-SOURCE BOUNDARY BLOCKED
 ```
 
@@ -624,6 +625,8 @@ V1C2A1 fingerprint:   a3e7d50e92de8aa0799953874a71ce60b2d141e52791282e5fd38814aa
 - A signed syntax failure is valid evidence with `check_passed=false`; it does not become a boundary-authenticity failure.
 - Every outcome keeps `changed_code_executed=false`, `execution_authorized=false` and `reusable_lease_issued=false`.
 
+V1C2A1 implementation is VERIFIED at `ec68dd4170bab82131dcf88f3aaa7b98ebaa75b8`. Pre-commit evidence passed package boundaries `28/28`, V1C1B `35/35`, V1C2A1 `45/45`, Windows contract smoke `1/1`, Runtime Architecture Audit `9/9` and the full `check` flow. Post-commit inventory is `264` files / `246` Python files, `94` flows / `479` total steps / `89` check steps, with inventory fingerprint `9f3bd41cdc379f126751e651dbcdd71cbc3380d7ac5bf57687b46dd48b5cd268`; post-commit V1C0A and V1C2A1 Windows smokes are both `1/1`. Canonical passed, authentic syntax-failed and boundary-failed result classes remain distinct, raw source is absent, and all Sandbox/runtime-lease/interpreter/changed-code/reusable-authority flags remain false.
+
 Before the first source parse/compile instruction, the same Sandbox instance must re-prove runtime, snapshot, execution-plan, network, worker privilege, Job, handle/environment and signed-handshake evidence. No candidate code object may be executed.
 
 ## 10. Acceptance criteria
@@ -653,4 +656,4 @@ full check                                 green
 
 Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–015 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B are VERIFIED; V1C0B2, V1C1 and V1C2 architecture are LOCKED. V1C2A1/V1C2A2/V1C2B are bounded host-only implementation and may proceed on **Очень высокий**. Return to **Pro Standard** before V1C2C active changed-source composition, exact PyPI wheel closure or MinGit pinning.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1 are VERIFIED; V1C0B2, V1C1 and V1C2 architecture are LOCKED. V1C2A2/V1C2B are bounded host-only implementation and may proceed on **Очень высокий**. Return to **Pro Standard** before V1C2C active changed-source composition, exact PyPI wheel closure or MinGit pinning.
