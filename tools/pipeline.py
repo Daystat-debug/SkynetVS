@@ -122,6 +122,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task canonical compile AST contract", _python_cmd("tools/eval_developer_task_execution_compile_ast_contract.py")),
             Step("Evaluate developer task fixed compile AST guest runner bundle", _python_cmd("tools/eval_developer_task_execution_compile_ast_runner.py")),
             Step("Evaluate developer task signed compile AST transcript verifier", _python_cmd("tools/eval_developer_task_execution_compile_ast_verifier.py")),
+            Step("Evaluate developer task process-local compile AST claim transaction", _python_cmd("tools/eval_developer_task_execution_compile_ast_claim_transaction.py")),
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
         "decision": [
@@ -670,6 +671,13 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task fixed compile AST guest runner bundle", _python_cmd("tools/eval_developer_task_execution_compile_ast_runner.py")),
             Step("Evaluate developer task signed compile AST transcript verifier", _python_cmd("tools/eval_developer_task_execution_compile_ast_verifier.py")),
             Step("Evaluate developer task signed compile AST transcript Windows CNG", _python_cmd("tools/eval_developer_task_execution_compile_ast_verifier_windows.py")),
+        ],
+        "developer_task_execution_compile_ast_claim_transaction": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate developer task typed compile AST plan capability", _python_cmd("tools/eval_developer_task_execution_compile_ast_plan.py")),
+            Step("Evaluate developer task same-run runtime capability lease", _python_cmd("tools/eval_developer_task_execution_runtime_lease.py")),
+            Step("Evaluate developer task process-local compile AST claim transaction", _python_cmd("tools/eval_developer_task_execution_compile_ast_claim_transaction.py")),
+            Step("Evaluate developer task process-local compile AST claim transaction Windows smoke", _python_cmd("tools/eval_developer_task_execution_compile_ast_claim_transaction_windows.py")),
         ],
         "package_boundaries": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
