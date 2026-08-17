@@ -662,3 +662,21 @@ full check                                 green
 Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–015 require **Pro Standard**.
 
 V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B are VERIFIED; V1C0B2, V1C1 and V1C2 architecture are LOCKED. V1C2C active changed-source composition architecture review is CURRENT and must stay on **Pro Standard** through exact source-context capture, claim-transaction design, controller/worker isolation review and first live acceptance. Exact PyPI wheel closure and MinGit pinning also require Pro Standard.
+
+## V1C2C active composition split — Roadmap Change 016
+
+The exact `b527f93` source audit locks V1C2C as four boundaries rather than one large active commit:
+
+```text
+V1C2C0 claim transaction: 092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa
+V1C2C1 fixed payload:     db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
+V1C2C2 active composition:d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
+V1C2C3 live evidence:     b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+Decision:                 56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6
+```
+
+The transaction wrapper is required because V1C2A1 needs a one-run `runtime_lease_fingerprint`, while the current V1B4D public status intentionally exposes no per-instance identity. V1C2C0 exclusively reserves and privately binds the exact lease object and exact plan object, generates a fresh public binding fingerprint, and later performs the irreversible `plan -> runtime lease` claim sequence without a fallible operation between claims. This does not modify the stable V1B4D claim API or turn a lease into serializable authority.
+
+V1C2C1 must use a new compile-specific helper: the V1B4C helper proves kill-on-close for a benign runtime probe, but the compile contract additionally requires active-process limit `1`, process memory `512 MiB` and Job memory `768 MiB`. V1C2C2 remains the only active slice. V1C2C3 closes pass, syntax-failure and signed boundary-failure evidence with fresh capabilities and fresh Sandbox instances.
+
+All outcomes remain non-reusable and non-authorizing. `changed_code_executed`, `execution_authorized` and `reusable_lease_issued` stay `false`.

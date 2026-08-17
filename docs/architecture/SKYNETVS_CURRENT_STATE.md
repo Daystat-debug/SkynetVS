@@ -1382,3 +1382,44 @@ latest signed-boundary and active-composition evidence
 ```
 
 Новый чат должен продолжать с раздела **«Следующее точное действие»**, а не восстанавливать roadmap по памяти.
+
+### V1C2C exact source-context closure and Roadmap Change 016
+
+```text
+context HEAD / origin:                b527f93037595ccac0cfe731c46c5012663fc3d1
+stable V1B4 target:                   91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+context archive SHA-256:              f5883188e4aa2119c849f2adbc449b73072ede208f742f6ededb42ae783aa08d
+context fingerprint:                  8cd54944d3e9873f8af267adf86d4e0d220c947dc3578d88140849ba8366e63c
+manifest files / bytes:               70 / 1,984,377
+payload size/hash mismatches:         0 / 0
+repository_mutated:                   false
+sandbox_launched:                     false
+runtime_lease_claimed:                false
+changed_source_processed:             false
+execution_authorized:                 false
+```
+
+The exact audit found that `V1C2A1` serializes `runtime_lease_fingerprint`, while the current V1B4D status has no public per-instance identity and its private binding hash is stable for the same host/runtime snapshot. V1C2C therefore cannot safely serialize that private hash as a one-run lease identity. Roadmap Change 016 introduces a separate process-local transaction that reserves and stores the exact plan and lease objects privately and publishes a fresh one-run binding fingerprint without changing the stable V1B4D claim return type.
+
+Final split:
+
+```text
+V1C2C0  Process-Local Plan/Runtime Claim Transaction Capability     CURRENT
+V1C2C1  Fixed SYSTEM Controller and Standard-User Worker Bundle     PLANNED
+V1C2C2  Active Compile/AST Sandbox Composition                      BLOCKED
+V1C2C3  Live Pass / Syntax-Failure / Boundary-Failure Acceptance    BLOCKED
+```
+
+Locked identities:
+
+```text
+decision fingerprint:  56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6
+V1C2C0 policy:         092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa
+V1C2C1 policy:         db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
+V1C2C2 policy:         d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
+V1C2C3 evidence:       b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+The V1C2C0 transaction reserves one exact plan and one exact runtime lease and is issued without claiming either capability. Its irreversible path is plan claim first and runtime-lease claim second, with no fallible filesystem/materialization operation between them. If the second claim fails, the plan remains consumed and no retry may reuse the transaction. V1C2C1 remains deterministic and host-only. V1C2C2 is the only slice allowed to materialize exact sources/runtime and launch Sandbox. V1C2C3 requires three fresh runs: attested pass, authentic syntax failure, and an eval-only post-ready/pre-authorization source substitution producing a signed boundary failure.
+
+Active processing remains blocked until V1C2C0 and V1C2C1 are independently VERIFIED and the V1C2C2 portable pre-commit gate is green.

@@ -594,6 +594,29 @@ execution_authorized:                       false
 
 **Что не меняется:** only the fixed benign V1B3C worker is executed; patch/workspace execution, `python_module`, `pipeline`, dependency installation and host fallback remain forbidden; `execution_authorized=false`.
 
+
+
+## Roadmap Change 016 — V1C2C requires a process-local claim transaction before fixed payload and active composition
+
+**Причина:** exact source audit at `b527f93` found a missing one-run identity boundary. V1C2A1 requires `runtime_lease_fingerprint`, but V1B4D exposes no public per-instance lease identity; its private binding hash contains the host/runtime snapshot but no per-issuance nonce or secret and therefore is not a unique transcript identity. Reusing it directly would permit two same-host leases to share the same serialized fingerprint even though their one-time secrets and object identities differ. The same audit also confirms that the V1B4C helper cannot be reused unchanged because V1C2A1 requires active-process and memory Job limits in addition to kill-on-close.
+
+**Что меняется:** V1C2C is split into four measured slices. V1C2C0 issues a process-local, single-use claim transaction bound by exact object identity to one V1C1B plan and one V1B4D lease and publishes a fresh non-secret `runtime_lease_fingerprint`; it claims nothing at issuance and later claims plan first and runtime lease second with no fallible filesystem operation between the two claims. V1C2C1 builds the exact fixed SYSTEM-controller/native-helper/bootstrap/WSB-template bundle with a standard-user worker, sanitized environment, no inherited handles, `CREATE_SUSPENDED`, assign-before-resume and Job limits `1 / 512 MiB / 768 MiB`. V1C2C2 alone materializes exact sources/runtime, launches one fresh Sandbox, pins authorization before publication and accepts signed evidence only after all known Sandbox processes exit and exact artifacts remain stable. V1C2C3 closes the live pass, authentic syntax-failure and signed post-ready boundary-failure matrix with three fresh capabilities and three fresh Sandbox instances.
+
+**Что не меняется:** V1C2A1/V1C2A2/V1C2B identities remain immutable; the stable V1B4 tag is not moved; workspace, `.git`, host `.venv` and host Git are never mapped; no guest network/install, `exec`, `eval`, import execution, top-level execution or bytecode write is allowed; every outcome keeps `changed_code_executed=false`, `execution_authorized=false` and `reusable_lease_issued=false`. An authentic syntax failure is a successful security composition with `check_passed=false`; an authentic `compile_ast_boundary_failed` terminal is verified evidence but the active composition remains unsuccessful.
+
+Locked identities:
+
+```text
+decision ID:          skynetvs-v1c2c-active-compile-ast-composition-split-v1
+decision fingerprint: 56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6
+V1C2C0 policy:        092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa
+V1C2C1 policy:        db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
+V1C2C2 policy:        d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
+V1C2C3 evidence:      b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+context archive:      f5883188e4aa2119c849f2adbc449b73072ede208f742f6ededb42ae783aa08d
+context fingerprint:  8cd54944d3e9873f8af267adf86d4e0d220c947dc3578d88140849ba8366e63c
+```
+
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
 
 **Причина:** V1C1B now holds exact selected source bytes in a process-local one-shot plan, but the first interpreter run adds four independent failure domains: canonical changed-source documents, fixed guest runner behavior, host-side signature/transcript verification and live Windows Sandbox lifecycle/resource isolation. A syntax error is a valid check outcome and must not be confused with an invalid signature or broken isolation boundary. Original repository paths also cannot safely become guest filesystem paths because their length and directory structure are unrelated to the fixed guest mount root.
@@ -947,7 +970,10 @@ V1C1B  Typed Compile/AST Plan Capability                     VERIFIED
 V1C2A1 Canonical Compile/AST Request, Result and Terminal Contract VERIFIED
 V1C2A2 Fixed Guest Runner and Payload Bundle                 VERIFIED / NON-AUTHORIZING
 V1C2B  Signed Compile/AST Transcript Verifier                VERIFIED / NON-AUTHORIZING
-V1C2C  Active Compile/AST Sandbox Composition                CURRENT / PRO ARCHITECTURE REVIEW / EXECUTION BLOCKED
+V1C2C0 Process-Local Plan/Runtime Claim Transaction        CURRENT / HOST-ONLY / EXECUTION BLOCKED
+V1C2C1 Fixed SYSTEM Controller and Worker Payload Bundle     PLANNED / HOST-ONLY
+V1C2C2 Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
+V1C2C3 Live Pass/Syntax/Boundary Acceptance                  BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
 V1C3C  Portable Git Source Provenance and Bundle             PLANNED
@@ -1560,8 +1586,11 @@ V1C2A2 — Fixed Guest Runner and Payload Bundle (host-only, non-authorizing).
 [VERIFIED]
 V1C2B — Signed Compile/AST Transcript Verifier (host-only, non-authorizing).
 
-[CURRENT ARCHITECTURE STAGE]
-V1C2C — Active Compile/AST Sandbox Composition (Pro Standard; implementation and changed-source processing remain blocked until the exact composition/source context, claim transaction, fixed controller/worker payload, post-exit evidence model and negative-path acceptance are locked).
+[LOCKED V1C2C ARCHITECTURE]
+Roadmap Change 016 → V1C2C0 claim transaction → V1C2C1 fixed controller/worker bundle → V1C2C2 active composition → V1C2C3 live acceptance.
+
+[CURRENT IMPLEMENTATION STAGE]
+V1C2C0 — Process-Local Plan/Runtime Claim Transaction Capability (host-only; no claim at issuance, no Sandbox, no interpreter, no changed-source processing).
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
