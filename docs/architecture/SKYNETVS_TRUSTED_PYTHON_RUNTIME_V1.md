@@ -19,7 +19,10 @@ V1C1B  — VERIFIED / NON-AUTHORIZING
 V1C2A1 — VERIFIED / NON-AUTHORIZING CONTRACT
 V1C2A2 — VERIFIED / NON-AUTHORIZING FIXED RUNNER AND PAYLOAD
 V1C2B  — VERIFIED / NON-AUTHORIZING VERIFIER
-V1C2C  — CURRENT / ACTIVE BOUNDARY ARCHITECTURE REVIEW / EXECUTION BLOCKED
+V1C2C0 — VERIFIED / NON-AUTHORIZING CLAIM TRANSACTION
+V1C2C1 — CURRENT / FIXED CONTROLLER-WORKER BUNDLE / PRO SECURITY IMPLEMENTATION
+V1C2C2 — BLOCKED / ACTIVE COMPOSITION
+V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
 Этот документ фиксирует threat model, source-provenance model, deterministic bundle model, active attestation и handoff-контракт для `Typed Check Runner V1B4 — Trusted Python Runtime`.
@@ -632,6 +635,8 @@ V1C2A2 implementation is VERIFIED at `b83d2966960a23ebf6930b8ba7ea4bd100cef0b3`.
 
 V1C2B implementation is VERIFIED at `98f4cfe0ee1a71c327b35670d786ab11b9485c6b`. Pre-commit evidence passed package boundaries `28/28`, V1C2A1 `45/45`, V1C2A2 `40/40`, V1C2B `44/44`, Windows CNG smoke `1/1`, Runtime Architecture Audit `9/9` and the full `check` flow. Post-commit inventory is `272` files / `254` Python files, `96` flows / `490` total steps / `91` check steps, with Python tree fingerprint `f73125f2281ef44f15fc13a8520d64a2522bb020610b13480bcf72b0df5ea0a4` and inventory fingerprint `06f3794183eec0beede477f72eacc51ef5b991d81e69cbc3b3660daba3f7765f`; post-commit V1C0A and V1C2B Windows smokes are both `1/1`. The verified policy is `cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf`; Windows CNG verified a 64-byte P1363 ECDSA-P256 signature and public-key SHA-256 `0bc654178e6f3d5e4ab8b170722a7b7a388a76d58c97031fcad019cf4bdb5e91`. The verifier distinguishes authentic syntax failure from boundary failure, rejects replay/substitution/forgery and has no filesystem/process/Sandbox/network/source-processing surface. Sandbox/runtime-lease/interpreter/changed-source/changed-code/reusable-authority flags remain false; V1C2B grants no execution authority.
 
+V1C2C0 implementation is VERIFIED at `e6e355ab3238565bb9d685f503647da6a487c919`. Pre-commit evidence passed package boundaries `28/28`, V1C1B `35/35`, V1B4D `36/36`, V1C2C0 `38/38`, Windows transaction smoke `1/1`, Runtime Architecture Audit `9/9` and the full `check` flow. Post-commit inventory is `276` files / `258` Python files, `97` flows / `496` total steps / `92` check steps, with Python tree fingerprint `f7af9a590320fb6a17178b8baa2785a0981ea83a22f9c8f393261ec38b599088` and inventory fingerprint `d10f6fb0c9a72419c0d63c1445253c692a90010a97ee834dfefe5015abf2289a`; post-commit V1C0A and V1C2C0 Windows smokes are both `1/1`. The verified transaction policy is `092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa`. It binds exact process-local plan/lease objects, exposes only a fresh non-secret one-run fingerprint, claims plan before runtime lease, rejects replay/duplicate reservations/tamper, and has no filesystem/process/Sandbox/network/source-processing surface. Sandbox/interpreter/changed-source/changed-code/reusable-authority flags remain false; V1C2C0 grants no execution authority.
+
 Before the first source parse/compile instruction, the same Sandbox instance must re-prove runtime, snapshot, execution-plan, network, worker privilege, Job, handle/environment and signed-handshake evidence. No candidate code object may be executed.
 
 ## 10. Acceptance criteria
@@ -659,9 +664,9 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–015 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–016 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B are VERIFIED; V1C0B2, V1C1 and V1C2 architecture are LOCKED. V1C2C active changed-source composition architecture review is CURRENT and must stay on **Pro Standard** through exact source-context capture, claim-transaction design, controller/worker isolation review and first live acceptance. Exact PyPI wheel closure and MinGit pinning also require Pro Standard.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C1 fixed controller/worker bundle is CURRENT and must use **Pro Standard** because it pins LocalSystem, standard-user, native Job/resource, handle/environment and suspended-process authority. V1C2C2/V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
 
 ## V1C2C active composition split — Roadmap Change 016
 

@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B VERIFIED; V1C0B2, V1C1 and V1C2 architecture LOCKED; CURRENT — V1C2C active compile/AST Sandbox composition architecture review in Pro Standard.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 VERIFIED; V1C0B2, V1C1 and V1C2 architecture LOCKED; CURRENT — V1C2C1 fixed SYSTEM-controller and standard-user worker bundle security implementation in Pro Standard.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -901,7 +901,7 @@ The Pro Standard V1C architecture review is complete against stable tag `skynet-
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B VERIFIED through `98f4cfe`; V1C0B2 external source authority and V1C1/V1C2 architecture are LOCKED; V1C2C active composition architecture review is CURRENT in Pro Standard; changed-code execution remains BLOCKED until a fresh Sandbox run is independently attested.
+**Статус:** V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 VERIFIED through `e6e355a`; V1C0B2 external source authority and V1C1/V1C2/V1C2C architecture are LOCKED; V1C2C1 fixed controller/worker bundle is CURRENT in Pro Standard; changed-source processing remains BLOCKED until V1C2C2 active composition is independently attested.
 
 #### V1C architecture context closure
 
@@ -970,8 +970,8 @@ V1C1B  Typed Compile/AST Plan Capability                     VERIFIED
 V1C2A1 Canonical Compile/AST Request, Result and Terminal Contract VERIFIED
 V1C2A2 Fixed Guest Runner and Payload Bundle                 VERIFIED / NON-AUTHORIZING
 V1C2B  Signed Compile/AST Transcript Verifier                VERIFIED / NON-AUTHORIZING
-V1C2C0 Process-Local Plan/Runtime Claim Transaction        CURRENT / HOST-ONLY / EXECUTION BLOCKED
-V1C2C1 Fixed SYSTEM Controller and Worker Payload Bundle     PLANNED / HOST-ONLY
+V1C2C0 Process-Local Plan/Runtime Claim Transaction          VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C1 Fixed SYSTEM Controller and Worker Payload Bundle       CURRENT / PRO SECURITY IMPLEMENTATION
 V1C2C2 Active Compile/AST Sandbox Composition                BLOCKED / PRO REQUIRED
 V1C2C3 Live Pass/Syntax/Boundary Acceptance                  BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
@@ -1137,6 +1137,25 @@ V1C2B post-commit Windows CNG smoke: 1/1
 ```
 
 The verifier revalidated policy `cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf`, strict canonical document/hash-chain binding, the exact V1C2A2 runner identities and a 64-byte ECDSA-P256 signature through Windows CNG. The post-commit smoke proved `signature_valid`, `chain_verified`, `result_verified` and `terminal_verified` with public-key SHA-256 `0bc654178e6f3d5e4ab8b170722a7b7a388a76d58c97031fcad019cf4bdb5e91`. Authentic syntax failure remains verified evidence with `check_passed=false`, while malformed, substituted, replayed or forged evidence fails closed. The production verifier has no filesystem, process, Sandbox, network, `ast.parse`, `compile`, `exec` or `eval` surface and never grants reusable authority. Sandbox launch, runtime-lease issue/claim, candidate-interpreter execution, changed-source processing, changed-code execution, reusable authority and `execution_authorized` all remained `false`. V1C2B is VERIFIED; V1C2C active composition architecture review is now CURRENT in Pro Standard.
+
+#### V1C2C0 verification closure
+
+Implementation commit `e6e355a` (`feat: add process-local compile ast claim transaction`) contains exactly four new V1C2C0 files plus `tools/eval_package_boundaries.py` and `tools/pipeline.py`. Pre-commit evidence passed package boundaries `28/28`, V1C1B plan `35/35`, V1B4D runtime lease `36/36`, V1C2C0 portable `38/38`, real Windows claim smoke `1/1`, Runtime Architecture Audit `9/9` and the full `check` flow. Post-commit evidence at exact HEAD `e6e355ab3238565bb9d685f503647da6a487c919` re-established:
+
+```text
+tracked files / Python files:        276 / 258
+Python bytes:                        3,873,221
+pipeline flows / all steps:          97 / 496
+check steps:                         92
+process-launch call sites:           40
+host-sensitive files:                31
+Python tree fingerprint:             f7af9a590320fb6a17178b8baa2785a0981ea83a22f9c8f393261ec38b599088
+inventory fingerprint:               d10f6fb0c9a72419c0d63c1445253c692a90010a97ee834dfefe5015abf2289a
+V1C0A post-commit Windows smoke:      1/1
+V1C2C0 post-commit Windows smoke:     1/1
+```
+
+The committed transaction revalidated policy `092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa`, issued without consuming either input, then irreversibly claimed the exact V1C1B plan before the exact V1B4D lease. The Windows smoke proved `issued -> claimed`, `plan_state_after_claim=claimed_for_compile_ast_gate`, `lease_state_after_claim=claimed`, a unique 64-hex one-run `runtime_lease_fingerprint`, exact source bytes `value = 2\n` and the exact retained runtime bundle. Source/workspace Git evidence remained unchanged, no Sandbox process or artifact remained, and repository mutation, network/download/install, Sandbox launch, candidate-interpreter execution, changed-source processing, changed-code execution, reusable authority and `execution_authorized` all remained `false`. V1C2C0 is VERIFIED and non-authorizing; V1C2C1 is now the current Pro security implementation slice.
 
 - The first active changed-workspace boundary is V1C2 compile/AST only. It consumes one fresh V1B4D lease and one fresh Sandbox, but imports and top-level execution remain forbidden.
 - Every `python_module` target must be selected by a semantic explicit allowlist and bound to an exact protected baseline-owned entrypoint. The existing name regex is validation only, not authorization.
@@ -1589,8 +1608,11 @@ V1C2B — Signed Compile/AST Transcript Verifier (host-only, non-authorizing).
 [LOCKED V1C2C ARCHITECTURE]
 Roadmap Change 016 → V1C2C0 claim transaction → V1C2C1 fixed controller/worker bundle → V1C2C2 active composition → V1C2C3 live acceptance.
 
+[VERIFIED]
+V1C2C0 — Process-Local Plan/Runtime Claim Transaction Capability (host-only, single-use, non-authorizing).
+
 [CURRENT IMPLEMENTATION STAGE]
-V1C2C0 — Process-Local Plan/Runtime Claim Transaction Capability (host-only; no claim at issuance, no Sandbox, no interpreter, no changed-source processing).
+V1C2C1 — Fixed SYSTEM Controller and Standard-User Worker Payload Bundle (host-only bundle construction; Pro security review; no Sandbox launch or changed-source processing).
 
 [PLANNED AFTER SAFETY KERNEL]
 Domain Package Structure V2.
