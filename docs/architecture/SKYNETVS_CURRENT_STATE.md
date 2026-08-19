@@ -960,7 +960,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED through `aa97b77`. Roadmap Changes 013–017 lock V1C0B2, V1C1, V1C2 and the V1C2C split. V1C2C2 active compile/AST Sandbox composition is CURRENT in **Pro Standard**; V1C2C3 remains blocked.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED through `aa97b77`. Roadmap Changes 013–018 lock V1C0B2, V1C1, V1C2 and the V1C2C split. V1C2C2 active compile/AST Sandbox composition is CURRENT in **Pro Standard**; V1C2C3 remains blocked.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1272,13 +1272,14 @@ The committed verifier independently pins and reparses the V1C2A1 pre-authorizat
 
 ### Следующее точное действие
 
-1. Commit only the three architecture-document changes that close V1C2C1 as VERIFIED / HOST-ONLY / NON-AUTHORIZING and mark V1C2C2 CURRENT.
+1. Commit only the three architecture-document changes for Roadmap Change 018: retain `d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484` as the immutable V1C2C2 architecture-slice identity and separate it from the future canonical active-composition implementation policy fingerprint and exact policy-document SHA-256.
 2. Keep stable tag `skynet-trusted-runtime-v1b4` at `91d8c37fc4afe7ef138e36063e7bc22014da8a2c`; do not modify historical V1B4/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 policies, payloads or fingerprints.
-3. Do not rerun the full pipeline after this docs-only transition; the V1C2C1 pre-commit full `check`, Runtime Architecture Audit and post-commit Windows/targeted evidence are already green.
-4. Continue in **Pro Standard** with V1C2C2, the only slice allowed to consume one fresh V1C2C0 claim transaction, materialize the exact selected sources and retained runtime/payload bytes, and launch one fresh Windows Sandbox instance.
-5. Preserve the fixed V1C2A1/A2/B/C0/C1 identities, four-folder mapping model, LocalSystem controller, fresh standard-user worker, `CREATE_SUSPENDED`, assign-before-resume, no inherited handles, sanitized environment and Job limits `1 / 512 MiB / 768 MiB`.
-6. Pin the exact request/ready/authorize transcript before authorization publication; accept terminal evidence only after every known Sandbox process exits, exact artifacts remain stable, V1C2B/CNG verification succeeds and fresh host evidence is unchanged.
-7. Keep `exec`, `eval`, import execution, top-level execution, bytecode writes, guest network/install, `python_module`, `pipeline`, commit/merge/push/promotion and reusable authority blocked. V1C2C3 remains BLOCKED until V1C2C2 is independently VERIFIED.
+3. Do not run the full pipeline after this docs-only identity clarification. The documentation transition must change exactly `SKYNETVS_ARCHITECTURE_ROADMAP_V1.md`, `SKYNETVS_CURRENT_STATE.md` and `SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md`.
+4. Implement V1C2C2 only in the locked seven-file scope: three compile-AST composition production modules, two evaluator modules, `tools/eval_package_boundaries.py` and `tools/pipeline.py`.
+5. Expose only `attest_developer_task_execution_compile_ast_composition(host_report, transaction, *, artifact_parent)`; reject caller-controlled runtime paths, workspace/source paths, executable/argv/environment, timeouts, Job limits, WSB settings, signature verifier and fault-injection hooks.
+6. Consume exactly one fresh V1C2C0 transaction inside composition, then materialize the exact retained runtime and selected flat source bytes, launch one fresh Sandbox, preserve the fixed four-folder mapping and LocalSystem → standard-user → Job boundary, and keep `CREATE_SUSPENDED`, assign-before-resume, no inherited handles and limits `1 / 512 MiB / 768 MiB`.
+7. Pin request/ready/authorize before publication; trust result/terminal only after every known Sandbox process exits, all exact artifacts remain stable, V1C2B/CNG verification succeeds, fresh host evidence is unchanged and private artifacts are safely removed.
+8. Keep `exec`, `eval`, import execution, top-level execution, bytecode writes, guest network/install, `python_module`, `pipeline`, commit/merge/push/promotion and reusable authority blocked. V1C2C3 remains BLOCKED until V1C2C2 is independently VERIFIED.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -1334,7 +1335,7 @@ aa97b77 feat: add fixed compile ast controller worker bundle
 tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED through `aa97b77`. Roadmap Changes 013–017 lock V1C0B2, V1C1, V1C2 and the V1C2C split. V1C2C2 active composition is current in Pro Standard and the stable V1B4 tag must not move.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED through `aa97b77`. Roadmap Changes 013–018 lock V1C0B2, V1C1, V1C2 and the V1C2C split. V1C2C2 active composition is current in Pro Standard and the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 
@@ -1361,7 +1362,7 @@ V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED through 
 
 ## 19. Режим модели
 
-Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–017 are approved in **Pro Standard**.
+Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–018 are approved in **Pro Standard**.
 
 V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C2 active composition is CURRENT and requires **Pro Standard** because it consumes the one-run capability boundary and launches the first changed-source Sandbox composition. V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
 
@@ -1428,7 +1429,7 @@ Locked identities:
 decision fingerprint:  56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6
 V1C2C0 policy:         092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa
 V1C2C1 architecture slice identity: db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
-V1C2C2 policy:         d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
+V1C2C2 architecture slice identity: d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
 V1C2C3 evidence:       b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
 ```
 
@@ -1465,6 +1466,47 @@ M tools/pipeline.py
 ```
 
 This clarification changes no stage order, threat model, active boundary or stable tag. The exact implementation and required Windows/full-pipeline evidence are now independently verified; V1C2C1 remains non-authorizing and its identities are immutable.
+
+### V1C2C2 implementation identity clarification — Roadmap Change 018
+
+The exact current source-context archive was collected from documentation HEAD `e2621ca5094eb7140323dcecb97b27ab9605ae65` / tree `369f8364df27898cb86a4754147d769ba0070bb0` and independently matched the committed tree:
+
+```text
+HEAD / origin/main:                  e2621ca5094eb7140323dcecb97b27ab9605ae65
+stable V1B4:                         91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+tracked files / Python files:        280 / 262
+archive files:                       280
+archive SHA-256:                     7cda253ce704cc028900e7b3d7da59340dd3da6f2b5cb60305cdc00fa4ccb50b
+working tree:                        clean
+repository_mutated:                  false
+```
+
+The current archive and the historical V1C2C architecture context contain `d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484` only as the locked Roadmap Change 016 identity. Neither contains a canonical V1C2C2 policy document or preimage for that value. Roadmap Change 018 therefore keeps it as the immutable architecture-slice identity and requires the concrete implementation to use the separate policy ID `skynetvs-v1c2c2-active-compile-ast-sandbox-composition-v1`, a reproducible semantic policy fingerprint and an exact canonical policy-document SHA-256.
+
+Locked public API:
+
+```python
+attest_developer_task_execution_compile_ast_composition(
+    host_report: DeveloperTaskExecutionBackendHostReport,
+    transaction: DeveloperTaskExecutionCompileAstClaimTransaction,
+    *,
+    artifact_parent: Path,
+) -> DeveloperTaskExecutionCompileAstCompositionReport
+```
+
+Locked implementation scope:
+
+```text
+A modules/developer/developer_task_execution_compile_ast_composition_policy.py
+A modules/developer/developer_task_execution_compile_ast_composition_fs.py
+A modules/developer/developer_task_execution_compile_ast_composition.py
+A tools/eval_developer_task_execution_compile_ast_composition.py
+A tools/eval_developer_task_execution_compile_ast_composition_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
+This clarification does not authorize an active run by itself. V1C2C2 remains CURRENT; V1C2C3 remains BLOCKED. The stable tag and every historical implementation identity remain unchanged.
 
 ### V1C2C0 verification closure
 

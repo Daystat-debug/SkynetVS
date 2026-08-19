@@ -664,7 +664,7 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–017 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–018 require **Pro Standard**.
 
 V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C2 active composition is CURRENT and must use **Pro Standard** because it consumes the process-local claim boundary and launches the first changed-source Sandbox composition. V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
 
@@ -675,7 +675,7 @@ The exact `b527f93` source audit locks V1C2C as four boundaries rather than one 
 ```text
 V1C2C0 claim transaction: 092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa
 V1C2C1 architecture slice identity: db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
-V1C2C2 active composition:d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
+V1C2C2 architecture slice identity: d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
 V1C2C3 live evidence:     b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
 Decision:                 56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6
 ```
@@ -704,6 +704,33 @@ bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53c
 ```
 
 The implementation scope is exactly two production modules, two evaluator modules and the existing package-boundary/pipeline registries. It remains host-only: no transaction claim, source/runtime materialization, Sandbox launch, interpreter execution or changed-source processing occurs. The stable V1B4 tag and all historical V1B4/V1C2A1/V1C2A2/V1C2B/V1C2C0 identities remain immutable.
+
+## V1C2C2 implementation identity — Roadmap Change 018
+
+The exact current source context at `e2621ca5094eb7140323dcecb97b27ab9605ae65` has SHA-256 `7cda253ce704cc028900e7b3d7da59340dd3da6f2b5cb60305cdc00fa4ccb50b` and contains `d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484` only as the locked V1C2C2 architecture-slice identity. The historical V1C2C architecture context with SHA-256 `f5883188e4aa2119c849f2adbc449b73072ede208f742f6ededb42ae783aa08d` also contains no canonical V1C2C2 policy JSON, schema or hash preimage for that value. The active-composition implementation must therefore never claim that newly created policy bytes reproduce the historical identity.
+
+The concrete implementation uses the separate canonical policy ID:
+
+```text
+skynetvs-v1c2c2-active-compile-ast-sandbox-composition-v1
+```
+
+Its semantic policy fingerprint and exact policy-document SHA-256 are reproducible identities derived from the final implementation policy bytes. They bind, but do not replace or reinterpret, the immutable Roadmap Change 016 architecture-slice identity.
+
+The only public active API is:
+
+```python
+attest_developer_task_execution_compile_ast_composition(
+    host_report: DeveloperTaskExecutionBackendHostReport,
+    transaction: DeveloperTaskExecutionCompileAstClaimTransaction,
+    *,
+    artifact_parent: Path,
+) -> DeveloperTaskExecutionCompileAstCompositionReport
+```
+
+The API accepts no caller command, runtime/source/workspace path, environment addition, timeout, Job limit, WSB setting, signature verifier or fault hook. It consumes one fresh process-local transaction, materializes only exact retained capabilities, launches one fresh Sandbox and accepts signed evidence only after full process exit and exact post-exit revalidation. All outcomes keep `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false`.
+
+The locked implementation scope is three production modules, two evaluator modules and the existing package-boundary/pipeline registries. V1C2C3 remains a separate future three-run acceptance boundary and may not widen the V1C2C2 public production API.
 
 ## V1C2C1 verification closure
 

@@ -611,7 +611,7 @@ decision ID:          skynetvs-v1c2c-active-compile-ast-composition-split-v1
 decision fingerprint: 56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6
 V1C2C0 policy:        092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa
 V1C2C1 architecture slice identity: db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
-V1C2C2 policy:        d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
+V1C2C2 architecture slice identity: d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
 V1C2C3 evidence:      b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
 context archive:      f5883188e4aa2119c849f2adbc449b73072ede208f742f6ededb42ae783aa08d
 context fingerprint:  8cd54944d3e9873f8af267adf86d4e0d220c947dc3578d88140849ba8366e63c
@@ -665,6 +665,60 @@ execution_authorized:                           false
 ```
 
 Those conditions are satisfied by the exact implementation commit and evidence recorded below. V1C2C1 is VERIFIED only as a deterministic host-only, non-authorizing payload bundle; it grants no active execution authority.
+
+## Roadmap Change 018 — V1C2C2 architecture slice identity and active-composition implementation policy are separate claims
+
+**Причина:** the exact current committed-tree context at `e2621ca5094eb7140323dcecb97b27ab9605ae65` (tree `369f8364df27898cb86a4754147d769ba0070bb0`, archive SHA-256 `7cda253ce704cc028900e7b3d7da59340dd3da6f2b5cb60305cdc00fa4ccb50b`) and the historical V1C2C architecture context with SHA-256 `f5883188e4aa2119c849f2adbc449b73072ede208f742f6ededb42ae783aa08d` preserve `d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484` only as the locked Roadmap Change 016 identity for the V1C2C2 slice. Neither archive contains a canonical V1C2C2 policy JSON, schema or preimage whose SHA-256 can be recomputed to that value. Treating newly created active-composition policy bytes as though they reproduced the unavailable historical preimage would be an unverifiable or false cryptographic claim.
+
+**Что меняется:** `d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484` remains immutable as the V1C2C2 architecture-slice identity. The concrete active-composition implementation introduces the separate canonical policy ID `skynetvs-v1c2c2-active-compile-ast-sandbox-composition-v1`, a reproducible semantic policy fingerprint and an exact canonical policy-document SHA-256 after the implementation bytes are fixed. The policy self-check must bind the Roadmap Change 016 decision, the V1C2C2 slice identity and every accepted V1C2A1/A2/B/C0/C1/runtime/backend identity without claiming that the historical preimage was reconstructed.
+
+**Что не меняется:** the V1C2C0 → V1C2C1 → V1C2C2 → V1C2C3 order, one-fresh-transaction/one-fresh-Sandbox model, LocalSystem-controller/standard-user-worker boundary, Job limits, four-folder mapping, post-exit trust model, stable V1B4 tag and all historical V1B4/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 identities remain immutable. V1C2C2 remains the only slice allowed to consume the transaction, materialize the retained runtime and selected exact source bytes, launch Sandbox and process changed sources. V1C2C3 remains blocked and owns the three-run pass/syntax/boundary acceptance matrix.
+
+Locked production API:
+
+```python
+attest_developer_task_execution_compile_ast_composition(
+    host_report: DeveloperTaskExecutionBackendHostReport,
+    transaction: DeveloperTaskExecutionCompileAstClaimTransaction,
+    *,
+    artifact_parent: Path,
+) -> DeveloperTaskExecutionCompileAstCompositionReport
+```
+
+The public production API accepts no runtime ZIP/path, workspace, manifest, source path/list, executable, argv, environment addition, timeout override, Job limit, WSB setting, signature verifier or fault-injection hook. Portable evaluation may exercise a private test runtime, but V1C2C3 fault injection must not widen the public production API.
+
+Locked implementation scope:
+
+```text
+A modules/developer/developer_task_execution_compile_ast_composition_policy.py
+A modules/developer/developer_task_execution_compile_ast_composition_fs.py
+A modules/developer/developer_task_execution_compile_ast_composition.py
+A tools/eval_developer_task_execution_compile_ast_composition.py
+A tools/eval_developer_task_execution_compile_ast_composition_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
+Acceptance remains fail-closed and requires:
+
+```text
+exact Roadmap Change 018 policy self-check        green
+package boundaries                                28/28
+V1C2A1 / V1C2A2 / V1C2B dependencies             green
+V1C2C0 / V1C2C1 dependencies                     green
+V1C2C2 portable state/failure gate                green
+one active Windows attested-pass composition      green
+all known Sandbox processes exited                true
+post-exit exact-byte and V1C2B/CNG verification   true
+forced cleanup attempted on success               false
+private artifacts removed                         true
+targeted flow                                      completed successfully
+full check                                         completed successfully
+Runtime Architecture Audit                         9/9
+changed_code_executed                              false
+reusable_lease_issued                              false
+execution_authorized                               false
+```
 
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
 
