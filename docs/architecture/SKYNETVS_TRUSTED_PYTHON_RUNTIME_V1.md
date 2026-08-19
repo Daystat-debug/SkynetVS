@@ -20,8 +20,8 @@ V1C2A1 — VERIFIED / NON-AUTHORIZING CONTRACT
 V1C2A2 — VERIFIED / NON-AUTHORIZING FIXED RUNNER AND PAYLOAD
 V1C2B  — VERIFIED / NON-AUTHORIZING VERIFIER
 V1C2C0 — VERIFIED / NON-AUTHORIZING CLAIM TRANSACTION
-V1C2C1 — CURRENT / FIXED CONTROLLER-WORKER BUNDLE / PRO SECURITY IMPLEMENTATION
-V1C2C2 — BLOCKED / ACTIVE COMPOSITION
+V1C2C1 — VERIFIED / HOST-ONLY / NON-AUTHORIZING FIXED CONTROLLER-WORKER BUNDLE
+V1C2C2 — CURRENT / ACTIVE COMPOSITION / PRO SECURITY IMPLEMENTATION
 V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
@@ -666,7 +666,7 @@ full check                                 green
 
 Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–017 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C1 fixed controller/worker bundle is CURRENT and must use **Pro Standard** because it pins LocalSystem, standard-user, native Job/resource, handle/environment and suspended-process authority. V1C2C2/V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C2 active composition is CURRENT and must use **Pro Standard** because it consumes the process-local claim boundary and launches the first changed-source Sandbox composition. V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
 
 ## V1C2C active composition split — Roadmap Change 016
 
@@ -704,3 +704,37 @@ bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53c
 ```
 
 The implementation scope is exactly two production modules, two evaluator modules and the existing package-boundary/pipeline registries. It remains host-only: no transaction claim, source/runtime materialization, Sandbox launch, interpreter execution or changed-source processing occurs. The stable V1B4 tag and all historical V1B4/V1C2A1/V1C2A2/V1C2B/V1C2C0 identities remain immutable.
+
+## V1C2C1 verification closure
+
+The fixed controller-worker payload bundle is VERIFIED at:
+
+```text
+commit:                   aa97b779441196b1586d317344f3a82d05411874
+message:                  feat: add fixed compile ast controller worker bundle
+parent docs commit:       1ca04d6568e687d8addd956eb4f9b6b0926ccdbe
+portable evaluator:       33/33
+Windows compile smoke:     3/3
+full check:               completed successfully
+Runtime Architecture Audit: 9/9
+post-commit V1C0A:         1/1
+post-commit V1C2C1:        3/3
+post-commit targeted flow: completed successfully
+```
+
+Post-commit inventory at exact `HEAD == origin/main` is `280` tracked files / `262` Python files / `4,027,150` Python bytes, with `98` pipeline flows / `504` total steps / `93` check steps. Python tree fingerprint is `5b58b6120524609c8f0d378d69bfa9316d65709f4ea2fe669f8c5334e1e59be3`; inventory fingerprint is `3c7cae90bdcd2584676c6cb82203af43658236602f683b83b0c377b6d9a36cad`.
+
+The exact bundle identities remain:
+
+```text
+architecture slice: db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
+semantic policy fp: 0a559e9a9bcac241a18b0e3cbe31263f4f01a5a94eaf70ee7d65382297a62baf
+policy bytes SHA:   1d9b1c66bf3971a3fdedfb077ef8deb08467e29acbc4f725d7050e3ae1342091
+bootstrap SHA:      7aafbabe34256c0360994b4f07b03fd809b89397f60688eb224f48f6f26bbc1d
+native helper SHA:  901373a63df349e245a0c90887779b2cdb7f204dee98535c95bdc235844bb7a1
+controller SHA:     f30d115d5a9dc2da2dd9e2d9dbeca3929b9497d35e700dec175d9399aac49996
+WSB template SHA:   81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416375f
+bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c
+```
+
+The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. V1C2C2 active composition is CURRENT in Pro Standard; V1C2C3 remains BLOCKED.
