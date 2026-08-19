@@ -779,4 +779,4 @@ WSB template SHA:   81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416
 bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c
 ```
 
-The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. V1C2C2 active composition is CURRENT in Pro Standard; V1C2C3 remains BLOCKED.
+The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. V1C2C1R1 integration correction is CURRENT in Pro Standard; V1C2C2 and V1C2C3 remain BLOCKED.
