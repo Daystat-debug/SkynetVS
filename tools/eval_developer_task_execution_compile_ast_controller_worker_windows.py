@@ -337,7 +337,7 @@ def main() -> int:
                 "process_start": False,
                 "runtime_executable_call": False,
                 "architecture_lock": "db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec",
-                "policy_fingerprint": "0a559e9a9bcac241a18b0e3cbe31263f4f01a5a94eaf70ee7d65382297a62baf",
+                "policy_fingerprint": "a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a",
             },
         )
 

@@ -106,13 +106,13 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_NATIVE_HELPER_SHA256 = (
     "901373a63df349e245a0c90887779b2cdb7f204dee98535c95bdc235844bb7a1"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_CONTROLLER_SHA256 = (
-    "f30d115d5a9dc2da2dd9e2d9dbeca3929b9497d35e700dec175d9399aac49996"
+    "776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_TEMPLATE_SHA256 = (
     "81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416375f"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_FINGERPRINT = (
-    "bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c"
+    "12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303"
 )
 
 
@@ -615,7 +615,7 @@ $ExpectedRuntimeFiles = @(
 function Assert-CompileAstStaticPayload {
     param([object]$Request)
     if ((Get-FileSha256 -Path $controllerWorkerPolicyPath) -cne $ExpectedControllerWorkerPolicySha256) { throw "Controller-worker policy hash mismatch." }
-    if ($ExpectedControllerWorkerPolicySha256 -cne [string]$Request.policy_sha256) { throw "Controller-worker request policy hash mismatch." }
+    if ($ExpectedContractPolicySha256 -cne [string]$Request.policy_sha256) { throw "Compile AST contract request policy hash mismatch." }
     if ((Get-FileSha256 -Path $bootstrapPath) -cne [string]$Request.bootstrap_sha256) { throw "Bootstrap file hash mismatch." }
     if ((Get-FileSha256 -Path $controllerPath) -cne [string]$Request.controller_sha256) { throw "Controller file hash mismatch." }
     if ((Get-FileSha256 -Path $nativeHelperPath) -cne $ExpectedNativeHelperSha256) { throw "Native helper hash mismatch." }
@@ -821,7 +821,7 @@ try {
         host_nonce = [string]$request.host_nonce
         request_sha256 = $requestSha256
         source_manifest_sha256 = [string]$request.source_manifest_sha256
-        policy_sha256 = Get-FileSha256 -Path $controllerWorkerPolicyPath
+        policy_sha256 = Get-FileSha256 -Path $contractPolicyPath
         bootstrap_sha256 = Get-FileSha256 -Path $bootstrapPath
         controller_sha256 = Get-FileSha256 -Path $controllerPath
         native_helper_sha256 = Get-FileSha256 -Path $nativeHelperPath
@@ -987,7 +987,7 @@ try {
         authorize_sha256 = $authorizeSha256
         source_manifest_sha256 = [string]$request.source_manifest_sha256
         result_sha256 = $resultSha256
-        policy_sha256 = Get-FileSha256 -Path $controllerWorkerPolicyPath
+        policy_sha256 = Get-FileSha256 -Path $contractPolicyPath
         bootstrap_sha256 = Get-FileSha256 -Path $bootstrapPath
         controller_sha256 = Get-FileSha256 -Path $controllerPath
         native_helper_sha256 = Get-FileSha256 -Path $nativeHelperPath

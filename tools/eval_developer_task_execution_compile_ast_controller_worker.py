@@ -143,12 +143,22 @@ def main() -> int:
         },
         {
             "errors": [],
-            "policy_id": "skynetvs-v1c2c1-fixed-system-controller-standard-user-worker-bundle-v1",
+            "policy_id": "skynetvs-v1c2c1r1-fixed-system-controller-standard-user-worker-bundle-v2",
             "policy_fingerprint": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             "recomputed": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             "policy_bytes_sha256": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256,
             "decision": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_FINGERPRINT,
             "slice_identity": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTITY,
+        },
+    )
+
+    check(
+        "V1C2C1R1 TRANSCRIPT POLICY HASH BINDS CONTRACT POLICY WHILE CONTROLLER POLICY SELF VERIFIES",
+        policy.to_dict()["transcript_artifact_binding"],
+        {
+            "request_policy_sha256_role": "v1c2a1_contract_policy_file",
+            "ready_terminal_policy_sha256": "echo_request_contract_policy_sha256",
+            "controller_worker_policy_verified_by": "controller_embedded_exact_sha256",
         },
     )
 
@@ -502,6 +512,35 @@ def main() -> int:
             "runtime_tree": True,
             "source_hash": True,
             "post_auth": True,
+        },
+    )
+
+    check(
+        "V1C2C1R1 CONTROLLER TRANSCRIPT POLICY HASH MATCHES V1C2A2 AND V1C2B",
+        {
+            "request_contract_policy": (
+                '$ExpectedContractPolicySha256 -cne [string]$Request.policy_sha256'
+                in controller_text
+            ),
+            "request_controller_policy_absent": (
+                '$ExpectedControllerWorkerPolicySha256 -cne [string]$Request.policy_sha256'
+                not in controller_text
+            ),
+            "controller_policy_self_verified": (
+                'Get-FileSha256 -Path $controllerWorkerPolicyPath' in controller_text
+                and 'Controller-worker policy hash mismatch.' in controller_text
+            ),
+            "ready_terminal_contract_policy": (
+                controller_text.count(
+                    'policy_sha256 = Get-FileSha256 -Path $contractPolicyPath'
+                ) == 2
+            ),
+        },
+        {
+            "request_contract_policy": True,
+            "request_controller_policy_absent": True,
+            "controller_policy_self_verified": True,
+            "ready_terminal_contract_policy": True,
         },
     )
 

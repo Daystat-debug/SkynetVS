@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""V1C2C1 immutable policy for the fixed compile/AST controller-worker bundle.
+"""V1C2C1R1 corrected policy for the fixed compile/AST controller-worker bundle.
 
 The Roadmap Change 016 value is retained as an immutable architecture-slice
 identity.  The production policy has a separate, reproducible SHA-256 over its
@@ -73,13 +73,13 @@ from modules.developer.developer_task_execution_runtime_policy import (
 
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_SCHEMA_VERSION = 1
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_ID = (
-    "skynetvs-v1c2c1-fixed-system-controller-standard-user-worker-bundle-v1"
+    "skynetvs-v1c2c1r1-fixed-system-controller-standard-user-worker-bundle-v2"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT = (
-    "0a559e9a9bcac241a18b0e3cbe31263f4f01a5a94eaf70ee7d65382297a62baf"
+    "a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256 = (
-    "1d9b1c66bf3971a3fdedfb077ef8deb08467e29acbc4f725d7050e3ae1342091"
+    "3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_ID = (
     "skynetvs-v1c2c-active-compile-ast-composition-split-v1"
@@ -93,7 +93,7 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTI
 )
 
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_ID = (
-    "v1c2c1_fixed_system_controller_standard_user_worker_payload_bundle_v1"
+    "v1c2c1r1_fixed_system_controller_standard_user_worker_payload_bundle_v2"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FILE_NAME = (
     "compile_ast_controller_worker_policy.json"
@@ -171,6 +171,12 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                 "slice_identity": self.architecture_slice_identity,
             },
             "operation": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OPERATION,
+            "implementation_revision": "V1C2C1R1",
+            "transcript_artifact_binding": {
+                "request_policy_sha256_role": "v1c2a1_contract_policy_file",
+                "ready_terminal_policy_sha256": "echo_request_contract_policy_sha256",
+                "controller_worker_policy_verified_by": "controller_embedded_exact_sha256",
+            },
             "dependencies": {
                 "backend": {
                     "backend_id": WINDOWS_SANDBOX_EXECUTION_POLICY_V1.backend_id,
@@ -470,6 +476,14 @@ def validate_developer_task_execution_compile_ast_controller_worker_policy(
     payload = policy.to_dict()
     if payload["operation"] != DEVELOPER_TASK_EXECUTION_COMPILE_AST_OPERATION:
         errors.append("operation_invalid")
+    if payload["implementation_revision"] != "V1C2C1R1":
+        errors.append("implementation_revision_invalid")
+    if payload["transcript_artifact_binding"] != {
+        "request_policy_sha256_role": "v1c2a1_contract_policy_file",
+        "ready_terminal_policy_sha256": "echo_request_contract_policy_sha256",
+        "controller_worker_policy_verified_by": "controller_embedded_exact_sha256",
+    }:
+        errors.append("transcript_artifact_binding_invalid")
     if payload["worker"]["job"] != {
         "unnamed": True,
         "kill_on_close": True,
