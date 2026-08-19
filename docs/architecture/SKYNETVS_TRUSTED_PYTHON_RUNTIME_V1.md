@@ -21,8 +21,8 @@ V1C2A2 — VERIFIED / NON-AUTHORIZING FIXED RUNNER AND PAYLOAD
 V1C2B  — VERIFIED / NON-AUTHORIZING VERIFIER
 V1C2C0 — VERIFIED / NON-AUTHORIZING CLAIM TRANSACTION
 V1C2C1 — VERIFIED / HISTORICAL HOST-ONLY CONTROLLER-WORKER BUNDLE
-V1C2C1R1 — CURRENT / HOST-ONLY TRANSCRIPT POLICY-HASH CORRECTION
-V1C2C2 — BLOCKED / AFTER V1C2C1R1
+V1C2C1R1 — VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C2 — CURRENT / PRO ACTIVE SECURITY IMPLEMENTATION
 V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
@@ -667,7 +667,7 @@ full check                                 green
 
 Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–019 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C1R1 correction is CURRENT and must use **Pro Standard**; V1C2C2 remains BLOCKED because it consumes the process-local claim boundary and launches the first changed-source Sandbox composition. V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C2 is CURRENT and must use **Pro Standard** because it consumes the process-local claim boundary and launches the first changed-source Sandbox composition. V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
 
 ## V1C2C active composition split — Roadmap Change 016
 
@@ -700,6 +700,53 @@ policy bytes SHA:   3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26d
 controller SHA:     776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4
 bundle fingerprint: 12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303
 ```
+
+## V1C2C1R1 verification closure
+
+The transcript policy-hash integration correction is VERIFIED at:
+
+```text
+implementation commit:                  7ffefba02306f06f53a72038ab18a94f580ba421
+parent documentation commit:            56e46b5beef3683f1bc144180369e0aa56a29fc2
+commit message:                          fix: align compile ast transcript policy hash
+package boundaries:                      28/28
+V1C2A1 dependency gate:                  45/45
+V1C2A2 dependency gate:                  40/40
+V1C2B dependency gate:                   44/44
+V1C2C0 dependency gate:                  38/38
+V1C2C1R1 portable evaluator:             35/35
+pre-commit Windows compile smoke:         3/3
+pre-commit full check:                   completed successfully
+Runtime Architecture Audit:               9/9
+post-commit V1C0A Windows smoke:          1/1
+post-commit V1C2C1R1 Windows smoke:       3/3
+post-commit targeted flow:               completed successfully
+tracked files / Python files:            280 / 262
+Python bytes:                            4,029,561
+pipeline flows / all steps:              98 / 504
+check steps:                             93
+process-launch call sites:               41
+host-sensitive files:                    34
+Python tree fingerprint:                 b06f1bd4eaf42c350323f7f14bd65ac57798fae36bbe50c50b421709532f07d7
+inventory fingerprint:                   ada6d4e5eb856d5a416f2b4662c13f1e1202249d8a5bbde03ebcbbb8ac19488b
+HEAD == origin/main:                     true
+working tree:                            clean
+known Sandbox process set:               empty
+stable V1B4:                             91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+```
+
+Exact committed scope:
+
+```text
+M modules/developer/developer_task_execution_compile_ast_controller_worker_policy.py
+M modules/developer/developer_task_execution_compile_ast_controller_worker.py
+M tools/eval_developer_task_execution_compile_ast_controller_worker.py
+M tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
+```
+
+The corrected bundle keeps canonical request/ready/terminal `policy_sha256` bound to the exact V1C2A1 contract-policy bytes while independently self-verifying the controller-worker policy. The corrected identities are policy `a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a`, policy-document SHA-256 `3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3`, controller SHA-256 `776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4` and bundle fingerprint `12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303`.
+
+No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING; V1C2C2 is reopened as CURRENT and V1C2C3 remains BLOCKED.
 
 ## V1C2C1 implementation identity — Roadmap Change 017
 
@@ -779,4 +826,4 @@ WSB template SHA:   81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416
 bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c
 ```
 
-The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. V1C2C1R1 integration correction is CURRENT in Pro Standard; V1C2C2 and V1C2C3 remain BLOCKED.
+The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 remains VERIFIED / HOST-ONLY / NON-AUTHORIZING historical evidence. V1C2C1R1 is independently VERIFIED and supersedes it for active composition; V1C2C2 is CURRENT in Pro Standard and V1C2C3 remains BLOCKED.
