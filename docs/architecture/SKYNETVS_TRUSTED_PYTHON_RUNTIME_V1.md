@@ -20,8 +20,9 @@ V1C2A1 — VERIFIED / NON-AUTHORIZING CONTRACT
 V1C2A2 — VERIFIED / NON-AUTHORIZING FIXED RUNNER AND PAYLOAD
 V1C2B  — VERIFIED / NON-AUTHORIZING VERIFIER
 V1C2C0 — VERIFIED / NON-AUTHORIZING CLAIM TRANSACTION
-V1C2C1 — VERIFIED / HOST-ONLY / NON-AUTHORIZING FIXED CONTROLLER-WORKER BUNDLE
-V1C2C2 — CURRENT / ACTIVE COMPOSITION / PRO SECURITY IMPLEMENTATION
+V1C2C1 — VERIFIED / HISTORICAL HOST-ONLY CONTROLLER-WORKER BUNDLE
+V1C2C1R1 — CURRENT / HOST-ONLY TRANSCRIPT POLICY-HASH CORRECTION
+V1C2C2 — BLOCKED / AFTER V1C2C1R1
 V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
@@ -664,9 +665,9 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–018 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–019 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C2 active composition is CURRENT and must use **Pro Standard** because it consumes the process-local claim boundary and launches the first changed-source Sandbox composition. V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C1R1 correction is CURRENT and must use **Pro Standard**; V1C2C2 remains BLOCKED because it consumes the process-local claim boundary and launches the first changed-source Sandbox composition. V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
 
 ## V1C2C active composition split — Roadmap Change 016
 
@@ -685,6 +686,20 @@ The transaction wrapper is required because V1C2A1 needs a one-run `runtime_leas
 V1C2C1 must use a new compile-specific helper: the V1B4C helper proves kill-on-close for a benign runtime probe, but the compile contract additionally requires active-process limit `1`, process memory `512 MiB` and Job memory `768 MiB`. V1C2C2 remains the only active slice. V1C2C3 closes pass, syntax-failure and signed boundary-failure evidence with fresh capabilities and fresh Sandbox instances.
 
 All outcomes remain non-reusable and non-authorizing. `changed_code_executed`, `execution_authorized` and `reusable_lease_issued` stay `false`.
+
+## V1C2C1R1 transcript policy-hash integration correction — Roadmap Change 019
+
+Exact-source integration review found that V1C2A2 and V1C2B require `request.policy_sha256` to identify the exact V1C2A1 contract-policy file, while the first V1C2C1 controller bundle required the same field to identify its different controller-worker policy. The two SHA-256 values are distinct, so no authentic active transcript could satisfy both boundaries.
+
+V1C2C1R1 corrects only the newer controller-worker bundle: request/ready/terminal `policy_sha256` binds the exact contract-policy bytes, and the controller-worker policy remains separately verified through an embedded exact SHA-256 plus the corrected bundle identity. V1C2A1, V1C2A2, V1C2B and V1C2C0 remain byte-for-byte unchanged. No Sandbox launch or interpreter execution belongs to this correction.
+
+```text
+policy ID:          skynetvs-v1c2c1r1-fixed-system-controller-standard-user-worker-bundle-v2
+semantic policy fp: a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a
+policy bytes SHA:   3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3
+controller SHA:     776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4
+bundle fingerprint: 12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303
+```
 
 ## V1C2C1 implementation identity — Roadmap Change 017
 
