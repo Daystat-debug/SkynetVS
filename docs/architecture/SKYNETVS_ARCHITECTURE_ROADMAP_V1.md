@@ -1,7 +1,7 @@
 # SkynetVS Architecture Roadmap V1
 
 **Дата фиксации:** 2026-07-30
-**Последнее обновление:** 2026-08-15
+**Последнее обновление:** 2026-08-19
 **Статус:** LOCKED
 **Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
@@ -610,12 +610,61 @@ Locked identities:
 decision ID:          skynetvs-v1c2c-active-compile-ast-composition-split-v1
 decision fingerprint: 56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6
 V1C2C0 policy:        092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa
-V1C2C1 policy:        db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
+V1C2C1 architecture slice identity: db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
 V1C2C2 policy:        d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
 V1C2C3 evidence:      b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
 context archive:      f5883188e4aa2119c849f2adbc449b73072ede208f742f6ededb42ae783aa08d
 context fingerprint:  8cd54944d3e9873f8af267adf86d4e0d220c947dc3578d88140849ba8366e63c
 ```
+
+## Roadmap Change 017 — V1C2C1 architecture slice identity and implementation policy fingerprint are separate claims
+
+**Причина:** the exact verified V1C2C context archive with SHA-256 `f5883188e4aa2119c849f2adbc449b73072ede208f742f6ededb42ae783aa08d` contains the Roadmap Change 016 value `db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec` only as a locked documentation identity. It contains no canonical V1C2C1 policy JSON, schema or preimage whose SHA-256 can be recomputed to that value. Treating it as the hash of newly invented bytes would create an unverifiable or false cryptographic claim.
+
+**Что меняется:** `db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec` remains immutable as the V1C2C1 architecture-slice identity. The concrete deterministic implementation introduces a separate canonical policy ID, a reproducible semantic policy fingerprint, an exact policy-document SHA-256 and exact payload/bundle identities. The policy self-check binds the architecture decision and slice identity but never claims that the unavailable historical preimage was reconstructed.
+
+**Что не меняется:** the V1C2C0 → V1C2C1 → V1C2C2 → V1C2C3 order, threat model, fixed scope, Job limits, LocalSystem/standard-user boundary, historical V1B4/V1C2A1/V1C2A2/V1C2B/V1C2C0 identities and stable V1B4 tag remain unchanged. V1C2C1 stays host-only and non-authorizing; claim consumption, materialization, Sandbox launch, interpreter execution and changed-source processing remain V1C2C2-only.
+
+Locked V1C2C1 implementation identities:
+
+```text
+policy ID:          skynetvs-v1c2c1-fixed-system-controller-standard-user-worker-bundle-v1
+semantic policy fp: 0a559e9a9bcac241a18b0e3cbe31263f4f01a5a94eaf70ee7d65382297a62baf
+policy bytes SHA:   1d9b1c66bf3971a3fdedfb077ef8deb08467e29acbc4f725d7050e3ae1342091
+bootstrap SHA:      7aafbabe34256c0360994b4f07b03fd809b89397f60688eb224f48f6f26bbc1d
+native helper SHA:  901373a63df349e245a0c90887779b2cdb7f204dee98535c95bdc235844bb7a1
+controller SHA:     f30d115d5a9dc2da2dd9e2d9dbeca3929b9497d35e700dec175d9399aac49996
+WSB template SHA:   81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416375f
+bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c
+```
+
+Locked implementation scope:
+
+```text
+A modules/developer/developer_task_execution_compile_ast_controller_worker_policy.py
+A modules/developer/developer_task_execution_compile_ast_controller_worker.py
+A tools/eval_developer_task_execution_compile_ast_controller_worker.py
+A tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
+Acceptance remains fail-closed and requires:
+
+```text
+package boundaries:                           28/28
+V1C2C1 portable adversarial gate:              33/33
+V1C2C1 Windows compile/parse-only smoke:         3/3
+targeted flow:                   completed successfully
+full check:                      completed successfully
+Runtime Architecture Audit:                       9/9
+Windows Sandbox launched:                       false
+candidate interpreter executed:                 false
+changed-source processing:                     false
+execution_authorized:                           false
+```
+
+V1C2C1 is not VERIFIED until the exact committed implementation, Windows smoke, targeted flow, full check and post-commit evidence are all confirmed.
 
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
 

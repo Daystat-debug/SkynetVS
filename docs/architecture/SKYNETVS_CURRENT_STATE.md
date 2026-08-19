@@ -2,11 +2,11 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-15`
+- Дата обновления: `2026-08-19`
 - Ветка: `main`
-- Проверенный code baseline перед этим documentation commit: `e090f63`
-- Название code baseline: `feat: add canonical host toolchain observation`
-- `origin/main` на проверенной code-точке: `e090f63`
+- Проверенный code baseline перед этим documentation commit: `e6e355a`
+- Название code baseline: `feat: add process-local compile ast claim transaction`
+- `origin/main` на проверенной code-точке: `e6e355a`
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Стабильный foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`
 - Рабочее дерево после documentation commit должно быть чистым.
@@ -959,7 +959,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 are VERIFIED through `e6e355a`. Roadmap Changes 013–016 lock V1C0B2, V1C1, V1C2 and the V1C2C split. V1C2C1 fixed SYSTEM-controller/standard-user-worker bundle is CURRENT in **Pro Standard**; active Sandbox launch and changed-source processing remain blocked until V1C2C2.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 are VERIFIED through `e6e355a`. Roadmap Changes 013–017 lock V1C0B2, V1C1, V1C2 and the V1C2C split. V1C2C1 fixed SYSTEM-controller/standard-user-worker bundle is CURRENT in **Pro Standard**; active Sandbox launch and changed-source processing remain blocked until V1C2C2.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1271,13 +1271,13 @@ The committed verifier independently pins and reparses the V1C2A1 pre-authorizat
 
 ### Следующее точное действие
 
-1. Commit only the three architecture-document changes that close V1C2C0 and mark V1C2C1 CURRENT.
+1. Commit only the three architecture-document changes for Roadmap Change 017, clarifying that `db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec` is the immutable V1C2C1 architecture-slice identity while the concrete canonical implementation policy has a separate reproducible fingerprint and policy-document SHA-256.
 2. Keep stable tag `skynet-trusted-runtime-v1b4` at `91d8c37`; do not modify V1B4/V1C2A1/V1C2A2/V1C2B/V1C2C0 policies, payloads or historical fingerprints.
-3. Do not rerun the full pipeline after this docs-only transition; V1C2C0 pre-commit targeted/full checks and both post-commit Windows smokes are green.
-4. Use **Pro Standard** for V1C2C1 because it defines a LocalSystem controller, fresh non-admin worker account, compile-specific native Job helper, suspended-process assignment, environment/handle isolation, fixed bootstrap and WSB-template authority.
-5. Build V1C2C1 as a deterministic host-only payload bundle. It must not accept caller-controlled executable, argv, environment, worker identity, Job limits, guest paths, runner path or WSB settings.
-6. Prove exact payload hashes, canonical bundle identity, LocalSystem/standard-user semantics, `CREATE_SUSPENDED`, assign-before-resume, active-process limit `1`, process memory `512 MiB`, Job memory `768 MiB`, kill-on-close, no inherited handles and sanitized `PYTHON*`/`PIP_*`/`PYLAUNCHER_*`/`VIRTUAL_ENV`.
-7. Keep claim transaction consumption, runtime/source materialization, Windows Sandbox launch, changed-source parsing/compilation and live evidence outside V1C2C1. Those remain blocked until V1C2C2.
+3. Implement exactly the six-file V1C2C1 scope locked by Roadmap Change 017: two production modules, two evaluators and the two existing tooling registries.
+4. Build only a deterministic host-side payload bundle with fixed LocalSystem controller, fresh standard-user worker, compile-specific native Job helper, fixed bootstrap and WSB template. Caller-controlled executable, argv, environment, identity, Job limits, guest paths, runner path and WSB settings remain forbidden.
+5. Prove exact policy/payload/bundle identities, `CREATE_SUSPENDED`, assign-before-resume, active-process limit `1`, process memory `512 MiB`, Job memory `768 MiB`, kill-on-close, no inherited handles and sanitized `PYTHON*`/`PIP_*`/`PYLAUNCHER_*`/`VIRTUAL_ENV`.
+6. Run package boundaries, the `33/33` portable gate, the `3/3` Windows compile/parse-only smoke, targeted flow, full `check` and Runtime Architecture Audit. Windows Sandbox and the candidate interpreter must not be launched by V1C2C1.
+7. Only after the exact implementation commit and post-commit Windows evidence may V1C2C1 be marked VERIFIED. V1C2C2/V1C2C3 remain BLOCKED.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -1331,7 +1331,7 @@ e6e355a feat: add process-local compile ast claim transaction
 tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 are VERIFIED through `e6e355a`. Roadmap Changes 013–016 lock V1C0B2, V1C1, V1C2 and the V1C2C split. V1C2C1 fixed controller/worker payload is current in Pro Standard and the stable V1B4 tag must not move.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 are VERIFIED through `e6e355a`. Roadmap Changes 013–017 lock V1C0B2, V1C1, V1C2 and the V1C2C split. V1C2C1 fixed controller/worker payload is current in Pro Standard and the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 
@@ -1358,7 +1358,7 @@ V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 are VERIFIED through `e6e355
 
 ## 19. Режим модели
 
-Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–016 are approved in **Pro Standard**.
+Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–017 are approved in **Pro Standard**.
 
 V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C1 fixed controller/worker payload is CURRENT and requires **Pro Standard** because it defines native Job/process/account isolation authority. V1C2C2/V1C2C3 and exact PyPI wheel closure/MinGit pinning also require Pro Standard.
 
@@ -1422,7 +1422,7 @@ Locked identities:
 ```text
 decision fingerprint:  56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6
 V1C2C0 policy:         092f17cbbdac961c6be254fbed196d9ff3c639c47957882f6fbbdaa9624b8caa
-V1C2C1 policy:         db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
+V1C2C1 architecture slice identity: db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec
 V1C2C2 policy:         d5a6fe191f0bc25d8f3aa708bd36f4383071c50189a070879926382f2075e484
 V1C2C3 evidence:       b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
 ```
@@ -1430,6 +1430,36 @@ V1C2C3 evidence:       b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068f
 The V1C2C0 transaction reserves one exact plan and one exact runtime lease and is issued without claiming either capability. Its irreversible path is plan claim first and runtime-lease claim second, with no fallible filesystem/materialization operation between them. If the second claim fails, the plan remains consumed and no retry may reuse the transaction. V1C2C1 remains deterministic and host-only. V1C2C2 is the only slice allowed to materialize exact sources/runtime and launch Sandbox. V1C2C3 requires three fresh runs: attested pass, authentic syntax failure, and an eval-only post-ready/pre-authorization source substitution producing a signed boundary failure.
 
 Active processing remains blocked until V1C2C1 is independently VERIFIED and the V1C2C2 portable pre-commit gate is green.
+
+### V1C2C1 implementation identity clarification — Roadmap Change 017
+
+The exact verified V1C2C context archive contains no canonical policy JSON or preimage for the Roadmap Change 016 value `db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec`. That value therefore remains the immutable architecture-slice identity and is not represented as the SHA-256 of newly invented implementation bytes.
+
+The concrete host-only implementation is separately self-verifying:
+
+```text
+policy ID:          skynetvs-v1c2c1-fixed-system-controller-standard-user-worker-bundle-v1
+semantic policy fp: 0a559e9a9bcac241a18b0e3cbe31263f4f01a5a94eaf70ee7d65382297a62baf
+policy bytes SHA:   1d9b1c66bf3971a3fdedfb077ef8deb08467e29acbc4f725d7050e3ae1342091
+bootstrap SHA:      7aafbabe34256c0360994b4f07b03fd809b89397f60688eb224f48f6f26bbc1d
+native helper SHA:  901373a63df349e245a0c90887779b2cdb7f204dee98535c95bdc235844bb7a1
+controller SHA:     f30d115d5a9dc2da2dd9e2d9dbeca3929b9497d35e700dec175d9399aac49996
+WSB template SHA:   81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416375f
+bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c
+```
+
+Locked implementation scope:
+
+```text
+A modules/developer/developer_task_execution_compile_ast_controller_worker_policy.py
+A modules/developer/developer_task_execution_compile_ast_controller_worker.py
+A tools/eval_developer_task_execution_compile_ast_controller_worker.py
+A tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
+M tools/eval_package_boundaries.py
+M tools/pipeline.py
+```
+
+This clarification changes no stage order, threat model, active boundary or stable tag. V1C2C1 remains CURRENT and non-authorizing until its exact implementation and all required Windows/full-pipeline evidence are independently verified.
 
 ### V1C2C0 verification closure
 
