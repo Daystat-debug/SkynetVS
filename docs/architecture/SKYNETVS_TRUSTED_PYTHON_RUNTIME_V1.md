@@ -22,7 +22,8 @@ V1C2B  — VERIFIED / NON-AUTHORIZING VERIFIER
 V1C2C0 — VERIFIED / NON-AUTHORIZING CLAIM TRANSACTION
 V1C2C1 — VERIFIED / HISTORICAL HOST-ONLY CONTROLLER-WORKER BUNDLE
 V1C2C1R1 — VERIFIED / HOST-ONLY / NON-AUTHORIZING
-V1C2C2 — CURRENT / PRO ACTIVE SECURITY IMPLEMENTATION
+V1C2C1R2 — CURRENT / HOST-ONLY SHARED-OUTPUT ACL CORRECTION
+V1C2C2 — BLOCKED / UNCOMMITTED ACTIVE IMPLEMENTATION PRESERVED
 V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
@@ -665,9 +666,9 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–019 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–020 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C2 is CURRENT and must use **Pro Standard** because it consumes the process-local claim boundary and launches the first changed-source Sandbox composition. V1C2C3, exact PyPI wheel closure and MinGit pinning also require Pro Standard.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C1R2 shared-output ACL preservation is CURRENT and host-only. V1C2C2 and V1C2C3 are BLOCKED; exact PyPI wheel closure and MinGit pinning also require Pro Standard.
 
 ## V1C2C active composition split — Roadmap Change 016
 
@@ -699,6 +700,31 @@ semantic policy fp: a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44
 policy bytes SHA:   3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3
 controller SHA:     776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4
 bundle fingerprint: 12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303
+```
+
+
+## V1C2C1R2 shared-output ACL preservation — Roadmap Change 020
+
+The first V1C2C2 active diagnostic received trusted ready evidence and published pinned authorization, but the host observed no result, terminal signature or controller-failure artifact before clean Sandbox exit. The exact controller then applies `PrepareWorkerResultDirectory` to `C:\SkynetVSOutput`. The inherited helper protects/replaces the DACL and sets a new owner, behavior designed for private guest-local result directories rather than a host-observed writable mapping.
+
+V1C2C1R2 changes only the compile-specific controller-worker bundle. Its shared-output ACL method must:
+
+- preserve the existing mapped-directory owner;
+- preserve the existing access-rule protection/inheritance state;
+- preserve all pre-existing access rules needed by the host mapping;
+- add an inheritable fresh-worker write ACE with no broader rights;
+- re-read and verify the exact worker ACE;
+- reject any attempt to use `SetAccessRuleProtection(true, false)` or owner replacement on the shared output root.
+
+Historical V1B3/V1B4 private-directory ACL helpers and V1C2A1/A2/B/C0/C1/C1R1 identities remain unchanged. V1C2C1R2 is host-only and non-authorizing. Until it is independently VERIFIED:
+
+```text
+V1C2C1R2 CURRENT
+V1C2C2   BLOCKED
+V1C2C3   BLOCKED
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
 ```
 
 ## V1C2C1R1 verification closure
@@ -746,7 +772,7 @@ M tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
 
 The corrected bundle keeps canonical request/ready/terminal `policy_sha256` bound to the exact V1C2A1 contract-policy bytes while independently self-verifying the controller-worker policy. The corrected identities are policy `a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a`, policy-document SHA-256 `3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3`, controller SHA-256 `776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4` and bundle fingerprint `12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303`.
 
-No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING; V1C2C2 is reopened as CURRENT and V1C2C3 remains BLOCKED.
+No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. It historically reopened V1C2C2; Roadmap Change 020 subsequently inserts V1C2C1R2 as CURRENT and returns V1C2C2/V1C2C3 to BLOCKED.
 
 ## V1C2C1 implementation identity — Roadmap Change 017
 
@@ -826,4 +852,4 @@ WSB template SHA:   81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416
 bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c
 ```
 
-The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 remains VERIFIED / HOST-ONLY / NON-AUTHORIZING historical evidence. V1C2C1R1 is independently VERIFIED and supersedes it for active composition; V1C2C2 is CURRENT in Pro Standard and V1C2C3 remains BLOCKED.
+The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 remains VERIFIED / HOST-ONLY / NON-AUTHORIZING historical evidence. V1C2C1R1 is independently VERIFIED. Roadmap Change 020 inserts V1C2C1R2 as CURRENT; V1C2C2/V1C2C3 remain BLOCKED.
