@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""V1C2C1 deterministic fixed SYSTEM-controller/standard-user-worker payload bundle.
+"""V1C2C1R2 deterministic fixed SYSTEM-controller/standard-user-worker payload bundle.
 
 This module only constructs immutable bytes.  It does not claim a plan or runtime
 lease, materialize task/runtime sources, launch Windows Sandbox or execute Python.
@@ -103,16 +103,16 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BOOTSTRAP_SHA256 = (
     "7aafbabe34256c0360994b4f07b03fd809b89397f60688eb224f48f6f26bbc1d"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_NATIVE_HELPER_SHA256 = (
-    "901373a63df349e245a0c90887779b2cdb7f204dee98535c95bdc235844bb7a1"
+    "550c1d009ffcbb0ea25ad609d215237f2e5a66a20f48edc7278c314e84d7677a"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_CONTROLLER_SHA256 = (
-    "776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4"
+    "335fbed28b001bcd4f11975b520d9d1e5feaec698a7a5836d946c132bebe5e23"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_TEMPLATE_SHA256 = (
     "81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416375f"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_FINGERPRINT = (
-    "12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303"
+    "449240db944a60ed51a1914f36d6c981a9579cd72e9c0e3802b6b9f3382c458c"
 )
 
 
@@ -364,6 +364,143 @@ def build_developer_task_execution_compile_ast_controller_worker_native_helper_s
 """,
     )
 
+
+    shared_output_public_anchor = r'''    public static void PrepareWorkerResultDirectory(string path, string workerSid)
+    {
+        ApplyProtectedDirectoryAcl(
+            path,
+            workerSid,
+            FileSystemRights.Write | FileSystemRights.ReadAttributes | FileSystemRights.ReadPermissions | FileSystemRights.Synchronize
+        );
+    }
+'''
+    shared_output_public_replacement = shared_output_public_anchor + r'''
+
+    public static void PrepareSharedWorkerOutputDirectory(string path, string workerSid)
+    {
+        if (String.IsNullOrEmpty(path) || !Path.IsPathRooted(path)) throw new ArgumentException("Directory path must be absolute.", "path");
+        if (!Directory.Exists(path)) throw new DirectoryNotFoundException(path);
+        if (String.IsNullOrEmpty(workerSid)) throw new ArgumentException("Worker SID is required.", "workerSid");
+
+        SecurityIdentifier worker = new SecurityIdentifier(workerSid);
+        DirectorySecurity before = Directory.GetAccessControl(path, AccessControlSections.Access | AccessControlSections.Owner);
+        SecurityIdentifier ownerBefore = (SecurityIdentifier)before.GetOwner(typeof(SecurityIdentifier));
+        bool protectionBefore = before.AreAccessRulesProtected;
+        Dictionary<string, int> rulesBefore = GetAccessRuleMultiset(before);
+        if (CountRulesForSid(before, worker.Value) != 0) throw new InvalidOperationException("Fresh worker SID already has shared-output ACL entries.");
+
+        FileSystemRights workerRights =
+            FileSystemRights.Write |
+            FileSystemRights.ReadAttributes |
+            FileSystemRights.ReadPermissions |
+            FileSystemRights.Synchronize;
+        FileSystemAccessRule workerRule = new FileSystemAccessRule(
+            worker,
+            workerRights,
+            InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+            PropagationFlags.None,
+            AccessControlType.Allow
+        );
+        string workerRuleSignature = BuildAccessRuleSignature(workerRule);
+        before.AddAccessRule(workerRule);
+        Directory.SetAccessControl(path, before);
+
+        DirectorySecurity after = Directory.GetAccessControl(path, AccessControlSections.Access | AccessControlSections.Owner);
+        SecurityIdentifier ownerAfter = (SecurityIdentifier)after.GetOwner(typeof(SecurityIdentifier));
+        if (!String.Equals(ownerBefore.Value, ownerAfter.Value, StringComparison.Ordinal)) throw new InvalidOperationException("Shared-output owner changed.");
+        if (protectionBefore != after.AreAccessRulesProtected) throw new InvalidOperationException("Shared-output access-rule protection changed.");
+
+        Dictionary<string, int> rulesAfterWithoutWorker = GetAccessRuleMultiset(after);
+        if (!RemoveSingleRule(rulesAfterWithoutWorker, workerRuleSignature)) throw new InvalidOperationException("Exact shared-output worker ACE was not observed after ACL write.");
+        if (!RuleMultisetsEqual(rulesBefore, rulesAfterWithoutWorker)) throw new InvalidOperationException("Pre-existing shared-output ACL rules changed.");
+        if (CountRulesForSid(after, worker.Value) != 1) throw new InvalidOperationException("Shared-output worker SID must have exactly one ACL entry.");
+    }
+'''
+    if shared_output_public_anchor not in source:
+        raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
+            "shared_output_public_acl_anchor_missing"
+        )
+    source = source.replace(
+        shared_output_public_anchor,
+        shared_output_public_replacement,
+        1,
+    )
+
+    shared_output_private_anchor = "    private static void ApplyProtectedDirectoryAcl(string path, string workerSid, FileSystemRights workerRights)\n"
+    shared_output_private_helpers = r'''    private static string BuildAccessRuleSignature(FileSystemAccessRule rule)
+    {
+        SecurityIdentifier identity = rule.IdentityReference as SecurityIdentifier;
+        if (identity == null) throw new InvalidOperationException("ACL identity is not a SecurityIdentifier.");
+        return identity.Value + "|" +
+            ((long)rule.FileSystemRights).ToString() + "|" +
+            ((int)rule.InheritanceFlags).ToString() + "|" +
+            ((int)rule.PropagationFlags).ToString() + "|" +
+            ((int)rule.AccessControlType).ToString() + "|" +
+            (rule.IsInherited ? "1" : "0");
+    }
+
+    private static Dictionary<string, int> GetAccessRuleMultiset(DirectorySecurity security)
+    {
+        Dictionary<string, int> result = new Dictionary<string, int>(StringComparer.Ordinal);
+        AuthorizationRuleCollection rules = security.GetAccessRules(true, true, typeof(SecurityIdentifier));
+        foreach (AuthorizationRule authorizationRule in rules)
+        {
+            FileSystemAccessRule rule = authorizationRule as FileSystemAccessRule;
+            if (rule == null) throw new InvalidOperationException("Unexpected non-filesystem ACL rule.");
+            string signature = BuildAccessRuleSignature(rule);
+            int count;
+            result.TryGetValue(signature, out count);
+            result[signature] = count + 1;
+        }
+        return result;
+    }
+
+    private static int CountRulesForSid(DirectorySecurity security, string sid)
+    {
+        int count = 0;
+        AuthorizationRuleCollection rules = security.GetAccessRules(true, true, typeof(SecurityIdentifier));
+        foreach (AuthorizationRule authorizationRule in rules)
+        {
+            FileSystemAccessRule rule = authorizationRule as FileSystemAccessRule;
+            if (rule == null) throw new InvalidOperationException("Unexpected non-filesystem ACL rule.");
+            SecurityIdentifier identity = rule.IdentityReference as SecurityIdentifier;
+            if (identity == null) throw new InvalidOperationException("ACL identity is not a SecurityIdentifier.");
+            if (String.Equals(identity.Value, sid, StringComparison.Ordinal)) count++;
+        }
+        return count;
+    }
+
+    private static bool RemoveSingleRule(Dictionary<string, int> rules, string signature)
+    {
+        int count;
+        if (!rules.TryGetValue(signature, out count) || count <= 0) return false;
+        if (count == 1) rules.Remove(signature);
+        else rules[signature] = count - 1;
+        return true;
+    }
+
+    private static bool RuleMultisetsEqual(Dictionary<string, int> left, Dictionary<string, int> right)
+    {
+        if (left.Count != right.Count) return false;
+        foreach (KeyValuePair<string, int> pair in left)
+        {
+            int rightCount;
+            if (!right.TryGetValue(pair.Key, out rightCount) || rightCount != pair.Value) return false;
+        }
+        return true;
+    }
+
+'''
+    if shared_output_private_anchor not in source:
+        raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
+            "shared_output_private_acl_anchor_missing"
+        )
+    source = source.replace(
+        shared_output_private_anchor,
+        shared_output_private_helpers + shared_output_private_anchor,
+        1,
+    )
+
     launch_replacement = r'''public static WorkerLaunchState LaunchFixedCompileAstWorkerSuspendedInJob(IntPtr token)
     {
         const string runtimeExecutablePath = @"C:\SkynetVSRuntime\python.exe";
@@ -514,6 +651,14 @@ def build_developer_task_execution_compile_ast_controller_worker_native_helper_s
     if any(marker in source for marker in forbidden):
         raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
             "native_helper_transformation_incomplete"
+        )
+    if (
+        "PrepareSharedWorkerOutputDirectory" not in source
+        or "Pre-existing shared-output ACL rules changed." not in source
+        or "Shared-output owner changed." not in source
+    ):
+        raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
+            "shared_output_acl_transformation_incomplete"
         )
     return _canonical_source_bytes(source, label="native_helper")
 
@@ -919,7 +1064,7 @@ try {
     $tokenState = [V1C2C1Native]::CreateFreshStandardUserAndLogon($workerUser)
     $workerAccountCreated = $true
     $workerSid = [string]$tokenState.UserSid
-    [V1C2C1Native]::PrepareWorkerResultDirectory($outputRoot, $workerSid)
+    [V1C2C1Native]::PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)
 
     $launchState = [V1C2C1Native]::LaunchFixedCompileAstWorkerSuspendedInJob($tokenState.TokenHandle)
     if ($launchState.InheritHandles) { throw "Compile AST worker inherited handles." }

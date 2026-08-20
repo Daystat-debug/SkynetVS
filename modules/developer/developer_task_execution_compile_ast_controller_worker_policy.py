@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""V1C2C1R1 corrected policy for the fixed compile/AST controller-worker bundle.
+"""V1C2C1R2 corrected policy for the fixed compile/AST controller-worker bundle.
 
 The Roadmap Change 016 value is retained as an immutable architecture-slice
 identity.  The production policy has a separate, reproducible SHA-256 over its
@@ -73,13 +73,13 @@ from modules.developer.developer_task_execution_runtime_policy import (
 
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_SCHEMA_VERSION = 1
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_ID = (
-    "skynetvs-v1c2c1r1-fixed-system-controller-standard-user-worker-bundle-v2"
+    "skynetvs-v1c2c1r2-fixed-system-controller-standard-user-worker-bundle-v3"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT = (
-    "a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a"
+    "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256 = (
-    "3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3"
+    "ece583455d0813154e9bd8e14a84822614b20d3f38a8276358d77d7e75e7d014"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_ID = (
     "skynetvs-v1c2c-active-compile-ast-composition-split-v1"
@@ -93,7 +93,7 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTI
 )
 
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_ID = (
-    "v1c2c1r1_fixed_system_controller_standard_user_worker_payload_bundle_v2"
+    "v1c2c1r2_fixed_system_controller_standard_user_worker_payload_bundle_v3"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FILE_NAME = (
     "compile_ast_controller_worker_policy.json"
@@ -171,7 +171,7 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                 "slice_identity": self.architecture_slice_identity,
             },
             "operation": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OPERATION,
-            "implementation_revision": "V1C2C1R1",
+            "implementation_revision": "V1C2C1R2",
             "transcript_artifact_binding": {
                 "request_policy_sha256_role": "v1c2a1_contract_policy_file",
                 "ready_terminal_policy_sha256": "echo_request_contract_policy_sha256",
@@ -264,6 +264,28 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                     "guest_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
                     "mode": "writable_untrusted",
                 },
+            },
+            "shared_output_acl": {
+                "path": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
+                "mode": "preserve_existing_add_exact_worker_write_ace_v1",
+                "preserve_owner": True,
+                "preserve_access_rule_protection": True,
+                "preserve_preexisting_access_rules": True,
+                "fresh_worker_sid_required": True,
+                "worker_rights": [
+                    "Write",
+                    "ReadAttributes",
+                    "ReadPermissions",
+                    "Synchronize",
+                ],
+                "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
+                "propagation_flags": "None",
+                "access_control_type": "Allow",
+                "exact_single_worker_rule_required": True,
+                "post_write_reread_required": True,
+                "set_access_rule_protection_allowed": False,
+                "owner_replacement_allowed": False,
+                "dacl_replacement_allowed": False,
             },
             "worker": {
                 "account": "fresh_local_standard_user",
@@ -476,7 +498,7 @@ def validate_developer_task_execution_compile_ast_controller_worker_policy(
     payload = policy.to_dict()
     if payload["operation"] != DEVELOPER_TASK_EXECUTION_COMPILE_AST_OPERATION:
         errors.append("operation_invalid")
-    if payload["implementation_revision"] != "V1C2C1R1":
+    if payload["implementation_revision"] != "V1C2C1R2":
         errors.append("implementation_revision_invalid")
     if payload["transcript_artifact_binding"] != {
         "request_policy_sha256_role": "v1c2a1_contract_policy_file",
@@ -484,6 +506,29 @@ def validate_developer_task_execution_compile_ast_controller_worker_policy(
         "controller_worker_policy_verified_by": "controller_embedded_exact_sha256",
     }:
         errors.append("transcript_artifact_binding_invalid")
+    if payload["shared_output_acl"] != {
+        "path": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
+        "mode": "preserve_existing_add_exact_worker_write_ace_v1",
+        "preserve_owner": True,
+        "preserve_access_rule_protection": True,
+        "preserve_preexisting_access_rules": True,
+        "fresh_worker_sid_required": True,
+        "worker_rights": [
+            "Write",
+            "ReadAttributes",
+            "ReadPermissions",
+            "Synchronize",
+        ],
+        "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
+        "propagation_flags": "None",
+        "access_control_type": "Allow",
+        "exact_single_worker_rule_required": True,
+        "post_write_reread_required": True,
+        "set_access_rule_protection_allowed": False,
+        "owner_replacement_allowed": False,
+        "dacl_replacement_allowed": False,
+    }:
+        errors.append("shared_output_acl_policy_invalid")
     if payload["worker"]["job"] != {
         "unnamed": True,
         "kill_on_close": True,

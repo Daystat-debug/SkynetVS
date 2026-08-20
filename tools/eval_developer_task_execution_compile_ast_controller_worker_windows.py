@@ -36,6 +36,7 @@ $ErrorActionPreference = "Stop"
 
 $strictUtf8 = [System.Text.UTF8Encoding]::new($false, $true)
 $policyText = [System.IO.File]::ReadAllText($PolicyPath, $strictUtf8)
+$nativeHelperText = [System.IO.File]::ReadAllText($NativeHelperPath, $strictUtf8)
 $bootstrapText = [System.IO.File]::ReadAllText($BootstrapPath, $strictUtf8)
 $controllerText = [System.IO.File]::ReadAllText($ControllerPath, $strictUtf8)
 $wsbText = [System.IO.File]::ReadAllText($WsbPath, $strictUtf8)
@@ -75,9 +76,33 @@ if ([uint64][V1C2C1Native]::COMPILE_AST_JOB_MEMORY_BYTES -ne 805306368) {
 if ([V1C2C1Native]::RUNTIME_EXECUTABLE_FILE_NAME -cne "python.exe") {
     throw "Compiled V1C2C1 helper exposes an unexpected runtime executable name."
 }
+if ($null -eq [V1C2C1Native].GetMethod("PrepareSharedWorkerOutputDirectory")) {
+    throw "Compiled V1C2C1R2 helper does not expose the shared-output ACL method."
+}
+if (-not $nativeHelperText.Contains("Pre-existing shared-output ACL rules changed.")) {
+    throw "Compiled V1C2C1R2 helper lacks the shared-output ACL preservation proof."
+}
+if (-not $controllerText.Contains('PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)')) {
+    throw "V1C2C1R2 controller does not call the shared-output ACL method."
+}
+if ($controllerText.Contains('PrepareWorkerResultDirectory($outputRoot, $workerSid)')) {
+    throw "V1C2C1R2 controller still applies the private-directory ACL helper to shared output."
+}
 
 if ([string]$policy.architecture_lock.slice -cne "V1C2C1") {
     throw "V1C2C1 policy architecture slice is invalid."
+}
+if ([string]$policy.implementation_revision -cne "V1C2C1R2") {
+    throw "V1C2C1R2 policy implementation revision is invalid."
+}
+if ([string]$policy.shared_output_acl.mode -cne "preserve_existing_add_exact_worker_write_ace_v1") {
+    throw "V1C2C1R2 shared-output ACL mode is invalid."
+}
+if (-not [bool]$policy.shared_output_acl.preserve_owner -or -not [bool]$policy.shared_output_acl.preserve_access_rule_protection -or -not [bool]$policy.shared_output_acl.preserve_preexisting_access_rules) {
+    throw "V1C2C1R2 shared-output ACL preservation requirements are incomplete."
+}
+if ([bool]$policy.shared_output_acl.set_access_rule_protection_allowed -or [bool]$policy.shared_output_acl.owner_replacement_allowed -or [bool]$policy.shared_output_acl.dacl_replacement_allowed) {
+    throw "V1C2C1R2 shared-output ACL policy permits destructive mutation."
 }
 if ([string]$policy.worker.account -cne "fresh_local_standard_user") {
     throw "V1C2C1 policy worker account type is invalid."
@@ -116,6 +141,66 @@ if ([bool]$policy.worker.job.breakaway_allowed -or [bool]$policy.worker.job.sile
     throw "V1C2C1 policy unexpectedly allows Job breakaway."
 }
 
+$aclProbePath = Join-Path (Split-Path -Parent $PolicyPath) "shared-output-acl-probe"
+if (Test-Path -LiteralPath $aclProbePath) { Remove-Item -LiteralPath $aclProbePath -Recurse -Force }
+New-Item -ItemType Directory -Path $aclProbePath -Force | Out-Null
+$syntheticWorkerSid = "S-1-5-21-424242-424242-424242-4242"
+$aclBefore = Get-Acl -LiteralPath $aclProbePath
+$ownerBefore = [string]$aclBefore.Owner
+$protectionBefore = [bool]$aclBefore.AreAccessRulesProtected
+$rulesBefore = @(
+    $aclBefore.Access |
+    ForEach-Object {
+        $sid = $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
+        "$sid|$([int]$_.AccessControlType)|$([int64]$_.FileSystemRights)|$([int]$_.InheritanceFlags)|$([int]$_.PropagationFlags)|$([int][bool]$_.IsInherited)"
+    }
+)
+[V1C2C1Native]::PrepareSharedWorkerOutputDirectory($aclProbePath, $syntheticWorkerSid)
+$aclAfter = Get-Acl -LiteralPath $aclProbePath
+$ownerAfter = [string]$aclAfter.Owner
+$protectionAfter = [bool]$aclAfter.AreAccessRulesProtected
+$rulesAfter = @(
+    $aclAfter.Access |
+    ForEach-Object {
+        $sid = $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
+        "$sid|$([int]$_.AccessControlType)|$([int64]$_.FileSystemRights)|$([int]$_.InheritanceFlags)|$([int]$_.PropagationFlags)|$([int][bool]$_.IsInherited)"
+    }
+)
+if ($ownerAfter -cne $ownerBefore) { throw "V1C2C1R2 ACL probe owner changed." }
+if ($protectionAfter -ne $protectionBefore) { throw "V1C2C1R2 ACL probe protection state changed." }
+foreach ($rule in $rulesBefore) {
+    if ($rulesAfter -cnotcontains $rule) { throw "V1C2C1R2 ACL probe lost an existing access rule." }
+}
+$requiredRights = [System.Security.AccessControl.FileSystemRights]::Write -bor `
+    [System.Security.AccessControl.FileSystemRights]::ReadAttributes -bor `
+    [System.Security.AccessControl.FileSystemRights]::ReadPermissions -bor `
+    [System.Security.AccessControl.FileSystemRights]::Synchronize
+$workerRules = @(
+    $aclAfter.Access |
+    Where-Object {
+        $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -ceq $syntheticWorkerSid -and
+        $_.AccessControlType -eq [System.Security.AccessControl.AccessControlType]::Allow -and
+        (([int64]$_.FileSystemRights -band [int64]$requiredRights) -eq [int64]$requiredRights) -and
+        $_.InheritanceFlags -eq ([System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit) -and
+        $_.PropagationFlags -eq [System.Security.AccessControl.PropagationFlags]::None
+    }
+)
+if ($workerRules.Count -ne 1) { throw "V1C2C1R2 ACL probe does not contain exactly one worker write ACE." }
+$nonWorkerRulesAfter = @(
+    $aclAfter.Access |
+    Where-Object {
+        $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -cne $syntheticWorkerSid
+    } |
+    ForEach-Object {
+        $sid = $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
+        "$sid|$([int]$_.AccessControlType)|$([int64]$_.FileSystemRights)|$([int]$_.InheritanceFlags)|$([int]$_.PropagationFlags)|$([int][bool]$_.IsInherited)"
+    }
+)
+if (@(Compare-Object -ReferenceObject $rulesBefore -DifferenceObject $nonWorkerRulesAfter).Count -ne 0) {
+    throw "V1C2C1R2 ACL probe pre-existing rule multiset changed."
+}
+Remove-Item -LiteralPath $aclProbePath -Recurse -Force
+
 [xml]$wsb = $wsbText
 $mappedFolders = @($wsb.Configuration.MappedFolders.MappedFolder)
 if ($mappedFolders.Count -ne 4) { throw "V1C2C1 WSB does not contain exactly four mappings." }
@@ -137,6 +222,12 @@ if ([int]$wsb.Configuration.MemoryInMB -ne 4096) { throw "V1C2C1 WSB memory sett
     policy_parsed = $true
     wsb_parsed = $true
     architecture_slice = [string]$policy.architecture_lock.slice
+    implementation_revision = [string]$policy.implementation_revision
+    shared_output_acl_preserves_existing = $true
+    shared_output_owner_preserved = ($ownerAfter -ceq $ownerBefore)
+    shared_output_rules_preserved = (@(Compare-Object -ReferenceObject $rulesBefore -DifferenceObject $nonWorkerRulesAfter).Count -eq 0)
+    shared_output_protection_preserved = ($protectionAfter -eq $protectionBefore)
+    shared_output_exact_worker_ace = ($workerRules.Count -eq 1)
     worker_integrity_rid = [int][V1C2C1Native]::WORKER_INTEGRITY_RID
     active_process_limit = [uint32][V1C2C1Native]::COMPILE_AST_ACTIVE_PROCESS_LIMIT
     process_memory_bytes = [uint64][V1C2C1Native]::COMPILE_AST_PROCESS_MEMORY_BYTES
@@ -160,6 +251,17 @@ if ([int]$wsb.Configuration.MemoryInMB -ne 4096) { throw "V1C2C1 WSB memory sett
 
 def _sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+def _decode_windows_process_output(data: bytes | None) -> str:
+    if not data:
+        return ""
+    for encoding in ("utf-8", "oem", "mbcs"):
+        try:
+            return data.decode(encoding, errors="strict")
+        except (LookupError, UnicodeDecodeError):
+            continue
+    return data.decode("utf-8", errors="backslashreplace")
 
 
 def main() -> int:
@@ -244,19 +346,22 @@ def main() -> int:
             ],
             cwd=str(root),
             capture_output=True,
-            text=True,
+            text=False,
             timeout=90.0,
             check=False,
         )
 
+        stdout_bytes = completed.stdout or b""
+        stderr_text = _decode_windows_process_output(completed.stderr)
+
         last_json: dict[str, Any] | None = None
-        for line in completed.stdout.splitlines():
-            line = line.strip()
-            if not line.startswith("{"):
+        for raw_line in stdout_bytes.splitlines():
+            line = raw_line.strip()
+            if not line.startswith(b"{"):
                 continue
             try:
-                parsed = json.loads(line)
-            except json.JSONDecodeError:
+                parsed = json.loads(line.decode("ascii", errors="strict"))
+            except (UnicodeDecodeError, json.JSONDecodeError):
                 continue
             if isinstance(parsed, dict):
                 last_json = parsed
@@ -271,6 +376,12 @@ def main() -> int:
                 "policy_parsed": bool(last_json and last_json.get("policy_parsed")),
                 "wsb_parsed": bool(last_json and last_json.get("wsb_parsed")),
                 "architecture_slice": str(last_json.get("architecture_slice", "")) if last_json else "",
+                "implementation_revision": str(last_json.get("implementation_revision", "")) if last_json else "",
+                "shared_output_acl_preserves_existing": bool(last_json and last_json.get("shared_output_acl_preserves_existing")),
+                "shared_output_owner_preserved": bool(last_json and last_json.get("shared_output_owner_preserved")),
+                "shared_output_rules_preserved": bool(last_json and last_json.get("shared_output_rules_preserved")),
+                "shared_output_protection_preserved": bool(last_json and last_json.get("shared_output_protection_preserved")),
+                "shared_output_exact_worker_ace": bool(last_json and last_json.get("shared_output_exact_worker_ace")),
                 "worker_integrity_rid": int(last_json.get("worker_integrity_rid", 0)) if last_json else 0,
                 "active_process_limit": int(last_json.get("active_process_limit", 0)) if last_json else 0,
                 "process_memory_bytes": int(last_json.get("process_memory_bytes", 0)) if last_json else 0,
@@ -288,7 +399,7 @@ def main() -> int:
                 "interpreter_executed": bool(last_json and last_json.get("interpreter_executed")),
                 "changed_source_processed": bool(last_json and last_json.get("changed_source_processed")),
                 "execution_authorized": bool(last_json and last_json.get("execution_authorized")),
-                "stderr": completed.stderr.strip(),
+                "stderr": stderr_text.strip(),
             },
             {
                 "returncode": 0,
@@ -298,6 +409,12 @@ def main() -> int:
                 "policy_parsed": True,
                 "wsb_parsed": True,
                 "architecture_slice": "V1C2C1",
+                "implementation_revision": "V1C2C1R2",
+                "shared_output_acl_preserves_existing": True,
+                "shared_output_owner_preserved": True,
+                "shared_output_rules_preserved": True,
+                "shared_output_protection_preserved": True,
+                "shared_output_exact_worker_ace": True,
                 "worker_integrity_rid": 8192,
                 "active_process_limit": 1,
                 "process_memory_bytes": 536870912,
@@ -337,7 +454,7 @@ def main() -> int:
                 "process_start": False,
                 "runtime_executable_call": False,
                 "architecture_lock": "db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec",
-                "policy_fingerprint": "a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a",
+                "policy_fingerprint": "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a",
             },
         )
 

@@ -116,6 +116,8 @@ def main() -> int:
     module_path = Path(__file__).resolve().parents[1] / "modules/developer/developer_task_execution_compile_ast_controller_worker.py"
     module_text = module_path.read_text(encoding="utf-8")
     module_tree = ast.parse(module_text, filename=str(module_path), mode="exec")
+    windows_eval_path = Path(__file__).resolve().parent / "eval_developer_task_execution_compile_ast_controller_worker_windows.py"
+    windows_eval_text = windows_eval_path.read_text(encoding="utf-8")
     imports = sorted(
         {
             alias.name.split(".")[0]
@@ -143,7 +145,7 @@ def main() -> int:
         },
         {
             "errors": [],
-            "policy_id": "skynetvs-v1c2c1r1-fixed-system-controller-standard-user-worker-bundle-v2",
+            "policy_id": "skynetvs-v1c2c1r2-fixed-system-controller-standard-user-worker-bundle-v3",
             "policy_fingerprint": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             "recomputed": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             "policy_bytes_sha256": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256,
@@ -159,6 +161,33 @@ def main() -> int:
             "request_policy_sha256_role": "v1c2a1_contract_policy_file",
             "ready_terminal_policy_sha256": "echo_request_contract_policy_sha256",
             "controller_worker_policy_verified_by": "controller_embedded_exact_sha256",
+        },
+    )
+
+    check(
+        "V1C2C1R2 SHARED OUTPUT ACL POLICY PRESERVES HOST OBSERVABILITY",
+        policy.to_dict()["shared_output_acl"],
+        {
+            "path": r"C:\SkynetVSOutput",
+            "mode": "preserve_existing_add_exact_worker_write_ace_v1",
+            "preserve_owner": True,
+            "preserve_access_rule_protection": True,
+            "preserve_preexisting_access_rules": True,
+            "fresh_worker_sid_required": True,
+            "worker_rights": [
+                "Write",
+                "ReadAttributes",
+                "ReadPermissions",
+                "Synchronize",
+            ],
+            "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
+            "propagation_flags": "None",
+            "access_control_type": "Allow",
+            "exact_single_worker_rule_required": True,
+            "post_write_reread_required": True,
+            "set_access_rule_protection_allowed": False,
+            "owner_replacement_allowed": False,
+            "dacl_replacement_allowed": False,
         },
     )
 
@@ -361,6 +390,77 @@ def main() -> int:
             "dispose": True,
             "command_line_password": False,
             "environment_password": False,
+        },
+    )
+
+    shared_acl_start = native_text.index(
+        "public static void PrepareSharedWorkerOutputDirectory"
+    )
+    shared_acl_end = native_text.index(
+        "public static IntPtr CreateInheritableSentinelEvent",
+        shared_acl_start,
+    )
+    shared_acl_section = native_text[shared_acl_start:shared_acl_end]
+
+    check(
+        "V1C2C1R2 SHARED OUTPUT ACL PRESERVES OWNER PROTECTION AND PREEXISTING RULES",
+        {
+            "read_before": "Directory.GetAccessControl(path, AccessControlSections.Access | AccessControlSections.Owner)" in shared_acl_section,
+            "owner_before": "ownerBefore" in shared_acl_section,
+            "protection_before": "protectionBefore" in shared_acl_section,
+            "preexisting_multiset": "rulesBefore" in shared_acl_section,
+            "fresh_sid": "Fresh worker SID already has shared-output ACL entries." in shared_acl_section,
+            "add_only": "before.AddAccessRule(workerRule);" in shared_acl_section,
+            "write": "Directory.SetAccessControl(path, before);" in shared_acl_section,
+            "reread": "DirectorySecurity after = Directory.GetAccessControl" in shared_acl_section,
+            "owner_check": "Shared-output owner changed." in shared_acl_section,
+            "protection_check": "Shared-output access-rule protection changed." in shared_acl_section,
+            "preexisting_check": "Pre-existing shared-output ACL rules changed." in shared_acl_section,
+            "exact_worker": "Shared-output worker SID must have exactly one ACL entry." in shared_acl_section,
+        },
+        {
+            "read_before": True,
+            "owner_before": True,
+            "protection_before": True,
+            "preexisting_multiset": True,
+            "fresh_sid": True,
+            "add_only": True,
+            "write": True,
+            "reread": True,
+            "owner_check": True,
+            "protection_check": True,
+            "preexisting_check": True,
+            "exact_worker": True,
+        },
+    )
+
+    check(
+        "V1C2C1R2 SHARED OUTPUT ACL DOES NOT PROTECT REPLACE OR REOWNER THE MAPPING",
+        {
+            "set_protection": "SetAccessRuleProtection" in shared_acl_section,
+            "set_owner": "SetOwner" in shared_acl_section,
+            "new_directory_security": "new DirectorySecurity" in shared_acl_section,
+            "system_only_dacl": "WellKnownSidType.LocalSystemSid" in shared_acl_section,
+        },
+        {
+            "set_protection": False,
+            "set_owner": False,
+            "new_directory_security": False,
+            "system_only_dacl": False,
+        },
+    )
+
+    check(
+        "V1C2C1R2 CONTROLLER USES SHARED OUTPUT ACL PATH ONLY",
+        {
+            "shared_call": "PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)" in controller_text,
+            "private_call": "PrepareWorkerResultDirectory($outputRoot, $workerSid)" in controller_text,
+            "shared_before_launch": controller_text.index("PrepareSharedWorkerOutputDirectory") < controller_text.index("LaunchFixedCompileAstWorkerSuspendedInJob"),
+        },
+        {
+            "shared_call": True,
+            "private_call": False,
+            "shared_before_launch": True,
         },
     )
 
@@ -793,6 +893,44 @@ def main() -> int:
             "caller_paths": False,
             "caller_runner": False,
             "caller_wsb": False,
+        },
+    )
+
+    check(
+        "V1C2C1 WINDOWS EVALUATOR CAPTURES LOCALIZED CHILD OUTPUT AS BYTES",
+        {
+            "byte_mode": "text=False" in windows_eval_text,
+            "decode_helper": "def _decode_windows_process_output" in windows_eval_text,
+            "ascii_json": 'line.decode("ascii", errors="strict")' in windows_eval_text,
+            "unsafe_text_mode": "text=True" in windows_eval_text,
+            "unsafe_stderr_strip": "completed.stderr.strip()" in windows_eval_text,
+        },
+        {
+            "byte_mode": True,
+            "decode_helper": True,
+            "ascii_json": True,
+            "unsafe_text_mode": False,
+            "unsafe_stderr_strip": False,
+        },
+    )
+
+    check(
+        "V1C2C1R2 WINDOWS EVALUATOR USES LITERAL CONTROLLER NEEDLES AND CURRENT POLICY FINGERPRINT",
+        {
+            "shared_literal": "$controllerText.Contains('PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)')" in windows_eval_text,
+            "private_literal": "$controllerText.Contains('PrepareWorkerResultDirectory($outputRoot, $workerSid)')" in windows_eval_text,
+            "unsafe_shared_interpolation": '$controllerText.Contains("PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)")' in windows_eval_text,
+            "unsafe_private_interpolation": '$controllerText.Contains("PrepareWorkerResultDirectory($outputRoot, $workerSid)")' in windows_eval_text,
+            "current_policy_fingerprint": '"policy_fingerprint": "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a"' in windows_eval_text,
+            "stale_policy_fingerprint": '"policy_fingerprint": "a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a"' in windows_eval_text,
+        },
+        {
+            "shared_literal": True,
+            "private_literal": True,
+            "unsafe_shared_interpolation": False,
+            "unsafe_private_interpolation": False,
+            "current_policy_fingerprint": True,
+            "stale_policy_fingerprint": False,
         },
     )
 
