@@ -311,7 +311,7 @@ runtime architecture audit:      9/9
 
 ### V1B — Execution Backend Capability and Evidence
 
-**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 VERIFIED; V1C0B2, V1C1 and V1C2 architecture LOCKED; Roadmap Changes 021 and 022 diagnostics COMPLETED / CONSUMED; CURRENT — V1C2C1R3 guest-local worker-result relay correction in Pro Standard; V1C2C2/V1C2C3 BLOCKED.
+**Статус:** V1B1–V1B4 VERIFIED; trusted-runtime foundation COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3 VERIFIED; V1C0B2, V1C1 and V1C2 architecture LOCKED; Roadmap Changes 021 and 022 diagnostics COMPLETED / CONSUMED; CURRENT — exact V1C2C2 R3 rebind plus one fresh active attested-pass retry in Pro Standard; V1C2C3 BLOCKED.
 
 Windows Sandbox поддерживает только один активный экземпляр на пользователя, а traditional `.wsb` runtime не предоставляет идентификатор сеанса и команду `stop`. Поэтому V1B нельзя безопасно реализовать одним неделимым commit.
 
@@ -743,7 +743,7 @@ M tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
 
 The corrected bundle keeps canonical request/ready/terminal `policy_sha256` bound to the exact V1C2A1 contract-policy bytes while independently self-verifying the controller-worker policy. The corrected identities are policy `a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a`, policy-document SHA-256 `3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3`, controller SHA-256 `776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4` and bundle fingerprint `12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303`.
 
-No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. Roadmap Change 020 subsequently inserted and independently verified V1C2C1R2 and historically reopened V1C2C2 for exact R2 rebinding and one fresh active retry. Roadmap Changes 021 and 022 are now COMPLETED / CONSUMED and localize the active defect to non-persistent worker-ACE mutation on the real writable Sandbox mapping. Roadmap Change 023 inserts V1C2C1R3 as the current host-only correction; V1C2C2 and V1C2C3 are BLOCKED.
+No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. Roadmap Change 020 subsequently inserted and independently verified V1C2C1R2 and historically reopened V1C2C2 for exact R2 rebinding and one fresh active retry. Roadmap Changes 021 and 022 are now COMPLETED / CONSUMED and localize the active defect to non-persistent worker-ACE mutation on the real writable Sandbox mapping. Roadmap Change 023 inserted V1C2C1R3; Roadmap Change 024 closes it as VERIFIED / HOST-ONLY / NON-AUTHORIZING and reopens only exact V1C2C2 R3 rebind plus one fresh active attested-pass retry. V1C2C3 remains BLOCKED.
 
 
 ## Roadmap Change 020 — V1C2C1R2 preserves host-observable shared-output ACL before V1C2C2 retry
@@ -940,8 +940,8 @@ Operational state:
 V1C2C1R2 VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
 RC021       COMPLETED / CONSUMED
 RC022       COMPLETED / CONSUMED / LOCALIZED_FAILURE
-V1C2C1R3   CURRENT / HOST-ONLY SECURITY CORRECTION / UNVERIFIED
-V1C2C2      BLOCKED / EXACT SEVEN-FILE CANDIDATE PRESERVED
+V1C2C1R3   VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C2      CURRENT / R3 REBIND + ONE FRESH ACTIVE ATTESTED-PASS RETRY
 V1C2C3      BLOCKED
 candidate SHA-256: 9e4c4fa1d81af471b6f778ec9fabf3b71334742d09b646e07976dac42158e2a1
 changed_code_executed=false
@@ -1023,24 +1023,65 @@ M tools/eval_developer_task_execution_compile_ast_controller_worker.py
 M tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
 ```
 
-V1C2C1R3 is a host-only, non-authorizing correction. Its acceptance may compile the exact native helper, parse the fixed PowerShell/WSB payloads, exercise ordinary local NTFS ACL/relay behavior and run targeted/full host checks, but it must not launch Windows Sandbox, consume a claim transaction, claim a runtime lease, run the candidate interpreter or process changed source. New R3 policy/payload/bundle identities are PLANNED and must be computed only from the final implementation bytes.
+V1C2C1R3 is a host-only, non-authorizing correction. Its acceptance may compile the exact native helper, parse the fixed PowerShell/WSB payloads, exercise ordinary local NTFS ACL/relay behavior and run targeted/full host checks, but it must not launch Windows Sandbox, consume a claim transaction, claim a runtime lease, run the candidate interpreter or process changed source. The final R3 bytes are independently VERIFIED at `7a73e97aad1bf333bd495f5755fbc14aa0885536`.
 
-**Что не меняется:** V1C2A1, V1C2A2, V1C2B, V1C2C0 and historical V1C2C1/R1/R2 evidence remain immutable; the fixed runner is not modified; the exact seven-file V1C2C2 candidate remains uncommitted and byte-preserved; stable V1B4 does not move. V1C2C2 and V1C2C3 are BLOCKED while R3 is open. Rebinding the candidate or authorizing another active Sandbox attempt requires a later explicit Roadmap Change after R3 is independently VERIFIED and committed.
+**Что не меняется:** V1C2A1, V1C2A2, V1C2B, V1C2C0 and historical V1C2C1/R1/R2 evidence remain immutable; the fixed runner is not modified; stable V1B4 does not move. Roadmap Change 024 preserves the exact seven-file V1C2C2 scope while reopening it only for exact R3 identity rebinding and at most one fresh active attested-pass retry. V1C2C3 remains BLOCKED.
 
-Operational state:
+Operational state after Roadmap Change 024:
 
 ```text
 RC021       COMPLETED / CONSUMED
 RC022       COMPLETED / CONSUMED / LOCALIZED_FAILURE
 V1C2C1R2    VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
-V1C2C1R3    CURRENT / HOST-ONLY SECURITY CORRECTION / UNVERIFIED
-V1C2C2      BLOCKED / EXACT SEVEN-FILE CANDIDATE PRESERVED
+V1C2C1R3    VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C2      CURRENT / R3 REBIND + ONE FRESH ACTIVE ATTESTED-PASS RETRY
 V1C2C3      BLOCKED
 candidate SHA-256: 9e4c4fa1d81af471b6f778ec9fabf3b71334742d09b646e07976dac42158e2a1
 changed_code_executed=false
 reusable_lease_issued=false
 execution_authorized=false
 ```
+
+## Roadmap Change 024 — close V1C2C1R3 and reopen exact V1C2C2 R3 composition
+
+**Причина:** exact four-file V1C2C1R3 bytes are committed at `7a73e97aad1bf333bd495f5755fbc14aa0885536` and have complete host-only pre-commit and post-commit evidence. The verified controller now separates the unchanged runner's private guest-local result path from the trusted LocalSystem host-publication mapping, so the mapped-folder ACL defect localized by RC022 is removed without modifying the fixed V1C2A2 runner.
+
+Verified implementation evidence:
+
+```text
+implementation commit:                  7a73e97aad1bf333bd495f5755fbc14aa0885536
+parent documentation commit:            030a2adba5185a57c3e2f3c56ad3f5d8319652c7
+commit message:                          fix: relay compile ast worker result through guest-local output
+exact four-file patch SHA-256:           daca5a58e1f62f61a7155fe0f4862322218d05c9f178445d7d1ed5172e9b2ebe
+package boundaries:                      28/28
+portable evaluator:                      41/41
+Windows host-only relay smoke:            3/3
+targeted flow:                           completed successfully
+isolated full check:                     completed successfully
+Runtime Architecture Audit:               9/9
+post-commit inventory:                   PASS
+post-commit Windows smoke:                3/3
+post-commit targeted flow:               41/41 + 3/3 / completed successfully
+HEAD == origin/main:                     true
+known Sandbox process set:               empty
+```
+
+Verified R3 identities:
+
+```text
+policy ID:          skynetvs-v1c2c1r3-fixed-system-controller-standard-user-worker-bundle-v4
+semantic policy fp: 3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9
+policy bytes SHA:   add4992b096cc4ee50fbcc5a898348995277b4c2facb8a4dc8f370f04dd566ea
+bootstrap SHA:      7aafbabe34256c0360994b4f07b03fd809b89397f60688eb224f48f6f26bbc1d
+native helper SHA:  f05437852c9204bcdb0cce70e30989544251070a836f55d748d559f289ddd8e8
+controller SHA:     11ccf69016fe0aceead56a9d07ac0f054e99d759207630b114922e4791553827
+WSB template SHA:   3de7527400c576ce9ce75ef58f616622ab52a57426811b193270e292d641c281
+bundle fingerprint: 62854e85a916f67f24453e3c64c3212a5ae722da8fbc0e275f59c738144dde98
+```
+
+**Что меняется:** V1C2C1R3 becomes VERIFIED / HOST-ONLY / NON-AUTHORIZING. V1C2C2 becomes CURRENT only for exact rebinding of the already preserved seven-file candidate SHA-256 `9e4c4fa1d81af471b6f778ec9fabf3b71334742d09b646e07976dac42158e2a1` to the verified R3 identities and one fresh active attested-pass retry. The retry must use a fresh host report, snapshot, plan, runtime bundle, runtime lease, claim transaction and Sandbox. A failed retry is terminal for RC024.
+
+**Что не меняется:** the immutable V1C2C2 architecture-slice identity, public API, seven-file scope, fixed V1C2A2 runner, V1C2A1/A2/B/C0 contracts, source/runtime materialization model, post-exit verification model and stable V1B4 tag remain unchanged. RC021 and RC022 remain COMPLETED / CONSUMED. V1C2C3 remains BLOCKED and no syntax-failure or boundary-failure acceptance run is authorized.
 
 ## Roadmap Change 018 — V1C2C2 architecture slice identity and active-composition implementation policy are separate claims
 
@@ -1197,7 +1238,7 @@ The V1B2 policy fingerprint remains the historical lifecycle baseline. A product
 
 #### V1B4 — Trusted Python Runtime Bundle Gate
 
-**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 VERIFIED; V1C0B2 and V1C1/V1C2/V1C2C architecture LOCKED; RC021/RC022 diagnostics COMPLETED / CONSUMED; V1C2C1R3 CURRENT; V1C2C2/V1C2C3 BLOCKED; changed-code execution remains false.
+**Статус:** V1B4A–V1B4D VERIFIED; V1B4 COMPLETE. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3 VERIFIED; V1C0B2 and V1C1/V1C2/V1C2C architecture LOCKED; RC021/RC022 diagnostics COMPLETED / CONSUMED; V1C2C2 R3 rebind plus one fresh active attested-pass retry CURRENT; V1C2C3 BLOCKED; changed-code execution remains false.
 
 Host `.venv` is not a trusted runtime bundle. V1B4 uses a separate application-local CPython distribution with exact source provenance, deterministic derived bytes, a fixed launch contract and active same-boundary evidence.
 
@@ -1380,7 +1421,7 @@ The Pro Standard V1C architecture review is complete against stable tag `skynet-
 
 ### V1C — Sandboxed Executable Checks
 
-**Статус:** V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 VERIFIED through `d200c49`; V1C0B2 external source authority and V1C1/V1C2/V1C2C architecture are LOCKED; RC021/RC022 diagnostics are COMPLETED / CONSUMED; V1C2C1R3 is CURRENT in Pro Standard; V1C2C2/V1C2C3 remain BLOCKED and changed-code execution remains false.
+**Статус:** V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3 VERIFIED through `7a73e97`; V1C0B2 external source authority and V1C1/V1C2/V1C2C architecture are LOCKED; RC021/RC022 diagnostics are COMPLETED / CONSUMED; V1C2C2 exact R3 rebind plus one fresh active attested-pass retry is CURRENT in Pro Standard; V1C2C3 remains BLOCKED and changed-code execution remains false.
 
 #### V1C architecture context closure
 
@@ -1453,8 +1494,8 @@ V1C2C0 Process-Local Plan/Runtime Claim Transaction          VERIFIED / HOST-ONL
 V1C2C1 Fixed SYSTEM Controller and Worker Payload Bundle       VERIFIED / HISTORICAL HOST-ONLY BUNDLE
 V1C2C1R1 Transcript Policy-Hash Integration Correction         VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C1R2 Shared Output ACL Preservation Correction              VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
-V1C2C1R3 Guest-Local Worker Result Relay Correction             CURRENT / HOST-ONLY SECURITY CORRECTION / UNVERIFIED
-V1C2C2 Active Compile/AST Sandbox Composition                  BLOCKED / EXACT SEVEN-FILE CANDIDATE PRESERVED
+V1C2C1R3 Guest-Local Worker Result Relay Correction             VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C2 Active Compile/AST Sandbox Composition                  CURRENT / R3 REBIND + ONE FRESH ACTIVE ATTESTED-PASS RETRY
 V1C2C3 Live Pass/Syntax/Boundary Acceptance                  BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
@@ -1618,7 +1659,7 @@ V1C0A post-commit Windows smoke:     1/1
 V1C2B post-commit Windows CNG smoke: 1/1
 ```
 
-The verifier revalidated policy `cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf`, strict canonical document/hash-chain binding, the exact V1C2A2 runner identities and a 64-byte ECDSA-P256 signature through Windows CNG. The post-commit smoke proved `signature_valid`, `chain_verified`, `result_verified` and `terminal_verified` with public-key SHA-256 `0bc654178e6f3d5e4ab8b170722a7b7a388a76d58c97031fcad019cf4bdb5e91`. Authentic syntax failure remains verified evidence with `check_passed=false`, while malformed, substituted, replayed or forged evidence fails closed. The production verifier has no filesystem, process, Sandbox, network, `ast.parse`, `compile`, `exec` or `eval` surface and never grants reusable authority. Sandbox launch, runtime-lease issue/claim, candidate-interpreter execution, changed-source processing, changed-code execution, reusable authority and `execution_authorized` all remained `false`. V1C2B is VERIFIED; V1C2C0 and the original V1C2C1 bundle have since been verified. Roadmap Change 019 inserted and verified V1C2C1R1; Roadmap Change 020 inserted and verified V1C2C1R2. Roadmap Changes 021/022 are COMPLETED / CONSUMED and prove mapped-output ACL non-persistence. V1C2C1R3 is CURRENT; V1C2C2/V1C2C3 are BLOCKED.
+The verifier revalidated policy `cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf`, strict canonical document/hash-chain binding, the exact V1C2A2 runner identities and a 64-byte ECDSA-P256 signature through Windows CNG. The post-commit smoke proved `signature_valid`, `chain_verified`, `result_verified` and `terminal_verified` with public-key SHA-256 `0bc654178e6f3d5e4ab8b170722a7b7a388a76d58c97031fcad019cf4bdb5e91`. Authentic syntax failure remains verified evidence with `check_passed=false`, while malformed, substituted, replayed or forged evidence fails closed. The production verifier has no filesystem, process, Sandbox, network, `ast.parse`, `compile`, `exec` or `eval` surface and never grants reusable authority. Sandbox launch, runtime-lease issue/claim, candidate-interpreter execution, changed-source processing, changed-code execution, reusable authority and `execution_authorized` all remained `false`. V1C2B is VERIFIED; V1C2C0 and the original V1C2C1 bundle have since been verified. Roadmap Change 019 inserted and verified V1C2C1R1; Roadmap Change 020 inserted and verified V1C2C1R2. Roadmap Change 024 closes V1C2C1R3 as VERIFIED / HOST-ONLY / NON-AUTHORIZING and reopens V1C2C2 only for exact R3 rebind plus one fresh active attested-pass retry; V1C2C3 remains BLOCKED.
 
 #### V1C2C0 verification closure
 
@@ -1701,7 +1742,7 @@ bundle fingerprint:    bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f
 
 The fixed payload proves, without launching Sandbox, a LocalSystem controller contract, a fresh standard-user medium-integrity worker, `CreateEnvironmentBlock(..., false)`, sanitized `PYTHON*`/`PIP_*`/`PYLAUNCHER_*`/`VIRTUAL_ENV`, no inherited handles, `CREATE_SUSPENDED`, assign-before-resume, kill-on-close and Job limits `1 / 512 MiB / 768 MiB`. The builder accepts no caller executable, argv, environment, identity, limits, guest paths, runner path or WSB settings.
 
-Every active flag remained false: no claim transaction was consumed, no runtime lease was claimed, no runtime or source was materialized, Windows Sandbox and the candidate interpreter were not launched, changed sources were not parsed or compiled, changed code was not executed, no reusable lease was issued and `execution_authorized=false`. V1C2C1 remains VERIFIED historical host-only evidence. V1C2C1R1 and V1C2C1R2 are independently VERIFIED. Roadmap Changes 021/022 are COMPLETED / CONSUMED and localize the active failure to mapped-output ACL non-persistence before process creation. V1C2C1R3 is CURRENT; V1C2C2/V1C2C3 are BLOCKED.
+Every active flag remained false: no claim transaction was consumed, no runtime lease was claimed, no runtime or source was materialized, Windows Sandbox and the candidate interpreter were not launched, changed sources were not parsed or compiled, changed code was not executed, no reusable lease was issued and `execution_authorized=false`. V1C2C1 remains VERIFIED historical host-only evidence. V1C2C1R1 and V1C2C1R2 are independently VERIFIED. Roadmap Change 024 closes V1C2C1R3 as VERIFIED / HOST-ONLY / NON-AUTHORIZING and reopens V1C2C2 only for exact R3 rebind plus one fresh active attested-pass retry; V1C2C3 remains BLOCKED.
 
 - The first active changed-workspace boundary is V1C2 compile/AST only. It consumes one fresh V1C2C0 transaction, which irreversibly claims one V1C1B plan and one fresh V1B4D lease, and launches one fresh Sandbox; imports and top-level execution remain forbidden.
 - Every `python_module` target must be selected by a semantic explicit allowlist and bound to an exact protected baseline-owned entrypoint. The existing name regex is validation only, not authorization.
