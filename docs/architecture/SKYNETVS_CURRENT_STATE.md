@@ -8,6 +8,8 @@
 - Название code baseline: `fix: preserve shared output ACL for compile ast worker`
 - `origin/main` на проверенной code-точке: `d200c49bc5868a50ae6c83c45d4e7ed8724f332a`
 - Точный documentation baseline перед Roadmap Change 021: `9a3f227685c6fd7e1097c371ce54137eb0a1c663`, tree `4e6ff04c3f1ce2ca30b8e77e6d74be0c708ef073`.
+- Roadmap Change 021 documentation commit: `b3cfad02c99aa283d9516a0d35c93d3edff21324` (`docs: record R2 guest failure and authorize diagnostic capture`).
+- RC021 one-shot evidence SHA-256: `96d2d4c797dd375d269e538558b5a5f9156a47bf80cc2f165b0d29b237b850dd`; consumed marker status: `completed`.
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Исторический foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`.
 - Стабильный trusted-runtime тег: `skynet-trusted-runtime-v1b4` → `91d8c37fc4afe7ef138e36063e7bc22014da8a2c`.
@@ -961,7 +963,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are VERIFIED through `d200c49`. Roadmap Changes 013–021 lock V1C0B2, V1C1, V1C2 and the V1C2C split. Exactly one V1C2C2 R2 guest-failure diagnostic capture is CURRENT in **Pro Standard**; V1C2C3 is blocked.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are VERIFIED through `d200c49`. Roadmap Changes 013–022 lock V1C0B2, V1C1, V1C2 and the V1C2C split. RC021 capture is COMPLETED / CONSUMED; exactly one V1C2C2 RC022 suspended-worker stage-localization probe is CURRENT in **Pro Standard**; V1C2C3 is blocked.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1036,7 +1038,7 @@ V1C2C0 Process-Local Plan/Runtime Claim Transaction          VERIFIED / NON-AUTH
 V1C2C1 Fixed SYSTEM Controller and Worker Payload Bundle       VERIFIED / HISTORICAL HOST-ONLY BUNDLE
 V1C2C1R1 Transcript Policy-Hash Integration Correction         VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C1R2 Shared Output ACL Preservation Correction              VERIFIED / HOST-ONLY / NON-AUTHORIZING
-V1C2C2 Active Compile/AST Sandbox Composition                  CURRENT / R2 GUEST-FAILURE DIAGNOSTIC CAPTURE ONLY
+V1C2C2 Active Compile/AST Sandbox Composition                  CURRENT / RC022 SUSPENDED-WORKER STAGE-LOCALIZATION PROBE ONLY
 V1C2C3 Live Pass/Syntax/Boundary Acceptance                    BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
@@ -1285,7 +1287,7 @@ V1C2C1 controller:   request.policy_sha256 == SHA256(compile_ast_controller_work
 
 The first two require `f280f9c564dd1cfd780cd5465a3ecd98244e0f00f10827a295b3709b2d8b0ed2`; the current controller requires `1d9b1c66bf3971a3fdedfb077ef8deb08467e29acbc4f725d7050e3ae1342091`. A V1C2C2 run cannot satisfy both. No active run was attempted and no capability was consumed.
 
-Roadmap Change 019 inserted `V1C2C1R1` as a host-only correction and temporarily returned V1C2C2 to BLOCKED. The corrected controller keeps the controller-worker policy independently self-verified but uses the exact V1C2A1 contract-policy hash in request/ready/terminal, matching both V1C2A2 and V1C2B. The correction is independently VERIFIED. Roadmap Change 020 then inserted and independently verified V1C2C1R2 and historically authorized exact R2 rebinding plus one fresh active retry. Roadmap Change 021 records that retry as consumed and failed closed; one guest-failure diagnostic capture is CURRENT, historical V1C2A1/A2/B/C0 sources and fingerprints stay unchanged, and V1C2C3 remains BLOCKED.
+Roadmap Change 019 inserted `V1C2C1R1` as a host-only correction and temporarily returned V1C2C2 to BLOCKED. The corrected controller keeps the controller-worker policy independently self-verified but uses the exact V1C2A1 contract-policy hash in request/ready/terminal, matching both V1C2A2 and V1C2B. The correction is independently VERIFIED. Roadmap Change 020 then inserted and independently verified V1C2C1R2 and historically authorized exact R2 rebinding plus one fresh active retry. Roadmap Change 021 records that retry as consumed and failed closed; its diagnostic capture is COMPLETED / CONSUMED. Roadmap Change 022 permits one suspended-worker stage-localization probe, historical V1C2A1/A2/B/C0 sources and fingerprints stay unchanged, and V1C2C3 remains BLOCKED.
 
 ### Roadmap Change 020 — first active-run ACL integration defect
 
@@ -1303,7 +1305,7 @@ changed_code_executed:                    false
 execution_authorized:                     false
 ```
 
-Roadmap Change 020 inserted `V1C2C1R2 — Shared Output ACL Preservation Correction`. The correction is independently VERIFIED at code commit `d200c49bc5868a50ae6c83c45d4e7ed8724f332a` and historically reopened V1C2C2 for corrected-bundle rebind plus one fresh active attested retry. Roadmap Change 021 records that retry as consumed and failed closed; only one guest-failure diagnostic capture is CURRENT. V1C2C3 remains BLOCKED.
+Roadmap Change 020 inserted `V1C2C1R2 — Shared Output ACL Preservation Correction`. The correction is independently VERIFIED at code commit `d200c49bc5868a50ae6c83c45d4e7ed8724f332a` and historically reopened V1C2C2 for corrected-bundle rebind plus one fresh active attested retry. Roadmap Change 021 records that retry as consumed and failed closed and its diagnostic capture is COMPLETED / CONSUMED. Roadmap Change 022 permits one suspended-worker stage-localization probe. V1C2C3 remains BLOCKED.
 
 ### V1C2C1R2 verification closure
 
@@ -1379,14 +1381,51 @@ Roadmap Change 021 therefore authorizes exactly one additional fresh active run 
 
 The diagnostic run is terminal for this roadmap change. Whether it succeeds or fails, stop after preserving the report and re-proving Git/artifact/process cleanup. Do not run full `check`, do not commit V1C2C2 and do not launch another Sandbox. Any production correction or another active acceptance run requires a subsequent explicit Roadmap Change grounded in the captured `file`, `stage`, `error_type` and `error_code` evidence.
 
+
+### Roadmap Change 022 — RC021 capture closed; suspended-worker stage localization is next
+
+The RC021 one-shot harness completed at documentation `HEAD b3cfad02c99aa283d9516a0d35c93d3edff21324`. Its permanent marker has `status=completed`, the immutable evidence SHA-256 is `96d2d4c797dd375d269e538558b5a5f9156a47bf80cc2f165b0d29b237b850dd`, and the exact seven-file candidate remains `9e4c4fa1d81af471b6f778ec9fabf3b71334742d09b646e07976dac42158e2a1`.
+
+Directly captured guest-failure evidence:
+
+```text
+capture_ok:                             true
+report_ok / report_status:              false / failed
+failure file:                           controller_failure.json
+failure SHA-256:                        74a0eba664c757660c21a4311eb4d62ae541913f4e6140109503deb7d141cdee
+stage:                                  compile_ast_worker
+error type:                             MethodInvocationException
+error code:                             compile_ast_controller_worker_stage_failed
+ready received:                         17 750 ms
+authorization published:                17 797 ms
+all Sandbox processes exited:           36 890 ms
+total:                                  37 640 ms
+candidate interpreter executed:         false
+changed source processed / parsed:      false / false
+changed source compiled:                false
+changed code executed:                  false
+reusable lease issued:                  false
+execution authorized:                   false
+artifacts removed:                      true
+source / workspace unchanged:           true / true
+known Sandbox process set after run:     empty
+```
+
+`MethodInvocationException` is an outer PowerShell wrapper and does not localize the inner failing call. The remaining exact candidates are shared-output ACL preparation, token access to the fixed runtime/runner, `CreateProcessAsUserW`, Job assignment and returned launch-state validation.
+
+Roadmap Change 022 therefore authorizes exactly one external `V1C2C2P1 — Suspended-Worker Stage-Localization Probe`. It may use one fresh Sandbox, one fresh standard-user account/token, the exact committed V1C2C1R2 native helper, exact read-only runtime bytes and the exact fixed runner path. It may create the worker with `CREATE_SUSPENDED` and assign it to the Job Object, but it must not call `ResumeCompileAstWorker`, must not resume the primary thread, must not process changed source, must not consume a V1C2C0 transaction, must not claim a runtime lease and must not publish normal compile authorization.
+
+The probe must persist ordered checkpoints and the complete exception chain (`type`, `HResult`, Win32 `NativeErrorCode` when present, message and inner exceptions), then close the Job Object, prove the suspended process exited, wait for worker-SID quiescence, delete the fresh account, shut down the Sandbox and prove host cleanup. Success means only that localization evidence was captured; it does not accept V1C2C2.
+
 ### Следующее точное действие
 
-1. Commit only Roadmap Change 021 in the three architecture documents on exact `HEAD / origin/main == 9a3f227685c6fd7e1097c371ce54137eb0a1c663`; preserve the exact seven-file R2-rebound candidate at SHA-256 `9e4c4fa1d81af471b6f778ec9fabf3b71334742d09b646e07976dac42158e2a1` and keep the stable V1B4 tag unchanged.
-2. Do not rerun `SKYNETVS_V1C2C2_R2_REBIND_AND_PRECOMMIT_VERIFY_UTF8_BOM.ps1`; its one active retry is already consumed.
-3. After the docs-only commit, run exactly one external diagnostic harness that changes no repository bytes and persists the full returned V1C2C2 report before the evaluator process exits.
-4. Require a fresh host report, snapshot, plan, runtime bundle, runtime lease, claim transaction and Sandbox. Preserve `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false`.
-5. After the run, require all known Sandbox processes absent, private artifact parents empty, source/workspace Git unchanged and the exact seven-file candidate SHA-256 unchanged. Upload the full report JSON and capture log.
-6. Stop. Do not run full `check`, do not modify or commit V1C2C2 and do not open V1C2C3 until the guest failure stage is reviewed and a further Roadmap Change, if required, is explicit.
+1. Commit only Roadmap Change 022 in the three architecture documents on exact `HEAD / origin/main == b3cfad02c99aa283d9516a0d35c93d3edff21324`; preserve the exact seven-file candidate SHA-256 `9e4c4fa1d81af471b6f778ec9fabf3b71334742d09b646e07976dac42158e2a1`, keep cached diff empty and do not move stable V1B4.
+2. Do not rerun the RC021 harness and do not delete or modify `V1C2C2_RC021_DIAGNOSTIC_CAPTURE_CONSUMED.json`.
+3. After the docs-only commit, prepare and run exactly one external RC022 suspended-worker stage-localization probe. The probe may create the exact fixed worker process with `CREATE_SUSPENDED`, but it must never call `ResumeCompileAstWorker` or otherwise resume the primary thread.
+4. Require ordered evidence for fresh account/token creation, runtime/runner access, shared-output ACL preparation, `CreateProcessAsUserW`, Job assignment, in-job/limit validation and cleanup. Persist the complete exception/inner-exception chain and Win32 code at the first failed checkpoint.
+5. Require no V1C2C0 transaction consumption, no runtime-lease claim, no changed-source materialization or processing, no normal compile authorization, no accepted result/terminal evidence, `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false`.
+6. After the probe, require the suspended process terminated without resume, worker SID quiescent, fresh account deleted, all known Sandbox processes absent, artifact parents empty, source/workspace Git unchanged and the exact seven-file candidate SHA-256 unchanged. Upload the full probe JSON, summary and consumed marker.
+7. Stop. Do not run full `check`, do not modify or commit V1C2C2 and do not open V1C2C3. Any production correction or active acceptance run requires the next explicit Roadmap Change based on the captured inner exception.
 
 ## 16. Зафиксированные коммиты текущего перехода
 
@@ -1450,7 +1489,7 @@ d200c49 fix: preserve shared output ACL for compile ast worker
 tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are VERIFIED through `d200c49`. Roadmap Changes 013–021 lock V1C0B2, V1C1, V1C2 and the V1C2C split. Exactly one V1C2C2 R2 guest-failure diagnostic capture is CURRENT in Pro Standard; V1C2C3 is blocked and the stable V1B4 tag must not move.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are VERIFIED through `d200c49`. Roadmap Changes 013–022 lock V1C0B2, V1C1, V1C2 and the V1C2C split. RC021 capture is COMPLETED / CONSUMED; exactly one V1C2C2 RC022 suspended-worker stage-localization probe is CURRENT in Pro Standard; V1C2C3 is blocked and the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 
@@ -1477,9 +1516,9 @@ V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are
 
 ## 19. Режим модели
 
-Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–021 are approved in **Pro Standard**.
+Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–022 are approved in **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. Exactly one V1C2C2 R2 guest-failure diagnostic capture is CURRENT in Pro Standard. V1C2C3, exact PyPI wheel closure and MinGit pinning remain BLOCKED.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. RC021 capture is COMPLETED / CONSUMED. Exactly one V1C2C2 RC022 suspended-worker stage-localization probe is CURRENT in Pro Standard. V1C2C3, exact PyPI wheel closure and MinGit pinning remain BLOCKED.
 
 ## 20. Файлы для будущего handoff
 
@@ -1536,7 +1575,7 @@ V1C2C0  Process-Local Plan/Runtime Claim Transaction Capability     VERIFIED
 V1C2C1  Fixed SYSTEM Controller and Standard-User Worker Bundle     VERIFIED / HISTORICAL HOST-ONLY BUNDLE
 V1C2C1R1 Transcript Policy-Hash Integration Correction              VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C1R2 Shared Output ACL Preservation Correction                   VERIFIED / HOST-ONLY / NON-AUTHORIZING
-V1C2C2  Active Compile/AST Sandbox Composition                      CURRENT / R2 GUEST-FAILURE DIAGNOSTIC CAPTURE ONLY
+V1C2C2  Active Compile/AST Sandbox Composition                      CURRENT / RC022 SUSPENDED-WORKER STAGE-LOCALIZATION PROBE ONLY
 V1C2C3  Live Pass / Syntax-Failure / Boundary-Failure Acceptance    BLOCKED
 ```
 
@@ -1552,7 +1591,7 @@ V1C2C3 evidence:       b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068f
 
 The V1C2C0 transaction reserves one exact plan and one exact runtime lease and is issued without claiming either capability. Its irreversible path is plan claim first and runtime-lease claim second, with no fallible filesystem/materialization operation between them. If the second claim fails, the plan remains consumed and no retry may reuse the transaction. V1C2C1 remains deterministic and host-only. V1C2C2 is the only slice allowed to materialize exact sources/runtime and launch Sandbox. V1C2C3 requires three fresh runs: attested pass, authentic syntax failure, and an eval-only post-ready/pre-authorization source substitution producing a signed boundary failure.
 
-V1C2C1 is independently VERIFIED. Roadmap Change 020's one fresh active retry has been consumed and failed closed. V1C2C2 remains CURRENT only for one guest-failure diagnostic capture; no acceptance retry is authorized.
+V1C2C1 is independently VERIFIED. Roadmap Change 020's one fresh active retry has been consumed and failed closed. Roadmap Change 021 diagnostic capture is COMPLETED / CONSUMED. V1C2C2 remains CURRENT only for one RC022 suspended-worker stage-localization probe; no acceptance retry is authorized.
 
 ### V1C2C1 implementation identity clarification — Roadmap Change 017
 
@@ -1623,7 +1662,7 @@ M tools/eval_package_boundaries.py
 M tools/pipeline.py
 ```
 
-This clarification did not authorize an active run by itself. Roadmap Change 019 subsequently inserted and verified V1C2C1R1. Roadmap Change 020 inserted and verified V1C2C1R2 and historically authorized exact R2 rebinding plus one fresh active retry. Roadmap Change 021 records that retry as consumed and failed closed; one guest-failure diagnostic capture is CURRENT, V1C2C3 remains BLOCKED, and the stable tag and historical identities remain preserved.
+This clarification did not authorize an active run by itself. Roadmap Change 019 subsequently inserted and verified V1C2C1R1. Roadmap Change 020 inserted and verified V1C2C1R2 and historically authorized exact R2 rebinding plus one fresh active retry. Roadmap Change 021 records that retry as consumed and failed closed and its capture is COMPLETED / CONSUMED; one RC022 suspended-worker stage-localization probe is CURRENT, V1C2C3 remains BLOCKED, and the stable tag and historical identities remain preserved.
 
 ### V1C2C0 verification closure
 
@@ -1649,7 +1688,7 @@ Python tree fingerprint:                    f7af9a590320fb6a17178b8baa2785a0981e
 inventory fingerprint:                      d10f6fb0c9a72419c0d63c1445253c692a90010a97ee834dfefe5015abf2289a
 ```
 
-The committed process-local transaction is single-use and non-serializable, reserves exact plan/lease objects without claiming them, publishes a unique non-secret one-run fingerprint, and consumes plan first and runtime lease second. Portable evidence proves duplicate-reservation rejection, terminal expiry, fail-closed guard/nonce/policy tamper handling, plan-preserving behavior when an already-consumed lease is detected before claim, and irreversible plan consumption if the lease claim fails after plan claim. The Windows smoke retained exact source bytes and the exact runtime bundle, left source/workspace Git evidence unchanged, found no running Sandbox processes or residual artifacts, and kept repository mutation, network/download/install, Sandbox launch, candidate-interpreter execution, changed-source processing, changed-code execution, reusable authority and `execution_authorized` false. V1C2C0 is VERIFIED; the original V1C2C1 bundle remains VERIFIED historical host-only evidence; V1C2C1R1 and V1C2C1R2 are VERIFIED. V1C2C2 is CURRENT only for one R2 guest-failure diagnostic capture and V1C2C3 is BLOCKED.
+The committed process-local transaction is single-use and non-serializable, reserves exact plan/lease objects without claiming them, publishes a unique non-secret one-run fingerprint, and consumes plan first and runtime lease second. Portable evidence proves duplicate-reservation rejection, terminal expiry, fail-closed guard/nonce/policy tamper handling, plan-preserving behavior when an already-consumed lease is detected before claim, and irreversible plan consumption if the lease claim fails after plan claim. The Windows smoke retained exact source bytes and the exact runtime bundle, left source/workspace Git evidence unchanged, found no running Sandbox processes or residual artifacts, and kept repository mutation, network/download/install, Sandbox launch, candidate-interpreter execution, changed-source processing, changed-code execution, reusable authority and `execution_authorized` false. V1C2C0 is VERIFIED; the original V1C2C1 bundle remains VERIFIED historical host-only evidence; V1C2C1R1 and V1C2C1R2 are VERIFIED. RC021 capture is COMPLETED / CONSUMED; V1C2C2 is CURRENT only for one RC022 suspended-worker stage-localization probe and V1C2C3 is BLOCKED.
 
 ### V1C2C1 verification closure
 
@@ -1695,7 +1734,7 @@ M tools/pipeline.py
 
 The committed deterministic bundle binds the architecture decision `56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6`, architecture slice `db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec`, semantic policy `0a559e9a9bcac241a18b0e3cbe31263f4f01a5a94eaf70ee7d65382297a62baf` and bundle `bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c`. It fixes a LocalSystem controller contract, fresh standard-user medium-integrity worker, sanitized environment, no inherited handles, `CREATE_SUSPENDED`, assign-before-resume and Job limits `1 / 512 MiB / 768 MiB`.
 
-The Windows smoke compiled the exact native helper and parsed the fixed bootstrap/controller/policy/WSB payloads only. Sandbox launch, transaction consumption, runtime-lease claim, candidate-interpreter execution, changed-source processing, changed-code execution, reusable authority and `execution_authorized` all remained false. The original V1C2C1 bundle remains VERIFIED historical host-only evidence; V1C2C1R1 and V1C2C1R2 are independently VERIFIED. Roadmap Change 020 historically authorized exact R2 rebinding and one fresh retry; Roadmap Change 021 records that retry as consumed and failed closed. One guest-failure diagnostic capture is CURRENT and V1C2C3 remains BLOCKED.
+The Windows smoke compiled the exact native helper and parsed the fixed bootstrap/controller/policy/WSB payloads only. Sandbox launch, transaction consumption, runtime-lease claim, candidate-interpreter execution, changed-source processing, changed-code execution, reusable authority and `execution_authorized` all remained false. The original V1C2C1 bundle remains VERIFIED historical host-only evidence; V1C2C1R1 and V1C2C1R2 are independently VERIFIED. Roadmap Change 020 historically authorized exact R2 rebinding and one fresh retry; Roadmap Change 021 records that retry as consumed and failed closed and its capture is COMPLETED / CONSUMED. One RC022 suspended-worker stage-localization probe is CURRENT and V1C2C3 remains BLOCKED.
 
 
 ## V1C2C1R2 shared-output ACL preservation correction — Roadmap Change 020
@@ -1762,4 +1801,4 @@ M tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
 
 The corrected bundle keeps canonical request/ready/terminal `policy_sha256` bound to the exact V1C2A1 contract-policy bytes while independently self-verifying the controller-worker policy. The corrected identities are policy `a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a`, policy-document SHA-256 `3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3`, controller SHA-256 `776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4` and bundle fingerprint `12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303`.
 
-No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. Roadmap Change 020 subsequently inserted and verified V1C2C1R2 and historically authorized exact R2 rebinding plus one fresh active retry. Roadmap Change 021 records that retry as consumed and failed closed; one diagnostic capture is CURRENT and V1C2C3 remains BLOCKED.
+No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. Roadmap Change 020 subsequently inserted and verified V1C2C1R2 and historically authorized exact R2 rebinding plus one fresh active retry. Roadmap Change 021 records that retry as consumed and failed closed and its capture is COMPLETED / CONSUMED; one RC022 suspended-worker stage-localization probe is CURRENT and V1C2C3 remains BLOCKED.
