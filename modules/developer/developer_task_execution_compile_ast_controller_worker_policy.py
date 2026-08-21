@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""V1C2C1R2 corrected policy for the fixed compile/AST controller-worker bundle.
+"""V1C2C1R3 guest-local result relay policy for the fixed compile/AST controller-worker bundle.
 
 The Roadmap Change 016 value is retained as an immutable architecture-slice
 identity.  The production policy has a separate, reproducible SHA-256 over its
@@ -73,13 +73,13 @@ from modules.developer.developer_task_execution_runtime_policy import (
 
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_SCHEMA_VERSION = 1
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_ID = (
-    "skynetvs-v1c2c1r2-fixed-system-controller-standard-user-worker-bundle-v3"
+    "skynetvs-v1c2c1r3-fixed-system-controller-standard-user-worker-bundle-v4"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT = (
-    "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a"
+    "3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256 = (
-    "ece583455d0813154e9bd8e14a84822614b20d3f38a8276358d77d7e75e7d014"
+    "add4992b096cc4ee50fbcc5a898348995277b4c2facb8a4dc8f370f04dd566ea"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_ID = (
     "skynetvs-v1c2c-active-compile-ast-composition-split-v1"
@@ -93,7 +93,7 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTI
 )
 
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_ID = (
-    "v1c2c1r2_fixed_system_controller_standard_user_worker_payload_bundle_v3"
+    "v1c2c1r3_fixed_system_controller_standard_user_worker_payload_bundle_v4"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FILE_NAME = (
     "compile_ast_controller_worker_policy.json"
@@ -124,6 +124,9 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ENVIRONMENT_EXACT = (
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_LOCAL_STAGE_ROOT = (
     r"C:\ProgramData\SkynetVS\V1C2C1"
+)
+DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT = (
+    r"C:\SkynetVSHostOutput"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_TEMPLATE_INPUT_TOKEN = (
     "@@SKYNETVS_INPUT_HOST@@"
@@ -171,7 +174,7 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                 "slice_identity": self.architecture_slice_identity,
             },
             "operation": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OPERATION,
-            "implementation_revision": "V1C2C1R2",
+            "implementation_revision": "V1C2C1R3",
             "transcript_artifact_binding": {
                 "request_policy_sha256_role": "v1c2a1_contract_policy_file",
                 "ready_terminal_policy_sha256": "echo_request_contract_policy_sha256",
@@ -261,31 +264,50 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                     "mode": "read_only",
                 },
                 "output": {
-                    "guest_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
-                    "mode": "writable_untrusted",
+                    "guest_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
+                    "mode": "writable_controller_only",
                 },
             },
-            "shared_output_acl": {
-                "path": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
-                "mode": "preserve_existing_add_exact_worker_write_ace_v1",
-                "preserve_owner": True,
-                "preserve_access_rule_protection": True,
-                "preserve_preexisting_access_rules": True,
-                "fresh_worker_sid_required": True,
-                "worker_rights": [
-                    "Write",
-                    "ReadAttributes",
-                    "ReadPermissions",
-                    "Synchronize",
-                ],
-                "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
-                "propagation_flags": "None",
-                "access_control_type": "Allow",
-                "exact_single_worker_rule_required": True,
-                "post_write_reread_required": True,
-                "set_access_rule_protection_allowed": False,
-                "owner_replacement_allowed": False,
-                "dacl_replacement_allowed": False,
+            "worker_result_relay": {
+                "host_output_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
+                "worker_result_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
+                "host_mapping_mode": "controller_only_exact_byte_publication_v1",
+                "worker_host_mapping_write_required": False,
+                "worker_host_mapping_write_denial_required": True,
+                "mapped_acl_snapshot_before_after_required": True,
+                "mapped_acl_mutation_allowed": False,
+                "mapped_owner_mutation_allowed": False,
+                "mapped_protection_mutation_allowed": False,
+                "private_result_directory": {
+                    "mode": "protected_system_and_exact_worker_v1",
+                    "owner": "LocalSystem",
+                    "fresh_worker_sid_required": True,
+                    "worker_rights": [
+                        "Write",
+                        "ReadAttributes",
+                        "ReadPermissions",
+                        "Synchronize",
+                    ],
+                    "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
+                    "propagation_flags": "None",
+                    "access_control_type": "Allow",
+                    "set_access_rule_protection": True,
+                    "remove_inherited_rules": True,
+                },
+                "relay": {
+                    "controller_identity": "LocalSystem",
+                    "source_path": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT + r"\result.json",
+                    "destination_path": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT + r"\result.json",
+                    "after_worker_exit": True,
+                    "after_job_close": True,
+                    "after_worker_sid_quiescence": True,
+                    "after_account_deletion": True,
+                    "exact_validated_bytes_required": True,
+                    "atomic_write_required": True,
+                    "post_write_reread_required": True,
+                    "terminal_result_sha256_source": "relayed_result_bytes",
+                    "local_result_removed_after_relay": True,
+                },
             },
             "worker": {
                 "account": "fresh_local_standard_user",
@@ -373,6 +395,8 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                 "caller_runner_path_allowed": False,
                 "caller_wsb_settings_allowed": False,
                 "host_fallback_allowed": False,
+                "mapped_folder_acl_mutation_allowed": False,
+                "worker_host_mapping_write_allowed": False,
             },
             "effects": {
                 "sandbox_launched": False,
@@ -498,7 +522,7 @@ def validate_developer_task_execution_compile_ast_controller_worker_policy(
     payload = policy.to_dict()
     if payload["operation"] != DEVELOPER_TASK_EXECUTION_COMPILE_AST_OPERATION:
         errors.append("operation_invalid")
-    if payload["implementation_revision"] != "V1C2C1R2":
+    if payload["implementation_revision"] != "V1C2C1R3":
         errors.append("implementation_revision_invalid")
     if payload["transcript_artifact_binding"] != {
         "request_policy_sha256_role": "v1c2a1_contract_policy_file",
@@ -506,29 +530,53 @@ def validate_developer_task_execution_compile_ast_controller_worker_policy(
         "controller_worker_policy_verified_by": "controller_embedded_exact_sha256",
     }:
         errors.append("transcript_artifact_binding_invalid")
-    if payload["shared_output_acl"] != {
-        "path": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
-        "mode": "preserve_existing_add_exact_worker_write_ace_v1",
-        "preserve_owner": True,
-        "preserve_access_rule_protection": True,
-        "preserve_preexisting_access_rules": True,
-        "fresh_worker_sid_required": True,
-        "worker_rights": [
-            "Write",
-            "ReadAttributes",
-            "ReadPermissions",
-            "Synchronize",
-        ],
-        "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
-        "propagation_flags": "None",
-        "access_control_type": "Allow",
-        "exact_single_worker_rule_required": True,
-        "post_write_reread_required": True,
-        "set_access_rule_protection_allowed": False,
-        "owner_replacement_allowed": False,
-        "dacl_replacement_allowed": False,
+    if payload["mappings"]["output"] != {
+        "guest_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
+        "mode": "writable_controller_only",
     }:
-        errors.append("shared_output_acl_policy_invalid")
+        errors.append("host_output_mapping_invalid")
+    if payload["worker_result_relay"] != {
+        "host_output_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
+        "worker_result_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
+        "host_mapping_mode": "controller_only_exact_byte_publication_v1",
+        "worker_host_mapping_write_required": False,
+        "worker_host_mapping_write_denial_required": True,
+        "mapped_acl_snapshot_before_after_required": True,
+        "mapped_acl_mutation_allowed": False,
+        "mapped_owner_mutation_allowed": False,
+        "mapped_protection_mutation_allowed": False,
+        "private_result_directory": {
+            "mode": "protected_system_and_exact_worker_v1",
+            "owner": "LocalSystem",
+            "fresh_worker_sid_required": True,
+            "worker_rights": [
+                "Write",
+                "ReadAttributes",
+                "ReadPermissions",
+                "Synchronize",
+            ],
+            "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
+            "propagation_flags": "None",
+            "access_control_type": "Allow",
+            "set_access_rule_protection": True,
+            "remove_inherited_rules": True,
+        },
+        "relay": {
+            "controller_identity": "LocalSystem",
+            "source_path": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT + r"\result.json",
+            "destination_path": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT + r"\result.json",
+            "after_worker_exit": True,
+            "after_job_close": True,
+            "after_worker_sid_quiescence": True,
+            "after_account_deletion": True,
+            "exact_validated_bytes_required": True,
+            "atomic_write_required": True,
+            "post_write_reread_required": True,
+            "terminal_result_sha256_source": "relayed_result_bytes",
+            "local_result_removed_after_relay": True,
+        },
+    }:
+        errors.append("worker_result_relay_policy_invalid")
     if payload["worker"]["job"] != {
         "unnamed": True,
         "kill_on_close": True,

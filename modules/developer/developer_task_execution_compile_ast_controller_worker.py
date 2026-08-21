@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""V1C2C1R2 deterministic fixed SYSTEM-controller/standard-user-worker payload bundle.
+"""V1C2C1R3 deterministic SYSTEM-controller guest-local worker-result relay bundle.
 
 This module only constructs immutable bytes.  It does not claim a plan or runtime
 lease, materialize task/runtime sources, launch Windows Sandbox or execute Python.
@@ -37,6 +37,7 @@ from modules.developer.developer_task_execution_compile_ast_controller_worker_po
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BOOTSTRAP_FILE_NAME,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_ID,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_CONTROLLER_FILE_NAME,
+    DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_NATIVE_HELPER_FILE_NAME,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FILE_NAME,
@@ -103,16 +104,16 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BOOTSTRAP_SHA256 = (
     "7aafbabe34256c0360994b4f07b03fd809b89397f60688eb224f48f6f26bbc1d"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_NATIVE_HELPER_SHA256 = (
-    "550c1d009ffcbb0ea25ad609d215237f2e5a66a20f48edc7278c314e84d7677a"
+    "f05437852c9204bcdb0cce70e30989544251070a836f55d748d559f289ddd8e8"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_CONTROLLER_SHA256 = (
-    "335fbed28b001bcd4f11975b520d9d1e5feaec698a7a5836d946c132bebe5e23"
+    "11ccf69016fe0aceead56a9d07ac0f054e99d759207630b114922e4791553827"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_TEMPLATE_SHA256 = (
-    "81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416375f"
+    "3de7527400c576ce9ce75ef58f616622ab52a57426811b193270e292d641c281"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_FINGERPRINT = (
-    "449240db944a60ed51a1914f36d6c981a9579cd72e9c0e3802b6b9f3382c458c"
+    "62854e85a916f67f24453e3c64c3212a5ae722da8fbc0e275f59c738144dde98"
 )
 
 
@@ -365,7 +366,28 @@ def build_developer_task_execution_compile_ast_controller_worker_native_helper_s
     )
 
 
-    shared_output_public_anchor = r'''    public static void PrepareWorkerResultDirectory(string path, string workerSid)
+    acl_snapshot_class_anchor = "public sealed class WorkerPasswordSecret : IDisposable\n"
+    acl_snapshot_class_source = r'''public sealed class DirectoryAclSnapshot
+{
+    public string OwnerSid;
+    public bool AccessRulesProtected;
+    public string RuleMultisetCanonical;
+    public string RuleMultisetSha256;
+    public int RuleCount;
+}
+
+'''
+    if acl_snapshot_class_anchor not in source:
+        raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
+            "directory_acl_snapshot_class_anchor_missing"
+        )
+    source = source.replace(
+        acl_snapshot_class_anchor,
+        acl_snapshot_class_source + acl_snapshot_class_anchor,
+        1,
+    )
+
+    private_result_public_anchor = r'''    public static void PrepareWorkerResultDirectory(string path, string workerSid)
     {
         ApplyProtectedDirectoryAcl(
             path,
@@ -374,60 +396,133 @@ def build_developer_task_execution_compile_ast_controller_worker_native_helper_s
         );
     }
 '''
-    shared_output_public_replacement = shared_output_public_anchor + r'''
+    private_result_public_replacement = private_result_public_anchor + r'''
 
-    public static void PrepareSharedWorkerOutputDirectory(string path, string workerSid)
+    public static DirectoryAclSnapshot CaptureDirectoryAclSnapshot(string path)
     {
         if (String.IsNullOrEmpty(path) || !Path.IsPathRooted(path)) throw new ArgumentException("Directory path must be absolute.", "path");
         if (!Directory.Exists(path)) throw new DirectoryNotFoundException(path);
+        DirectorySecurity security = Directory.GetAccessControl(path, AccessControlSections.Access | AccessControlSections.Owner);
+        SecurityIdentifier owner = (SecurityIdentifier)security.GetOwner(typeof(SecurityIdentifier));
+        int ruleCount;
+        string canonical = BuildAccessRuleMultisetCanonical(security, out ruleCount);
+        return new DirectoryAclSnapshot
+        {
+            OwnerSid = owner.Value,
+            AccessRulesProtected = security.AreAccessRulesProtected,
+            RuleMultisetCanonical = canonical,
+            RuleMultisetSha256 = Sha256Utf8(canonical),
+            RuleCount = ruleCount
+        };
+    }
+
+    public static void AssertDirectoryAclSnapshotUnchanged(string path, DirectoryAclSnapshot expected)
+    {
+        if (expected == null) throw new ArgumentNullException("expected");
+        DirectoryAclSnapshot actual = CaptureDirectoryAclSnapshot(path);
+        if (!String.Equals(expected.OwnerSid, actual.OwnerSid, StringComparison.Ordinal)) throw new InvalidOperationException("Mapped output owner changed.");
+        if (expected.AccessRulesProtected != actual.AccessRulesProtected) throw new InvalidOperationException("Mapped output access-rule protection changed.");
+        if (expected.RuleCount != actual.RuleCount) throw new InvalidOperationException("Mapped output ACL rule count changed.");
+        if (!String.Equals(expected.RuleMultisetSha256, actual.RuleMultisetSha256, StringComparison.Ordinal)) throw new InvalidOperationException("Mapped output ACL rule multiset changed.");
+        if (!String.Equals(expected.RuleMultisetCanonical, actual.RuleMultisetCanonical, StringComparison.Ordinal)) throw new InvalidOperationException("Mapped output ACL canonical rule multiset changed.");
+    }
+
+    public static void AssertPrivateWorkerResultDirectory(string path, string workerSid)
+    {
         if (String.IsNullOrEmpty(workerSid)) throw new ArgumentException("Worker SID is required.", "workerSid");
-
+        DirectorySecurity security = Directory.GetAccessControl(path, AccessControlSections.Access | AccessControlSections.Owner);
+        SecurityIdentifier systemSid = new SecurityIdentifier(WellKnownSidType.LocalSystemSid, null);
         SecurityIdentifier worker = new SecurityIdentifier(workerSid);
-        DirectorySecurity before = Directory.GetAccessControl(path, AccessControlSections.Access | AccessControlSections.Owner);
-        SecurityIdentifier ownerBefore = (SecurityIdentifier)before.GetOwner(typeof(SecurityIdentifier));
-        bool protectionBefore = before.AreAccessRulesProtected;
-        Dictionary<string, int> rulesBefore = GetAccessRuleMultiset(before);
-        if (CountRulesForSid(before, worker.Value) != 0) throw new InvalidOperationException("Fresh worker SID already has shared-output ACL entries.");
+        SecurityIdentifier owner = (SecurityIdentifier)security.GetOwner(typeof(SecurityIdentifier));
+        if (!String.Equals(owner.Value, systemSid.Value, StringComparison.Ordinal)) throw new InvalidOperationException("Private worker result owner is not LocalSystem.");
+        if (!security.AreAccessRulesProtected) throw new InvalidOperationException("Private worker result ACL is not protected.");
+        AuthorizationRuleCollection rules = security.GetAccessRules(true, true, typeof(SecurityIdentifier));
+        FileSystemRights workerRights = FileSystemRights.Write | FileSystemRights.ReadAttributes | FileSystemRights.ReadPermissions | FileSystemRights.Synchronize;
+        FileSystemAccessRule expectedSystem = new FileSystemAccessRule(systemSid, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow);
+        FileSystemAccessRule expectedWorker = new FileSystemAccessRule(worker, workerRights, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow);
+        string systemSignature = BuildAccessRuleSignature(expectedSystem);
+        string workerSignature = BuildAccessRuleSignature(expectedWorker);
+        int systemCount = 0;
+        int workerCount = 0;
+        int totalCount = 0;
+        foreach (AuthorizationRule authorizationRule in rules)
+        {
+            FileSystemAccessRule rule = authorizationRule as FileSystemAccessRule;
+            if (rule == null) throw new InvalidOperationException("Unexpected non-filesystem ACL rule.");
+            if (rule.IsInherited) throw new InvalidOperationException("Private worker result ACL contains an inherited rule.");
+            string signature = BuildAccessRuleSignature(rule);
+            if (String.Equals(signature, systemSignature, StringComparison.Ordinal)) systemCount++;
+            else if (String.Equals(signature, workerSignature, StringComparison.Ordinal)) workerCount++;
+            else throw new InvalidOperationException("Private worker result ACL contains an unexpected rule.");
+            totalCount++;
+        }
+        if (totalCount != 2 || systemCount != 1 || workerCount != 1) throw new InvalidOperationException("Private worker result ACL is not exact.");
+    }
 
-        FileSystemRights workerRights =
-            FileSystemRights.Write |
-            FileSystemRights.ReadAttributes |
-            FileSystemRights.ReadPermissions |
-            FileSystemRights.Synchronize;
-        FileSystemAccessRule workerRule = new FileSystemAccessRule(
-            worker,
-            workerRights,
-            InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-            PropagationFlags.None,
-            AccessControlType.Allow
-        );
-        string workerRuleSignature = BuildAccessRuleSignature(workerRule);
-        before.AddAccessRule(workerRule);
-        Directory.SetAccessControl(path, before);
+    public static bool ProbeTokenHostOutputWriteDenied(IntPtr token, string directoryPath, string existingFilePath)
+    {
+        if (token == IntPtr.Zero) throw new ArgumentException("Worker token is required.", "token");
+        if (String.IsNullOrEmpty(directoryPath) || !Path.IsPathRooted(directoryPath)) throw new ArgumentException("Directory path must be absolute.", "directoryPath");
+        if (String.IsNullOrEmpty(existingFilePath) || !Path.IsPathRooted(existingFilePath)) throw new ArgumentException("Existing file path must be absolute.", "existingFilePath");
+        if (!Directory.Exists(directoryPath)) throw new DirectoryNotFoundException(directoryPath);
+        if (!File.Exists(existingFilePath)) throw new FileNotFoundException("Existing controller artifact is missing.", existingFilePath);
+        string probePath = Path.Combine(directoryPath, ".skynetvs-worker-write-probe-" + Guid.NewGuid().ToString("N") + ".tmp");
+        bool created = false;
+        bool createDenied = false;
+        bool existingWriteDenied = false;
+        WindowsImpersonationContext context = null;
+        try
+        {
+            context = WindowsIdentity.Impersonate(token);
+            try
+            {
+                using (FileStream stream = new FileStream(probePath, FileMode.CreateNew, FileAccess.Write, FileShare.None, 1, FileOptions.WriteThrough))
+                {
+                    created = true;
+                    stream.WriteByte(0x5A);
+                    stream.Flush(true);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                createDenied = true;
+            }
 
-        DirectorySecurity after = Directory.GetAccessControl(path, AccessControlSections.Access | AccessControlSections.Owner);
-        SecurityIdentifier ownerAfter = (SecurityIdentifier)after.GetOwner(typeof(SecurityIdentifier));
-        if (!String.Equals(ownerBefore.Value, ownerAfter.Value, StringComparison.Ordinal)) throw new InvalidOperationException("Shared-output owner changed.");
-        if (protectionBefore != after.AreAccessRulesProtected) throw new InvalidOperationException("Shared-output access-rule protection changed.");
-
-        Dictionary<string, int> rulesAfterWithoutWorker = GetAccessRuleMultiset(after);
-        if (!RemoveSingleRule(rulesAfterWithoutWorker, workerRuleSignature)) throw new InvalidOperationException("Exact shared-output worker ACE was not observed after ACL write.");
-        if (!RuleMultisetsEqual(rulesBefore, rulesAfterWithoutWorker)) throw new InvalidOperationException("Pre-existing shared-output ACL rules changed.");
-        if (CountRulesForSid(after, worker.Value) != 1) throw new InvalidOperationException("Shared-output worker SID must have exactly one ACL entry.");
+            try
+            {
+                using (FileStream stream = new FileStream(existingFilePath, FileMode.Open, FileAccess.Write, FileShare.Read))
+                {
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                existingWriteDenied = true;
+            }
+            return createDenied && existingWriteDenied;
+        }
+        finally
+        {
+            if (context != null)
+            {
+                context.Undo();
+                context.Dispose();
+            }
+            if (created && File.Exists(probePath)) File.Delete(probePath);
+        }
     }
 '''
-    if shared_output_public_anchor not in source:
+    if private_result_public_anchor not in source:
         raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
-            "shared_output_public_acl_anchor_missing"
+            "private_result_public_acl_anchor_missing"
         )
     source = source.replace(
-        shared_output_public_anchor,
-        shared_output_public_replacement,
+        private_result_public_anchor,
+        private_result_public_replacement,
         1,
     )
 
-    shared_output_private_anchor = "    private static void ApplyProtectedDirectoryAcl(string path, string workerSid, FileSystemRights workerRights)\n"
-    shared_output_private_helpers = r'''    private static string BuildAccessRuleSignature(FileSystemAccessRule rule)
+    private_result_private_anchor = "    private static void ApplyProtectedDirectoryAcl(string path, string workerSid, FileSystemRights workerRights)\n"
+    private_result_private_helpers = r'''    private static string BuildAccessRuleSignature(FileSystemAccessRule rule)
     {
         SecurityIdentifier identity = rule.IdentityReference as SecurityIdentifier;
         if (identity == null) throw new InvalidOperationException("ACL identity is not a SecurityIdentifier.");
@@ -439,65 +534,54 @@ def build_developer_task_execution_compile_ast_controller_worker_native_helper_s
             (rule.IsInherited ? "1" : "0");
     }
 
-    private static Dictionary<string, int> GetAccessRuleMultiset(DirectorySecurity security)
+    private static string BuildAccessRuleMultisetCanonical(DirectorySecurity security, out int ruleCount)
     {
-        Dictionary<string, int> result = new Dictionary<string, int>(StringComparer.Ordinal);
+        Dictionary<string, int> counts = new Dictionary<string, int>(StringComparer.Ordinal);
         AuthorizationRuleCollection rules = security.GetAccessRules(true, true, typeof(SecurityIdentifier));
+        ruleCount = 0;
         foreach (AuthorizationRule authorizationRule in rules)
         {
             FileSystemAccessRule rule = authorizationRule as FileSystemAccessRule;
             if (rule == null) throw new InvalidOperationException("Unexpected non-filesystem ACL rule.");
             string signature = BuildAccessRuleSignature(rule);
             int count;
-            result.TryGetValue(signature, out count);
-            result[signature] = count + 1;
+            counts.TryGetValue(signature, out count);
+            counts[signature] = count + 1;
+            ruleCount++;
         }
-        return result;
-    }
-
-    private static int CountRulesForSid(DirectorySecurity security, string sid)
-    {
-        int count = 0;
-        AuthorizationRuleCollection rules = security.GetAccessRules(true, true, typeof(SecurityIdentifier));
-        foreach (AuthorizationRule authorizationRule in rules)
+        List<string> keys = new List<string>(counts.Keys);
+        keys.Sort(StringComparer.Ordinal);
+        StringBuilder canonical = new StringBuilder();
+        foreach (string key in keys)
         {
-            FileSystemAccessRule rule = authorizationRule as FileSystemAccessRule;
-            if (rule == null) throw new InvalidOperationException("Unexpected non-filesystem ACL rule.");
-            SecurityIdentifier identity = rule.IdentityReference as SecurityIdentifier;
-            if (identity == null) throw new InvalidOperationException("ACL identity is not a SecurityIdentifier.");
-            if (String.Equals(identity.Value, sid, StringComparison.Ordinal)) count++;
+            canonical.Append(key);
+            canonical.Append("|");
+            canonical.Append(counts[key].ToString());
+            canonical.Append("\n");
         }
-        return count;
+        return canonical.ToString();
     }
 
-    private static bool RemoveSingleRule(Dictionary<string, int> rules, string signature)
+    private static string Sha256Utf8(string text)
     {
-        int count;
-        if (!rules.TryGetValue(signature, out count) || count <= 0) return false;
-        if (count == 1) rules.Remove(signature);
-        else rules[signature] = count - 1;
-        return true;
-    }
-
-    private static bool RuleMultisetsEqual(Dictionary<string, int> left, Dictionary<string, int> right)
-    {
-        if (left.Count != right.Count) return false;
-        foreach (KeyValuePair<string, int> pair in left)
-        {
-            int rightCount;
-            if (!right.TryGetValue(pair.Key, out rightCount) || rightCount != pair.Value) return false;
-        }
-        return true;
+        byte[] bytes = Encoding.UTF8.GetBytes(text);
+        byte[] digest;
+        using (SHA256 sha = SHA256.Create()) digest = sha.ComputeHash(bytes);
+        StringBuilder value = new StringBuilder(digest.Length * 2);
+        foreach (byte item in digest) value.Append(item.ToString("x2"));
+        Array.Clear(bytes, 0, bytes.Length);
+        Array.Clear(digest, 0, digest.Length);
+        return value.ToString();
     }
 
 '''
-    if shared_output_private_anchor not in source:
+    if private_result_private_anchor not in source:
         raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
-            "shared_output_private_acl_anchor_missing"
+            "private_result_private_acl_anchor_missing"
         )
     source = source.replace(
-        shared_output_private_anchor,
-        shared_output_private_helpers + shared_output_private_anchor,
+        private_result_private_anchor,
+        private_result_private_helpers + private_result_private_anchor,
         1,
     )
 
@@ -653,12 +737,14 @@ def build_developer_task_execution_compile_ast_controller_worker_native_helper_s
             "native_helper_transformation_incomplete"
         )
     if (
-        "PrepareSharedWorkerOutputDirectory" not in source
-        or "Pre-existing shared-output ACL rules changed." not in source
-        or "Shared-output owner changed." not in source
+        "PrepareSharedWorkerOutputDirectory" in source
+        or "CaptureDirectoryAclSnapshot" not in source
+        or "AssertDirectoryAclSnapshotUnchanged" not in source
+        or "AssertPrivateWorkerResultDirectory" not in source
+        or "ProbeTokenHostOutputWriteDenied" not in source
     ):
         raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
-            "shared_output_acl_transformation_incomplete"
+            "guest_local_result_relay_transformation_incomplete"
         )
     return _canonical_source_bytes(source, label="native_helper")
 
@@ -733,7 +819,8 @@ $inputRoot = "@@INPUT_ROOT@@"
 $sourceRoot = "@@SOURCE_ROOT@@"
 $runtimeRoot = "@@RUNTIME_ROOT@@"
 $controlRoot = "@@CONTROL_ROOT@@"
-$outputRoot = "@@OUTPUT_ROOT@@"
+$hostOutputRoot = "@@HOST_OUTPUT_ROOT@@"
+$workerResultRoot = "@@WORKER_RESULT_ROOT@@"
 $requestPath = Join-Path $inputRoot "@@REQUEST_FILE@@"
 $sourceManifestPath = Join-Path $inputRoot "@@SOURCE_MANIFEST_FILE@@"
 $controllerWorkerPolicyPath = Join-Path $inputRoot "@@CONTROLLER_WORKER_POLICY_FILE@@"
@@ -744,12 +831,13 @@ $nativeHelperPath = Join-Path $inputRoot "@@NATIVE_HELPER_FILE@@"
 $runnerPath = Join-Path $inputRoot "@@RUNNER_FILE@@"
 $payloadPath = Join-Path $inputRoot "@@PAYLOAD_FILE@@"
 $wsbPath = Join-Path $inputRoot "@@WSB_FILE@@"
-$readyPath = Join-Path $outputRoot "ready.json"
+$readyPath = Join-Path $hostOutputRoot "ready.json"
 $authorizeCommitPath = Join-Path $controlRoot "authorize.sha256"
-$resultPath = Join-Path $outputRoot "@@RESULT_FILE@@"
-$terminalPayloadPath = Join-Path $outputRoot "terminal_payload.json"
-$terminalSignaturePath = Join-Path $outputRoot "terminal_signature.bin"
-$failurePath = Join-Path $outputRoot "controller_failure.json"
+$hostResultPath = Join-Path $hostOutputRoot "@@RESULT_FILE@@"
+$localResultPath = Join-Path $workerResultRoot "@@RESULT_FILE@@"
+$terminalPayloadPath = Join-Path $hostOutputRoot "terminal_payload.json"
+$terminalSignaturePath = Join-Path $hostOutputRoot "terminal_signature.bin"
+$failurePath = Join-Path $hostOutputRoot "controller_failure.json"
 $stage = "request_validation"
 
 $ExpectedRuntimeFiles = @(
@@ -827,9 +915,9 @@ function Assert-SourceManifestAndTree {
 }
 
 function Read-TrustedCompileAstResult {
-    param([object]$Request, [object]$Manifest)
-    if (-not (Test-Path -LiteralPath $resultPath -PathType Leaf)) { return $null }
-    $bytes = Read-StrictUtf8Bytes -Path $resultPath -MaximumBytes @@RESULT_MAX_BYTES@@
+    param([object]$Request, [object]$Manifest, [string]$Path)
+    if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { return $null }
+    $bytes = Read-StrictUtf8Bytes -Path $Path -MaximumBytes @@RESULT_MAX_BYTES@@
     if ($bytes.Length -lt 2 -or $bytes[$bytes.Length - 1] -ne 10 -or $bytes[$bytes.Length - 2] -eq 13) { throw "Compile AST result does not have the exact LF terminator." }
     $text = [System.Text.UTF8Encoding]::new($false, $true).GetString($bytes)
     $result = $text | ConvertFrom-Json
@@ -857,6 +945,21 @@ function Read-TrustedCompileAstResult {
     $expectedPassed = ($failed -eq 0)
     if ([bool]$result.check_passed -ne $expectedPassed) { throw "Compile AST result pass state mismatch." }
     return [pscustomobject]@{ Document = $result; Bytes = $bytes; Sha256 = (Get-BytesSha256 -Bytes $bytes) }
+}
+
+function Relay-TrustedCompileAstResult {
+    param([object]$Evidence)
+    if ($null -eq $Evidence) { throw "Trusted local compile AST result is missing." }
+    if (Test-Path -LiteralPath $hostResultPath) { throw "Host-observed compile AST result path already exists." }
+    Write-BytesAtomic -Path $hostResultPath -Bytes ([byte[]]$Evidence.Bytes)
+    $relayedBytes = Read-StrictUtf8Bytes -Path $hostResultPath -MaximumBytes @@RESULT_MAX_BYTES@@
+    $relayedSha256 = Get-BytesSha256 -Bytes $relayedBytes
+    if ($relayedSha256 -cne [string]$Evidence.Sha256) { throw "Relayed compile AST result hash mismatch." }
+    if ($relayedBytes.Length -ne ([byte[]]$Evidence.Bytes).Length) { throw "Relayed compile AST result size mismatch." }
+    for ($index = 0; $index -lt $relayedBytes.Length; $index++) {
+        if ($relayedBytes[$index] -ne ([byte[]]$Evidence.Bytes)[$index]) { throw "Relayed compile AST result bytes changed." }
+    }
+    return [pscustomobject]@{ Document = $Evidence.Document; Bytes = $relayedBytes; Sha256 = $relayedSha256 }
 }
 
 $cngKey = $null
@@ -934,7 +1037,9 @@ try {
     $sourceWriteBlocked = Test-WriteBlocked -Root $sourceRoot -Name "controller_source_write_probe.py"
     $runtimeWriteBlocked = Test-WriteBlocked -Root $runtimeRoot -Name ".skynetvs_controller_runtime_write_probe"
     $controlWriteBlocked = Test-WriteBlocked -Root $controlRoot -Name "controller_control_write_probe.txt"
-    $outputWritable = Test-OutputWritable -Root $outputRoot
+    $hostOutputAclSnapshot = [V1C2C1Native]::CaptureDirectoryAclSnapshot($hostOutputRoot)
+    $outputWritable = Test-OutputWritable -Root $hostOutputRoot
+    [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostOutputRoot, $hostOutputAclSnapshot)
 
     $readyChecks = [ordered]@{
         controller_is_system = $controllerIsSystem
@@ -1059,12 +1164,19 @@ try {
     # standard-user/Job/account cleanup boundary has also been proved.
 
     $stage = "compile_ast_worker"
-    if (Test-Path -LiteralPath $resultPath) { throw "Compile AST result path already exists." }
+    if (Test-Path -LiteralPath $hostResultPath) { throw "Host-observed compile AST result path already exists." }
+    if (Test-Path -LiteralPath $workerResultRoot) { throw "Private worker result root already exists." }
     $workerUser = [V1C2C1Native]::BuildWorkerUserName($requestId)
     $tokenState = [V1C2C1Native]::CreateFreshStandardUserAndLogon($workerUser)
     $workerAccountCreated = $true
     $workerSid = [string]$tokenState.UserSid
-    [V1C2C1Native]::PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)
+    if ($tokenState.IsAdministrator -or $tokenState.IntegrityRid -ne 8192 -or $tokenState.TokenType -ne 1) { throw "Compile AST worker token boundary mismatch." }
+    if (-not [V1C2C1Native]::ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)) { throw "Compile AST worker token can write the host-observed mapping." }
+    [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostOutputRoot, $hostOutputAclSnapshot)
+    New-Item -ItemType Directory -Path $workerResultRoot -ErrorAction Stop | Out-Null
+    [V1C2C1Native]::PrepareWorkerResultDirectory($workerResultRoot, $workerSid)
+    [V1C2C1Native]::AssertPrivateWorkerResultDirectory($workerResultRoot, $workerSid)
+    if (Test-Path -LiteralPath $localResultPath) { throw "Private compile AST result path already exists." }
 
     $launchState = [V1C2C1Native]::LaunchFixedCompileAstWorkerSuspendedInJob($tokenState.TokenHandle)
     if ($launchState.InheritHandles) { throw "Compile AST worker inherited handles." }
@@ -1081,11 +1193,6 @@ try {
     }
     elseif ($workerWait -ne [V1C2C1Native]::WAIT_OBJECT_0) { throw "Compile AST worker wait failed." }
     if (-not [V1C2C1Native]::GetExitCodeProcess($launchState.ProcessHandle, [ref]$workerExitCode)) { throw "Compile AST worker exit code could not be read." }
-    if ($workerWait -eq [V1C2C1Native]::WAIT_OBJECT_0 -and $workerExitCode -eq 0) {
-        try { $resultEvidence = Read-TrustedCompileAstResult -Request $request -Manifest $manifest }
-        catch { $resultEvidence = $null }
-    }
-
     [V1C2C1Native]::CloseHandle($launchState.ProcessHandle) | Out-Null
     $launchState.ProcessHandle = [IntPtr]::Zero
     if (-not $jobClosed) {
@@ -1098,6 +1205,15 @@ try {
     if (-not $workerSidProcessSetEmpty) { throw "Compile AST worker SID process set is not empty." }
     [V1C2C1Native]::DeleteLocalUserExact($workerUser, $workerSid)
     $workerAccountDeleted = $true
+    if ($workerWait -eq [V1C2C1Native]::WAIT_OBJECT_0 -and $workerExitCode -eq 0) {
+        try {
+            $localResultEvidence = Read-TrustedCompileAstResult -Request $request -Manifest $manifest -Path $localResultPath
+            if ($null -ne $localResultEvidence) { $resultEvidence = Relay-TrustedCompileAstResult -Evidence $localResultEvidence }
+        }
+        catch { $resultEvidence = $null }
+    }
+    [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostOutputRoot, $hostOutputAclSnapshot)
+    if (Test-Path -LiteralPath $workerResultRoot) { Remove-Item -LiteralPath $workerResultRoot -Recurse -Force -ErrorAction Stop }
 
     $stage = "network_and_terminal"
     $ipv4DefaultRoutePresent = Test-DefaultRoute -Family IPv4
@@ -1270,6 +1386,8 @@ catch {
         }
     }
     catch { }
+    try { if (Test-Path -LiteralPath $workerResultRoot) { Remove-Item -LiteralPath $workerResultRoot -Recurse -Force -ErrorAction Stop } } catch { }
+    try { if ($null -ne $hostOutputAclSnapshot) { [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostOutputRoot, $hostOutputAclSnapshot) } } catch { }
     Schedule-Shutdown | Out-Null
 }
 finally {
@@ -1310,7 +1428,8 @@ finally {
         "@@SOURCE_ROOT@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_SOURCE_ROOT,
         "@@RUNTIME_ROOT@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_RUNTIME_ROOT,
         "@@CONTROL_ROOT@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROL_ROOT,
-        "@@OUTPUT_ROOT@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
+        "@@HOST_OUTPUT_ROOT@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
+        "@@WORKER_RESULT_ROOT@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
         "@@REQUEST_FILE@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_REQUEST_FILE_NAME,
         "@@SOURCE_MANIFEST_FILE@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_SOURCE_MANIFEST_FILE_NAME,
         "@@CONTROLLER_WORKER_POLICY_FILE@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FILE_NAME,
@@ -1353,6 +1472,14 @@ def build_developer_task_execution_compile_ast_controller_worker_wsb_template() 
         text = text.replace(
             r'\bootstrap.ps1"',
             "\\" + DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BOOTSTRAP_FILE_NAME + '"',
+        )
+    text = text.replace(
+        "<SandboxFolder>" + DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT + "</SandboxFolder>",
+        "<SandboxFolder>" + DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT + "</SandboxFolder>",
+    )
+    if "<SandboxFolder>" + DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT + "</SandboxFolder>" in text:
+        raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
+            "worker_result_root_must_not_be_mapped"
         )
     return _canonical_source_bytes(text, label="wsb_template")
 

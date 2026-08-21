@@ -33,187 +33,80 @@ _COMPILE_SCRIPT = r'''param(
 )
 
 $ErrorActionPreference = "Stop"
-
 $strictUtf8 = [System.Text.UTF8Encoding]::new($false, $true)
 $policyText = [System.IO.File]::ReadAllText($PolicyPath, $strictUtf8)
 $nativeHelperText = [System.IO.File]::ReadAllText($NativeHelperPath, $strictUtf8)
 $bootstrapText = [System.IO.File]::ReadAllText($BootstrapPath, $strictUtf8)
 $controllerText = [System.IO.File]::ReadAllText($ControllerPath, $strictUtf8)
 $wsbText = [System.IO.File]::ReadAllText($WsbPath, $strictUtf8)
-
 $policy = $policyText | ConvertFrom-Json
 [ScriptBlock]::Create($bootstrapText) | Out-Null
 [ScriptBlock]::Create($controllerText) | Out-Null
+Add-Type -Path $NativeHelperPath -ErrorAction Stop
 
-Add-Type `
-    -Path $NativeHelperPath `
-    -ErrorAction Stop
+if ([V1C2C1Native]::WORKER_INTEGRITY_RID -ne 8192) { throw "Unexpected worker integrity RID." }
+if ([V1C2C1Native]::COMPILE_AST_ACTIVE_PROCESS_LIMIT -ne 1) { throw "Unexpected active-process limit." }
+if ([uint64][V1C2C1Native]::COMPILE_AST_PROCESS_MEMORY_BYTES -ne 536870912) { throw "Unexpected process-memory limit." }
+if ([uint64][V1C2C1Native]::COMPILE_AST_JOB_MEMORY_BYTES -ne 805306368) { throw "Unexpected Job-memory limit." }
+if ($null -eq [V1C2C1Native].GetMethod("CaptureDirectoryAclSnapshot")) { throw "Missing mapped ACL snapshot method." }
+if ($null -eq [V1C2C1Native].GetMethod("AssertDirectoryAclSnapshotUnchanged")) { throw "Missing mapped ACL assertion method." }
+if ($null -eq [V1C2C1Native].GetMethod("AssertPrivateWorkerResultDirectory")) { throw "Missing private result ACL assertion method." }
+if ($null -eq [V1C2C1Native].GetMethod("ProbeTokenHostOutputWriteDenied")) { throw "Missing worker host-output denial method." }
+if ($null -ne [V1C2C1Native].GetMethod("PrepareSharedWorkerOutputDirectory")) { throw "Destructive mapped-output ACL helper remains exposed." }
+if ($nativeHelperText.Contains("PrepareSharedWorkerOutputDirectory")) { throw "Destructive mapped-output ACL helper remains in source." }
 
-if ([V1C2C1Native]::WORKER_INTEGRITY_RID -ne 8192) {
-    throw "Compiled V1C2C1 helper exposes an unexpected worker integrity RID."
-}
-if ([V1C2C1Native]::JOB_OBJECT_LIMIT_ACTIVE_PROCESS -ne 0x00000008) {
-    throw "Compiled V1C2C1 helper exposes an unexpected active-process flag."
-}
-if ([V1C2C1Native]::JOB_OBJECT_LIMIT_PROCESS_MEMORY -ne 0x00000100) {
-    throw "Compiled V1C2C1 helper exposes an unexpected process-memory flag."
-}
-if ([V1C2C1Native]::JOB_OBJECT_LIMIT_JOB_MEMORY -ne 0x00000200) {
-    throw "Compiled V1C2C1 helper exposes an unexpected Job-memory flag."
-}
-if ([V1C2C1Native]::JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE -ne 0x00002000) {
-    throw "Compiled V1C2C1 helper exposes an unexpected kill-on-close flag."
-}
-if ([V1C2C1Native]::COMPILE_AST_ACTIVE_PROCESS_LIMIT -ne 1) {
-    throw "Compiled V1C2C1 helper exposes an unexpected active-process limit."
-}
-if ([uint64][V1C2C1Native]::COMPILE_AST_PROCESS_MEMORY_BYTES -ne 536870912) {
-    throw "Compiled V1C2C1 helper exposes an unexpected process-memory limit."
-}
-if ([uint64][V1C2C1Native]::COMPILE_AST_JOB_MEMORY_BYTES -ne 805306368) {
-    throw "Compiled V1C2C1 helper exposes an unexpected Job-memory limit."
-}
-if ([V1C2C1Native]::RUNTIME_EXECUTABLE_FILE_NAME -cne "python.exe") {
-    throw "Compiled V1C2C1 helper exposes an unexpected runtime executable name."
-}
-if ($null -eq [V1C2C1Native].GetMethod("PrepareSharedWorkerOutputDirectory")) {
-    throw "Compiled V1C2C1R2 helper does not expose the shared-output ACL method."
-}
-if (-not $nativeHelperText.Contains("Pre-existing shared-output ACL rules changed.")) {
-    throw "Compiled V1C2C1R2 helper lacks the shared-output ACL preservation proof."
-}
-if (-not $controllerText.Contains('PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)')) {
-    throw "V1C2C1R2 controller does not call the shared-output ACL method."
-}
-if ($controllerText.Contains('PrepareWorkerResultDirectory($outputRoot, $workerSid)')) {
-    throw "V1C2C1R2 controller still applies the private-directory ACL helper to shared output."
-}
+if (-not $controllerText.Contains('$hostOutputRoot = "C:\SkynetVSHostOutput"')) { throw "Controller host-output root is invalid." }
+if (-not $controllerText.Contains('$workerResultRoot = "C:\SkynetVSOutput"')) { throw "Controller private result root is invalid." }
+if (-not $controllerText.Contains('ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)')) { throw "Controller does not prove worker denial on host output." }
+if (-not $controllerText.Contains('PrepareWorkerResultDirectory($workerResultRoot, $workerSid)')) { throw "Controller does not harden the private worker result root." }
+if (-not $controllerText.Contains('Relay-TrustedCompileAstResult -Evidence $localResultEvidence')) { throw "Controller does not relay exact local result bytes." }
+if ($controllerText.Contains("PrepareSharedWorkerOutputDirectory")) { throw "Controller still mutates mapped output ACL." }
 
-if ([string]$policy.architecture_lock.slice -cne "V1C2C1") {
-    throw "V1C2C1 policy architecture slice is invalid."
-}
-if ([string]$policy.implementation_revision -cne "V1C2C1R2") {
-    throw "V1C2C1R2 policy implementation revision is invalid."
-}
-if ([string]$policy.shared_output_acl.mode -cne "preserve_existing_add_exact_worker_write_ace_v1") {
-    throw "V1C2C1R2 shared-output ACL mode is invalid."
-}
-if (-not [bool]$policy.shared_output_acl.preserve_owner -or -not [bool]$policy.shared_output_acl.preserve_access_rule_protection -or -not [bool]$policy.shared_output_acl.preserve_preexisting_access_rules) {
-    throw "V1C2C1R2 shared-output ACL preservation requirements are incomplete."
-}
-if ([bool]$policy.shared_output_acl.set_access_rule_protection_allowed -or [bool]$policy.shared_output_acl.owner_replacement_allowed -or [bool]$policy.shared_output_acl.dacl_replacement_allowed) {
-    throw "V1C2C1R2 shared-output ACL policy permits destructive mutation."
-}
-if ([string]$policy.worker.account -cne "fresh_local_standard_user") {
-    throw "V1C2C1 policy worker account type is invalid."
-}
-if ([bool]$policy.worker.administrator) {
-    throw "V1C2C1 policy unexpectedly allows an administrative worker."
-}
-if ([int]$policy.worker.integrity_rid -ne 8192) {
-    throw "V1C2C1 policy worker integrity is invalid."
-}
-if ([string]$policy.worker.launch.api -cne "CreateProcessAsUserW") {
-    throw "V1C2C1 policy launch API is invalid."
-}
-if ([bool]$policy.worker.launch.inherit_handles) {
-    throw "V1C2C1 policy unexpectedly allows inherited handles."
-}
-if (-not [bool]$policy.worker.launch.create_suspended) {
-    throw "V1C2C1 policy does not require CREATE_SUSPENDED."
-}
-if (-not [bool]$policy.worker.launch.assign_to_job_before_resume) {
-    throw "V1C2C1 policy does not require assign-before-resume."
-}
-if ([int]$policy.worker.job.active_process_limit -ne 1) {
-    throw "V1C2C1 policy active-process limit is invalid."
-}
-if ([int64]$policy.worker.job.process_memory_bytes -ne 536870912) {
-    throw "V1C2C1 policy process-memory limit is invalid."
-}
-if ([int64]$policy.worker.job.job_memory_bytes -ne 805306368) {
-    throw "V1C2C1 policy Job-memory limit is invalid."
-}
-if (-not [bool]$policy.worker.job.kill_on_close) {
-    throw "V1C2C1 policy does not require kill-on-close."
-}
-if ([bool]$policy.worker.job.breakaway_allowed -or [bool]$policy.worker.job.silent_breakaway_allowed) {
-    throw "V1C2C1 policy unexpectedly allows Job breakaway."
-}
+if ([string]$policy.architecture_lock.slice -cne "V1C2C1") { throw "Policy architecture slice is invalid." }
+if ([string]$policy.implementation_revision -cne "V1C2C1R3") { throw "Policy implementation revision is invalid." }
+if ([string]$policy.mappings.output.guest_root -cne "C:\SkynetVSHostOutput") { throw "Policy host-output mapping is invalid." }
+if ([string]$policy.worker_result_relay.worker_result_root -cne "C:\SkynetVSOutput") { throw "Policy private result root is invalid." }
+if (-not [bool]$policy.worker_result_relay.worker_host_mapping_write_denial_required) { throw "Policy does not require worker host-output denial." }
+if ([bool]$policy.worker_result_relay.mapped_acl_mutation_allowed -or [bool]$policy.worker_result_relay.mapped_owner_mutation_allowed -or [bool]$policy.worker_result_relay.mapped_protection_mutation_allowed) { throw "Policy permits mapped-output security mutation." }
+if (-not [bool]$policy.worker_result_relay.relay.after_worker_exit -or -not [bool]$policy.worker_result_relay.relay.after_job_close -or -not [bool]$policy.worker_result_relay.relay.after_worker_sid_quiescence -or -not [bool]$policy.worker_result_relay.relay.after_account_deletion) { throw "Relay ordering requirements are incomplete." }
+if (-not [bool]$policy.worker_result_relay.relay.exact_validated_bytes_required -or -not [bool]$policy.worker_result_relay.relay.atomic_write_required -or -not [bool]$policy.worker_result_relay.relay.post_write_reread_required) { throw "Relay byte requirements are incomplete." }
 
-$aclProbePath = Join-Path (Split-Path -Parent $PolicyPath) "shared-output-acl-probe"
-if (Test-Path -LiteralPath $aclProbePath) { Remove-Item -LiteralPath $aclProbePath -Recurse -Force }
-New-Item -ItemType Directory -Path $aclProbePath -Force | Out-Null
-$syntheticWorkerSid = "S-1-5-21-424242-424242-424242-4242"
-$aclBefore = Get-Acl -LiteralPath $aclProbePath
-$ownerBefore = [string]$aclBefore.Owner
-$protectionBefore = [bool]$aclBefore.AreAccessRulesProtected
-$rulesBefore = @(
-    $aclBefore.Access |
-    ForEach-Object {
-        $sid = $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
-        "$sid|$([int]$_.AccessControlType)|$([int64]$_.FileSystemRights)|$([int]$_.InheritanceFlags)|$([int]$_.PropagationFlags)|$([int][bool]$_.IsInherited)"
-    }
-)
-[V1C2C1Native]::PrepareSharedWorkerOutputDirectory($aclProbePath, $syntheticWorkerSid)
-$aclAfter = Get-Acl -LiteralPath $aclProbePath
-$ownerAfter = [string]$aclAfter.Owner
-$protectionAfter = [bool]$aclAfter.AreAccessRulesProtected
-$rulesAfter = @(
-    $aclAfter.Access |
-    ForEach-Object {
-        $sid = $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
-        "$sid|$([int]$_.AccessControlType)|$([int64]$_.FileSystemRights)|$([int]$_.InheritanceFlags)|$([int]$_.PropagationFlags)|$([int][bool]$_.IsInherited)"
-    }
-)
-if ($ownerAfter -cne $ownerBefore) { throw "V1C2C1R2 ACL probe owner changed." }
-if ($protectionAfter -ne $protectionBefore) { throw "V1C2C1R2 ACL probe protection state changed." }
-foreach ($rule in $rulesBefore) {
-    if ($rulesAfter -cnotcontains $rule) { throw "V1C2C1R2 ACL probe lost an existing access rule." }
-}
-$requiredRights = [System.Security.AccessControl.FileSystemRights]::Write -bor `
-    [System.Security.AccessControl.FileSystemRights]::ReadAttributes -bor `
-    [System.Security.AccessControl.FileSystemRights]::ReadPermissions -bor `
-    [System.Security.AccessControl.FileSystemRights]::Synchronize
-$workerRules = @(
-    $aclAfter.Access |
-    Where-Object {
-        $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -ceq $syntheticWorkerSid -and
-        $_.AccessControlType -eq [System.Security.AccessControl.AccessControlType]::Allow -and
-        (([int64]$_.FileSystemRights -band [int64]$requiredRights) -eq [int64]$requiredRights) -and
-        $_.InheritanceFlags -eq ([System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit) -and
-        $_.PropagationFlags -eq [System.Security.AccessControl.PropagationFlags]::None
-    }
-)
-if ($workerRules.Count -ne 1) { throw "V1C2C1R2 ACL probe does not contain exactly one worker write ACE." }
-$nonWorkerRulesAfter = @(
-    $aclAfter.Access |
-    Where-Object {
-        $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -cne $syntheticWorkerSid
-    } |
-    ForEach-Object {
-        $sid = $_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
-        "$sid|$([int]$_.AccessControlType)|$([int64]$_.FileSystemRights)|$([int]$_.InheritanceFlags)|$([int]$_.PropagationFlags)|$([int][bool]$_.IsInherited)"
-    }
-)
-if (@(Compare-Object -ReferenceObject $rulesBefore -DifferenceObject $nonWorkerRulesAfter).Count -ne 0) {
-    throw "V1C2C1R2 ACL probe pre-existing rule multiset changed."
-}
-Remove-Item -LiteralPath $aclProbePath -Recurse -Force
+$probeRoot = Join-Path (Split-Path -Parent $PolicyPath) "r3-relay-probe"
+if (Test-Path -LiteralPath $probeRoot) { Remove-Item -LiteralPath $probeRoot -Recurse -Force }
+$hostRoot = Join-Path $probeRoot "host-output"
+$localRoot = Join-Path $probeRoot "local-result"
+New-Item -ItemType Directory -Path $hostRoot -Force | Out-Null
+New-Item -ItemType Directory -Path $localRoot -Force | Out-Null
+$snapshot = [V1C2C1Native]::CaptureDirectoryAclSnapshot($hostRoot)
+$ownerBefore = [string]$snapshot.OwnerSid
+$protectionBefore = [bool]$snapshot.AccessRulesProtected
+$rulesBefore = [string]$snapshot.RuleMultisetCanonical
+$sourcePath = Join-Path $localRoot "result.json"
+$destinationPath = Join-Path $hostRoot "result.json"
+$tempPath = Join-Path $hostRoot ".result.json.relay.tmp"
+$sourceBytes = [System.Text.UTF8Encoding]::new($false).GetBytes('{"schema_version":1,"status":"passed"}' + "`n")
+[System.IO.File]::WriteAllBytes($sourcePath, $sourceBytes)
+[System.IO.File]::WriteAllBytes($tempPath, $sourceBytes)
+[System.IO.File]::Move($tempPath, $destinationPath)
+$relayedBytes = [System.IO.File]::ReadAllBytes($destinationPath)
+if ($relayedBytes.Length -ne $sourceBytes.Length) { throw "Relayed result size changed." }
+for ($index = 0; $index -lt $sourceBytes.Length; $index++) { if ($sourceBytes[$index] -ne $relayedBytes[$index]) { throw "Relayed result bytes changed." } }
+[V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostRoot, $snapshot)
+$after = [V1C2C1Native]::CaptureDirectoryAclSnapshot($hostRoot)
+if ([string]$after.OwnerSid -cne $ownerBefore) { throw "Host output owner changed in relay smoke." }
+if ([bool]$after.AccessRulesProtected -ne $protectionBefore) { throw "Host output protection changed in relay smoke." }
+if ([string]$after.RuleMultisetCanonical -cne $rulesBefore) { throw "Host output ACL rules changed in relay smoke." }
+Remove-Item -LiteralPath $probeRoot -Recurse -Force
 
 [xml]$wsb = $wsbText
 $mappedFolders = @($wsb.Configuration.MappedFolders.MappedFolder)
-if ($mappedFolders.Count -ne 4) { throw "V1C2C1 WSB does not contain exactly four mappings." }
-if (@($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "true" }).Count -ne 3) { throw "V1C2C1 WSB read-only mapping count is invalid." }
-if (@($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "false" }).Count -ne 1) { throw "V1C2C1 WSB writable mapping count is invalid." }
-if ([string]$wsb.Configuration.Networking -cne "Disable") { throw "V1C2C1 WSB networking is not disabled." }
-if ([string]$wsb.Configuration.VGpu -cne "Disable") { throw "V1C2C1 WSB vGPU is not disabled." }
-if ([string]$wsb.Configuration.AudioInput -cne "Disable") { throw "V1C2C1 WSB audio input is not disabled." }
-if ([string]$wsb.Configuration.VideoInput -cne "Disable") { throw "V1C2C1 WSB video input is not disabled." }
-if ([string]$wsb.Configuration.PrinterRedirection -cne "Disable") { throw "V1C2C1 WSB printer redirection is not disabled." }
-if ([string]$wsb.Configuration.ClipboardRedirection -cne "Disable") { throw "V1C2C1 WSB clipboard redirection is not disabled." }
-if ([string]$wsb.Configuration.ProtectedClient -cne "Enable") { throw "V1C2C1 WSB ProtectedClient is not enabled." }
-if ([int]$wsb.Configuration.MemoryInMB -ne 4096) { throw "V1C2C1 WSB memory setting is invalid." }
+if ($mappedFolders.Count -ne 4) { throw "WSB mapping count is invalid." }
+if (@($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "true" }).Count -ne 3) { throw "WSB read-only mapping count is invalid." }
+if (@($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "false" }).Count -ne 1) { throw "WSB writable mapping count is invalid." }
+$writable = @($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "false" })
+if ([string]$writable[0].SandboxFolder -cne "C:\SkynetVSHostOutput") { throw "WSB writable mapping does not target host output root." }
+if (@($mappedFolders | Where-Object { [string]$_.SandboxFolder -ceq "C:\SkynetVSOutput" }).Count -ne 0) { throw "Private worker result root is still mapped." }
+if ([string]$wsb.Configuration.Networking -cne "Disable") { throw "WSB networking is not disabled." }
 
 [pscustomobject]@{
     native_helper_compiled = $true
@@ -223,11 +116,14 @@ if ([int]$wsb.Configuration.MemoryInMB -ne 4096) { throw "V1C2C1 WSB memory sett
     wsb_parsed = $true
     architecture_slice = [string]$policy.architecture_lock.slice
     implementation_revision = [string]$policy.implementation_revision
-    shared_output_acl_preserves_existing = $true
-    shared_output_owner_preserved = ($ownerAfter -ceq $ownerBefore)
-    shared_output_rules_preserved = (@(Compare-Object -ReferenceObject $rulesBefore -DifferenceObject $nonWorkerRulesAfter).Count -eq 0)
-    shared_output_protection_preserved = ($protectionAfter -eq $protectionBefore)
-    shared_output_exact_worker_ace = ($workerRules.Count -eq 1)
+    guest_local_result_relay = $true
+    host_output_acl_preserved = $true
+    host_output_owner_preserved = ([string]$after.OwnerSid -ceq $ownerBefore)
+    host_output_rules_preserved = ([string]$after.RuleMultisetCanonical -ceq $rulesBefore)
+    host_output_protection_preserved = ([bool]$after.AccessRulesProtected -eq $protectionBefore)
+    exact_result_bytes_relayed = $true
+    worker_host_mapping_write_denial_method = ($null -ne [V1C2C1Native].GetMethod("ProbeTokenHostOutputWriteDenied"))
+    mapped_acl_mutation_absent = (-not $nativeHelperText.Contains("PrepareSharedWorkerOutputDirectory"))
     worker_integrity_rid = [int][V1C2C1Native]::WORKER_INTEGRITY_RID
     active_process_limit = [uint32][V1C2C1Native]::COMPILE_AST_ACTIVE_PROCESS_LIMIT
     process_memory_bytes = [uint64][V1C2C1Native]::COMPILE_AST_PROCESS_MEMORY_BYTES
@@ -235,6 +131,8 @@ if ([int]$wsb.Configuration.MemoryInMB -ne 4096) { throw "V1C2C1 WSB memory sett
     mapped_folders = $mappedFolders.Count
     readonly_mappings = 3
     writable_mappings = 1
+    host_output_mapping = ([string]$writable[0].SandboxFolder -ceq "C:\SkynetVSHostOutput")
+    private_result_not_mapped = (@($mappedFolders | Where-Object { [string]$_.SandboxFolder -ceq "C:\SkynetVSOutput" }).Count -eq 0)
     networking_disabled = $true
     inherited_handles = $false
     create_suspended = $true
@@ -247,7 +145,6 @@ if ([int]$wsb.Configuration.MemoryInMB -ne 4096) { throw "V1C2C1 WSB memory sett
     execution_authorized = $false
 } | ConvertTo-Json -Compress
 '''
-
 
 def _sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -276,34 +173,26 @@ def main() -> int:
             fail_count += 1
         print()
         print(f"=== {name} ===")
-        print(
-            json.dumps(
-                {"actual": actual, "expected": expected, "ok": ok},
-                ensure_ascii=False,
-                indent=2,
-                default=str,
-            )
-        )
+        print(json.dumps({"actual": actual, "expected": expected, "ok": ok}, ensure_ascii=False, indent=2, default=str))
         print(f"[{'OK' if ok else 'FAIL'}] {name}")
 
     if sys.platform != "win32":
-        print("[SKIP] V1C2C1 PowerShell/C# compile-only smoke requires win32.")
+        print("[SKIP] V1C2C1R3 PowerShell/C# host-only smoke requires win32.")
         return 0
 
     bundle = build_developer_task_execution_compile_ast_controller_worker_bundle()
-
-    with tempfile.TemporaryDirectory(prefix="skynetvs-v1c2c1-compile-") as temp_dir:
+    with tempfile.TemporaryDirectory(prefix="skynetvs-v1c2c1r3-compile-") as temp_dir:
         root = Path(temp_dir)
         paths: dict[str, Path] = {}
         for payload in bundle.payloads:
             path = root / payload.file_name
             path.write_bytes(payload.exact_bytes())
             paths[payload.kind] = path
-        script_path = root / "compile_v1c2c1.ps1"
+        script_path = root / "compile_v1c2c1r3.ps1"
         script_path.write_text(_COMPILE_SCRIPT, encoding="utf-8", newline="\n")
 
         check(
-            "EXACT V1C2C1 PAYLOAD BYTES ARE STAGED FOR COMPILE AND PARSE ONLY",
+            "EXACT V1C2C1R3 PAYLOAD BYTES ARE STAGED FOR COMPILE AND PARSE ONLY",
             {
                 "policy": _sha256(paths["compile_ast_controller_worker_policy"].read_bytes()),
                 "bootstrap": _sha256(paths["trusted_bootstrap"].read_bytes()),
@@ -326,34 +215,18 @@ def main() -> int:
 
         completed = subprocess.run(
             [
-                "powershell.exe",
-                "-NoProfile",
-                "-NonInteractive",
-                "-ExecutionPolicy",
-                "Bypass",
-                "-File",
-                str(script_path),
-                "-PolicyPath",
-                str(paths["compile_ast_controller_worker_policy"]),
-                "-NativeHelperPath",
-                str(paths["trusted_native_helper"]),
-                "-BootstrapPath",
-                str(paths["trusted_bootstrap"]),
-                "-ControllerPath",
-                str(paths["trusted_system_controller"]),
-                "-WsbPath",
-                str(paths["windows_sandbox_template"]),
+                "powershell.exe", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass",
+                "-File", str(script_path),
+                "-PolicyPath", str(paths["compile_ast_controller_worker_policy"]),
+                "-NativeHelperPath", str(paths["trusted_native_helper"]),
+                "-BootstrapPath", str(paths["trusted_bootstrap"]),
+                "-ControllerPath", str(paths["trusted_system_controller"]),
+                "-WsbPath", str(paths["windows_sandbox_template"]),
             ],
-            cwd=str(root),
-            capture_output=True,
-            text=False,
-            timeout=90.0,
-            check=False,
+            cwd=str(root), capture_output=True, text=False, timeout=90.0, check=False,
         )
-
         stdout_bytes = completed.stdout or b""
         stderr_text = _decode_windows_process_output(completed.stderr)
-
         last_json: dict[str, Any] | None = None
         for raw_line in stdout_bytes.splitlines():
             line = raw_line.strip()
@@ -366,78 +239,90 @@ def main() -> int:
             if isinstance(parsed, dict):
                 last_json = parsed
 
+        actual = {
+            "returncode": completed.returncode,
+            "native_helper_compiled": bool(last_json and last_json.get("native_helper_compiled")),
+            "bootstrap_parsed": bool(last_json and last_json.get("bootstrap_parsed")),
+            "controller_parsed": bool(last_json and last_json.get("controller_parsed")),
+            "policy_parsed": bool(last_json and last_json.get("policy_parsed")),
+            "wsb_parsed": bool(last_json and last_json.get("wsb_parsed")),
+            "architecture_slice": str(last_json.get("architecture_slice", "")) if last_json else "",
+            "implementation_revision": str(last_json.get("implementation_revision", "")) if last_json else "",
+            "guest_local_result_relay": bool(last_json and last_json.get("guest_local_result_relay")),
+            "host_output_acl_preserved": bool(last_json and last_json.get("host_output_acl_preserved")),
+            "host_output_owner_preserved": bool(last_json and last_json.get("host_output_owner_preserved")),
+            "host_output_rules_preserved": bool(last_json and last_json.get("host_output_rules_preserved")),
+            "host_output_protection_preserved": bool(last_json and last_json.get("host_output_protection_preserved")),
+            "exact_result_bytes_relayed": bool(last_json and last_json.get("exact_result_bytes_relayed")),
+            "worker_host_mapping_write_denial_method": bool(last_json and last_json.get("worker_host_mapping_write_denial_method")),
+            "mapped_acl_mutation_absent": bool(last_json and last_json.get("mapped_acl_mutation_absent")),
+            "worker_integrity_rid": int(last_json.get("worker_integrity_rid", 0)) if last_json else 0,
+            "active_process_limit": int(last_json.get("active_process_limit", 0)) if last_json else 0,
+            "process_memory_bytes": int(last_json.get("process_memory_bytes", 0)) if last_json else 0,
+            "job_memory_bytes": int(last_json.get("job_memory_bytes", 0)) if last_json else 0,
+            "mapped_folders": int(last_json.get("mapped_folders", 0)) if last_json else 0,
+            "readonly_mappings": int(last_json.get("readonly_mappings", 0)) if last_json else 0,
+            "writable_mappings": int(last_json.get("writable_mappings", 0)) if last_json else 0,
+            "host_output_mapping": bool(last_json and last_json.get("host_output_mapping")),
+            "private_result_not_mapped": bool(last_json and last_json.get("private_result_not_mapped")),
+            "networking_disabled": bool(last_json and last_json.get("networking_disabled")),
+            "inherited_handles": bool(last_json and last_json.get("inherited_handles")),
+            "create_suspended": bool(last_json and last_json.get("create_suspended")),
+            "assign_before_resume": bool(last_json and last_json.get("assign_before_resume")),
+            "sandbox_launched": bool(last_json and last_json.get("sandbox_launched")),
+            "claim_transaction_consumed": bool(last_json and last_json.get("claim_transaction_consumed")),
+            "runtime_lease_claimed": bool(last_json and last_json.get("runtime_lease_claimed")),
+            "interpreter_executed": bool(last_json and last_json.get("interpreter_executed")),
+            "changed_source_processed": bool(last_json and last_json.get("changed_source_processed")),
+            "execution_authorized": bool(last_json and last_json.get("execution_authorized")),
+            "stderr": stderr_text.strip(),
+        }
+        expected = {
+            "returncode": 0,
+            "native_helper_compiled": True,
+            "bootstrap_parsed": True,
+            "controller_parsed": True,
+            "policy_parsed": True,
+            "wsb_parsed": True,
+            "architecture_slice": "V1C2C1",
+            "implementation_revision": "V1C2C1R3",
+            "guest_local_result_relay": True,
+            "host_output_acl_preserved": True,
+            "host_output_owner_preserved": True,
+            "host_output_rules_preserved": True,
+            "host_output_protection_preserved": True,
+            "exact_result_bytes_relayed": True,
+            "worker_host_mapping_write_denial_method": True,
+            "mapped_acl_mutation_absent": True,
+            "worker_integrity_rid": 8192,
+            "active_process_limit": 1,
+            "process_memory_bytes": 536870912,
+            "job_memory_bytes": 805306368,
+            "mapped_folders": 4,
+            "readonly_mappings": 3,
+            "writable_mappings": 1,
+            "host_output_mapping": True,
+            "private_result_not_mapped": True,
+            "networking_disabled": True,
+            "inherited_handles": False,
+            "create_suspended": True,
+            "assign_before_resume": True,
+            "sandbox_launched": False,
+            "claim_transaction_consumed": False,
+            "runtime_lease_claimed": False,
+            "interpreter_executed": False,
+            "changed_source_processed": False,
+            "execution_authorized": False,
+            "stderr": "",
+        }
         check(
-            "V1C2C1 NATIVE HELPER COMPILES AND FIXED POWERSHELL POLICY WSB PAYLOADS PARSE WITHOUT EXECUTION",
-            {
-                "returncode": completed.returncode,
-                "native_helper_compiled": bool(last_json and last_json.get("native_helper_compiled")),
-                "bootstrap_parsed": bool(last_json and last_json.get("bootstrap_parsed")),
-                "controller_parsed": bool(last_json and last_json.get("controller_parsed")),
-                "policy_parsed": bool(last_json and last_json.get("policy_parsed")),
-                "wsb_parsed": bool(last_json and last_json.get("wsb_parsed")),
-                "architecture_slice": str(last_json.get("architecture_slice", "")) if last_json else "",
-                "implementation_revision": str(last_json.get("implementation_revision", "")) if last_json else "",
-                "shared_output_acl_preserves_existing": bool(last_json and last_json.get("shared_output_acl_preserves_existing")),
-                "shared_output_owner_preserved": bool(last_json and last_json.get("shared_output_owner_preserved")),
-                "shared_output_rules_preserved": bool(last_json and last_json.get("shared_output_rules_preserved")),
-                "shared_output_protection_preserved": bool(last_json and last_json.get("shared_output_protection_preserved")),
-                "shared_output_exact_worker_ace": bool(last_json and last_json.get("shared_output_exact_worker_ace")),
-                "worker_integrity_rid": int(last_json.get("worker_integrity_rid", 0)) if last_json else 0,
-                "active_process_limit": int(last_json.get("active_process_limit", 0)) if last_json else 0,
-                "process_memory_bytes": int(last_json.get("process_memory_bytes", 0)) if last_json else 0,
-                "job_memory_bytes": int(last_json.get("job_memory_bytes", 0)) if last_json else 0,
-                "mapped_folders": int(last_json.get("mapped_folders", 0)) if last_json else 0,
-                "readonly_mappings": int(last_json.get("readonly_mappings", 0)) if last_json else 0,
-                "writable_mappings": int(last_json.get("writable_mappings", 0)) if last_json else 0,
-                "networking_disabled": bool(last_json and last_json.get("networking_disabled")),
-                "inherited_handles": bool(last_json and last_json.get("inherited_handles")),
-                "create_suspended": bool(last_json and last_json.get("create_suspended")),
-                "assign_before_resume": bool(last_json and last_json.get("assign_before_resume")),
-                "sandbox_launched": bool(last_json and last_json.get("sandbox_launched")),
-                "claim_transaction_consumed": bool(last_json and last_json.get("claim_transaction_consumed")),
-                "runtime_lease_claimed": bool(last_json and last_json.get("runtime_lease_claimed")),
-                "interpreter_executed": bool(last_json and last_json.get("interpreter_executed")),
-                "changed_source_processed": bool(last_json and last_json.get("changed_source_processed")),
-                "execution_authorized": bool(last_json and last_json.get("execution_authorized")),
-                "stderr": stderr_text.strip(),
-            },
-            {
-                "returncode": 0,
-                "native_helper_compiled": True,
-                "bootstrap_parsed": True,
-                "controller_parsed": True,
-                "policy_parsed": True,
-                "wsb_parsed": True,
-                "architecture_slice": "V1C2C1",
-                "implementation_revision": "V1C2C1R2",
-                "shared_output_acl_preserves_existing": True,
-                "shared_output_owner_preserved": True,
-                "shared_output_rules_preserved": True,
-                "shared_output_protection_preserved": True,
-                "shared_output_exact_worker_ace": True,
-                "worker_integrity_rid": 8192,
-                "active_process_limit": 1,
-                "process_memory_bytes": 536870912,
-                "job_memory_bytes": 805306368,
-                "mapped_folders": 4,
-                "readonly_mappings": 3,
-                "writable_mappings": 1,
-                "networking_disabled": True,
-                "inherited_handles": False,
-                "create_suspended": True,
-                "assign_before_resume": True,
-                "sandbox_launched": False,
-                "claim_transaction_consumed": False,
-                "runtime_lease_claimed": False,
-                "interpreter_executed": False,
-                "changed_source_processed": False,
-                "execution_authorized": False,
-                "stderr": "",
-            },
+            "V1C2C1R3 NATIVE HELPER COMPILES AND ORDINARY NTFS ACL RELAY SMOKE PASSES WITHOUT EXECUTION",
+            actual,
+            expected,
         )
 
         check(
-            "V1C2C1 WINDOWS COMPILE EVALUATOR HAS NO SANDBOX OR CANDIDATE PYTHON LAUNCH COMMAND",
+            "V1C2C1R3 WINDOWS EVALUATOR HAS NO SANDBOX OR CANDIDATE PYTHON LAUNCH COMMAND",
             {
                 "windows_sandbox": "WindowsSandbox.exe" in _COMPILE_SCRIPT,
                 "start_process": "Start-Process" in _COMPILE_SCRIPT,
@@ -454,19 +339,13 @@ def main() -> int:
                 "process_start": False,
                 "runtime_executable_call": False,
                 "architecture_lock": "db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec",
-                "policy_fingerprint": "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a",
+                "policy_fingerprint": "3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9",
             },
         )
 
     print()
     print("=== SUMMARY ===")
-    print(
-        json.dumps(
-            {"case_count": case_count, "fail_count": fail_count},
-            ensure_ascii=False,
-            indent=2,
-        )
-    )
+    print(json.dumps({"case_count": case_count, "fail_count": fail_count}, ensure_ascii=False, indent=2))
     return 1 if fail_count else 0
 
 

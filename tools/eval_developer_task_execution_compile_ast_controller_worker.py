@@ -145,7 +145,7 @@ def main() -> int:
         },
         {
             "errors": [],
-            "policy_id": "skynetvs-v1c2c1r2-fixed-system-controller-standard-user-worker-bundle-v3",
+            "policy_id": "skynetvs-v1c2c1r3-fixed-system-controller-standard-user-worker-bundle-v4",
             "policy_fingerprint": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             "recomputed": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             "policy_bytes_sha256": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256,
@@ -165,29 +165,48 @@ def main() -> int:
     )
 
     check(
-        "V1C2C1R2 SHARED OUTPUT ACL POLICY PRESERVES HOST OBSERVABILITY",
-        policy.to_dict()["shared_output_acl"],
+        "V1C2C1R3 POLICY SEPARATES PRIVATE WORKER RESULT FROM CONTROLLER HOST RELAY",
+        policy.to_dict()["worker_result_relay"],
         {
-            "path": r"C:\SkynetVSOutput",
-            "mode": "preserve_existing_add_exact_worker_write_ace_v1",
-            "preserve_owner": True,
-            "preserve_access_rule_protection": True,
-            "preserve_preexisting_access_rules": True,
-            "fresh_worker_sid_required": True,
-            "worker_rights": [
-                "Write",
-                "ReadAttributes",
-                "ReadPermissions",
-                "Synchronize",
-            ],
-            "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
-            "propagation_flags": "None",
-            "access_control_type": "Allow",
-            "exact_single_worker_rule_required": True,
-            "post_write_reread_required": True,
-            "set_access_rule_protection_allowed": False,
-            "owner_replacement_allowed": False,
-            "dacl_replacement_allowed": False,
+            "host_output_root": r"C:\SkynetVSHostOutput",
+            "worker_result_root": r"C:\SkynetVSOutput",
+            "host_mapping_mode": "controller_only_exact_byte_publication_v1",
+            "worker_host_mapping_write_required": False,
+            "worker_host_mapping_write_denial_required": True,
+            "mapped_acl_snapshot_before_after_required": True,
+            "mapped_acl_mutation_allowed": False,
+            "mapped_owner_mutation_allowed": False,
+            "mapped_protection_mutation_allowed": False,
+            "private_result_directory": {
+                "mode": "protected_system_and_exact_worker_v1",
+                "owner": "LocalSystem",
+                "fresh_worker_sid_required": True,
+                "worker_rights": [
+                    "Write",
+                    "ReadAttributes",
+                    "ReadPermissions",
+                    "Synchronize",
+                ],
+                "inheritance_flags": ["ContainerInherit", "ObjectInherit"],
+                "propagation_flags": "None",
+                "access_control_type": "Allow",
+                "set_access_rule_protection": True,
+                "remove_inherited_rules": True,
+            },
+            "relay": {
+                "controller_identity": "LocalSystem",
+                "source_path": r"C:\SkynetVSOutput\result.json",
+                "destination_path": r"C:\SkynetVSHostOutput\result.json",
+                "after_worker_exit": True,
+                "after_job_close": True,
+                "after_worker_sid_quiescence": True,
+                "after_account_deletion": True,
+                "exact_validated_bytes_required": True,
+                "atomic_write_required": True,
+                "post_write_reread_required": True,
+                "terminal_result_sha256_source": "relayed_result_bytes",
+                "local_result_removed_after_relay": True,
+            },
         },
     )
 
@@ -393,74 +412,86 @@ def main() -> int:
         },
     )
 
-    shared_acl_start = native_text.index(
-        "public static void PrepareSharedWorkerOutputDirectory"
+    mapped_acl_start = native_text.index(
+        "public static DirectoryAclSnapshot CaptureDirectoryAclSnapshot"
     )
-    shared_acl_end = native_text.index(
+    mapped_acl_end = native_text.index(
         "public static IntPtr CreateInheritableSentinelEvent",
-        shared_acl_start,
+        mapped_acl_start,
     )
-    shared_acl_section = native_text[shared_acl_start:shared_acl_end]
+    mapped_acl_section = native_text[mapped_acl_start:mapped_acl_end]
 
     check(
-        "V1C2C1R2 SHARED OUTPUT ACL PRESERVES OWNER PROTECTION AND PREEXISTING RULES",
+        "V1C2C1R3 MAPPED OUTPUT ACL IS SNAPSHOTTED AND ASSERTED UNCHANGED",
         {
-            "read_before": "Directory.GetAccessControl(path, AccessControlSections.Access | AccessControlSections.Owner)" in shared_acl_section,
-            "owner_before": "ownerBefore" in shared_acl_section,
-            "protection_before": "protectionBefore" in shared_acl_section,
-            "preexisting_multiset": "rulesBefore" in shared_acl_section,
-            "fresh_sid": "Fresh worker SID already has shared-output ACL entries." in shared_acl_section,
-            "add_only": "before.AddAccessRule(workerRule);" in shared_acl_section,
-            "write": "Directory.SetAccessControl(path, before);" in shared_acl_section,
-            "reread": "DirectorySecurity after = Directory.GetAccessControl" in shared_acl_section,
-            "owner_check": "Shared-output owner changed." in shared_acl_section,
-            "protection_check": "Shared-output access-rule protection changed." in shared_acl_section,
-            "preexisting_check": "Pre-existing shared-output ACL rules changed." in shared_acl_section,
-            "exact_worker": "Shared-output worker SID must have exactly one ACL entry." in shared_acl_section,
+            "capture": "CaptureDirectoryAclSnapshot" in mapped_acl_section,
+            "owner": "OwnerSid" in mapped_acl_section,
+            "protection": "AccessRulesProtected" in mapped_acl_section,
+            "canonical_rules": "RuleMultisetCanonical" in mapped_acl_section,
+            "rules_sha256": "RuleMultisetSha256" in mapped_acl_section,
+            "rule_count": "RuleCount" in mapped_acl_section,
+            "assert": "AssertDirectoryAclSnapshotUnchanged" in mapped_acl_section,
+            "owner_check": "Mapped output owner changed." in mapped_acl_section,
+            "protection_check": "Mapped output access-rule protection changed." in mapped_acl_section,
+            "multiset_check": "Mapped output ACL rule multiset changed." in mapped_acl_section,
         },
         {
-            "read_before": True,
-            "owner_before": True,
-            "protection_before": True,
-            "preexisting_multiset": True,
-            "fresh_sid": True,
-            "add_only": True,
-            "write": True,
-            "reread": True,
+            "capture": True,
+            "owner": True,
+            "protection": True,
+            "canonical_rules": True,
+            "rules_sha256": True,
+            "rule_count": True,
+            "assert": True,
             "owner_check": True,
             "protection_check": True,
-            "preexisting_check": True,
-            "exact_worker": True,
+            "multiset_check": True,
         },
     )
 
     check(
-        "V1C2C1R2 SHARED OUTPUT ACL DOES NOT PROTECT REPLACE OR REOWNER THE MAPPING",
+        "V1C2C1R3 MAPPED OUTPUT PATH HAS NO ACL OWNER OR PROTECTION MUTATION",
         {
-            "set_protection": "SetAccessRuleProtection" in shared_acl_section,
-            "set_owner": "SetOwner" in shared_acl_section,
-            "new_directory_security": "new DirectorySecurity" in shared_acl_section,
-            "system_only_dacl": "WellKnownSidType.LocalSystemSid" in shared_acl_section,
+            "shared_helper_absent": "PrepareSharedWorkerOutputDirectory" in native_text,
+            "set_acl": "Directory.SetAccessControl(path" in mapped_acl_section,
+            "set_protection": "SetAccessRuleProtection" in mapped_acl_section,
+            "set_owner": "SetOwner" in mapped_acl_section,
+            "worker_write_probe": "ProbeTokenHostOutputWriteDenied" in mapped_acl_section,
         },
         {
+            "shared_helper_absent": False,
+            "set_acl": False,
             "set_protection": False,
             "set_owner": False,
-            "new_directory_security": False,
-            "system_only_dacl": False,
+            "worker_write_probe": True,
         },
     )
 
     check(
-        "V1C2C1R2 CONTROLLER USES SHARED OUTPUT ACL PATH ONLY",
+        "V1C2C1R3 CONTROLLER USES PRIVATE RESULT ROOT AND EXACT HOST RELAY ORDER",
         {
-            "shared_call": "PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)" in controller_text,
-            "private_call": "PrepareWorkerResultDirectory($outputRoot, $workerSid)" in controller_text,
-            "shared_before_launch": controller_text.index("PrepareSharedWorkerOutputDirectory") < controller_text.index("LaunchFixedCompileAstWorkerSuspendedInJob"),
+            "host_root": '$hostOutputRoot = "C:\\SkynetVSHostOutput"' in controller_text,
+            "private_root": '$workerResultRoot = "C:\\SkynetVSOutput"' in controller_text,
+            "worker_denied": "ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)" in controller_text,
+            "private_acl": "PrepareWorkerResultDirectory($workerResultRoot, $workerSid)" in controller_text,
+            "private_assert": "AssertPrivateWorkerResultDirectory($workerResultRoot, $workerSid)" in controller_text,
+            "relay": "Relay-TrustedCompileAstResult" in controller_text,
+            "no_shared_helper": "PrepareSharedWorkerOutputDirectory" in controller_text,
+            "delete_before_read": controller_text.index("DeleteLocalUserExact($workerUser, $workerSid)") < controller_text.index("Read-TrustedCompileAstResult -Request $request -Manifest $manifest -Path $localResultPath"),
+            "read_before_relay": controller_text.index("Read-TrustedCompileAstResult -Request $request -Manifest $manifest -Path $localResultPath") < controller_text.index("Relay-TrustedCompileAstResult -Evidence $localResultEvidence"),
+            "relay_before_terminal": controller_text.index("Relay-TrustedCompileAstResult -Evidence $localResultEvidence") < controller_text.index("$terminalPayload = [ordered]@{"),
         },
         {
-            "shared_call": True,
-            "private_call": False,
-            "shared_before_launch": True,
+            "host_root": True,
+            "private_root": True,
+            "worker_denied": True,
+            "private_acl": True,
+            "private_assert": True,
+            "relay": True,
+            "no_shared_helper": False,
+            "delete_before_read": True,
+            "read_before_relay": True,
+            "relay_before_terminal": True,
         },
     )
 
@@ -777,7 +808,7 @@ def main() -> int:
         {
             "comment": "Source changes after ready are deliberately left for the fixed runner" in controller_text,
             "runner_validates": "Read-TrustedCompileAstResult" in controller_text,
-            "result_optional": "if (-not (Test-Path -LiteralPath $resultPath -PathType Leaf)) { return $null }" in controller_text,
+            "result_optional": "if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { return $null }" in controller_text,
             "boundary_status": 'if (-not $boundaryOk) { "compile_ast_boundary_failed" }' in controller_text,
         },
         {
@@ -839,6 +870,8 @@ def main() -> int:
             "clipboard": "<ClipboardRedirection>Disable</ClipboardRedirection>" in wsb_text,
             "printer": "<PrinterRedirection>Disable</PrinterRedirection>" in wsb_text,
             "protected": "<ProtectedClient>Enable</ProtectedClient>" in wsb_text,
+            "host_output_mapping": r"<SandboxFolder>C:\SkynetVSHostOutput</SandboxFolder>" in wsb_text,
+            "private_result_not_mapped": r"<SandboxFolder>C:\SkynetVSOutput</SandboxFolder>" in wsb_text,
         },
         {
             "mapped": 4,
@@ -851,6 +884,8 @@ def main() -> int:
             "clipboard": True,
             "printer": True,
             "protected": True,
+            "host_output_mapping": True,
+            "private_result_not_mapped": False,
         },
     )
 
@@ -915,22 +950,24 @@ def main() -> int:
     )
 
     check(
-        "V1C2C1R2 WINDOWS EVALUATOR USES LITERAL CONTROLLER NEEDLES AND CURRENT POLICY FINGERPRINT",
+        "V1C2C1R3 WINDOWS EVALUATOR BINDS GUEST LOCAL RELAY AND CURRENT POLICY",
         {
-            "shared_literal": "$controllerText.Contains('PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)')" in windows_eval_text,
-            "private_literal": "$controllerText.Contains('PrepareWorkerResultDirectory($outputRoot, $workerSid)')" in windows_eval_text,
-            "unsafe_shared_interpolation": '$controllerText.Contains("PrepareSharedWorkerOutputDirectory($outputRoot, $workerSid)")' in windows_eval_text,
-            "unsafe_private_interpolation": '$controllerText.Contains("PrepareWorkerResultDirectory($outputRoot, $workerSid)")' in windows_eval_text,
-            "current_policy_fingerprint": '"policy_fingerprint": "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a"' in windows_eval_text,
-            "stale_policy_fingerprint": '"policy_fingerprint": "a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a"' in windows_eval_text,
+            "host_mapping": "C:\\SkynetVSHostOutput" in windows_eval_text,
+            "private_result": "C:\\SkynetVSOutput" in windows_eval_text,
+            "snapshot": "CaptureDirectoryAclSnapshot" in windows_eval_text,
+            "relay": "exact_result_bytes_relayed" in windows_eval_text,
+            "shared_helper_rejection": 'GetMethod("PrepareSharedWorkerOutputDirectory")' in windows_eval_text,
+            "current_policy_fingerprint": '"policy_fingerprint": "3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9"' in windows_eval_text,
+            "stale_r2_fingerprint": '"policy_fingerprint": "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a"' in windows_eval_text,
         },
         {
-            "shared_literal": True,
-            "private_literal": True,
-            "unsafe_shared_interpolation": False,
-            "unsafe_private_interpolation": False,
+            "host_mapping": True,
+            "private_result": True,
+            "snapshot": True,
+            "relay": True,
+            "shared_helper_rejection": True,
             "current_policy_fingerprint": True,
-            "stale_policy_fingerprint": False,
+            "stale_r2_fingerprint": False,
         },
     )
 
