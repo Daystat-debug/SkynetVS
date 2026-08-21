@@ -23,7 +23,7 @@ V1C2C0 — VERIFIED / NON-AUTHORIZING CLAIM TRANSACTION
 V1C2C1 — VERIFIED / HISTORICAL HOST-ONLY CONTROLLER-WORKER BUNDLE
 V1C2C1R1 — VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C1R2 — VERIFIED / HOST-ONLY / NON-AUTHORIZING
-V1C2C2 — CURRENT / REBIND PRESERVED ACTIVE IMPLEMENTATION / PRO REQUIRED
+V1C2C2 — CURRENT / R2 GUEST-FAILURE DIAGNOSTIC CAPTURE ONLY
 V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
@@ -666,9 +666,9 @@ full check                                 green
 
 ## 11. Mode decision
 
-Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–020 require **Pro Standard**.
+Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–021 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. V1C2C2 corrected-bundle rebind and one fresh active retry are CURRENT in Pro Standard. V1C2C3 is BLOCKED; exact PyPI wheel closure and MinGit pinning also require Pro Standard.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. Exactly one V1C2C2 R2 guest-failure diagnostic capture is CURRENT in Pro Standard. V1C2C3 remains BLOCKED; exact PyPI wheel closure and MinGit pinning also require Pro Standard.
 
 ## V1C2C active composition split — Roadmap Change 016
 
@@ -729,16 +729,48 @@ bundle fingerprint: 449240db944a60ed51a1914f36d6c981a9579cd72e9c0e3802b6b9f3382c
 
 Acceptance and post-commit evidence proved package boundaries `28/28`, portable coverage `41/41`, Windows ACL behavior `3/3`, targeted flow success, isolated full `check`, Runtime Architecture Audit `9/9`, exact four-file commit scope and committed-tree inventory. The helper preserved owner, protection/inheritance and every pre-existing ACL rule, added exactly one worker ACE and left Sandbox launch, transaction consumption, runtime-lease claim, interpreter execution, changed-source processing, changed-code execution, reusable lease and execution authorization false.
 
-The preserved V1C2C2 seven-file implementation remains uncommitted with exact SHA-256 `90bc88930ce093c73ab6d3a5e5ef4bf016d14db46470c4ae62445f630134a657`. It must be rebound to the R2 identities above and stripped of temporary failure diagnostics before one fresh active retry.
+The preserved V1C2C2 seven-file implementation was rebound to the exact R2 identities without scope growth and stripped of temporary failure-only diagnostics. It remains uncommitted with exact candidate SHA-256 `9e4c4fa1d81af471b6f778ec9fabf3b71334742d09b646e07976dac42158e2a1`, semantic policy fingerprint `1cc5a4aedb348f9cb669f2317c3a0a7b24bd11b7bbbd6eadd02907b2b1a8b1e5` and policy-document SHA-256 `71aa6a3228836740411d4c042d12b825cda8337b958771bc8e9ec4579299a5e1`. The one fresh active retry failed closed; only a diagnostic capture is now permitted.
 
 ```text
 V1C2C1R2 VERIFIED
-V1C2C2   CURRENT / REBIND AND FRESH ACTIVE RETRY
+V1C2C2   CURRENT / R2 GUEST-FAILURE DIAGNOSTIC CAPTURE ONLY
 V1C2C3   BLOCKED
 changed_code_executed=false
 reusable_lease_issued=false
 execution_authorized=false
 ```
+
+
+
+## V1C2C2 R2 guest-failure evidence capture — Roadmap Change 021
+
+Roadmap Change 021 is generated from the exact committed documentation export at `HEAD 9a3f227685c6fd7e1097c371ce54137eb0a1c663`, tree `4e6ff04c3f1ce2ca30b8e77e6d74be0c708ef073`, archive SHA-256 `42bfb8e589da5fdd7947594b2e7ab296bc4505cd86dd0592d14ef9e513a9102d`; the three source blob IDs are `a0f8e3a4d1b8ecacf7bfb5ca907bdc152c924e2c`, `318c41956c4770c9e4f1ca3549a70e472fcad5ae` and `b23462bd5852799fd6713a5fae8350cc88c094a5`.
+
+The R2-rebound seven-file candidate is fixed at SHA-256 `9e4c4fa1d81af471b6f778ec9fabf3b71334742d09b646e07976dac42158e2a1`, with V1C2C2 policy fingerprint `1cc5a4aedb348f9cb669f2317c3a0a7b24bd11b7bbbd6eadd02907b2b1a8b1e5` and policy-document SHA-256 `71aa6a3228836740411d4c042d12b825cda8337b958771bc8e9ec4579299a5e1`. Package boundaries passed `28/28` and portable coverage passed `45/45`.
+
+The Roadmap Change 020 active retry consumed one fresh transaction and lease, launched one Sandbox and failed closed with a guest failure artifact. The candidate interpreter did not execute, changed source was not processed, all Sandbox processes exited, no forced cleanup was required, private artifacts were removed and the host repository/workspace remained unchanged. The retained issue codes are:
+
+```text
+compile_ast_composition_guest_failure_reported
+compile_ast_composition_guest_failure_artifact
+```
+
+The report's bounded failure diagnostic carries `file`, `sha256`, `stage`, `error_type` and `error_code` in `issues[].actual`, but that field was not printed by the acceptance evaluator and the artifact tree was correctly removed after exit. Those values are therefore UNVERIFIED.
+
+Roadmap Change 021 authorizes one fresh diagnostic capture only. A temporary external harness may persist the immutable returned report without changing production or candidate bytes. It must use fresh host/snapshot/plan/runtime/lease/transaction state, launch at most one Sandbox, preserve the exact seven-file SHA-256 and finish with no Sandbox processes or private artifacts. The run may parse/compile the fixed benign changed-source boundary, but must never execute changed code or create reusable authority.
+
+```text
+V1C2C2 status:                    CURRENT / DIAGNOSTIC CAPTURE ONLY
+additional acceptance retry:     not authorized
+full check after diagnostic:     not authorized
+candidate code commit:           not authorized
+V1C2C3:                          BLOCKED
+changed_code_executed:           false
+reusable_lease_issued:           false
+execution_authorized:            false
+```
+
+After the one report is captured, stop. A production correction or any further active run requires another explicit Roadmap Change based on the exact guest failure stage and error evidence.
 
 ## V1C2C1R1 verification closure
 
@@ -785,7 +817,7 @@ M tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
 
 The corrected bundle keeps canonical request/ready/terminal `policy_sha256` bound to the exact V1C2A1 contract-policy bytes while independently self-verifying the controller-worker policy. The corrected identities are policy `a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a`, policy-document SHA-256 `3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3`, controller SHA-256 `776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4` and bundle fingerprint `12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303`.
 
-No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. It historically reopened V1C2C2. V1C2C1R2 is now VERIFIED at `d200c49`; V1C2C2 is CURRENT only for corrected-bundle rebind and one fresh active retry; V1C2C3 remains BLOCKED.
+No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. Roadmap Change 020 subsequently inserted and verified V1C2C1R2 and historically authorized exact R2 rebinding plus one fresh active retry. Roadmap Change 021 records that retry as consumed and failed closed; one diagnostic capture is CURRENT and V1C2C3 remains BLOCKED.
 
 ## V1C2C1 implementation identity — Roadmap Change 017
 
@@ -865,4 +897,4 @@ WSB template SHA:   81861905167211b29fbff7179878b6b671c31b731af482166913b5e20416
 bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53cd50c
 ```
 
-The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 remains VERIFIED / HOST-ONLY / NON-AUTHORIZING historical evidence. V1C2C1R1 is independently VERIFIED. V1C2C1R2 is VERIFIED; V1C2C2 is CURRENT only for corrected-bundle rebind and one fresh active retry; V1C2C3 remains BLOCKED.
+The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 remains VERIFIED / HOST-ONLY / NON-AUTHORIZING historical evidence. V1C2C1R1 and V1C2C1R2 are independently VERIFIED. Roadmap Change 020 historically authorized exact R2 rebinding and one fresh active retry; Roadmap Change 021 records that retry as consumed and failed closed. One guest-failure diagnostic capture is CURRENT and V1C2C3 remains BLOCKED.
