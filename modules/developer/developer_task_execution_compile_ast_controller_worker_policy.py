@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""V1C2C1R3 guest-local result relay policy for the fixed compile/AST controller-worker bundle.
+"""V1C2C1R4 signed controller evidence policy for the fixed compile/AST controller-worker bundle.
 
 The Roadmap Change 016 value is retained as an immutable architecture-slice
 identity.  The production policy has a separate, reproducible SHA-256 over its
@@ -73,19 +73,19 @@ from modules.developer.developer_task_execution_runtime_policy import (
 
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_SCHEMA_VERSION = 1
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_ID = (
-    "skynetvs-v1c2c1r3-fixed-system-controller-standard-user-worker-bundle-v4"
+    "skynetvs-v1c2c1r4-fixed-system-controller-standard-user-worker-bundle-v5"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT = (
-    "3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9"
+    "ad14229bad416194d64f21684309cb842af1abaed9e0d2fa05a28a59b3a2e19e"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256 = (
-    "add4992b096cc4ee50fbcc5a898348995277b4c2facb8a4dc8f370f04dd566ea"
+    "6f06c46f729655747f06400055dcc31f79b09372563ef63f551fcd95ec9cf15a"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_ID = (
-    "skynetvs-v1c2c-active-compile-ast-composition-split-v1"
+    "skynetvs-v1c2c1r4-untrusted-wsb-transport-signed-controller-evidence-lock-v1"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_FINGERPRINT = (
-    "56bfd2ca196ca2b6d8f6ad426ea06141fe1535a28a281f0d7661bc8e32ee8ff6"
+    "8ccd984bb6b92d9ad5a6091168efaf902d3ec6524593c89437acd16ad2cdb955"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE = "V1C2C1"
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTITY = (
@@ -93,7 +93,7 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTI
 )
 
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_ID = (
-    "v1c2c1r3_fixed_system_controller_standard_user_worker_payload_bundle_v4"
+    "v1c2c1r4_fixed_system_controller_standard_user_worker_payload_bundle_v5"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FILE_NAME = (
     "compile_ast_controller_worker_policy.json"
@@ -128,6 +128,13 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_LOCAL_STAGE_ROOT = (
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT = (
     r"C:\SkynetVSHostOutput"
 )
+DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_PAYLOAD_FILE_NAME = (
+    "controller_evidence_payload.json"
+)
+DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_SIGNATURE_FILE_NAME = (
+    "controller_evidence_signature.bin"
+)
+DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_MAX_BYTES = 16 * 1024
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_TEMPLATE_INPUT_TOKEN = (
     "@@SKYNETVS_INPUT_HOST@@"
 )
@@ -174,7 +181,7 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                 "slice_identity": self.architecture_slice_identity,
             },
             "operation": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OPERATION,
-            "implementation_revision": "V1C2C1R3",
+            "implementation_revision": "V1C2C1R4",
             "transcript_artifact_binding": {
                 "request_policy_sha256_role": "v1c2a1_contract_policy_file",
                 "ready_terminal_policy_sha256": "echo_request_contract_policy_sha256",
@@ -265,16 +272,18 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                 },
                 "output": {
                     "guest_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
-                    "mode": "writable_controller_only",
+                    "mode": "untrusted_writable_transport",
                 },
             },
             "worker_result_relay": {
                 "host_output_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
                 "worker_result_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
-                "host_mapping_mode": "controller_only_exact_byte_publication_v1",
+                "host_mapping_mode": "untrusted_writable_transport_signed_controller_evidence_v1",
                 "worker_host_mapping_write_required": False,
-                "worker_host_mapping_write_denial_required": True,
+                "worker_host_mapping_write_denial_required": False,
+                "worker_direct_mapping_write_may_succeed": True,
                 "mapped_acl_snapshot_before_after_required": True,
+                "mapped_acl_is_trust_boundary": False,
                 "mapped_acl_mutation_allowed": False,
                 "mapped_owner_mutation_allowed": False,
                 "mapped_protection_mutation_allowed": False,
@@ -305,9 +314,53 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                     "exact_validated_bytes_required": True,
                     "atomic_write_required": True,
                     "post_write_reread_required": True,
-                    "terminal_result_sha256_source": "relayed_result_bytes",
+                    "terminal_result_sha256_source": "signed_private_and_relayed_result_hashes",
                     "local_result_removed_after_relay": True,
                 },
+            },
+            "controller_evidence": {
+                "key": "ephemeral_controller_ecc_key",
+                "ready_pinned_before_worker_creation": True,
+                "ready_post_exit_stability_required": True,
+                "host_transport": "untrusted_writable_wsb_mapping",
+                "payload_file": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_PAYLOAD_FILE_NAME,
+                "signature_file": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_SIGNATURE_FILE_NAME,
+                "payload_max_bytes": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_MAX_BYTES,
+                "canonical_text": "utf8_no_bom_no_trailing_newline_v1",
+                "terminal_success_signed": True,
+                "terminal_failure_signed": True,
+                "failure_artifact_authority": "signed_controller_terminal_only",
+                "unsigned_guest_artifacts_authoritative": False,
+                "worker_direct_mapping_write_may_succeed": True,
+                "worker_may_only_cause_dos": True,
+                "legacy_success_terminal_signature_required": True,
+                "stable_post_exit_reads": 2,
+                "terminal_bindings": [
+                    "request_id",
+                    "host_nonce",
+                    "request_sha256",
+                    "ready_sha256",
+                    "authorize_sha256",
+                    "public_key_sha256",
+                    "runtime_bundle_fingerprint",
+                    "runtime_lease_fingerprint",
+                    "plan_fingerprint",
+                    "source_manifest_sha256",
+                    "private_result_sha256",
+                    "relayed_result_sha256",
+                    "terminal_status",
+                ],
+                "tamper_matrix": [
+                    "precreated_result",
+                    "relayed_result_substitution",
+                    "post_authorization_ready_mutation",
+                    "forged_terminal_payload",
+                    "forged_signature",
+                    "request_nonce_replay",
+                    "unsigned_failure_injection",
+                    "payload_signature_pair_swap",
+                    "between_read_mutation",
+                ],
             },
             "worker": {
                 "account": "fresh_local_standard_user",
@@ -396,7 +449,9 @@ class DeveloperTaskExecutionCompileAstControllerWorkerPolicy:
                 "caller_wsb_settings_allowed": False,
                 "host_fallback_allowed": False,
                 "mapped_folder_acl_mutation_allowed": False,
-                "worker_host_mapping_write_allowed": False,
+                "mapped_folder_acl_trust_allowed": False,
+                "unsigned_guest_artifact_authority_allowed": False,
+                "worker_host_mapping_write_assumed_denied": False,
             },
             "effects": {
                 "sandbox_launched": False,
@@ -522,7 +577,7 @@ def validate_developer_task_execution_compile_ast_controller_worker_policy(
     payload = policy.to_dict()
     if payload["operation"] != DEVELOPER_TASK_EXECUTION_COMPILE_AST_OPERATION:
         errors.append("operation_invalid")
-    if payload["implementation_revision"] != "V1C2C1R3":
+    if payload["implementation_revision"] != "V1C2C1R4":
         errors.append("implementation_revision_invalid")
     if payload["transcript_artifact_binding"] != {
         "request_policy_sha256_role": "v1c2a1_contract_policy_file",
@@ -532,16 +587,18 @@ def validate_developer_task_execution_compile_ast_controller_worker_policy(
         errors.append("transcript_artifact_binding_invalid")
     if payload["mappings"]["output"] != {
         "guest_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
-        "mode": "writable_controller_only",
+        "mode": "untrusted_writable_transport",
     }:
         errors.append("host_output_mapping_invalid")
     if payload["worker_result_relay"] != {
         "host_output_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_HOST_OUTPUT_ROOT,
         "worker_result_root": DEVELOPER_TASK_EXECUTION_COMPILE_AST_OUTPUT_ROOT,
-        "host_mapping_mode": "controller_only_exact_byte_publication_v1",
+        "host_mapping_mode": "untrusted_writable_transport_signed_controller_evidence_v1",
         "worker_host_mapping_write_required": False,
-        "worker_host_mapping_write_denial_required": True,
+        "worker_host_mapping_write_denial_required": False,
+        "worker_direct_mapping_write_may_succeed": True,
         "mapped_acl_snapshot_before_after_required": True,
+        "mapped_acl_is_trust_boundary": False,
         "mapped_acl_mutation_allowed": False,
         "mapped_owner_mutation_allowed": False,
         "mapped_protection_mutation_allowed": False,
@@ -572,11 +629,56 @@ def validate_developer_task_execution_compile_ast_controller_worker_policy(
             "exact_validated_bytes_required": True,
             "atomic_write_required": True,
             "post_write_reread_required": True,
-            "terminal_result_sha256_source": "relayed_result_bytes",
+            "terminal_result_sha256_source": "signed_private_and_relayed_result_hashes",
             "local_result_removed_after_relay": True,
         },
     }:
         errors.append("worker_result_relay_policy_invalid")
+    if payload["controller_evidence"] != {
+        "key": "ephemeral_controller_ecc_key",
+        "ready_pinned_before_worker_creation": True,
+        "ready_post_exit_stability_required": True,
+        "host_transport": "untrusted_writable_wsb_mapping",
+        "payload_file": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_PAYLOAD_FILE_NAME,
+        "signature_file": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_SIGNATURE_FILE_NAME,
+        "payload_max_bytes": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_MAX_BYTES,
+        "canonical_text": "utf8_no_bom_no_trailing_newline_v1",
+        "terminal_success_signed": True,
+        "terminal_failure_signed": True,
+        "failure_artifact_authority": "signed_controller_terminal_only",
+        "unsigned_guest_artifacts_authoritative": False,
+        "worker_direct_mapping_write_may_succeed": True,
+        "worker_may_only_cause_dos": True,
+        "legacy_success_terminal_signature_required": True,
+        "stable_post_exit_reads": 2,
+        "terminal_bindings": [
+            "request_id",
+            "host_nonce",
+            "request_sha256",
+            "ready_sha256",
+            "authorize_sha256",
+            "public_key_sha256",
+            "runtime_bundle_fingerprint",
+            "runtime_lease_fingerprint",
+            "plan_fingerprint",
+            "source_manifest_sha256",
+            "private_result_sha256",
+            "relayed_result_sha256",
+            "terminal_status",
+        ],
+        "tamper_matrix": [
+            "precreated_result",
+            "relayed_result_substitution",
+            "post_authorization_ready_mutation",
+            "forged_terminal_payload",
+            "forged_signature",
+            "request_nonce_replay",
+            "unsigned_failure_injection",
+            "payload_signature_pair_swap",
+            "between_read_mutation",
+        ],
+    }:
+        errors.append("controller_evidence_policy_invalid")
     if payload["worker"]["job"] != {
         "unnamed": True,
         "kill_on_close": True,

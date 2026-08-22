@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import subprocess
@@ -15,13 +16,26 @@ from modules.developer.developer_task_execution_compile_ast_controller_worker im
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_CONTROLLER_SHA256,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_NATIVE_HELPER_SHA256,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_TEMPLATE_SHA256,
+    DeveloperTaskExecutionCompileAstControllerEvidenceExpectation,
     build_developer_task_execution_compile_ast_controller_worker_bundle,
+    verify_developer_task_execution_compile_ast_controller_evidence_transport,
 )
 from modules.developer.developer_task_execution_compile_ast_controller_worker_policy import (
+    DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_FINGERPRINT,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTITY,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
 )
+
+
+_REQUEST_ID = "1" * 32
+_HOST_NONCE = "2" * 64
+_REQUEST_SHA256 = "3" * 64
+_AUTHORIZE_SHA256 = "4" * 64
+_RUNTIME_BUNDLE_FINGERPRINT = "5" * 64
+_RUNTIME_LEASE_FINGERPRINT = "6" * 64
+_PLAN_FINGERPRINT = "7" * 64
+_SOURCE_MANIFEST_SHA256 = "8" * 64
 
 
 _COMPILE_SCRIPT = r'''param(
@@ -34,6 +48,7 @@ _COMPILE_SCRIPT = r'''param(
 
 $ErrorActionPreference = "Stop"
 $strictUtf8 = [System.Text.UTF8Encoding]::new($false, $true)
+$utf8 = [System.Text.UTF8Encoding]::new($false)
 $policyText = [System.IO.File]::ReadAllText($PolicyPath, $strictUtf8)
 $nativeHelperText = [System.IO.File]::ReadAllText($NativeHelperPath, $strictUtf8)
 $bootstrapText = [System.IO.File]::ReadAllText($BootstrapPath, $strictUtf8)
@@ -51,27 +66,38 @@ if ([uint64][V1C2C1Native]::COMPILE_AST_JOB_MEMORY_BYTES -ne 805306368) { throw 
 if ($null -eq [V1C2C1Native].GetMethod("CaptureDirectoryAclSnapshot")) { throw "Missing mapped ACL snapshot method." }
 if ($null -eq [V1C2C1Native].GetMethod("AssertDirectoryAclSnapshotUnchanged")) { throw "Missing mapped ACL assertion method." }
 if ($null -eq [V1C2C1Native].GetMethod("AssertPrivateWorkerResultDirectory")) { throw "Missing private result ACL assertion method." }
-if ($null -eq [V1C2C1Native].GetMethod("ProbeTokenHostOutputWriteDenied")) { throw "Missing worker host-output denial method." }
+if ($null -eq [V1C2C1Native].GetMethod("CreateEphemeralEcdsaP256SigningKey")) { throw "Missing ephemeral controller signing-key method." }
 if ($null -ne [V1C2C1Native].GetMethod("PrepareSharedWorkerOutputDirectory")) { throw "Destructive mapped-output ACL helper remains exposed." }
 if ($nativeHelperText.Contains("PrepareSharedWorkerOutputDirectory")) { throw "Destructive mapped-output ACL helper remains in source." }
 
 if (-not $controllerText.Contains('$hostOutputRoot = "C:\SkynetVSHostOutput"')) { throw "Controller host-output root is invalid." }
 if (-not $controllerText.Contains('$workerResultRoot = "C:\SkynetVSOutput"')) { throw "Controller private result root is invalid." }
-if (-not $controllerText.Contains('ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)')) { throw "Controller does not prove worker denial on host output." }
+if ($controllerText.Contains('ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)')) { throw "Controller still assumes mapped-folder write denial." }
 if (-not $controllerText.Contains('PrepareWorkerResultDirectory($workerResultRoot, $workerSid)')) { throw "Controller does not harden the private worker result root." }
 if (-not $controllerText.Contains('Relay-TrustedCompileAstResult -Evidence $localResultEvidence')) { throw "Controller does not relay exact local result bytes." }
+if (-not $controllerText.Contains('function Publish-SignedControllerEvidence')) { throw "Controller does not publish signed R4 evidence." }
+if (-not $controllerText.Contains('controller_evidence_payload.json')) { throw "Controller evidence payload path is missing." }
+if (-not $controllerText.Contains('controller_evidence_signature.bin')) { throw "Controller evidence signature path is missing." }
+if (-not $controllerText.Contains('-Outcome "success"')) { throw "Controller signed success publication is missing." }
+if (-not $controllerText.Contains('-Outcome "failure"')) { throw "Controller signed failure publication is missing." }
+if (-not $controllerText.Contains('authoritative = $false')) { throw "Unsigned diagnostic failure is not explicitly non-authoritative." }
 if ($controllerText.Contains("PrepareSharedWorkerOutputDirectory")) { throw "Controller still mutates mapped output ACL." }
 
 if ([string]$policy.architecture_lock.slice -cne "V1C2C1") { throw "Policy architecture slice is invalid." }
-if ([string]$policy.implementation_revision -cne "V1C2C1R3") { throw "Policy implementation revision is invalid." }
+if ([string]$policy.implementation_revision -cne "V1C2C1R4") { throw "Policy implementation revision is invalid." }
 if ([string]$policy.mappings.output.guest_root -cne "C:\SkynetVSHostOutput") { throw "Policy host-output mapping is invalid." }
+if ([string]$policy.mappings.output.mode -cne "untrusted_writable_transport") { throw "Policy does not mark the host mapping untrusted." }
 if ([string]$policy.worker_result_relay.worker_result_root -cne "C:\SkynetVSOutput") { throw "Policy private result root is invalid." }
-if (-not [bool]$policy.worker_result_relay.worker_host_mapping_write_denial_required) { throw "Policy does not require worker host-output denial." }
+if ([bool]$policy.worker_result_relay.worker_host_mapping_write_denial_required) { throw "Policy still requires worker host-output denial." }
+if (-not [bool]$policy.worker_result_relay.worker_direct_mapping_write_may_succeed) { throw "Policy does not acknowledge writable transport." }
+if ([bool]$policy.worker_result_relay.mapped_acl_is_trust_boundary) { throw "Policy still treats mapped ACL as a trust boundary." }
 if ([bool]$policy.worker_result_relay.mapped_acl_mutation_allowed -or [bool]$policy.worker_result_relay.mapped_owner_mutation_allowed -or [bool]$policy.worker_result_relay.mapped_protection_mutation_allowed) { throw "Policy permits mapped-output security mutation." }
-if (-not [bool]$policy.worker_result_relay.relay.after_worker_exit -or -not [bool]$policy.worker_result_relay.relay.after_job_close -or -not [bool]$policy.worker_result_relay.relay.after_worker_sid_quiescence -or -not [bool]$policy.worker_result_relay.relay.after_account_deletion) { throw "Relay ordering requirements are incomplete." }
-if (-not [bool]$policy.worker_result_relay.relay.exact_validated_bytes_required -or -not [bool]$policy.worker_result_relay.relay.atomic_write_required -or -not [bool]$policy.worker_result_relay.relay.post_write_reread_required) { throw "Relay byte requirements are incomplete." }
+if ([string]$policy.controller_evidence.host_transport -cne "untrusted_writable_wsb_mapping") { throw "Controller evidence transport policy is invalid." }
+if (-not [bool]$policy.controller_evidence.terminal_success_signed -or -not [bool]$policy.controller_evidence.terminal_failure_signed) { throw "Controller evidence signing policy is incomplete." }
+if ([bool]$policy.controller_evidence.unsigned_guest_artifacts_authoritative) { throw "Unsigned guest artifacts remain authoritative." }
+if (@($policy.controller_evidence.tamper_matrix).Count -ne 9) { throw "Controller evidence tamper matrix is incomplete." }
 
-$probeRoot = Join-Path (Split-Path -Parent $PolicyPath) "r3-relay-probe"
+$probeRoot = Join-Path (Split-Path -Parent $PolicyPath) "r4-signed-evidence-probe"
 if (Test-Path -LiteralPath $probeRoot) { Remove-Item -LiteralPath $probeRoot -Recurse -Force }
 $hostRoot = Join-Path $probeRoot "host-output"
 $localRoot = Join-Path $probeRoot "local-result"
@@ -84,67 +110,196 @@ $rulesBefore = [string]$snapshot.RuleMultisetCanonical
 $sourcePath = Join-Path $localRoot "result.json"
 $destinationPath = Join-Path $hostRoot "result.json"
 $tempPath = Join-Path $hostRoot ".result.json.relay.tmp"
-$sourceBytes = [System.Text.UTF8Encoding]::new($false).GetBytes('{"schema_version":1,"status":"passed"}' + "`n")
-[System.IO.File]::WriteAllBytes($sourcePath, $sourceBytes)
-[System.IO.File]::WriteAllBytes($tempPath, $sourceBytes)
+$resultText = '{"schema_version":1,"status":"passed"}' + "`n"
+$resultBytes = $utf8.GetBytes($resultText)
+[System.IO.File]::WriteAllBytes($sourcePath, $resultBytes)
+[System.IO.File]::WriteAllBytes($tempPath, $resultBytes)
 [System.IO.File]::Move($tempPath, $destinationPath)
 $relayedBytes = [System.IO.File]::ReadAllBytes($destinationPath)
-if ($relayedBytes.Length -ne $sourceBytes.Length) { throw "Relayed result size changed." }
-for ($index = 0; $index -lt $sourceBytes.Length; $index++) { if ($sourceBytes[$index] -ne $relayedBytes[$index]) { throw "Relayed result bytes changed." } }
+if ($relayedBytes.Length -ne $resultBytes.Length) { throw "Relayed result size changed." }
+for ($index = 0; $index -lt $resultBytes.Length; $index++) { if ($resultBytes[$index] -ne $relayedBytes[$index]) { throw "Relayed result bytes changed." } }
 [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostRoot, $snapshot)
 $after = [V1C2C1Native]::CaptureDirectoryAclSnapshot($hostRoot)
 if ([string]$after.OwnerSid -cne $ownerBefore) { throw "Host output owner changed in relay smoke." }
 if ([bool]$after.AccessRulesProtected -ne $protectionBefore) { throw "Host output protection changed in relay smoke." }
 if ([string]$after.RuleMultisetCanonical -cne $rulesBefore) { throw "Host output ACL rules changed in relay smoke." }
-Remove-Item -LiteralPath $probeRoot -Recurse -Force
 
-[xml]$wsb = $wsbText
-$mappedFolders = @($wsb.Configuration.MappedFolders.MappedFolder)
-if ($mappedFolders.Count -ne 4) { throw "WSB mapping count is invalid." }
-if (@($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "true" }).Count -ne 3) { throw "WSB read-only mapping count is invalid." }
-if (@($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "false" }).Count -ne 1) { throw "WSB writable mapping count is invalid." }
-$writable = @($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "false" })
-if ([string]$writable[0].SandboxFolder -cne "C:\SkynetVSHostOutput") { throw "WSB writable mapping does not target host output root." }
-if (@($mappedFolders | Where-Object { [string]$_.SandboxFolder -ceq "C:\SkynetVSOutput" }).Count -ne 0) { throw "Private worker result root is still mapped." }
-if ([string]$wsb.Configuration.Networking -cne "Disable") { throw "WSB networking is not disabled." }
+function Get-Sha256Hex([byte[]]$Bytes) {
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try { return -join ($sha.ComputeHash($Bytes) | ForEach-Object { $_.ToString("x2") }) }
+    finally { $sha.Dispose() }
+}
+function Sign-Bytes([System.Security.Cryptography.ECDsaCng]$Ecdsa, [byte[]]$Bytes) {
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try { $digest = $sha.ComputeHash($Bytes) }
+    finally { $sha.Dispose() }
+    return $Ecdsa.SignHash($digest)
+}
 
-[pscustomobject]@{
-    native_helper_compiled = $true
-    bootstrap_parsed = $true
-    controller_parsed = $true
-    policy_parsed = $true
-    wsb_parsed = $true
-    architecture_slice = [string]$policy.architecture_lock.slice
-    implementation_revision = [string]$policy.implementation_revision
-    guest_local_result_relay = $true
-    host_output_acl_preserved = $true
-    host_output_owner_preserved = ([string]$after.OwnerSid -ceq $ownerBefore)
-    host_output_rules_preserved = ([string]$after.RuleMultisetCanonical -ceq $rulesBefore)
-    host_output_protection_preserved = ([bool]$after.AccessRulesProtected -eq $protectionBefore)
-    exact_result_bytes_relayed = $true
-    worker_host_mapping_write_denial_method = ($null -ne [V1C2C1Native].GetMethod("ProbeTokenHostOutputWriteDenied"))
-    mapped_acl_mutation_absent = (-not $nativeHelperText.Contains("PrepareSharedWorkerOutputDirectory"))
-    worker_integrity_rid = [int][V1C2C1Native]::WORKER_INTEGRITY_RID
-    active_process_limit = [uint32][V1C2C1Native]::COMPILE_AST_ACTIVE_PROCESS_LIMIT
-    process_memory_bytes = [uint64][V1C2C1Native]::COMPILE_AST_PROCESS_MEMORY_BYTES
-    job_memory_bytes = [uint64][V1C2C1Native]::COMPILE_AST_JOB_MEMORY_BYTES
-    mapped_folders = $mappedFolders.Count
-    readonly_mappings = 3
-    writable_mappings = 1
-    host_output_mapping = ([string]$writable[0].SandboxFolder -ceq "C:\SkynetVSHostOutput")
-    private_result_not_mapped = (@($mappedFolders | Where-Object { [string]$_.SandboxFolder -ceq "C:\SkynetVSOutput" }).Count -eq 0)
-    networking_disabled = $true
-    inherited_handles = $false
-    create_suspended = $true
-    assign_before_resume = $true
-    sandbox_launched = $false
-    claim_transaction_consumed = $false
-    runtime_lease_claimed = $false
-    interpreter_executed = $false
-    changed_source_processed = $false
-    execution_authorized = $false
-} | ConvertTo-Json -Compress
+$cngKey = [V1C2C1Native]::CreateEphemeralEcdsaP256SigningKey()
+$ecdsa = [System.Security.Cryptography.ECDsaCng]::new($cngKey)
+try {
+    $publicBlob = $cngKey.Export([System.Security.Cryptography.CngKeyBlobFormat]::EccPublicBlob)
+    $publicKeySha256 = Get-Sha256Hex $publicBlob
+    $readyText = '{"schema_version":1,"overall_ok":true}'
+    $readyBytes = $utf8.GetBytes($readyText)
+    $readySha256 = Get-Sha256Hex $readyBytes
+    $resultSha256 = Get-Sha256Hex $resultBytes
+
+    $terminal = [ordered]@{
+        request_id = "11111111111111111111111111111111"
+        host_nonce = "2222222222222222222222222222222222222222222222222222222222222222"
+        request_sha256 = "3333333333333333333333333333333333333333333333333333333333333333"
+        ready_sha256 = $readySha256
+        authorize_sha256 = "4444444444444444444444444444444444444444444444444444444444444444"
+        public_key_sha256 = $publicKeySha256
+        runtime_bundle_fingerprint = "5555555555555555555555555555555555555555555555555555555555555555"
+        runtime_lease_fingerprint = "6666666666666666666666666666666666666666666666666666666666666666"
+        plan_fingerprint = "7777777777777777777777777777777777777777777777777777777777777777"
+        source_manifest_sha256 = "8888888888888888888888888888888888888888888888888888888888888888"
+        result_sha256 = $resultSha256
+        status = "compile_ast_attested_passed"
+        check = [ordered]@{ changed_code_executed = $false }
+        reusable_lease_issued = $false
+        execution_authorized = $false
+    }
+    $terminalText = $terminal | ConvertTo-Json -Depth 6 -Compress
+    $terminalBytes = $utf8.GetBytes($terminalText)
+    $terminalSignature = Sign-Bytes $ecdsa $terminalBytes
+
+    $success = [ordered]@{
+        schema_version = 1
+        evidence_type = "compile_ast_controller_terminal_v1"
+        implementation_revision = "V1C2C1R4"
+        outcome = "success"
+        terminal_status = "compile_ast_attested_passed"
+        request_id = "11111111111111111111111111111111"
+        host_nonce = "2222222222222222222222222222222222222222222222222222222222222222"
+        request_sha256 = "3333333333333333333333333333333333333333333333333333333333333333"
+        ready_sha256 = $readySha256
+        authorize_sha256 = "4444444444444444444444444444444444444444444444444444444444444444"
+        public_key_sha256 = $publicKeySha256
+        runtime_bundle_fingerprint = "5555555555555555555555555555555555555555555555555555555555555555"
+        runtime_lease_fingerprint = "6666666666666666666666666666666666666666666666666666666666666666"
+        plan_fingerprint = "7777777777777777777777777777777777777777777777777777777777777777"
+        source_manifest_sha256 = "8888888888888888888888888888888888888888888888888888888888888888"
+        private_result_sha256 = $resultSha256
+        relayed_result_sha256 = $resultSha256
+        terminal_payload_sha256 = (Get-Sha256Hex $terminalBytes)
+        failure_stage = ""
+        failure_type = ""
+        failure_code = ""
+        failure_message_sha256 = ""
+        completed_at_utc = "2026-08-22T00:00:00.0000000Z"
+        changed_code_executed = $false
+        reusable_lease_issued = $false
+        execution_authorized = $false
+    }
+    $successText = $success | ConvertTo-Json -Depth 5 -Compress
+    $successBytes = $utf8.GetBytes($successText)
+    $successSignature = Sign-Bytes $ecdsa $successBytes
+
+    $failureMessageBytes = $utf8.GetBytes("synthetic trusted controller failure")
+    $failure = [ordered]@{
+        schema_version = 1
+        evidence_type = "compile_ast_controller_terminal_v1"
+        implementation_revision = "V1C2C1R4"
+        outcome = "failure"
+        terminal_status = "compile_ast_controller_failed"
+        request_id = "11111111111111111111111111111111"
+        host_nonce = "2222222222222222222222222222222222222222222222222222222222222222"
+        request_sha256 = "3333333333333333333333333333333333333333333333333333333333333333"
+        ready_sha256 = $readySha256
+        authorize_sha256 = "4444444444444444444444444444444444444444444444444444444444444444"
+        public_key_sha256 = $publicKeySha256
+        runtime_bundle_fingerprint = "5555555555555555555555555555555555555555555555555555555555555555"
+        runtime_lease_fingerprint = "6666666666666666666666666666666666666666666666666666666666666666"
+        plan_fingerprint = "7777777777777777777777777777777777777777777777777777777777777777"
+        source_manifest_sha256 = "8888888888888888888888888888888888888888888888888888888888888888"
+        private_result_sha256 = ""
+        relayed_result_sha256 = ""
+        terminal_payload_sha256 = ""
+        failure_stage = "compile_ast_worker"
+        failure_type = "System.InvalidOperationException"
+        failure_code = "compile_ast_controller_worker_stage_failed"
+        failure_message_sha256 = (Get-Sha256Hex $failureMessageBytes)
+        completed_at_utc = "2026-08-22T00:00:01.0000000Z"
+        changed_code_executed = $false
+        reusable_lease_issued = $false
+        execution_authorized = $false
+    }
+    $failureText = $failure | ConvertTo-Json -Depth 5 -Compress
+    $failureBytes = $utf8.GetBytes($failureText)
+    $failureSignature = Sign-Bytes $ecdsa $failureBytes
+
+    [xml]$wsb = $wsbText
+    $mappedFolders = @($wsb.Configuration.MappedFolders.MappedFolder)
+    if ($mappedFolders.Count -ne 4) { throw "WSB mapping count is invalid." }
+    if (@($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "true" }).Count -ne 3) { throw "WSB read-only mapping count is invalid." }
+    if (@($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "false" }).Count -ne 1) { throw "WSB writable mapping count is invalid." }
+    $writable = @($mappedFolders | Where-Object { [string]$_.ReadOnly -eq "false" })
+    if ([string]$writable[0].SandboxFolder -cne "C:\SkynetVSHostOutput") { throw "WSB writable mapping does not target host output root." }
+    if (@($mappedFolders | Where-Object { [string]$_.SandboxFolder -ceq "C:\SkynetVSOutput" }).Count -ne 0) { throw "Private worker result root is still mapped." }
+    if ([string]$wsb.Configuration.Networking -cne "Disable") { throw "WSB networking is not disabled." }
+
+    [pscustomobject]@{
+        native_helper_compiled = $true
+        bootstrap_parsed = $true
+        controller_parsed = $true
+        policy_parsed = $true
+        wsb_parsed = $true
+        architecture_slice = [string]$policy.architecture_lock.slice
+        implementation_revision = [string]$policy.implementation_revision
+        untrusted_writable_transport = ([string]$policy.mappings.output.mode -ceq "untrusted_writable_transport")
+        mapped_acl_is_trust_boundary = [bool]$policy.worker_result_relay.mapped_acl_is_trust_boundary
+        worker_write_denial_required = [bool]$policy.worker_result_relay.worker_host_mapping_write_denial_required
+        signed_success_required = [bool]$policy.controller_evidence.terminal_success_signed
+        signed_failure_required = [bool]$policy.controller_evidence.terminal_failure_signed
+        unsigned_failure_authoritative = [bool]$policy.controller_evidence.unsigned_guest_artifacts_authoritative
+        tamper_matrix_count = @($policy.controller_evidence.tamper_matrix).Count
+        host_output_acl_preserved = $true
+        host_output_owner_preserved = ([string]$after.OwnerSid -ceq $ownerBefore)
+        host_output_rules_preserved = ([string]$after.RuleMultisetCanonical -ceq $rulesBefore)
+        host_output_protection_preserved = ([bool]$after.AccessRulesProtected -eq $protectionBefore)
+        exact_result_bytes_relayed = $true
+        mapped_acl_mutation_absent = (-not $nativeHelperText.Contains("PrepareSharedWorkerOutputDirectory"))
+        controller_denial_probe_absent = (-not $controllerText.Contains('ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)'))
+        worker_integrity_rid = [int][V1C2C1Native]::WORKER_INTEGRITY_RID
+        active_process_limit = [uint32][V1C2C1Native]::COMPILE_AST_ACTIVE_PROCESS_LIMIT
+        process_memory_bytes = [uint64][V1C2C1Native]::COMPILE_AST_PROCESS_MEMORY_BYTES
+        job_memory_bytes = [uint64][V1C2C1Native]::COMPILE_AST_JOB_MEMORY_BYTES
+        mapped_folders = $mappedFolders.Count
+        readonly_mappings = 3
+        writable_mappings = 1
+        host_output_mapping = ([string]$writable[0].SandboxFolder -ceq "C:\SkynetVSHostOutput")
+        private_result_not_mapped = (@($mappedFolders | Where-Object { [string]$_.SandboxFolder -ceq "C:\SkynetVSOutput" }).Count -eq 0)
+        networking_disabled = $true
+        public_key_blob_base64 = [Convert]::ToBase64String($publicBlob)
+        ready_base64 = [Convert]::ToBase64String($readyBytes)
+        result_base64 = [Convert]::ToBase64String($resultBytes)
+        terminal_base64 = [Convert]::ToBase64String($terminalBytes)
+        terminal_signature_base64 = [Convert]::ToBase64String($terminalSignature)
+        success_payload_base64 = [Convert]::ToBase64String($successBytes)
+        success_signature_base64 = [Convert]::ToBase64String($successSignature)
+        failure_payload_base64 = [Convert]::ToBase64String($failureBytes)
+        failure_signature_base64 = [Convert]::ToBase64String($failureSignature)
+        sandbox_launched = $false
+        claim_transaction_consumed = $false
+        runtime_lease_claimed = $false
+        interpreter_executed = $false
+        changed_source_processed = $false
+        changed_code_executed = $false
+        reusable_lease_issued = $false
+        execution_authorized = $false
+    } | ConvertTo-Json -Compress
+}
+finally {
+    $ecdsa.Dispose()
+    $cngKey.Dispose()
+    Remove-Item -LiteralPath $probeRoot -Recurse -Force -ErrorAction SilentlyContinue
+}
 '''
+
 
 def _sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -161,6 +316,16 @@ def _decode_windows_process_output(data: bytes | None) -> str:
     return data.decode("utf-8", errors="backslashreplace")
 
 
+def _b64(value: dict[str, Any], name: str) -> bytes:
+    raw = value.get(name)
+    if not isinstance(raw, str):
+        return b""
+    try:
+        return base64.b64decode(raw, validate=True)
+    except (ValueError, TypeError):
+        return b""
+
+
 def main() -> int:
     case_count = 0
     fail_count = 0
@@ -173,26 +338,33 @@ def main() -> int:
             fail_count += 1
         print()
         print(f"=== {name} ===")
-        print(json.dumps({"actual": actual, "expected": expected, "ok": ok}, ensure_ascii=False, indent=2, default=str))
+        print(
+            json.dumps(
+                {"actual": actual, "expected": expected, "ok": ok},
+                ensure_ascii=False,
+                indent=2,
+                default=str,
+            )
+        )
         print(f"[{'OK' if ok else 'FAIL'}] {name}")
 
     if sys.platform != "win32":
-        print("[SKIP] V1C2C1R3 PowerShell/C# host-only smoke requires win32.")
+        print("[SKIP] V1C2C1R4 PowerShell/C# host-only crypto smoke requires win32.")
         return 0
 
     bundle = build_developer_task_execution_compile_ast_controller_worker_bundle()
-    with tempfile.TemporaryDirectory(prefix="skynetvs-v1c2c1r3-compile-") as temp_dir:
+    with tempfile.TemporaryDirectory(prefix="skynetvs-v1c2c1r4-crypto-") as temp_dir:
         root = Path(temp_dir)
         paths: dict[str, Path] = {}
         for payload in bundle.payloads:
             path = root / payload.file_name
             path.write_bytes(payload.exact_bytes())
             paths[payload.kind] = path
-        script_path = root / "compile_v1c2c1r3.ps1"
+        script_path = root / "compile_v1c2c1r4.ps1"
         script_path.write_text(_COMPILE_SCRIPT, encoding="utf-8", newline="\n")
 
         check(
-            "EXACT V1C2C1R3 PAYLOAD BYTES ARE STAGED FOR COMPILE AND PARSE ONLY",
+            "EXACT V1C2C1R4 PAYLOAD BYTES ARE STAGED FOR COMPILE PARSE AND CRYPTO ONLY",
             {
                 "policy": _sha256(paths["compile_ast_controller_worker_policy"].read_bytes()),
                 "bootstrap": _sha256(paths["trusted_bootstrap"].read_bytes()),
@@ -215,15 +387,29 @@ def main() -> int:
 
         completed = subprocess.run(
             [
-                "powershell.exe", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass",
-                "-File", str(script_path),
-                "-PolicyPath", str(paths["compile_ast_controller_worker_policy"]),
-                "-NativeHelperPath", str(paths["trusted_native_helper"]),
-                "-BootstrapPath", str(paths["trusted_bootstrap"]),
-                "-ControllerPath", str(paths["trusted_system_controller"]),
-                "-WsbPath", str(paths["windows_sandbox_template"]),
+                "powershell.exe",
+                "-NoProfile",
+                "-NonInteractive",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                str(script_path),
+                "-PolicyPath",
+                str(paths["compile_ast_controller_worker_policy"]),
+                "-NativeHelperPath",
+                str(paths["trusted_native_helper"]),
+                "-BootstrapPath",
+                str(paths["trusted_bootstrap"]),
+                "-ControllerPath",
+                str(paths["trusted_system_controller"]),
+                "-WsbPath",
+                str(paths["windows_sandbox_template"]),
             ],
-            cwd=str(root), capture_output=True, text=False, timeout=90.0, check=False,
+            cwd=str(root),
+            capture_output=True,
+            text=False,
+            timeout=90.0,
+            check=False,
         )
         stdout_bytes = completed.stdout or b""
         stderr_text = _decode_windows_process_output(completed.stderr)
@@ -239,7 +425,7 @@ def main() -> int:
             if isinstance(parsed, dict):
                 last_json = parsed
 
-        actual = {
+        structural_actual = {
             "returncode": completed.returncode,
             "native_helper_compiled": bool(last_json and last_json.get("native_helper_compiled")),
             "bootstrap_parsed": bool(last_json and last_json.get("bootstrap_parsed")),
@@ -248,14 +434,20 @@ def main() -> int:
             "wsb_parsed": bool(last_json and last_json.get("wsb_parsed")),
             "architecture_slice": str(last_json.get("architecture_slice", "")) if last_json else "",
             "implementation_revision": str(last_json.get("implementation_revision", "")) if last_json else "",
-            "guest_local_result_relay": bool(last_json and last_json.get("guest_local_result_relay")),
+            "untrusted_writable_transport": bool(last_json and last_json.get("untrusted_writable_transport")),
+            "mapped_acl_is_trust_boundary": bool(last_json and last_json.get("mapped_acl_is_trust_boundary")),
+            "worker_write_denial_required": bool(last_json and last_json.get("worker_write_denial_required")),
+            "signed_success_required": bool(last_json and last_json.get("signed_success_required")),
+            "signed_failure_required": bool(last_json and last_json.get("signed_failure_required")),
+            "unsigned_failure_authoritative": bool(last_json and last_json.get("unsigned_failure_authoritative")),
+            "tamper_matrix_count": int(last_json.get("tamper_matrix_count", 0)) if last_json else 0,
             "host_output_acl_preserved": bool(last_json and last_json.get("host_output_acl_preserved")),
             "host_output_owner_preserved": bool(last_json and last_json.get("host_output_owner_preserved")),
             "host_output_rules_preserved": bool(last_json and last_json.get("host_output_rules_preserved")),
             "host_output_protection_preserved": bool(last_json and last_json.get("host_output_protection_preserved")),
             "exact_result_bytes_relayed": bool(last_json and last_json.get("exact_result_bytes_relayed")),
-            "worker_host_mapping_write_denial_method": bool(last_json and last_json.get("worker_host_mapping_write_denial_method")),
             "mapped_acl_mutation_absent": bool(last_json and last_json.get("mapped_acl_mutation_absent")),
+            "controller_denial_probe_absent": bool(last_json and last_json.get("controller_denial_probe_absent")),
             "worker_integrity_rid": int(last_json.get("worker_integrity_rid", 0)) if last_json else 0,
             "active_process_limit": int(last_json.get("active_process_limit", 0)) if last_json else 0,
             "process_memory_bytes": int(last_json.get("process_memory_bytes", 0)) if last_json else 0,
@@ -266,18 +458,17 @@ def main() -> int:
             "host_output_mapping": bool(last_json and last_json.get("host_output_mapping")),
             "private_result_not_mapped": bool(last_json and last_json.get("private_result_not_mapped")),
             "networking_disabled": bool(last_json and last_json.get("networking_disabled")),
-            "inherited_handles": bool(last_json and last_json.get("inherited_handles")),
-            "create_suspended": bool(last_json and last_json.get("create_suspended")),
-            "assign_before_resume": bool(last_json and last_json.get("assign_before_resume")),
             "sandbox_launched": bool(last_json and last_json.get("sandbox_launched")),
             "claim_transaction_consumed": bool(last_json and last_json.get("claim_transaction_consumed")),
             "runtime_lease_claimed": bool(last_json and last_json.get("runtime_lease_claimed")),
             "interpreter_executed": bool(last_json and last_json.get("interpreter_executed")),
             "changed_source_processed": bool(last_json and last_json.get("changed_source_processed")),
+            "changed_code_executed": bool(last_json and last_json.get("changed_code_executed")),
+            "reusable_lease_issued": bool(last_json and last_json.get("reusable_lease_issued")),
             "execution_authorized": bool(last_json and last_json.get("execution_authorized")),
             "stderr": stderr_text.strip(),
         }
-        expected = {
+        structural_expected = {
             "returncode": 0,
             "native_helper_compiled": True,
             "bootstrap_parsed": True,
@@ -285,15 +476,21 @@ def main() -> int:
             "policy_parsed": True,
             "wsb_parsed": True,
             "architecture_slice": "V1C2C1",
-            "implementation_revision": "V1C2C1R3",
-            "guest_local_result_relay": True,
+            "implementation_revision": "V1C2C1R4",
+            "untrusted_writable_transport": True,
+            "mapped_acl_is_trust_boundary": False,
+            "worker_write_denial_required": False,
+            "signed_success_required": True,
+            "signed_failure_required": True,
+            "unsigned_failure_authoritative": False,
+            "tamper_matrix_count": 9,
             "host_output_acl_preserved": True,
             "host_output_owner_preserved": True,
             "host_output_rules_preserved": True,
             "host_output_protection_preserved": True,
             "exact_result_bytes_relayed": True,
-            "worker_host_mapping_write_denial_method": True,
             "mapped_acl_mutation_absent": True,
+            "controller_denial_probe_absent": True,
             "worker_integrity_rid": 8192,
             "active_process_limit": 1,
             "process_memory_bytes": 536870912,
@@ -304,25 +501,171 @@ def main() -> int:
             "host_output_mapping": True,
             "private_result_not_mapped": True,
             "networking_disabled": True,
-            "inherited_handles": False,
-            "create_suspended": True,
-            "assign_before_resume": True,
             "sandbox_launched": False,
             "claim_transaction_consumed": False,
             "runtime_lease_claimed": False,
             "interpreter_executed": False,
             "changed_source_processed": False,
+            "changed_code_executed": False,
+            "reusable_lease_issued": False,
             "execution_authorized": False,
             "stderr": "",
         }
         check(
-            "V1C2C1R3 NATIVE HELPER COMPILES AND ORDINARY NTFS ACL RELAY SMOKE PASSES WITHOUT EXECUTION",
-            actual,
-            expected,
+            "V1C2C1R4 NATIVE CONTROLLER POLICY WSB AND ACL HYGIENE PASS WITHOUT EXECUTION",
+            structural_actual,
+            structural_expected,
+        )
+
+        if last_json is None:
+            public_key = ready = result = terminal = terminal_signature = b""
+            success_payload = success_signature = failure_payload = failure_signature = b""
+        else:
+            public_key = _b64(last_json, "public_key_blob_base64")
+            ready = _b64(last_json, "ready_base64")
+            result = _b64(last_json, "result_base64")
+            terminal = _b64(last_json, "terminal_base64")
+            terminal_signature = _b64(last_json, "terminal_signature_base64")
+            success_payload = _b64(last_json, "success_payload_base64")
+            success_signature = _b64(last_json, "success_signature_base64")
+            failure_payload = _b64(last_json, "failure_payload_base64")
+            failure_signature = _b64(last_json, "failure_signature_base64")
+
+        expectation = DeveloperTaskExecutionCompileAstControllerEvidenceExpectation(
+            request_id=_REQUEST_ID,
+            host_nonce=_HOST_NONCE,
+            request_sha256=_REQUEST_SHA256,
+            ready_sha256=_sha256(ready),
+            authorize_sha256=_AUTHORIZE_SHA256,
+            public_key_sha256=_sha256(public_key),
+            runtime_bundle_fingerprint=_RUNTIME_BUNDLE_FINGERPRINT,
+            runtime_lease_fingerprint=_RUNTIME_LEASE_FINGERPRINT,
+            plan_fingerprint=_PLAN_FINGERPRINT,
+            source_manifest_sha256=_SOURCE_MANIFEST_SHA256,
+        )
+        success_report = verify_developer_task_execution_compile_ast_controller_evidence_transport(
+            expectation,
+            public_key_blob=public_key,
+            pinned_ready_bytes=ready,
+            post_exit_ready_reads=(ready, ready),
+            evidence_payload_reads=(success_payload, success_payload),
+            evidence_signature_reads=(success_signature, success_signature),
+            relayed_result_reads=(result, result),
+            terminal_payload_reads=(terminal, terminal),
+            terminal_signature_reads=(terminal_signature, terminal_signature),
+        )
+        failure_report = verify_developer_task_execution_compile_ast_controller_evidence_transport(
+            expectation,
+            public_key_blob=public_key,
+            pinned_ready_bytes=ready,
+            post_exit_ready_reads=(ready, ready),
+            evidence_payload_reads=(failure_payload, failure_payload),
+            evidence_signature_reads=(failure_signature, failure_signature),
+        )
+        check(
+            "V1C2C1R4 WINDOWS CNG VERIFIES SIGNED SUCCESS AND TYPED FAILURE",
+            {
+                "success": success_report.to_dict(),
+                "failure": failure_report.to_dict(),
+            },
+            {
+                "success": {
+                    "ok": True,
+                    "status": "controller_signed_success",
+                    "terminal_status": "compile_ast_attested_passed",
+                    "issue_codes": [],
+                    "signature_valid": True,
+                    "legacy_terminal_signature_valid": True,
+                    "ready_stable": True,
+                    "evidence_stable": True,
+                    "result_stable": True,
+                    "private_relay_hash_bound": True,
+                    "changed_code_executed": False,
+                    "reusable_lease_issued": False,
+                    "execution_authorized": False,
+                },
+                "failure": {
+                    "ok": True,
+                    "status": "controller_signed_failure",
+                    "terminal_status": "compile_ast_controller_failed",
+                    "issue_codes": [],
+                    "signature_valid": True,
+                    "legacy_terminal_signature_valid": True,
+                    "ready_stable": True,
+                    "evidence_stable": True,
+                    "result_stable": True,
+                    "private_relay_hash_bound": True,
+                    "changed_code_executed": False,
+                    "reusable_lease_issued": False,
+                    "execution_authorized": False,
+                },
+            },
+        )
+
+        forged_signature = bytearray(success_signature)
+        if forged_signature:
+            forged_signature[-1] ^= 1
+        tampered_result = result + b"x"
+        mutated_ready = ready + b" "
+        tamper_reports = {
+            "forged_signature": verify_developer_task_execution_compile_ast_controller_evidence_transport(
+                expectation,
+                public_key_blob=public_key,
+                pinned_ready_bytes=ready,
+                post_exit_ready_reads=(ready, ready),
+                evidence_payload_reads=(success_payload, success_payload),
+                evidence_signature_reads=(bytes(forged_signature), bytes(forged_signature)),
+                relayed_result_reads=(result, result),
+                terminal_payload_reads=(terminal, terminal),
+                terminal_signature_reads=(terminal_signature, terminal_signature),
+            ),
+            "relayed_result_substitution": verify_developer_task_execution_compile_ast_controller_evidence_transport(
+                expectation,
+                public_key_blob=public_key,
+                pinned_ready_bytes=ready,
+                post_exit_ready_reads=(ready, ready),
+                evidence_payload_reads=(success_payload, success_payload),
+                evidence_signature_reads=(success_signature, success_signature),
+                relayed_result_reads=(tampered_result, tampered_result),
+                terminal_payload_reads=(terminal, terminal),
+                terminal_signature_reads=(terminal_signature, terminal_signature),
+            ),
+            "ready_mutation": verify_developer_task_execution_compile_ast_controller_evidence_transport(
+                expectation,
+                public_key_blob=public_key,
+                pinned_ready_bytes=ready,
+                post_exit_ready_reads=(mutated_ready, mutated_ready),
+                evidence_payload_reads=(success_payload, success_payload),
+                evidence_signature_reads=(success_signature, success_signature),
+                relayed_result_reads=(result, result),
+                terminal_payload_reads=(terminal, terminal),
+                terminal_signature_reads=(terminal_signature, terminal_signature),
+            ),
+        }
+        check(
+            "V1C2C1R4 WINDOWS CNG TAMPER SMOKE FAILS CLOSED",
+            {
+                name: {
+                    "ok": report.ok,
+                    "changed_code_executed": report.changed_code_executed,
+                    "reusable_lease_issued": report.reusable_lease_issued,
+                    "execution_authorized": report.execution_authorized,
+                }
+                for name, report in tamper_reports.items()
+            },
+            {
+                name: {
+                    "ok": False,
+                    "changed_code_executed": False,
+                    "reusable_lease_issued": False,
+                    "execution_authorized": False,
+                }
+                for name in tamper_reports
+            },
         )
 
         check(
-            "V1C2C1R3 WINDOWS EVALUATOR HAS NO SANDBOX OR CANDIDATE PYTHON LAUNCH COMMAND",
+            "V1C2C1R4 WINDOWS EVALUATOR HAS NO SANDBOX OR CANDIDATE PYTHON LAUNCH COMMAND",
             {
                 "windows_sandbox": "WindowsSandbox.exe" in _COMPILE_SCRIPT,
                 "start_process": "Start-Process" in _COMPILE_SCRIPT,
@@ -330,6 +673,7 @@ def main() -> int:
                 "process_start": "System.Diagnostics.Process" in _COMPILE_SCRIPT,
                 "runtime_executable_call": "C:\\SkynetVSRuntime\\python.exe" in _COMPILE_SCRIPT,
                 "architecture_lock": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTITY,
+                "decision_fingerprint": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_FINGERPRINT,
                 "policy_fingerprint": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             },
             {
@@ -339,13 +683,20 @@ def main() -> int:
                 "process_start": False,
                 "runtime_executable_call": False,
                 "architecture_lock": "db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec",
-                "policy_fingerprint": "3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9",
+                "decision_fingerprint": "8ccd984bb6b92d9ad5a6091168efaf902d3ec6524593c89437acd16ad2cdb955",
+                "policy_fingerprint": "ad14229bad416194d64f21684309cb842af1abaed9e0d2fa05a28a59b3a2e19e",
             },
         )
 
     print()
     print("=== SUMMARY ===")
-    print(json.dumps({"case_count": case_count, "fail_count": fail_count}, ensure_ascii=False, indent=2))
+    print(
+        json.dumps(
+            {"case_count": case_count, "fail_count": fail_count},
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
     return 1 if fail_count else 0
 
 

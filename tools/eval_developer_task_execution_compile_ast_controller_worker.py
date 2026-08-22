@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import base64
 import hashlib
 import inspect
 import json
@@ -26,7 +27,10 @@ from modules.developer.developer_task_execution_compile_ast_controller_worker im
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_CONTROLLER_SHA256,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_NATIVE_HELPER_SHA256,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_TEMPLATE_SHA256,
+    DeveloperTaskExecutionCompileAstControllerEvidenceExpectation,
     build_developer_task_execution_compile_ast_controller_worker_bundle,
+    canonical_developer_task_execution_compile_ast_controller_evidence_payload_bytes,
+    verify_developer_task_execution_compile_ast_controller_evidence_transport,
 )
 from modules.developer.developer_task_execution_compile_ast_controller_worker_policy import (
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_FINGERPRINT,
@@ -77,6 +81,128 @@ def _powershell_ordered_block_keys(source: str, marker: str) -> tuple[str, ...]:
         if depth == 0:
             return tuple(keys)
     raise AssertionError(f"unterminated ordered PowerShell block: {marker}")
+
+
+_TEST_PUBLIC_KEY_BLOB = base64.b64decode(
+    "RUNTMSAAAACqAz4+Qtra+UqQiqJmjhZPXP+TzBxoZ3KfbaajTlWP0WJQ100QGLaLgkxf5fIDaaJ0R+/t65eiPa62/nlIO1AU"
+)
+_P256_N = 0xFFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551
+
+
+def _fake_signature(message: bytes) -> bytes:
+    r = int.from_bytes(hashlib.sha256(b"r4-test-r" + message).digest(), "big") % (_P256_N - 1) + 1
+    s = int.from_bytes(hashlib.sha256(b"r4-test-s" + message).digest(), "big") % (_P256_N - 1) + 1
+    return r.to_bytes(32, "big") + s.to_bytes(32, "big")
+
+
+def _fake_signature_verifier(public_key: bytes, message: bytes, signature: bytes) -> bool:
+    return public_key == _TEST_PUBLIC_KEY_BLOB and signature == _fake_signature(message)
+
+
+def _controller_evidence_fixture(
+    *,
+    outcome: str = "success",
+    terminal_status: str = "compile_ast_attested_passed",
+    request_id: str = "1" * 32,
+) -> dict[str, Any]:
+    ready_bytes = b'{"schema_version":1,"overall_ok":true}'
+    public_key_sha256 = hashlib.sha256(_TEST_PUBLIC_KEY_BLOB).hexdigest()
+    expectation = DeveloperTaskExecutionCompileAstControllerEvidenceExpectation(
+        request_id=request_id,
+        host_nonce="2" * 64,
+        request_sha256="3" * 64,
+        ready_sha256=hashlib.sha256(ready_bytes).hexdigest(),
+        authorize_sha256="4" * 64,
+        public_key_sha256=public_key_sha256,
+        runtime_bundle_fingerprint="5" * 64,
+        runtime_lease_fingerprint="6" * 64,
+        plan_fingerprint="7" * 64,
+        source_manifest_sha256="8" * 64,
+    )
+    result_bytes = b'{"schema_version":1,"status":"passed"}\n'
+    result_sha256 = hashlib.sha256(result_bytes).hexdigest()
+    result_required = terminal_status != "compile_ast_boundary_failed"
+    legacy_terminal = {
+        "request_id": expectation.request_id,
+        "host_nonce": expectation.host_nonce,
+        "request_sha256": expectation.request_sha256,
+        "ready_sha256": expectation.ready_sha256,
+        "authorize_sha256": expectation.authorize_sha256,
+        "public_key_sha256": expectation.public_key_sha256,
+        "runtime_bundle_fingerprint": expectation.runtime_bundle_fingerprint,
+        "runtime_lease_fingerprint": expectation.runtime_lease_fingerprint,
+        "plan_fingerprint": expectation.plan_fingerprint,
+        "source_manifest_sha256": expectation.source_manifest_sha256,
+        "result_sha256": result_sha256 if result_required else None,
+        "status": terminal_status,
+        "check": {"changed_code_executed": False},
+        "reusable_lease_issued": False,
+        "execution_authorized": False,
+    }
+    terminal_bytes = json.dumps(
+        legacy_terminal,
+        ensure_ascii=False,
+        separators=(",", ":"),
+        allow_nan=False,
+    ).encode("utf-8")
+    failure_message = "synthetic trusted controller failure"
+    payload = {
+        "schema_version": 1,
+        "evidence_type": "compile_ast_controller_terminal_v1",
+        "implementation_revision": "V1C2C1R4",
+        "outcome": outcome,
+        "terminal_status": terminal_status if outcome == "success" else "compile_ast_controller_failed",
+        "request_id": expectation.request_id,
+        "host_nonce": expectation.host_nonce,
+        "request_sha256": expectation.request_sha256,
+        "ready_sha256": expectation.ready_sha256,
+        "authorize_sha256": expectation.authorize_sha256,
+        "public_key_sha256": expectation.public_key_sha256,
+        "runtime_bundle_fingerprint": expectation.runtime_bundle_fingerprint,
+        "runtime_lease_fingerprint": expectation.runtime_lease_fingerprint,
+        "plan_fingerprint": expectation.plan_fingerprint,
+        "source_manifest_sha256": expectation.source_manifest_sha256,
+        "private_result_sha256": result_sha256 if outcome == "success" and result_required else "",
+        "relayed_result_sha256": result_sha256 if outcome == "success" and result_required else "",
+        "terminal_payload_sha256": hashlib.sha256(terminal_bytes).hexdigest() if outcome == "success" else "",
+        "failure_stage": "" if outcome == "success" else "compile_ast_worker",
+        "failure_type": "" if outcome == "success" else "System.InvalidOperationException",
+        "failure_code": "" if outcome == "success" else "compile_ast_controller_worker_stage_failed",
+        "failure_message_sha256": "" if outcome == "success" else hashlib.sha256(failure_message.encode("utf-8")).hexdigest(),
+        "completed_at_utc": "2026-08-22T00:00:00.0000000Z",
+        "changed_code_executed": False,
+        "reusable_lease_issued": False,
+        "execution_authorized": False,
+    }
+    payload_bytes = canonical_developer_task_execution_compile_ast_controller_evidence_payload_bytes(payload)
+    return {
+        "expectation": expectation,
+        "ready_bytes": ready_bytes,
+        "payload": payload,
+        "payload_bytes": payload_bytes,
+        "signature": _fake_signature(payload_bytes),
+        "result_bytes": result_bytes if result_required and outcome == "success" else None,
+        "terminal_bytes": terminal_bytes if outcome == "success" else None,
+        "terminal_signature": _fake_signature(terminal_bytes) if outcome == "success" else None,
+    }
+
+
+def _verify_fixture(fixture: dict[str, Any], **overrides: Any) -> Any:
+    values: dict[str, Any] = {
+        "expectation": fixture["expectation"],
+        "public_key_blob": _TEST_PUBLIC_KEY_BLOB,
+        "pinned_ready_bytes": fixture["ready_bytes"],
+        "post_exit_ready_reads": (fixture["ready_bytes"], fixture["ready_bytes"]),
+        "evidence_payload_reads": (fixture["payload_bytes"], fixture["payload_bytes"]),
+        "evidence_signature_reads": (fixture["signature"], fixture["signature"]),
+        "pre_worker_reserved_artifacts": (),
+        "relayed_result_reads": None if fixture["result_bytes"] is None else (fixture["result_bytes"], fixture["result_bytes"]),
+        "terminal_payload_reads": None if fixture["terminal_bytes"] is None else (fixture["terminal_bytes"], fixture["terminal_bytes"]),
+        "terminal_signature_reads": None if fixture["terminal_signature"] is None else (fixture["terminal_signature"], fixture["terminal_signature"]),
+        "signature_verifier": _fake_signature_verifier,
+    }
+    values.update(overrides)
+    return verify_developer_task_execution_compile_ast_controller_evidence_transport(**values)
 
 
 def main() -> int:
@@ -145,7 +271,7 @@ def main() -> int:
         },
         {
             "errors": [],
-            "policy_id": "skynetvs-v1c2c1r3-fixed-system-controller-standard-user-worker-bundle-v4",
+            "policy_id": "skynetvs-v1c2c1r4-fixed-system-controller-standard-user-worker-bundle-v5",
             "policy_fingerprint": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             "recomputed": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_FINGERPRINT,
             "policy_bytes_sha256": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_POLICY_BYTES_SHA256,
@@ -165,15 +291,17 @@ def main() -> int:
     )
 
     check(
-        "V1C2C1R3 POLICY SEPARATES PRIVATE WORKER RESULT FROM CONTROLLER HOST RELAY",
+        "V1C2C1R4 POLICY TREATS WRITABLE WSB OUTPUT AS UNTRUSTED TRANSPORT",
         policy.to_dict()["worker_result_relay"],
         {
             "host_output_root": r"C:\SkynetVSHostOutput",
             "worker_result_root": r"C:\SkynetVSOutput",
-            "host_mapping_mode": "controller_only_exact_byte_publication_v1",
+            "host_mapping_mode": "untrusted_writable_transport_signed_controller_evidence_v1",
             "worker_host_mapping_write_required": False,
-            "worker_host_mapping_write_denial_required": True,
+            "worker_host_mapping_write_denial_required": False,
+            "worker_direct_mapping_write_may_succeed": True,
             "mapped_acl_snapshot_before_after_required": True,
+            "mapped_acl_is_trust_boundary": False,
             "mapped_acl_mutation_allowed": False,
             "mapped_owner_mutation_allowed": False,
             "mapped_protection_mutation_allowed": False,
@@ -204,9 +332,58 @@ def main() -> int:
                 "exact_validated_bytes_required": True,
                 "atomic_write_required": True,
                 "post_write_reread_required": True,
-                "terminal_result_sha256_source": "relayed_result_bytes",
+                "terminal_result_sha256_source": "signed_private_and_relayed_result_hashes",
                 "local_result_removed_after_relay": True,
             },
+        },
+    )
+
+    check(
+        "V1C2C1R4 POLICY REQUIRES SIGNED CONTROLLER EVIDENCE AND TAMPER MATRIX",
+        policy.to_dict()["controller_evidence"],
+        {
+            "key": "ephemeral_controller_ecc_key",
+            "ready_pinned_before_worker_creation": True,
+            "ready_post_exit_stability_required": True,
+            "host_transport": "untrusted_writable_wsb_mapping",
+            "payload_file": "controller_evidence_payload.json",
+            "signature_file": "controller_evidence_signature.bin",
+            "payload_max_bytes": 16384,
+            "canonical_text": "utf8_no_bom_no_trailing_newline_v1",
+            "terminal_success_signed": True,
+            "terminal_failure_signed": True,
+            "failure_artifact_authority": "signed_controller_terminal_only",
+            "unsigned_guest_artifacts_authoritative": False,
+            "worker_direct_mapping_write_may_succeed": True,
+            "worker_may_only_cause_dos": True,
+            "legacy_success_terminal_signature_required": True,
+            "stable_post_exit_reads": 2,
+            "terminal_bindings": [
+                "request_id",
+                "host_nonce",
+                "request_sha256",
+                "ready_sha256",
+                "authorize_sha256",
+                "public_key_sha256",
+                "runtime_bundle_fingerprint",
+                "runtime_lease_fingerprint",
+                "plan_fingerprint",
+                "source_manifest_sha256",
+                "private_result_sha256",
+                "relayed_result_sha256",
+                "terminal_status",
+            ],
+            "tamper_matrix": [
+                "precreated_result",
+                "relayed_result_substitution",
+                "post_authorization_ready_mutation",
+                "forged_terminal_payload",
+                "forged_signature",
+                "request_nonce_replay",
+                "unsigned_failure_injection",
+                "payload_signature_pair_swap",
+                "between_read_mutation",
+            ],
         },
     )
 
@@ -422,7 +599,7 @@ def main() -> int:
     mapped_acl_section = native_text[mapped_acl_start:mapped_acl_end]
 
     check(
-        "V1C2C1R3 MAPPED OUTPUT ACL IS SNAPSHOTTED AND ASSERTED UNCHANGED",
+        "V1C2C1R4 MAPPED OUTPUT ACL SNAPSHOT REMAINS HYGIENE EVIDENCE",
         {
             "capture": "CaptureDirectoryAclSnapshot" in mapped_acl_section,
             "owner": "OwnerSid" in mapped_acl_section,
@@ -450,50 +627,74 @@ def main() -> int:
     )
 
     check(
-        "V1C2C1R3 MAPPED OUTPUT PATH HAS NO ACL OWNER OR PROTECTION MUTATION",
+        "V1C2C1R4 MAPPED OUTPUT ACL IS NOT MUTATED OR TRUSTED",
         {
-            "shared_helper_absent": "PrepareSharedWorkerOutputDirectory" in native_text,
+            "shared_helper_present": "PrepareSharedWorkerOutputDirectory" in native_text,
             "set_acl": "Directory.SetAccessControl(path" in mapped_acl_section,
             "set_protection": "SetAccessRuleProtection" in mapped_acl_section,
             "set_owner": "SetOwner" in mapped_acl_section,
-            "worker_write_probe": "ProbeTokenHostOutputWriteDenied" in mapped_acl_section,
+            "legacy_probe_method_retained": "ProbeTokenHostOutputWriteDenied" in mapped_acl_section,
+            "legacy_probe_not_called": "ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle" not in controller_text,
+            "policy_acl_trust": policy.to_dict()["worker_result_relay"]["mapped_acl_is_trust_boundary"],
+            "policy_write_denial_required": policy.to_dict()["worker_result_relay"]["worker_host_mapping_write_denial_required"],
         },
         {
-            "shared_helper_absent": False,
+            "shared_helper_present": False,
             "set_acl": False,
             "set_protection": False,
             "set_owner": False,
-            "worker_write_probe": True,
+            "legacy_probe_method_retained": True,
+            "legacy_probe_not_called": True,
+            "policy_acl_trust": False,
+            "policy_write_denial_required": False,
         },
     )
 
+
     check(
-        "V1C2C1R3 CONTROLLER USES PRIVATE RESULT ROOT AND EXACT HOST RELAY ORDER",
+        "V1C2C1R4 CONTROLLER SIGNS SUCCESS AND FAILURE OVER UNTRUSTED TRANSPORT",
         {
-            "host_root": '$hostOutputRoot = "C:\\SkynetVSHostOutput"' in controller_text,
-            "private_root": '$workerResultRoot = "C:\\SkynetVSOutput"' in controller_text,
-            "worker_denied": "ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)" in controller_text,
+            "host_root": r'$hostOutputRoot = "C:\SkynetVSHostOutput"' in controller_text,
+            "private_root": r'$workerResultRoot = "C:\SkynetVSOutput"' in controller_text,
+            "denial_probe_absent": "ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)" not in controller_text,
             "private_acl": "PrepareWorkerResultDirectory($workerResultRoot, $workerSid)" in controller_text,
             "private_assert": "AssertPrivateWorkerResultDirectory($workerResultRoot, $workerSid)" in controller_text,
             "relay": "Relay-TrustedCompileAstResult" in controller_text,
-            "no_shared_helper": "PrepareSharedWorkerOutputDirectory" in controller_text,
+            "evidence_payload": 'controller_evidence_payload.json' in controller_text,
+            "evidence_signature": 'controller_evidence_signature.bin' in controller_text,
+            "signed_publisher": "function Publish-SignedControllerEvidence" in controller_text,
+            "success_signed": '-Outcome "success"' in controller_text,
+            "failure_signed": '-Outcome "failure"' in controller_text,
+            "typed_failure": '-TerminalStatus "compile_ast_controller_failed"' in controller_text,
+            "unsigned_failure_non_authoritative": 'authoritative = $false' in controller_text,
+            "ready_before_worker": controller_text.index("Write-Utf8Atomic -Path $readyPath") < controller_text.index("CreateFreshStandardUserAndLogon($workerUser)"),
             "delete_before_read": controller_text.index("DeleteLocalUserExact($workerUser, $workerSid)") < controller_text.index("Read-TrustedCompileAstResult -Request $request -Manifest $manifest -Path $localResultPath"),
             "read_before_relay": controller_text.index("Read-TrustedCompileAstResult -Request $request -Manifest $manifest -Path $localResultPath") < controller_text.index("Relay-TrustedCompileAstResult -Evidence $localResultEvidence"),
-            "relay_before_terminal": controller_text.index("Relay-TrustedCompileAstResult -Evidence $localResultEvidence") < controller_text.index("$terminalPayload = [ordered]@{"),
+            "legacy_before_outer": controller_text.index("Write-BytesAtomic -Path $terminalSignaturePath") < controller_text.index('Publish-SignedControllerEvidence `\n        -Outcome "success"'),
+            "no_shared_helper": "PrepareSharedWorkerOutputDirectory" in controller_text,
         },
         {
             "host_root": True,
             "private_root": True,
-            "worker_denied": True,
+            "denial_probe_absent": True,
             "private_acl": True,
             "private_assert": True,
             "relay": True,
-            "no_shared_helper": False,
+            "evidence_payload": True,
+            "evidence_signature": True,
+            "signed_publisher": True,
+            "success_signed": True,
+            "failure_signed": True,
+            "typed_failure": True,
+            "unsigned_failure_non_authoritative": True,
+            "ready_before_worker": True,
             "delete_before_read": True,
             "read_before_relay": True,
-            "relay_before_terminal": True,
+            "legacy_before_outer": True,
+            "no_shared_helper": False,
         },
     )
+
 
     check(
         "V1C2C1 ENVIRONMENT IS CREATED FRESH AND SANITIZED",
@@ -949,15 +1150,176 @@ def main() -> int:
         },
     )
 
+    success_fixture = _controller_evidence_fixture()
+    success_report = _verify_fixture(success_fixture)
     check(
-        "V1C2C1R3 WINDOWS EVALUATOR BINDS GUEST LOCAL RELAY AND CURRENT POLICY",
+        "V1C2C1R4 SIGNED SUCCESS BINDS READY RESULT LEGACY TERMINAL AND FALSE EFFECTS",
+        success_report.to_dict(),
+        {
+            "ok": True,
+            "status": "controller_signed_success",
+            "terminal_status": "compile_ast_attested_passed",
+            "issue_codes": [],
+            "signature_valid": True,
+            "legacy_terminal_signature_valid": True,
+            "ready_stable": True,
+            "evidence_stable": True,
+            "result_stable": True,
+            "private_relay_hash_bound": True,
+            "changed_code_executed": False,
+            "reusable_lease_issued": False,
+            "execution_authorized": False,
+        },
+    )
+
+    boundary_fixture = _controller_evidence_fixture(
+        terminal_status="compile_ast_boundary_failed"
+    )
+    boundary_report = _verify_fixture(boundary_fixture)
+    check(
+        "V1C2C1R4 SIGNED BOUNDARY FAILURE NEEDS NO RESULT BUT KEEPS LEGACY TERMINAL",
+        {
+            "ok": boundary_report.ok,
+            "status": boundary_report.status,
+            "terminal_status": boundary_report.terminal_status,
+            "signature_valid": boundary_report.signature_valid,
+            "legacy_terminal_signature_valid": boundary_report.legacy_terminal_signature_valid,
+            "private_relay_hash_bound": boundary_report.private_relay_hash_bound,
+            "issue_codes": list(boundary_report.issue_codes),
+        },
+        {
+            "ok": True,
+            "status": "controller_signed_success",
+            "terminal_status": "compile_ast_boundary_failed",
+            "signature_valid": True,
+            "legacy_terminal_signature_valid": True,
+            "private_relay_hash_bound": True,
+            "issue_codes": [],
+        },
+    )
+
+    failure_fixture = _controller_evidence_fixture(outcome="failure")
+    failure_report = _verify_fixture(failure_fixture)
+    check(
+        "V1C2C1R4 TYPED FAILURE IS AUTHORITATIVE ONLY THROUGH CONTROLLER SIGNATURE",
+        failure_report.to_dict(),
+        {
+            "ok": True,
+            "status": "controller_signed_failure",
+            "terminal_status": "compile_ast_controller_failed",
+            "issue_codes": [],
+            "signature_valid": True,
+            "legacy_terminal_signature_valid": True,
+            "ready_stable": True,
+            "evidence_stable": True,
+            "result_stable": True,
+            "private_relay_hash_bound": True,
+            "changed_code_executed": False,
+            "reusable_lease_issued": False,
+            "execution_authorized": False,
+        },
+    )
+
+    evil_result = b'{"schema_version":1,"status":"worker-substitution"}\n'
+    mutated_ready = b'{"schema_version":1,"overall_ok":false}'
+    forged_payload = bytearray(success_fixture["payload_bytes"])
+    forged_payload[-2] = forged_payload[-2] ^ 1
+    forged_signature = bytearray(success_fixture["signature"])
+    forged_signature[-1] = forged_signature[-1] ^ 1
+    replay_payload = dict(success_fixture["payload"])
+    replay_payload["request_id"] = "9" * 32
+    replay_payload_bytes = canonical_developer_task_execution_compile_ast_controller_evidence_payload_bytes(replay_payload)
+    tamper_reports = {
+        "precreated_result": _verify_fixture(
+            success_fixture,
+            pre_worker_reserved_artifacts=("result.json",),
+        ),
+        "relayed_result_substitution": _verify_fixture(
+            success_fixture,
+            relayed_result_reads=(evil_result, evil_result),
+        ),
+        "post_authorization_ready_mutation": _verify_fixture(
+            success_fixture,
+            post_exit_ready_reads=(mutated_ready, mutated_ready),
+        ),
+        "forged_terminal_payload": _verify_fixture(
+            success_fixture,
+            terminal_payload_reads=(b"{}", b"{}"),
+        ),
+        "forged_signature": _verify_fixture(
+            success_fixture,
+            evidence_signature_reads=(bytes(forged_signature), bytes(forged_signature)),
+        ),
+        "request_nonce_replay": _verify_fixture(
+            success_fixture,
+            evidence_payload_reads=(replay_payload_bytes, replay_payload_bytes),
+            evidence_signature_reads=(
+                _fake_signature(replay_payload_bytes),
+                _fake_signature(replay_payload_bytes),
+            ),
+        ),
+        "unsigned_failure_injection": _verify_fixture(
+            failure_fixture,
+            evidence_signature_reads=(b"\x01" * 64, b"\x01" * 64),
+        ),
+        "payload_signature_pair_swap": _verify_fixture(
+            success_fixture,
+            evidence_signature_reads=(failure_fixture["signature"], failure_fixture["signature"]),
+        ),
+        "between_read_mutation": _verify_fixture(
+            success_fixture,
+            evidence_payload_reads=(success_fixture["payload_bytes"], bytes(forged_payload)),
+        ),
+    }
+    required_tamper_issue = {
+        "precreated_result": "controller_evidence_precreated_artifact",
+        "relayed_result_substitution": "controller_evidence_relayed_result_hash_mismatch",
+        "post_authorization_ready_mutation": "controller_evidence_ready_pin_mismatch",
+        "forged_terminal_payload": "controller_evidence_terminal_payload_hash_mismatch",
+        "forged_signature": "controller_evidence_signature_invalid",
+        "request_nonce_replay": "controller_evidence_request_id_mismatch",
+        "unsigned_failure_injection": "controller_evidence_signature_invalid",
+        "payload_signature_pair_swap": "controller_evidence_signature_invalid",
+        "between_read_mutation": "controller_evidence_payload_mutated",
+    }
+    check(
+        "V1C2C1R4 HOST-ONLY TAMPER MATRIX FAILS CLOSED",
+        {
+            name: {
+                "ok": report.ok,
+                "required_issue": required_tamper_issue[name] in report.issue_codes,
+                "changed_code_executed": report.changed_code_executed,
+                "reusable_lease_issued": report.reusable_lease_issued,
+                "execution_authorized": report.execution_authorized,
+            }
+            for name, report in tamper_reports.items()
+        },
+        {
+            name: {
+                "ok": False,
+                "required_issue": True,
+                "changed_code_executed": False,
+                "reusable_lease_issued": False,
+                "execution_authorized": False,
+            }
+            for name in required_tamper_issue
+        },
+    )
+
+    check(
+        "V1C2C1R4 WINDOWS EVALUATOR BINDS SIGNED UNTRUSTED TRANSPORT",
         {
             "host_mapping": "C:\\SkynetVSHostOutput" in windows_eval_text,
             "private_result": "C:\\SkynetVSOutput" in windows_eval_text,
             "snapshot": "CaptureDirectoryAclSnapshot" in windows_eval_text,
             "relay": "exact_result_bytes_relayed" in windows_eval_text,
             "shared_helper_rejection": 'GetMethod("PrepareSharedWorkerOutputDirectory")' in windows_eval_text,
-            "current_policy_fingerprint": '"policy_fingerprint": "3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9"' in windows_eval_text,
+            "untrusted_transport": "untrusted_writable_transport" in windows_eval_text,
+            "signed_success_failure": "WINDOWS CNG VERIFIES SIGNED SUCCESS AND TYPED FAILURE" in windows_eval_text,
+            "tamper_smoke": "WINDOWS CNG TAMPER SMOKE FAILS CLOSED" in windows_eval_text,
+            "cng_key_generation": "CreateEphemeralEcdsaP256SigningKey" in windows_eval_text,
+            "current_policy_fingerprint": '"policy_fingerprint": "ad14229bad416194d64f21684309cb842af1abaed9e0d2fa05a28a59b3a2e19e"' in windows_eval_text,
+            "stale_r3_fingerprint": '"policy_fingerprint": "3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9"' in windows_eval_text,
             "stale_r2_fingerprint": '"policy_fingerprint": "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a"' in windows_eval_text,
         },
         {
@@ -966,7 +1328,12 @@ def main() -> int:
             "snapshot": True,
             "relay": True,
             "shared_helper_rejection": True,
+            "untrusted_transport": True,
+            "signed_success_failure": True,
+            "tamper_smoke": True,
+            "cng_key_generation": True,
             "current_policy_fingerprint": True,
+            "stale_r3_fingerprint": False,
             "stale_r2_fingerprint": False,
         },
     )

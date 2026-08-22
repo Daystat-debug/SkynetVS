@@ -1,17 +1,26 @@
 from __future__ import annotations
 
-"""V1C2C1R3 deterministic SYSTEM-controller guest-local worker-result relay bundle.
+"""V1C2C1R4 deterministic SYSTEM-controller signed-evidence bundle.
 
-This module only constructs immutable bytes.  It does not claim a plan or runtime
-lease, materialize task/runtime sources, launch Windows Sandbox or execute Python.
+This module constructs immutable controller-worker bytes and provides a host-only
+strict verifier for controller-signed evidence transported through an untrusted
+writable WSB mapping.  It does not claim a plan or runtime lease, materialize
+task/runtime sources, launch Windows Sandbox or execute Python.
 """
 
 import hashlib
 import json
+import re
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Callable, Mapping, Sequence
 
+from modules.developer.developer_task_execution_boundary_crypto import (
+    DeveloperTaskExecutionBoundaryCryptoError,
+    validate_ecdsa_p256_public_blob,
+    validate_ecdsa_p256_signature,
+    verify_ecdsa_p256_sha256_cng,
+)
 from modules.developer.developer_task_execution_compile_ast_contract_policy import (
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_ACTIVE_PROCESS_LIMIT,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_AUTHORIZE_MAX_BYTES,
@@ -27,6 +36,8 @@ from modules.developer.developer_task_execution_compile_ast_contract_policy impo
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_RESULT_MAX_BYTES,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_SOURCE_MANIFEST_MAX_BYTES,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_SOURCE_ROOT,
+    DEVELOPER_TASK_EXECUTION_COMPILE_AST_SIGNATURE_BYTES,
+    DEVELOPER_TASK_EXECUTION_COMPILE_AST_TERMINAL_MAX_BYTES,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_WORKER_TIMEOUT_SECONDS,
 )
 from modules.developer.developer_task_execution_compile_ast_controller_worker_policy import (
@@ -34,6 +45,9 @@ from modules.developer.developer_task_execution_compile_ast_controller_worker_po
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_DECISION_ID,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_ARCHITECTURE_SLICE_IDENTITY,
+    DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_MAX_BYTES,
+    DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_PAYLOAD_FILE_NAME,
+    DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_SIGNATURE_FILE_NAME,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BOOTSTRAP_FILE_NAME,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_ID,
     DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_CONTROLLER_FILE_NAME,
@@ -107,18 +121,558 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_NATIVE_HELPER_SHA256 = (
     "f05437852c9204bcdb0cce70e30989544251070a836f55d748d559f289ddd8e8"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_CONTROLLER_SHA256 = (
-    "11ccf69016fe0aceead56a9d07ac0f054e99d759207630b114922e4791553827"
+    "5a3d4e49348fc97c473cd53ee2035c154fe96273b94b4a7a7684907b8a29c2f5"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_TEMPLATE_SHA256 = (
     "3de7527400c576ce9ce75ef58f616622ab52a57426811b193270e292d641c281"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_BUNDLE_FINGERPRINT = (
-    "62854e85a916f67f24453e3c64c3212a5ae722da8fbc0e275f59c738144dde98"
+    "0562d3033e61bd6177c833a9026aac63ab19b3aa4551a4325451708aa14bbd26"
 )
 
 
 class DeveloperTaskExecutionCompileAstControllerWorkerBundleError(ValueError):
     pass
+
+
+_CONTROLLER_EVIDENCE_FIELDS = (
+    "schema_version",
+    "evidence_type",
+    "implementation_revision",
+    "outcome",
+    "terminal_status",
+    "request_id",
+    "host_nonce",
+    "request_sha256",
+    "ready_sha256",
+    "authorize_sha256",
+    "public_key_sha256",
+    "runtime_bundle_fingerprint",
+    "runtime_lease_fingerprint",
+    "plan_fingerprint",
+    "source_manifest_sha256",
+    "private_result_sha256",
+    "relayed_result_sha256",
+    "terminal_payload_sha256",
+    "failure_stage",
+    "failure_type",
+    "failure_code",
+    "failure_message_sha256",
+    "completed_at_utc",
+    "changed_code_executed",
+    "reusable_lease_issued",
+    "execution_authorized",
+)
+_CONTROLLER_EVIDENCE_SUCCESS_STATUSES = (
+    "compile_ast_attested_passed",
+    "compile_ast_attested_failed",
+    "compile_ast_boundary_failed",
+)
+_CONTROLLER_EVIDENCE_FAILURE_STATUS = "compile_ast_controller_failed"
+_CONTROLLER_EVIDENCE_TYPE = "compile_ast_controller_terminal_v1"
+_CONTROLLER_EVIDENCE_REVISION = "V1C2C1R4"
+_CONTROLLER_EVIDENCE_RESERVED_ARTIFACTS = frozenset(
+    {
+        "result.json",
+        "terminal_payload.json",
+        "terminal_signature.bin",
+        DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_PAYLOAD_FILE_NAME,
+        DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_SIGNATURE_FILE_NAME,
+    }
+)
+_HEX_32 = re.compile(r"^[0-9a-f]{32}$")
+_HEX_64 = re.compile(r"^[0-9a-f]{64}$")
+_UTC_TIMESTAMP = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,7})?Z$")
+
+
+def canonical_developer_task_execution_compile_ast_controller_evidence_payload_bytes(
+    payload: Mapping[str, Any],
+) -> bytes:
+    if not isinstance(payload, Mapping):
+        raise TypeError("payload must be a mapping")
+    if tuple(payload.keys()) != _CONTROLLER_EVIDENCE_FIELDS:
+        raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
+            "controller_evidence_payload_fields_invalid"
+        )
+    try:
+        data = json.dumps(
+            dict(payload),
+            ensure_ascii=False,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    except (TypeError, ValueError) as error:
+        raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
+            "controller_evidence_payload_json_invalid"
+        ) from error
+    if (
+        not data
+        or len(data) > DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_MAX_BYTES
+        or data.startswith(b"\xef\xbb\xbf")
+        or b"\r" in data
+        or data.endswith(b"\n")
+    ):
+        raise DeveloperTaskExecutionCompileAstControllerWorkerBundleError(
+            "controller_evidence_payload_encoding_invalid"
+        )
+    return data
+
+
+@dataclass(frozen=True)
+class DeveloperTaskExecutionCompileAstControllerEvidenceExpectation:
+    request_id: str
+    host_nonce: str
+    request_sha256: str
+    ready_sha256: str
+    authorize_sha256: str
+    public_key_sha256: str
+    runtime_bundle_fingerprint: str
+    runtime_lease_fingerprint: str
+    plan_fingerprint: str
+    source_manifest_sha256: str
+
+
+@dataclass(frozen=True)
+class DeveloperTaskExecutionCompileAstControllerEvidenceTransportReport:
+    ok: bool
+    status: str
+    terminal_status: str
+    issue_codes: tuple[str, ...]
+    signature_valid: bool
+    legacy_terminal_signature_valid: bool
+    ready_stable: bool
+    evidence_stable: bool
+    result_stable: bool
+    private_relay_hash_bound: bool
+    changed_code_executed: bool = False
+    reusable_lease_issued: bool = False
+    execution_authorized: bool = False
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "ok": self.ok,
+            "status": self.status,
+            "terminal_status": self.terminal_status,
+            "issue_codes": list(self.issue_codes),
+            "signature_valid": self.signature_valid,
+            "legacy_terminal_signature_valid": self.legacy_terminal_signature_valid,
+            "ready_stable": self.ready_stable,
+            "evidence_stable": self.evidence_stable,
+            "result_stable": self.result_stable,
+            "private_relay_hash_bound": self.private_relay_hash_bound,
+            "changed_code_executed": self.changed_code_executed,
+            "reusable_lease_issued": self.reusable_lease_issued,
+            "execution_authorized": self.execution_authorized,
+        }
+
+
+def _stable_exact_reads(
+    reads: Sequence[bytes] | None,
+    *,
+    issue_code: str,
+    issues: list[str],
+    required: bool,
+) -> tuple[bytes, bool]:
+    if reads is None:
+        if required:
+            issues.append(issue_code)
+        return b"", False
+    values = tuple(reads)
+    if len(values) != 2 or any(not isinstance(value, bytes) for value in values):
+        issues.append(issue_code)
+        return b"", False
+    if not values[0] or values[0] != values[1]:
+        issues.append(issue_code)
+        return values[0] if values else b"", False
+    return values[0], True
+
+
+def _parse_controller_evidence_payload(
+    payload_bytes: bytes,
+    issues: list[str],
+) -> dict[str, Any]:
+    if (
+        not payload_bytes
+        or len(payload_bytes)
+        > DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_MAX_BYTES
+        or payload_bytes.startswith(b"\xef\xbb\xbf")
+        or b"\r" in payload_bytes
+        or payload_bytes.endswith(b"\n")
+    ):
+        issues.append("controller_evidence_payload_encoding_invalid")
+        return {}
+    try:
+        text = payload_bytes.decode("utf-8", errors="strict")
+        pairs = json.loads(text, object_pairs_hook=lambda value: value)
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        issues.append("controller_evidence_payload_json_invalid")
+        return {}
+    if not isinstance(pairs, list) or any(
+        not isinstance(item, tuple) or len(item) != 2 for item in pairs
+    ):
+        issues.append("controller_evidence_payload_object_invalid")
+        return {}
+    keys = tuple(str(item[0]) for item in pairs)
+    if len(set(keys)) != len(keys):
+        issues.append("controller_evidence_payload_duplicate_field")
+        return {}
+    if keys != _CONTROLLER_EVIDENCE_FIELDS:
+        issues.append("controller_evidence_payload_fields_invalid")
+        return {}
+    return {str(key): value for key, value in pairs}
+
+
+def _parse_legacy_terminal_payload(
+    payload_bytes: bytes,
+    issues: list[str],
+) -> dict[str, Any]:
+    if (
+        not payload_bytes
+        or len(payload_bytes) > DEVELOPER_TASK_EXECUTION_COMPILE_AST_TERMINAL_MAX_BYTES
+        or payload_bytes.startswith(b"\xef\xbb\xbf")
+        or b"\r" in payload_bytes
+        or payload_bytes.endswith(b"\n")
+    ):
+        issues.append("controller_evidence_legacy_terminal_encoding_invalid")
+        return {}
+    try:
+        value = json.loads(payload_bytes.decode("utf-8", errors="strict"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        issues.append("controller_evidence_legacy_terminal_json_invalid")
+        return {}
+    if not isinstance(value, dict):
+        issues.append("controller_evidence_legacy_terminal_object_invalid")
+        return {}
+    return value
+
+
+def verify_developer_task_execution_compile_ast_controller_evidence_transport(
+    expectation: DeveloperTaskExecutionCompileAstControllerEvidenceExpectation,
+    *,
+    public_key_blob: bytes,
+    pinned_ready_bytes: bytes,
+    post_exit_ready_reads: Sequence[bytes],
+    evidence_payload_reads: Sequence[bytes],
+    evidence_signature_reads: Sequence[bytes],
+    pre_worker_reserved_artifacts: Sequence[str] = (),
+    relayed_result_reads: Sequence[bytes] | None = None,
+    terminal_payload_reads: Sequence[bytes] | None = None,
+    terminal_signature_reads: Sequence[bytes] | None = None,
+    signature_verifier: Callable[[bytes, bytes, bytes], bool] | None = None,
+) -> DeveloperTaskExecutionCompileAstControllerEvidenceTransportReport:
+    if not isinstance(
+        expectation,
+        DeveloperTaskExecutionCompileAstControllerEvidenceExpectation,
+    ):
+        raise TypeError(
+            "expectation must be DeveloperTaskExecutionCompileAstControllerEvidenceExpectation"
+        )
+    if not isinstance(public_key_blob, bytes) or not isinstance(
+        pinned_ready_bytes, bytes
+    ):
+        raise TypeError("public_key_blob and pinned_ready_bytes must be bytes")
+
+    issues: list[str] = []
+    unexpected_pre_worker = sorted(
+        set(str(item) for item in pre_worker_reserved_artifacts).intersection(
+            _CONTROLLER_EVIDENCE_RESERVED_ARTIFACTS
+        )
+    )
+    if unexpected_pre_worker:
+        issues.append("controller_evidence_precreated_artifact")
+
+    expected_values = {
+        "request_id": expectation.request_id,
+        "host_nonce": expectation.host_nonce,
+        "request_sha256": expectation.request_sha256,
+        "ready_sha256": expectation.ready_sha256,
+        "authorize_sha256": expectation.authorize_sha256,
+        "public_key_sha256": expectation.public_key_sha256,
+        "runtime_bundle_fingerprint": expectation.runtime_bundle_fingerprint,
+        "runtime_lease_fingerprint": expectation.runtime_lease_fingerprint,
+        "plan_fingerprint": expectation.plan_fingerprint,
+        "source_manifest_sha256": expectation.source_manifest_sha256,
+    }
+    for field_name, value in expected_values.items():
+        pattern = _HEX_32 if field_name == "request_id" else _HEX_64
+        if not isinstance(value, str) or pattern.fullmatch(value) is None:
+            issues.append("controller_evidence_expectation_invalid")
+            break
+
+    ready_bytes, ready_stable = _stable_exact_reads(
+        post_exit_ready_reads,
+        issue_code="controller_evidence_ready_mutated",
+        issues=issues,
+        required=True,
+    )
+    if ready_bytes != pinned_ready_bytes:
+        issues.append("controller_evidence_ready_pin_mismatch")
+        ready_stable = False
+    if _sha256(pinned_ready_bytes) != expectation.ready_sha256:
+        issues.append("controller_evidence_ready_hash_mismatch")
+        ready_stable = False
+
+    public_key_valid = True
+    try:
+        public_key = validate_ecdsa_p256_public_blob(public_key_blob)
+    except (TypeError, DeveloperTaskExecutionBoundaryCryptoError):
+        issues.append("controller_evidence_public_key_invalid")
+        public_key_valid = False
+        public_key = None
+    if (
+        public_key is None
+        or public_key.blob_sha256 != expectation.public_key_sha256
+    ):
+        issues.append("controller_evidence_public_key_mismatch")
+        public_key_valid = False
+
+    payload_bytes, payload_stable = _stable_exact_reads(
+        evidence_payload_reads,
+        issue_code="controller_evidence_payload_mutated",
+        issues=issues,
+        required=True,
+    )
+    signature_bytes, signature_stable = _stable_exact_reads(
+        evidence_signature_reads,
+        issue_code="controller_evidence_signature_mutated",
+        issues=issues,
+        required=True,
+    )
+    evidence_stable = payload_stable and signature_stable
+    payload = _parse_controller_evidence_payload(payload_bytes, issues)
+
+    terminal_status = str(payload.get("terminal_status", ""))
+    if payload:
+        if payload.get("schema_version") != 1:
+            issues.append("controller_evidence_schema_invalid")
+        if payload.get("evidence_type") != _CONTROLLER_EVIDENCE_TYPE:
+            issues.append("controller_evidence_type_invalid")
+        if payload.get("implementation_revision") != _CONTROLLER_EVIDENCE_REVISION:
+            issues.append("controller_evidence_revision_invalid")
+        for field_name, expected in expected_values.items():
+            if payload.get(field_name) != expected:
+                issues.append(f"controller_evidence_{field_name}_mismatch")
+        if any(
+            payload.get(field_name) is not False
+            for field_name in (
+                "changed_code_executed",
+                "reusable_lease_issued",
+                "execution_authorized",
+            )
+        ):
+            issues.append("controller_evidence_forbidden_effect")
+        if not isinstance(payload.get("outcome"), str):
+            issues.append("controller_evidence_outcome_type_invalid")
+        if not isinstance(payload.get("terminal_status"), str):
+            issues.append("controller_evidence_terminal_status_type_invalid")
+        completed_at = payload.get("completed_at_utc")
+        if not isinstance(completed_at, str) or _UTC_TIMESTAMP.fullmatch(completed_at) is None:
+            issues.append("controller_evidence_completed_at_invalid")
+        for hash_field in (
+            "request_sha256",
+            "ready_sha256",
+            "authorize_sha256",
+            "public_key_sha256",
+            "runtime_bundle_fingerprint",
+            "runtime_lease_fingerprint",
+            "plan_fingerprint",
+            "source_manifest_sha256",
+        ):
+            if _HEX_64.fullmatch(str(payload.get(hash_field, ""))) is None:
+                issues.append(f"controller_evidence_{hash_field}_invalid")
+
+    signature_valid = False
+    if public_key_valid and payload_bytes and signature_bytes:
+        try:
+            validate_ecdsa_p256_signature(signature_bytes)
+            verifier = signature_verifier or verify_ecdsa_p256_sha256_cng
+            verified = verifier(public_key_blob, payload_bytes, signature_bytes)
+            if not isinstance(verified, bool):
+                issues.append("controller_evidence_signature_verifier_invalid")
+            else:
+                signature_valid = verified
+        except (
+            TypeError,
+            DeveloperTaskExecutionBoundaryCryptoError,
+            ValueError,
+            RuntimeError,
+        ):
+            issues.append("controller_evidence_signature_verification_failed")
+        if not signature_valid:
+            issues.append("controller_evidence_signature_invalid")
+
+    legacy_terminal_signature_valid = False
+    result_stable = False
+    private_relay_hash_bound = False
+    outcome = str(payload.get("outcome", "")) if payload else ""
+    if outcome == "success":
+        if terminal_status not in _CONTROLLER_EVIDENCE_SUCCESS_STATUSES:
+            issues.append("controller_evidence_success_status_invalid")
+        private_hash = str(payload.get("private_result_sha256", ""))
+        relayed_hash = str(payload.get("relayed_result_sha256", ""))
+        terminal_hash = str(payload.get("terminal_payload_sha256", ""))
+        result_required = terminal_status != "compile_ast_boundary_failed"
+        if result_required:
+            if (
+                _HEX_64.fullmatch(private_hash) is None
+                or _HEX_64.fullmatch(relayed_hash) is None
+                or private_hash != relayed_hash
+            ):
+                issues.append("controller_evidence_private_relay_hash_invalid")
+            else:
+                private_relay_hash_bound = True
+        else:
+            if private_hash != "" or relayed_hash != "":
+                issues.append("controller_evidence_boundary_result_fields_invalid")
+            else:
+                private_relay_hash_bound = True
+        if _HEX_64.fullmatch(terminal_hash) is None:
+            issues.append("controller_evidence_terminal_hash_invalid")
+        for field_name in (
+            "failure_stage",
+            "failure_type",
+            "failure_code",
+            "failure_message_sha256",
+        ):
+            if payload.get(field_name) != "":
+                issues.append("controller_evidence_success_failure_fields_invalid")
+                break
+
+        if result_required:
+            relayed_bytes, relayed_stable = _stable_exact_reads(
+                relayed_result_reads,
+                issue_code="controller_evidence_relayed_result_mutated",
+                issues=issues,
+                required=True,
+            )
+            if relayed_bytes and _sha256(relayed_bytes) != relayed_hash:
+                issues.append("controller_evidence_relayed_result_hash_mismatch")
+        else:
+            relayed_bytes = b""
+            relayed_stable = True
+            if relayed_result_reads is not None and any(relayed_result_reads):
+                issues.append("controller_evidence_boundary_result_unexpected")
+
+        terminal_bytes, terminal_stable = _stable_exact_reads(
+            terminal_payload_reads,
+            issue_code="controller_evidence_terminal_payload_mutated",
+            issues=issues,
+            required=True,
+        )
+        terminal_signature, terminal_signature_stable = _stable_exact_reads(
+            terminal_signature_reads,
+            issue_code="controller_evidence_terminal_signature_mutated",
+            issues=issues,
+            required=True,
+        )
+        result_stable = relayed_stable and terminal_stable and terminal_signature_stable
+        if terminal_bytes and _sha256(terminal_bytes) != terminal_hash:
+            issues.append("controller_evidence_terminal_payload_hash_mismatch")
+
+        legacy = _parse_legacy_terminal_payload(terminal_bytes, issues)
+        if legacy:
+            legacy_expected = {
+                "request_id": expectation.request_id,
+                "host_nonce": expectation.host_nonce,
+                "request_sha256": expectation.request_sha256,
+                "ready_sha256": expectation.ready_sha256,
+                "authorize_sha256": expectation.authorize_sha256,
+                "public_key_sha256": expectation.public_key_sha256,
+                "runtime_bundle_fingerprint": expectation.runtime_bundle_fingerprint,
+                "runtime_lease_fingerprint": expectation.runtime_lease_fingerprint,
+                "plan_fingerprint": expectation.plan_fingerprint,
+                "source_manifest_sha256": expectation.source_manifest_sha256,
+                "status": terminal_status,
+            }
+            for field_name, expected in legacy_expected.items():
+                if legacy.get(field_name) != expected:
+                    issues.append(f"controller_evidence_legacy_{field_name}_mismatch")
+            legacy_result_hash = legacy.get("result_sha256")
+            if result_required:
+                if legacy_result_hash != relayed_hash:
+                    issues.append("controller_evidence_legacy_result_hash_mismatch")
+            elif legacy_result_hash is not None:
+                issues.append("controller_evidence_legacy_boundary_result_invalid")
+            if legacy.get("reusable_lease_issued") is not False or legacy.get("execution_authorized") is not False:
+                issues.append("controller_evidence_legacy_forbidden_effect")
+            check_payload = legacy.get("check")
+            if isinstance(check_payload, dict) and check_payload.get("changed_code_executed") is not False:
+                issues.append("controller_evidence_legacy_changed_code_execution")
+
+        if public_key_valid and terminal_bytes and terminal_signature:
+            try:
+                validate_ecdsa_p256_signature(terminal_signature)
+                verifier = signature_verifier or verify_ecdsa_p256_sha256_cng
+                verified = verifier(public_key_blob, terminal_bytes, terminal_signature)
+                if isinstance(verified, bool):
+                    legacy_terminal_signature_valid = verified
+                else:
+                    issues.append("controller_evidence_legacy_verifier_invalid")
+            except (
+                TypeError,
+                DeveloperTaskExecutionBoundaryCryptoError,
+                ValueError,
+                RuntimeError,
+            ):
+                issues.append("controller_evidence_legacy_signature_verification_failed")
+            if not legacy_terminal_signature_valid:
+                issues.append("controller_evidence_legacy_signature_invalid")
+    elif outcome == "failure":
+        if terminal_status != _CONTROLLER_EVIDENCE_FAILURE_STATUS:
+            issues.append("controller_evidence_failure_status_invalid")
+        if any(
+            payload.get(field_name) != ""
+            for field_name in (
+                "private_result_sha256",
+                "relayed_result_sha256",
+                "terminal_payload_sha256",
+            )
+        ):
+            issues.append("controller_evidence_failure_result_fields_invalid")
+        if any(
+            not isinstance(payload.get(field_name), str)
+            or not str(payload.get(field_name))
+            for field_name in ("failure_stage", "failure_type", "failure_code")
+        ):
+            issues.append("controller_evidence_failure_fields_invalid")
+        if _HEX_64.fullmatch(str(payload.get("failure_message_sha256", ""))) is None:
+            issues.append("controller_evidence_failure_message_hash_invalid")
+        if any(
+            reads is not None and any(reads)
+            for reads in (
+                relayed_result_reads,
+                terminal_payload_reads,
+                terminal_signature_reads,
+            )
+        ):
+            issues.append("controller_evidence_failure_unsigned_artifact_injection")
+        result_stable = True
+        private_relay_hash_bound = True
+        legacy_terminal_signature_valid = True
+    elif payload:
+        issues.append("controller_evidence_outcome_invalid")
+
+    unique_issues = tuple(dict.fromkeys(issues))
+    ok = not unique_issues
+    status = (
+        "controller_signed_success"
+        if ok and outcome == "success"
+        else "controller_signed_failure"
+        if ok and outcome == "failure"
+        else "failed"
+    )
+    return DeveloperTaskExecutionCompileAstControllerEvidenceTransportReport(
+        ok=ok,
+        status=status,
+        terminal_status=terminal_status,
+        issue_codes=unique_issues,
+        signature_valid=signature_valid,
+        legacy_terminal_signature_valid=legacy_terminal_signature_valid,
+        ready_stable=ready_stable,
+        evidence_stable=evidence_stable,
+        result_stable=result_stable,
+        private_relay_hash_bound=private_relay_hash_bound,
+    )
 
 
 @dataclass(frozen=True)
@@ -837,6 +1391,8 @@ $hostResultPath = Join-Path $hostOutputRoot "@@RESULT_FILE@@"
 $localResultPath = Join-Path $workerResultRoot "@@RESULT_FILE@@"
 $terminalPayloadPath = Join-Path $hostOutputRoot "terminal_payload.json"
 $terminalSignaturePath = Join-Path $hostOutputRoot "terminal_signature.bin"
+$controllerEvidencePayloadPath = Join-Path $hostOutputRoot "@@CONTROLLER_EVIDENCE_PAYLOAD_FILE@@"
+$controllerEvidenceSignaturePath = Join-Path $hostOutputRoot "@@CONTROLLER_EVIDENCE_SIGNATURE_FILE@@"
 $failurePath = Join-Path $hostOutputRoot "controller_failure.json"
 $stage = "request_validation"
 
@@ -962,6 +1518,94 @@ function Relay-TrustedCompileAstResult {
     return [pscustomobject]@{ Document = $Evidence.Document; Bytes = $relayedBytes; Sha256 = $relayedSha256 }
 }
 
+function Assert-HostTransportReservedArtifactsAbsent {
+    param([string]$Phase)
+    $reserved = @(
+        $hostResultPath,
+        $terminalPayloadPath,
+        $terminalSignaturePath,
+        $controllerEvidencePayloadPath,
+        $controllerEvidenceSignaturePath,
+        $failurePath
+    )
+    foreach ($path in $reserved) {
+        if (Test-Path -LiteralPath $path) {
+            throw ("Untrusted host transport contains a reserved artifact at " + $Phase + ": " + [System.IO.Path]::GetFileName($path))
+        }
+    }
+}
+
+function Assert-ReadyPinStable {
+    if (-not (Test-Path -LiteralPath $readyPath -PathType Leaf)) { throw "Pinned ready artifact is missing." }
+    if ((Get-FileSha256 -Path $readyPath) -cne $readySha256) { throw "Pinned ready artifact changed after publication." }
+}
+
+function Get-TextSha256 {
+    param([string]$Text)
+    return Get-BytesSha256 -Bytes ([System.Text.UTF8Encoding]::new($false).GetBytes($Text))
+}
+
+function Publish-SignedControllerEvidence {
+    param(
+        [ValidateSet("success", "failure")][string]$Outcome,
+        [string]$TerminalStatus,
+        [string]$PrivateResultSha256,
+        [string]$RelayedResultSha256,
+        [string]$TerminalPayloadSha256,
+        [string]$FailureStage,
+        [string]$FailureType,
+        [string]$FailureCode,
+        [string]$FailureMessageSha256
+    )
+    if ($null -eq $ecdsa) { throw "Controller evidence signing key is unavailable." }
+    $payload = [ordered]@{
+        schema_version = 1
+        evidence_type = "compile_ast_controller_terminal_v1"
+        implementation_revision = "V1C2C1R4"
+        outcome = $Outcome
+        terminal_status = $TerminalStatus
+        request_id = $requestId
+        host_nonce = [string]$request.host_nonce
+        request_sha256 = $requestSha256
+        ready_sha256 = $readySha256
+        authorize_sha256 = $authorizeSha256
+        public_key_sha256 = $publicKeySha256
+        runtime_bundle_fingerprint = $ExpectedRuntimeBundleFingerprint
+        runtime_lease_fingerprint = [string]$request.runtime_lease_fingerprint
+        plan_fingerprint = [string]$request.plan_fingerprint
+        source_manifest_sha256 = [string]$request.source_manifest_sha256
+        private_result_sha256 = $PrivateResultSha256
+        relayed_result_sha256 = $RelayedResultSha256
+        terminal_payload_sha256 = $TerminalPayloadSha256
+        failure_stage = $FailureStage
+        failure_type = $FailureType
+        failure_code = $FailureCode
+        failure_message_sha256 = $FailureMessageSha256
+        completed_at_utc = (Get-Date).ToUniversalTime().ToString("o")
+        changed_code_executed = $false
+        reusable_lease_issued = $false
+        execution_authorized = $false
+    }
+    $text = $payload | ConvertTo-Json -Depth 8 -Compress
+    $bytes = [System.Text.UTF8Encoding]::new($false).GetBytes($text)
+    if ($bytes.Length -le 0 -or $bytes.Length -gt @@EVIDENCE_MAX_BYTES@@) { throw "Controller evidence payload size is invalid." }
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try { $digest = $sha.ComputeHash($bytes) }
+    finally { $sha.Dispose() }
+    $signature = $ecdsa.SignHash($digest)
+    if ($signature.Length -ne 64) { throw "Controller evidence signature size is invalid." }
+    Write-Utf8Atomic -Path $controllerEvidencePayloadPath -Text $text
+    Write-BytesAtomic -Path $controllerEvidenceSignaturePath -Bytes $signature
+    $writtenPayload = Read-StrictUtf8Bytes -Path $controllerEvidencePayloadPath -MaximumBytes @@EVIDENCE_MAX_BYTES@@
+    $writtenSignature = [System.IO.File]::ReadAllBytes($controllerEvidenceSignaturePath)
+    if ((Get-BytesSha256 -Bytes $writtenPayload) -cne (Get-BytesSha256 -Bytes $bytes)) { throw "Controller evidence payload changed after publication." }
+    if ((Get-BytesSha256 -Bytes $writtenSignature) -cne (Get-BytesSha256 -Bytes $signature)) { throw "Controller evidence signature changed after publication." }
+    return [pscustomobject]@{
+        PayloadSha256 = (Get-BytesSha256 -Bytes $writtenPayload)
+        SignatureSha256 = (Get-BytesSha256 -Bytes $writtenSignature)
+    }
+}
+
 $cngKey = $null
 $ecdsa = $null
 $tokenState = $null
@@ -974,14 +1618,25 @@ $workerSidProcessSetEmpty = $false
 $jobClosed = $false
 $request = $null
 $authorize = $null
+$requestId = ""
+$requestSha256 = ""
 $readySha256 = ""
 $authorizeSha256 = ""
+$publicKeySha256 = ""
+$hostOutputAclSnapshot = $null
 $resumePreviousCount = 0
 $workerExitCode = [uint32]70
 $resultEvidence = $null
+$localResultEvidence = $null
 $manifest = $null
+$privateResultSha256 = ""
+$relayedResultSha256 = ""
+$terminalPayloadSha256 = ""
+$controllerEvidencePublished = $false
 
 try {
+    if (Test-Path -LiteralPath $readyPath) { throw "Ready artifact path already exists." }
+    Assert-HostTransportReservedArtifactsAbsent -Phase "controller_start"
     $requestBytes = Read-StrictUtf8Bytes -Path $requestPath -MaximumBytes @@REQUEST_MAX_BYTES@@
     $requestSha256 = Get-BytesSha256 -Bytes $requestBytes
     $requestText = [System.Text.UTF8Encoding]::new($false, $true).GetString($requestBytes)
@@ -1171,7 +1826,8 @@ try {
     $workerAccountCreated = $true
     $workerSid = [string]$tokenState.UserSid
     if ($tokenState.IsAdministrator -or $tokenState.IntegrityRid -ne 8192 -or $tokenState.TokenType -ne 1) { throw "Compile AST worker token boundary mismatch." }
-    if (-not [V1C2C1Native]::ProbeTokenHostOutputWriteDenied($tokenState.TokenHandle, $hostOutputRoot, $readyPath)) { throw "Compile AST worker token can write the host-observed mapping." }
+    Assert-ReadyPinStable
+    Assert-HostTransportReservedArtifactsAbsent -Phase "before_worker_launch"
     [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostOutputRoot, $hostOutputAclSnapshot)
     New-Item -ItemType Directory -Path $workerResultRoot -ErrorAction Stop | Out-Null
     [V1C2C1Native]::PrepareWorkerResultDirectory($workerResultRoot, $workerSid)
@@ -1205,12 +1861,22 @@ try {
     if (-not $workerSidProcessSetEmpty) { throw "Compile AST worker SID process set is not empty." }
     [V1C2C1Native]::DeleteLocalUserExact($workerUser, $workerSid)
     $workerAccountDeleted = $true
+    Assert-ReadyPinStable
+    Assert-HostTransportReservedArtifactsAbsent -Phase "after_worker_cleanup"
     if ($workerWait -eq [V1C2C1Native]::WAIT_OBJECT_0 -and $workerExitCode -eq 0) {
         try {
             $localResultEvidence = Read-TrustedCompileAstResult -Request $request -Manifest $manifest -Path $localResultPath
-            if ($null -ne $localResultEvidence) { $resultEvidence = Relay-TrustedCompileAstResult -Evidence $localResultEvidence }
+            if ($null -ne $localResultEvidence) {
+                $privateResultSha256 = [string]$localResultEvidence.Sha256
+                $resultEvidence = Relay-TrustedCompileAstResult -Evidence $localResultEvidence
+                $relayedResultSha256 = [string]$resultEvidence.Sha256
+            }
         }
-        catch { $resultEvidence = $null }
+        catch {
+            $resultEvidence = $null
+            $privateResultSha256 = ""
+            $relayedResultSha256 = ""
+        }
     }
     [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostOutputRoot, $hostOutputAclSnapshot)
     if (Test-Path -LiteralPath $workerResultRoot) { Remove-Item -LiteralPath $workerResultRoot -Recurse -Force -ErrorAction Stop }
@@ -1349,21 +2015,27 @@ try {
     $signatureBytes = $ecdsa.SignHash($terminalDigest)
     Write-Utf8Atomic -Path $terminalPayloadPath -Text $terminalText
     Write-BytesAtomic -Path $terminalSignaturePath -Bytes $signatureBytes
+    $terminalPayloadSha256 = Get-BytesSha256 -Bytes $terminalBytes
+    Publish-SignedControllerEvidence `
+        -Outcome "success" `
+        -TerminalStatus $status `
+        -PrivateResultSha256 $privateResultSha256 `
+        -RelayedResultSha256 $relayedResultSha256 `
+        -TerminalPayloadSha256 $terminalPayloadSha256 `
+        -FailureStage "" `
+        -FailureType "" `
+        -FailureCode "" `
+        -FailureMessageSha256 "" | Out-Null
+    $controllerEvidencePublished = $true
+    [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostOutputRoot, $hostOutputAclSnapshot)
 }
 catch {
-    $failure = [ordered]@{
-        schema_version = 1
-        request_id = if ($null -ne $request) { [string]$request.request_id } else { "" }
-        stage = $stage
-        error_type = $_.Exception.GetType().Name
-        error_code = "compile_ast_controller_worker_stage_failed"
-        worker_account_created = $workerAccountCreated
-        worker_account_deleted = $workerAccountDeleted
-        job_closed = $jobClosed
-        completed_at_utc = (Get-Date).ToUniversalTime().ToString("o")
-        execution_authorized = $false
-    }
-    try { Write-Utf8Atomic -Path $failurePath -Text ($failure | ConvertTo-Json -Depth 8 -Compress) } catch { }
+    $caughtError = $_
+    $failureStage = $stage
+    $failureType = $caughtError.Exception.GetType().FullName
+    $failureCode = "compile_ast_controller_worker_stage_failed"
+    $failureMessage = [string]$caughtError.Exception.Message
+    $failureMessageSha256 = Get-TextSha256 -Text $failureMessage
     try {
         if ($null -ne $launchState -and $launchState.JobHandle -ne [IntPtr]::Zero) {
             [V1C2C1Native]::CloseHandle($launchState.JobHandle) | Out-Null
@@ -1388,7 +2060,47 @@ catch {
     catch { }
     try { if (Test-Path -LiteralPath $workerResultRoot) { Remove-Item -LiteralPath $workerResultRoot -Recurse -Force -ErrorAction Stop } } catch { }
     try { if ($null -ne $hostOutputAclSnapshot) { [V1C2C1Native]::AssertDirectoryAclSnapshotUnchanged($hostOutputRoot, $hostOutputAclSnapshot) } } catch { }
-    Schedule-Shutdown | Out-Null
+    $failure = [ordered]@{
+        schema_version = 1
+        request_id = if ($null -ne $request) { [string]$request.request_id } else { "" }
+        stage = $failureStage
+        error_type = $failureType
+        error_code = $failureCode
+        error_message = $failureMessage
+        error_message_sha256 = $failureMessageSha256
+        authoritative = $false
+        worker_account_created = $workerAccountCreated
+        worker_account_deleted = $workerAccountDeleted
+        worker_sid_process_set_empty = $workerSidProcessSetEmpty
+        job_closed = $jobClosed
+        completed_at_utc = (Get-Date).ToUniversalTime().ToString("o")
+        execution_authorized = $false
+    }
+    try { Write-Utf8Atomic -Path $failurePath -Text ($failure | ConvertTo-Json -Depth 8 -Compress) } catch { }
+    $shutdownScheduled = Schedule-Shutdown
+    try {
+        if (
+            $null -ne $ecdsa -and
+            $requestId -cmatch "^[0-9a-f]{32}$" -and
+            $requestSha256 -cmatch "^[0-9a-f]{64}$" -and
+            $readySha256 -cmatch "^[0-9a-f]{64}$" -and
+            $authorizeSha256 -cmatch "^[0-9a-f]{64}$" -and
+            $publicKeySha256 -cmatch "^[0-9a-f]{64}$"
+        ) {
+            Publish-SignedControllerEvidence `
+                -Outcome "failure" `
+                -TerminalStatus "compile_ast_controller_failed" `
+                -PrivateResultSha256 "" `
+                -RelayedResultSha256 "" `
+                -TerminalPayloadSha256 "" `
+                -FailureStage $failureStage `
+                -FailureType $failureType `
+                -FailureCode $failureCode `
+                -FailureMessageSha256 $failureMessageSha256 | Out-Null
+            $controllerEvidencePublished = $true
+        }
+    }
+    catch { }
 }
 finally {
     try { if ($null -ne $launchState -and $launchState.ThreadHandle -ne [IntPtr]::Zero) { [V1C2C1Native]::CloseHandle($launchState.ThreadHandle) | Out-Null } } catch { }
@@ -1441,6 +2153,9 @@ finally {
         "@@PAYLOAD_FILE@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_PAYLOAD_FILE_NAME,
         "@@WSB_FILE@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_WORKER_WSB_FILE_NAME,
         "@@RESULT_FILE@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_RESULT_FILE_NAME,
+        "@@CONTROLLER_EVIDENCE_PAYLOAD_FILE@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_PAYLOAD_FILE_NAME,
+        "@@CONTROLLER_EVIDENCE_SIGNATURE_FILE@@": DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_SIGNATURE_FILE_NAME,
+        "@@EVIDENCE_MAX_BYTES@@": str(DEVELOPER_TASK_EXECUTION_COMPILE_AST_CONTROLLER_EVIDENCE_MAX_BYTES),
         "@@EXPECTED_RUNTIME_FILES@@": expected_runtime_files,
         "@@COMMON_FUNCTIONS@@": common,
         "@@MAX_FILE_COUNT@@": str(DEVELOPER_TASK_EXECUTION_COMPILE_AST_MAX_FILE_COUNT),
