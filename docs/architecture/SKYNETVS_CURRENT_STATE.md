@@ -30,6 +30,11 @@
 - RC027 R4-rebound seven-file candidate SHA-256: `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`; exact diff bytes `225629`; composition policy fingerprint `4062935bd211fccc6e0b5c31cb086f28d32350d0e08bf2027f2f280959d3fa71`; policy bytes SHA-256 `127afed174dc034cdfd7b4b46471aebb7083055ace702806047df8488ba91e44`.
 - RC027 consumed marker SHA-256: `7d3d2b670c878ae9e6b38e0c90f30ba9ca3f20904b03f8a1eab518c239a9a354`; status `failed / consumed / must not be rerun`; targeted active log SHA-256 `8d161de30ad32b431f09d9399c9c35105af4e61e3510a518c84db80498a0822c`.
 - RC027 result: controller evidence is authentic and stable (`controller_signed_success`, signature valid, legacy terminal signature valid, ready/evidence/result stability valid) but the signed terminal status is `compile_ast_boundary_failed`; no accepted result/verifier evidence exists. Sandbox/process cleanup passed, `changed_code_executed=false`, `reusable_lease_issued=false`, `execution_authorized=false`.
+- Roadmap Change 028 documentation commit: `b59dacedabca72b839d1f04f011613dae3045d4f` (`docs: record RC027 boundary failure and authorize terminal capture`); parent `a53065dc1b39af8e46720f1592cb4625c830aac3`.
+- RC028 consumed marker SHA-256: `bc116ae32b67f9feb9b218eee6cff16aaf4a64065c330614ef6b92d4e210eefc`; status `completed / consumed / authenticated capture`; diagnostic log SHA-256 `601a9f3b65c472c1a26cd01cf2fcb4b2ee6e5e884bbb9dd60f6ce390e39f5d2b`; authenticated diagnostic SHA-256 `a0dce9e18dc2221331ebea30ab0fa9e7b7d8c9820cd1b56f99ace64e07a78ebd`.
+- RC028 authenticated result: signed terminal/controller evidence is valid and stable; worker lifecycle is correct (`created_suspended=true`, `assigned_before_resume=true`, `resume_previous_count=1`, `worker_in_job=true`, `job_closed=true`, `sid_process_set_empty=true`, `account_deleted=true`), but `worker.exit_code=70`, `worker.result_received=false`, all check counters are zero and `changed_code_executed=false`.
+- RC028 host-only root-cause proof: `SkynetVS_V1C2C2_RC028_HostOnlyRunnerShadowValidationV2_20260825_161623.txt` SHA-256 `cb6f0648f09fdbb32f7268fe5f01f78085054da3f4bf44469b074aa83b6298c9`. Exact materialization passes request/manifest loading and `_validate_request`, then deterministically fails in pinned V1C2A2 `_verify_payload` at `_require_fields(launch, _PAYLOAD_LAUNCH_FIELDS)` with `RunnerInputError("fields_invalid")`.
+- Root cause: V1C2A2 `_payload_manifest_bytes` serializes recursively with `sort_keys=True`, while the unchanged pinned runner requires an exact non-sorted launch-object field order. Recursive sorting places `runner_path` before `runtime_executable`/`runtime_flags`, so the worker fails before source processing and `main()` collapses the exception to exit code `70`.
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Исторический foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`.
 - Стабильный trusted-runtime тег: `skynet-trusted-runtime-v1b4` → `91d8c37fc4afe7ef138e36063e7bc22014da8a2c`.
@@ -983,7 +988,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED through `f0a2da9`. Roadmap Changes 013–027 lock V1C0B2, V1C1, V1C2 and the V1C2C split. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 028 is CURRENT for one exact R4 signed-boundary terminal capture; V1C2C2 remains NOT VERIFIED and V1C2C3 remains blocked.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED through `f0a2da9`. Roadmap Changes 013–028 lock V1C0B2, V1C1, V1C2 and the V1C2C diagnostic history. RC021/RC022/RC025/RC028 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 029 is CURRENT for host-only `V1C2A2R1` payload launch-order correction; V1C2C2 remains NOT VERIFIED and V1C2C3 remains blocked.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1061,8 +1066,9 @@ V1C2C1R2 Shared Output ACL Preservation Correction              VERIFIED / HISTO
 V1C2C1R3 Guest-Local Worker Result Relay Correction             VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
 V1C2C1R4 Signed Controller Evidence over Untrusted WSB Transport     VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C2P2 R3 Active Guest Checkpoint Capture                   COMPLETED / CONSUMED / LOCALIZED_FAILURE
-V1C2C2P3 R4 Signed Boundary Terminal Capture                   CURRENT / ONE FRESH DIAGNOSTIC CAPTURE ONLY
-V1C2C2 Active Compile/AST Sandbox Composition                  BLOCKED / RC027 FAILED / R4 CANDIDATE PRESERVED
+V1C2C2P3 R4 Signed Boundary Terminal Capture                   COMPLETED / CONSUMED / ROOT CAUSE LOCALIZED
+V1C2A2R1 Fixed Payload Launch-Order Serialization Correction    CURRENT / HOST-ONLY / NON-AUTHORIZING
+V1C2C2 Active Compile/AST Sandbox Composition                  BLOCKED / AWAIT V1C2A2R1 + DOWNSTREAM REBIND
 V1C2C3 Live Pass/Syntax/Boundary Acceptance                    BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
@@ -1693,13 +1699,47 @@ reusable_lease_issued=false
 execution_authorized=false
 ```
 
+### Roadmap Change 029 — V1C2A2 fixed payload launch-order correction
+
+RC028 is COMPLETED / CONSUMED. Its authenticated capture proves that the R4 controller/worker lifecycle, signed transport and cleanup all succeed, but the fixed standard-user worker exits with code `70` before producing `result.json`. The pinned V1C2A2 runner source proves that `70` is the generic return for any exception in `main()`, so the exit code alone is not a semantic error class.
+
+Host-only shadow validation then reproduced the exact failure without Sandbox or guest execution: exact V1C2C2 materialization passed canonical `request.json`, canonical `source_manifest.json` and `_validate_request`, then failed in `_verify_payload` at `_require_fields(launch, _PAYLOAD_LAUNCH_FIELDS)` with `RunnerInputError("fields_invalid")`. The report SHA-256 is `cb6f0648f09fdbb32f7268fe5f01f78085054da3f4bf44469b074aa83b6298c9`.
+
+The defect is in the V1C2A2 host-side payload serializer, not in the guest runner algorithm. `_payload_manifest_bytes` uses recursive `json.dumps(..., sort_keys=True, ...)`, while the exact runner intentionally requires the launch object in this order: `caller_arguments`, `caller_environment`, `runtime_executable`, `runtime_flags`, `runner_path`, `shell`, `working_directory`. Recursive sorting instead serializes `runner_path` before `runtime_executable` and `runtime_flags`, so `_require_fields` fails before source processing.
+
+Roadmap Change 029 inserts `V1C2A2R1 — Fixed Payload Launch-Order Serialization Correction` before any further V1C2C2 activity. The correction is host-only and non-authorizing. It must preserve the exact generated guest runner bytes and runner SHA-256 `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9`, preserve the V1C2A1 contract-policy bytes/fingerprint and V1C2A2 runner-policy fingerprint, and change only host payload serialization so the existing `_launch_contract()` insertion order is retained. The corrected payload SHA-256 and runner-bundle fingerprint must be measured from final bytes and pinned; they must not be guessed.
+
+The locked implementation scope for V1C2A2R1 is exactly two tracked files: `modules/developer/developer_task_execution_compile_ast_runner.py` and `tools/eval_developer_task_execution_compile_ast_runner.py`. The existing Windows bundle smoke, package-boundary registry and pipeline flow may be executed but are not modified by this correction. Any need to widen that two-file implementation scope requires another explicit Roadmap Change.
+
+V1C2A2R1 acceptance requires: exact guest runner SHA unchanged; exact payload launch order regression coverage; corrected bundle self-validation; unchanged V1C2A1 and V1C2B dependency gates; package boundaries; existing V1C2A2 Windows bundle smoke with no Sandbox launch; full `check`; Runtime Architecture Audit; exact two-file commit scope; post-commit repeat of the host-only payload-order proof; and all active flags false. No transaction/lease claim, source/runtime active composition, Sandbox launch, guest interpreter execution or changed-source processing is permitted while V1C2A2R1 is open.
+
+The preserved seven-file V1C2C2 candidate remains byte-for-byte unchanged at SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05` during RC029 implementation. Its current runner dependency identities will become historical/stale once V1C2A2R1 is verified, so V1C2C2 remains BLOCKED. A later explicit Roadmap Change must rebind the seven-file candidate to the measured V1C2A2R1 payload/bundle identities before any new active retry can be considered. RC027 and RC028 must never be rerun.
+
+Operational state after Roadmap Change 029:
+
+```text
+RC027       FAILED / CONSUMED / MUST NOT BE RERUN
+RC028       COMPLETED / CONSUMED / ROOT CAUSE LOCALIZED
+V1C2C2P3   COMPLETED / CONSUMED
+V1C2A2     VERIFIED / HISTORICAL ORIGINAL PAYLOAD BUNDLE
+V1C2A2R1   CURRENT / HOST-ONLY / NON-AUTHORIZING
+V1C2C1R4   VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C2      BLOCKED / R4 CANDIDATE PRESERVED / AWAIT R1 REBIND
+V1C2C3      BLOCKED
+R4 candidate SHA-256: dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+fixed guest runner SHA-256: 6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
 ### Следующее точное действие
 
-1. Commit Roadmap Change 028 in only the three architecture documents on exact `HEAD / origin/main == a53065dc1b39af8e46720f1592cb4625c830aac3`; preserve exact R4-rebound seven-file candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`, empty cached diff, RC027 marker/log evidence and stable V1B4. No pipeline or Windows Sandbox run belongs to the docs transition.
-2. After RC028 is committed and pushed, build an external one-shot V1C2C2P3 diagnostic harness without modifying tracked production/candidate files. The harness must bind the exact candidate/policy/R4 identities, reserve a permanent RC028 consumed marker before launch, use one fresh host report/snapshot/plan/runtime bundle/runtime lease/V1C2C0 transaction/Sandbox, and copy the stable post-exit signed terminal/controller-evidence bytes before cleanup.
-3. Accept the diagnostic capture only if all Sandbox processes exit, no forced cleanup is required, the copied terminal/evidence hashes equal the hashes verified by the normal R4 composition, the signatures validate under the pinned pre-worker public key, repository/workspace/candidate bytes remain unchanged, artifacts are removed, `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false`.
-4. If the diagnostic capture fails, stop and preserve its permanent marker/evidence. If it succeeds, use only the authenticated `worker.exit_code`, `worker.result_received`, worker lifecycle and `check` fields to choose the next explicit Roadmap Change. Do not rerun RC027 or RC028 automatically.
-5. V1C2C2 remains NOT VERIFIED and V1C2C3 remains BLOCKED. Do not move `skynet-trusted-runtime-v1b4`, delete consumed markers, widen the public API or modify the fixed V1C2A2 runner.
+1. Commit Roadmap Change 029 in only the three architecture documents on exact `HEAD / origin/main == b59dacedabca72b839d1f04f011613dae3045d4f`; preserve exact seven-file candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`, empty cached diff, RC027/RC028 consumed evidence and stable V1B4. No pipeline or Windows Sandbox run belongs to the docs transition.
+2. After RC029 is committed and pushed, prepare the exact two-file V1C2A2R1 correction. In `developer_task_execution_compile_ast_runner.py`, preserve exact generated runner bytes while changing only payload-manifest serialization from recursive sorted-key output to insertion-order output; then measure and pin the corrected payload SHA-256 and runner-bundle fingerprint.
+3. Extend only `tools/eval_developer_task_execution_compile_ast_runner.py` with explicit regression evidence that all payload object key orders — especially `launch` — match the exact pinned runner field tuples and that the exact runner SHA remains unchanged.
+4. Run only host-only/non-authorizing V1C2A2R1 verification: Python compilation, package boundaries, V1C2A1/V1C2A2/V1C2B dependency gates, existing Windows bundle compile/smoke without Sandbox launch, targeted flow, full `check` and Runtime Architecture Audit. No active V1C2C2 run is authorized.
+5. If all gates pass, commit exactly the two V1C2A2R1 files with subject `fix: preserve compile ast payload launch field order`, push, repeat post-commit host-only verification, then stop. A separate Roadmap Change is required before rebinding or rerunning V1C2C2. V1C2C3 remains BLOCKED.
 
 
 ## 16. Зафиксированные коммиты текущего перехода

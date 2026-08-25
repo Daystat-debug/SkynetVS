@@ -26,8 +26,9 @@ V1C2C1R2 — VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
 V1C2C1R3 — VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
 V1C2C1R4 — VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C2P2 — COMPLETED / CONSUMED / LOCALIZED_FAILURE
-V1C2C2P3 — CURRENT / ONE FRESH R4 SIGNED-BOUNDARY TERMINAL CAPTURE ONLY
-V1C2C2 — BLOCKED / RC027 FAILED / R4 CANDIDATE PRESERVED
+V1C2C2P3 — COMPLETED / CONSUMED / ROOT CAUSE LOCALIZED
+V1C2A2R1 — CURRENT / HOST-ONLY / NON-AUTHORIZING PAYLOAD ORDER CORRECTION
+V1C2C2 — BLOCKED / R4 CANDIDATE PRESERVED / AWAIT R1 REBIND
 V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
@@ -672,7 +673,7 @@ full check                                 green
 
 Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–025 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 028 is CURRENT for one exact R4 signed-boundary terminal capture. V1C2C2 remains NOT VERIFIED and V1C2C3 remains BLOCKED; exact PyPI wheel closure and MinGit pinning remain separate blocked work.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. RC021/RC022/RC025/RC028 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 029 is CURRENT for host-only V1C2A2R1 payload launch-order correction. V1C2C2 remains NOT VERIFIED and V1C2C3 remains BLOCKED; exact PyPI wheel closure and MinGit pinning remain separate blocked work.
 
 ## V1C2C active composition split — Roadmap Change 016
 
@@ -834,6 +835,29 @@ RC028:                              CURRENT / ONE EXACT DIAGNOSTIC CAPTURE ONLY
 V1C2C2P3:                           CURRENT / ONE FRESH DIAGNOSTIC CAPTURE ONLY
 V1C2C2:                             BLOCKED / R4 CANDIDATE PRESERVED
 R4 candidate SHA-256:               dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+changed_code_executed:               false
+reusable_lease_issued:               false
+execution_authorized:                false
+V1C2C3:                              BLOCKED
+```
+
+## V1C2A2R1 fixed payload launch-order serialization correction — Roadmap Change 029
+
+RC028 completed its authenticated diagnostic and is permanently CONSUMED. The signed terminal proves `worker.exit_code=70`, `worker.result_received=false`, zero processed/passed/failed counts and correct standard-user lifecycle/Job cleanup. Host-only exact-runner shadow validation reproduced the hidden exception at `_verify_payload`: `_require_fields(launch, _PAYLOAD_LAUNCH_FIELDS)` raises `RunnerInputError("fields_invalid")` after request/manifest validation already passed. Root-cause report SHA-256: `cb6f0648f09fdbb32f7268fe5f01f78085054da3f4bf44469b074aa83b6298c9`.
+
+The incompatibility is deterministic: host-side V1C2A2 payload serialization recursively sorts JSON keys, but the fixed runner requires a deliberate launch-object insertion order. Roadmap Change 029 therefore inserts host-only `V1C2A2R1`. It preserves exact guest runner SHA-256 `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9` and changes only host payload serialization to retain `_launch_contract()` order. The corrected payload SHA-256 and runner-bundle fingerprint must be measured from final bytes.
+
+Implementation scope is exactly `modules/developer/developer_task_execution_compile_ast_runner.py` plus `tools/eval_developer_task_execution_compile_ast_runner.py`. No Sandbox, interpreter execution, transaction/lease claim or changed-source processing belongs to V1C2A2R1. The exact V1C2C2 candidate remains preserved at `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05` and remains BLOCKED until a later explicit Roadmap Change rebinds it to the corrected V1C2A2R1 payload/bundle identities.
+
+```text
+RC027:                              FAILED / CONSUMED / MUST NOT BE RERUN
+RC028:                              COMPLETED / CONSUMED / ROOT CAUSE LOCALIZED
+V1C2C2P3:                           COMPLETED / CONSUMED
+V1C2A2:                             VERIFIED / HISTORICAL ORIGINAL PAYLOAD BUNDLE
+V1C2A2R1:                           CURRENT / HOST-ONLY / NON-AUTHORIZING
+V1C2C2:                             BLOCKED / AWAIT V1C2A2R1 + DOWNSTREAM REBIND
+R4 candidate SHA-256:               dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+fixed guest runner SHA-256:          6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9
 changed_code_executed:               false
 reusable_lease_issued:               false
 execution_authorized:                false

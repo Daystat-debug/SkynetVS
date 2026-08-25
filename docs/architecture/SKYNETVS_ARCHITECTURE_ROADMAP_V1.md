@@ -1429,6 +1429,39 @@ reusable_lease_issued=false
 execution_authorized=false
 ```
 
+### Roadmap Change 029 — V1C2A2 fixed payload launch-order serialization correction
+
+**Причина:** RC028 completed its one-shot authenticated terminal capture. The signed R4 terminal proves the standard-user worker was created suspended, assigned to the Job before resume, resumed exactly once, remained non-admin/medium-integrity, exited, quiesced and was deleted cleanly; controller signatures and post-exit stability are valid. The worker nevertheless exited `70` with `result_received=false` before any source was processed. RC028 marker SHA-256 is `bc116ae32b67f9feb9b218eee6cff16aaf4a64065c330614ef6b92d4e210eefc`; authenticated diagnostic SHA-256 is `a0dce9e18dc2221331ebea30ab0fa9e7b7d8c9820cd1b56f99ace64e07a78ebd`.
+
+Exact pinned-runner inspection proves `main()` converts every exception in `_verify_runtime → request/manifest/payload validation → source parse/compile → result write` into generic exit code `70`. A host-only shadow using the exact V1C2C2 materializer and exact pinned runner bytes reproduced the failure without Sandbox: request/manifest canonical loading and `_validate_request` pass, while `_verify_payload` fails at `_require_fields(launch, _PAYLOAD_LAUNCH_FIELDS)` with `RunnerInputError("fields_invalid")`. Root-cause proof SHA-256: `cb6f0648f09fdbb32f7268fe5f01f78085054da3f4bf44469b074aa83b6298c9`.
+
+The host-side V1C2A2 `_payload_manifest_bytes` uses recursive `json.dumps(..., sort_keys=True, ...)`. The unchanged guest runner intentionally requires launch-object key order `caller_arguments → caller_environment → runtime_executable → runtime_flags → runner_path → shell → working_directory`; recursive sorting instead places `runner_path` before `runtime_executable`/`runtime_flags`. Thus the exact verified host payload bundle and exact verified guest parser are individually deterministic but mutually incompatible at the nested launch-object order boundary.
+
+**Что меняется:** insert `V1C2A2R1 — Fixed Payload Launch-Order Serialization Correction` before V1C2C2. Change only host-side payload-manifest serialization so it preserves the deliberate insertion order already produced by `_launch_contract()`. Preserve exact generated guest runner bytes and SHA-256 `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9`; preserve V1C2A1 contract-policy bytes/fingerprint, V1C2A2 runner-policy fingerprint, fixed paths, runtime flags, no-shell/no-argv/no-environment policy and all execution prohibitions. Measure and pin the new payload SHA-256 and runner-bundle fingerprint from final bytes.
+
+The implementation scope is exactly two tracked files: `modules/developer/developer_task_execution_compile_ast_runner.py` and `tools/eval_developer_task_execution_compile_ast_runner.py`. The evaluator must add an explicit exact-order regression for all payload object levels, with special coverage for `launch`, and prove the generated runner SHA remains unchanged. Existing Windows bundle smoke and pipeline/package-boundary wiring are verification dependencies only and are not modified. Any scope growth requires another Roadmap Change.
+
+**Что не меняется:** historical V1C2A2 at `b83d2966960a23ebf6930b8ba7ea4bd100cef0b3` remains preserved evidence; V1C2A1/V1C2B/V1C2C0/V1C2C1R4 sources and public APIs remain unchanged; stable V1B4 does not move. RC027 remains FAILED / CONSUMED and RC028 becomes COMPLETED / CONSUMED; neither may be rerun. The exact seven-file V1C2C2 R4 candidate stays uncommitted and byte-for-byte preserved at SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05` while V1C2A2R1 is implemented and verified. No V1C2C2 Sandbox run is authorized by RC029.
+
+Acceptance requires exact guest runner SHA unchanged; corrected payload/bundle identities measured from final bytes; explicit nested field-order regression; package boundaries; unchanged V1C2A1 and V1C2B dependency gates; complete V1C2A2 evaluator; existing Windows bundle smoke without active Sandbox; targeted flow; full `check`; Runtime Architecture Audit; exact two-file implementation commit; post-commit repetition of the host-only payload-order proof; and all active flags false. Commit subject: `fix: preserve compile ast payload launch field order`.
+
+Operational state after Roadmap Change 029:
+
+```text
+RC027       FAILED / CONSUMED / MUST NOT BE RERUN
+RC028       COMPLETED / CONSUMED / ROOT CAUSE LOCALIZED
+V1C2C2P3   COMPLETED / CONSUMED
+V1C2A2     VERIFIED / HISTORICAL ORIGINAL PAYLOAD BUNDLE
+V1C2A2R1   CURRENT / HOST-ONLY / NON-AUTHORIZING
+V1C2C1R4   VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C2      BLOCKED / R4 CANDIDATE PRESERVED / AWAIT R1 REBIND
+V1C2C3      BLOCKED
+R4 candidate SHA-256: dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+fixed guest runner SHA-256: 6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
 
 
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
