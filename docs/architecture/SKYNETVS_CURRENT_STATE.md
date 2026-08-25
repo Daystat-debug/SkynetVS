@@ -2,7 +2,7 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-23`
+- Дата обновления: `2026-08-25`
 - Ветка: `main`
 - Проверенный code baseline перед этим documentation commit: `f0a2da9bf96d9010b6df42ae79104e58c15a9838`
 - Название code baseline: `fix: verify signed controller evidence over untrusted WSB transport`
@@ -26,10 +26,14 @@
 - Roadmap Change 026 architecture decision: `skynetvs-v1c2c1r4-untrusted-wsb-transport-signed-controller-evidence-lock-v1` → `8ccd984bb6b92d9ad5a6091168efaf902d3ec6524593c89437acd16ad2cdb955`.
 - V1C2C1R4 implementation commit: `f0a2da9bf96d9010b6df42ae79104e58c15a9838` (`fix: verify signed controller evidence over untrusted WSB transport`); exact four-file patch SHA-256 `65596d2f3a5067e770c755979c3ba0562c7f7d2ec486b41598abf13d5a388079`.
 - V1C2C1R4 verified identities: policy `ad14229bad416194d64f21684309cb842af1abaed9e0d2fa05a28a59b3a2e19e`, policy bytes `6f06c46f729655747f06400055dcc31f79b09372563ef63f551fcd95ec9cf15a`, controller `5a3d4e49348fc97c473cd53ee2035c154fe96273b94b4a7a7684907b8a29c2f5`, bundle `0562d3033e61bd6177c833a9026aac63ab19b3aa4551a4325451708aa14bbd26`.
+- Roadmap Change 027 documentation commit: `a53065dc1b39af8e46720f1592cb4625c830aac3` (`docs: close signed WSB transport correction and reopen active composition`); parent `f0a2da9bf96d9010b6df42ae79104e58c15a9838`.
+- RC027 R4-rebound seven-file candidate SHA-256: `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`; exact diff bytes `225629`; composition policy fingerprint `4062935bd211fccc6e0b5c31cb086f28d32350d0e08bf2027f2f280959d3fa71`; policy bytes SHA-256 `127afed174dc034cdfd7b4b46471aebb7083055ace702806047df8488ba91e44`.
+- RC027 consumed marker SHA-256: `7d3d2b670c878ae9e6b38e0c90f30ba9ca3f20904b03f8a1eab518c239a9a354`; status `failed / consumed / must not be rerun`; targeted active log SHA-256 `8d161de30ad32b431f09d9399c9c35105af4e61e3510a518c84db80498a0822c`.
+- RC027 result: controller evidence is authentic and stable (`controller_signed_success`, signature valid, legacy terminal signature valid, ready/evidence/result stability valid) but the signed terminal status is `compile_ast_boundary_failed`; no accepted result/verifier evidence exists. Sandbox/process cleanup passed, `changed_code_executed=false`, `reusable_lease_issued=false`, `execution_authorized=false`.
 - Documentation HEAD после сохранения этого файла определяется фактическим `git log -1`; self-referential commit SHA в содержимом не фиксируется.
 - Исторический foundation-тег: `skynet-runtime-foundation-v1` → `09f8708`.
 - Стабильный trusted-runtime тег: `skynet-trusted-runtime-v1b4` → `91d8c37fc4afe7ef138e36063e7bc22014da8a2c`.
-- Рабочее дерево после documentation commit намеренно содержит только exact seven-file R3-bound V1C2C2 candidate SHA-256 `e4733892327b53c327f418fcffd129041bab109e56752bb4dd3cd657e72115bc`; cached diff должен быть пустым.
+- Рабочее дерево после documentation commit намеренно содержит только exact seven-file R4-rebound V1C2C2 candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`; cached diff должен быть пустым.
 
 ## 2. Приоритет источников истины
 
@@ -979,7 +983,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED through `f0a2da9`. Roadmap Changes 013–027 lock V1C0B2, V1C1, V1C2 and the V1C2C split. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 is FAILED / CONSUMED; RC027 is CURRENT for exact V1C2C2 R4 rebinding plus one fresh active attested-pass retry; V1C2C3 remains blocked.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED through `f0a2da9`. Roadmap Changes 013–027 lock V1C0B2, V1C1, V1C2 and the V1C2C split. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 028 is CURRENT for one exact R4 signed-boundary terminal capture; V1C2C2 remains NOT VERIFIED and V1C2C3 remains blocked.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1057,7 +1061,8 @@ V1C2C1R2 Shared Output ACL Preservation Correction              VERIFIED / HISTO
 V1C2C1R3 Guest-Local Worker Result Relay Correction             VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
 V1C2C1R4 Signed Controller Evidence over Untrusted WSB Transport     VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C2P2 R3 Active Guest Checkpoint Capture                   COMPLETED / CONSUMED / LOCALIZED_FAILURE
-V1C2C2 Active Compile/AST Sandbox Composition                  CURRENT / R4 REBIND + ONE FRESH ACTIVE RETRY ONLY
+V1C2C2P3 R4 Signed Boundary Terminal Capture                   CURRENT / ONE FRESH DIAGNOSTIC CAPTURE ONLY
+V1C2C2 Active Compile/AST Sandbox Composition                  BLOCKED / RC027 FAILED / R4 CANDIDATE PRESERVED
 V1C2C3 Live Pass/Syntax/Boundary Acceptance                    BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
@@ -1659,15 +1664,42 @@ reusable_lease_issued=false
 execution_authorized=false
 ```
 
+### Roadmap Change 028 — RC027 signed boundary failure requires one exact terminal capture
+
+RC027 is permanently FAILED / CONSUMED and must not be rerun. The exact active run was bound to documentation `HEAD / origin/main a53065dc1b39af8e46720f1592cb4625c830aac3` and R4-rebound candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`. The one-shot marker SHA-256 is `7d3d2b670c878ae9e6b38e0c90f30ba9ca3f20904b03f8a1eab518c239a9a354`; the targeted log SHA-256 is `8d161de30ad32b431f09d9399c9c35105af4e61e3510a518c84db80498a0822c`.
+
+The trusted R4 transport itself succeeded: the post-exit controller evidence is signed and stable, the legacy terminal signature is valid, the pinned ready/public-key anchor remained stable, and the controller terminal status is `compile_ast_boundary_failed`. Host/source/workspace cleanup passed and no reusable or changed-code execution authority was accepted.
+
+The exact controller computes the boundary as `resultReceived && workerExitCode == 0`. The retained RC027 evaluator output does not preserve the signed terminal's `worker.exit_code`, `worker.result_received`, worker lifecycle fields or `check` counters, so the current evidence cannot distinguish a non-zero worker exit from a zero-exit private-result absence/validation/relay rejection. Choosing a production correction without that evidence would be speculative.
+
+Roadmap Change 028 therefore inserts temporary external diagnostic slice `V1C2C2P3 — R4 Signed Boundary Terminal Capture`. It may perform exactly one fresh diagnostic run with the unchanged R4-rebound seven-file candidate. Before launch it must persist a permanent RC028 consumed marker. It must capture the exact post-exit terminal payload/signature and controller-evidence payload/signature before normal artifact cleanup, prove the copied bytes match the hashes that the normal R4 composition verified, and extract only signed terminal fields needed to localize the boundary: worker exit/result state, worker lifecycle/Job cleanup state, result/check counters and exact result hash presence. The diagnostic must not accept V1C2C2, run the normal pipeline, widen the production API, modify tracked production/candidate files, modify the fixed V1C2A2 runner, authorize V1C2C3 or issue reusable execution authority.
+
+Operational state after Roadmap Change 028:
+
+```text
+RC021       COMPLETED / CONSUMED
+RC022       COMPLETED / CONSUMED / LOCALIZED_FAILURE
+RC024       FAILED / CONSUMED / MUST NOT BE RERUN
+RC025       COMPLETED / CONSUMED / LOCALIZED_FAILURE
+RC027       FAILED / CONSUMED / MUST NOT BE RERUN
+RC028       CURRENT / ONE EXACT SIGNED-BOUNDARY TERMINAL CAPTURE ONLY
+V1C2C1R4   VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C2P3   CURRENT / ONE FRESH DIAGNOSTIC CAPTURE ONLY
+V1C2C2      BLOCKED / RC027 FAILED / R4 CANDIDATE PRESERVED
+V1C2C3      BLOCKED
+R4 candidate SHA-256: dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
 ### Следующее точное действие
 
-1. Commit Roadmap Change 027 in only the three architecture documents on exact `HEAD / origin/main == f0a2da9bf96d9010b6df42ae79104e58c15a9838`; preserve exact starting candidate SHA-256 `e4733892327b53c327f418fcffd129041bab109e56752bb4dd3cd657e72115bc`, empty cached diff, all consumed markers and stable V1B4. No pipeline or Windows Sandbox run belongs to the docs transition.
-2. After RC027 is committed and pushed, rebind only the existing seven V1C2C2 candidate files from the R3 controller-worker identities to the exact verified R4 identities. Preserve the immutable V1C2C2 architecture identity, fixed public API, seven-file scope and fixed V1C2A2 runner. Measure the rebound policy fingerprint/document SHA and resulting seven-file candidate SHA from the final bytes; do not predeclare them.
-3. Run Python compilation, package boundaries and the portable V1C2C2 evaluator before any active launch. Prove the rebind contains no temporary diagnostic code and no scope growth.
-4. Reserve a permanent RC027 consumed marker before the active retry. Then perform exactly one fresh active attested-pass retry using a fresh host report, snapshot, plan, runtime bundle, runtime lease, V1C2C0 transaction and Windows Sandbox. RC024 and RC025 must never be rerun.
-5. Accept success only from stable post-exit controller-signed R4 terminal evidence bound to the pinned pre-worker ready/public key and exact request/authorization/runtime/lease/plan/source/private-result/relayed-result identities. Writable-mapping ACL state is not authority.
-6. If the RC027 active retry fails, stop immediately, preserve evidence and the consumed marker, and do not rerun automatically. If it passes, continue with the locked full `check` / Runtime Architecture Audit / exact seven-file commit acceptance sequence before V1C2C3 can be considered.
-7. V1C2C3 remains BLOCKED. Do not move `skynet-trusted-runtime-v1b4`, delete consumed markers, widen the public API or modify the fixed V1C2A2 runner.
+1. Commit Roadmap Change 028 in only the three architecture documents on exact `HEAD / origin/main == a53065dc1b39af8e46720f1592cb4625c830aac3`; preserve exact R4-rebound seven-file candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`, empty cached diff, RC027 marker/log evidence and stable V1B4. No pipeline or Windows Sandbox run belongs to the docs transition.
+2. After RC028 is committed and pushed, build an external one-shot V1C2C2P3 diagnostic harness without modifying tracked production/candidate files. The harness must bind the exact candidate/policy/R4 identities, reserve a permanent RC028 consumed marker before launch, use one fresh host report/snapshot/plan/runtime bundle/runtime lease/V1C2C0 transaction/Sandbox, and copy the stable post-exit signed terminal/controller-evidence bytes before cleanup.
+3. Accept the diagnostic capture only if all Sandbox processes exit, no forced cleanup is required, the copied terminal/evidence hashes equal the hashes verified by the normal R4 composition, the signatures validate under the pinned pre-worker public key, repository/workspace/candidate bytes remain unchanged, artifacts are removed, `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false`.
+4. If the diagnostic capture fails, stop and preserve its permanent marker/evidence. If it succeeds, use only the authenticated `worker.exit_code`, `worker.result_received`, worker lifecycle and `check` fields to choose the next explicit Roadmap Change. Do not rerun RC027 or RC028 automatically.
+5. V1C2C2 remains NOT VERIFIED and V1C2C3 remains BLOCKED. Do not move `skynet-trusted-runtime-v1b4`, delete consumed markers, widen the public API or modify the fixed V1C2A2 runner.
 
 
 ## 16. Зафиксированные коммиты текущего перехода
@@ -1737,7 +1769,7 @@ bdd23fe docs: close guest failure capture and authorize suspended worker localiz
 tag skynet-trusted-runtime-v1b4 -> 91d8c37
 ```
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED through `f0a2da9`. Roadmap Changes 013–027 lock V1C0B2, V1C1, V1C2 and the V1C2C split. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 is FAILED / CONSUMED; V1C2C2P2 is COMPLETED / CONSUMED; RC027 is CURRENT for exact V1C2C2 R4 rebind plus one fresh active retry; V1C2C3 remains blocked and the stable V1B4 tag must not move.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED through `f0a2da9`. Roadmap Changes 013–027 lock V1C0B2, V1C1, V1C2 and the V1C2C split. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 is FAILED / CONSUMED; V1C2C2P2 is COMPLETED / CONSUMED; RC027 is FAILED / CONSUMED / MUST NOT BE RERUN; Roadmap Change 028 is CURRENT for one exact R4 signed-boundary terminal capture; V1C2C2 remains NOT VERIFIED, V1C2C3 remains blocked and the stable V1B4 tag must not move.
 
 ## 17. DEFERRED
 
@@ -1766,7 +1798,7 @@ V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C
 
 Threat model, result-authenticity model, V1B4 and Roadmap Changes 011–025 are approved in **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED. V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 is FAILED / CONSUMED. V1C2C2P2 is COMPLETED / CONSUMED. RC027 is CURRENT for exact V1C2C2 R4 rebind plus one fresh active retry. V1C2C3, exact PyPI wheel closure and MinGit pinning remain BLOCKED.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED. V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 is FAILED / CONSUMED. V1C2C2P2 is COMPLETED / CONSUMED. RC027 is FAILED / CONSUMED / MUST NOT BE RERUN. Roadmap Change 028 is CURRENT for one exact R4 signed-boundary terminal capture. V1C2C2 remains NOT VERIFIED; V1C2C3, exact PyPI wheel closure and MinGit pinning remain BLOCKED.
 
 ## 20. Файлы для будущего handoff
 

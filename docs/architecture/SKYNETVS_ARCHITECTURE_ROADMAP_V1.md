@@ -1,7 +1,7 @@
 # SkynetVS Architecture Roadmap V1
 
 **Дата фиксации:** 2026-07-30
-**Последнее обновление:** 2026-08-23
+**Последнее обновление:** 2026-08-25
 **Статус:** LOCKED
 **Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
@@ -1371,6 +1371,65 @@ reusable_lease_issued=false
 execution_authorized=false
 ```
 
+## Roadmap Change 028 — failed RC027 retry requires one exact R4 signed-boundary terminal capture
+
+**Причина:** RC027 was consumed exactly once on documentation `HEAD / origin/main a53065dc1b39af8e46720f1592cb4625c830aac3` and the exact R4-rebound seven-file candidate. Pre-active Python compilation, package boundaries `28/28` and portable V1C2C2 evaluator `48/48` passed. The active run consumed one fresh V1C2C0 transaction and runtime lease, launched one fresh Windows Sandbox and failed closed with an authentic stable controller-signed terminal status `compile_ast_boundary_failed`.
+
+Exact RC027 evidence binding:
+
+```text
+documentation HEAD / origin:          a53065dc1b39af8e46720f1592cb4625c830aac3
+parent:                               f0a2da9bf96d9010b6df42ae79104e58c15a9838
+commit:                               docs: close signed WSB transport correction and reopen active composition
+starting candidate SHA-256:           e4733892327b53c327f418fcffd129041bab109e56752bb4dd3cd657e72115bc
+R4-rebound candidate SHA-256:         dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+R4-rebound candidate bytes:           225629
+composition policy fingerprint:       4062935bd211fccc6e0b5c31cb086f28d32350d0e08bf2027f2f280959d3fa71
+composition policy bytes SHA-256:     127afed174dc034cdfd7b4b46471aebb7083055ace702806047df8488ba91e44
+RC027 consumed marker SHA-256:        7d3d2b670c878ae9e6b38e0c90f30ba9ca3f20904b03f8a1eab518c239a9a354
+targeted log SHA-256:                 8d161de30ad32b431f09d9399c9c35105af4e61e3510a518c84db80498a0822c
+marker status:                        failed / consumed / must not be rerun
+controller evidence status:           controller_signed_success
+controller terminal status:           compile_ast_boundary_failed
+controller evidence signature:        valid
+legacy terminal signature:            valid
+ready/evidence/result stability:      valid
+all Sandbox processes exited:         true
+forced cleanup attempted:             false
+artifacts removed:                     true
+changed_code_executed:                false
+reusable_lease_issued:                false
+execution_authorized:                 false
+```
+
+R4's transport/trust correction therefore worked: the host accepted a stable post-exit controller signature under the pinned pre-worker ready/public key. The failure is narrower, at the worker-result boundary. The exact controller defines that boundary as `resultReceived && workerExitCode == 0`; however the retained evaluator log and consumed marker do not preserve the signed terminal fields `worker.exit_code`, `worker.result_received`, worker lifecycle details or `check` counters. The current evidence cannot distinguish a non-zero worker exit from a zero-exit missing/invalid private result or relay rejection. A production correction must not be selected from this ambiguity.
+
+**Что меняется:** insert temporary external diagnostic slice `V1C2C2P3 — R4 Signed Boundary Terminal Capture`. It may perform exactly one fresh diagnostic run using the unchanged exact R4-rebound candidate and one fresh host report, snapshot, plan, runtime bundle, runtime lease, V1C2C0 transaction and Windows Sandbox. A permanent RC028 consumed marker must exist before launch. The harness must copy the exact stable post-exit `terminal_payload.json`, `terminal_signature.bin`, controller-evidence payload and controller-evidence signature before normal artifact cleanup, then prove the copied bytes match the exact hashes verified by the unchanged R4 composition and verify the signatures under the pinned pre-worker controller public key.
+
+The diagnostic may extract only evidence needed to localize the existing boundary: `worker.exit_code`, `worker.result_received`, worker account/token/suspend/Job/resume/wait/quiescence/delete state, result/check counts and exact result-hash presence. It must not alter tracked production or candidate files, modify the fixed V1C2A2 runner, widen the public production API, run the normal pipeline, accept V1C2C2, authorize V1C2C3 or create reusable execution authority. Its success means only that exact authenticated diagnostic evidence and cleanup were captured.
+
+**Что не меняется:** RC021/RC022/RC025 remain COMPLETED / CONSUMED; RC024 and RC027 remain FAILED / CONSUMED / MUST NOT BE RERUN. V1C2C1R4 remains VERIFIED / HOST-ONLY / NON-AUTHORIZING. The exact R4-rebound seven-file candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`, immutable V1C2C2 architecture identity, public API, fixed V1C2A2 runner, source/runtime materialization model, signed-evidence trust model and stable V1B4 tag remain unchanged. V1C2C2 remains NOT VERIFIED and V1C2C3 remains BLOCKED.
+
+Operational state after Roadmap Change 028:
+
+```text
+RC021       COMPLETED / CONSUMED
+RC022       COMPLETED / CONSUMED / LOCALIZED_FAILURE
+RC024       FAILED / CONSUMED / MUST NOT BE RERUN
+RC025       COMPLETED / CONSUMED / LOCALIZED_FAILURE
+RC027       FAILED / CONSUMED / MUST NOT BE RERUN
+RC028       CURRENT / ONE EXACT SIGNED-BOUNDARY TERMINAL CAPTURE ONLY
+V1C2C1R4   VERIFIED / HOST-ONLY / NON-AUTHORIZING
+V1C2C2P3   CURRENT / ONE FRESH DIAGNOSTIC CAPTURE ONLY
+V1C2C2      BLOCKED / RC027 FAILED / R4 CANDIDATE PRESERVED
+V1C2C3      BLOCKED
+R4 candidate SHA-256: dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
+
 
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
 
@@ -2442,8 +2501,11 @@ V1C2C1R3 — Guest-Local Worker Result Relay Correction (`7a73e97`; host-only / 
 [VERIFIED HOST-ONLY CORRECTION]
 V1C2C1R4 — Signed Controller Evidence over Untrusted Writable WSB Transport (`f0a2da9`; host-only / non-authorizing; fixed runner unchanged).
 
-[CURRENT / R4 REBIND + ONE FRESH ACTIVE RETRY ONLY]
-V1C2C2 — Active Compile/AST Sandbox Composition (exact seven-file starting candidate SHA-256 `e4733892327b53c327f418fcffd129041bab109e56752bb4dd3cd657e72115bc`; uncommitted; must be rebound to R4 before the one RC027 retry).
+[CURRENT DIAGNOSTIC / ONE FRESH CAPTURE ONLY]
+V1C2C2P3 — R4 Signed Boundary Terminal Capture (external, one-shot, non-accepting; exact R4 candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`).
+
+[BLOCKED / RC027 FAILED]
+V1C2C2 — Active Compile/AST Sandbox Composition (exact seven-file R4-rebound candidate preserved uncommitted; RC027 failed/consumed and must not be rerun).
 
 [BLOCKED]
 V1C2C3 — Live Pass / Syntax-Failure / Boundary-Failure Acceptance.

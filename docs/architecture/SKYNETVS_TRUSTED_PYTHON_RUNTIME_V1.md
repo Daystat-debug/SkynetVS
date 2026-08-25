@@ -26,7 +26,8 @@ V1C2C1R2 — VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
 V1C2C1R3 — VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
 V1C2C1R4 — VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C2P2 — COMPLETED / CONSUMED / LOCALIZED_FAILURE
-V1C2C2 — CURRENT / R4 REBIND + ONE FRESH ACTIVE ATTESTED-PASS RETRY ONLY
+V1C2C2P3 — CURRENT / ONE FRESH R4 SIGNED-BOUNDARY TERMINAL CAPTURE ONLY
+V1C2C2 — BLOCKED / RC027 FAILED / R4 CANDIDATE PRESERVED
 V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
@@ -671,7 +672,7 @@ full check                                 green
 
 Threat model, runtime provenance, V1C toolchain separation and Roadmap Changes 011–025 require **Pro Standard**.
 
-V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 is FAILED / CONSUMED. RC027 is CURRENT for exact V1C2C2 R4 rebinding plus one fresh active attested-pass retry. V1C2C3 remains BLOCKED; exact PyPI wheel closure and MinGit pinning remain separate blocked work.
+V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED; V1C0B2, V1C1, V1C2 and the V1C2C split are LOCKED. RC021/RC022/RC025 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 028 is CURRENT for one exact R4 signed-boundary terminal capture. V1C2C2 remains NOT VERIFIED and V1C2C3 remains BLOCKED; exact PyPI wheel closure and MinGit pinning remain separate blocked work.
 
 ## V1C2C active composition split — Roadmap Change 016
 
@@ -818,6 +819,26 @@ bundle fingerprint:    0562d3033e61bd6177c833a9026aac63ab19b3aa4551a4325451708aa
 ```
 
 The exact starting V1C2C2 candidate remains uncommitted at SHA-256 `e4733892327b53c327f418fcffd129041bab109e56752bb4dd3cd657e72115bc`. Roadmap Change 027 authorizes only exact rebinding of that seven-file candidate to the verified R4 identities and exactly one fresh active attested-pass retry with a permanent consumed marker reserved before launch. The fixed V1C2A2 runner and public V1C2C2 API remain unchanged. Any failed RC027 retry is terminal and must not be rerun; V1C2C3 remains BLOCKED.
+
+## V1C2C2 RC027 signed-boundary failure — Roadmap Change 028
+
+RC027 is permanently FAILED / CONSUMED. Its exact R4-rebound candidate SHA-256 is `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`, composition policy fingerprint `4062935bd211fccc6e0b5c31cb086f28d32350d0e08bf2027f2f280959d3fa71` and policy bytes SHA-256 `127afed174dc034cdfd7b4b46471aebb7083055ace702806047df8488ba91e44`. The permanent marker SHA-256 is `7d3d2b670c878ae9e6b38e0c90f30ba9ca3f20904b03f8a1eab518c239a9a354`; the targeted log SHA-256 is `8d161de30ad32b431f09d9399c9c35105af4e61e3510a518c84db80498a0822c`.
+
+The R4 controller evidence transport verified successfully after full Sandbox exit: controller evidence signature valid, legacy terminal signature valid, ready/evidence/result stability valid and controller terminal status `compile_ast_boundary_failed`. Therefore the writable WSB mapping is not the current trust failure. The remaining boundary is the fixed worker/private-result path: exact controller logic requires both `resultReceived` and worker exit code `0`. RC027's retained summary does not include the authenticated worker exit/result fields needed to choose a correction.
+
+Roadmap Change 028 authorizes only one external diagnostic `V1C2C2P3 — R4 Signed Boundary Terminal Capture`. It preserves the exact R4 candidate and fixed runner, reserves a permanent consumed marker before launch, and captures the exact stable post-exit terminal/controller-evidence bytes before normal cleanup. The copies must match the hashes already verified by the unchanged R4 composition and remain verifiable under the pinned pre-worker controller public key. This diagnostic cannot accept V1C2C2 or authorize V1C2C3.
+
+```text
+RC027:                              FAILED / CONSUMED / MUST NOT BE RERUN
+RC028:                              CURRENT / ONE EXACT DIAGNOSTIC CAPTURE ONLY
+V1C2C2P3:                           CURRENT / ONE FRESH DIAGNOSTIC CAPTURE ONLY
+V1C2C2:                             BLOCKED / R4 CANDIDATE PRESERVED
+R4 candidate SHA-256:               dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+changed_code_executed:               false
+reusable_lease_issued:               false
+execution_authorized:                false
+V1C2C3:                              BLOCKED
+```
 
 
 ## V1C2C1R1 transcript policy-hash integration correction — Roadmap Change 019
