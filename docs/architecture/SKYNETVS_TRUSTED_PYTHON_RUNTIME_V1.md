@@ -865,6 +865,28 @@ V1C2C3:                              BLOCKED
 ```
 
 
+## V1C2A2R1 downstream identity-cascade closure — Roadmap Change 030
+
+Final pre-commit V1C2A2R1 patch SHA-256 is `b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2`. The corrected runner bundle is host-only/non-authorizing, preserves exact guest runner SHA-256 `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9`, uses corrected payload SHA-256 `501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249` and bundle fingerprint `9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf`, with portable coverage `41/41` and package boundaries green.
+
+Pipeline wiring evidence SHA-256 `17898746de49d8e0e769b44148f668ba407e41a96b654840e4266010096c51bc` proves no active V1C2C2 Windows composition belongs to full `check`; however downstream import fails earlier because preserved V1C2C1R4 policy fingerprints/bytes were computed over the historical V1C2A2 payload/bundle identities. The R4 policy, generated controller bytes and controller-worker bundle therefore require an identity-only host-side rebind before global import/audit/check closure can be green. V1C2C2 also consumes those downstream identities and remains BLOCKED.
+
+Roadmap Change 030 keeps V1C2A2R1 itself exactly two files and explicitly defers full `check`/Runtime Architecture Audit until the downstream pin cascade is rebound. After exact R1 commit and scoped post-commit verification, an exact four-file `V1C2C1R5` host-only identity rebind is next, followed by portable seven-file V1C2C2 rebind. RC030 does not authorize Sandbox, runtime-lease claim, guest interpreter execution or changed-source processing.
+
+```text
+RC027:                              FAILED / CONSUMED / MUST NOT BE RERUN
+RC028:                              COMPLETED / CONSUMED / MUST NOT BE RERUN
+V1C2A2R1:                           CURRENT / EXACT TWO-FILE PRE-COMMIT CANDIDATE
+V1C2C1R5:                           PLANNED / HOST-ONLY / BLOCKED UNTIL R1 COMMIT
+V1C2C2:                             BLOCKED / AWAIT R1 + R5 REBIND
+R1 patch SHA-256:                   b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2
+R4 candidate SHA-256:               dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+changed_code_executed:               false
+reusable_lease_issued:               false
+execution_authorized:                false
+V1C2C3:                              BLOCKED
+```
+
 ## V1C2C1R1 transcript policy-hash integration correction — Roadmap Change 019
 
 Exact-source integration review found that V1C2A2 and V1C2B require `request.policy_sha256` to identify the exact V1C2A1 contract-policy file, while the first V1C2C1 controller bundle required the same field to identify its different controller-worker policy. The two SHA-256 values are distinct, so no authentic active transcript could satisfy both boundaries.

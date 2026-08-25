@@ -1464,6 +1464,39 @@ execution_authorized=false
 ```
 
 
+### Roadmap Change 030 — V1C2A2R1 downstream identity-cascade closure
+
+**Причина:** final V1C2A2R1 two-file candidate is exact SHA-256 `b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2`. Host-only acceptance already proves guest runner SHA-256 remains `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9`, corrected payload SHA-256 is `501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249`, corrected runner-bundle fingerprint is `9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf`, portable coverage is `41/41`, package boundaries are green and no Sandbox was launched.
+
+Pipeline wiring proof SHA-256 `17898746de49d8e0e769b44148f668ba407e41a96b654840e4266010096c51bc` proves the targeted `developer_task_execution_compile_ast_runner` flow is exactly package boundaries → V1C2A1 contract → V1C2A2 runner → V1C2A2 Windows bundle smoke. It also proves full `check` contains the portable V1C2C2 composition evaluator but not the active V1C2C2 Windows composition evaluator. The same proof then fails deterministically while importing the preserved V1C2C1R4 controller-worker policy: `RuntimeError("V1C2C1 controller-worker policy self-check failed.")`. No pipeline flow, Sandbox or guest worker was launched.
+
+The failure is an expected pinned-identity cascade, not a new behavioral defect. V1C2C1R4 policy semantics include the V1C2A2 runner `bundle_fingerprint` and `payload_sha256`; its verified policy fingerprint/bytes pins therefore become stale as soon as V1C2A2R1 changes those two identities. The R4 controller script also embeds the controller-worker policy SHA, runner payload SHA and runner bundle fingerprint, so the derived controller SHA and controller-worker bundle fingerprint must be remeasured before downstream imports can be self-consistent. The preserved V1C2C2 policy in turn binds both the runner identities and the controller-worker policy/bundle/controller identities.
+
+**Что меняется:** RC030 resolves the acceptance-cycle contradiction discovered in RC029 without widening the V1C2A2R1 implementation itself. Full `check` and Runtime Architecture Audit are no longer prerequisites for the exact two-file V1C2A2R1 commit because they transitively import deliberately stale downstream pins. V1C2A2R1 may close only after its own host-only/non-authorizing gates pass: Python syntax, package boundaries, V1C2A1/V1C2A2/V1C2B dependency gates, complete V1C2A2 evaluator, existing Windows bundle smoke without Sandbox launch, exact targeted runner flow, exact two-file scope and all active flags false. The commit subject remains `fix: preserve compile ast payload launch field order`.
+
+After that exact R1 commit and post-commit repetition of the same scoped gates, RC030 opens `V1C2C1R5 — V1C2A2R1 Dependency Identity Rebind`, host-only and non-authorizing. Its implementation scope is exactly the existing four controller-worker files: `modules/developer/developer_task_execution_compile_ast_controller_worker_policy.py`, `modules/developer/developer_task_execution_compile_ast_controller_worker.py`, `tools/eval_developer_task_execution_compile_ast_controller_worker.py` and `tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py`. R5 may change only identities transitively derived from the corrected runner payload/bundle. R4 signed-transport semantics, LocalSystem controller, fresh standard-user worker, Job/ACL/lifecycle rules, native-helper behavior, public APIs and architecture decision remain unchanged. All new policy/controller/bundle hashes must be measured from final bytes, never guessed.
+
+After verified R5 is committed, the preserved seven-file V1C2C2 candidate may be rebound in place to the measured V1C2A2R1/R5 identities. That rebind remains non-active: no V1C2C0 claim, runtime lease, source/runtime active materialization, Sandbox launch or guest interpreter run is authorized by RC030. Only after the R1 commit, verified R5 rebind and portable seven-file V1C2C2 rebind are self-consistent must full `check` and Runtime Architecture Audit return green. Any new active V1C2C2 retry requires a later explicit Roadmap Change and a new permanent consumed marker.
+
+**Что не меняется:** RC027 remains FAILED / CONSUMED and RC028 remains COMPLETED / CONSUMED; neither may ever be rerun. Stable V1B4 does not move. Historical V1C2A2 and verified V1C2C1R4 evidence remain immutable historical facts. Until R1 is committed and downstream rebinding is completed, the exact seven-file R4 candidate stays byte-for-byte `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`. V1C2C3 remains BLOCKED.
+
+Operational state after Roadmap Change 030:
+
+```text
+RC027       FAILED / CONSUMED / MUST NOT BE RERUN
+RC028       COMPLETED / CONSUMED / MUST NOT BE RERUN
+V1C2A2R1   CURRENT / EXACT TWO-FILE PRE-COMMIT CANDIDATE / HOST-ONLY
+V1C2C1R4   VERIFIED / HISTORICAL / DOWNSTREAM PINS STALE AGAINST R1
+V1C2C1R5   PLANNED / BLOCKED UNTIL V1C2A2R1 COMMIT
+V1C2C2      BLOCKED / EXACT R4 CANDIDATE PRESERVED / AWAIT R1 + R5 REBIND
+V1C2C3      BLOCKED
+V1C2A2R1 patch SHA-256: b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2
+R4 candidate SHA-256: dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
 
 **Причина:** V1C1B now holds exact selected source bytes in a process-local one-shot plan, but the first interpreter run adds four independent failure domains: canonical changed-source documents, fixed guest runner behavior, host-side signature/transcript verification and live Windows Sandbox lifecycle/resource isolation. A syntax error is a valid check outcome and must not be confused with an invalid signature or broken isolation boundary. Original repository paths also cannot safely become guest filesystem paths because their length and directory structure are unrelated to the fixed guest mount root.
