@@ -1497,6 +1497,37 @@ reusable_lease_issued=false
 execution_authorized=false
 ```
 
+### Roadmap Change 031 — V1C2B verifier identity rebind precedes controller-worker R5
+
+**Причина:** scoped V1C2A2R1 pre-commit acceptance on documentation HEAD `146b2133c1a05d983e398d6139cd6383f7de1b5e` proved package boundaries `28/28`, V1C2A1 `45/45` and corrected V1C2A2R1 `41/41` green, but V1C2B failed `19/44` before Windows bundle smoke, targeted flow, commit, pipeline or Sandbox launch. Historical V1C2B policy fingerprint `cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf` recomputes as `d7fc8c5011e6dd353202ebd04567d1e7f59d7af523c8c9b20769afc6b38d45a2` against corrected V1C2A2R1 runner payload/bundle identities. The verifier then correctly rejects its trusted-bundle pin; the other failed cases are downstream consequences of that failed pin report, not nineteen independent defects.
+
+Historical V1C2B is explicitly host-only/non-authorizing and binds exact V1C2A2 policy/runner/payload identities. RC030 therefore contained a second acceptance cycle: it said R1 scoped gates must avoid stale downstream imports but still listed V1C2B as an R1 prerequisite. V1C2B cannot remain unchanged and green while also cryptographically pinning identities that R1 intentionally changes.
+
+**Что меняется:** remove V1C2B from V1C2A2R1 pre/post-commit scoped gates. R1 may close after Python syntax, package boundaries, V1C2A1, V1C2A2R1 `41/41`, existing V1C2A2 Windows bundle smoke, exact targeted `developer_task_execution_compile_ast_runner` flow, exact two-file patch/commit identity and empty Sandbox process set are green. Full `check`, Runtime Architecture Audit and all stale downstream verifier/controller/composition imports remain deferred.
+
+After exact R1 commit, insert `V1C2BR1 — V1C2A2R1 Dependency Identity Rebind` before `V1C2C1R5`. BR1 is host-only and non-authorizing. It may change only verifier identities transitively derived from committed R1 and must preserve V1C2B public APIs, transcript/hash-chain semantics, Windows CNG ECDSA-P256 verification, fail-closed behavior and every execution prohibition. Before mutation, a host-only source audit must lock the exact changed subset inside the existing four-file verifier boundary: `modules/developer/developer_task_execution_compile_ast_verifier_policy.py`, `modules/developer/developer_task_execution_compile_ast_verifier.py`, `tools/eval_developer_task_execution_compile_ast_verifier.py`, `tools/eval_developer_task_execution_compile_ast_verifier_windows.py`. Package-boundary and pipeline registries are not modified by BR1. New verifier identities are measured from final bytes, never guessed.
+
+BR1 acceptance requires committed R1 identities, package boundaries, V1C2A1, V1C2A2R1, V1C2B portable `44/44`, existing real-Windows CNG smoke `1/1`, exact targeted `developer_task_execution_compile_ast_verifier` flow, exact locked rebind scope and all active flags false. No Sandbox, runtime-lease claim, candidate interpreter, changed-source processing or changed-code execution belongs to BR1.
+
+Only after verified BR1 may `V1C2C1R5` rebind R4 controller-worker identities. After verified R5, the preserved seven-file V1C2C2 candidate must be rebound to committed R1/BR1/R5 identities. Full `check` and Runtime Architecture Audit return only after that portable cascade is self-consistent. RC031 authorizes no active V1C2C2 retry.
+
+Operational state after Roadmap Change 031:
+
+```text
+V1C2A2R1   CURRENT / EXACT TWO-FILE PRE-COMMIT CANDIDATE / HOST-ONLY
+V1C2BR1    PLANNED / BLOCKED UNTIL V1C2A2R1 COMMIT
+V1C2C1R5   PLANNED / BLOCKED UNTIL V1C2BR1 VERIFIED
+V1C2C2      BLOCKED / R4 CANDIDATE PRESERVED / AWAIT R1 + BR1 + R5 REBIND
+V1C2C3      BLOCKED
+R1 patch SHA-256: b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2
+R4 candidate SHA-256: dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+V1C2B historical policy fp: cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf
+V1C2B R1-dependent recomputation: d7fc8c5011e6dd353202ebd04567d1e7f59d7af523c8c9b20769afc6b38d45a2
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
 
 **Причина:** V1C1B now holds exact selected source bytes in a process-local one-shot plan, but the first interpreter run adds four independent failure domains: canonical changed-source documents, fixed guest runner behavior, host-side signature/transcript verification and live Windows Sandbox lifecycle/resource isolation. A syntax error is a valid check outcome and must not be confused with an invalid signature or broken isolation boundary. Original repository paths also cannot safely become guest filesystem paths because their length and directory structure are unrelated to the fixed guest mount root.

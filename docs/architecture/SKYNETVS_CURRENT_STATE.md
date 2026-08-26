@@ -988,7 +988,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are VERIFIED through `f0a2da9`. Roadmap Changes 013–028 lock V1C0B2, V1C1, V1C2 and the V1C2C diagnostic history. RC021/RC022/RC025/RC028 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 029 is CURRENT for host-only `V1C2A2R1` payload launch-order correction; V1C2C2 remains NOT VERIFIED and V1C2C3 remains blocked.
+V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are historical VERIFIED through `f0a2da9`. Roadmap Changes 029–031 correct the V1C2A2 payload-order defect and its downstream identity cascade. RC021/RC022/RC025/RC028 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 031 is CURRENT for exact V1C2A2R1 commit closure followed by host-only V1C2BR1 and V1C2C1R5 rebinds; V1C2C2 remains NOT VERIFIED and V1C2C3 remains blocked.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1067,8 +1067,10 @@ V1C2C1R3 Guest-Local Worker Result Relay Correction             VERIFIED / HISTO
 V1C2C1R4 Signed Controller Evidence over Untrusted WSB Transport     VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C2P2 R3 Active Guest Checkpoint Capture                   COMPLETED / CONSUMED / LOCALIZED_FAILURE
 V1C2C2P3 R4 Signed Boundary Terminal Capture                   COMPLETED / CONSUMED / ROOT CAUSE LOCALIZED
-V1C2A2R1 Fixed Payload Launch-Order Serialization Correction    CURRENT / HOST-ONLY / NON-AUTHORIZING
-V1C2C2 Active Compile/AST Sandbox Composition                  BLOCKED / AWAIT V1C2A2R1 + DOWNSTREAM REBIND
+V1C2A2R1 Fixed Payload Launch-Order Serialization Correction    CURRENT / EXACT TWO-FILE PRE-COMMIT / HOST-ONLY
+V1C2BR1 V1C2A2R1 Dependency Identity Rebind                   PLANNED / BLOCKED UNTIL R1 COMMIT
+V1C2C1R5 V1C2A2R1/BR1 Controller-Worker Identity Rebind       PLANNED / BLOCKED UNTIL BR1 VERIFIED
+V1C2C2 Active Compile/AST Sandbox Composition                  BLOCKED / AWAIT R1 + BR1 + R5 REBIND
 V1C2C3 Live Pass/Syntax/Boundary Acceptance                    BLOCKED / PRO REQUIRED
 V1C3A  Python Dependency Source Provenance                   PLANNED
 V1C3B  Deterministic Python Check Dependency Bundle          PLANNED
@@ -1757,14 +1759,36 @@ reusable_lease_issued=false
 execution_authorized=false
 ```
 
+### Roadmap Change 031 — V1C2B downstream verifier identity rebind
+
+RC030 scoped pre-commit execution on exact documentation HEAD `146b2133c1a05d983e398d6139cd6383f7de1b5e` stopped before Windows bundle smoke, targeted flow or commit because V1C2B is stale under the R1 worktree. Independent gates remained green: package boundaries `28/28`, V1C2A1 `45/45`, V1C2A2R1 `41/41`. V1C2B failed `19/44`; historical policy fingerprint `cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf` recomputed as `d7fc8c5011e6dd353202ebd04567d1e7f59d7af523c8c9b20769afc6b38d45a2`. No Sandbox or pipeline flow launched.
+
+Historical V1C2B explicitly pins exact V1C2A2 policy/runner/payload identities. It is therefore a downstream identity consumer, not an R1-independent prerequisite. RC031 removes V1C2B from R1 scoped gates, inserts host-only `V1C2BR1` after R1 commit, and blocks R5 until BR1 is verified.
+
+```text
+RC030 docs commit HEAD:             146b2133c1a05d983e398d6139cd6383f7de1b5e
+V1C2A2R1 patch SHA-256:             b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2
+V1C2C2 candidate SHA-256:           dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+V1C2B historical policy fp:         cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf
+V1C2B R1-dependent recomputation:   d7fc8c5011e6dd353202ebd04567d1e7f59d7af523c8c9b20769afc6b38d45a2
+V1C2A1:                              45/45 PASS
+V1C2A2R1:                            41/41 PASS
+package boundaries:                  28/28 PASS
+V1C2B:                               19/44 FAIL / EXPECTED STALE PIN CASCADE
+Sandbox launched:                    false
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
 ### Следующее точное действие
 
-1. Commit Roadmap Change 030 in only the three architecture documents on exact `HEAD / origin/main == 9bb6267c6816ebe7be77023e539ffe269ead60d2`. Preserve empty cached diff, exact V1C2A2R1 two-file patch SHA-256 `b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2`, exact seven-file V1C2C2 candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`, stable V1B4 and RC027/RC028 consumed evidence. No pipeline or Sandbox launch belongs to the docs transition.
-2. After RC030 is committed and pushed, run the scoped V1C2A2R1 pre-commit gates only: Python syntax, package boundaries, V1C2A1 contract evaluator, V1C2A2R1 `41/41`, V1C2B verifier evaluator, existing V1C2A2 Windows bundle smoke, exact targeted `developer_task_execution_compile_ast_runner` flow, exact two-file diff/patch verification and empty Sandbox process set. Do not run full `check` or Runtime Architecture Audit yet because downstream pinned imports are intentionally stale.
-3. If those scoped gates pass, commit exactly `modules/developer/developer_task_execution_compile_ast_runner.py` and `tools/eval_developer_task_execution_compile_ast_runner.py` with subject `fix: preserve compile ast payload launch field order`, push, repeat the same scoped gates post-commit and stop.
-4. Then prepare `V1C2C1R5` as an exact four-file host-only/non-authorizing identity rebind of the verified R4 controller-worker implementation to the committed V1C2A2R1 payload/bundle identities. Preserve all R4 semantics and measure every changed policy/controller/bundle identity from final bytes. No Sandbox launch belongs to R5.
-5. After verified R5 is committed, rebind the preserved seven-file V1C2C2 candidate to committed V1C2A2R1/R5 identities, run portable gates only, then run full `check` and Runtime Architecture Audit. Stop before any active V1C2C2 retry. Any fresh active attempt requires another explicit Roadmap Change and new permanent consumed marker. V1C2C3 remains BLOCKED.
-
+1. Commit Roadmap Change 031 in only the three architecture documents on exact `HEAD / origin/main == 146b2133c1a05d983e398d6139cd6383f7de1b5e`. Preserve empty cached diff, exact R1 patch SHA-256 `b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2`, exact seven-file V1C2C2 candidate SHA-256 `dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05`, stable V1B4 and consumed evidence. No pipeline or Sandbox launch belongs to the docs transition.
+2. After RC031 is committed and pushed, run only R1-independent scoped gates: Python syntax, package boundaries, V1C2A1, V1C2A2R1 `41/41`, existing V1C2A2 Windows bundle smoke, exact targeted `developer_task_execution_compile_ast_runner` flow, exact two-file patch verification and empty Sandbox process set. Do not run V1C2B, full `check` or Runtime Architecture Audit before downstream rebind.
+3. If those gates pass, commit exactly `modules/developer/developer_task_execution_compile_ast_runner.py` and `tools/eval_developer_task_execution_compile_ast_runner.py` with subject `fix: preserve compile ast payload launch field order`, push, repeat the same R1-independent scoped gates post-commit and stop.
+4. On committed R1, perform a host-only source audit of the four existing V1C2B verifier files, lock the exact changed subset, then implement and independently verify `V1C2BR1`. Required BR1 evidence includes V1C2B `44/44`, Windows CNG `1/1`, targeted verifier flow, package boundaries and zero active execution.
+5. After verified BR1 is committed, prepare `V1C2C1R5` as the exact four-file host-only/non-authorizing identity rebind of R4 to committed R1/BR1 identities. Preserve R4 semantics and measure every changed identity from final bytes.
+6. After verified R5 is committed, rebind the preserved seven-file V1C2C2 candidate to committed R1/BR1/R5 identities, run portable gates, full `check` and Runtime Architecture Audit, then stop before any active retry. Any fresh active V1C2C2 attempt requires another explicit Roadmap Change and a new permanent consumed marker. V1C2C3 remains BLOCKED.
 
 ## 16. Зафиксированные коммиты текущего перехода
 

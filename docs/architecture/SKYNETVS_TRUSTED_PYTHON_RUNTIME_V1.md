@@ -27,8 +27,10 @@ V1C2C1R3 — VERIFIED / HISTORICAL HOST-ONLY / NON-AUTHORIZING
 V1C2C1R4 — VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C2P2 — COMPLETED / CONSUMED / LOCALIZED_FAILURE
 V1C2C2P3 — COMPLETED / CONSUMED / ROOT CAUSE LOCALIZED
-V1C2A2R1 — CURRENT / HOST-ONLY / NON-AUTHORIZING PAYLOAD ORDER CORRECTION
-V1C2C2 — BLOCKED / R4 CANDIDATE PRESERVED / AWAIT R1 REBIND
+V1C2A2R1 — CURRENT / EXACT TWO-FILE PRE-COMMIT / HOST-ONLY
+V1C2BR1 — PLANNED / HOST-ONLY / BLOCKED UNTIL R1 COMMIT
+V1C2C1R5 — PLANNED / HOST-ONLY / BLOCKED UNTIL BR1 VERIFIED
+V1C2C2 — BLOCKED / R4 CANDIDATE PRESERVED / AWAIT R1 + BR1 + R5 REBIND
 V1C2C3 — BLOCKED / LIVE ACCEPTANCE
 ```
 
@@ -877,8 +879,9 @@ Roadmap Change 030 keeps V1C2A2R1 itself exactly two files and explicitly defers
 RC027:                              FAILED / CONSUMED / MUST NOT BE RERUN
 RC028:                              COMPLETED / CONSUMED / MUST NOT BE RERUN
 V1C2A2R1:                           CURRENT / EXACT TWO-FILE PRE-COMMIT CANDIDATE
-V1C2C1R5:                           PLANNED / HOST-ONLY / BLOCKED UNTIL R1 COMMIT
-V1C2C2:                             BLOCKED / AWAIT R1 + R5 REBIND
+V1C2BR1:                            PLANNED / HOST-ONLY / BLOCKED UNTIL R1 COMMIT
+V1C2C1R5:                           PLANNED / HOST-ONLY / BLOCKED UNTIL BR1 VERIFIED
+V1C2C2:                             BLOCKED / AWAIT R1 + BR1 + R5 REBIND
 R1 patch SHA-256:                   b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2
 R4 candidate SHA-256:               dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
 changed_code_executed:               false
@@ -886,6 +889,14 @@ reusable_lease_issued:               false
 execution_authorized:                false
 V1C2C3:                              BLOCKED
 ```
+
+## V1C2B downstream verifier identity cascade — Roadmap Change 031
+
+RC030 pre-commit execution proved package boundaries `28/28`, V1C2A1 `45/45` and V1C2A2R1 `41/41` green, then V1C2B failed `19/44` before Windows bundle smoke, targeted flow, commit or any Sandbox launch. Historical verifier policy fingerprint `cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf` recomputed as `d7fc8c5011e6dd353202ebd04567d1e7f59d7af523c8c9b20769afc6b38d45a2` because V1C2B binds exact V1C2A2 runner/payload identities now changed by R1.
+
+RC031 treats V1C2B as a downstream rebind, not an R1 prerequisite. R1 may close using only independent host-only gates. `V1C2BR1` follows committed R1, preserves verifier semantics/public APIs/CNG behavior, and is constrained to the existing four-file verifier boundary with exact changed subset locked by host-only source audit before mutation. No package/pipeline change, Sandbox launch, lease claim, candidate interpreter, changed-source processing or execution authority belongs to BR1.
+
+Verified BR1 precedes V1C2C1R5; verified R5 precedes portable V1C2C2 rebind. Full `check` and Runtime Architecture Audit return only after R1/BR1/R5/V1C2C2 identities are self-consistent. RC031 grants no active retry authority.
 
 ## V1C2C1R1 transcript policy-hash integration correction — Roadmap Change 019
 
