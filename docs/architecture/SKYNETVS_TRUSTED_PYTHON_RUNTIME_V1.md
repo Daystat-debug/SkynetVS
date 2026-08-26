@@ -1175,3 +1175,44 @@ The closure proves only deterministic host-side payload construction and compile
 The corrected V1C2A2R1 host bundle already reports payload SHA-256 `501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249`, bundle fingerprint `9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf`, unchanged guest runner SHA-256 `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9`, and all active flags false. The existing Windows bundle smoke failed only because its expected payload/bundle literals still described historical V1C2A2 identities; no Sandbox or guest interpreter ran.
 
 RC032 therefore locks V1C2A2R1 closure to exactly three files: the runner module, portable runner evaluator and Windows runner evaluator. The Windows evaluator rebind is expectation-only. A new exact three-file candidate SHA must be measured before commit. V1C2BR1, V1C2C1R5 and portable V1C2C2 rebind remain later host-only stages; full `check`, Runtime Architecture Audit and active V1C2C2 remain blocked until the identity cascade is consistent.
+
+## V1C2C2 rebound active-retry authorization — Roadmap Change 033
+
+This section supersedes earlier operational status labels that left V1C2C2 blocked only for completion of the V1C2A2R1 -> V1C2BR1 -> V1C2C1R5 dependency cascade.
+
+That cascade and the portable V1C2C2 rebind are now host-side complete:
+
+```text
+V1C2A2R1 commit:                        13c136803982871be4df28229cf4988e598b9cf3
+V1C2BR1 commit:                         1280fc816316255762b913fe2fd085738c1a8b83
+V1C2C1R5 commit:                        b0bf07015b001499c48c8fc334472993cc83bdb1
+
+rebound candidate bytes:                225629
+rebound candidate SHA-256:              296d1c94a884f065d27e65cb312618576c8f7ce4e60c7a3ee2fa84c7f4a2ff2e
+composition policy fingerprint:         b4d254963b38caaf1031e85d304eda186eeb784c46ce42af97f0eb3c8c215976
+composition policy-document SHA-256:    fb34f1e7d41f8c5f2ef79a39b8a833c7eb4981769bf1b894f14e7b19b7eddd16
+
+package boundaries:                     28/28
+portable V1C2C2:                        48/48
+full check:                             PASS
+Runtime Architecture Audit:             9/9
+```
+
+RC033 authorizes exactly one future fresh active attested-pass V1C2C2 attempt. It does not authorize V1C2C3 and does not make historical active evidence reusable.
+
+Before launch, a permanent consumed marker must bind the committed RC033 documentation HEAD, exact rebound candidate/policy identities, committed R1/BR1/R5 identities and the one-shot attempt. Marker format and path must be confirmed by a read-only audit before creation. Once reserved, the single active authority is consumed regardless of outcome.
+
+The active attempt must use fresh host/snapshot/plan/runtime/lease/transaction capabilities and one fresh Windows Sandbox. A failure is terminal and requires another explicit Roadmap Change. A pass may make the exact seven-file candidate eligible for a later exact implementation commit after evidence review, but does not authorize a second active retry.
+
+```text
+RC033:                              CURRENT / ONE FRESH ACTIVE ATTESTED-PASS RETRY ONLY
+RC033 consumed marker:             NOT YET RESERVED
+V1C2C2:                            CURRENT / EXACT REBOUND CANDIDATE / ONE FRESH ACTIVE RETRY ONLY
+V1C2C2 candidate commit:           NOT YET AUTHORIZED / UNCOMMITTED
+V1C2C3:                            BLOCKED
+changed_code_executed:             false
+reusable_lease_issued:             false
+execution_authorized:              false
+```
+
+No Sandbox launch belongs to the RC033 documentation transition itself.

@@ -2256,3 +2256,68 @@ V1C2A2R1 VERIFIED
 -> preserved V1C2C2 portable rebind
 -> full check + Runtime Architecture Audit
 -> explicit Roadmap Change before any new active V1C2C2 attempt
+
+## Chat handoff snapshot after V1C2C2 global closure / Roadmap Change 033 — 2026-08-26
+
+This snapshot supersedes the earlier V1C2A2R1/BR1/R5 waiting-state labels for the current operational state.
+
+```text
+committed HEAD before RC033 docs:        b0bf07015b001499c48c8fc334472993cc83bdb1
+origin/main:                             b0bf07015b001499c48c8fc334472993cc83bdb1
+stable V1B4:                             91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+
+V1C2A2R1 implementation:                 13c136803982871be4df28229cf4988e598b9cf3
+V1C2BR1 implementation:                  1280fc816316255762b913fe2fd085738c1a8b83
+V1C2C1R5 implementation:                 b0bf07015b001499c48c8fc334472993cc83bdb1
+
+R1 runner SHA-256:                       6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9
+R1 payload SHA-256:                      501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249
+R1 runner bundle fingerprint:            9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf
+BR1 verifier policy fingerprint:         d7fc8c5011e6dd353202ebd04567d1e7f59d7af523c8c9b20769afc6b38d45a2
+R5 controller-worker policy fingerprint: 2dc6aaba3384a072524053a90adbdbf394332a8d83c10b6863dd62f1a6365f2f
+R5 policy bytes SHA-256:                 04102be389be5624c34fcc12c88d998c57840633e9f349d1e59fc0ba03e1eb17
+R5 controller SHA-256:                   75ebefd7c3d6fa06f9176ba4f1c75424940b7e92e3f2cfb4901c656da4326653
+R5 bundle fingerprint:                   6e09456eb4d0c76eef136dd7f1d0c40510932dba6887f738529d19481fb5ead0
+
+rebound V1C2C2 candidate bytes:          225629
+rebound V1C2C2 candidate SHA-256:        296d1c94a884f065d27e65cb312618576c8f7ce4e60c7a3ee2fa84c7f4a2ff2e
+composition policy fingerprint:          b4d254963b38caaf1031e85d304eda186eeb784c46ce42af97f0eb3c8c215976
+composition policy bytes SHA-256:        fb34f1e7d41f8c5f2ef79a39b8a833c7eb4981769bf1b894f14e7b19b7eddd16
+
+package boundaries:                      28/28 PASS
+portable V1C2C2:                         48/48 PASS
+full check:                              PASS
+Runtime Architecture Audit:              9/9 PASS
+
+global closure report SHA-256:           ef530ff345870f86fdb2ec0878476507181c2e58c4fd509c35226b39b9ff8b23
+full check log SHA-256:                  930efb0fb69146d00660dd03d889d4588395a526a73d5ff1b44215883532af96
+roadmap-transition audit SHA-256:         64f021d309f7cb9507d8b79d3051fd9ca64beba9663ecf6bc91818e50bbf93b8
+
+real active V1C2C2 retry during rebind:   NOT RUN
+real Sandbox launch during rebind:        false
+candidate code commit:                    NOT PERFORMED
+```
+
+Roadmap Change 033 is the first authority after the R1/BR1/R5 cascade that may permit another real V1C2C2 run. It authorizes exactly one fresh active attested-pass attempt against the exact rebound candidate. A permanent RC033 consumed marker must be reserved before launch and makes the attempt single-use regardless of outcome. RC024 and RC027 remain failed/consumed and may never be rerun. V1C2C3 remains BLOCKED.
+
+### Next Exact Action
+
+Run a READ-ONLY / HOST-ONLY audit of:
+
+```text
+tools/eval_developer_task_execution_compile_ast_composition_windows.py
+modules/developer/developer_task_execution_compile_ast_composition.py
+historical RC024 / RC027 consumed-marker convention
+current pipeline topology for developer_task_execution_compile_ast_composition
+```
+
+The audit must determine, before any active action:
+
+1. exact current Windows evaluator case count and acceptance fields;
+2. exact permanent RC033 marker path and canonical schema;
+3. exact point at which the marker must be atomically persisted before Sandbox launch;
+4. proof that the active path can launch at most one Sandbox;
+5. exact report/log evidence retained after pass or failure;
+6. exact cleanup and repository-preservation checks.
+
+Do not yet create the RC033 consumed marker, launch Windows Sandbox, consume a V1C2C0 transaction/runtime lease, execute the candidate interpreter, commit the seven-file candidate or start V1C2C3.

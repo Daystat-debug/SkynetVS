@@ -1547,6 +1547,98 @@ V1C2C3     BLOCKED
 ```
 
 
+### Roadmap Change 033 — rebound V1C2C2 closure authorizes one fresh active attested-pass retry
+
+**Причина:** the exact V1C2A2R1 -> V1C2BR1 -> V1C2C1R5 downstream identity cascade is now complete on committed code, and the preserved seven-file V1C2C2 implementation has been rebound in place to those committed identities without architecture or public-API growth. The rebound candidate is exact `225629` Git-diff bytes with SHA-256 `296d1c94a884f065d27e65cb312618576c8f7ce4e60c7a3ee2fa84c7f4a2ff2e`, semantic composition-policy fingerprint `b4d254963b38caaf1031e85d304eda186eeb784c46ce42af97f0eb3c8c215976` and exact policy-document SHA-256 `fb34f1e7d41f8c5f2ef79a39b8a833c7eb4981769bf1b894f14e7b19b7eddd16`.
+
+Committed dependency closure is exact:
+
+```text
+V1C2A2R1 commit:                  13c136803982871be4df28229cf4988e598b9cf3
+guest runner SHA-256:             6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9
+corrected payload SHA-256:        501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249
+runner bundle fingerprint:        9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf
+
+V1C2BR1 commit:                   1280fc816316255762b913fe2fd085738c1a8b83
+verifier policy fingerprint:      d7fc8c5011e6dd353202ebd04567d1e7f59d7af523c8c9b20769afc6b38d45a2
+
+V1C2C1R5 commit:                  b0bf07015b001499c48c8fc334472993cc83bdb1
+controller-worker policy fp:      2dc6aaba3384a072524053a90adbdbf394332a8d83c10b6863dd62f1a6365f2f
+controller-worker policy SHA:     04102be389be5624c34fcc12c88d998c57840633e9f349d1e59fc0ba03e1eb17
+controller SHA-256:               75ebefd7c3d6fa06f9176ba4f1c75424940b7e92e3f2cfb4901c656da4326653
+controller-worker bundle fp:      6e09456eb4d0c76eef136dd7f1d0c40510932dba6887f738529d19481fb5ead0
+```
+
+Host-only closure after the portable rebind is green: seven-file AST parsing passed, package boundaries passed `28/28`, portable V1C2C2 coverage passed `48/48`, full `check` completed successfully and Runtime Architecture Audit passed `9/9`. Full `check` contains exactly one portable V1C2C2 evaluator and no active Windows V1C2C2 evaluator. No V1C2C0 transaction or runtime lease was claimed, no Sandbox was launched and no real candidate interpreter was executed during the rebind/closure cascade. The global-closure report SHA-256 is `ef530ff345870f86fdb2ec0878476507181c2e58c4fd509c35226b39b9ff8b23`; its full-check log SHA-256 is `930efb0fb69146d00660dd03d889d4588395a526a73d5ff1b44215883532af96`. The final roadmap-transition source audit is SHA-256 `64f021d309f7cb9507d8b79d3051fd9ca64beba9663ecf6bc91818e50bbf93b8`.
+
+**Что меняется:** RC033 supersedes the earlier operational labels that left V1C2C2 blocked only for the R1/BR1/R5 cascade. V1C2C2 becomes CURRENT solely for exactly one fresh active attested-pass attempt against the exact rebound candidate above. The attempt must use one fresh host report, one fresh workspace snapshot and compile/AST plan, one exact rebuilt runtime capability and fresh runtime lease, one fresh V1C2C0 claim transaction and one fresh Windows Sandbox instance. No past transaction, lease, Sandbox or active report is reusable authority.
+
+Before the first active launch, a permanent RC033 one-shot marker must be persisted. Its path/format must first be confirmed against the current evaluator and historical marker convention by a read-only host audit. The marker must bind at minimum the committed RC033 documentation HEAD, exact candidate SHA-256, composition policy fingerprint and policy-document SHA-256, committed R1/BR1/R5 identities and one-shot attempt identity. Once that marker reserves the attempt, RC033 is consumed regardless of success or failure. It must never be deleted or reset to manufacture another retry.
+
+**Что не меняется:** RC024 and RC027 remain FAILED / CONSUMED / MUST NOT BE RERUN. RC021/RC022/RC025/RC028 remain COMPLETED / CONSUMED. Stable `skynet-trusted-runtime-v1b4` remains at `91d8c37fc4afe7ef138e36063e7bc22014da8a2c`. The immutable V1C2C2 architecture-slice identity, active-composition architecture decision, public production API, exact seven-file implementation scope, fixed guest-runner bytes, LocalSystem-controller/standard-user-worker boundary, Job limits, source/runtime materialization model and post-exit signed-evidence trust model remain unchanged. The seven-file candidate remains uncommitted before active acceptance. V1C2C3 remains BLOCKED; RC033 does not authorize the V1C2C3 syntax-failure or boundary-failure acceptance runs.
+
+The one active attested-pass attempt succeeds only if the real Windows report establishes the accepted pass boundary, including:
+
+```text
+ok=true
+status=active_compile_ast_attested_passed
+terminal_status=compile_ast_attested_passed
+boundary_ok=true
+check_passed=true
+signature_valid=true
+result_verified=true
+relayed_result_hash_match=true
+
+claim_transaction_consumed=true
+runtime_lease_claimed=true
+sandbox_launched=true
+candidate_interpreter_executed=true
+changed_source_processed=true
+changed_source_ast_parsed=true
+changed_source_compiled=true
+
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+
+all known Sandbox processes exited=true
+forced_cleanup_attempted=false
+artifacts_removed=true
+```
+
+Controller-signed terminal evidence, legacy terminal verification, ready/evidence/result stability and private-to-relayed-result hash binding must remain valid under the pinned pre-worker controller public key. No unsigned writable-mapping artifact may become authority.
+
+A failed active attempt is terminal for RC033: preserve the failed/consumed marker and exact evidence, keep the seven-file candidate uncommitted, do not rerun, and stop for another explicit Roadmap Change.
+
+A successful active attempt consumes RC033 as PASSED evidence but does not itself commit code. After exact evidence review, the same seven-file bytes may become eligible for one exact implementation commit; no second active acceptance run is authorized merely because the first passed. The intended implementation commit subject is `feat: add active compile ast sandbox composition`. V1C2C3 remains separately blocked after V1C2C2 closure.
+
+Operational state after Roadmap Change 033:
+
+```text
+V1C2A2R1   VERIFIED / COMMITTED
+V1C2BR1    VERIFIED / COMMITTED / HOST-ONLY / NON-AUTHORIZING
+V1C2C1R5   VERIFIED / COMMITTED / HOST-ONLY / NON-AUTHORIZING
+
+RC027       FAILED / CONSUMED / MUST NOT BE RERUN
+RC028       COMPLETED / CONSUMED / MUST NOT BE RERUN
+RC033       CURRENT / ONE FRESH ACTIVE ATTESTED-PASS RETRY ONLY
+
+V1C2C2      CURRENT / EXACT REBOUND CANDIDATE / ONE FRESH ACTIVE RETRY ONLY
+candidate bytes:                       225629
+candidate SHA-256:                     296d1c94a884f065d27e65cb312618576c8f7ce4e60c7a3ee2fa84c7f4a2ff2e
+composition policy fingerprint:        b4d254963b38caaf1031e85d304eda186eeb784c46ce42af97f0eb3c8c215976
+composition policy-document SHA-256:   fb34f1e7d41f8c5f2ef79a39b8a833c7eb4981769bf1b894f14e7b19b7eddd16
+candidate commit:                      NOT YET AUTHORIZED / UNCOMMITTED
+RC033 consumed marker:                 NOT YET RESERVED
+active RC033 attempt:                  NOT YET RUN
+V1C2C3:                                BLOCKED
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
+Next exact action after the RC033 documentation commit is a READ-ONLY / HOST-ONLY audit of the exact current Windows V1C2C2 evaluator and historical consumed-marker convention. That audit must lock the marker path/schema, exact one-shot harness topology, exact expected Windows case count and exact evidence retained on success/failure before any marker is created or Sandbox is launched.
+
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
 
 **Причина:** V1C1B now holds exact selected source bytes in a process-local one-shot plan, but the first interpreter run adds four independent failure domains: canonical changed-source documents, fixed guest runner behavior, host-side signature/transcript verification and live Windows Sandbox lifecycle/resource isolation. A syntax error is a valid check outcome and must not be confused with an invalid signature or broken isolation boundary. Original repository paths also cannot safely become guest filesystem paths because their length and directory structure are unrelated to the fixed guest mount root.
@@ -2634,3 +2726,34 @@ Tools Package Structure V1.
 ```
 
 До завершения Developer Safety Kernel дополнительные production-файлы по пакетам не переносятся.
+
+## Current operational override after Roadmap Change 033 — 2026-08-26
+
+This section supersedes all earlier CURRENT/BLOCKED operational labels in this document where they conflict with Roadmap Change 033. Historical evidence and historical Roadmap Change states remain immutable.
+
+```text
+HEAD before RC033 docs transition:       b0bf07015b001499c48c8fc334472993cc83bdb1
+
+V1C2A2R1:                                 VERIFIED / COMMITTED
+V1C2BR1:                                  VERIFIED / COMMITTED / HOST-ONLY
+V1C2C1R5:                                 VERIFIED / COMMITTED / HOST-ONLY
+
+V1C2C2 portable rebind:                   PASS
+V1C2C2 candidate bytes:                   225629
+V1C2C2 candidate SHA-256:                 296d1c94a884f065d27e65cb312618576c8f7ce4e60c7a3ee2fa84c7f4a2ff2e
+V1C2C2 policy fingerprint:                b4d254963b38caaf1031e85d304eda186eeb784c46ce42af97f0eb3c8c215976
+V1C2C2 policy-document SHA-256:            fb34f1e7d41f8c5f2ef79a39b8a833c7eb4981769bf1b894f14e7b19b7eddd16
+
+package boundaries:                       28/28
+portable V1C2C2:                          48/48
+full check:                               PASS
+Runtime Architecture Audit:               9/9
+
+RC033:                                    CURRENT / ONE FRESH ACTIVE ATTESTED-PASS RETRY ONLY
+RC033 consumed marker:                    NOT YET RESERVED
+V1C2C2 active attempt:                    NOT YET RUN
+V1C2C2 candidate commit:                  NOT YET AUTHORIZED / UNCOMMITTED
+V1C2C3:                                   BLOCKED
+```
+
+No active authority exists until the permanent RC033 one-shot marker is created under the exact convention confirmed by the next read-only audit. Creating that marker consumes the sole RC033 active attempt. No Sandbox launch belongs to this documentation transition.
