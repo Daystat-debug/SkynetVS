@@ -124,6 +124,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task signed compile AST transcript verifier", _python_cmd("tools/eval_developer_task_execution_compile_ast_verifier.py")),
             Step("Evaluate developer task process-local compile AST claim transaction", _python_cmd("tools/eval_developer_task_execution_compile_ast_claim_transaction.py")),
             Step("Evaluate developer task fixed compile AST controller-worker bundle", _python_cmd("tools/eval_developer_task_execution_compile_ast_controller_worker.py")),
+            Step("Evaluate developer task active compile AST Sandbox composition", _python_cmd("tools/eval_developer_task_execution_compile_ast_composition.py")),
             Step("Evaluate runtime architecture audit", _python_cmd("tools/eval_runtime_architecture_audit.py")),
         ],
         "decision": [
@@ -688,6 +689,17 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task process-local compile AST claim transaction", _python_cmd("tools/eval_developer_task_execution_compile_ast_claim_transaction.py")),
             Step("Evaluate developer task fixed compile AST controller-worker bundle", _python_cmd("tools/eval_developer_task_execution_compile_ast_controller_worker.py")),
             Step("Evaluate developer task fixed compile AST controller-worker Windows compile smoke", _python_cmd("tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py")),
+        ],
+        "developer_task_execution_compile_ast_composition": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate developer task canonical compile AST contract", _python_cmd("tools/eval_developer_task_execution_compile_ast_contract.py")),
+            Step("Evaluate developer task fixed compile AST guest runner bundle", _python_cmd("tools/eval_developer_task_execution_compile_ast_runner.py")),
+            Step("Evaluate developer task signed compile AST transcript verifier", _python_cmd("tools/eval_developer_task_execution_compile_ast_verifier.py")),
+            Step("Evaluate developer task process-local compile AST claim transaction", _python_cmd("tools/eval_developer_task_execution_compile_ast_claim_transaction.py")),
+            Step("Evaluate developer task fixed compile AST controller-worker bundle", _python_cmd("tools/eval_developer_task_execution_compile_ast_controller_worker.py")),
+            Step("Evaluate developer task fixed compile AST controller-worker Windows compile smoke", _python_cmd("tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py")),
+            Step("Evaluate developer task active compile AST Sandbox composition", _python_cmd("tools/eval_developer_task_execution_compile_ast_composition.py")),
+            Step("Evaluate developer task active compile AST Sandbox composition Windows smoke", _python_cmd("tools/eval_developer_task_execution_compile_ast_composition_windows.py")),
         ],
         "package_boundaries": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
