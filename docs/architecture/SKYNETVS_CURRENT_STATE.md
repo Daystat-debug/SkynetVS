@@ -988,7 +988,7 @@ V1B может запускать только trusted probe/controller/benign w
 
 ### Mode decision
 
-V1B3A–V1B3D and V1B4A–V1B4D are VERIFIED; V1B4 is COMPLETE and tagged. V1C0A/V1C0B1/V1C1A/V1C1B/V1C2A1/V1C2A2/V1C2B/V1C2C0/V1C2C1/V1C2C1R1/V1C2C1R2/V1C2C1R3/V1C2C1R4 are historical VERIFIED through `f0a2da9`. Roadmap Changes 029–031 correct the V1C2A2 payload-order defect and its downstream identity cascade. RC021/RC022/RC025/RC028 diagnostics are COMPLETED / CONSUMED; RC024 and RC027 are FAILED / CONSUMED and must not be rerun. Roadmap Change 032 is CURRENT for exact V1C2A2R1 Windows-smoke expectation rebinding and three-file R1 commit closure, followed by host-only V1C2BR1 and V1C2C1R5 rebinds; V1C2C2 remains NOT VERIFIED and V1C2C3 remains blocked.
+V1C2A2R1 is VERIFIED / COMMITTED at 13c136803982871be4df28229cf4988e598b9cf3 after RC032 exact three-file closure; V1C2BR1 is CURRENT / HOST-ONLY / NON-AUTHORIZING / SOURCE AUDIT FIRST. V1C2C1R5 remains BLOCKED until BR1 VERIFIED; V1C2C2 remains BLOCKED / AWAIT BR1 + R5 REBIND; V1C2C3 remains BLOCKED.
 
 ## 14. VERIFIED V1C0A/V1C0B1 / LOCKED V1C0B2 — External Source Authority
 
@@ -1067,8 +1067,8 @@ V1C2C1R3 Guest-Local Worker Result Relay Correction             VERIFIED / HISTO
 V1C2C1R4 Signed Controller Evidence over Untrusted WSB Transport     VERIFIED / HOST-ONLY / NON-AUTHORIZING
 V1C2C2P2 R3 Active Guest Checkpoint Capture                   COMPLETED / CONSUMED / LOCALIZED_FAILURE
 V1C2C2P3 R4 Signed Boundary Terminal Capture                   COMPLETED / CONSUMED / ROOT CAUSE LOCALIZED
-V1C2A2R1 Fixed Payload Launch-Order Serialization Correction    CURRENT / EXACT THREE-FILE PRE-COMMIT / HOST-ONLY
-V1C2BR1 V1C2A2R1 Dependency Identity Rebind                   PLANNED / BLOCKED UNTIL R1 COMMIT
+V1C2A2R1 Fixed Payload Launch-Order Serialization Correction    VERIFIED / COMMITTED / HOST-ONLY / NON-AUTHORIZING
+V1C2BR1 V1C2A2R1 Dependency Identity Rebind                   CURRENT / HOST-ONLY / NON-AUTHORIZING / SOURCE AUDIT FIRST
 V1C2C1R5 V1C2A2R1/BR1 Controller-Worker Identity Rebind       PLANNED / BLOCKED UNTIL BR1 VERIFIED
 V1C2C2 Active Compile/AST Sandbox Composition                  BLOCKED / AWAIT R1 + BR1 + R5 REBIND
 V1C2C3 Live Pass/Syntax/Boundary Acceptance                    BLOCKED / PRO REQUIRED
@@ -2192,3 +2192,67 @@ M tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py
 The corrected bundle keeps canonical request/ready/terminal `policy_sha256` bound to the exact V1C2A1 contract-policy bytes while independently self-verifying the controller-worker policy. The corrected identities are policy `a1c9e95421ffe9755acc13028b05c3b45b960ad5d2ee750685bf56db1d44d03a`, policy-document SHA-256 `3d5405a603030d79a18ef31a3f5a5cd4f03b40c7115842a0d75974ecb26db3b3`, controller SHA-256 `776e4c07c533a44d54a57b5ecd0d38bf92cf6b7fc4aece1d4a211d85594049f4` and bundle fingerprint `12714af317444e481967af2ca063ec1fe0f3a4e83a8f750332aa667ba6155303`.
 
 No Sandbox was launched, no transaction was consumed, no runtime lease was claimed, no interpreter ran and no changed source was processed. `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false` remained invariant. V1C2C1R1 is therefore VERIFIED / HOST-ONLY / NON-AUTHORIZING. Roadmap Change 020 subsequently inserted and verified V1C2C1R2. Roadmap Changes 021/022 are COMPLETED / CONSUMED and prove mapped-output ACL non-persistence before process creation. Roadmap Change 024 closed V1C2C1R3 as VERIFIED / HOST-ONLY / NON-AUTHORIZING and consumed one exact R3-bound active retry, which failed closed. Roadmap Change 025 is COMPLETED / CONSUMED. Roadmap Change 027 closes V1C2C1R4 as VERIFIED / HOST-ONLY / NON-AUTHORIZING and reopens V1C2C2 only for exact R4 rebinding plus one fresh active attested-pass retry; V1C2C3 remains BLOCKED.
+
+## Chat handoff snapshot after V1C2A2R1 closure - 2026-08-26
+
+This snapshot supersedes earlier RC032 operational labels for the current execution state.
+
+V1C2A2R1 implementation commit: 13c136803982871be4df28229cf4988e598b9cf3
+parent RC032 docs commit: aa37c4bc57c3bf84b0d3ebe3b593bc209f4d7e1e
+commit subject: fix: preserve compile ast payload launch field order
+exact committed R1 scope: 3 files
+exact R1 patch bytes: 5229
+exact R1 patch SHA-256: e913d1d5866a6930769b2a8312e203735ce866304fcbc1cfb855f082cedef30d
+guest runner SHA-256: 6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9
+corrected payload SHA-256: 501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249
+corrected bundle fingerprint: 9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf
+package boundaries post-commit: 28/28
+V1C2A1 post-commit: 45/45
+V1C2A2R1 portable post-commit: 41/41
+V1C2A2 Windows bundle smoke: 1/1
+targeted runner flow post-commit: PASS
+Sandbox launched: false
+changed code executed: false
+execution authorized: false
+full check: NOT RUN / DEFERRED
+Runtime Architecture Audit: NOT RUN / DEFERRED
+stable V1B4: 91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+
+Preserved V1C2C2 worktree candidate:
+scope: exact seven files
+bytes: 225629
+SHA-256: dfd84a366db41fa718b59ca91437a7e2f03746d025373690176667530ef92d05
+cached diff: empty
+untracked: empty
+active Sandbox authorization: none
+
+The earlier V1C2B run before BR1 is diagnostic stale-downstream evidence, not an R1 failure. Historical verifier policy fingerprint cd2fa5fc2c74a5fb683a6d65348468c926f6bbb4311b0d32e3f397555e8edfaf recomputes as d7fc8c5011e6dd353202ebd04567d1e7f59d7af523c8c9b20769afc6b38d45a2 against the committed V1C2A2R1 runner identities. Do not treat the resulting V1C2B evaluator failures as independent defects.
+
+### Next Exact Action
+
+Start V1C2BR1 with a READ-ONLY / HOST-ONLY source audit of exactly these existing verifier files:
+
+modules/developer/developer_task_execution_compile_ast_verifier.py
+modules/developer/developer_task_execution_compile_ast_verifier_policy.py
+tools/eval_developer_task_execution_compile_ast_verifier.py
+tools/eval_developer_task_execution_compile_ast_verifier_windows.py
+
+The audit must determine the exact minimal changed subset needed to bind committed V1C2A2R1 payload/bundle identities and measure every resulting V1C2B identity before any mutation.
+
+Do NOT yet:
+- modify V1C2C1R4/R5
+- modify the preserved V1C2C2 candidate
+- run full pipeline check
+- run Runtime Architecture Audit
+- launch Windows Sandbox
+- consume any active composition retry
+- start V1C2C3
+
+Required order remains:
+
+V1C2A2R1 VERIFIED
+-> V1C2BR1 host-only identity rebind
+-> V1C2C1R5 host-only identity rebind
+-> preserved V1C2C2 portable rebind
+-> full check + Runtime Architecture Audit
+-> explicit Roadmap Change before any new active V1C2C2 attempt
