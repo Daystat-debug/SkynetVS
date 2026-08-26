@@ -1168,3 +1168,10 @@ bundle fingerprint: bd30bec84c8cbdd37940c0e1bb4b34f3cd6c0aed72d05c326afef118f53c
 ```
 
 The closure proves only deterministic host-side payload construction and compile/parse evidence. No claim transaction was consumed, no runtime lease was claimed, no source/runtime was materialized, Sandbox and candidate Python were not launched, no changed source was processed and `execution_authorized=false`. V1C2C1 remains VERIFIED / HOST-ONLY / NON-AUTHORIZING historical evidence. V1C2C1R1 and V1C2C1R2 are independently VERIFIED. Roadmap Changes 021/022 are COMPLETED / CONSUMED and prove mapped-output ACL non-persistence before process creation. Roadmap Change 024 closed V1C2C1R3 as VERIFIED / HOST-ONLY / NON-AUTHORIZING and consumed one exact R3-bound active retry, which failed closed. Roadmap Change 025 is COMPLETED / CONSUMED. Roadmap Change 027 closes V1C2C1R4 as VERIFIED / HOST-ONLY / NON-AUTHORIZING and reopens V1C2C2 only for exact R4 rebinding plus one fresh active attested-pass retry; V1C2C3 remains BLOCKED.
+
+
+## V1C2A2R1 Windows-smoke expectation scope correction — Roadmap Change 032
+
+The corrected V1C2A2R1 host bundle already reports payload SHA-256 `501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249`, bundle fingerprint `9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf`, unchanged guest runner SHA-256 `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9`, and all active flags false. The existing Windows bundle smoke failed only because its expected payload/bundle literals still described historical V1C2A2 identities; no Sandbox or guest interpreter ran.
+
+RC032 therefore locks V1C2A2R1 closure to exactly three files: the runner module, portable runner evaluator and Windows runner evaluator. The Windows evaluator rebind is expectation-only. A new exact three-file candidate SHA must be measured before commit. V1C2BR1, V1C2C1R5 and portable V1C2C2 rebind remain later host-only stages; full `check`, Runtime Architecture Audit and active V1C2C2 remain blocked until the identity cascade is consistent.

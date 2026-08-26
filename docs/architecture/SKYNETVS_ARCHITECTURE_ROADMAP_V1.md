@@ -1528,6 +1528,25 @@ reusable_lease_issued=false
 execution_authorized=false
 ```
 
+### Roadmap Change 032 — V1C2A2R1 Windows-smoke expectation joins R1 scope
+
+**Причина:** after RC031 documentation HEAD `46ce8f1c3263d78133ae0e6b649f4f0c9c89671f`, the R1-independent Windows bundle smoke fails `0/1` only because its expected payload/bundle identities remain historical. Actual corrected payload SHA-256 is `501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249`; actual corrected bundle fingerprint is `9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf`; guest runner SHA remains `6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9`. The smoke reports all active flags false and launches no Sandbox.
+
+**Что меняется:** widen V1C2A2R1 from exact two-file to exact three-file scope by adding only `tools/eval_developer_task_execution_compile_ast_runner_windows.py`. That file may rebind only its expected corrected payload/bundle identities and directly necessary test bookkeeping. Production semantics and runner bytes do not change. Historical two-file patch SHA `b7024d18c8d000271240bf3a662dde612260de330b0c3ae1ab540ef813e18eb2` remains pre-RC032 evidence; acceptance must measure a new exact three-file candidate SHA.
+
+**Acceptance:** syntax over all three files; package boundaries; V1C2A1 `45/45`; V1C2A2R1 `41/41`; Windows bundle smoke `1/1`; exact targeted runner flow; exact three-file diff; preserved seven-file V1C2C2 candidate; empty Sandbox process set. Commit exactly the three R1 files with subject `fix: preserve compile ast payload launch field order`, push and repeat the same gates post-commit. V1C2B/full `check`/Runtime Architecture Audit/downstream imports/active composition remain deferred to BR1/R5/portable V1C2C2 rebind.
+
+Operational state after Roadmap Change 032:
+
+```text
+V1C2A2R1   CURRENT / EXACT THREE-FILE PRE-COMMIT CANDIDATE / HOST-ONLY
+V1C2BR1    PLANNED / BLOCKED UNTIL V1C2A2R1 COMMIT
+V1C2C1R5   PLANNED / BLOCKED UNTIL V1C2BR1 VERIFIED
+V1C2C2     BLOCKED / AWAIT R1 + BR1 + R5 REBIND
+V1C2C3     BLOCKED
+```
+
+
 ## Roadmap Change 015 — Compile/AST contract, fixed runner, verifier and active Sandbox composition are separate boundaries
 
 **Причина:** V1C1B now holds exact selected source bytes in a process-local one-shot plan, but the first interpreter run adds four independent failure domains: canonical changed-source documents, fixed guest runner behavior, host-side signature/transcript verification and live Windows Sandbox lifecycle/resource isolation. A syntax error is a valid check outcome and must not be confused with an invalid signature or broken isolation boundary. Original repository paths also cannot safely become guest filesystem paths because their length and directory structure are unrelated to the fixed guest mount root.
