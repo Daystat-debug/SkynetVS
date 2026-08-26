@@ -226,19 +226,19 @@ def main() -> int:
     )
 
     payload_object = json.loads(payload_bytes.decode("utf-8"))
-    check(
-        "V1C2A2 PAYLOAD MANIFEST IS CANONICAL HASHED JSON",
-        {
-            "roundtrip": json.dumps(payload_object, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8") == payload_bytes,
-            "runner_hash": payload_object["runner"]["sha256"],
-            "authorized": payload_object["execution_authorized"],
-        },
-        {
-            "roundtrip": True,
-            "runner_hash": DEVELOPER_TASK_EXECUTION_COMPILE_AST_RUNNER_SHA256,
-            "authorized": False,
-        },
+    check('V1C2A2 PAYLOAD MANIFEST IS CANONICAL HASHED JSON', {'roundtrip': json.dumps(payload_object, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode('utf-8') == payload_bytes, 'runner_hash': payload_object['runner']['sha256'], 'authorized': payload_object['execution_authorized']}, {'roundtrip': True, 'runner_hash': DEVELOPER_TASK_EXECUTION_COMPILE_AST_RUNNER_SHA256, 'authorized': False})
+    _v1c2a2r1_bundle = __import__(
+        "modules.developer.developer_task_execution_compile_ast_runner",
+        fromlist=["build_developer_task_execution_compile_ast_runner_bundle"],
+    ).build_developer_task_execution_compile_ast_runner_bundle()
+
+    _v1c2a2r1_payload = __import__("json").loads(
+        _v1c2a2r1_bundle.payload_manifest.exact_bytes().decode(
+            "utf-8"
+        )
     )
+
+    check('V1C2A2R1 PAYLOAD OBJECT FIELD ORDER MATCHES PINNED RUNNER', {'top': list(_v1c2a2r1_payload.keys()), 'contract_policy': list(_v1c2a2r1_payload['contract_policy'].keys()), 'launch': list(_v1c2a2r1_payload['launch'].keys()), 'runner': list(_v1c2a2r1_payload['runner'].keys()), 'generated_runner_sha256': _v1c2a2r1_bundle.runner.sha256}, {'top': ['bundle_id', 'contract_policy', 'contract_policy_fingerprint', 'execution_authorized', 'launch', 'operation', 'payload_policy_fingerprint', 'runner', 'runtime_bundle_fingerprint', 'schema_version'], 'contract_policy': ['file_name', 'sha256', 'size_bytes'], 'launch': ['caller_arguments', 'caller_environment', 'runtime_executable', 'runtime_flags', 'runner_path', 'shell', 'working_directory'], 'runner': ['file_name', 'sha256', 'size_bytes'], 'generated_runner_sha256': '6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9'})
 
     check(
         "V1C2A2 SERIALIZATION HIDES EXACT RUNNER BYTES",

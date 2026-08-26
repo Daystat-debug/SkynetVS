@@ -44,10 +44,10 @@ def main() -> int:
     expected = {
         "ok": True,
         "policy_fingerprint": DEVELOPER_TASK_EXECUTION_COMPILE_AST_RUNNER_POLICY_FINGERPRINT,
-        "bundle_fingerprint": "b1f182ca4ee1a9e83cb6a32ca54e45d4511c81faa27d8dd4be7817883affb9f3",
+        "bundle_fingerprint": "9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf",
         "contract_policy_sha256": "f280f9c564dd1cfd780cd5465a3ecd98244e0f00f10827a295b3709b2d8b0ed2",
         "runner_sha256": "6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9",
-        "payload_sha256": "730d4108aab8246d1e6ff030a4d5a64ad25a89adf888e2b10c64ec63d56f60b6",
+        "payload_sha256": "501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249",
         "runtime_executable": r"C:\SkynetVSRuntime\python.exe",
         "runtime_flags": ["-I", "-S", "-B", "-E", "-s", "-P", "-X", "utf8"],
         "runner_path": r"C:\SkynetVSInput\SkynetVS_V1C2A2_runner.py",

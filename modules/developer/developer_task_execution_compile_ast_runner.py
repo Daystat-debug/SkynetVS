@@ -47,10 +47,10 @@ DEVELOPER_TASK_EXECUTION_COMPILE_AST_RUNNER_SHA256 = (
     "6f4ec0085cfa45c7d9242850d570b6a723c3a051338fc3c0bbd2e78dc1c43ec9"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_PAYLOAD_SHA256 = (
-    "730d4108aab8246d1e6ff030a4d5a64ad25a89adf888e2b10c64ec63d56f60b6"
+    "501ed90023f8f8afc75c7676a8acba3d1497334e398f929d0a8d1d96b9ee9249"
 )
 DEVELOPER_TASK_EXECUTION_COMPILE_AST_RUNNER_BUNDLE_FINGERPRINT = (
-    "b1f182ca4ee1a9e83cb6a32ca54e45d4511c81faa27d8dd4be7817883affb9f3"
+    "9179cf51614dc3c43dc4189d5dc2835cb4ed3ba781811dbe0050cea4470ee9bf"
 )
 
 
@@ -701,7 +701,6 @@ def _payload_manifest_bytes(runner_bytes: bytes, contract_policy_bytes: bytes) -
     data = json.dumps(
         payload,
         ensure_ascii=False,
-        sort_keys=True,
         separators=(",", ":"),
         allow_nan=False,
     ).encode("utf-8")
