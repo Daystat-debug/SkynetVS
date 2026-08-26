@@ -1318,7 +1318,7 @@ def main() -> int:
             "signed_success_failure": "WINDOWS CNG VERIFIES SIGNED SUCCESS AND TYPED FAILURE" in windows_eval_text,
             "tamper_smoke": "WINDOWS CNG TAMPER SMOKE FAILS CLOSED" in windows_eval_text,
             "cng_key_generation": "CreateEphemeralEcdsaP256SigningKey" in windows_eval_text,
-            "current_policy_fingerprint": '"policy_fingerprint": "ad14229bad416194d64f21684309cb842af1abaed9e0d2fa05a28a59b3a2e19e"' in windows_eval_text,
+            "current_policy_fingerprint": '"policy_fingerprint": "2dc6aaba3384a072524053a90adbdbf394332a8d83c10b6863dd62f1a6365f2f"' in windows_eval_text,
             "stale_r3_fingerprint": '"policy_fingerprint": "3683f525c3ef037817e0fda4addccb1f7ed82d7e01c34e9e248494644fa4f3c9"' in windows_eval_text,
             "stale_r2_fingerprint": '"policy_fingerprint": "65d0dbdd1cf03095f35f3bd322b3ef8a1f0e9139c163266fefd1664218e21a0a"' in windows_eval_text,
         },

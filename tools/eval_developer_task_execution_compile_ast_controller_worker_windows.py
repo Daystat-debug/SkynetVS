@@ -684,7 +684,7 @@ def main() -> int:
                 "runtime_executable_call": False,
                 "architecture_lock": "db0624732f29c5b8d62850567c8e6de75482e65d334175ab04d5a4926242c4ec",
                 "decision_fingerprint": "8ccd984bb6b92d9ad5a6091168efaf902d3ec6524593c89437acd16ad2cdb955",
-                "policy_fingerprint": "ad14229bad416194d64f21684309cb842af1abaed9e0d2fa05a28a59b3a2e19e",
+                "policy_fingerprint": "2dc6aaba3384a072524053a90adbdbf394332a8d83c10b6863dd62f1a6365f2f",
             },
         )
 
