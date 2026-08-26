@@ -2321,3 +2321,60 @@ The audit must determine, before any active action:
 6. exact cleanup and repository-preservation checks.
 
 Do not yet create the RC033 consumed marker, launch Windows Sandbox, consume a V1C2C0 transaction/runtime lease, execute the candidate interpreter, commit the seven-file candidate or start V1C2C3.
+
+## Chat handoff snapshot after V1C2C2 verification closure — 2026-08-27
+
+This snapshot supersedes earlier V1C2C2 CURRENT / candidate / active-retry operational labels.
+
+```text
+HEAD / origin/main after implementation: c4ceb272898600a90be9db56c990e0c8d98a7bac
+implementation parent:                  372fa7554a107226675b1d5c0d845b65d50b8a53
+implementation subject:                 feat: add active compile ast sandbox composition
+stable V1B4:                             91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+
+V1C2C2 committed patch bytes:            225629
+V1C2C2 committed patch SHA-256:          296d1c94a884f065d27e65cb312618576c8f7ce4e60c7a3ee2fa84c7f4a2ff2e
+composition policy fingerprint:         b4d254963b38caaf1031e85d304eda186eeb784c46ce42af97f0eb3c8c215976
+composition policy-document SHA-256:    fb34f1e7d41f8c5f2ef79a39b8a833c7eb4981769bf1b894f14e7b19b7eddd16
+
+RC033 consumed marker SHA-256:           5bffd4f5cbf204dbe3ee290cc733a7d4271a8f8789856e190bc869affb6666d9
+RC033 terminal result SHA-256:           8e5d708f7385c8b8c1f8ca22bc0a641c3d1f67f41be63821fbb266338bb59af2
+active evaluator log SHA-256:            18b5c73f79532c09db45a4966a5ac52d8f6b36f19559e96931bcfe9138f4bb65
+parsed active evidence SHA-256:          51a48b62675ebd013abba96d1e6b97a37f35a87f39586572e396bf05331ef1d6
+terminal recovery report SHA-256:        f3c9f1d27732ce8cdb7a4a69bd37647e30cc13d66d5d07f9a16847c7a117ae92
+implementation closure report SHA-256:   ed5712c3496573eb7c0648f237511ec0b316805f3bb5e22dae67aa27612ceeb6
+
+active Windows acceptance:               3/3 PASS
+pre-commit full check:                   PASS
+pre-commit Runtime Architecture Audit:   9/9 PASS
+post-commit full check:                  PASS
+post-commit Runtime Architecture Audit:  9/9 PASS
+
+RC033:                                   PASSED / CONSUMED / MUST NOT BE RERUN
+V1C2C2:                                  VERIFIED / COMMITTED / ACTIVE ATTESTED-PASS CLOSED
+V1C2C3:                                  BLOCKED
+```
+
+Important permanent rules from this closure:
+
+- Never rerun RC033 or `tools/eval_developer_task_execution_compile_ast_composition_windows.py` as part of V1C2C2 closure.
+- Never delete, reset or overwrite the RC033 consumed marker.
+- Preserve the append-only terminal result as the terminal truth for the successful one-shot attempt.
+- The normal targeted V1C2C2 composition flow is not a post-closure check because it contains the already-consumed active Windows evaluator.
+- Full `check` remains non-active with respect to V1C2C2 Windows composition.
+- Stable `skynet-trusted-runtime-v1b4` remains unchanged.
+
+### Next Exact Action
+
+Start the next chat from a READ-ONLY / HOST-ONLY V1C2C3 roadmap-and-source transition audit.
+
+The audit must:
+
+1. verify the exact committed V1C2C2 closure state at current `HEAD / origin/main`;
+2. read the current roadmap/trusted-runtime V1C2C3 contract and historical locked identity;
+3. inventory existing V1C2C3 production/evaluator files and pipeline wiring;
+4. determine whether current docs already authorize any V1C2C3 action or whether an explicit Roadmap Change 034 is required;
+5. classify each possible V1C2C3 gate as portable, host-only or active;
+6. stop before any V1C2C3 mutation, capability claim, Sandbox launch or interpreter run.
+
+Do not yet create Roadmap Change 034, modify V1C2C3 code, run a V1C2C3 active acceptance, launch Sandbox or widen the roadmap. The transition audit decides the next authorized step.

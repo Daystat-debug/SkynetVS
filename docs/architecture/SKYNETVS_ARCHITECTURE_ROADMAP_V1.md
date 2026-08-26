@@ -2757,3 +2757,81 @@ V1C2C3:                                   BLOCKED
 ```
 
 No active authority exists until the permanent RC033 one-shot marker is created under the exact convention confirmed by the next read-only audit. Creating that marker consumes the sole RC033 active attempt. No Sandbox launch belongs to this documentation transition.
+
+## V1C2C2 verification closure after Roadmap Change 033 — 2026-08-27
+
+This closure records the completed outcome already authorized by Roadmap Change 033; it does not create a new Roadmap Change and does not authorize a second active run.
+
+The exact seven-file V1C2C2 implementation is VERIFIED / COMMITTED at:
+
+```text
+implementation commit:                  c4ceb272898600a90be9db56c990e0c8d98a7bac
+parent RC033 documentation commit:      372fa7554a107226675b1d5c0d845b65d50b8a53
+commit subject:                         feat: add active compile ast sandbox composition
+exact committed patch bytes:            225629
+exact committed patch SHA-256:          296d1c94a884f065d27e65cb312618576c8f7ce4e60c7a3ee2fa84c7f4a2ff2e
+composition policy fingerprint:         b4d254963b38caaf1031e85d304eda186eeb784c46ce42af97f0eb3c8c215976
+composition policy-document SHA-256:    fb34f1e7d41f8c5f2ef79a39b8a833c7eb4981769bf1b894f14e7b19b7eddd16
+```
+
+RC033 active evidence is permanently consumed and immutable. The one real active Windows evaluator run passed exactly `3/3`, with evaluator exit code `0`, status `active_compile_ast_attested_passed`, signed terminal status `compile_ast_attested_passed`, valid controller and legacy-terminal signatures, stable ready/evidence/result bytes, private-to-relayed-result hash binding, `boundary_ok=true`, `check_passed=true`, `result_verified=true`, no issue codes and full cleanup.
+
+```text
+RC033 consumed marker SHA-256:           5bffd4f5cbf204dbe3ee290cc733a7d4271a8f8789856e190bc869affb6666d9
+append-only terminal result SHA-256:     8e5d708f7385c8b8c1f8ca22bc0a641c3d1f67f41be63821fbb266338bb59af2
+active evaluator log SHA-256:            18b5c73f79532c09db45a4966a5ac52d8f6b36f19559e96931bcfe9138f4bb65
+parsed active evidence SHA-256:          51a48b62675ebd013abba96d1e6b97a37f35a87f39586572e396bf05331ef1d6
+terminal recovery report SHA-256:        f3c9f1d27732ce8cdb7a4a69bd37647e30cc13d66d5d07f9a16847c7a117ae92
+implementation closure report SHA-256:   ed5712c3496573eb7c0648f237511ec0b316805f3bb5e22dae67aa27612ceeb6
+```
+
+The marker-finalizer incident was harness-only: the active product run had already passed `3/3`; the immutable reservation marker remained byte-for-byte unchanged and the terminal outcome was safely recorded in a separate append-only CreateNew result. No active evaluator was reexecuted during recovery or commit closure.
+
+Pre-commit and post-commit non-active acceptance are green:
+
+```text
+pre-commit full check:                   PASS
+pre-commit full check stdout SHA-256:    368b854f570f14754388602e712bdec62187baaea30ada76d2ce460eab869520
+pre-commit Runtime Architecture Audit:   9/9 PASS
+post-commit full check:                  PASS
+post-commit full check stdout SHA-256:   39863604dad5f0472c4d6d125c3232ef89d381bda349397139d52b09f0a9fa0d
+post-commit Runtime Architecture Audit:  9/9 PASS
+HEAD == origin/main:                     true
+working tree:                            clean
+known Sandbox process set:               empty
+stable V1B4:                             91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+```
+
+Security invariants at closure remain:
+
+```text
+claim_transaction_consumed=true
+runtime_lease_claimed=true
+sandbox_launched=true
+candidate_interpreter_executed=true
+changed_source_processed=true
+changed_source_ast_parsed=true
+changed_source_compiled=true
+
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+artifacts_removed=true
+all_processes_exited=true
+forced_cleanup_attempted=false
+```
+
+Operational state after this closure:
+
+```text
+V1C2A2R1   VERIFIED / COMMITTED
+V1C2BR1    VERIFIED / COMMITTED / HOST-ONLY / NON-AUTHORIZING
+V1C2C1R5   VERIFIED / COMMITTED / HOST-ONLY / NON-AUTHORIZING
+RC033       PASSED / CONSUMED / MUST NOT BE RERUN
+V1C2C2      VERIFIED / COMMITTED / ACTIVE ATTESTED-PASS CLOSED
+V1C2C3      BLOCKED
+```
+
+The targeted `developer_task_execution_compile_ast_composition` flow must not be run for V1C2C2 closure because it contains the already-consumed active Windows evaluator. A second RC033 active run is forbidden.
+
+This closure does not create Roadmap Change 034 and does not authorize V1C2C3. The next exact action is a READ-ONLY / HOST-ONLY V1C2C3 roadmap-and-source transition audit. That audit must determine the exact locked V1C2C3 acceptance surface, existing evaluator/policy files, required immutable identities, whether a new explicit Roadmap Change is required before any V1C2C3 run, and the exact non-active/active boundaries. Until that audit is reviewed, V1C2C3 remains BLOCKED.
