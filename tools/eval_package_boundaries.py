@@ -1015,6 +1015,9 @@ def main() -> int:
             "developer_compile_ast_composition_flow": '"developer_task_execution_compile_ast_composition"' in pipeline_text,
             "developer_compile_ast_composition_eval": "tools/eval_developer_task_execution_compile_ast_composition.py" in pipeline_text,
             "developer_compile_ast_composition_windows_smoke": "tools/eval_developer_task_execution_compile_ast_composition_windows.py" in pipeline_text,
+            "developer_compile_ast_live_acceptance_flow": '"developer_task_execution_compile_ast_live_acceptance"' in pipeline_text,
+            "developer_compile_ast_live_acceptance_eval": "tools/eval_developer_task_execution_compile_ast_live_acceptance.py" in pipeline_text,
+            "developer_compile_ast_live_acceptance_windows_unwired": "tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py" not in pipeline_text,
         },
         {
             "pipeline": True,
@@ -1097,6 +1100,9 @@ def main() -> int:
             "developer_compile_ast_composition_flow": True,
             "developer_compile_ast_composition_eval": True,
             "developer_compile_ast_composition_windows_smoke": True,
+            "developer_compile_ast_live_acceptance_flow": True,
+            "developer_compile_ast_live_acceptance_eval": True,
+            "developer_compile_ast_live_acceptance_windows_unwired": True,
         },
     )
 
