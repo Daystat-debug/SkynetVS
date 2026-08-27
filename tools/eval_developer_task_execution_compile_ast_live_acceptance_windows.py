@@ -7,10 +7,13 @@ The harness therefore requires an explicit host-side environment guard before
 it performs any host inspection, capability issue/claim, or Sandbox launch.
 """
 
+import argparse
 import hashlib
+import hmac
 import json
 import os
 import platform
+import secrets
 import tempfile
 
 from dataclasses import dataclass
@@ -72,6 +75,57 @@ ROW_PASS = "live_pass"
 ROW_SYNTAX = "authentic_syntax_failure"
 ROW_BOUNDARY = "signed_post_ready_boundary_failure"
 ROWS = (ROW_PASS, ROW_SYNTAX, ROW_BOUNDARY)
+
+_ROW_AUTHORITY_DIGEST: bytes | None = None
+
+
+class _RowAuthority:
+    __slots__ = ("row", "_token")
+
+    def __init__(self, row: str, token: bytes) -> None:
+        self.row = row
+        self._token = token
+
+
+def _mint_row_authority(row: str) -> _RowAuthority:
+    global _ROW_AUTHORITY_DIGEST
+    if row not in ROWS:
+        raise ValueError(f"unsupported V1C2C3 row: {row}")
+    if os.environ.get(ACTIVE_AUTHORITY_ENV, "") != ACTIVE_AUTHORITY_VALUE:
+        raise RuntimeError("V1C2C3 row authority cannot be minted before host guard")
+    if _ROW_AUTHORITY_DIGEST is not None:
+        raise RuntimeError("V1C2C3 row authority is already active")
+    token = secrets.token_bytes(32)
+    _ROW_AUTHORITY_DIGEST = hashlib.sha256(token).digest()
+    return _RowAuthority(row, token)
+
+
+def _consume_row_authority(authority: _RowAuthority, row: str) -> None:
+    global _ROW_AUTHORITY_DIGEST
+    if (
+        type(authority) is not _RowAuthority
+        or authority.row != row
+        or _ROW_AUTHORITY_DIGEST is None
+        or not hmac.compare_digest(
+            hashlib.sha256(authority._token).digest(),
+            _ROW_AUTHORITY_DIGEST,
+        )
+    ):
+        raise RuntimeError("V1C2C3 row authority is missing, forged, or mismatched")
+    _ROW_AUTHORITY_DIGEST = None
+
+
+def _parse_row(argv: list[str] | None = None) -> str:
+    parser = argparse.ArgumentParser(
+        description="Run exactly one authorized V1C2C3 live acceptance row."
+    )
+    parser.add_argument(
+        "--row",
+        required=True,
+        choices=ROWS,
+        help="One locked V1C2C3 row to execute.",
+    )
+    return str(parser.parse_args(argv).row)
 
 
 @dataclass(frozen=True)
@@ -275,9 +329,11 @@ def _row_changes(row: str) -> dict[str, bytes | None]:
 def _run_case(
     row: str,
     *,
+    authority: _RowAuthority,
     runtime_zip: Path,
     parent: Path,
 ) -> dict[str, Any]:
+    _consume_row_authority(authority, row)
     if row not in ROWS:
         raise ValueError(f"unsupported V1C2C3 row: {row}")
 
@@ -415,7 +471,9 @@ def _run_case(
     }
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    selected_row = _parse_row(argv)
+
     if os.environ.get(ACTIVE_AUTHORITY_ENV, "") != ACTIVE_AUTHORITY_VALUE:
         print(
             "BLOCKED: V1C2C3 active matrix is blocked without later roadmap authority."
@@ -434,6 +492,7 @@ def main() -> int:
                 {
                     "ok": False,
                     "reason": "v1c2c3_runtime_source_unavailable",
+                    "row": selected_row,
                     "runtime_path": str(runtime_zip),
                     "runtime_exists": runtime_zip.is_file(),
                 },
@@ -442,6 +501,26 @@ def main() -> int:
             )
         )
         return 1
+
+    initial_processes = snapshot_windows_sandbox_processes()
+    if initial_processes:
+        print(
+            json.dumps(
+                {
+                    "ok": False,
+                    "reason": "sandbox_process_set_not_empty_before_v1c2c3",
+                    "row": selected_row,
+                    "processes": [
+                        item.to_dict() for item in initial_processes
+                    ],
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 1
+
+    authority = _mint_row_authority(selected_row)
 
     case_count = 0
     fail_count = 0
@@ -464,280 +543,222 @@ def main() -> int:
         )
         print(f"[{'OK' if ok else 'FAIL'}] {name}")
 
-    initial_processes = snapshot_windows_sandbox_processes()
-    if initial_processes:
-        print(
-            json.dumps(
-                {
-                    "ok": False,
-                    "reason": "sandbox_process_set_not_empty_before_v1c2c3",
-                    "processes": [
-                        item.to_dict() for item in initial_processes
-                    ],
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
-        return 1
-
     with tempfile.TemporaryDirectory(
-        prefix="skynetvs-v1c2c3-live-acceptance-",
+        prefix=f"skynetvs-v1c2c3-{selected_row}-",
         ignore_cleanup_errors=True,
     ) as temporary:
         parent = Path(temporary).resolve()
-        rows = [
-            _run_case(row, runtime_zip=runtime_zip, parent=parent)
-            for row in ROWS
+        item = _run_case(
+            selected_row,
+            authority=authority,
+            runtime_zip=runtime_zip,
+            parent=parent,
+        )
+
+    report = item["report"]
+    signed = item["signed"]
+    controller = item["controller"]
+
+    if selected_row == ROW_PASS:
+        check(
+            "V1C2C3 LIVE PASS",
+            {
+                "composition_ok": report.ok,
+                "composition_status": report.status,
+                "signed_ok": signed.ok,
+                "terminal_status": signed.terminal_status,
+                "boundary_ok": signed.boundary_ok,
+                "check_passed": signed.check_passed,
+                "controller_status": controller.status if controller else "",
+                "controller_terminal": (
+                    controller.terminal_status if controller else ""
+                ),
+            },
+            {
+                "composition_ok": True,
+                "composition_status": DEVELOPER_TASK_EXECUTION_COMPILE_AST_COMPOSITION_STATUS_ATTESTED,
+                "signed_ok": True,
+                "terminal_status": "compile_ast_attested_passed",
+                "boundary_ok": True,
+                "check_passed": True,
+                "controller_status": "controller_signed_success",
+                "controller_terminal": "compile_ast_attested_passed",
+            },
+        )
+    elif selected_row == ROW_SYNTAX:
+        syntax_result = item["captured_result"] or {}
+        syntax_files = syntax_result.get("files", [])
+        syntax_errors = [
+            source_item.get("error")
+            for source_item in syntax_files
+            if isinstance(source_item, dict)
+            and source_item.get("error") is not None
         ]
-
-    by_name = {item["row"]: item for item in rows}
-    passed = by_name[ROW_PASS]
-    syntax = by_name[ROW_SYNTAX]
-    boundary = by_name[ROW_BOUNDARY]
-
-    check(
-        "V1C2C3 LIVE PASS",
-        {
-            "composition_ok": passed["report"].ok,
-            "composition_status": passed["report"].status,
-            "signed_ok": passed["signed"].ok,
-            "terminal_status": passed["signed"].terminal_status,
-            "boundary_ok": passed["signed"].boundary_ok,
-            "check_passed": passed["signed"].check_passed,
-            "controller_status": (
-                passed["controller"].status if passed["controller"] else ""
-            ),
-            "controller_terminal": (
-                passed["controller"].terminal_status
-                if passed["controller"]
-                else ""
-            ),
-        },
-        {
-            "composition_ok": True,
-            "composition_status": DEVELOPER_TASK_EXECUTION_COMPILE_AST_COMPOSITION_STATUS_ATTESTED,
-            "signed_ok": True,
-            "terminal_status": "compile_ast_attested_passed",
-            "boundary_ok": True,
-            "check_passed": True,
-            "controller_status": "controller_signed_success",
-            "controller_terminal": "compile_ast_attested_passed",
-        },
-    )
-
-    syntax_result = syntax["captured_result"] or {}
-    syntax_files = syntax_result.get("files", [])
-    syntax_errors = [
-        item.get("error")
-        for item in syntax_files
-        if isinstance(item, dict) and item.get("error") is not None
-    ]
-    check(
-        "V1C2C3 AUTHENTIC SYNTAX FAILURE",
-        {
-            "composition_ok": syntax["report"].ok,
-            "composition_status": syntax["report"].status,
-            "signed_ok": syntax["signed"].ok,
-            "terminal_status": syntax["signed"].terminal_status,
-            "boundary_ok": syntax["signed"].boundary_ok,
-            "check_passed": syntax["signed"].check_passed,
-            "controller_status": (
-                syntax["controller"].status if syntax["controller"] else ""
-            ),
-            "controller_terminal": (
-                syntax["controller"].terminal_status
-                if syntax["controller"]
-                else ""
-            ),
-            "trusted_interpreter_executed": syntax_result.get(
-                "trusted_interpreter_executed"
-            ),
-            "changed_source_processed": syntax_result.get(
-                "changed_source_processed"
-            ),
-            "changed_source_ast_parsed": syntax_result.get(
-                "changed_source_ast_parsed"
-            ),
-            "changed_source_compiled": syntax_result.get(
-                "changed_source_compiled"
-            ),
-            "changed_code_executed": syntax_result.get(
-                "changed_code_executed"
-            ),
-            "syntax_error_type": (
-                syntax_errors[0].get("type") if syntax_errors else ""
-            ),
-            "raw_source_absent": all(
-                isinstance(item, dict) and "text" not in item
-                for item in syntax_errors
-            ),
-        },
-        {
-            "composition_ok": False,
-            "composition_status": DEVELOPER_TASK_EXECUTION_COMPILE_AST_COMPOSITION_STATUS_FAILED,
-            "signed_ok": True,
-            "terminal_status": "compile_ast_attested_failed",
-            "boundary_ok": True,
-            "check_passed": False,
-            "controller_status": "controller_signed_success",
-            "controller_terminal": "compile_ast_attested_failed",
-            "trusted_interpreter_executed": True,
-            "changed_source_processed": True,
-            "changed_source_ast_parsed": False,
-            "changed_source_compiled": False,
-            "changed_code_executed": False,
-            "syntax_error_type": "SyntaxError",
-            "raw_source_absent": True,
-        },
-    )
+        check(
+            "V1C2C3 AUTHENTIC SYNTAX FAILURE",
+            {
+                "composition_ok": report.ok,
+                "composition_status": report.status,
+                "signed_ok": signed.ok,
+                "terminal_status": signed.terminal_status,
+                "boundary_ok": signed.boundary_ok,
+                "check_passed": signed.check_passed,
+                "controller_status": controller.status if controller else "",
+                "controller_terminal": (
+                    controller.terminal_status if controller else ""
+                ),
+                "trusted_interpreter_executed": syntax_result.get(
+                    "trusted_interpreter_executed"
+                ),
+                "changed_source_processed": syntax_result.get(
+                    "changed_source_processed"
+                ),
+                "changed_source_ast_parsed": syntax_result.get(
+                    "changed_source_ast_parsed"
+                ),
+                "changed_source_compiled": syntax_result.get(
+                    "changed_source_compiled"
+                ),
+                "changed_code_executed": syntax_result.get(
+                    "changed_code_executed"
+                ),
+                "syntax_error_type": (
+                    syntax_errors[0].get("type") if syntax_errors else ""
+                ),
+                "raw_source_absent": all(
+                    isinstance(error, dict) and "text" not in error
+                    for error in syntax_errors
+                ),
+            },
+            {
+                "composition_ok": False,
+                "composition_status": DEVELOPER_TASK_EXECUTION_COMPILE_AST_COMPOSITION_STATUS_FAILED,
+                "signed_ok": True,
+                "terminal_status": "compile_ast_attested_failed",
+                "boundary_ok": True,
+                "check_passed": False,
+                "controller_status": "controller_signed_success",
+                "controller_terminal": "compile_ast_attested_failed",
+                "trusted_interpreter_executed": True,
+                "changed_source_processed": True,
+                "changed_source_ast_parsed": False,
+                "changed_source_compiled": False,
+                "changed_code_executed": False,
+                "syntax_error_type": "SyntaxError",
+                "raw_source_absent": True,
+            },
+        )
+    else:
+        check(
+            "V1C2C3 SIGNED POST-READY BOUNDARY FAILURE",
+            {
+                "composition_ok": report.ok,
+                "composition_status": report.status,
+                "signed_ok": signed.ok,
+                "terminal_status": signed.terminal_status,
+                "boundary_ok": signed.boundary_ok,
+                "check_passed": signed.check_passed,
+                "result_sha256": signed.result_sha256,
+                "controller_status": controller.status if controller else "",
+                "controller_terminal": (
+                    controller.terminal_status if controller else ""
+                ),
+                "fault_applied": item["boundary_fault_applied"],
+                "fault_restored": item["boundary_fault_restored"],
+                "fault_kind": item["boundary_fault_kind"],
+            },
+            {
+                "composition_ok": False,
+                "composition_status": DEVELOPER_TASK_EXECUTION_COMPILE_AST_COMPOSITION_STATUS_FAILED,
+                "signed_ok": True,
+                "terminal_status": "compile_ast_boundary_failed",
+                "boundary_ok": False,
+                "check_passed": False,
+                "result_sha256": None,
+                "controller_status": "controller_signed_success",
+                "controller_terminal": "compile_ast_boundary_failed",
+                "fault_applied": True,
+                "fault_restored": True,
+                "fault_kind": BOUNDARY_FAULT_KIND,
+            },
+        )
 
     check(
-        "V1C2C3 SIGNED POST-READY BOUNDARY FAILURE",
+        "V1C2C3 SINGLE ROW FRESH CAPABILITY EVIDENCE",
         {
-            "composition_ok": boundary["report"].ok,
-            "composition_status": boundary["report"].status,
-            "signed_ok": boundary["signed"].ok,
-            "terminal_status": boundary["signed"].terminal_status,
-            "boundary_ok": boundary["signed"].boundary_ok,
-            "check_passed": boundary["signed"].check_passed,
-            "result_sha256": boundary["signed"].result_sha256,
-            "controller_status": (
-                boundary["controller"].status
-                if boundary["controller"]
-                else ""
+            "row": item["row"],
+            "request_id_length": len(item["request_id"]),
+            "runtime_lease_fingerprint_length": len(
+                item["runtime_lease_fingerprint"]
             ),
-            "controller_terminal": (
-                boundary["controller"].terminal_status
-                if boundary["controller"]
-                else ""
-            ),
-            "fault_applied": boundary["boundary_fault_applied"],
-            "fault_restored": boundary["boundary_fault_restored"],
-            "fault_kind": boundary["boundary_fault_kind"],
-        },
-        {
-            "composition_ok": False,
-            "composition_status": DEVELOPER_TASK_EXECUTION_COMPILE_AST_COMPOSITION_STATUS_FAILED,
-            "signed_ok": True,
-            "terminal_status": "compile_ast_boundary_failed",
-            "boundary_ok": False,
-            "check_passed": False,
-            "result_sha256": None,
-            "controller_status": "controller_signed_success",
-            "controller_terminal": "compile_ast_boundary_failed",
-            "fault_applied": True,
-            "fault_restored": True,
-            "fault_kind": BOUNDARY_FAULT_KIND,
-        },
-    )
-
-    check(
-        "V1C2C3 THREE FRESH CAPABILITY CHAINS",
-        {
-            "request_ids": len({item["request_id"] for item in rows}),
-            "runtime_leases": len(
-                {item["runtime_lease_fingerprint"] for item in rows}
-            ),
-            "plan_fingerprints": len(
-                {item["plan_fingerprint"] for item in rows}
-            ),
-            "controller_public_keys": len(
-                {item["public_key_sha256"] for item in rows}
+            "plan_fingerprint_length": len(item["plan_fingerprint"]),
+            "controller_public_key_sha256_length": len(
+                item["public_key_sha256"]
             ),
         },
         {
-            "request_ids": 3,
-            "runtime_leases": 3,
-            "plan_fingerprints": 3,
-            "controller_public_keys": 3,
+            "row": selected_row,
+            "request_id_length": 32,
+            "runtime_lease_fingerprint_length": 64,
+            "plan_fingerprint_length": 64,
+            "controller_public_key_sha256_length": 64,
         },
     )
 
     check(
         "V1C2C3 ACTIVE SECURITY FLAGS",
-        [
-            {
-                "row": item["row"],
-                "claim_transaction_consumed": item[
-                    "report"
-                ].claim_transaction_consumed,
-                "runtime_lease_claimed": item[
-                    "report"
-                ].runtime_lease_claimed,
-                "sandbox_launched": item["report"].sandbox_launched,
-                "changed_code_executed": item[
-                    "report"
-                ].changed_code_executed,
-                "reusable_lease_issued": item[
-                    "report"
-                ].reusable_lease_issued,
-                "execution_authorized": item[
-                    "report"
-                ].execution_authorized,
-            }
-            for item in rows
-        ],
-        [
-            {
-                "row": row,
-                "claim_transaction_consumed": True,
-                "runtime_lease_claimed": True,
-                "sandbox_launched": True,
-                "changed_code_executed": False,
-                "reusable_lease_issued": False,
-                "execution_authorized": False,
-            }
-            for row in ROWS
-        ],
+        {
+            "claim_transaction_consumed": report.claim_transaction_consumed,
+            "runtime_lease_claimed": report.runtime_lease_claimed,
+            "sandbox_launched": report.sandbox_launched,
+            "changed_code_executed": report.changed_code_executed,
+            "reusable_lease_issued": report.reusable_lease_issued,
+            "execution_authorized": report.execution_authorized,
+        },
+        {
+            "claim_transaction_consumed": True,
+            "runtime_lease_claimed": True,
+            "sandbox_launched": True,
+            "changed_code_executed": False,
+            "reusable_lease_issued": False,
+            "execution_authorized": False,
+        },
     )
 
     check(
-        "V1C2C3 PER-ROW CLEANUP",
-        [
-            {
-                "row": item["row"],
-                "all_processes_exited": item[
-                    "report"
-                ].all_processes_exited,
-                "forced_cleanup_attempted": item[
-                    "report"
-                ].termination.attempted,
-                "artifacts_removed": (
-                    item["report"].artifacts.removed
-                    if item["report"].artifacts is not None
-                    else False
-                ),
-                "source_unchanged": item["source_unchanged"],
-                "workspace_unchanged": item["workspace_unchanged"],
-                "active_tree_after": list(item["active_tree_after"]),
-                "runtime_tree_after": list(item["runtime_tree_after"]),
-                "processes_after": [
-                    process.to_dict() for process in item["processes_after"]
-                ],
-            }
-            for item in rows
-        ],
-        [
-            {
-                "row": row,
-                "all_processes_exited": True,
-                "forced_cleanup_attempted": False,
-                "artifacts_removed": True,
-                "source_unchanged": True,
-                "workspace_unchanged": True,
-                "active_tree_after": [],
-                "runtime_tree_after": [],
-                "processes_after": [],
-            }
-            for row in ROWS
-        ],
+        "V1C2C3 ROW CLEANUP",
+        {
+            "all_processes_exited": report.all_processes_exited,
+            "forced_cleanup_attempted": report.termination.attempted,
+            "artifacts_removed": (
+                report.artifacts.removed
+                if report.artifacts is not None
+                else False
+            ),
+            "source_unchanged": item["source_unchanged"],
+            "workspace_unchanged": item["workspace_unchanged"],
+            "active_tree_after": list(item["active_tree_after"]),
+            "runtime_tree_after": list(item["runtime_tree_after"]),
+            "processes_after": [
+                process.to_dict() for process in item["processes_after"]
+            ],
+        },
+        {
+            "all_processes_exited": True,
+            "forced_cleanup_attempted": False,
+            "artifacts_removed": True,
+            "source_unchanged": True,
+            "workspace_unchanged": True,
+            "active_tree_after": [],
+            "runtime_tree_after": [],
+            "processes_after": [],
+        },
     )
 
     final_processes = snapshot_windows_sandbox_processes()
     check(
         "V1C2C3 FINAL SANDBOX PROCESS SET",
-        [item.to_dict() for item in final_processes],
+        [process.to_dict() for process in final_processes],
         [],
     )
 
@@ -746,13 +767,21 @@ def main() -> int:
         "fail_count": fail_count,
         "ok": fail_count == 0,
         "historical_evidence_identity": HISTORICAL_V1C2C3_EVIDENCE_IDENTITY,
-        "rows": list(ROWS),
+        "row": selected_row,
+        "request_id": item["request_id"],
+        "runtime_lease_fingerprint": item["runtime_lease_fingerprint"],
+        "plan_fingerprint": item["plan_fingerprint"],
+        "controller_public_key_sha256": item["public_key_sha256"],
+        "terminal_status": signed.terminal_status,
+        "boundary_ok": signed.boundary_ok,
+        "check_passed": signed.check_passed,
+        "result_sha256": signed.result_sha256,
         "changed_code_executed": False,
         "reusable_lease_issued": False,
         "execution_authorized": False,
     }
     print()
-    print("=== V1C2C3 WINDOWS SUMMARY ===")
+    print("=== V1C2C3 WINDOWS ROW SUMMARY ===")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if fail_count == 0 else 1
 

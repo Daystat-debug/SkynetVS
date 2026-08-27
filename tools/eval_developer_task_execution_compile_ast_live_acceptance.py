@@ -122,6 +122,41 @@ def _function_names(tree: ast.AST) -> set[str]:
     }
 
 
+def _top_level_function(tree: ast.Module, name: str) -> ast.FunctionDef:
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef) and node.name == name:
+            return node
+    raise AssertionError(f"missing top-level function: {name}")
+
+
+def _call_name(node: ast.Call) -> str:
+    if isinstance(node.func, ast.Name):
+        return node.func.id
+    if isinstance(node.func, ast.Attribute):
+        return node.func.attr
+    return ""
+
+
+def _call_names(node: ast.AST) -> list[str]:
+    return [
+        _call_name(item)
+        for item in ast.walk(node)
+        if isinstance(item, ast.Call)
+    ]
+
+
+def _loops_over_rows(node: ast.AST) -> bool:
+    for item in ast.walk(node):
+        iterator: ast.AST | None = None
+        if isinstance(item, (ast.For, ast.AsyncFor)):
+            iterator = item.iter
+        elif isinstance(item, ast.comprehension):
+            iterator = item.iter
+        if isinstance(iterator, ast.Name) and iterator.id == "ROWS":
+            return True
+    return False
+
+
 def _flow_count(flow: list[Any], script_path: str) -> int:
     return sum(
         1
@@ -436,15 +471,236 @@ def main() -> int:
             ),
             "functions": sorted(
                 _function_names(windows_tree)
-                & {"_run_case", "_verify_captured_transcript", "main"}
+                & {
+                    "_parse_row",
+                    "_mint_row_authority",
+                    "_consume_row_authority",
+                    "_run_case",
+                    "_verify_captured_transcript",
+                    "main",
+                }
             ),
         },
         {
             "capture_methods": ["verify_controller_evidence"],
             "boundary_methods": ["publish_authorize", "verify_materialization"],
-            "functions": ["_run_case", "_verify_captured_transcript", "main"],
+            "functions": [
+                "_consume_row_authority",
+                "_mint_row_authority",
+                "_parse_row",
+                "_run_case",
+                "_verify_captured_transcript",
+                "main",
+            ],
         },
     )
+
+    row_constants: dict[str, str] = {}
+    windows_rows: list[str] = []
+    for node in windows_tree.body:
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+            and node.targets[0].id in {"ROW_PASS", "ROW_SYNTAX", "ROW_BOUNDARY"}
+        ):
+            row_constants[node.targets[0].id] = node.value.value
+    for node in windows_tree.body:
+        if (
+            isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == "ROWS"
+                for target in node.targets
+            )
+            and isinstance(node.value, ast.Tuple)
+        ):
+            windows_rows = [
+                row_constants[item.id]
+                for item in node.value.elts
+                if isinstance(item, ast.Name)
+            ]
+            break
+
+    parse_row_node = _top_level_function(windows_tree, "_parse_row")
+    add_argument_calls = [
+        node
+        for node in ast.walk(parse_row_node)
+        if isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Attribute)
+        and node.func.attr == "add_argument"
+    ]
+    row_call = next(
+        (
+            node
+            for node in add_argument_calls
+            if node.args
+            and isinstance(node.args[0], ast.Constant)
+            and node.args[0].value == "--row"
+        ),
+        None,
+    )
+    row_keywords = (
+        {item.arg: item.value for item in row_call.keywords}
+        if row_call is not None
+        else {}
+    )
+    check(
+        "V1C2C3 WINDOWS HARNESS HAS EXACT REQUIRED ROW SELECTOR",
+        {
+            "row_argument_present": row_call is not None,
+            "required_true": (
+                isinstance(row_keywords.get("required"), ast.Constant)
+                and row_keywords["required"].value is True
+            ),
+            "choices_rows": (
+                isinstance(row_keywords.get("choices"), ast.Name)
+                and row_keywords["choices"].id == "ROWS"
+            ),
+            "locked_rows": windows_rows,
+        },
+        {
+            "row_argument_present": True,
+            "required_true": True,
+            "choices_rows": True,
+            "locked_rows": [item["row"] for item in V1C2C3_MATRIX],
+        },
+    )
+
+    main_node = _top_level_function(windows_tree, "main")
+    main_source = ast.get_source_segment(windows_source, main_node) or ""
+    main_calls = _call_names(main_node)
+    guard_offset = main_source.find(
+        'os.environ.get(ACTIVE_AUTHORITY_ENV, "") != ACTIVE_AUTHORITY_VALUE'
+    )
+    mint_offset = main_source.find("_mint_row_authority(selected_row)")
+    dispatch_offset = main_source.find("_run_case(")
+    runtime_offset = main_source.find("_runtime_zip_path()")
+    check(
+        "V1C2C3 WINDOWS MAIN IS ONE-ROW AND GUARD-FIRST",
+        {
+            "main_loops_over_rows": _loops_over_rows(main_node),
+            "run_case_call_count": main_calls.count("_run_case"),
+            "selected_row_dispatch": "_run_case(\n            selected_row,"
+            in main_source,
+            "guard_before_runtime_lookup": (
+                guard_offset >= 0
+                and runtime_offset >= 0
+                and guard_offset < runtime_offset
+            ),
+            "guard_before_mint": (
+                guard_offset >= 0
+                and mint_offset >= 0
+                and guard_offset < mint_offset
+            ),
+            "mint_before_dispatch": (
+                mint_offset >= 0
+                and dispatch_offset >= 0
+                and mint_offset < dispatch_offset
+            ),
+        },
+        {
+            "main_loops_over_rows": False,
+            "run_case_call_count": 1,
+            "selected_row_dispatch": True,
+            "guard_before_runtime_lookup": True,
+            "guard_before_mint": True,
+            "mint_before_dispatch": True,
+        },
+    )
+
+    run_case_node = _top_level_function(windows_tree, "_run_case")
+    run_case_calls = [
+        node
+        for node in ast.walk(run_case_node)
+        if isinstance(node, ast.Call)
+    ]
+    active_call_names = {
+        "snapshot_windows_sandbox_processes",
+        "inspect_developer_task_execution_backend_host",
+        "issue_developer_task_execution_compile_ast_plan",
+        "build_developer_task_execution_runtime_bundle",
+        "issue_developer_task_execution_runtime_lease",
+        "issue_developer_task_execution_compile_ast_claim_transaction",
+        "attest_developer_task_execution_compile_ast_composition",
+        "_attest_developer_task_execution_compile_ast_composition",
+    }
+    consume_calls = [
+        node
+        for node in run_case_calls
+        if _call_name(node) == "_consume_row_authority"
+    ]
+    active_calls = [
+        node
+        for node in run_case_calls
+        if _call_name(node) in active_call_names
+    ]
+    authority_parameters = [
+        item.arg
+        for item in (
+            list(run_case_node.args.args)
+            + list(run_case_node.args.kwonlyargs)
+        )
+    ]
+    check(
+        "V1C2C3 _RUN_CASE REQUIRES AND CONSUMES PRIVATE AUTHORITY FIRST",
+        {
+            "authority_parameter": "authority" in authority_parameters,
+            "consume_call_count": len(consume_calls),
+            "consume_precedes_active_calls": (
+                len(consume_calls) == 1
+                and bool(active_calls)
+                and all(
+                    consume_calls[0].lineno < call.lineno
+                    for call in active_calls
+                )
+            ),
+            "active_call_names": sorted(
+                {_call_name(call) for call in active_calls}
+            ),
+            "main_passes_authority": "authority=authority" in main_source,
+        },
+        {
+            "authority_parameter": True,
+            "consume_call_count": 1,
+            "consume_precedes_active_calls": True,
+            "active_call_names": sorted(active_call_names),
+            "main_passes_authority": True,
+        },
+    )
+
+    mint_node = _top_level_function(windows_tree, "_mint_row_authority")
+    consume_node = _top_level_function(windows_tree, "_consume_row_authority")
+    mint_source = ast.get_source_segment(windows_source, mint_node) or ""
+    consume_source = ast.get_source_segment(windows_source, consume_node) or ""
+    check(
+        "V1C2C3 ROW AUTHORITY IS FRESH SINGLE-USE AND HOST-GATED",
+        {
+            "mint_checks_host_guard": (
+                'os.environ.get(ACTIVE_AUTHORITY_ENV, "") != ACTIVE_AUTHORITY_VALUE'
+                in mint_source
+            ),
+            "fresh_random_token": "secrets.token_bytes(32)" in mint_source,
+            "digest_bound": "hashlib.sha256(token).digest()" in mint_source,
+            "exact_type_check": "type(authority) is not _RowAuthority"
+            in consume_source,
+            "row_binding": "authority.row != row" in consume_source,
+            "constant_time_digest": "hmac.compare_digest(" in consume_source,
+            "consumed_before_return": "_ROW_AUTHORITY_DIGEST = None"
+            in consume_source,
+        },
+        {
+            "mint_checks_host_guard": True,
+            "fresh_random_token": True,
+            "digest_bound": True,
+            "exact_type_check": True,
+            "row_binding": True,
+            "constant_time_digest": True,
+            "consumed_before_return": True,
+        },
+    )
+
     check(
         "V1C2C3 WINDOWS HARNESS IS EXPLICITLY AUTHORITY-GATED",
         (
@@ -526,7 +782,7 @@ def main() -> int:
     target_flow = flows["developer_task_execution_compile_ast_live_acceptance"]
     old_composition_flow = flows["developer_task_execution_compile_ast_composition"]
     check(
-        "V1C2C3 RC034 PIPELINE IS NON-ACTIVE",
+        "V1C2C3 RC035 PIPELINE REMAINS NON-ACTIVE",
         {
             "check_portable": _flow_count(check_flow, portable_path),
             "check_windows": _flow_count(check_flow, windows_path),
@@ -551,6 +807,7 @@ def main() -> int:
         "fail_count": fail_count,
         "ok": fail_count == 0,
         "architecture_slice": "V1C2C3",
+        "row_isolation_hardened": True,
         "historical_evidence_identity": HISTORICAL_V1C2C3_EVIDENCE_IDENTITY,
         "matrix_rows": [item["row"] for item in V1C2C3_MATRIX],
         "windows_active_evaluator_executed": False,
