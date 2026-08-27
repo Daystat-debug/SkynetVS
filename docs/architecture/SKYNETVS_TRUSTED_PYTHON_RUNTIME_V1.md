@@ -1334,3 +1334,54 @@ V1C2C3:  CURRENT / EVALUATOR-ONLY IMPLEMENTATION CANDIDATE
 ```
 
 A separate later Roadmap Change is required before any V1C2C3 active Windows evaluator may be wired or executed.
+
+## V1C2C3 non-active evaluator implementation closure — Roadmap Change 034
+
+The RC034 evaluator-only implementation is committed at `a2a4be24e2507d70312ab363853a6dd578380568` and is NON-ACTIVE VERIFIED.
+
+```text
+patch bytes:                            51956
+patch SHA-256:                          dca08c8e9cee29e0e45e7ac5b6a7459d82eea2cc3c356d5794260b56c43caacf
+portable evaluator SHA-256:             6ce0c1e8322153dc24df0e372a024a1adcbb199760a68c4014f13b3792b91a0b
+Windows evaluator SHA-256:              d928155bff1679d71509a110af4a46615d42cd2ab75a249d4d8f410237b65027
+package-boundary SHA-256:               717b3da8fc48a36ea4cb5048a248b95d1e24757c6f76fe994f0e3ba0f0546652
+pipeline SHA-256:                       4c42f1bea0fef653e8f58a9cfb39c6980bd16caceb1038f983e6e24e54cff188
+```
+
+The Windows evaluator is still future active harness source only. It remains unwired from all pipeline flows and requires explicit host-side future authority before any active path can be entered.
+
+Locked future matrix:
+
+```text
+PASS:
+    compile_ast_attested_passed
+    boundary_ok=true
+    check_passed=true
+
+AUTHENTIC SYNTAX FAILURE:
+    compile_ast_attested_failed
+    boundary_ok=true
+    check_passed=false
+
+SIGNED POST-READY BOUNDARY FAILURE:
+    compile_ast_boundary_failed
+    boundary_ok=false
+    check_passed=false
+    result_sha256=null
+```
+
+The historical V1C2C3 identity `b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8` remains historical evidence identity only.
+
+No active authority exists yet:
+
+```text
+RC034:   COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+V1C2C3:  IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+         ACTIVE THREE-RUN MATRIX BLOCKED
+
+Windows evaluator wired:     false
+Windows evaluator executed:  false
+Sandbox launched:            false
+```
+
+A read-only active-authority transition audit is required before the next Roadmap Change. That audit must define row-specific permanent consumption and no-rerun semantics before any future V1C2C3 active execution.

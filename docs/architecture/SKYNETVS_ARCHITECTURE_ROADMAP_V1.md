@@ -2904,3 +2904,100 @@ Sandbox     NOT AUTHORIZED
 ```
 
 **Next Exact Action:** create the exact four-file V1C2C3 evaluator-only candidate, then perform only Python syntax/AST checks, package-boundary verification, portable V1C2C3 evaluation, source-only pipeline topology verification, full `check` only after proving the V1C2C3 Windows evaluator count is `0`, Runtime Architecture Audit, exact candidate identity measurement and an empty Sandbox-process check. Stop before any V1C2C3 Windows evaluator execution, Sandbox launch, capability/lease/transaction claim or active acceptance. The candidate must be reviewed before any implementation commit. A separate later Roadmap Change is required to authorize the live three-run matrix.
+
+## Roadmap Change 034 implementation closure — V1C2C3 evaluator candidate committed / active matrix still blocked
+
+Roadmap Change 034 implementation authority is now COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED.
+
+The exact evaluator-only implementation authorized by RC034 is committed and pushed at:
+
+```text
+implementation commit:                a2a4be24e2507d70312ab363853a6dd578380568
+parent RC034 docs commit:             3abd91ebb3c3d24e99ed756e6f8b5cd3cda0149d
+commit subject:                       feat: add compile ast live acceptance evaluators
+exact committed patch bytes:          51956
+exact committed patch SHA-256:        dca08c8e9cee29e0e45e7ac5b6a7459d82eea2cc3c356d5794260b56c43caacf
+candidate precommit evidence SHA-256: 754c80b97a630d58c61e795ca836f58c6046f73b0f91ed3aeb45a97146799ea5
+implementation closure SHA-256:       aa7391d3b4e655c54881f59dc193fe2fa5c783824fdca622780b6505a4f1611f
+```
+
+Exact committed scope:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+tools/eval_package_boundaries.py
+tools/pipeline.py
+```
+
+The implementation is NON-ACTIVE VERIFIED. Before and after commit:
+
+```text
+package boundaries:                    PASS
+V1C2C3 portable evaluator:             PASS
+full check:                             PASS
+Runtime Architecture Audit:            PASS
+V1C2C3 Windows evaluator references:   0
+known Sandbox process set:             empty
+Windows live evaluator executed:       false
+active V1C2C3 matrix executed:         false
+```
+
+The portable evaluator proves the locked three-row matrix and the existing V1C2B signed-evidence semantics:
+
+```text
+live pass:
+    terminal=compile_ast_attested_passed
+    boundary_ok=true
+    check_passed=true
+    result required
+
+authentic syntax failure:
+    terminal=compile_ast_attested_failed
+    boundary_ok=true
+    check_passed=false
+    result required
+
+signed post-ready boundary failure:
+    terminal=compile_ast_boundary_failed
+    boundary_ok=false
+    check_passed=false
+    result absent
+```
+
+The committed Windows evaluator remains future active harness source only. It contains an explicit host-side authority guard and is deliberately unwired from every pipeline flow. RC034 never authorized its execution.
+
+The historical locked V1C2C3 evidence identity remains documentation/evidence identity only:
+
+```text
+b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+The new evaluator bytes have their own measured identities and do not claim to reproduce that historical identity.
+
+Permanent invariants remain:
+
+```text
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
+Operational state after this implementation closure:
+
+```text
+RC033       PASSED / CONSUMED / MUST NOT BE RERUN
+V1C2C2      VERIFIED / COMMITTED / ACTIVE ATTESTED-PASS CLOSED
+
+RC034       COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+V1C2C3      IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+            ACTIVE THREE-RUN MATRIX BLOCKED
+
+future Windows evaluator execution       NOT AUTHORIZED
+future active matrix                     NOT AUTHORIZED
+next Roadmap Change                      NOT CREATED
+```
+
+This closure does not authorize any V1C2C3 active row, does not set or permit `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`, does not wire the Windows evaluator into a pipeline flow, and does not create reusable active authority.
+
+**Next Exact Action:** perform a READ-ONLY / HOST-ONLY V1C2C3 active-authority transition audit. The audit must bind the exact committed four-file implementation, historical evidence identity and locked three-row matrix; design permanent consumed evidence for future active attempts; determine whether the three rows require one common authority with three independently consumed row markers or separate roadmap grants; define failure/no-rerun semantics for every row; define the exact success evidence expected for pass, syntax and boundary rows; confirm fresh capability/transaction/runtime-lease/Sandbox requirements and no cross-row reuse; and stop before creating the next Roadmap Change or running the Windows evaluator.

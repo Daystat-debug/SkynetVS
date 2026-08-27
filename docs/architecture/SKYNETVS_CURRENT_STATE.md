@@ -2447,3 +2447,79 @@ Do not consume a V1C2C0 transaction or claim a runtime lease.
 Do not execute the candidate interpreter.
 Do not commit the candidate before exact evidence review.
 Do not create the later active-authorization Roadmap Change yet.
+
+## Roadmap Change 034 implementation closure — 2026-08-27
+
+RC034 evaluator-only implementation is now committed and NON-ACTIVE VERIFIED.
+
+```text
+HEAD / origin after implementation:      a2a4be24e2507d70312ab363853a6dd578380568
+implementation parent:                  3abd91ebb3c3d24e99ed756e6f8b5cd3cda0149d
+implementation subject:                 feat: add compile ast live acceptance evaluators
+patch bytes:                            51956
+patch SHA-256:                          dca08c8e9cee29e0e45e7ac5b6a7459d82eea2cc3c356d5794260b56c43caacf
+candidate evidence SHA-256:             754c80b97a630d58c61e795ca836f58c6046f73b0f91ed3aeb45a97146799ea5
+implementation closure SHA-256:         aa7391d3b4e655c54881f59dc193fe2fa5c783824fdca622780b6505a4f1611f
+historical V1C2C3 evidence identity:    b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+Exact committed source identities:
+
+```text
+portable live acceptance:
+6ce0c1e8322153dc24df0e372a024a1adcbb199760a68c4014f13b3792b91a0b
+
+Windows future live acceptance:
+d928155bff1679d71509a110af4a46615d42cd2ab75a249d4d8f410237b65027
+
+package boundaries:
+717b3da8fc48a36ea4cb5048a248b95d1e24757c6f76fe994f0e3ba0f0546652
+
+pipeline:
+4c42f1bea0fef653e8f58a9cfb39c6980bd16caceb1038f983e6e24e54cff188
+```
+
+Verification:
+
+```text
+pre/post package boundaries:             PASS
+pre/post portable V1C2C3 evaluator:      PASS
+pre/post full check:                     PASS
+pre/post Runtime Architecture Audit:     PASS
+Windows evaluator pipeline references:  0
+Windows evaluator executed:              false
+Sandbox launched:                        false
+```
+
+Current state:
+
+```text
+RC033:   PASSED / CONSUMED / MUST NOT BE RERUN
+V1C2C2:  VERIFIED / COMMITTED / ACTIVE ATTESTED-PASS CLOSED
+
+RC034:   COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+V1C2C3:  IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+         ACTIVE THREE-RUN MATRIX BLOCKED
+
+next active authority: NOT CREATED
+```
+
+### Next Exact Action
+
+Perform a READ-ONLY / HOST-ONLY V1C2C3 active-authority transition audit only.
+
+The audit must decide the irreversible active-attempt model before any live run:
+
+1. exact binding to committed implementation `a2a4be24e2507d70312ab363853a6dd578380568`;
+2. exact pass / authentic syntax-failure / signed boundary-failure expected evidence;
+3. permanent pre-run consumed marker design for each future row;
+4. whether one roadmap grant may authorize all three independently consumed rows or each row needs its own roadmap grant;
+5. failure / partial-matrix / no-rerun semantics;
+6. three fresh capability chains, transactions, runtime leases and Sandbox instances with no reuse;
+7. source/workspace/evidence cleanup requirements after every row;
+8. exact later pipeline wiring, if any, without making active execution part of normal `check`.
+
+Do not create the next Roadmap Change yet.
+Do not wire or run the V1C2C3 Windows evaluator.
+Do not set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`.
+Do not launch Sandbox.
