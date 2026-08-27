@@ -1275,3 +1275,62 @@ V1C2C3:  BLOCKED
 ```
 
 No V1C2C3 authority is granted by this closure. Before V1C2C3 begins, perform a read-only roadmap/source transition audit and determine the exact required roadmap authority and acceptance boundaries.
+
+## V1C2C3 evaluator-only implementation opening — Roadmap Change 034
+
+Roadmap Change 034 opens only the non-active implementation/evaluation surface for the already locked V1C2C3 live-acceptance boundary.
+
+Historical locked V1C2C3 evidence identity remains:
+
+```text
+b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+This value remains a historical documentation/evidence identity. Newly created evaluator source, policy/state-machine fixtures and future live evidence receive their own measured identities and must never claim to reconstruct a missing preimage for `b866a1c6...`.
+
+RC034 exact tracked implementation scope:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+tools/eval_package_boundaries.py
+tools/pipeline.py
+```
+
+No new production module is authorized. V1C2C2 production composition remains the only production active-composition capability and its public API remains unchanged.
+
+The portable evaluator validates the three-row contract without Sandbox. The Windows evaluator is future active harness source only and MUST remain unwired/unexecuted during RC034.
+
+Locked live matrix semantics:
+
+```text
+PASS:
+    terminal=compile_ast_attested_passed
+    boundary_ok=true
+    check_passed=true
+
+AUTHENTIC SYNTAX FAILURE:
+    terminal=compile_ast_attested_failed
+    boundary_ok=true
+    check_passed=false
+
+SIGNED POST-READY BOUNDARY FAILURE:
+    terminal=compile_ast_boundary_failed
+    boundary_ok=false
+    check_passed=false
+    result_sha256=null
+```
+
+The future active harness must use a fresh full capability chain and a fresh Sandbox for every row. Evaluator-private fault construction may create genuinely invalid selected Python bytes for the syntax row and post-ready/pre-authorization source substitution for the boundary row. No such hook may enter the public V1C2C2 production API.
+
+RC034 itself is NON-ACTIVE. It authorizes source creation and host/portable verification only. It does not authorize transaction consumption, runtime-lease claim, materialization for live execution, Sandbox launch, interpreter execution, changed-source live processing or active terminal acceptance.
+
+```text
+RC033:   PASSED / CONSUMED / MUST NOT BE RERUN
+V1C2C2:  VERIFIED / COMMITTED / ACTIVE ATTESTED-PASS CLOSED
+RC034:   CURRENT / NON-ACTIVE IMPLEMENTATION AUTHORITY ONLY
+V1C2C3:  CURRENT / EVALUATOR-ONLY IMPLEMENTATION CANDIDATE
+         ACTIVE THREE-RUN MATRIX BLOCKED
+```
+
+A separate later Roadmap Change is required before any V1C2C3 active Windows evaluator may be wired or executed.

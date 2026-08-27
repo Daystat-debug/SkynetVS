@@ -2835,3 +2835,72 @@ V1C2C3      BLOCKED
 The targeted `developer_task_execution_compile_ast_composition` flow must not be run for V1C2C2 closure because it contains the already-consumed active Windows evaluator. A second RC033 active run is forbidden.
 
 This closure does not create Roadmap Change 034 and does not authorize V1C2C3. The next exact action is a READ-ONLY / HOST-ONLY V1C2C3 roadmap-and-source transition audit. That audit must determine the exact locked V1C2C3 acceptance surface, existing evaluator/policy files, required immutable identities, whether a new explicit Roadmap Change is required before any V1C2C3 run, and the exact non-active/active boundaries. Until that audit is reviewed, V1C2C3 remains BLOCKED.
+
+## Roadmap Change 034 — open evaluator-only V1C2C3 live acceptance implementation without authorizing active matrix execution
+
+**Причина:** the read-only / host-only V1C2C3 roadmap-and-source transition audit at committed documentation `HEAD / origin/main e30a1df8ad3b403e52bd4c84668b9e02f44ec7eb` completed with repository mutation `NONE`, empty Sandbox process set and exact audit SHA-256 `2b6a468b8c262b082e78f399634dd7a78badb7bfa07432240ea66a801c7a01e1`. It confirmed that V1C2C3 is still explicitly BLOCKED, Roadmap Change 034 was absent, the locked historical V1C2C3 evidence identity remains `b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8`, and no V1C2C3-specific production/evaluator file or pipeline wiring currently exists. The locked architecture requires a three-run live acceptance matrix — pass, authentic syntax failure and signed post-ready boundary failure — with fresh capabilities and fresh Sandbox instances, while the public V1C2C2 production API must not gain fault-injection hooks.
+
+**Что меняется:** V1C2C3 becomes CURRENT only for one measured evaluator-only implementation candidate. This Roadmap Change authorizes creation/modification of exactly these four tracked files and no others:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+tools/eval_package_boundaries.py
+tools/pipeline.py
+```
+
+No new `modules/developer` production module is authorized. The portable evaluator is the policy/state-machine and source-topology acceptance surface. The Windows evaluator may be authored as the future live harness but MUST NOT be executed under RC034.
+
+The candidate must preserve the existing V1C2C2 public production API byte-for-byte outside ordinary dependency imports required by the evaluator; no runtime ZIP/path, workspace, manifest, source path/list, executable, argv, environment addition, timeout override, Job limit, WSB setting, signature verifier or fault-injection hook may be added to the public composition API.
+
+The portable evaluator must prove at minimum:
+
+1. the locked three-row matrix exists in the evaluator contract: live pass / authentic syntax failure / signed post-ready boundary failure;
+2. every row requires a distinct fresh capability chain and future fresh Sandbox instance;
+3. live pass expects signed terminal `compile_ast_attested_passed`, `boundary_ok=true` and `check_passed=true`;
+4. authentic syntax failure expects signed terminal `compile_ast_attested_failed`, `boundary_ok=true` and `check_passed=false`;
+5. signed post-ready boundary failure expects signed terminal `compile_ast_boundary_failed`, `boundary_ok=false`, `check_passed=false` and no accepted result hash;
+6. all rows preserve `changed_code_executed=false`, `reusable_lease_issued=false` and `execution_authorized=false`;
+7. fault injection is evaluator-private and absent from the public production API;
+8. the historical value `b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8` remains a locked documentation/evidence identity and is not claimed to be the SHA-256 or policy fingerprint of newly created evaluator bytes.
+
+The future Windows evaluator must be structured for three separate fresh runs:
+
+```text
+RUN 1: live pass
+RUN 2: authentic syntax failure using genuinely invalid selected Python source bytes
+RUN 3: signed post-ready / pre-authorization boundary failure using evaluator-private source substitution
+```
+
+Each future active row must obtain fresh host snapshot/report, fresh plan capability, fresh retained runtime capability/lease, fresh V1C2C0 claim transaction and a fresh Windows Sandbox instance. No transaction, lease, capability, Sandbox or terminal evidence may be reused across matrix rows.
+
+**RC034 active prohibition:** this Roadmap Change does NOT authorize execution of `tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py`, does NOT authorize any of the three V1C2C3 live rows, and does NOT authorize any Sandbox launch, V1C2C0 transaction consumption, runtime-lease claim or candidate-interpreter execution for V1C2C3.
+
+Pipeline wiring under RC034 is intentionally non-active:
+
+```text
+full check:
+    portable V1C2C3 evaluator may be wired exactly once
+    V1C2C3 Windows active evaluator count must remain 0
+
+developer_task_execution_compile_ast_live_acceptance targeted flow:
+    may contain portable / host-only non-active dependencies and the portable V1C2C3 evaluator
+    must contain V1C2C3 Windows active evaluator count 0
+```
+
+The Windows evaluator file therefore remains deliberately unwired from every pipeline flow during RC034. A later explicit Roadmap Change is required before it may be wired or launched.
+
+**Что не меняется:** V1C2C2 remains VERIFIED / COMMITTED / ACTIVE ATTESTED-PASS CLOSED at exact implementation commit `c4ceb272898600a90be9db56c990e0c8d98a7bac`. RC033 remains PASSED / CONSUMED / MUST NOT BE RERUN. The consumed RC033 marker and append-only terminal result remain immutable. The stable tag `skynet-trusted-runtime-v1b4` remains `91d8c37fc4afe7ef138e36063e7bc22014da8a2c`. The LocalSystem-controller / standard-user-worker boundary, Job limits `1 / 512 MiB / 768 MiB`, four-folder mapping, network denial, fixed V1C2A2 runner, signed-evidence trust model and all verified V1C2A1/A2/B/C0/C1/R1/R2/R3/R4/R5 identities remain unchanged.
+
+Operational state after Roadmap Change 034:
+
+```text
+RC033       PASSED / CONSUMED / MUST NOT BE RERUN
+V1C2C2      VERIFIED / COMMITTED / ACTIVE ATTESTED-PASS CLOSED
+V1C2C3      CURRENT / EVALUATOR-ONLY IMPLEMENTATION CANDIDATE
+            ACTIVE THREE-RUN MATRIX BLOCKED
+RC034       CURRENT / NON-ACTIVE IMPLEMENTATION AUTHORITY ONLY
+Sandbox     NOT AUTHORIZED
+```
+
+**Next Exact Action:** create the exact four-file V1C2C3 evaluator-only candidate, then perform only Python syntax/AST checks, package-boundary verification, portable V1C2C3 evaluation, source-only pipeline topology verification, full `check` only after proving the V1C2C3 Windows evaluator count is `0`, Runtime Architecture Audit, exact candidate identity measurement and an empty Sandbox-process check. Stop before any V1C2C3 Windows evaluator execution, Sandbox launch, capability/lease/transaction claim or active acceptance. The candidate must be reviewed before any implementation commit. A separate later Roadmap Change is required to authorize the live three-run matrix.
