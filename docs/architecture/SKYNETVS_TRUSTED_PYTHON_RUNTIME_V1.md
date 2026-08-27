@@ -1427,3 +1427,48 @@ V1C2C3:  IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
 ```
 
 A later explicit Roadmap Change is still required before any V1C2C3 active row may be entered.
+
+## V1C2C3 row-isolation implementation closure — Roadmap Change 035
+
+Roadmap Change 035 is COMPLETED / NON-ACTIVE ROW-ISOLATION HARDENING VERIFIED.
+
+Committed implementation:
+
+```text
+commit:
+1693e3e8fdac6026c5b48735c0b2539a7cc2f246
+
+patch SHA-256:
+99c4a10675ac19c5e88ceb46325b8c27513c79405c19797061386c4056b1b02f
+
+portable evaluator SHA-256:
+281c75d9237baacb7f3631069c1af0d95a1eecc052dae78587a2b6367e08abbb
+
+Windows evaluator SHA-256:
+d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+```
+
+Row isolation is now present in the evaluator source:
+
+```text
+required --row
+one row per process
+no automatic full ROWS loop
+host authority guard before active work
+private row-bound in-process authority capability
+capability consumed before active path
+direct missing/forged/replayed capability rejected before active calls
+```
+
+The Windows evaluator remains unwired and unexecuted.
+
+```text
+Windows evaluator pipeline refs = 0
+active authority = NONE
+consumed/result markers = 0 / 0
+Sandbox launched = false
+```
+
+No production API changed. `tools/pipeline.py` and package-boundary registry were not modified by RC035.
+
+The active three-run matrix remains BLOCKED. A fresh read-only readiness audit must review the exact committed hardened bytes before any later Roadmap Change may authorize an active row.

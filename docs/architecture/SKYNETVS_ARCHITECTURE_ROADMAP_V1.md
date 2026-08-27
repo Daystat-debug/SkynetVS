@@ -3119,3 +3119,115 @@ Sandbox                           NOT AUTHORIZED
 ```
 
 **Next Exact Action:** create the exact two-file RC035 row-isolation hardening candidate and perform only the allowed non-active verification. Stop before commit for evidence review. Do not create the next active-authority Roadmap Change.
+
+## Roadmap Change 035 implementation closure — V1C2C3 row isolation hardened / active authority still absent
+
+Roadmap Change 035 is now COMPLETED / NON-ACTIVE ROW-ISOLATION HARDENING VERIFIED.
+
+The exact RC035 implementation is committed and pushed at:
+
+```text
+implementation commit:                1693e3e8fdac6026c5b48735c0b2539a7cc2f246
+parent RC035 docs commit:             800b4403d998a4a85d80bf8df538779e42ad2d99
+commit subject:                       fix: isolate V1C2C3 live acceptance rows
+exact committed patch bytes:          35183
+exact committed patch SHA-256:        99c4a10675ac19c5e88ceb46325b8c27513c79405c19797061386c4056b1b02f
+candidate precommit evidence SHA-256: d941ab1bd9dcb85ac410ba1eb7b7f48cd9e57d3041bad6ec5367e607608ddd7b
+implementation closure SHA-256:       6db703b9a4549ffa9c0e6a8b8c41aa394b7b4bd9de3c98f122ed88812f163783
+```
+
+Exact committed scope:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+```
+
+The hardened identities are:
+
+```text
+portable evaluator:
+281c75d9237baacb7f3631069c1af0d95a1eecc052dae78587a2b6367e08abbb
+
+Windows evaluator:
+d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+```
+
+`tools/pipeline.py` and `tools/eval_package_boundaries.py` remained byte-for-byte unchanged.
+
+The RC035 row-isolation contract is now implemented:
+
+```text
+required --row selector
+exact selector choices:
+  live_pass
+  authentic_syntax_failure
+  signed_post_ready_boundary_failure
+
+one process invocation selects exactly one row
+main no longer automatically loops over all ROWS
+host-side active-authority env guard remains before active work
+private in-process row authority is minted only after that guard
+_run_case requires and consumes the genuine row-bound capability before active calls
+missing/forged/replayed capability fails before active work
+```
+
+The non-active acceptance before and after commit passed:
+
+```text
+package boundaries:                         PASS
+portable V1C2C3 row-isolation evaluator:    PASS
+full check:                                  PASS
+Runtime Architecture Audit:                  PASS
+Windows evaluator pipeline references:      0
+V1C2C3 consumed/result marker count:         0 / 0
+Sandbox process set:                         empty
+Windows evaluator executed:                  false
+```
+
+RC035 did not create active authority. It did not create any consumed marker or terminal result, and it did not execute the Windows evaluator.
+
+The future matrix-authority model remains only a design decision from the prior read-only audit:
+
+```text
+one future matrix grant
+three independent consumed row markers
+fixed row order:
+  1. live_pass
+  2. authentic_syntax_failure
+  3. signed_post_ready_boundary_failure
+
+reserve each row marker with FileMode.CreateNew before that row enters active execution
+terminal row result stored separately with FileMode.CreateNew
+row marker consumes that row regardless of outcome
+stop the matrix grant on first failed row
+never rerun a passed/consumed row
+remaining rows after failure require new explicit roadmap authority
+```
+
+None of those active semantics are authorized by RC035.
+
+Operational state after this closure:
+
+```text
+RC034       COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+RC035       COMPLETED / NON-ACTIVE ROW-ISOLATION HARDENING VERIFIED
+
+V1C2C3      IMPLEMENTED / COMMITTED / ROW-ISOLATED / NON-ACTIVE VERIFIED
+            ACTIVE THREE-RUN MATRIX BLOCKED
+
+active authority                  NONE
+Windows evaluator pipeline refs   0
+Windows evaluator execution       NOT AUTHORIZED / NOT RUN
+V1C2C3 consumed/result markers    0 / 0
+Sandbox                           NOT AUTHORIZED
+next Roadmap Change               NOT CREATED
+```
+
+The historical V1C2C3 identity remains historical evidence identity only:
+
+```text
+b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+**Next Exact Action:** perform a fresh READ-ONLY / HOST-ONLY V1C2C3 active-authority readiness audit against committed hardened evaluator `1693e3e8fdac6026c5b48735c0b2539a7cc2f246`. The audit must prove row selector/capability enforcement from exact committed source, verify no bypass to `_run_case`, revalidate marker absence and pipeline refs `0`, bind the future row-consumption model to the hardened bytes, and determine whether a later explicit active-authority Roadmap Change may now be safely drafted. Stop before creating that Roadmap Change or running any active row.

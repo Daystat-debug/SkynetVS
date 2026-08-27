@@ -2596,3 +2596,77 @@ Do not run the Windows evaluator.
 Do not set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`.
 Do not create row consumed markers.
 Do not create the later active-authority Roadmap Change.
+
+## Roadmap Change 035 implementation closure — 2026-08-27
+
+RC035 row-isolation hardening is now committed and NON-ACTIVE VERIFIED.
+
+```text
+implementation commit:                  1693e3e8fdac6026c5b48735c0b2539a7cc2f246
+implementation parent:                  800b4403d998a4a85d80bf8df538779e42ad2d99
+implementation subject:                 fix: isolate V1C2C3 live acceptance rows
+patch bytes:                            35183
+patch SHA-256:                          99c4a10675ac19c5e88ceb46325b8c27513c79405c19797061386c4056b1b02f
+candidate evidence SHA-256:             d941ab1bd9dcb85ac410ba1eb7b7f48cd9e57d3041bad6ec5367e607608ddd7b
+implementation closure SHA-256:         6db703b9a4549ffa9c0e6a8b8c41aa394b7b4bd9de3c98f122ed88812f163783
+portable evaluator SHA-256:             281c75d9237baacb7f3631069c1af0d95a1eecc052dae78587a2b6367e08abbb
+Windows evaluator SHA-256:              d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+historical V1C2C3 evidence identity:    b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+Verified hardening:
+
+```text
+required --row selector:                 present
+exactly one row per process:             enforced
+full automatic ROWS active loop:         removed
+host authority guard:                    preserved before active work
+private row authority capability:        required
+missing/forged/replayed capability:      fails before active calls
+Windows evaluator pipeline refs:         0
+Windows evaluator executed:              false
+consumed/result markers:                 0 / 0
+Sandbox launched:                        false
+```
+
+Pre/post package boundaries, portable evaluator, full `check` and Runtime Architecture Audit all passed.
+
+Current state:
+
+```text
+RC034:   COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+RC035:   COMPLETED / NON-ACTIVE ROW-ISOLATION HARDENING VERIFIED
+
+V1C2C3:  IMPLEMENTED / COMMITTED / ROW-ISOLATED / NON-ACTIVE VERIFIED
+         ACTIVE THREE-RUN MATRIX BLOCKED
+
+active authority:             NONE
+Windows evaluator execution: NOT AUTHORIZED / NOT RUN
+Windows pipeline references: 0
+V1C2C3 markers:              0 / 0
+Sandbox:                      NOT AUTHORIZED
+next Roadmap Change:          NOT CREATED
+```
+
+### Next Exact Action
+
+Perform only a fresh READ-ONLY / HOST-ONLY active-authority readiness audit against the committed hardened evaluator.
+
+The audit must prove, from exact committed source:
+
+1. `--row` is required and has exactly the three locked choices;
+2. no full-matrix row loop remains in `main()`;
+3. authority guard executes before runtime lookup and active work;
+4. private row capability is minted only after the guard;
+5. `_run_case` requires the capability;
+6. invalid, forged and replayed capability paths fail before every active call;
+7. exactly one selected row reaches `_run_case`;
+8. pipeline references to Windows evaluator remain `0`;
+9. no V1C2C3 active marker/result exists;
+10. future marker/no-rerun semantics can be bound safely to the hardened implementation.
+
+Do not create the next Roadmap Change yet.
+Do not run the Windows evaluator.
+Do not set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`.
+Do not create V1C2C3 consumed/result markers.
+Do not launch Sandbox.
