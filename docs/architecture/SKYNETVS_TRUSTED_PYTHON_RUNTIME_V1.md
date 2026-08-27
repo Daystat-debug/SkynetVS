@@ -1472,3 +1472,49 @@ Sandbox launched = false
 No production API changed. `tools/pipeline.py` and package-boundary registry were not modified by RC035.
 
 The active three-run matrix remains BLOCKED. A fresh read-only readiness audit must review the exact committed hardened bytes before any later Roadmap Change may authorize an active row.
+
+## V1C2C3 one-shot active authority contract — Roadmap Change 036
+
+RC036 defines, but does not yet execute, the V1C2C3 three-row live matrix authority.
+
+Exact hardened Windows evaluator:
+
+```text
+commit:
+1693e3e8fdac6026c5b48735c0b2539a7cc2f246
+
+SHA-256:
+d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+```
+
+The readiness audit proved required `--row`, one-row dispatch, guard-first authority minting and capability consumption before every active call.
+
+Fixed order:
+
+```text
+live_pass
+authentic_syntax_failure
+signed_post_ready_boundary_failure
+```
+
+Every row must have a separate immutable exclusive-create consumed marker and separate append-only exclusive-create terminal result. Marker reservation precedes child active authority and consumes the row regardless of outcome. Markers are never rewritten.
+
+The future external harness must not import the Windows evaluator. It must spawn a new child process for one exact row and set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1` only in that child environment.
+
+The harness must self-test its exact filesystem primitive and schemas on disposable files before any permanent marker. No File.Replace path is permitted.
+
+Failure stops the grant. Passed/consumed rows are never rerun. Unstarted or failed rows require later explicit roadmap authority.
+
+RC036 state immediately after docs transition:
+
+```text
+authority contract:              OPEN
+pre-execution harness audit:     REQUIRED
+active environment:              ABSENT
+permanent row markers/results:   0 / 0
+Windows evaluator execution:     false
+Windows evaluator pipeline refs: 0
+Sandbox launched:                false
+```
+
+No production source or public API changes are authorized. No active row may be entered until the external harness is fully source-audited and pinned.

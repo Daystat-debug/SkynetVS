@@ -2670,3 +2670,82 @@ Do not run the Windows evaluator.
 Do not set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`.
 Do not create V1C2C3 consumed/result markers.
 Do not launch Sandbox.
+
+## Roadmap Change 036 — V1C2C3 one-shot active matrix authority contract
+
+The committed hardened evaluator passed the fresh active-authority readiness audit.
+
+```text
+baseline HEAD / origin:                    49d6bbfb1c0520a0e4eaa160885736618e25b98c
+readiness-audit SHA-256:                  c8313da61f53aafa39a6530ae3f3448f7f80c20a57539e174b1bcd6323da0186
+RC035 implementation commit:             1693e3e8fdac6026c5b48735c0b2539a7cc2f246
+portable evaluator SHA-256:              281c75d9237baacb7f3631069c1af0d95a1eecc052dae78587a2b6367e08abbb
+Windows evaluator SHA-256:               d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+historical V1C2C3 evidence identity:     b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+RC036 defines one matrix grant with three independently consumed rows:
+
+```text
+1. live_pass
+2. authentic_syntax_failure
+3. signed_post_ready_boundary_failure
+```
+
+Permanent marker/result names:
+
+```text
+V1C2C3_RC036_LIVE_PASS_CONSUMED.json
+V1C2C3_RC036_LIVE_PASS_RESULT.json
+
+V1C2C3_RC036_SYNTAX_FAILURE_CONSUMED.json
+V1C2C3_RC036_SYNTAX_FAILURE_RESULT.json
+
+V1C2C3_RC036_BOUNDARY_FAILURE_CONSUMED.json
+V1C2C3_RC036_BOUNDARY_FAILURE_RESULT.json
+
+V1C2C3_RC036_MATRIX_RESULT.json
+```
+
+Every row is a separate child process and separate permanent one-shot reservation. The marker is created before active entry and consumes that row regardless of outcome. The marker is immutable; the terminal result is a separate append-only file. No `File.Replace` or overwrite finalization is permitted.
+
+A failed or uncertain row stops RC036 immediately. Remaining rows are not run under that grant. Passed/consumed rows are never repeated. Any recovery or authorization of failed/unstarted rows requires a later explicit Roadmap Change with new grant-specific marker names.
+
+Current state:
+
+```text
+RC034:   COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+RC035:   COMPLETED / NON-ACTIVE ROW-ISOLATION HARDENING VERIFIED
+RC036:   CURRENT / ONE-SHOT MATRIX AUTHORITY CONTRACT
+         PRE-EXECUTION HARNESS AUDIT REQUIRED
+
+V1C2C3:  IMPLEMENTED / COMMITTED / ROW-ISOLATED
+         ACTIVE MATRIX CONTRACT OPEN
+         0 OF 3 ROWS CONSUMED
+         NO ROW EXECUTED
+
+active environment:             ABSENT
+Windows evaluator execution:   NOT RUN
+Windows pipeline references:   0
+consumed/result markers:       0 / 0
+Sandbox:                       NOT LAUNCHED
+```
+
+### Next Exact Action
+
+Create and source-audit the external RC036 one-shot authority harness only.
+
+Required pre-execution proofs:
+
+1. exact evaluator CLI/output and row evidence parsing;
+2. no import of the Windows evaluator by the authority harness;
+3. exact committed evaluator/runtime/harness identities;
+4. parent environment has no active variable;
+5. child-only active environment and exactly one `--row`;
+6. disposable self-test of the exact exclusive-create JSON primitive;
+7. immutable marker and append-only result schemas;
+8. fixed row ordering and previous-result SHA bindings;
+9. stop-on-first-failure/no-rerun behavior;
+10. pipeline references remain zero, markers/results remain absent and Sandbox remains empty.
+
+Stop before creating any permanent RC036 marker or invoking an active row.

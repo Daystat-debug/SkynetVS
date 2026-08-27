@@ -3231,3 +3231,213 @@ b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
 ```
 
 **Next Exact Action:** perform a fresh READ-ONLY / HOST-ONLY V1C2C3 active-authority readiness audit against committed hardened evaluator `1693e3e8fdac6026c5b48735c0b2539a7cc2f246`. The audit must prove row selector/capability enforcement from exact committed source, verify no bypass to `_run_case`, revalidate marker absence and pipeline refs `0`, bind the future row-consumption model to the hardened bytes, and determine whether a later explicit active-authority Roadmap Change may now be safely drafted. Stop before creating that Roadmap Change or running any active row.
+
+## Roadmap Change 036 — V1C2C3 one-shot three-row active authority contract
+
+**Основание:** the fresh read-only / host-only active-authority readiness audit completed at `HEAD / origin/main 49d6bbfb1c0520a0e4eaa160885736618e25b98c` with repository mutation `NONE`, Windows evaluator import/execution `false`, Sandbox launch `false`, V1C2C3 marker/result count `0 / 0`, Windows pipeline references `0` and exact audit SHA-256 `c8313da61f53aafa39a6530ae3f3448f7f80c20a57539e174b1bcd6323da0186`.
+
+The audit bound the hardened evaluator source:
+
+```text
+RC035 implementation commit:
+1693e3e8fdac6026c5b48735c0b2539a7cc2f246
+
+portable evaluator SHA-256:
+281c75d9237baacb7f3631069c1af0d95a1eecc052dae78587a2b6367e08abbb
+
+Windows evaluator SHA-256:
+d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+```
+
+It proved from committed AST/source that:
+
+```text
+--row is required
+choices are exactly:
+  live_pass
+  authentic_syntax_failure
+  signed_post_ready_boundary_failure
+
+main selects exactly one row
+main has no full ROWS loop
+host authority guard precedes runtime lookup and active work
+row authority is minted only after the host guard
+_run_case requires a keyword-only row-bound capability
+the capability is consumed as the first effective statement
+capability consumption precedes every host/plan/lease/transaction/Sandbox/attestation call
+only main calls _mint_row_authority and _run_case inside the committed module
+```
+
+**Authority created by RC036:** one matrix grant containing exactly three independent one-shot row authorities in this fixed order:
+
+```text
+1. live_pass
+2. authentic_syntax_failure
+3. signed_post_ready_boundary_failure
+```
+
+RC036 does not authorize a full-matrix invocation. Each row must run in a separate fresh child Python process with exactly one `--row` value.
+
+Permanent row reservation markers:
+
+```text
+V1C2C3_RC036_LIVE_PASS_CONSUMED.json
+V1C2C3_RC036_SYNTAX_FAILURE_CONSUMED.json
+V1C2C3_RC036_BOUNDARY_FAILURE_CONSUMED.json
+```
+
+Append-only row terminal results:
+
+```text
+V1C2C3_RC036_LIVE_PASS_RESULT.json
+V1C2C3_RC036_SYNTAX_FAILURE_RESULT.json
+V1C2C3_RC036_BOUNDARY_FAILURE_RESULT.json
+```
+
+The matrix may become PASSED only through:
+
+```text
+V1C2C3_RC036_MATRIX_RESULT.json
+```
+
+created after all three row results are independently accepted.
+
+### Irreversible per-row sequence
+
+For every row, the future external authority harness must:
+
+1. run host-only prechecks while no active environment variable is present;
+2. verify exact `HEAD / origin`, implementation/evaluator/runtime/input/harness identities, required prior accepted row results and an empty Sandbox process set;
+3. self-test the same exclusive-create JSON primitive on disposable files before any permanent marker;
+4. reserve the row marker with exclusive `FileMode.CreateNew`;
+5. treat successful marker creation as permanent row consumption regardless of every later outcome;
+6. spawn a new child Python process with child-only `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`;
+7. invoke the exact committed Windows evaluator source with exactly one selected `--row`;
+8. capture stdout/stderr without importing the evaluator into the authority harness;
+9. verify exact row-specific signed evidence and cleanup;
+10. create the row terminal result with exclusive `FileMode.CreateNew`;
+11. prove the active/runtime artifact parents are empty and all Sandbox processes exited before the next row may be considered.
+
+The parent, user and machine environments must never persist the active variable.
+
+### Row ordering and binding
+
+The live-pass marker may be reserved only when no RC036 row marker/result exists.
+
+The syntax-failure marker may be reserved only after a PASS result for `live_pass`; its marker must bind the SHA-256 of the live-pass marker and result.
+
+The boundary-failure marker may be reserved only after PASS results for both previous rows; its marker must bind all previous marker/result SHA-256 values.
+
+Each row marker must bind at minimum:
+
+```text
+schema / status=reserved / consumed=true
+grant=RC036
+row / ordinal
+reserved_at_utc
+HEAD / origin / stable tag
+RC035 implementation commit and patch SHA-256
+portable and Windows evaluator SHA-256
+runtime source path and SHA-256
+external harness path and SHA-256
+pre-execution audit/report path and SHA-256
+selected --row value
+required prior marker/result SHA-256 bindings
+```
+
+Markers are immutable and are never rewritten.
+
+Each row result must bind its marker SHA-256, child command identity, exit code, stdout/stderr hashes, parsed evidence hash, signed transcript/controller evidence, security flags, cleanup evidence and source/workspace preservation.
+
+No `File.Replace`, overwrite, delete, reset or marker-finalization mutation is permitted. If terminal-result creation fails after marker reservation, the row remains consumed; do not rerun it. Preserve all evidence and require a separate recovery decision.
+
+### Failure and no-rerun semantics
+
+On the first failed, uncertain or incompletely terminalized row:
+
+```text
+stop immediately
+preserve every existing marker/result/log byte-for-byte
+do not execute any remaining RC036 row
+never rerun a row that already passed or was consumed
+do not delete or reset a marker
+do not create MATRIX_RESULT
+```
+
+A failed-row retry or authorization of unstarted rows requires a new explicit Roadmap Change with new grant-specific marker identities. Previous passed rows remain permanently accepted and must not be repeated.
+
+### Required row acceptance
+
+`live_pass`:
+
+```text
+terminal_status=compile_ast_attested_passed
+boundary_ok=true
+check_passed=true
+result_sha256 present
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
+`authentic_syntax_failure`:
+
+```text
+terminal_status=compile_ast_attested_failed
+boundary_ok=true
+check_passed=false
+result_sha256 present
+genuine bounded SyntaxError evidence
+trusted_interpreter_executed=true
+changed_source_processed=true
+changed_source_ast_parsed=false
+changed_source_compiled=false
+changed_code_executed=false
+execution_authorized=false
+```
+
+`signed_post_ready_boundary_failure`:
+
+```text
+terminal_status=compile_ast_boundary_failed
+boundary_ok=false
+check_passed=false
+result_sha256=null
+valid signed controller evidence
+evaluator-private post-ready/pre-authorization source substitution proven
+changed_code_executed=false
+execution_authorized=false
+```
+
+Every accepted row additionally requires fresh snapshot/plan, runtime bundle/lease, V1C2C0 transaction, request ID, plan fingerprint, lease fingerprint, controller public key and Windows Sandbox instance; no cross-row reuse; unchanged source/workspace; all processes exited; artifacts removed; no forced cleanup.
+
+### Pipeline and implementation invariants
+
+The Windows evaluator remains unwired from normal `check` and all targeted pipeline flows. Active rows may only be entered by the exact external one-shot authority harness. No tracked source mutation is authorized by RC036. V1C2C2 production code and public API remain immutable.
+
+The historical V1C2C3 identity remains historical evidence identity only:
+
+```text
+b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+### RC036 execution gate
+
+This docs commit defines the grant contract but does not itself start or arm a row.
+
+```text
+RC036       CURRENT / ONE-SHOT MATRIX AUTHORITY CONTRACT
+            PRE-EXECUTION HARNESS AUDIT REQUIRED
+
+V1C2C3      IMPLEMENTED / COMMITTED / ROW-ISOLATED
+            ACTIVE MATRIX CONTRACT OPEN
+            0 OF 3 ROWS CONSUMED
+            NO ROW EXECUTED
+
+active env                         ABSENT
+row markers/results                0 / 0
+Windows evaluator pipeline refs   0
+Sandbox                            NOT LAUNCHED
+```
+
+**Next Exact Action:** perform a READ-ONLY / HOST-ONLY audit of the exact committed evaluator CLI/output and build an external one-shot RC036 authority harness. The harness may undergo parser/source review, disposable exclusive-create self-tests, child-environment/argv construction tests, marker/result schema tests and exact SHA measurement only. Stop before creating any permanent RC036 marker, setting child active authority or invoking the Windows evaluator.
