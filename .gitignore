@@ -91,3 +91,4 @@ dist/
 
 data/reminders.json
 data/reminders.json.tmp
+/data/reminders.json
