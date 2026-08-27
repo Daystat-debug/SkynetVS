@@ -1385,3 +1385,45 @@ Sandbox launched:            false
 ```
 
 A read-only active-authority transition audit is required before the next Roadmap Change. That audit must define row-specific permanent consumption and no-rerun semantics before any future V1C2C3 active execution.
+
+## V1C2C3 row-isolation hardening authority — Roadmap Change 035
+
+Roadmap Change 035 opens one evaluator-only, host/static hardening step before any V1C2C3 live authority exists.
+
+Exact mutable scope:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+```
+
+The purpose is only to make irreversible row consumption isolatable.
+
+The Windows evaluator must expose exactly one selected row per process invocation and must enforce a genuine private in-process authority capability in `_run_case` before any host/Sandbox/capability path. The capability may be minted only after the existing host-side active-authority guard succeeds.
+
+The portable evaluator must prove this structure without executing the Windows evaluator.
+
+RC035 preserves:
+
+```text
+V1C2C2 public production API unchanged
+V1C2C3 Windows evaluator pipeline refs = 0
+V1C2C3 active evaluator executed = false
+Sandbox launched = false
+changed_code_executed=false
+reusable_lease_issued=false
+execution_authorized=false
+```
+
+Future active authority remains blocked. The preferred future model is one matrix grant with three independent append-only row-consumption states; no such grant or marker is created by RC035.
+
+```text
+RC034:   COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+RC035:   CURRENT / NON-ACTIVE ROW-ISOLATION HARDENING ONLY
+
+V1C2C3:  IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+         ROW-ISOLATION HARDENING CURRENT
+         ACTIVE THREE-RUN MATRIX BLOCKED
+```
+
+A later explicit Roadmap Change is still required before any V1C2C3 active row may be entered.

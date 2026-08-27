@@ -3001,3 +3001,121 @@ next Roadmap Change                      NOT CREATED
 This closure does not authorize any V1C2C3 active row, does not set or permit `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`, does not wire the Windows evaluator into a pipeline flow, and does not create reusable active authority.
 
 **Next Exact Action:** perform a READ-ONLY / HOST-ONLY V1C2C3 active-authority transition audit. The audit must bind the exact committed four-file implementation, historical evidence identity and locked three-row matrix; design permanent consumed evidence for future active attempts; determine whether the three rows require one common authority with three independently consumed row markers or separate roadmap grants; define failure/no-rerun semantics for every row; define the exact success evidence expected for pass, syntax and boundary rows; confirm fresh capability/transaction/runtime-lease/Sandbox requirements and no cross-row reuse; and stop before creating the next Roadmap Change or running the Windows evaluator.
+
+## Roadmap Change 035 — V1C2C3 non-active row-isolation hardening before active authority
+
+**Причина:** the read-only / host-only V1C2C3 active-authority transition audit completed at committed `HEAD / origin/main 811c542e4cb706f07176defed442e260bfc7466f` with repository mutation `NONE`, no Sandbox launch and no active evaluator execution. Exact audit SHA-256 is `547891c2a9880e03403253e1cea130f58d947e8dc657625270c493344cb68b51`.
+
+The audit proved that the committed V1C2C3 Windows evaluator is not yet safe to receive irreversible active authority. Its current `main()` executes the complete fixed three-row matrix in one process, while private `_run_case()` contains the real active capability/Sandbox path but does not independently enforce the committed authority guard. There is no `--row` selector. A partial matrix failure would therefore make a whole-program retry repeat an already consumed successful row, while direct external `_run_case()` use would bypass the intended guard.
+
+**Что меняется:** RC035 opens exactly one NON-ACTIVE row-isolation hardening candidate over exactly two evaluator files:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+```
+
+No production module, package-boundary registry or pipeline file may change under RC035.
+
+The Windows evaluator hardening must:
+
+1. add an explicit required `--row` selector whose only allowed values are exactly:
+   - `live_pass`;
+   - `authentic_syntax_failure`;
+   - `signed_post_ready_boundary_failure`;
+2. execute exactly one selected row per process invocation;
+3. preserve the existing host-side `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1` guard before any runtime lookup, host inspection, capability issue/claim or Sandbox path;
+4. introduce a private in-process row authority capability/token created only after the host-side authority guard succeeds;
+5. require that exact private capability in `_run_case(...)`;
+6. reject `_run_case(...)` without the genuine in-process capability before `snapshot_windows_sandbox_processes`, host inspection, plan issue, runtime bundle/lease issue, V1C2C0 transaction issue/claim or either composition attestation call;
+7. remove the automatic complete `for row in ROWS` active loop from `main()`;
+8. keep the locked row names/order available as static contract data but never automatically consume more than one row;
+9. preserve exact future row semantics, cleanup assertions and fresh-capability evidence requirements;
+10. preserve the evaluator-private boundary fault and authentic invalid-syntax fixture;
+11. keep the Windows evaluator completely unwired from all normal and targeted pipeline flows.
+
+The portable evaluator hardening must statically prove at minimum:
+
+```text
+explicit --row selector exists
+selector choices are exactly the three locked rows
+main no longer loops over all ROWS for active execution
+main creates/mints row authority only after the host guard
+_run_case requires an authority parameter/capability
+invalid or absent capability fails before every active call
+exactly one selected row is dispatched
+Windows evaluator remains pipeline references = 0
+V1C2C2 public production API remains unchanged
+locked pass/syntax/boundary transcript semantics remain unchanged
+```
+
+RC035 is host-only / non-active implementation authority. It does NOT authorize setting `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`, does NOT authorize executing the Windows evaluator, does NOT authorize any row marker creation and does NOT authorize any Sandbox launch, runtime-lease claim, V1C2C0 transaction consumption or candidate-interpreter execution.
+
+Allowed RC035 verification only:
+
+```text
+Python parse / compile of the exact two-file candidate
+git diff --check
+portable V1C2C3 evaluator
+package-boundary evaluator without modifying it
+source-only pipeline topology verification
+full check only after proving V1C2C3 Windows evaluator references remain 0
+Runtime Architecture Audit
+exact two-file candidate identity measurement
+Sandbox process set empty
+```
+
+No Windows V1C2C3 evaluator invocation is allowed, including a guard-only invocation.
+
+The historical V1C2C3 evidence identity remains unchanged and historical only:
+
+```text
+b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+The closed RC034 implementation remains:
+
+```text
+implementation commit: a2a4be24e2507d70312ab363853a6dd578380568
+patch SHA-256:        dca08c8e9cee29e0e45e7ac5b6a7459d82eea2cc3c356d5794260b56c43caacf
+```
+
+**Future active-authority model locked by the audit but NOT authorized by RC035:**
+
+```text
+one future matrix grant
+three independently consumed row markers
+fixed row order:
+  1. live_pass
+  2. authentic_syntax_failure
+  3. signed_post_ready_boundary_failure
+
+every row marker reserved with FileMode.CreateNew before that row enters active execution
+every row marker consumes that row regardless of outcome
+row terminal result stored separately with append-only FileMode.CreateNew
+no File.Replace finalization
+stop entire matrix grant on first failed row
+never rerun any already passed/consumed row
+remaining rows after a failure require a new explicit Roadmap Change
+matrix PASS requires all three independently verified row results
+```
+
+RC035 does not create those markers and does not create active matrix authority.
+
+Operational state under RC035:
+
+```text
+RC034       COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+RC035       CURRENT / NON-ACTIVE ROW-ISOLATION HARDENING ONLY
+
+V1C2C3      IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+            ROW-ISOLATION HARDENING CURRENT
+            ACTIVE THREE-RUN MATRIX BLOCKED
+
+Windows evaluator execution      FORBIDDEN
+Windows evaluator pipeline refs  0
+active authority                  NONE
+Sandbox                           NOT AUTHORIZED
+```
+
+**Next Exact Action:** create the exact two-file RC035 row-isolation hardening candidate and perform only the allowed non-active verification. Stop before commit for evidence review. Do not create the next active-authority Roadmap Change.

@@ -2523,3 +2523,76 @@ Do not create the next Roadmap Change yet.
 Do not wire or run the V1C2C3 Windows evaluator.
 Do not set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`.
 Do not launch Sandbox.
+
+## Roadmap Change 035 — V1C2C3 non-active row-isolation hardening
+
+The V1C2C3 active-authority transition audit completed read-only and proved the committed Windows evaluator is not yet active-authority ready.
+
+```text
+HEAD / origin before RC035:                  811c542e4cb706f07176defed442e260bfc7466f
+V1C2C3 evaluator implementation commit:      a2a4be24e2507d70312ab363853a6dd578380568
+V1C2C3 implementation patch SHA-256:         dca08c8e9cee29e0e45e7ac5b6a7459d82eea2cc3c356d5794260b56c43caacf
+active-authority transition audit SHA-256:   547891c2a9880e03403253e1cea130f58d947e8dc657625270c493344cb68b51
+historical V1C2C3 evidence identity:         b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+Audit decision:
+
+```text
+current main() full-matrix authority:    REJECTED
+direct _run_case authority path:         REJECTED
+current Windows evaluator ready:         NO
+preferred future authority:
+    one matrix grant
+    three independent permanent row consumed markers
+```
+
+RC035 is CURRENT only for an exact two-file evaluator hardening:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+```
+
+No production, package-boundary or pipeline change is authorized.
+
+Required hardening:
+
+```text
+required --row selector
+one row per process
+host env guard before all active work
+private in-process authority capability minted only after guard
+_run_case requires genuine capability
+_run_case rejects missing/forged capability before active calls
+no automatic for row in ROWS active loop
+portable evaluator proves all row-isolation and guard properties statically
+Windows evaluator remains unwired
+```
+
+Current state:
+
+```text
+RC034:   COMPLETED / NON-ACTIVE IMPLEMENTATION VERIFIED
+RC035:   CURRENT / NON-ACTIVE ROW-ISOLATION HARDENING ONLY
+
+V1C2C3:  IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+         ROW-ISOLATION HARDENING CURRENT
+         ACTIVE THREE-RUN MATRIX BLOCKED
+
+active authority:             NONE
+Windows evaluator execution: FORBIDDEN
+Windows pipeline references: 0
+Sandbox:                      NOT AUTHORIZED
+```
+
+### Next Exact Action
+
+Create exactly the two RC035 evaluator changes and perform non-active verification only: syntax/AST, `git diff --check`, portable evaluator, unchanged package boundaries, source-only pipeline topology, full `check` only after Windows count remains `0`, Runtime Architecture Audit, exact candidate identity and empty Sandbox-process verification.
+
+Stop before candidate commit for evidence review.
+
+Do not run the Windows evaluator.
+Do not set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`.
+Do not create row consumed markers.
+Do not create the later active-authority Roadmap Change.
