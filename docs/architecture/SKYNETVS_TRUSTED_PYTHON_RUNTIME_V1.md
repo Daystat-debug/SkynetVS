@@ -1565,3 +1565,39 @@ Sandbox = NOT AUTHORIZED
 ```
 
 A separate later Roadmap Change is required after implementation closure and a fresh readiness audit. That future grant may bind the accepted RC036 live-pass result and authorize only fresh grant-specific syntax and boundary attempts; it may never repeat live_pass or rewrite RC036 evidence.
+## V1C2C3 RC037 IMPLEMENTATION CLOSURE — NON-ACTIVE VERIFIED
+
+RC037 is closed as `COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED` at implementation commit `7eddbb1614d726a8267eca2f57851ae384293616`.
+
+The hardening is evaluator-private only. It changes no trusted runtime source, runtime lease, production compile/AST composition, workspace implementation, package-boundary registry or pipeline authority. Canonical V1C2C3 row names remain unchanged in CLI and evidence; only private temporary-path labels are shortened:
+
+```text
+live_pass                           p
+authentic_syntax_failure            s
+signed_post_ready_boundary_failure  b
+```
+
+The resulting simulated worst Git loose-object path is `194` with `66` characters of headroom below the classic Windows `260` boundary. Portable regression checks bind the exact mapping, the shortened `sv3-` private temporary prefix and the fixed path budget.
+
+Exact committed evaluator identities:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+  bytes:   35288
+  SHA-256: 68372cd661166d4c34dad050ef73b8d118022aa93c8013e68a0bad5941f9961b
+
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+  bytes:   28758
+  SHA-256: fdc8fdb4a52bf030c7486180db759ccb0a9a70490578881b6c12aa4fa620b1cb
+
+patch:
+  bytes:   9431
+  SHA-256: fcf035632798e0561c78a3d5d1438ac5b45735bf8afabb127fe10f0150ab3690
+```
+
+The Windows evaluator remains pipeline-unwired and was not executed by RC037 verification. RC037 therefore grants no reusable capability and no active recovery authority. RC036 evidence remains immutable and partially consumed. A separate fresh read-only readiness audit is required before any later recovery Roadmap Change can even be drafted.
+
+```text
+RC038 = ABSENT / NOT CREATED
+active authority = NONE
+```

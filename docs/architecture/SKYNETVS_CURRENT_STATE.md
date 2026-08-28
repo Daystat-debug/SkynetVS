@@ -2832,3 +2832,59 @@ Do not set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`.
 Do not modify/delete/rewrite RC036 markers/results.
 Do not create RC036 MATRIX_RESULT.
 Do not create the later recovery Roadmap Change yet.
+## V1C2C3 RC037 IMPLEMENTATION CLOSURE — NON-ACTIVE VERIFIED
+
+```text
+HEAD / origin/main:
+7eddbb1614d726a8267eca2f57851ae384293616
+
+implementation parent:
+3bee5567a2a02b907af7422e503abad1e37db567
+
+implementation subject:
+fix: shorten V1C2C3 evaluator private paths
+
+RC036:
+FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+
+RC037:
+COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+```
+
+RC037 permanently closes the evaluator-private Windows path-amplification defect without widening production scope. The exact two-file implementation has patch SHA-256 `fcf035632798e0561c78a3d5d1438ac5b45735bf8afabb127fe10f0150ab3690`. Private labels `p / s / b` reduce the simulated worst Git loose-object path from the failed RC036 value `274` to `194`, leaving `66` characters of classic Windows headroom.
+
+Verification is complete and non-active:
+
+```text
+package boundaries                    PASS pre/post commit
+portable V1C2C3 evaluator             PASS pre/post commit
+full check                            PASS pre/post commit
+Runtime Architecture Audit            PASS pre/post commit
+
+Windows evaluator execution           NOT RUN / FORBIDDEN
+Windows evaluator pipeline references 0
+active authority                      NONE
+Sandbox launch by RC037 closure       false
+```
+
+RC036 immutable evidence is preserved byte-for-byte. Never rerun RC036, never repeat its accepted `live_pass`, never reuse its consumed syntax marker, never create the missing RC036 boundary evidence, and never create `V1C2C3_RC036_MATRIX_RESULT.json`.
+
+### Следующее точное действие
+
+Run one **fresh read-only V1C2C3 recovery-readiness audit** from the exact committed RC037 state. It must not create a new Roadmap Change, marker, result or active environment and must not run the Windows evaluator or Sandbox.
+
+The audit must determine whether a later recovery grant can safely:
+
+1. bind and reuse only the already accepted immutable RC036 `live_pass` result without rerunning that row;
+2. issue exactly one fresh grant-specific syntax-failure retry;
+3. issue exactly one fresh grant-specific signed post-ready boundary-failure attempt;
+4. stop permanently on the first failed/uncertain fresh attempt;
+5. create a new recovery matrix result only after binding RC036 live-pass evidence plus both independently accepted fresh recovery rows;
+6. keep every RC036 marker/result immutable and leave the absent RC036 matrix result absent.
+
+Until that audit is reviewed:
+
+```text
+RC038            ABSENT / NOT CREATED
+active recovery  BLOCKED
+```

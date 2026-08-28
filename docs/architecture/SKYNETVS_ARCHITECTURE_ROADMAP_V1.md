@@ -3586,3 +3586,55 @@ future recovery Roadmap Change   NOT CREATED
 ```
 
 **Next Exact Action:** create the exact two-file RC037 path-budget hardening candidate and perform only the allowed non-active verification. Stop before candidate commit for exact evidence review. Do not create a recovery harness or later active-authority Roadmap Change yet.
+## V1C2C3 RC037 IMPLEMENTATION CLOSURE — NON-ACTIVE VERIFIED
+
+**Статус:** RC037 `COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED`.
+
+Exact implementation closure:
+
+```text
+implementation commit:   7eddbb1614d726a8267eca2f57851ae384293616
+implementation parent:   3bee5567a2a02b907af7422e503abad1e37db567
+subject:                 fix: shorten V1C2C3 evaluator private paths
+exact scope:             2 evaluator files
+patch bytes:             9431
+patch SHA-256:           fcf035632798e0561c78a3d5d1438ac5b45735bf8afabb127fe10f0150ab3690
+
+portable evaluator:
+  bytes:                 35288
+  SHA-256:               68372cd661166d4c34dad050ef73b8d118022aa93c8013e68a0bad5941f9961b
+
+Windows evaluator:
+  bytes:                 28758
+  SHA-256:               fdc8fdb4a52bf030c7486180db759ccb0a9a70490578881b6c12aa4fa620b1cb
+
+private path mapping:
+  live_pass                           -> p
+  authentic_syntax_failure            -> s
+  signed_post_ready_boundary_failure  -> b
+
+simulated worst Git object path: 194
+classic Windows path headroom:   66
+```
+
+Pre- and post-commit package boundaries, portable V1C2C3 evaluator, full `check` and Runtime Architecture Audit all passed. The Windows evaluator remained unwired (`0` pipeline references) and was not executed. No production, workspace, pipeline or package-boundary file changed.
+
+RC036 evidence remains immutable: `live_pass` is PASSED / CONSUMED / IMMUTABLE; the RC036 syntax attempt is INFRASTRUCTURE-FAILED / CONSUMED / IMMUTABLE; the RC036 boundary row was never started; `V1C2C3_RC036_MATRIX_RESULT.json` remains absent and must remain absent.
+
+Operational state after RC037 closure:
+
+```text
+RC036  FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+RC037  COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+V1C2C3 live-pass evidence            ACCEPTED FROM RC036 / IMMUTABLE
+V1C2C3 syntax recovery               BLOCKED PENDING NEW ROADMAP AUTHORITY
+V1C2C3 boundary recovery             BLOCKED PENDING NEW ROADMAP AUTHORITY
+V1C2C3 active recovery               BLOCKED
+
+Windows evaluator pipeline refs      0
+active authority                     NONE
+RC038                                ABSENT / NOT CREATED
+```
+
+**Следующее решение не выдаётся этой записью.** Сначала требуется отдельный fresh read-only recovery-readiness audit, который должен доказать безопасную связку существующего accepted RC036 `live_pass` с одной новой syntax-retry authority и одной новой boundary authority. Только после отдельного review такого audit может быть спроектирован новый Roadmap Change; RC037 не предоставляет active authority.
