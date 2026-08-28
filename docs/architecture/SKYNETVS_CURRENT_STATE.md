@@ -3032,3 +3032,46 @@ Sandbox = DO NOT LAUNCH
 ### Next Exact Action
 
 Implement and verify the single evaluator-only correction. Stop before any RC038 marker.
+## RC039 IMPLEMENTATION CLOSURE — VERIFIED / COMMITTED
+
+```text
+HEAD / origin entering RC039 closure:
+f773a86b4ddde760f7a10f4722b316ebfd2115a5
+
+RC039:
+COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+V1C1A evaluator:
+bytes   31066
+SHA-256 bcd0de47311064067ccce246dc897d9503d266734fb52dd229b58257a6d1c4ad
+
+RC038:
+CURRENT / SPLIT-PROVENANCE TWO-ROW RECOVERY CONTRACT
+ACTIVE EXECUTION STILL BLOCKED
+```
+
+The V1C1A durable-report privacy test is now deterministic with respect to SHA-256/fingerprint identities. No production/runtime behavior changed.
+
+Verified implementation result:
+
+```text
+targeted V1C1A evaluator       PASS pre/post commit
+package boundaries             PASS pre/post commit
+portable V1C2C3 evaluator      PASS pre/post commit
+full check                     PASS pre/post commit
+Runtime Architecture Audit     PASS pre/post commit
+```
+
+Safety state:
+
+```text
+RC038 permanent evidence       0
+Windows active evaluator       NOT RUN
+Windows evaluator pipeline refs 0
+Sandbox                        EMPTY
+active environment             ABSENT
+```
+
+### Next Exact Action
+
+Run a fresh post-RC039 RC038 recovery-harness source/host-only preflight. It must bind this exact HEAD and current V1C1A evaluator identity and stop before any RC038 marker, child active authority or Sandbox launch.

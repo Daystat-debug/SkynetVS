@@ -1673,3 +1673,23 @@ RC038 authority expansion = NONE
 ```
 
 RC038 active recovery remains blocked until RC039 is implemented, non-actively verified, committed, documented closed, and a fresh RC038 host-only preflight passes.
+## RC039 IMPLEMENTATION CLOSURE — VERIFIED / COMMITTED
+
+RC039 introduced no trusted-runtime or production-runtime change. Its exact mutable scope was the V1C1A evaluator only:
+
+```text
+tools/eval_developer_task_execution_workspace_snapshot.py
+bytes:   31066
+SHA-256: bcd0de47311064067ccce246dc897d9503d266734fb52dd229b58257a6d1c4ad
+```
+
+The privacy contract is unchanged: durable workspace snapshot evidence exposes hashed identities but not raw source bytes or host paths. Only the test sentinel was made collision-resistant against lowercase SHA-256 hex identities.
+
+```text
+production implementation identity change = NONE
+runtime bundle change                      = NONE
+execution authority change                 = NONE
+RC038 authority expansion                  = NONE
+```
+
+RC038 active recovery is not authorized by RC039 closure. A fresh external recovery-harness source/host-only preflight is required first.

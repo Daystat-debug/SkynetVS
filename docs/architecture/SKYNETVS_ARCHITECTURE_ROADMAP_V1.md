@@ -3897,3 +3897,80 @@ RC038 active execution            BLOCKED BY RC039
 After RC039 implementation + docs closure, rerun a fresh RC038 recovery-harness source/host-only preflight. Only a clean PASS may return the flow to the pre-execution launcher review.
 
 **Next Exact Action:** implement the exact two-line evaluator-only sentinel correction above, run non-active verification, commit/push exact one-file scope, then close RC039. No active RC038 action.
+## RC039 IMPLEMENTATION CLOSURE — VERIFIED / COMMITTED
+
+RC039 is closed as:
+
+```text
+COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+```
+
+Exact implementation:
+
+```text
+commit:
+f773a86b4ddde760f7a10f4722b316ebfd2115a5
+
+parent:
+a46aa900c8d077d7f65aab7625b0e7227b1da210
+
+subject:
+fix: harden V1C1A raw payload sentinel
+
+scope:
+tools/eval_developer_task_execution_workspace_snapshot.py
+
+evaluator bytes:
+31066
+
+evaluator SHA-256:
+bcd0de47311064067ccce246dc897d9503d266734fb52dd229b58257a6d1c4ad
+```
+
+The only semantic change is the replacement of the collision-prone raw privacy sentinel:
+
+```text
+OLD raw fixture:
+abc\x00def
+
+NEW raw fixture:
+__V1C1A_RAW_BINARY_SENTINEL__\x00def
+
+OLD durable-report sentinel:
+abc
+
+NEW durable-report sentinel:
+__V1C1A_RAW_BINARY_SENTINEL__
+```
+
+The previous `abc` sentinel belonged entirely to the lowercase SHA-256 hexadecimal alphabet and could therefore appear accidentally inside a legitimate durable hash identity. The new recognizable sentinel contains characters outside that alphabet and eliminates the false-positive construction while preserving the privacy assertion.
+
+Implementation verification:
+
+```text
+pre/post V1C1A targeted evaluator       PASS
+pre/post package boundaries             PASS
+pre/post portable V1C2C3 evaluator      PASS
+pre/post full check                     PASS
+pre/post Runtime Architecture Audit     PASS
+production/runtime changes              NONE
+Windows active evaluator execution      false
+Windows evaluator pipeline references   0
+RC038 permanent evidence count          0
+Sandbox launch                          false
+active environment                      ABSENT
+```
+
+RC038 relationship:
+
+```text
+RC038 contract                          PRESERVED
+RC038 historical RC036 live binding     PRESERVED
+RC038 syntax retry marker               ABSENT / NOT CONSUMED
+RC038 boundary marker                   ABSENT / NOT CONSUMED
+RC038 recovery matrix                   ABSENT
+```
+
+RC038 active execution remains blocked until a **fresh post-RC039 external recovery-harness source/host-only preflight** passes against this exact committed state.
+
+**Next Exact Action:** rerun a fresh source/host-only audit of the exact RC038 external recovery harness from this post-RC039 HEAD. Stop before the first RC038 permanent marker and before any Windows active evaluator row.
