@@ -1644,3 +1644,32 @@ RC038 active execution authorized by docs transition = FALSE
 pre-execution external harness source audit required = TRUE
 Windows evaluator pipeline refs = 0
 ```
+## Roadmap Change 039 — V1C1A durable-report sentinel determinism hardening
+
+RC039 is an evaluator-only determinism hardening. It changes no production runtime, no trusted runtime bundle, no workspace snapshot production implementation and no execution authority.
+
+Pinned pre-change evaluator:
+
+```text
+tools/eval_developer_task_execution_workspace_snapshot.py
+bytes:   31014
+SHA-256: 74f67644a12249dc7e23db8fbc0c8b1b214df9695e80992c9e155c515a49dbbd
+```
+
+The legacy privacy sentinel used the short lowercase-hex-compatible token `"abc"` across the entire serialized durable report. Because hashed identities are intentionally durable, this permits false positives.
+
+The approved replacement sentinel is:
+
+```text
+__V1C1A_RAW_BINARY_SENTINEL__
+```
+
+It is deliberately outside the SHA-256 lowercase hexadecimal alphabet and remains embedded in the private raw fixture bytes. The durable-report assertion checks that exact recognizable raw sentinel is absent.
+
+```text
+production behavior change = NONE
+runtime authority change = NONE
+RC038 authority expansion = NONE
+```
+
+RC038 active recovery remains blocked until RC039 is implemented, non-actively verified, committed, documented closed, and a fresh RC038 host-only preflight passes.

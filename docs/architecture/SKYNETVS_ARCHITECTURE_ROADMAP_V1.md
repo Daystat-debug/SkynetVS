@@ -3797,3 +3797,103 @@ Sandbox                            NOT LAUNCHED
 ```
 
 **Next Exact Action:** create and source-audit the exact external RC038 recovery harness, then run host-only preflight. Stop before creating either RC038 marker or invoking either active row.
+## Roadmap Change 039 — V1C1A durable-report sentinel determinism hardening
+
+**Причина:** RC038 host-only preflight остановился на non-active full `check`. Единственным product/evaluator failure оказался V1C1A privacy sentinel `nul_payload_absent`; RC038 permanent evidence не создавалась, Windows evaluator не запускался, active authority отсутствовала.
+
+Fresh targeted recheck на том же HEAD и с тем же evaluator:
+
+```text
+V1C1A targeted recheck = PASS
+case_count = 37
+fail_count = 0
+nul_payload_absent = true
+```
+
+Fresh source audit:
+
+```text
+report bytes:   8492
+report SHA-256: 98eb6453312be2acfc9f85567eefe6816f5d5f074af01680f57abbe5e7867a33
+
+fixture:
+"binary.dat": b"abc\x00def"
+
+legacy durable-report assertion:
+"nul_payload_absent": "abc" not in serialized
+
+serialized scope:
+json.dumps(report.to_dict(), ensure_ascii=False)
+
+single 64-hex digest probability of containing "abc":
+~1.5025%
+
+false-positive capability:
+PROVEN BY CONSTRUCTION
+```
+
+The check is therefore flaky: `"abc"` belongs entirely to the SHA-256 hexadecimal alphabet while the durable report intentionally exposes hashed identities. A legal digest may contain that substring even when no raw source bytes or host paths are present.
+
+### Exact RC039 mutable scope
+
+Only:
+
+```text
+tools/eval_developer_task_execution_workspace_snapshot.py
+```
+
+No production module, workspace implementation, policy, pipeline, package-boundary file, RC038 harness or Windows active evaluator may change.
+
+### Exact intended correction
+
+Within the existing successful V1C1A fixture only:
+
+```text
+OLD:
+"binary.dat": b"abc\x00def"
+"nul_payload_absent": "abc" not in serialized
+
+NEW:
+"binary.dat": b"__V1C1A_RAW_BINARY_SENTINEL__\x00def"
+"nul_payload_absent": "__V1C1A_RAW_BINARY_SENTINEL__" not in serialized
+```
+
+The sentinel contains characters outside the lowercase hexadecimal alphabet (`_`, uppercase letters), so a SHA-256 digest cannot satisfy it by collision. The test continues to assert that recognizable raw fixture bytes do not appear in the durable JSON.
+
+Do not rename the existing result key `nul_payload_absent`; keep the correction minimal and compatibility-preserving.
+
+### Required RC039 verification
+
+Before commit:
+
+```text
+exact one-file diff
+git diff --check
+targeted V1C1A evaluator = 37/37 PASS
+package boundaries = PASS
+portable V1C2C3 evaluator = PASS
+full check = PASS
+Runtime Architecture Audit = PASS
+RC038 permanent evidence count = 0
+Windows evaluator pipeline refs = 0
+Sandbox = empty
+active authority = absent
+```
+
+Repeat the same non-active gates after commit. Push only after exact scope and patch identity are verified.
+
+### RC038 relationship
+
+RC038 remains open but blocked:
+
+```text
+RC038 contract                    PRESERVED
+RC038 fresh syntax marker         ABSENT / NOT CONSUMED
+RC038 fresh boundary marker       ABSENT / NOT CONSUMED
+RC038 recovery matrix             ABSENT
+RC038 active execution            BLOCKED BY RC039
+```
+
+After RC039 implementation + docs closure, rerun a fresh RC038 recovery-harness source/host-only preflight. Only a clean PASS may return the flow to the pre-execution launcher review.
+
+**Next Exact Action:** implement the exact two-line evaluator-only sentinel correction above, run non-active verification, commit/push exact one-file scope, then close RC039. No active RC038 action.

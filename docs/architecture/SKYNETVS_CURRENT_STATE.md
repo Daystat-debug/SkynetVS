@@ -2974,3 +2974,61 @@ do not create RC036 MATRIX_RESULT
 ### Next Exact Action
 
 Create the exact external RC038 split-provenance recovery harness and an independent source audit. The audit may run host-only/non-active gates, but must stop before the first RC038 permanent marker and before either active child row.
+## Roadmap Change 039 — V1C1A durable-report sentinel determinism hardening
+
+Current state:
+
+```text
+HEAD / origin entering RC039:
+6d684c3700ffa39746ee0efa4fdbb3686fea34b4
+
+RC038:
+CURRENT / SPLIT-PROVENANCE TWO-ROW RECOVERY CONTRACT
+ACTIVE EXECUTION BLOCKED
+
+RC039:
+CURRENT / V1C1A SENTINEL DETERMINISM HARDENING
+```
+
+Root cause:
+
+```text
+fixture raw binary prefix: abc
+legacy check:            "abc" not in entire durable JSON
+durable JSON contains:   SHA-256 / fingerprint identities
+abc is valid hex:        true
+false-positive capable:  true
+```
+
+The same evaluator at the same HEAD produced an isolated full-check failure and then a targeted `37/37 PASS`, confirming nondeterministic collision behavior rather than a demonstrated production privacy regression.
+
+Exact mutable scope:
+
+```text
+tools/eval_developer_task_execution_workspace_snapshot.py
+```
+
+Exact intended replacement:
+
+```text
+b"abc\x00def"
+->
+b"__V1C1A_RAW_BINARY_SENTINEL__\x00def"
+
+"abc" not in serialized
+->
+"__V1C1A_RAW_BINARY_SENTINEL__" not in serialized
+```
+
+Until RC039 is verified and closed:
+
+```text
+RC038 permanent evidence = 0
+RC038 active authority = NONE
+Windows active evaluator = DO NOT RUN
+Sandbox = DO NOT LAUNCH
+```
+
+### Next Exact Action
+
+Implement and verify the single evaluator-only correction. Stop before any RC038 marker.
