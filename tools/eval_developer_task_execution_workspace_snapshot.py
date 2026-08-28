@@ -269,7 +269,7 @@ def main() -> int:
             baseline={
                 "module.py": b"value = 1\n",
                 "unchanged.txt": b"unchanged\n",
-                "binary.dat": b"abc\x00def",
+                "binary.dat": b"__V1C1A_RAW_BINARY_SENTINEL__\x00def",
                 "delete.txt": b"remove me\n",
             },
             changes={
@@ -333,7 +333,7 @@ def main() -> int:
             {
                 "json": isinstance(serialized, str),
                 "value2_absent": "value = 2" not in serialized,
-                "nul_payload_absent": "abc" not in serialized,
+                "nul_payload_absent": "__V1C1A_RAW_BINARY_SENTINEL__" not in serialized,
                 "workspace_root_absent": fixture[5].workspace_root not in serialized,
                 "task_root_absent": fixture[5].task_root not in serialized,
                 "sha_present": report.files[0].sha256 in serialized,
