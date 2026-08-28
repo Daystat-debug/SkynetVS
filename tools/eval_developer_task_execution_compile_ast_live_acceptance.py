@@ -12,7 +12,7 @@ import hashlib
 import inspect
 import json
 
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from typing import Any
 
 from modules.developer.developer_task_execution_compile_ast_composition import (
@@ -63,6 +63,21 @@ HISTORICAL_V1C2C3_EVIDENCE_IDENTITY = (
 )
 WINDOWS_ACTIVE_AUTHORITY_ENV = "SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED"
 INVALID_SYNTAX_SOURCE = b"def broken(:\n"
+WINDOWS_CLASSIC_MAX_PATH = 260
+V1C2C3_PRIVATE_PATH_BUDGET = 210
+V1C2C3_MIN_PATH_HEADROOM = 50
+V1C2C3_PATH_BUDGET_TEMP_BASE = PureWindowsPath(
+    r"C:\Users\User\AppData\Local\Temp"
+)
+V1C2C3_PATH_BUDGET_TEMP_SUFFIX = "12345678"
+V1C2C3_PATH_BUDGET_MANIFEST_PREFIX = "f" * 12
+V1C2C3_PATH_BUDGET_WORKSPACE_NONCE = "f" * 24
+V1C2C3_PATH_BUDGET_OBJECT_OID = "f" * 40
+EXPECTED_ROW_PATH_LABELS = {
+    "live_pass": "p",
+    "authentic_syntax_failure": "s",
+    "signed_post_ready_boundary_failure": "b",
+}
 
 V1C2C3_MATRIX = (
     {
@@ -120,6 +135,102 @@ def _function_names(tree: ast.AST) -> set[str]:
         for node in ast.walk(tree)
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
     }
+
+
+def _top_level_string_constants(tree: ast.Module) -> dict[str, str]:
+    values: dict[str, str] = {}
+    for node in tree.body:
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        ):
+            values[node.targets[0].id] = node.value.value
+    return values
+
+
+def _top_level_string_mapping(
+    tree: ast.Module,
+    name: str,
+) -> dict[str, str]:
+    constants = _top_level_string_constants(tree)
+    assignment = next(
+        (
+            node
+            for node in tree.body
+            if isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == name
+                for target in node.targets
+            )
+        ),
+        None,
+    )
+    if assignment is None or not isinstance(assignment.value, ast.Dict):
+        raise AssertionError(f"missing top-level dict assignment: {name}")
+
+    result: dict[str, str] = {}
+    for key_node, value_node in zip(
+        assignment.value.keys,
+        assignment.value.values,
+    ):
+        if isinstance(key_node, ast.Name):
+            key = constants.get(key_node.id)
+        elif isinstance(key_node, ast.Constant) and isinstance(
+            key_node.value, str
+        ):
+            key = key_node.value
+        else:
+            key = None
+
+        if isinstance(value_node, ast.Name):
+            value = constants.get(value_node.id)
+        elif isinstance(value_node, ast.Constant) and isinstance(
+            value_node.value, str
+        ):
+            value = value_node.value
+        else:
+            value = None
+
+        if key is None or value is None:
+            raise AssertionError(
+                f"non-string mapping entry in {name}"
+            )
+        result[key] = value
+    return result
+
+
+def _simulated_private_git_object_path(
+    row: str,
+    label: str,
+) -> PureWindowsPath:
+    if EXPECTED_ROW_PATH_LABELS.get(row) != label:
+        raise AssertionError(f"unexpected V1C2C3 row label: {row}={label}")
+    temporary_root = (
+        V1C2C3_PATH_BUDGET_TEMP_BASE
+        / f"sv3-{V1C2C3_PATH_BUDGET_TEMP_SUFFIX}"
+    )
+    task_id = f"v3-{label}"
+    workspace_id = (
+        f"skynetvs-task-{task_id}-"
+        f"{V1C2C3_PATH_BUDGET_MANIFEST_PREFIX}-"
+        f"{V1C2C3_PATH_BUDGET_WORKSPACE_NONCE}"
+    )
+    object_oid = V1C2C3_PATH_BUDGET_OBJECT_OID
+    return (
+        temporary_root
+        / label
+        / "plan-fixture"
+        / "workspaces"
+        / workspace_id
+        / "repository"
+        / ".git"
+        / "objects"
+        / object_oid[:2]
+        / object_oid[2:]
+    )
 
 
 def _top_level_function(tree: ast.Module, name: str) -> ast.FunctionDef:
@@ -458,6 +569,91 @@ def main() -> int:
         filename=str(WINDOWS_EVALUATOR_PATH),
         mode="exec",
     )
+
+    row_path_labels = _top_level_string_mapping(
+        windows_tree,
+        "ROW_PATH_LABELS",
+    )
+    simulated_paths = {
+        row: str(_simulated_private_git_object_path(row, label))
+        for row, label in row_path_labels.items()
+    }
+    simulated_lengths = {
+        row: len(path)
+        for row, path in simulated_paths.items()
+    }
+    simulated_headroom = {
+        row: WINDOWS_CLASSIC_MAX_PATH - length
+        for row, length in simulated_lengths.items()
+    }
+    check(
+        "V1C2C3 PRIVATE ROW PATH LABELS ARE EXACT",
+        row_path_labels,
+        EXPECTED_ROW_PATH_LABELS,
+    )
+    check(
+        "V1C2C3 PRIVATE WINDOWS PATH BUDGET",
+        {
+            "lengths": simulated_lengths,
+            "max_length": max(simulated_lengths.values()),
+            "minimum_headroom": min(simulated_headroom.values()),
+            "within_budget": all(
+                length <= V1C2C3_PRIVATE_PATH_BUDGET
+                for length in simulated_lengths.values()
+            ),
+            "headroom_ok": all(
+                headroom >= V1C2C3_MIN_PATH_HEADROOM
+                for headroom in simulated_headroom.values()
+            ),
+        },
+        {
+            "lengths": {
+                "live_pass": 194,
+                "authentic_syntax_failure": 194,
+                "signed_post_ready_boundary_failure": 194,
+            },
+            "max_length": 194,
+            "minimum_headroom": 66,
+            "within_budget": True,
+            "headroom_ok": True,
+        },
+    )
+
+    check(
+        "V1C2C3 WINDOWS PRIVATE PATH RECIPE IS SHORT AND CANONICAL",
+        {
+            "temporary_prefix": 'prefix="sv3-"' in windows_source,
+            "row_label_assignment": (
+                "row_label = ROW_PATH_LABELS[row]" in windows_source
+            ),
+            "row_root_uses_label": (
+                "row_root = parent / row_label" in windows_source
+            ),
+            "task_id_uses_label": (
+                'task_id=f"v3-{row_label}"' in windows_source
+            ),
+            "old_temp_prefix_absent": (
+                "skynetvs-v1c2c3-{selected_row}-" not in windows_source
+            ),
+            "old_row_root_absent": all(
+                line.strip() != "row_root = parent / row"
+                for line in windows_source.splitlines()
+            ),
+            "old_task_id_absent": (
+                'task_id=f"v1c2c3-{row}"' not in windows_source
+            ),
+        },
+        {
+            "temporary_prefix": True,
+            "row_label_assignment": True,
+            "row_root_uses_label": True,
+            "task_id_uses_label": True,
+            "old_temp_prefix_absent": True,
+            "old_row_root_absent": True,
+            "old_task_id_absent": True,
+        },
+    )
+
     check(
         "V1C2C3 WINDOWS HARNESS REQUIRED STRUCTURE",
         {
@@ -808,6 +1004,7 @@ def main() -> int:
         "ok": fail_count == 0,
         "architecture_slice": "V1C2C3",
         "row_isolation_hardened": True,
+        "path_budget_hardened": True,
         "historical_evidence_identity": HISTORICAL_V1C2C3_EVIDENCE_IDENTITY,
         "matrix_rows": [item["row"] for item in V1C2C3_MATRIX],
         "windows_active_evaluator_executed": False,

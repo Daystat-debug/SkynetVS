@@ -75,6 +75,11 @@ ROW_PASS = "live_pass"
 ROW_SYNTAX = "authentic_syntax_failure"
 ROW_BOUNDARY = "signed_post_ready_boundary_failure"
 ROWS = (ROW_PASS, ROW_SYNTAX, ROW_BOUNDARY)
+ROW_PATH_LABELS = {
+    ROW_PASS: "p",
+    ROW_SYNTAX: "s",
+    ROW_BOUNDARY: "b",
+}
 
 _ROW_AUTHORITY_DIGEST: bytes | None = None
 
@@ -350,7 +355,8 @@ def _run_case(
             + ",".join(host_report.issue_codes)
         )
 
-    row_root = parent / row
+    row_label = ROW_PATH_LABELS[row]
+    row_root = parent / row_label
     row_root.mkdir()
     fixture = _prepare(
         row_root / "plan-fixture",
@@ -361,7 +367,7 @@ def _run_case(
             "keep.py": b"keep = True\n",
         },
         changes=_row_changes(row),
-        task_id=f"v1c2c3-{row}",
+        task_id=f"v3-{row_label}",
     )
     source_repo, _, _, _, _, workspace, _, _ = fixture
     workspace_repo = Path(workspace.repository_root)
@@ -544,7 +550,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[{'OK' if ok else 'FAIL'}] {name}")
 
     with tempfile.TemporaryDirectory(
-        prefix=f"skynetvs-v1c2c3-{selected_row}-",
+        prefix="sv3-",
         ignore_cleanup_errors=True,
     ) as temporary:
         parent = Path(temporary).resolve()
