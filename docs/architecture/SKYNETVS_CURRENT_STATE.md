@@ -2888,3 +2888,89 @@ Until that audit is reviewed:
 RC038            ABSENT / NOT CREATED
 active recovery  BLOCKED
 ```
+## Roadmap Change 038 — V1C2C3 split-provenance two-row recovery authority
+
+```text
+HEAD / origin entering transition:
+abd97f5dd69581a706a4c609f17b123a44d2a80c
+
+RC036:
+FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+
+RC037:
+COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+RC038:
+CURRENT / SPLIT-PROVENANCE TWO-ROW RECOVERY CONTRACT
+PRE-EXECUTION RECOVERY HARNESS AUDIT REQUIRED
+```
+
+Historical accepted evidence remains:
+
+```text
+RC036 live marker:
+d944ae6b96a644563992b4f5354837b00be6156dbe90f989ac15bd5f39020f0c
+
+RC036 live result:
+30f1938b23febce463c17c5104d8d5b509b9b549322b2c81e7f03d4514cd85fc
+
+terminal:
+compile_ast_attested_passed
+
+production composition:
+748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+
+historical Windows evaluator:
+d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+```
+
+That historical row is reused only as immutable evidence. It is never rerun.
+
+Fresh RC038 execution, once separately harness-audited, is limited to:
+
+```text
+1. authentic_syntax_failure
+2. signed_post_ready_boundary_failure
+```
+
+Exact future evidence:
+
+```text
+V1C2C3_RC038_SYNTAX_FAILURE_RETRY_CONSUMED.json
+V1C2C3_RC038_SYNTAX_FAILURE_RETRY_RESULT.json
+
+V1C2C3_RC038_BOUNDARY_FAILURE_CONSUMED.json
+V1C2C3_RC038_BOUNDARY_FAILURE_RESULT.json
+
+V1C2C3_RC038_RECOVERY_MATRIX_RESULT.json
+```
+
+The recovery matrix must explicitly record split evaluator provenance:
+
+```text
+RC036 historical live:
+  evaluator d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+
+RC038 fresh syntax/boundary:
+  evaluator fdc8fdb4a52bf030c7486180db759ccb0a9a70490578881b6c12aa4fa620b1cb
+```
+
+It must not claim a single common evaluator identity for all three logical rows.
+
+### Current prohibitions
+
+Until the external RC038 harness and host-only preflight are reviewed:
+
+```text
+do not create RC038 markers/results
+do not set active authority
+do not invoke the Windows evaluator
+do not launch Sandbox
+do not rerun RC036
+do not create missing RC036 boundary evidence
+do not create RC036 MATRIX_RESULT
+```
+
+### Next Exact Action
+
+Create the exact external RC038 split-provenance recovery harness and an independent source audit. The audit may run host-only/non-active gates, but must stop before the first RC038 permanent marker and before either active child row.

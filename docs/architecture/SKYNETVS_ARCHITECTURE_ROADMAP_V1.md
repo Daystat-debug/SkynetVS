@@ -3638,3 +3638,162 @@ RC038                                ABSENT / NOT CREATED
 ```
 
 **Следующее решение не выдаётся этой записью.** Сначала требуется отдельный fresh read-only recovery-readiness audit, который должен доказать безопасную связку существующего accepted RC036 `live_pass` с одной новой syntax-retry authority и одной новой boundary authority. Только после отдельного review такого audit может быть спроектирован новый Roadmap Change; RC037 не предоставляет active authority.
+## Roadmap Change 038 — V1C2C3 split-provenance two-row recovery authority
+
+**Причина:** RC036 завершился как `FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN`. Его `live_pass` принят и остаётся immutable historical evidence; RC036 syntax-marker consumed, но результат не принят из-за evaluator-private path infrastructure failure; RC036 boundary row не запускался. RC037 устранил только evaluator-private path amplification и закрыт как non-active verified.
+
+Fresh recovery-readiness audit:
+
+```text
+report SHA-256:
+6e58cc14dd4e1047b556ae8ae6ca8372ce83bef2904ff114e573bcec18ee9ace
+
+decision:
+RC038 recovery authority may be drafted = TRUE
+active recovery authorized now = FALSE
+```
+
+### Split provenance
+
+RC038 не повторяет `live_pass`. Recovery matrix обязана явно связывать две разные provenance-ветви:
+
+```text
+historical accepted branch:
+  grant:                         RC036
+  row:                           live_pass
+  historical HEAD:               a0a352fe19e843a4f7b80c0e26a6b938520a9056
+  historical Windows evaluator:  d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+  historical portable evaluator: 281c75d9237baacb7f3631069c1af0d95a1eecc052dae78587a2b6367e08abbb
+  production composition:        748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+  marker SHA-256:                 d944ae6b96a644563992b4f5354837b00be6156dbe90f989ac15bd5f39020f0c
+  result SHA-256:                 30f1938b23febce463c17c5104d8d5b509b9b549322b2c81e7f03d4514cd85fc
+  request_id:                     e7185cc61aecaae11cdb6480a976dc8a
+  plan fingerprint:               ee623f0157b04d2a8e9846f2c5c00db9a4852ba1a0d7d5071922c86eadb24bf3
+  runtime lease fingerprint:      2d6b6b1d549d5eddc90e84c69c593c03e6b5c0aede2ce1c1dca395319d13744f
+  controller public key SHA-256:  7b1d46f608f0f43a34b3934179d7e77b5d55cd3e88e4b49782ba94a26fb6a466
+  rerun:                          FORBIDDEN
+
+fresh recovery branch:
+  current Windows evaluator:      fdc8fdb4a52bf030c7486180db759ccb0a9a70490578881b6c12aa4fa620b1cb
+  current production composition: 748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+  row order:
+    1. authentic_syntax_failure
+    2. signed_post_ready_boundary_failure
+```
+
+The final recovery result must preserve split provenance and MUST NOT claim that all three rows were executed under one evaluator identity.
+
+### Exact future RC038 permanent evidence
+
+Fresh row markers:
+
+```text
+V1C2C3_RC038_SYNTAX_FAILURE_RETRY_CONSUMED.json
+V1C2C3_RC038_BOUNDARY_FAILURE_CONSUMED.json
+```
+
+Fresh row results:
+
+```text
+V1C2C3_RC038_SYNTAX_FAILURE_RETRY_RESULT.json
+V1C2C3_RC038_BOUNDARY_FAILURE_RESULT.json
+```
+
+Recovery matrix:
+
+```text
+V1C2C3_RC038_RECOVERY_MATRIX_RESULT.json
+```
+
+Schemas:
+
+```text
+row marker:   skynetvs-v1c2c3-rc038-recovery-row-consumed-v1
+row result:   skynetvs-v1c2c3-rc038-recovery-row-result-v1
+matrix result:skynetvs-v1c2c3-rc038-recovery-matrix-result-v1
+```
+
+Every row marker must be reserved through exclusive create before the child receives active authority. The marker permanently consumes that grant-specific attempt regardless of child/result outcome. Each row result is written separately through exclusive create after child completion and evidence verification. No marker is ever rewritten, replaced, finalized in place, deleted or reused.
+
+### Fresh recovery order and fail-stop semantics
+
+1. Revalidate exact immutable RC036 live marker/result and its signed accepted payload. Do not execute `live_pass`.
+2. Reserve the RC038 syntax-retry marker.
+3. Launch one fresh child process for exactly `authentic_syntax_failure`.
+4. Accept only the locked genuine syntax-failure contract.
+5. Revalidate cleanup and fresh evidence before proceeding.
+6. Reserve the RC038 boundary marker.
+7. Launch a second fresh child process for exactly `signed_post_ready_boundary_failure`.
+8. Accept only the locked signed boundary-failure contract.
+9. Prove syntax/boundary cross-row freshness.
+10. Create the recovery matrix result only after all previous conditions pass.
+
+If a fresh row fails or is uncertain:
+
+```text
+stop immediately
+do not launch the next fresh row
+keep all markers/results immutable
+do not create the recovery matrix
+do not rerun accepted historical live_pass
+do not reuse the RC036 syntax marker
+require a new explicit Roadmap Change
+```
+
+If failure occurs before the first RC038 marker, authority is not consumed, but no automatic retry is allowed; the report must be reviewed first. Once any RC038 marker exists, the RC038 harness MUST NOT be rerun.
+
+### Required fresh evidence
+
+Each fresh row requires its own:
+
+```text
+host inspection / workspace snapshot / compile-AST plan
+runtime bundle / runtime lease
+V1C2C0 claim transaction
+request_id
+plan fingerprint
+runtime lease fingerprint
+controller public key
+Windows Sandbox instance
+child process
+cleanup proof
+```
+
+The two fresh rows must have pairwise-distinct request/plan/lease/public-key identities. Historical RC036 live evidence is immutable historical provenance and is not part of the fresh cross-row execution set.
+
+### External recovery harness requirements
+
+Before any marker or active row, a separate external recovery harness must be created, SHA-pinned and source-audited. It must:
+
+```text
+not import the Windows evaluator
+invoke exactly one selected evaluator row per child process
+set active authority only in the child environment
+keep parent/user active environment absent
+pin the resulting RC038 docs commit
+pin current evaluator/production/runtime/host identities
+verify immutable RC036 evidence before every irreversible boundary
+use exclusive create + fsync for markers/results
+never use File.Replace / os.replace / rename finalization
+remain unwired from normal pipeline flows
+stop on first failed or uncertain fresh row
+```
+
+RC038 transition state:
+
+```text
+RC036       FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+RC037       COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+RC038       CURRENT / SPLIT-PROVENANCE TWO-ROW RECOVERY CONTRACT
+            PRE-EXECUTION RECOVERY HARNESS AUDIT REQUIRED
+
+historical live_pass               ACCEPTED / IMMUTABLE / NO RERUN
+fresh syntax retry                 NOT CONSUMED / NOT EXECUTED
+fresh boundary attempt             NOT CONSUMED / NOT EXECUTED
+recovery matrix                    ABSENT
+active environment                 ABSENT
+Windows evaluator pipeline refs    0
+Sandbox                            NOT LAUNCHED
+```
+
+**Next Exact Action:** create and source-audit the exact external RC038 recovery harness, then run host-only preflight. Stop before creating either RC038 marker or invoking either active row.

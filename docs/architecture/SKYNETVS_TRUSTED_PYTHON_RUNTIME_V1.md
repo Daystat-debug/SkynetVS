@@ -1601,3 +1601,46 @@ The Windows evaluator remains pipeline-unwired and was not executed by RC037 ver
 RC038 = ABSENT / NOT CREATED
 active authority = NONE
 ```
+## Roadmap Change 038 — V1C2C3 split-provenance two-row recovery authority
+
+RC038 defines a recovery authority contract over the already row-isolated and path-budget-hardened evaluator. It does not change trusted runtime or production source and grants no execution by this docs transition.
+
+Current evaluator identity:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+SHA-256: fdc8fdb4a52bf030c7486180db759ccb0a9a70490578881b6c12aa4fa620b1cb
+```
+
+Production composition identity shared with the accepted historical RC036 live evidence:
+
+```text
+748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+```
+
+The accepted live evidence came from historical evaluator SHA `d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd`. This evaluator provenance difference must remain explicit in the recovery matrix. Production capability continuity does not permit collapsing the evaluator provenance.
+
+Fresh row authority is limited to exactly:
+
+```text
+authentic_syntax_failure
+signed_post_ready_boundary_failure
+```
+
+Every fresh row requires a new capability chain, runtime lease, claim transaction, child process and Sandbox instance. Active authority exists only in the selected child environment. The parent environment remains non-active.
+
+Permanent evidence is append-only and grant-specific:
+
+```text
+marker schema: skynetvs-v1c2c3-rc038-recovery-row-consumed-v1
+result schema: skynetvs-v1c2c3-rc038-recovery-row-result-v1
+matrix schema: skynetvs-v1c2c3-rc038-recovery-matrix-result-v1
+```
+
+The final matrix may be created only after revalidating immutable RC036 live evidence and accepting both fresh RC038 rows with pairwise-distinct fresh capability identities. Any failed/uncertain fresh row permanently stops the grant and prevents matrix creation.
+
+```text
+RC038 active execution authorized by docs transition = FALSE
+pre-execution external harness source audit required = TRUE
+Windows evaluator pipeline refs = 0
+```
