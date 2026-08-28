@@ -1518,3 +1518,50 @@ Sandbox launched:                false
 ```
 
 No production source or public API changes are authorized. No active row may be entered until the external harness is fully source-audited and pinned.
+
+## V1C2C3 path-budget hardening authority — Roadmap Change 037
+
+RC037 is a NON-ACTIVE evaluator-only hardening step after RC036 became PARTIALLY CONSUMED / FAILED.
+
+Immutable RC036 state:
+
+```text
+live-pass consumed marker/result:      immutable / accepted
+syntax consumed marker/result:         immutable / infrastructure failure
+boundary marker/result:                absent
+RC036 matrix result:                   absent / must remain absent
+RC036 rerun:                           forbidden
+```
+
+Exact RC037 mutable scope:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+```
+
+The evaluator-private path labels are locked to:
+
+```text
+live_pass                          p
+authentic_syntax_failure           s
+signed_post_ready_boundary_failure b
+```
+
+The Windows evaluator must use `sv3-` as the temporary-directory prefix, the private one-character row directory and a `v3-<label>` fixture task id. These private labels must not alter canonical row names, signed evidence, CLI values, permanent marker schemas or production APIs.
+
+The portable evaluator must prove the exact mapping and a worst-case Git loose-object path budget `<= 210` with at least `50` characters of classic MAX_PATH headroom. The audited target is `194 / 66`.
+
+No production module, workspace implementation/policy, package-boundary registry or pipeline file may change. The Windows evaluator remains unwired and must not be executed under RC037.
+
+```text
+RC036:   FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+RC037:   CURRENT / NON-ACTIVE PATH-BUDGET HARDENING ONLY
+V1C2C3:  PATH-BUDGET HARDENING CURRENT / ACTIVE RECOVERY BLOCKED
+
+Windows evaluator pipeline refs = 0
+active authority = NONE
+Sandbox = NOT AUTHORIZED
+```
+
+A separate later Roadmap Change is required after implementation closure and a fresh readiness audit. That future grant may bind the accepted RC036 live-pass result and authorize only fresh grant-specific syntax and boundary attempts; it may never repeat live_pass or rewrite RC036 evidence.

@@ -3441,3 +3441,148 @@ Sandbox                            NOT LAUNCHED
 ```
 
 **Next Exact Action:** perform a READ-ONLY / HOST-ONLY audit of the exact committed evaluator CLI/output and build an external one-shot RC036 authority harness. The harness may undergo parser/source review, disposable exclusive-create self-tests, child-environment/argv construction tests, marker/result schema tests and exact SHA measurement only. Stop before creating any permanent RC036 marker, setting child active authority or invoking the Windows evaluator.
+
+## Roadmap Change 037 — V1C2C3 non-active evaluator path-budget hardening after partial RC036 consumption
+
+**Причина:** the exact read-only RC036 path-length root-cause audit completed at `HEAD / origin/main a0a352fe19e843a4f7b80c0e26a6b938520a9056` with repository mutation `NONE`, active environment absent and Sandbox process set empty. The report is fixed at `30591` bytes and SHA-256 `6e3269faf9ade9bbde51e5b123ffec87ed65590dd7c5cfd64f6bb2d82d309b25`.
+
+The audit proved that RC036 is irreversibly PARTIALLY CONSUMED / FAILED and MUST NOT BE RERUN:
+
+```text
+live_pass:
+    PASSED / CONSUMED / IMMUTABLE / MUST NOT BE RERUN
+
+authentic_syntax_failure:
+    INFRASTRUCTURE-FAILED / CONSUMED / IMMUTABLE
+    no authentic compile/AST syntax evidence was reached
+
+signed_post_ready_boundary_failure:
+    NOT STARTED / NOT CONSUMED
+    NOT AUTHORIZED UNDER FAILED RC036
+
+RC036 MATRIX_RESULT:
+    ABSENT / MUST REMAIN ABSENT
+```
+
+The accepted live-pass marker/result and the failed syntax marker/result remain permanent byte-for-byte evidence. No RC036 marker/result may be deleted, rewritten, replaced, renamed, finalized in place or reused.
+
+The root cause is evaluator-private workspace path amplification before any plan, runtime lease, claim transaction, composition attestation or Sandbox launch:
+
+```text
+repository_root length:               219
+failing Git loose-object path length: 274
+classic Windows path limit:           260
+over limit by:                        14
+```
+
+The long path was produced by repeating the canonical row name in the temporary prefix, row directory and task/workspace identity. The production compile/AST composition, workspace production implementation, package-boundary registry and pipeline are not the defect.
+
+**Что меняется:** RC037 opens exactly one NON-ACTIVE two-file evaluator path-budget hardening candidate:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+```
+
+No other tracked file may change under RC037.
+
+The Windows evaluator candidate must introduce the exact evaluator-private mapping:
+
+```python
+ROW_PATH_LABELS = {
+    "live_pass": "p",
+    "authentic_syntax_failure": "s",
+    "signed_post_ready_boundary_failure": "b",
+}
+```
+
+and must use the shortened private fixture recipe:
+
+```text
+TemporaryDirectory prefix = sv3-
+row_root                  = parent / ROW_PATH_LABELS[row]
+task_id                   = v3-<row label>
+```
+
+The canonical row strings remain unchanged in CLI choices, signed evidence, output sections, consumed markers and terminal results. The mapping is only for evaluator-private fixture paths.
+
+The portable evaluator candidate must statically prove at minimum:
+
+```text
+exact ROW_PATH_LABELS mapping
+all three canonical row names remain unchanged
+short temporary prefix is exactly sv3-
+row_root uses only the private label
+fixture task_id uses only v3-<label>
+no production API or caller path override is introduced
+simulated worst-row loose-object path length <= 210
+classic MAX_PATH headroom >= 50
+Windows evaluator remains absent from every pipeline flow
+RC036 permanent evidence remains immutable
+```
+
+The audited proposed path is `194` characters for every row, leaving `66` characters of classic Windows path headroom.
+
+RC037 verification is strictly non-active and may perform only:
+
+```text
+Python AST/syntax/compile checks for the exact two-file candidate
+git diff --check
+portable V1C2C3 evaluator
+unchanged package-boundary evaluator
+source-only pipeline topology verification
+full check only after Windows evaluator pipeline references remain 0
+Runtime Architecture Audit
+exact two-file candidate identity and patch measurement
+RC036 immutable evidence re-verification
+Sandbox process set empty verification
+```
+
+RC037 does NOT authorize:
+
+```text
+running the Windows evaluator, including guard-only invocation
+setting SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1
+launching Windows Sandbox
+creating any RC037 or RC038 consumed/result marker
+retrying RC036 live_pass
+retrying RC036 authentic_syntax_failure
+running the unstarted RC036 boundary row
+creating RC036 MATRIX_RESULT
+modifying production/workspace modules, pipeline.py or package boundaries
+```
+
+The future recovery model is not active authority under RC037. After exact candidate implementation, commit, docs closure and a fresh readiness audit, a separate later Roadmap Change may define recovery authority. The intended later model is:
+
+```text
+preserve and bind accepted RC036 live-pass RESULT; never rerun live_pass
+one fresh grant-specific syntax-failure retry
+one fresh grant-specific boundary-failure run
+new recovery matrix result binds:
+    RC036 live-pass result
+    + future accepted syntax result
+    + future accepted boundary result
+```
+
+Any future recovery markers/results must use new grant-specific names and must never overwrite or impersonate RC036 evidence.
+
+Operational state under RC037:
+
+```text
+RC036       FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+RC037       CURRENT / NON-ACTIVE PATH-BUDGET HARDENING ONLY
+
+V1C2C3      LIVE PASS ACCEPTED FROM RC036
+            SYNTAX ROW INFRASTRUCTURE-FAILED / CONSUMED IN RC036
+            BOUNDARY ROW NOT STARTED
+            PATH-BUDGET HARDENING CURRENT
+            ACTIVE RECOVERY BLOCKED
+
+Windows evaluator execution      FORBIDDEN
+Windows evaluator pipeline refs  0
+active authority                  NONE
+Sandbox                           NOT AUTHORIZED
+future recovery Roadmap Change   NOT CREATED
+```
+
+**Next Exact Action:** create the exact two-file RC037 path-budget hardening candidate and perform only the allowed non-active verification. Stop before candidate commit for exact evidence review. Do not create a recovery harness or later active-authority Roadmap Change yet.

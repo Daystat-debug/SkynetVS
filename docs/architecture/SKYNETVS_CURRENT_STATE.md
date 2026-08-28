@@ -2749,3 +2749,86 @@ Required pre-execution proofs:
 10. pipeline references remain zero, markers/results remain absent and Sandbox remains empty.
 
 Stop before creating any permanent RC036 marker or invoking an active row.
+
+## Roadmap Change 037 — V1C2C3 non-active path-budget hardening
+
+The read-only RC036 root-cause audit completed and fixed the irreversible state:
+
+```text
+HEAD / origin before RC037:             a0a352fe19e843a4f7b80c0e26a6b938520a9056
+root-cause audit bytes:                 30591
+root-cause audit SHA-256:               6e3269faf9ade9bbde51e5b123ffec87ed65590dd7c5cfd64f6bb2d82d309b25
+historical V1C2C3 evidence identity:    b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8
+```
+
+RC036 permanent state:
+
+```text
+live_pass:                    PASSED / CONSUMED / IMMUTABLE
+syntax_failure:               INFRASTRUCTURE-FAILED / CONSUMED / IMMUTABLE
+boundary_failure:             NOT STARTED / NOT AUTHORIZED UNDER RC036
+RC036 MATRIX_RESULT:          ABSENT / MUST REMAIN ABSENT
+RC036 rerun:                  FORBIDDEN
+```
+
+Root cause:
+
+```text
+evaluator-private repeated row names produced a 274-character Git object path
+classic Windows limit = 260
+over limit = 14
+failure occurred in _prepare / git clone
+before plan / lease / transaction / composition / Sandbox
+```
+
+RC037 exact mutable scope:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+```
+
+Required private path recipe:
+
+```text
+live_pass                          -> p
+authentic_syntax_failure           -> s
+signed_post_ready_boundary_failure -> b
+TEMP prefix                        -> sv3-
+row directory                      -> p / s / b
+task id                            -> v3-p / v3-s / v3-b
+```
+
+Canonical row names and all public/production contracts remain unchanged. Proposed worst-row loose-object path is `194`, with `66` characters of headroom.
+
+Current state:
+
+```text
+RC036:   FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+RC037:   CURRENT / NON-ACTIVE PATH-BUDGET HARDENING ONLY
+
+V1C2C3:  LIVE PASS ACCEPTED FROM RC036
+         SYNTAX ROW INFRASTRUCTURE-FAILED / CONSUMED IN RC036
+         BOUNDARY ROW NOT STARTED
+         PATH-BUDGET HARDENING CURRENT
+         ACTIVE RECOVERY BLOCKED
+
+active authority:             NONE
+Windows evaluator execution: FORBIDDEN
+Windows pipeline references: 0
+Sandbox:                      NOT AUTHORIZED
+recovery Roadmap Change:      NOT CREATED
+```
+
+### Next Exact Action
+
+Create exactly the two RC037 evaluator changes and perform non-active verification only: AST/syntax, `git diff --check`, portable evaluator, unchanged package boundaries, source-only topology, full `check` only with Windows references `0`, Runtime Architecture Audit, exact candidate/patch identities and immutable RC036 evidence verification.
+
+Stop before candidate commit for evidence review.
+
+Do not rerun RC036.
+Do not run any active V1C2C3 row.
+Do not set `SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED=1`.
+Do not modify/delete/rewrite RC036 markers/results.
+Do not create RC036 MATRIX_RESULT.
+Do not create the later recovery Roadmap Change yet.
