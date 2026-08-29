@@ -1772,3 +1772,61 @@ Sandbox                  NOT LAUNCHED
 ```
 
 Any future active attempt requires a new Roadmap Change/grant and fresh grant-specific permanent evidence. RC038 remains immutable failed historical evidence and must never be rerun.
+## Roadmap Change 041 — V1C2C3 post-RC040 split-provenance two-row recovery authority
+
+RC041 changes no production module or trusted runtime. It defines a future
+recovery evidence contract over the RC040 evaluator-only reachability fix.
+
+Fresh syntax provenance:
+
+```text
+eval_private_scoped_snapshot_material_substitution_v1
+```
+
+The production workspace snapshot continues to attest a valid placeholder. The
+evaluator-private substitution exists only during public plan issuance, is
+restricted to `module.py`, and must be restored before runtime bundle, lease,
+claim transaction, materialization and Sandbox execution.
+
+Exact current identities:
+
+```text
+Windows evaluator:
+dc45fbf529684fde4625050afbb512dfaefcf140109fe859a6ebe98378917002
+
+portable evaluator:
+b20514efebe1c7a9e7277ea45fc0fbdd67be5b6e8aa9547ac291861a1c3b2ed8
+
+plan evaluator:
+b24a3fdd237993d26e6023b325c4a6de0de68575ba64ad92dec85f9821a9f644
+
+production composition:
+748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+```
+
+The historical accepted live row came from Windows evaluator
+`d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd`. The final RC041 matrix must preserve that
+split provenance and may not claim one common evaluator for all logical rows.
+
+Every fresh row requires a new single-use capability chain and a new Sandbox
+instance. Active authority may exist only in the selected child environment.
+The parent remains non-active.
+
+Permanent evidence is append-only and grant-specific:
+
+```text
+skynetvs-v1c2c3-rc041-recovery-row-consumed-v1
+skynetvs-v1c2c3-rc041-recovery-row-result-v1
+skynetvs-v1c2c3-rc041-recovery-matrix-result-v1
+```
+
+```text
+production source change by RC041 docs transition = NONE
+trusted runtime change = NONE
+execution authority created by docs transition = NONE
+Windows active evaluator execution = FALSE
+Sandbox launch = FALSE
+```
+
+A source-audited external harness, host-only preflight and separate reviewed
+launcher are mandatory before any RC041 row may execute.

@@ -4250,3 +4250,409 @@ COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
 RC040 does not authorize active recovery.
 
 **Next Exact Action:** perform a fresh recovery-readiness review for a separate new grant (expected RC041). It must bind the current implementation commit and use new grant-specific permanent evidence names. RC038 must never be rerun or reused.
+## Roadmap Change 041 — V1C2C3 post-RC040 split-provenance two-row recovery authority
+
+**Основание:** fresh non-active readiness review завершён `PASS`:
+
+```text
+report:
+SkynetVS_V1C2C3_RC041_RecoveryReadinessReview_20260830_011705.txt
+
+bytes:
+53860
+
+SHA-256:
+99fb3d330d37f32ad96c46f99e204cc3be7740e7759a28f1ab9bd9710d867df3
+
+decision:
+ready to draft RC041 docs-only active grant = TRUE
+RC041 active execution authorized by readiness review = FALSE
+```
+
+RC040 закрыт как `COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED`.
+Production/runtime source не изменялся. Windows active evaluator отсутствует во всех
+pipeline flows.
+
+### Historical terminal state
+
+```text
+RC036 live_pass:
+  ACCEPTED / IMMUTABLE / NO RERUN
+
+RC038:
+  FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+
+RC038 syntax attempt:
+  CONSUMED / FAILED / IMMUTABLE
+
+RC038 boundary row:
+  NOT STARTED / FORBIDDEN UNDER RC038
+
+RC038 recovery matrix:
+  ABSENT / MUST REMAIN ABSENT
+```
+
+RC038 evidence не является частью успешных строк RC041. Финальный RC041 matrix
+обязан сохранить ссылки на RC038 marker/result как на historical failed recovery
+incident и явно указать, что они не приняты и не переиспользованы.
+
+### RC041 split-provenance model
+
+Логический acceptance order:
+
+```text
+1. historical RC036 live_pass — bind only, never execute
+2. fresh RC041 authentic_syntax_failure
+3. fresh RC041 signed_post_ready_boundary_failure
+```
+
+Fresh child order:
+
+```text
+1. authentic_syntax_failure
+2. signed_post_ready_boundary_failure
+```
+
+Historical accepted branch:
+
+```text
+grant:                         RC036
+row:                           live_pass
+historical HEAD:               a0a352fe19e843a4f7b80c0e26a6b938520a9056
+historical Windows evaluator:  d7135796b2cbb29d68a41ee3c391c3f0579c6b570da30ac3cd41d9a09fb849dd
+historical portable evaluator: 281c75d9237baacb7f3631069c1af0d95a1eecc052dae78587a2b6367e08abbb
+production composition:        748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+marker SHA-256:                 d944ae6b96a644563992b4f5354837b00be6156dbe90f989ac15bd5f39020f0c
+result SHA-256:                 30f1938b23febce463c17c5104d8d5b509b9b549322b2c81e7f03d4514cd85fc
+request_id:                     e7185cc61aecaae11cdb6480a976dc8a
+plan fingerprint:               ee623f0157b04d2a8e9846f2c5c00db9a4852ba1a0d7d5071922c86eadb24bf3
+runtime lease fingerprint:      2d6b6b1d549d5eddc90e84c69c593c03e6b5c0aede2ce1c1dca395319d13744f
+controller public key SHA-256:  7b1d46f608f0f43a34b3934179d7e77b5d55cd3e88e4b49782ba94a26fb6a466
+signed result SHA-256:          e40fb2d25ad00d6a1bd44bcb1f81aaaa873502d1677a0a6443af8b9296d1f5e6
+terminal:                       compile_ast_attested_passed
+boundary_ok:                    true
+check_passed:                   true
+rerun:                          FORBIDDEN
+```
+
+The readiness serialization contained a non-authoritative optional field:
+
+```text
+historical_live_binding.production_composition_sha256 = null
+```
+
+RC041 MUST NOT inherit or serialize that null as its binding. The exact non-empty
+production composition identity is pinned directly from the current committed
+production file:
+
+```text
+748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+```
+
+Every future RC041 harness/source audit must reject a missing, null, empty, or
+different production-composition identity before the first marker.
+
+Historical failed RC038 incident:
+
+```text
+grant:       RC038
+row:         authentic_syntax_failure
+marker SHA:  7f50a1b22bc82a1c2074624412ef82a857edf01fd842a8752df3dbefbdc4d205
+result SHA:  487ce6540761a72d6bdc7e59a5700566ccbcd8dfbea1808c79d7f8d646c40355
+consumed:    true
+accepted:    false
+reuse:       FORBIDDEN
+```
+
+Fresh RC041 branch:
+
+```text
+Windows evaluator:
+  dc45fbf529684fde4625050afbb512dfaefcf140109fe859a6ebe98378917002
+
+portable evaluator:
+  b20514efebe1c7a9e7277ea45fc0fbdd67be5b6e8aa9547ac291861a1c3b2ed8
+
+plan evaluator:
+  b24a3fdd237993d26e6023b325c4a6de0de68575ba64ad92dec85f9821a9f644
+
+production composition:
+  748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+
+syntax fixture provenance:
+  eval_private_scoped_snapshot_material_substitution_v1
+
+row order:
+  1. authentic_syntax_failure
+  2. signed_post_ready_boundary_failure
+```
+
+The final matrix MUST preserve split evaluator provenance. It must never claim
+that the historical RC036 live row and fresh RC041 rows were executed by one
+common evaluator identity.
+
+### Exact RC041 permanent evidence
+
+```text
+V1C2C3_RC041_SYNTAX_FAILURE_CONSUMED.json
+V1C2C3_RC041_SYNTAX_FAILURE_RESULT.json
+
+V1C2C3_RC041_BOUNDARY_FAILURE_CONSUMED.json
+V1C2C3_RC041_BOUNDARY_FAILURE_RESULT.json
+
+V1C2C3_RC041_RECOVERY_MATRIX_RESULT.json
+```
+
+Schemas:
+
+```text
+row marker:    skynetvs-v1c2c3-rc041-recovery-row-consumed-v1
+row result:    skynetvs-v1c2c3-rc041-recovery-row-result-v1
+matrix result: skynetvs-v1c2c3-rc041-recovery-matrix-result-v1
+```
+
+All five names are grant-specific. No RC036/RC038 marker, result, attempt ID,
+row authority, harness or launcher may be reused.
+
+### Append-only one-shot semantics
+
+For every fresh row:
+
+```text
+1. Revalidate exact Git/evaluator/runtime/historical evidence state.
+2. Reserve the grant-specific marker through exclusive create.
+3. Flush and fsync the marker before child creation.
+4. Launch exactly one selected Windows evaluator row in a new child process.
+5. Give active authority only to that child environment.
+6. Parse and independently validate the complete row transcript.
+7. Write one separate result through exclusive create + flush + fsync.
+8. Never rewrite, replace, rename-finalize, delete or reuse marker/result.
+```
+
+A marker permanently consumes its row attempt regardless of child/result
+outcome.
+
+Fail-stop rules:
+
+```text
+if a fresh row fails or is uncertain:
+  stop immediately
+  do not launch the next row
+  preserve all created evidence
+  do not create the matrix
+  do not retry the grant
+  require a new Roadmap Change
+
+if failure occurs before the first RC041 marker:
+  no row is consumed
+  automatic retry is still forbidden
+  review all reports before any new action
+
+once any RC041 marker exists:
+  RC041 harness/launcher rerun is permanently forbidden
+```
+
+### Locked syntax-row acceptance
+
+The syntax row is accepted only if the exact evaluator reports all of:
+
+```text
+row = authentic_syntax_failure
+process exit code = 0
+
+fixture_provenance =
+  eval_private_scoped_snapshot_material_substitution_v1
+
+ordinary_production_ingress = false
+production_public_plan_api_used = true
+snapshot_capability_consumed = true
+snapshot_attests_invalid_source = false
+plan_material_contains_exact_invalid_source = true
+substitution_scope = plan_issuance_only
+snapshot_material_methods_restored_before_runtime = true
+entry_substitution_paths = ["module.py"]
+exact_file_bytes_substitution_paths = ["module.py"]
+
+composition_ok = false
+composition_status = failed
+signed_ok = true
+terminal_status = compile_ast_attested_failed
+boundary_ok = true
+check_passed = false
+controller_status = controller_signed_success
+controller_terminal = compile_ast_attested_failed
+
+trusted_interpreter_executed = true
+changed_source_processed = true
+changed_source_ast_parsed = false
+changed_source_compiled = false
+changed_code_executed = false
+syntax_error_type = SyntaxError
+raw_source_absent = true
+```
+
+The harness must verify the dedicated `V1C2C3 SYNTAX FIXTURE PROVENANCE` section,
+the `V1C2C3 AUTHENTIC SYNTAX FAILURE` section, the summary, security section and
+cleanup section. A summary-only check is insufficient.
+
+### Locked boundary-row acceptance
+
+The boundary row is accepted only if:
+
+```text
+row = signed_post_ready_boundary_failure
+process exit code = 0
+
+fixture_provenance = ordinary_production_workspace_snapshot
+ordinary_production_ingress = true
+production_public_plan_api_used = true
+snapshot_capability_consumed = true
+snapshot_attests_invalid_source = false
+plan_material_contains_exact_invalid_source = false
+substitution_scope = none
+snapshot_material_methods_restored_before_runtime = true
+
+composition_ok = false
+composition_status = failed
+signed_ok = true
+terminal_status = compile_ast_boundary_failed
+boundary_ok = false
+check_passed = false
+result_sha256 = null
+controller_status = controller_signed_success
+controller_terminal = compile_ast_boundary_failed
+fault_applied = true
+fault_restored = true
+fault_kind = post_ready_pre_authorization_source_substitution
+```
+
+The boundary row must not use the RC040 syntax substitution.
+
+### Security, cleanup and freshness requirements
+
+Each fresh row must independently prove:
+
+```text
+claim_transaction_consumed = true
+runtime_lease_claimed = true
+sandbox_launched = true
+changed_code_executed = false
+reusable_lease_issued = false
+execution_authorized = false
+
+all_processes_exited = true
+forced_cleanup_attempted = false
+artifacts_removed = true
+source_unchanged = true
+workspace_unchanged = true
+active_tree_after = []
+runtime_tree_after = []
+processes_after = []
+```
+
+Fresh syntax and boundary rows require distinct:
+
+```text
+request_id
+plan fingerprint
+runtime lease fingerprint
+controller public key SHA-256
+child process
+Sandbox instance
+capability chain
+```
+
+Each fresh identity must also differ from the immutable RC036 live identity of
+the same type. Cross-row freshness is checked only after both fresh rows are
+accepted and before matrix creation.
+
+### Future RC041 matrix requirements
+
+The matrix may be created only after:
+
+```text
+historical RC036 live evidence revalidated, not rerun
+fresh RC041 syntax marker/result accepted
+fresh RC041 boundary marker/result accepted
+fresh-row cleanup revalidated
+fresh cross-row identities proven distinct
+all RC036/RC038 evidence preserved
+```
+
+Required matrix semantics:
+
+```text
+schema = skynetvs-v1c2c3-rc041-recovery-matrix-result-v1
+grant = RC041
+status = passed
+acceptance_ok = true
+logical_row_order = ['live_pass', 'authentic_syntax_failure', 'signed_post_ready_boundary_failure']
+fresh_row_order = ['authentic_syntax_failure', 'signed_post_ready_boundary_failure']
+
+single_evaluator_provenance_for_all_rows = false
+single_evaluator_provenance_claim_forbidden = true
+historical_live_rerun = false
+rc038_evidence_reused = false
+changed_code_executed = false
+reusable_lease_issued = false
+execution_authorized = false
+```
+
+### External harness, audit and launcher requirements
+
+Before active execution, create a separate external RC041 harness. It must:
+
+```text
+not import the Windows evaluator
+invoke one selected row per child process
+never construct a live_pass child command
+pin the RC041 docs commit
+pin this readiness report and RC040 closure report
+pin host Python, trusted runtime ZIP and current source identities
+pin exact non-empty production composition SHA
+verify RC036/RC038 evidence before every irreversible boundary
+require all five RC041 evidence files absent before the first marker
+use shell=False for every subprocess
+use exclusive-create + flush + fsync for evidence
+keep active authority absent in the parent
+set active authority/runtime ZIP only in the selected child
+stop after first failed or uncertain row
+```
+
+The external harness must be independently source-audited. The audit may run
+host-only/non-active gates and harness preflight, but it must stop before the
+first RC041 marker and before any Windows active row.
+
+A separate SHA-pinned launcher must require this exact manual confirmation:
+
+```text
+EXECUTE-RC041-POST-RC040-SPLIT-PROVENANCE-TWO-ROW-RECOVERY
+```
+
+The docs transition itself does not authorize execution:
+
+```text
+RC041 active execution authorized by docs transition = FALSE
+external harness source audit required = TRUE
+host-only preflight required = TRUE
+final launcher review required = TRUE
+```
+
+RC041 transition state:
+
+```text
+RC036 historical live_pass        ACCEPTED / IMMUTABLE / NO RERUN
+RC038                              FAILED / PARTIALLY CONSUMED / NO RERUN
+RC040                              CLOSED / NON-ACTIVE VERIFIED
+RC041                              CURRENT / SPLIT-PROVENANCE RECOVERY CONTRACT
+RC041 fresh syntax row             NOT CONSUMED / NOT EXECUTED
+RC041 fresh boundary row           NOT CONSUMED / NOT EXECUTED
+RC041 matrix                       ABSENT
+active authority                   ABSENT
+Windows evaluator pipeline refs    0
+Sandbox                            NOT LAUNCHED
+```
+
+**Next Exact Action:** create the exact external RC041 one-shot recovery harness
+and an independent source audit, then run only host-only preflight. Stop before
+the first RC041 marker and before any active Windows evaluator child.

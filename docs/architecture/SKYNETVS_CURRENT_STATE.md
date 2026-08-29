@@ -3199,3 +3199,86 @@ Active recovery remains blocked.
 ### Next Exact Action
 
 Run a fresh non-active recovery-readiness review against the RC040 implementation commit. If and only if that review passes, define a separate RC041 active grant with new marker/result names. Do not reuse any RC038 launcher, harness, marker, result, or row authority.
+## Roadmap Change 041 — V1C2C3 post-RC040 split-provenance two-row recovery authority
+
+```text
+HEAD / origin entering RC041 docs transition:
+de7704b2c804eb92b96537edbbd4b1feaa55849f
+
+RC036:
+live_pass ACCEPTED / IMMUTABLE / NO RERUN
+
+RC038:
+FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+
+RC040:
+COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+RC041:
+CURRENT / SPLIT-PROVENANCE TWO-ROW RECOVERY CONTRACT
+PRE-EXECUTION HARNESS SOURCE AUDIT REQUIRED
+```
+
+Fresh RC041 rows are:
+
+```text
+1. authentic_syntax_failure
+2. signed_post_ready_boundary_failure
+```
+
+Future evidence:
+
+```text
+V1C2C3_RC041_SYNTAX_FAILURE_CONSUMED.json
+V1C2C3_RC041_SYNTAX_FAILURE_RESULT.json
+V1C2C3_RC041_BOUNDARY_FAILURE_CONSUMED.json
+V1C2C3_RC041_BOUNDARY_FAILURE_RESULT.json
+V1C2C3_RC041_RECOVERY_MATRIX_RESULT.json
+```
+
+Current evaluator identities:
+
+```text
+Windows:
+dc45fbf529684fde4625050afbb512dfaefcf140109fe859a6ebe98378917002
+
+portable:
+b20514efebe1c7a9e7277ea45fc0fbdd67be5b6e8aa9547ac291861a1c3b2ed8
+
+plan evaluator:
+b24a3fdd237993d26e6023b325c4a6de0de68575ba64ad92dec85f9821a9f644
+
+production composition:
+748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992
+```
+
+Syntax provenance:
+
+```text
+eval_private_scoped_snapshot_material_substitution_v1
+```
+
+Historical `RC036 live_pass` remains bound under its historical evaluator
+identity and is never rerun. Failed RC038 evidence remains immutable historical
+failure evidence and is never reused as accepted RC041 evidence.
+
+The exact production composition identity is pinned directly to
+`748431106ed01d9898546c55799a4948424aa3e2eaed67181fce8110bbaea992`. A null/empty historical binding is forbidden.
+
+### Current prohibitions
+
+```text
+do not create RC041 marker/result/matrix files
+do not set active authority
+do not invoke the Windows active evaluator
+do not launch Sandbox
+do not rerun RC036 or RC038
+do not execute either RC041 row manually
+do not reuse any earlier launcher/harness
+```
+
+### Next Exact Action
+
+Create and source-audit a new RC041 external one-shot harness. Run its host-only
+preflight only. Stop before the first permanent RC041 marker and before either
+active child row.
