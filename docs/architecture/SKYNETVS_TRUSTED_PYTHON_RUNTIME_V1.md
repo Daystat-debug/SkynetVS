@@ -1693,3 +1693,49 @@ RC038 authority expansion                  = NONE
 ```
 
 RC038 active recovery is not authorized by RC039 closure. A fresh external recovery-harness source/host-only preflight is required first.
+## Roadmap Change 040 — V1C2C3 evaluator-private syntax-fixture reachability correction
+
+RC040 changes no trusted-runtime, production workspace, plan, transaction, composition, runner, contract, controller or verifier implementation.
+
+Exact source review established the existing production boundary:
+
+```text
+workspace static/snapshot layer:
+  ordinary invalid Python is rejected fail-closed
+
+Compile/AST plan layer:
+  consumes one typed snapshot
+  rechecks mode, exact size/SHA, NUL, strict UTF-8 and LF-only
+  deliberately does not parse Python syntax
+
+claim/composition layer:
+  transports and materializes exact retained plan bytes
+
+trusted guest runner:
+  performs ast.parse and compile
+  emits bounded SyntaxError evidence
+  never executes changed code
+
+contract/verifier:
+  accepts a signed attested failure with intact boundary and failed check
+```
+
+The RC040 fixture is therefore evaluator-private and limited to plan issuance:
+
+```text
+eval_private_scoped_snapshot_material_substitution_v1
+```
+
+It may temporarily substitute `DeveloperTaskExecutionWorkspaceSnapshotMaterial.entry` and `exact_file_bytes` only in the isolated syntax-row child process, only for `module.py`, and only around one real public plan issuance call. Original methods must be restored before runtime bundle, lease, transaction, materialization or Sandbox work begins.
+
+The final evidence must not claim that the production snapshot attested invalid source bytes or that invalid bytes arrived through ordinary production ingress.
+
+```text
+production API change       NONE
+trusted runtime change      NONE
+runtime policy change       NONE
+execution authority change  NONE
+RC040 active execution      FORBIDDEN
+```
+
+A later new recovery grant requires a separate Roadmap Change and new permanent evidence names. RC038 evidence remains immutable historical failed evidence.

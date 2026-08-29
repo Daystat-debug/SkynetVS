@@ -3974,3 +3974,203 @@ RC038 recovery matrix                   ABSENT
 RC038 active execution remains blocked until a **fresh post-RC039 external recovery-harness source/host-only preflight** passes against this exact committed state.
 
 **Next Exact Action:** rerun a fresh source/host-only audit of the exact RC038 external recovery harness from this post-RC039 HEAD. Stop before the first RC038 permanent marker and before any Windows active evaluator row.
+## Roadmap Change 040 — V1C2C3 evaluator-private syntax-fixture reachability correction
+
+**Основание:** точный review двух source bundles на commit `6dd329a788a64c713d86ad4de27a365d6dd363f6`:
+
+```text
+SkynetVS_RC040_ExactSourceBundle_20260829_133959.zip
+bytes:   58344
+SHA-256: b61f26868aca67a5da222c12d32a4f877fd00ef3cbd9dcc67d32a006595dd42d
+
+SkynetVS_RC040_DownstreamAndDocsSourceBundle_20260829_141122.zip
+bytes:   282441
+SHA-256: 48acc459d73bb964b5cff5276332dcf639bc17e925b9754364747103bb23b26b
+```
+
+### Terminal state RC038
+
+RC038 завершён как:
+
+```text
+FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+```
+
+Его fresh syntax-attempt имеет immutable consumed marker и отдельный failed result. Он был остановлен production static gate до snapshot/plan/runtime:
+
+```text
+row:              authentic_syntax_failure
+marker consumed:  true
+result status:    failed
+acceptance_ok:    false
+parsed_evidence:  null
+root failure:     static_python_syntax_error
+actual:           path=module.py;1:12:invalid syntax
+```
+
+RC038 boundary row не запускался. RC038 boundary marker/result и RC038 recovery matrix отсутствуют и должны оставаться отсутствующими. Ни launcher, ни harness RC038 нельзя запускать повторно.
+
+### Exact source-derived root cause
+
+Текущий Windows evaluator помещает `b"def broken(:\n"` в workspace **до** `_prepare()`. `_prepare()` запускает настоящий host static check и требует `static_report.ok`. Production workspace snapshot также fail-closed отвергает failed static report.
+
+При этом public Compile/AST plan API:
+
+```python
+issue_developer_task_execution_compile_ast_plan(snapshot)
+```
+
+не анализирует Python syntax. После атомарного `snapshot.claim_for_plan()` он проверяет mode, size/SHA, отсутствие NUL, strict UTF-8 и LF-only, затем сохраняет exact selected bytes в одноразовый plan material.
+
+Downstream review подтвердил:
+
+```text
+claim transaction:
+  возвращает exact plan_material и trusted runtime_bundle без преобразования
+
+composition filesystem:
+  читает plan_material.exact_source_bytes(...)
+  повторно проверяет size/SHA
+  записывает exact bytes в private input/sources
+  повторно сверяет materialization identity
+
+trusted guest runner:
+  проверяет exact source identity
+  выполняет ast.parse(...) и compile(...)
+  ловит genuine SyntaxError
+  не выполняет exec/eval/import/top-level code
+  возвращает bounded error evidence
+
+contract/controller/verifier:
+  принимают signed compile_ast_attested_failed
+  boundary_ok = true
+  check_passed = false
+  changed_code_executed = false
+  reusable_lease_issued = false
+  execution_authorized = false
+```
+
+Production behavior исправлять не требуется. Противоречие находится только в evaluator fixture reachability.
+
+### Locked RC040 architecture
+
+RC040 выбирает evaluator-private scoped substitution **только во время настоящего public plan issuance**:
+
+```text
+1. Создать ordinary workspace с синтаксически валидным placeholder Python.
+2. Успешно пройти настоящий static check.
+3. Создать настоящий production workspace snapshot.
+4. Только для syntax row открыть узкий unittest.mock.patch.object context:
+   - DeveloperTaskExecutionWorkspaceSnapshotMaterial.entry
+   - DeveloperTaskExecutionWorkspaceSnapshotMaterial.exact_file_bytes
+5. Только для module.py вернуть genuine invalid bytes:
+   b"def broken(:\n"
+   и согласованные size/SHA при сохранённом mode.
+6. Внутри этого context ровно один раз вызвать настоящий public
+   issue_developer_task_execution_compile_ast_plan(snapshot).
+7. Немедленно закрыть context.
+8. Доказать восстановление обоих class methods до runtime bundle, lease,
+   claim transaction, composition и Sandbox.
+9. Продолжить обычную production chain без дальнейших substitutions.
+```
+
+Snapshot остаётся честным attestation валидного placeholder workspace. Он **не** объявляется attestation invalid source. Invalid plan bytes имеют отдельную явную evaluator-only provenance:
+
+```text
+fixture_provenance =
+eval_private_scoped_snapshot_material_substitution_v1
+
+ordinary_production_ingress = false
+production_public_plan_api_used = true
+snapshot_capability_consumed = true
+plan_material_contains_exact_invalid_source = true
+substitution_scope = plan_issuance_only
+snapshot_material_methods_restored_before_runtime = true
+```
+
+Runtime SyntaxError, signed terminal, claim transaction, materialization, runner и verifier остаются настоящими. Только происхождение invalid test bytes является evaluator-private и должно быть явно отражено в evidence.
+
+### Exact RC040 mutable scope
+
+Только:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_plan.py
+```
+
+Назначение:
+
+```text
+Windows live evaluator:
+  реализовать syntax-only scoped plan-material substitution и provenance evidence
+
+portable V1C2C3 evaluator:
+  зафиксировать structural/provenance boundaries и неизменность pass/boundary flows
+
+V1C1B plan evaluator:
+  non-active positive proof, что syntax-invalid, но UTF-8/LF/NUL-safe bytes
+  запечатываются настоящим public plan API без выполнения кода
+```
+
+### Explicit prohibitions
+
+RC040 не разрешает изменять:
+
+```text
+modules/developer/**
+tools/pipeline.py
+tools/eval_package_boundaries.py
+RC038 launcher/harness
+RC036/RC038 permanent evidence
+```
+
+Запрещено:
+
+```text
+ослаблять static_check.ok или production snapshot validation
+добавлять public raw-source/fault-injection arguments
+обращаться к private plan/snapshot registry или constructor keys
+создавать synthetic production plan вручную
+оставлять patch context активным после plan issuance
+применять syntax substitution к live_pass или boundary row
+запускать Windows active evaluator или Sandbox под RC040
+```
+
+### Required non-active verification
+
+До и после implementation commit:
+
+```text
+exact three-file scope
+Python syntax/AST
+git diff --check
+targeted V1C1B plan evaluator
+portable V1C2C3 evaluator
+package boundaries
+full check
+Runtime Architecture Audit
+Windows evaluator pipeline references = 0
+RC036/RC038 immutable evidence preserved
+RC038 boundary/matrix evidence absent
+active environment absent
+Sandbox empty
+```
+
+RC040 не предоставляет active recovery authority. После implementation + docs closure требуется fresh readiness review и отдельный новый Roadmap Change, ожидаемо RC041, с новыми grant-specific marker/result names. Он не может повторять или переиспользовать RC038 syntax evidence.
+
+RC040 transition state:
+
+```text
+RC036  historical live-pass accepted / immutable
+RC038  failed / partially consumed / must not be rerun
+RC039  completed / non-active verified
+RC040  CURRENT / NON-ACTIVE EVALUATOR-ONLY REACHABILITY CORRECTION
+
+active recovery  BLOCKED
+Windows evaluator pipeline refs  0
+Sandbox  NOT AUTHORIZED
+```
+
+**Next Exact Action:** создать exact three-file RC040 candidate, выполнить только non-active verification и остановиться до commit для review.

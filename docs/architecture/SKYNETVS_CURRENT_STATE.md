@@ -3075,3 +3075,74 @@ active environment             ABSENT
 ### Next Exact Action
 
 Run a fresh post-RC039 RC038 recovery-harness source/host-only preflight. It must bind this exact HEAD and current V1C1A evaluator identity and stop before any RC038 marker, child active authority or Sandbox launch.
+## Roadmap Change 040 — V1C2C3 evaluator-private syntax-fixture reachability correction
+
+```text
+HEAD / origin entering RC040:
+6dd329a788a64c713d86ad4de27a365d6dd363f6
+
+RC038:
+FAILED / PARTIALLY CONSUMED / MUST NOT BE RERUN
+
+RC038 syntax retry:
+CONSUMED / FAILED / IMMUTABLE
+
+RC038 boundary row:
+NOT STARTED / FORBIDDEN UNDER RC038
+
+RC038 recovery matrix:
+ABSENT / MUST REMAIN ABSENT
+
+RC039:
+COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+RC040:
+CURRENT / NON-ACTIVE EVALUATOR-ONLY REACHABILITY CORRECTION
+```
+
+Direct source review proved that the existing syntax fixture is placed into the workspace before the mandatory host static gate. The gate correctly rejects it, so the fixture cannot reach the trusted runtime through ordinary workspace ingress.
+
+Locked correction:
+
+```text
+valid placeholder -> static PASS -> production snapshot
+-> syntax-row-only scoped snapshot-material substitution
+-> real public plan issuance
+-> patch methods restored
+-> ordinary transaction/materialization/runner/verifier chain
+-> genuine signed runtime SyntaxError
+```
+
+Provenance must remain explicit:
+
+```text
+fixture_provenance = eval_private_scoped_snapshot_material_substitution_v1
+ordinary_production_ingress = false
+snapshot attests invalid bytes = false
+public production plan API used = true
+runtime SyntaxError genuine = true
+```
+
+Exact mutable scope:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_plan.py
+```
+
+Current safety state:
+
+```text
+RC038 syntax marker/result  immutable
+RC038 boundary/matrix       absent
+active authority            NONE
+Windows active evaluator    DO NOT RUN
+Windows evaluator pipeline refs 0
+Sandbox                     DO NOT LAUNCH
+production source changes   NOT AUTHORIZED
+```
+
+### Next Exact Action
+
+Create and non-actively verify the exact three-file RC040 candidate. Stop before commit and before any active Windows/Sandbox execution.
