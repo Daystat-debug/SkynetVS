@@ -43,6 +43,11 @@ WINDOWS_EVALUATOR_PATH = (
     / "tools"
     / "eval_developer_task_execution_compile_ast_live_acceptance_windows.py"
 )
+PLAN_EVALUATOR_PATH = (
+    PROJECT_ROOT
+    / "tools"
+    / "eval_developer_task_execution_compile_ast_plan.py"
+)
 COMPOSITION_PATH = (
     PROJECT_ROOT
     / "modules"
@@ -62,6 +67,10 @@ HISTORICAL_V1C2C3_EVIDENCE_IDENTITY = (
     "b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8"
 )
 WINDOWS_ACTIVE_AUTHORITY_ENV = "SKYNETVS_V1C2C3_ACTIVE_MATRIX_AUTHORIZED"
+SYNTAX_FIXTURE_PROVENANCE = (
+    "eval_private_scoped_snapshot_material_substitution_v1"
+)
+VALID_SYNTAX_PLACEHOLDER_SOURCE = b"value = 2\n"
 INVALID_SYNTAX_SOURCE = b"def broken(:\n"
 WINDOWS_CLASSIC_MAX_PATH = 260
 V1C2C3_PRIVATE_PATH_BUDGET = 210
@@ -562,6 +571,26 @@ def main() -> int:
         == HISTORICAL_V1C2C3_EVIDENCE_IDENTITY,
         False,
     )
+    check(
+        "V1C2C3 RC040 SYNTAX FIXTURE PROVENANCE IS DOCUMENTED",
+        {
+            "roadmap_change_040": "Roadmap Change 040" in docs,
+            "fixture_provenance": SYNTAX_FIXTURE_PROVENANCE in docs,
+            "ordinary_ingress_false": (
+                "ordinary_production_ingress = false" in docs
+            ),
+            "production_change_none": (
+                "production/runtime changes authorized = NONE" in docs
+                or "production API change       NONE" in docs
+            ),
+        },
+        {
+            "roadmap_change_040": True,
+            "fixture_provenance": True,
+            "ordinary_ingress_false": True,
+            "production_change_none": True,
+        },
+    )
 
     windows_source = _source(WINDOWS_EVALUATOR_PATH)
     windows_tree = ast.parse(
@@ -654,6 +683,210 @@ def main() -> int:
         },
     )
 
+
+    row_changes_node = _top_level_function(
+        windows_tree,
+        "_row_changes",
+    )
+    row_changes_source = (
+        ast.get_source_segment(windows_source, row_changes_node) or ""
+    )
+    issue_plan_node = _top_level_function(
+        windows_tree,
+        "_issue_plan_for_row",
+    )
+    issue_plan_source = (
+        ast.get_source_segment(windows_source, issue_plan_node) or ""
+    )
+    issue_plan_with_nodes = [
+        node
+        for node in ast.walk(issue_plan_node)
+        if isinstance(node, ast.With)
+    ]
+    issue_plan_patch_attributes: list[str] = []
+    for node in ast.walk(issue_plan_node):
+        if not (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Attribute)
+            and isinstance(node.func.value, ast.Name)
+            and node.func.value.id == "patch"
+            and node.func.attr == "object"
+            and len(node.args) >= 2
+            and isinstance(node.args[1], ast.Constant)
+            and isinstance(node.args[1].value, str)
+        ):
+            continue
+        issue_plan_patch_attributes.append(node.args[1].value)
+
+    issue_plan_calls = [
+        node
+        for node in ast.walk(issue_plan_node)
+        if isinstance(node, ast.Call)
+        and _call_name(node)
+        == "issue_developer_task_execution_compile_ast_plan"
+    ]
+    issue_plan_calls_inside_with = [
+        call
+        for call in issue_plan_calls
+        if any(
+            call is descendant
+            for with_node in issue_plan_with_nodes
+            for descendant in ast.walk(with_node)
+        )
+    ]
+    methods_restored_assignments = [
+        node
+        for node in ast.walk(issue_plan_node)
+        if isinstance(node, ast.Assign)
+        and any(
+            isinstance(target, ast.Name)
+            and target.id == "methods_restored"
+            for target in node.targets
+        )
+    ]
+    forbidden_issue_plan_calls = sorted(
+        {
+            _call_name(node)
+            for node in ast.walk(issue_plan_node)
+            if isinstance(node, ast.Call)
+            and _call_name(node)
+            in {
+                "build_developer_task_execution_runtime_bundle",
+                "issue_developer_task_execution_runtime_lease",
+                "issue_developer_task_execution_compile_ast_claim_transaction",
+                "attest_developer_task_execution_compile_ast_composition",
+                "_attest_developer_task_execution_compile_ast_composition",
+                "snapshot_windows_sandbox_processes",
+            }
+        }
+    )
+
+    check(
+        "V1C2C3 RC040 SYNTAX FIXTURE IS SCOPED TO PUBLIC PLAN ISSUANCE",
+        {
+            "syntax_workspace_uses_valid_placeholder": (
+                "SYNTAX_FIXTURE_PATH: VALID_SYNTAX_PLACEHOLDER_SOURCE"
+                in row_changes_source
+                and "INVALID_SYNTAX_SOURCE" not in row_changes_source
+            ),
+            "valid_placeholder_is_syntax_valid": (
+                ast.parse(
+                    VALID_SYNTAX_PLACEHOLDER_SOURCE.decode("utf-8"),
+                    filename="placeholder.py",
+                )
+                is not None
+            ),
+            "fixture_provenance_constant": (
+                SYNTAX_FIXTURE_PROVENANCE in windows_source
+            ),
+            "syntax_only_branch": (
+                "if row != ROW_SYNTAX:" in issue_plan_source
+            ),
+            "with_count": len(issue_plan_with_nodes),
+            "patch_attributes": sorted(issue_plan_patch_attributes),
+            "public_plan_call_count": len(issue_plan_calls),
+            "public_plan_calls_inside_patch": len(
+                issue_plan_calls_inside_with
+            ),
+            "restoration_after_patch": (
+                len(issue_plan_with_nodes) == 1
+                and len(methods_restored_assignments) == 1
+                and issue_plan_with_nodes[0].end_lineno
+                < methods_restored_assignments[0].lineno
+            ),
+            "runtime_calls_inside_helper": forbidden_issue_plan_calls,
+            "private_registry_absent": "_REGISTRY" not in windows_source,
+            "private_constructor_keys_absent": (
+                "_MATERIAL_CONSTRUCTOR_KEY" not in windows_source
+                and "_CONSTRUCTOR_KEY" not in windows_source
+            ),
+            "provenance_output_section": (
+                windows_source.count(
+                    "V1C2C3 SYNTAX FIXTURE PROVENANCE"
+                )
+                == 1
+            ),
+        },
+        {
+            "syntax_workspace_uses_valid_placeholder": True,
+            "valid_placeholder_is_syntax_valid": True,
+            "fixture_provenance_constant": True,
+            "syntax_only_branch": True,
+            "with_count": 1,
+            "patch_attributes": ["entry", "exact_file_bytes"],
+            "public_plan_call_count": 2,
+            "public_plan_calls_inside_patch": 1,
+            "restoration_after_patch": True,
+            "runtime_calls_inside_helper": [],
+            "private_registry_absent": True,
+            "private_constructor_keys_absent": True,
+            "provenance_output_section": True,
+        },
+    )
+
+    plan_evaluator_source = _source(PLAN_EVALUATOR_PATH)
+    plan_evaluator_tree = ast.parse(
+        plan_evaluator_source,
+        filename=str(PLAN_EVALUATOR_PATH),
+        mode="exec",
+    )
+    plan_main_node = _top_level_function(plan_evaluator_tree, "main")
+    plan_main_source = (
+        ast.get_source_segment(plan_evaluator_source, plan_main_node) or ""
+    )
+    check(
+        "V1C2C3 RC040 PLAN EVALUATOR PROVES NON-ACTIVE INVALID SOURCE SEALING",
+        {
+            "case_present": (
+                "V1C1B SYNTAX INVALID UTF8 LF SOURCE IS SEALED WITHOUT EXECUTION"
+                in plan_main_source
+            ),
+            "genuine_invalid_source": (
+                'invalid_syntax_source = b"def broken(:\\n"'
+                in plan_main_source
+            ),
+            "entry_patch": (
+                '"entry",\n            syntax_entry,'
+                in plan_main_source
+            ),
+            "exact_bytes_patch": (
+                '"exact_file_bytes",\n            syntax_bytes,'
+                in plan_main_source
+            ),
+            "public_plan_api": (
+                "issue_developer_task_execution_compile_ast_plan("
+                in plan_main_source
+            ),
+            "exact_material_read": (
+                'syntax_material.exact_source_bytes("module.py")'
+                in plan_main_source
+            ),
+            "methods_restored": (
+                "snapshot_material_methods_restored"
+                in plan_main_source
+            ),
+            "non_execution_flags": all(
+                token in plan_main_source
+                for token in (
+                    '"sandbox": False',
+                    '"candidate": False',
+                    '"changed_exec": False',
+                    '"authorized": False',
+                )
+            ),
+        },
+        {
+            "case_present": True,
+            "genuine_invalid_source": True,
+            "entry_patch": True,
+            "exact_bytes_patch": True,
+            "public_plan_api": True,
+            "exact_material_read": True,
+            "methods_restored": True,
+            "non_execution_flags": True,
+        },
+    )
+
     check(
         "V1C2C3 WINDOWS HARNESS REQUIRED STRUCTURE",
         {
@@ -671,6 +904,7 @@ def main() -> int:
                     "_parse_row",
                     "_mint_row_authority",
                     "_consume_row_authority",
+                    "_issue_plan_for_row",
                     "_run_case",
                     "_verify_captured_transcript",
                     "main",
@@ -682,6 +916,7 @@ def main() -> int:
             "boundary_methods": ["publish_authorize", "verify_materialization"],
             "functions": [
                 "_consume_row_authority",
+                "_issue_plan_for_row",
                 "_mint_row_authority",
                 "_parse_row",
                 "_run_case",
@@ -815,7 +1050,7 @@ def main() -> int:
     active_call_names = {
         "snapshot_windows_sandbox_processes",
         "inspect_developer_task_execution_backend_host",
-        "issue_developer_task_execution_compile_ast_plan",
+        "_issue_plan_for_row",
         "build_developer_task_execution_runtime_bundle",
         "issue_developer_task_execution_runtime_lease",
         "issue_developer_task_execution_compile_ast_claim_transaction",
@@ -839,6 +1074,49 @@ def main() -> int:
             + list(run_case_node.args.kwonlyargs)
         )
     ]
+
+    run_case_source = (
+        ast.get_source_segment(windows_source, run_case_node) or ""
+    )
+    capture_offset = run_case_source.find("snapshot = _capture(fixture)")
+    plan_helper_offset = run_case_source.find(
+        "plan, plan_fixture = _issue_plan_for_row(row, snapshot)"
+    )
+    restore_guard_offset = run_case_source.find(
+        '"snapshot_material_methods_restored_before_runtime"'
+    )
+    runtime_bundle_offset = run_case_source.find(
+        "build_developer_task_execution_runtime_bundle("
+    )
+    check(
+        "V1C2C3 RC040 PLAN SUBSTITUTION ENDS BEFORE RUNTIME CHAIN",
+        {
+            "capture_before_plan_helper": (
+                0 <= capture_offset < plan_helper_offset
+            ),
+            "plan_helper_before_restore_guard": (
+                0 <= plan_helper_offset < restore_guard_offset
+            ),
+            "restore_guard_before_runtime_bundle": (
+                0 <= restore_guard_offset < runtime_bundle_offset
+            ),
+            "run_case_has_no_patch_context": (
+                "patch.object(" not in run_case_source
+            ),
+            "run_case_has_no_direct_plan_issue": (
+                "issue_developer_task_execution_compile_ast_plan("
+                not in run_case_source
+            ),
+        },
+        {
+            "capture_before_plan_helper": True,
+            "plan_helper_before_restore_guard": True,
+            "restore_guard_before_runtime_bundle": True,
+            "run_case_has_no_patch_context": True,
+            "run_case_has_no_direct_plan_issue": True,
+        },
+    )
+
     check(
         "V1C2C3 _RUN_CASE REQUIRES AND CONSUMES PRIVATE AUTHORITY FIRST",
         {
@@ -1005,6 +1283,8 @@ def main() -> int:
         "architecture_slice": "V1C2C3",
         "row_isolation_hardened": True,
         "path_budget_hardened": True,
+        "syntax_fixture_reachability_hardened": True,
+        "syntax_fixture_provenance": SYNTAX_FIXTURE_PROVENANCE,
         "historical_evidence_identity": HISTORICAL_V1C2C3_EVIDENCE_IDENTITY,
         "matrix_rows": [item["row"] for item in V1C2C3_MATRIX],
         "windows_active_evaluator_executed": False,

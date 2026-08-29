@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import copy
 import hashlib
 import inspect
@@ -311,6 +312,150 @@ def main() -> int:
 
         original_entry = DeveloperTaskExecutionWorkspaceSnapshotMaterial.entry
         original_bytes = DeveloperTaskExecutionWorkspaceSnapshotMaterial.exact_file_bytes
+
+        invalid_syntax_source = b"def broken(:\n"
+        invalid_syntax_sha256 = hashlib.sha256(
+            invalid_syntax_source
+        ).hexdigest()
+        placeholder_source = b"value = 2\n"
+        placeholder_sha256 = hashlib.sha256(
+            placeholder_source
+        ).hexdigest()
+        snapshot = standard_snapshot()
+        snapshot_entry = next(
+            item
+            for item in snapshot.report.files
+            if item.path == "module.py"
+        )
+        entry_paths: list[str] = []
+        exact_file_bytes_paths: list[str] = []
+
+        def syntax_entry(
+            material: DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+            path: str,
+        ) -> DeveloperTaskExecutionWorkspaceSnapshotEntry:
+            item = original_entry(material, path)
+            if path == "module.py":
+                entry_paths.append(path)
+                return DeveloperTaskExecutionWorkspaceSnapshotEntry(
+                    path=item.path,
+                    mode=item.mode,
+                    object_id=item.object_id,
+                    size_bytes=len(invalid_syntax_source),
+                    sha256=invalid_syntax_sha256,
+                )
+            return item
+
+        def syntax_bytes(
+            material: DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+            path: str,
+        ) -> bytes:
+            if path == "module.py":
+                exact_file_bytes_paths.append(path)
+                return invalid_syntax_source
+            return original_bytes(material, path)
+
+        with patch.object(
+            DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+            "entry",
+            syntax_entry,
+        ), patch.object(
+            DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+            "exact_file_bytes",
+            syntax_bytes,
+        ):
+            syntax_plan = issue_developer_task_execution_compile_ast_plan(
+                snapshot
+            )
+
+        methods_restored = (
+            DeveloperTaskExecutionWorkspaceSnapshotMaterial.entry
+            is original_entry
+            and DeveloperTaskExecutionWorkspaceSnapshotMaterial.exact_file_bytes
+            is original_bytes
+        )
+        syntax_plan_state_before_claim = syntax_plan.status().state
+        syntax_material = syntax_plan.claim_for_compile_ast_gate()
+        syntax_source = syntax_plan.report.sources[0]
+        syntax_is_invalid = False
+        try:
+            ast.parse(
+                invalid_syntax_source.decode("utf-8"),
+                filename="module.py",
+                mode="exec",
+            )
+        except SyntaxError:
+            syntax_is_invalid = True
+
+        syntax_serialized = json.dumps(
+            syntax_plan.report.to_dict(),
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        check(
+            "V1C1B SYNTAX INVALID UTF8 LF SOURCE IS SEALED WITHOUT EXECUTION",
+            {
+                "syntax_is_invalid": syntax_is_invalid,
+                "snapshot_attests_placeholder": (
+                    snapshot_entry.sha256 == placeholder_sha256
+                    and snapshot_entry.size_bytes == len(placeholder_source)
+                ),
+                "snapshot_attests_invalid_source": (
+                    snapshot_entry.sha256 == invalid_syntax_sha256
+                ),
+                "snapshot_state": snapshot.status().state,
+                "plan_state_before_claim": syntax_plan_state_before_claim,
+                "plan_state_after_claim": syntax_plan.status().state,
+                "plan_ok": syntax_plan.report.ok,
+                "selected": list(
+                    syntax_plan.report.selected_python_files
+                ),
+                "source_size": syntax_source.size_bytes,
+                "source_sha256": syntax_source.sha256,
+                "exact_source_matches": (
+                    syntax_material.exact_source_bytes("module.py")
+                    == invalid_syntax_source
+                ),
+                "entry_substitution_paths": entry_paths,
+                "exact_file_bytes_substitution_paths": (
+                    exact_file_bytes_paths
+                ),
+                "snapshot_material_methods_restored": methods_restored,
+                "raw_invalid_source_absent_from_report": (
+                    "def broken(:" not in syntax_serialized
+                ),
+                "sandbox": syntax_plan.report.sandbox_launched,
+                "candidate": (
+                    syntax_plan.report.candidate_interpreter_executed
+                ),
+                "changed_exec": syntax_plan.report.changed_code_executed,
+                "authorized": syntax_plan.report.execution_authorized,
+            },
+            {
+                "syntax_is_invalid": True,
+                "snapshot_attests_placeholder": True,
+                "snapshot_attests_invalid_source": False,
+                "snapshot_state": "claimed_for_plan",
+                "plan_state_before_claim": "issued",
+                "plan_state_after_claim": (
+                    COMPILE_AST_PLAN_STATE_CLAIMED_FOR_GATE
+                ),
+                "plan_ok": True,
+                "selected": ["module.py"],
+                "source_size": len(invalid_syntax_source),
+                "source_sha256": invalid_syntax_sha256,
+                "exact_source_matches": True,
+                "entry_substitution_paths": ["module.py"],
+                "exact_file_bytes_substitution_paths": ["module.py"],
+                "snapshot_material_methods_restored": True,
+                "raw_invalid_source_absent_from_report": True,
+                "sandbox": False,
+                "candidate": False,
+                "changed_exec": False,
+                "authorized": False,
+            },
+        )
+
         for name, payload, code in (
             ("V1C1B STRICT UTF8 RECHECK REJECTS INVALID SOURCE", b"value = \xff\n", "compile_ast_plan_encoding_rejected"),
             ("V1C1B NUL SOURCE RECHECK FAILS CLOSED", b"value = 1\x00\n", "compile_ast_plan_nul_rejected"),

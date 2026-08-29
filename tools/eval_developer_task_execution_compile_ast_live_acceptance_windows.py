@@ -19,6 +19,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from unittest.mock import patch
 
 from modules.developer.developer_task_execution_backend_host import (
     inspect_developer_task_execution_backend_host,
@@ -46,6 +47,10 @@ from modules.developer.developer_task_execution_compile_ast_verifier import (
     DeveloperTaskExecutionCompileAstTranscriptReport,
     verify_developer_task_execution_compile_ast_transcript,
 )
+from modules.developer.developer_task_execution_workspace_snapshot import (
+    DeveloperTaskExecutionWorkspaceSnapshotEntry,
+    DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+)
 from modules.developer.developer_task_execution_runtime_bundle import (
     build_developer_task_execution_runtime_bundle,
 )
@@ -69,6 +74,11 @@ HISTORICAL_V1C2C3_EVIDENCE_IDENTITY = (
     "b866a1c6dcddb802b4b7d2883aabf9c1fc8d22ed25443bd5aade3068fc49b9c8"
 )
 BOUNDARY_FAULT_KIND = "post_ready_pre_authorization_source_substitution"
+SYNTAX_FIXTURE_PROVENANCE = (
+    "eval_private_scoped_snapshot_material_substitution_v1"
+)
+SYNTAX_FIXTURE_PATH = "module.py"
+VALID_SYNTAX_PLACEHOLDER_SOURCE = b"value = 2\n"
 INVALID_SYNTAX_SOURCE = b"def broken(:\n"
 
 ROW_PASS = "live_pass"
@@ -314,7 +324,7 @@ def _verify_captured_transcript(
 def _row_changes(row: str) -> dict[str, bytes | None]:
     if row == ROW_SYNTAX:
         return {
-            "module.py": INVALID_SYNTAX_SOURCE,
+            SYNTAX_FIXTURE_PATH: VALID_SYNTAX_PLACEHOLDER_SOURCE,
             "delete.py": None,
             "notes.txt": b"new\n",
         }
@@ -328,6 +338,155 @@ def _row_changes(row: str) -> dict[str, bytes | None]:
         "module.py": b"value = 2\n",
         "delete.py": None,
         "notes.txt": b"new\n",
+    }
+
+
+def _issue_plan_for_row(
+    row: str,
+    snapshot: Any,
+) -> tuple[Any, dict[str, Any]]:
+    """Issue one real public plan and bind evaluator-only syntax provenance."""
+
+    if row != ROW_SYNTAX:
+        plan = issue_developer_task_execution_compile_ast_plan(snapshot)
+        return plan, {
+            "fixture_provenance": "ordinary_production_workspace_snapshot",
+            "ordinary_production_ingress": True,
+            "production_public_plan_api_used": True,
+            "snapshot_capability_consumed": plan.report.snapshot_consumed,
+            "snapshot_attests_invalid_source": False,
+            "plan_material_contains_exact_invalid_source": False,
+            "substitution_scope": "none",
+            "snapshot_material_methods_restored_before_runtime": True,
+            "entry_substitution_paths": [],
+            "exact_file_bytes_substitution_paths": [],
+        }
+
+    invalid_sha256 = hashlib.sha256(INVALID_SYNTAX_SOURCE).hexdigest()
+    placeholder_sha256 = hashlib.sha256(
+        VALID_SYNTAX_PLACEHOLDER_SOURCE
+    ).hexdigest()
+    placeholder_entry = next(
+        (
+            item
+            for item in snapshot.report.files
+            if item.path == SYNTAX_FIXTURE_PATH
+        ),
+        None,
+    )
+    if placeholder_entry is None:
+        raise RuntimeError(
+            "V1C2C3 syntax fixture placeholder is missing from snapshot"
+        )
+    if (
+        placeholder_entry.sha256 != placeholder_sha256
+        or placeholder_entry.size_bytes
+        != len(VALID_SYNTAX_PLACEHOLDER_SOURCE)
+    ):
+        raise RuntimeError(
+            "V1C2C3 syntax fixture snapshot does not attest the valid placeholder"
+        )
+    if placeholder_entry.sha256 == invalid_sha256:
+        raise RuntimeError(
+            "V1C2C3 syntax fixture snapshot must not attest invalid source bytes"
+        )
+
+    original_entry = DeveloperTaskExecutionWorkspaceSnapshotMaterial.entry
+    original_exact_file_bytes = (
+        DeveloperTaskExecutionWorkspaceSnapshotMaterial.exact_file_bytes
+    )
+    entry_paths: list[str] = []
+    exact_file_bytes_paths: list[str] = []
+
+    def substituted_entry(
+        material: DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+        path: str,
+    ) -> DeveloperTaskExecutionWorkspaceSnapshotEntry:
+        item = original_entry(material, path)
+        if path == SYNTAX_FIXTURE_PATH:
+            entry_paths.append(path)
+            return DeveloperTaskExecutionWorkspaceSnapshotEntry(
+                path=item.path,
+                mode=item.mode,
+                object_id=item.object_id,
+                size_bytes=len(INVALID_SYNTAX_SOURCE),
+                sha256=invalid_sha256,
+            )
+        return item
+
+    def substituted_exact_file_bytes(
+        material: DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+        path: str,
+    ) -> bytes:
+        if path == SYNTAX_FIXTURE_PATH:
+            exact_file_bytes_paths.append(path)
+            return INVALID_SYNTAX_SOURCE
+        return original_exact_file_bytes(material, path)
+
+    with patch.object(
+        DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+        "entry",
+        substituted_entry,
+    ), patch.object(
+        DeveloperTaskExecutionWorkspaceSnapshotMaterial,
+        "exact_file_bytes",
+        substituted_exact_file_bytes,
+    ):
+        plan = issue_developer_task_execution_compile_ast_plan(snapshot)
+
+    methods_restored = (
+        DeveloperTaskExecutionWorkspaceSnapshotMaterial.entry
+        is original_entry
+        and DeveloperTaskExecutionWorkspaceSnapshotMaterial.exact_file_bytes
+        is original_exact_file_bytes
+    )
+    if not methods_restored:
+        raise RuntimeError(
+            "V1C2C3 syntax fixture snapshot material methods were not restored"
+        )
+
+    plan_source = next(
+        (
+            item
+            for item in plan.report.sources
+            if item.path == SYNTAX_FIXTURE_PATH
+        ),
+        None,
+    )
+    plan_binds_invalid_source = bool(
+        plan_source is not None
+        and plan_source.size_bytes == len(INVALID_SYNTAX_SOURCE)
+        and plan_source.sha256 == invalid_sha256
+        and plan.report.selected_python_files == (SYNTAX_FIXTURE_PATH,)
+        and entry_paths == [SYNTAX_FIXTURE_PATH]
+        and exact_file_bytes_paths == [SYNTAX_FIXTURE_PATH]
+    )
+    if not plan_binds_invalid_source:
+        raise RuntimeError(
+            "V1C2C3 syntax fixture plan did not bind exact invalid source identity"
+        )
+    if snapshot.status().state != "claimed_for_plan":
+        raise RuntimeError(
+            "V1C2C3 syntax fixture snapshot was not atomically consumed"
+        )
+    if plan.status().state != "issued":
+        raise RuntimeError(
+            "V1C2C3 syntax fixture plan is not in issued state"
+        )
+
+    return plan, {
+        "fixture_provenance": SYNTAX_FIXTURE_PROVENANCE,
+        "ordinary_production_ingress": False,
+        "production_public_plan_api_used": True,
+        "snapshot_capability_consumed": plan.report.snapshot_consumed,
+        "snapshot_attests_invalid_source": False,
+        "plan_material_contains_exact_invalid_source": True,
+        "substitution_scope": "plan_issuance_only",
+        "snapshot_material_methods_restored_before_runtime": methods_restored,
+        "entry_substitution_paths": list(entry_paths),
+        "exact_file_bytes_substitution_paths": list(exact_file_bytes_paths),
+        "invalid_source_sha256": invalid_sha256,
+        "placeholder_source_sha256": placeholder_sha256,
     }
 
 
@@ -373,7 +532,13 @@ def _run_case(
     workspace_repo = Path(workspace.repository_root)
 
     snapshot = _capture(fixture)
-    plan = issue_developer_task_execution_compile_ast_plan(snapshot)
+    plan, plan_fixture = _issue_plan_for_row(row, snapshot)
+    if not plan_fixture[
+        "snapshot_material_methods_restored_before_runtime"
+    ]:
+        raise RuntimeError(
+            "V1C2C3 snapshot material methods remain patched before runtime"
+        )
 
     runtime_artifact_parent = row_root / "runtime-artifacts"
     runtime_artifact_parent.mkdir()
@@ -452,6 +617,7 @@ def _run_case(
         "signed": signed,
         "controller": controller,
         "captured_result": captured_result_payload,
+        "plan_fixture": plan_fixture,
         "request_id": expectation.request_id,
         "runtime_lease_fingerprint": expectation.runtime_lease_fingerprint,
         "plan_fingerprint": expectation.plan_fingerprint,
@@ -592,6 +758,61 @@ def main(argv: list[str] | None = None) -> int:
             },
         )
     elif selected_row == ROW_SYNTAX:
+        syntax_fixture = item["plan_fixture"]
+        check(
+            "V1C2C3 SYNTAX FIXTURE PROVENANCE",
+            {
+                "fixture_provenance": syntax_fixture.get(
+                    "fixture_provenance"
+                ),
+                "ordinary_production_ingress": syntax_fixture.get(
+                    "ordinary_production_ingress"
+                ),
+                "production_public_plan_api_used": syntax_fixture.get(
+                    "production_public_plan_api_used"
+                ),
+                "snapshot_capability_consumed": syntax_fixture.get(
+                    "snapshot_capability_consumed"
+                ),
+                "snapshot_attests_invalid_source": syntax_fixture.get(
+                    "snapshot_attests_invalid_source"
+                ),
+                "plan_material_contains_exact_invalid_source": (
+                    syntax_fixture.get(
+                        "plan_material_contains_exact_invalid_source"
+                    )
+                ),
+                "substitution_scope": syntax_fixture.get(
+                    "substitution_scope"
+                ),
+                "snapshot_material_methods_restored_before_runtime": (
+                    syntax_fixture.get(
+                        "snapshot_material_methods_restored_before_runtime"
+                    )
+                ),
+                "entry_substitution_paths": syntax_fixture.get(
+                    "entry_substitution_paths"
+                ),
+                "exact_file_bytes_substitution_paths": syntax_fixture.get(
+                    "exact_file_bytes_substitution_paths"
+                ),
+            },
+            {
+                "fixture_provenance": SYNTAX_FIXTURE_PROVENANCE,
+                "ordinary_production_ingress": False,
+                "production_public_plan_api_used": True,
+                "snapshot_capability_consumed": True,
+                "snapshot_attests_invalid_source": False,
+                "plan_material_contains_exact_invalid_source": True,
+                "substitution_scope": "plan_issuance_only",
+                "snapshot_material_methods_restored_before_runtime": True,
+                "entry_substitution_paths": [SYNTAX_FIXTURE_PATH],
+                "exact_file_bytes_substitution_paths": [
+                    SYNTAX_FIXTURE_PATH
+                ],
+            },
+        )
+
         syntax_result = item["captured_result"] or {}
         syntax_files = syntax_result.get("files", [])
         syntax_errors = [
@@ -782,6 +1003,24 @@ def main(argv: list[str] | None = None) -> int:
         "boundary_ok": signed.boundary_ok,
         "check_passed": signed.check_passed,
         "result_sha256": signed.result_sha256,
+        "fixture_provenance": item["plan_fixture"][
+            "fixture_provenance"
+        ],
+        "ordinary_production_ingress": item["plan_fixture"][
+            "ordinary_production_ingress"
+        ],
+        "production_public_plan_api_used": item["plan_fixture"][
+            "production_public_plan_api_used"
+        ],
+        "snapshot_capability_consumed": item["plan_fixture"][
+            "snapshot_capability_consumed"
+        ],
+        "plan_material_contains_exact_invalid_source": item[
+            "plan_fixture"
+        ]["plan_material_contains_exact_invalid_source"],
+        "snapshot_material_methods_restored_before_runtime": item[
+            "plan_fixture"
+        ]["snapshot_material_methods_restored_before_runtime"],
         "changed_code_executed": False,
         "reusable_lease_issued": False,
         "execution_authorized": False,
