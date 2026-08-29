@@ -3146,3 +3146,56 @@ production source changes   NOT AUTHORIZED
 ### Next Exact Action
 
 Create and non-actively verify the exact three-file RC040 candidate. Stop before commit and before any active Windows/Sandbox execution.
+## RC040 CLOSURE — IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+```text
+RC040 implementation commit:
+cda355c76f47bac8775072a1e13075c211c3cda0
+
+RC040 implementation parent:
+00c779b706babf8341b3e418a5772471bf5ec01d
+
+RC040 status:
+COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+exact mutable scope:
+3 evaluator files
+
+production/runtime source changes:
+NONE
+```
+
+All post-commit non-active gates passed:
+
+```text
+V1C1B plan evaluator       PASS
+portable V1C2C3 evaluator PASS
+package boundaries        PASS
+full check                PASS
+Runtime Architecture Audit PASS
+```
+
+Safety state remains:
+
+```text
+Windows active evaluator pipeline references  0
+Windows active evaluator execution             false
+Sandbox launch                                 false
+active environment                             ABSENT
+
+RC038 syntax marker/result                     IMMUTABLE / PRESERVED
+RC038 boundary marker/result                   ABSENT
+RC038 recovery matrix                          ABSENT
+```
+
+The corrected syntax fixture is now runtime-reachable only through the explicitly evaluator-private plan-issuance substitution provenance:
+
+```text
+eval_private_scoped_snapshot_material_substitution_v1
+```
+
+Active recovery remains blocked.
+
+### Next Exact Action
+
+Run a fresh non-active recovery-readiness review against the RC040 implementation commit. If and only if that review passes, define a separate RC041 active grant with new marker/result names. Do not reuse any RC038 launcher, harness, marker, result, or row authority.

@@ -4174,3 +4174,79 @@ Sandbox  NOT AUTHORIZED
 ```
 
 **Next Exact Action:** создать exact three-file RC040 candidate, выполнить только non-active verification и остановиться до commit для review.
+### RC040 CLOSURE — IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+Implementation commit:
+
+```text
+cda355c76f47bac8775072a1e13075c211c3cda0
+fix: make V1C2C3 syntax fixture runtime-reachable
+```
+
+Exact implementation scope remained:
+
+```text
+tools/eval_developer_task_execution_compile_ast_live_acceptance_windows.py
+tools/eval_developer_task_execution_compile_ast_live_acceptance.py
+tools/eval_developer_task_execution_compile_ast_plan.py
+```
+
+Verified candidate identities:
+
+```text
+Windows evaluator:
+  bytes   38262
+  SHA256  dc45fbf529684fde4625050afbb512dfaefcf140109fe859a6ebe98378917002
+
+portable evaluator:
+  bytes   45630
+  SHA256  b20514efebe1c7a9e7277ea45fc0fbdd67be5b6e8aa9547ac291861a1c3b2ed8
+
+plan evaluator:
+  bytes   28737
+  SHA256  b24a3fdd237993d26e6023b325c4a6de0de68575ba64ad92dec85f9821a9f644
+```
+
+The implementation uses the locked evaluator-only provenance:
+
+```text
+fixture_provenance =
+eval_private_scoped_snapshot_material_substitution_v1
+
+ordinary_production_ingress = false
+production_public_plan_api_used = true
+snapshot_capability_consumed = true
+plan_material_contains_exact_invalid_source = true
+substitution_scope = plan_issuance_only
+snapshot_material_methods_restored_before_runtime = true
+```
+
+Post-commit non-active verification passed:
+
+```text
+V1C1B plan evaluator       PASS
+portable V1C2C3 evaluator PASS
+package boundaries        PASS
+full check                PASS
+Runtime Architecture Audit PASS
+```
+
+No production/runtime source changed. Windows active evaluator pipeline references remain `0`; Windows active evaluator was not executed; active authority was absent; Sandbox was not launched.
+
+Historical failure evidence remains immutable:
+
+```text
+RC038 syntax retry  CONSUMED / FAILED / IMMUTABLE
+RC038 boundary row  NOT STARTED / FORBIDDEN UNDER RC038
+RC038 matrix        ABSENT / MUST REMAIN ABSENT
+```
+
+RC040 state:
+
+```text
+COMPLETED / IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+```
+
+RC040 does not authorize active recovery.
+
+**Next Exact Action:** perform a fresh recovery-readiness review for a separate new grant (expected RC041). It must bind the current implementation commit and use new grant-specific permanent evidence names. RC038 must never be rerun or reused.

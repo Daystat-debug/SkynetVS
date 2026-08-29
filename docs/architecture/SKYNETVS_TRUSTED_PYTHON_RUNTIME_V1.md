@@ -1739,3 +1739,36 @@ RC040 active execution      FORBIDDEN
 ```
 
 A later new recovery grant requires a separate Roadmap Change and new permanent evidence names. RC038 evidence remains immutable historical failed evidence.
+## RC040 CLOSURE — IMPLEMENTED / COMMITTED / NON-ACTIVE VERIFIED
+
+RC040 introduced no trusted-runtime or production-module change.
+
+The implementation changes only evaluator behavior required to make the syntax-negative fixture reach the already-existing trusted guest runner while preserving fail-closed production workspace validation.
+
+```text
+production workspace/snapshot implementation  unchanged
+production Compile/AST plan implementation     unchanged
+claim transaction                              unchanged
+composition/materialization                    unchanged
+trusted guest runner                           unchanged
+contract/controller/verifier                   unchanged
+pipeline active topology                       unchanged
+```
+
+The evaluator-only fixture provenance is:
+
+```text
+eval_private_scoped_snapshot_material_substitution_v1
+```
+
+The substitution is restricted to plan issuance and must be restored before trusted runtime/transaction/materialization execution.
+
+Post-commit non-active verification and Runtime Architecture Audit passed. No execution authority was created.
+
+```text
+RC040 active authority   NONE
+Windows active evaluator NOT EXECUTED
+Sandbox                  NOT LAUNCHED
+```
+
+Any future active attempt requires a new Roadmap Change/grant and fresh grant-specific permanent evidence. RC038 remains immutable failed historical evidence and must never be rerun.
