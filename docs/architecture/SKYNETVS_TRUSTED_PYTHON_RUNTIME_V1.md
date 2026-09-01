@@ -1830,3 +1830,52 @@ Sandbox launch = FALSE
 
 A source-audited external harness, host-only preflight and separate reviewed
 launcher are mandatory before any RC041 row may execute.
+## RC041 ACTIVE RECOVERY CLOSURE — PASSED / CONSUMED / IMMUTABLE
+
+The RC041 matrix proves the complete V1C2 Compile/AST acceptance boundary while
+leaving the trusted runtime and all production modules unchanged.
+
+```text
+historical live pass:
+  compile_ast_attested_passed
+  boundary_ok = true
+  check_passed = true
+
+fresh syntax failure:
+  compile_ast_attested_failed
+  boundary_ok = true
+  check_passed = false
+  trusted interpreter executed = true
+  changed source processed = true
+  AST parsed = false
+  compiled = false
+  changed code executed = false
+  provenance = eval_private_scoped_snapshot_material_substitution_v1
+
+fresh post-ready boundary failure:
+  compile_ast_boundary_failed
+  boundary_ok = false
+  check_passed = false
+  fault applied/restored = true
+  changed code executed = false
+  provenance = ordinary_production_workspace_snapshot
+```
+
+The matrix preserved split evaluator provenance, fresh capability identity and
+exact source/runtime identities. It did not issue a reusable lease or execution
+authorization.
+
+```text
+production source change by RC041       NONE
+trusted runtime change                  NONE
+changed_code_executed                   false
+reusable_lease_issued                   false
+execution_authorized                    false
+final Sandbox process set               []
+```
+
+RC041 permanent evidence is immutable. The launcher/harness are retired and
+must never execute again.
+
+V1C2 is complete. V1C3A remains a separate planned source-provenance stage and
+has no acquisition, installation or guest-execution authority yet.

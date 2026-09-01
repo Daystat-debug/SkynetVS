@@ -3282,3 +3282,60 @@ do not reuse any earlier launcher/harness
 Create and source-audit a new RC041 external one-shot harness. Run its host-only
 preflight only. Stop before the first permanent RC041 marker and before either
 active child row.
+## RC041 ACTIVE RECOVERY CLOSURE — PASSED / CONSUMED / IMMUTABLE
+
+```text
+RC041 recovery attempt:
+rc041-recovery-20260831_230654-402a73ae8ae749a3b8e009f313887d94
+
+RC041 status:
+PASSED / CONSUMED / IMMUTABLE / CLOSED
+
+V1C2C3:
+VERIFIED / LIVE-SYNTAX-BOUNDARY MATRIX COMPLETE
+
+V1C2:
+COMPLETE
+
+HEAD bound by active evidence:
+7e3451499a18e7a9f6b53f657a9fa3c9ec470d47
+```
+
+Accepted rows:
+
+```text
+historical RC036 live_pass                 BOUND / NOT RERUN
+fresh RC041 authentic_syntax_failure       ACCEPTED
+fresh RC041 boundary failure               ACCEPTED
+RC041 matrix                               CREATED / PASS
+```
+
+Permanent evidence:
+
+```text
+syntax marker   8a7868c2b2ca306d86c97a41d2c0434a52fc41a038f5aaba796683cb2b29b424
+syntax result   a922751af6e82b756c8764ba0e1ebccf1e850dbc654477b5ab9d10182b28932d
+boundary marker f1cda750ea5b3fc77a1c3ddcb6d87b8737ddf864e5e21ecefb3774c52d0ed8de
+boundary result b7a0d9a5247d5efd13a04934090120fc6bba7f6e9bf1f22e2493ac42222c4a24
+matrix result   e37f0a69d7ffc5bebf36c156d251b49853967e0ed8ee07401bacf6e7308b9b35
+```
+
+Final safety state:
+
+```text
+changed_code_executed  false
+reusable_lease_issued  false
+execution_authorized   false
+repository/index       clean
+active environment     absent
+Sandbox                empty
+```
+
+The RC041 launcher and harness must never be run again. All five RC041 evidence
+files are immutable and must never be deleted, rewritten, replaced or reused.
+
+### Next Exact Action
+
+Perform a read-only V1C3A transition audit. Do not acquire/download/install
+Python dependencies, do not launch Sandbox and do not open RC042 until that
+audit is reviewed.

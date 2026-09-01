@@ -4656,3 +4656,115 @@ Sandbox                            NOT LAUNCHED
 **Next Exact Action:** create the exact external RC041 one-shot recovery harness
 and an independent source audit, then run only host-only preflight. Stop before
 the first RC041 marker and before any active Windows evaluator child.
+### RC041 ACTIVE RECOVERY CLOSURE — PASSED / CONSUMED / IMMUTABLE
+
+The one-shot RC041 recovery completed successfully:
+
+```text
+recovery attempt:
+rc041-recovery-20260831_230654-402a73ae8ae749a3b8e009f313887d94
+
+completed at UTC:
+2026-08-31T20:13:18.299308+00:00
+
+active launcher report:
+bytes   177190
+SHA256  f650fcac4a7dd40f7ef4568cd17acfebdb8af418d18eb735a1acba1903e5c0cd
+
+active harness report:
+bytes   37056
+SHA256  4661b19ac69b618080ec3f5c84a680667597fd961f8aec5f22d48902bcf068e2
+```
+
+Exact immutable RC041 evidence:
+
+```text
+V1C2C3_RC041_SYNTAX_FAILURE_CONSUMED.json
+bytes   8617
+SHA256  8a7868c2b2ca306d86c97a41d2c0434a52fc41a038f5aaba796683cb2b29b424
+
+V1C2C3_RC041_SYNTAX_FAILURE_RESULT.json
+bytes   19486
+SHA256  a922751af6e82b756c8764ba0e1ebccf1e850dbc654477b5ab9d10182b28932d
+
+V1C2C3_RC041_BOUNDARY_FAILURE_CONSUMED.json
+bytes   8662
+SHA256  f1cda750ea5b3fc77a1c3ddcb6d87b8737ddf864e5e21ecefb3774c52d0ed8de
+
+V1C2C3_RC041_BOUNDARY_FAILURE_RESULT.json
+bytes   17923
+SHA256  b7a0d9a5247d5efd13a04934090120fc6bba7f6e9bf1f22e2493ac42222c4a24
+
+V1C2C3_RC041_RECOVERY_MATRIX_RESULT.json
+bytes   16852
+SHA256  e37f0a69d7ffc5bebf36c156d251b49853967e0ed8ee07401bacf6e7308b9b35
+```
+
+Accepted logical matrix:
+
+```text
+live_pass:
+  source = immutable RC036 accepted evidence
+  executed_by_rc041 = false
+  rerun_forbidden = true
+
+authentic_syntax_failure:
+  source = fresh RC041 child
+  fixture_provenance = eval_private_scoped_snapshot_material_substitution_v1
+  accepted = true
+
+signed_post_ready_boundary_failure:
+  source = fresh RC041 child
+  fixture_provenance = ordinary_production_workspace_snapshot
+  accepted = true
+```
+
+The two fresh rows used pairwise-distinct request IDs, plan fingerprints,
+runtime-lease fingerprints and controller public keys. Neither fresh identity
+overlapped the historical RC036 live identity.
+
+Security and cleanup closure:
+
+```text
+fresh rows consumed                  2 / 2
+fresh row results accepted           2 / 2
+recovery matrix                      CREATED / PASS
+single evaluator provenance claim    false / forbidden
+RC038 evidence reused                false
+historical RC036 live rerun          false
+
+changed_code_executed                false
+reusable_lease_issued                false
+execution_authorized                 false
+
+repository/index                     clean
+parent active environment            absent
+Sandbox processes after completion   []
+temporary artifacts removed          true
+```
+
+RC036 accepted evidence remains immutable. RC038 remains failed, partially
+consumed and immutable; it was not reused by RC041.
+
+The RC041 launcher and harness are permanently retired:
+
+```text
+DO NOT RERUN
+DO NOT DELETE OR REWRITE RC041 EVIDENCE
+DO NOT REPEAT EITHER FRESH ROW
+```
+
+Status transition:
+
+```text
+RC041   PASSED / CONSUMED / IMMUTABLE / CLOSED
+V1C2C3  VERIFIED / LIVE-SYNTAX-BOUNDARY MATRIX COMPLETE
+V1C2    COMPLETE
+V1C3A   PLANNED / NOT OPEN
+```
+
+**Next Exact Action:** perform a read-only V1C3A transition audit against the
+closed V1C2 baseline. The audit must define the exact Python dependency source
+provenance scope, artifact/metadata/license/hash requirements and deterministic
+closure boundary without downloading, resolving, installing or executing any
+dependency, without launching Sandbox and without opening Roadmap Change 042.
