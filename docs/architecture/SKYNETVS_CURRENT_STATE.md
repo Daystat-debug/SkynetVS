@@ -3339,3 +3339,104 @@ files are immutable and must never be deleted, rewritten, replaced or reused.
 Perform a read-only V1C3A transition audit. Do not acquire/download/install
 Python dependencies, do not launch Sandbox and do not open RC042 until that
 audit is reviewed.
+
+## Roadmap Change 042 — V1C3A dependency-profile architecture lock
+
+Current state:
+
+```text
+HEAD / origin/main entering RC042:
+a250a9730291982d1a5512b121947e63e42fe002
+
+RC041:
+PASSED / CONSUMED / IMMUTABLE / CLOSED
+
+V1C2:
+COMPLETE
+
+V1C3A:
+CURRENT / ARCHITECTURE LOCK / NO ACQUISITION
+
+RC042:
+CURRENT / DOCS-ONLY / NON-AUTHORIZING
+```
+
+Exact transition context:
+
+```text
+SkynetVS_V1C3A_RC042_ExactProfileTopologyContext_20260901_131209.txt
+bytes   5027022
+SHA256  f3777bb9346258e944915c3b3e391de844e426653a6683432f71fd6150ecfefa
+result  PASS
+```
+
+The verified profile graph is:
+
+```text
+skynetvs-python-base-v1
+  roots = requirements.txt
+  composition = standalone
+  initial V1C3A acquisition = selected
+  initial V1C3B consumer = selected
+
+skynetvs-nlu-training-minimal-v1
+  roots = requirements-train.txt
+  composition = standalone minimal
+  inherits base = false
+  initial acquisition = blocked
+
+skynetvs-python-base-whisper-v1
+  roots = requirements.txt + requirements-whisper.txt
+  composition = base plus optional overlay
+  overlay standalone = false
+  default enabled = false
+  initial acquisition = blocked
+```
+
+This replaces the earlier provisional assumption that all three declaration
+files should automatically become three independent closures.
+
+The declaration files are root authority. Import topology may validate the
+profile graph but may not silently remove `pydub`, inject
+`faster-whisper`, union profiles or infer inheritance.
+
+V1C3A is internally ordered as:
+
+```text
+V1C3A0 profile/target contract
+V1C3A1 candidate resolver/acquisition
+V1C3A2 offline artifact/metadata/graph verification
+V1C3A3 manual immutable closure acceptance
+```
+
+Only V1C3A0 is open for implementation. It performs no network access and
+accepts no wheel, metadata response or resolver output.
+
+Exact V1C3A0 mutable scope:
+
+```text
+modules/developer/developer_task_execution_dependency_profile.py
+modules/developer/developer_task_execution_dependency_profile_policy.py
+tools/eval_developer_task_execution_dependency_profile.py
+tools/eval_developer_task_execution_dependency_profile_windows.py
+tools/pipeline.py
+tools/eval_package_boundaries.py
+```
+
+Current prohibitions:
+
+```text
+do not resolve dependencies
+do not download metadata or wheels
+do not install dependencies
+do not import or execute candidate dependencies
+do not launch Sandbox
+do not create reusable leases
+do not create permanent V1C3A acquisition evidence
+do not expand acquisition beyond requirements.txt
+```
+
+### Next Exact Action
+
+Implement and verify the non-network V1C3A0 profile and target contract.
+Stop before V1C3A1.

@@ -4768,3 +4768,353 @@ closed V1C2 baseline. The audit must define the exact Python dependency source
 provenance scope, artifact/metadata/license/hash requirements and deterministic
 closure boundary without downloading, resolving, installing or executing any
 dependency, without launching Sandbox and without opening Roadmap Change 042.
+
+## Roadmap Change 042 — V1C3A dependency-profile and source-closure architecture lock
+
+RC042 is a Pro architecture/docs transition. It opens V1C3A without
+authorizing dependency acquisition, resolution, installation, import,
+execution, Sandbox launch or a reusable capability.
+
+Current transition state:
+
+```text
+RC041   PASSED / CONSUMED / IMMUTABLE / CLOSED
+V1C2    COMPLETE
+V1C3A   CURRENT / ARCHITECTURE LOCK / NO ACQUISITION
+RC042   CURRENT / DOCS-ONLY / NON-AUTHORIZING
+```
+
+Exact baseline:
+
+```text
+HEAD / origin/main:
+a250a9730291982d1a5512b121947e63e42fe002
+
+tree:
+695c35e0b7f67e728543c05e3ae9472186824914
+
+stable V1B4:
+91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+```
+
+Transition source evidence:
+
+```text
+file:
+SkynetVS_V1C3A_RC042_ExactProfileTopologyContext_20260901_131209.txt
+
+bytes:
+5027022
+
+SHA-256:
+f3777bb9346258e944915c3b3e391de844e426653a6683432f71fd6150ecfefa
+
+result:
+PASS
+
+network used:
+false
+
+dependency download / install / execution:
+false
+
+Sandbox launched:
+false
+```
+
+### Exact dependency-profile topology
+
+The three committed requirement files are neither one unconditional union
+closure nor three independent runtime environments.
+
+```text
+profile:
+skynetvs-python-base-v1
+
+declaration roots:
+- requirements.txt
+
+composition:
+standalone
+
+role:
+default project dependency declaration
+initial V1C3A source-acquisition profile
+initial V1C3B dependency-bundle source profile
+```
+
+```text
+profile:
+skynetvs-nlu-training-minimal-v1
+
+declaration roots:
+- requirements-train.txt
+
+composition:
+standalone minimal training profile
+
+inherits base:
+false
+
+selected by initial V1C3A acquisition:
+false
+
+selected by initial V1C3B:
+false
+```
+
+```text
+profile:
+skynetvs-python-base-whisper-v1
+
+declaration roots:
+- requirements.txt
+- requirements-whisper.txt
+
+composition:
+skynetvs-python-base-v1 plus optional Whisper overlay
+
+overlay standalone:
+false
+
+default enabled:
+false
+
+selected by initial V1C3A acquisition:
+false
+
+selected by initial V1C3B:
+false
+```
+
+`requirements-train.txt` is a separate minimal declaration for
+`train/train_nlu.py`. It overlaps the base declaration but has its own
+constraints, including `joblib>=1.3.2` versus `joblib>=1.3.0` in the base
+declaration. Exact package reuse between profiles is therefore permitted only
+after exact name, version, filename and SHA-256 equality is proven.
+
+`requirements-whisper.txt` contains only the optional
+`faster-whisper==1.2.1` declaration. `WHISPER_ENABLE=0` is the default,
+`main.py` imports the Whisper refiner conditionally, and the fixed worker uses
+both NumPy and faster-whisper through the current Python environment.
+Therefore the Whisper declaration is an overlay over the base environment,
+not a standalone SkynetVS environment.
+
+The declaration files remain root authority. Import topology is validation
+evidence only and cannot silently add, remove or merge direct requirements.
+
+### Initial V1C3A scope
+
+The first source-acquisition and acceptance scope is exactly:
+
+```text
+skynetvs-python-base-v1
+requirements.txt
+```
+
+The training and Whisper profiles are topology-bound but remain:
+
+```text
+NOT ACQUIRED
+NOT RESOLVED
+NOT BUNDLED
+NOT EXECUTED
+```
+
+Any acquisition-scope expansion requires a separate roadmap decision.
+
+### V1C3A internal decomposition
+
+```text
+V1C3A0
+Canonical dependency-profile and target contract
+NO NETWORK / NO ARTIFACT / NO RESOLVER
+
+V1C3A1
+Bounded resolver proposal and authoritative source acquisition
+HOST NETWORK / CANDIDATE ONLY / NO INSTALL
+
+V1C3A2
+Offline wheel, Core Metadata, RECORD, license, provenance and
+dependency-graph verification
+NO NETWORK / NO PACKAGE EXECUTION
+
+V1C3A3
+Manual exact closure acceptance and immutable source capability
+NON-EXECUTABLE / INPUT FOR V1C3B ONLY
+```
+
+### Fixed target
+
+```text
+implementation_name            cpython
+implementation_version         3.13.15
+python_version                 3.13
+python_full_version            3.13.15
+os_name                        nt
+sys_platform                   win32
+platform_system                Windows
+platform_machine               AMD64
+platform_python_implementation CPython
+requested_extras               []
+```
+
+Host CPython 3.12 ABI/tags and mutable host platform observations are not
+target authority. A dependency marker that needs an unpinned target value
+must fail closed until the target contract is explicitly extended.
+
+Project declarations continue to use the V1C0B1
+`strict_simple_requirements_v1` parser. Transitive Core Metadata uses a
+separate project-owned strict supported subset of dependency-specifier,
+version and marker syntax. Unsupported metadata versions, fields required for
+selection, specifier forms or marker variables fail closed.
+
+No extra-specific dependency is active unless a pinned profile explicitly
+requests that extra. The initial profile requests none.
+
+### Source authority and resolver boundary
+
+The V1C0B2 authority lock remains unchanged:
+
+```text
+metadata:
+PyPI Simple Repository API JSON v1
+supported major 1
+minimum minor 4
+
+artifacts:
+exact HTTPS wheel URLs under files.pythonhosted.org
+returned by verified project metadata
+```
+
+RC042 selects no resolver. A future version-pinned isolated host resolver may
+only emit a candidate proposal. Before its first use, its implementation,
+version, entry point, code/distribution manifest SHA-256, Python identity,
+argv, environment and output SHA-256 must be captured.
+
+Resolver output has no authority. Final package selection is accepted only
+after authoritative metadata and exact wheel bytes independently prove every
+direct and transitive constraint.
+
+### Required package evidence
+
+Every selected package must bind at least:
+
+```text
+normalized project name
+canonical Name
+exact Version
+direct/transitive classification
+parent dependency edges
+exact Simple API response bytes and SHA-256
+Simple API version and project status
+wheel filename and parsed tags
+wheel byte size
+index-declared SHA-256
+actual wheel SHA-256
+Requires-Python
+yanked state
+Core Metadata source and SHA-256
+Requires-Dist edges and marker decisions
+RECORD identity and verified entries
+license declaration state
+declared License-File paths, sizes and SHA-256
+provenance/attestation presence and verification state
+```
+
+A wheel is inspected without importing or executing it. Unsafe ZIP paths,
+duplicates, Windows case collisions, encrypted entries, symlinks, unsupported
+compression, unbounded entry sizes, expanded sizes or compression ratios fail
+closed.
+
+License evidence proves what the exact artifact declares and contains. It does
+not create a legal allowlist. A declared License-File missing from the verified
+wheel or inconsistent license metadata fails closed.
+
+Attestation absence is recorded explicitly. An attestation that is present but
+not cryptographically verified is a blocking state. A dependency from the
+candidate closure may not be used to bootstrap proof of its own provenance.
+
+### Candidate and accepted closure boundary
+
+Network acquisition produces only a non-authoritative candidate:
+
+```text
+resolver proposal
++
+captured source responses
++
+exact artifact bytes
++
+candidate manifest
+```
+
+The candidate cannot be consumed by V1C3B.
+
+V1C3A acceptance requires:
+
+```text
+offline independent verification
+canonical UTF-8 JSON bytes
+explicit deterministic array ordering
+manifest SHA-256
+closure fingerprint
+manual exact review
+separate immutable acceptance record
+```
+
+The closure fingerprint binds the policy, fixed target, profile identity,
+declaration Git objects and SHA-256 values, resolver-proposal identity,
+metadata-response identities, package graph, artifact hashes, license evidence
+and provenance evidence.
+
+Only an accepted immutable closure may become V1C3B input. It remains
+non-executable and grants no lease or execution authority.
+
+### V1C3A0 exact implementation scope
+
+```text
+modules/developer/developer_task_execution_dependency_profile.py
+modules/developer/developer_task_execution_dependency_profile_policy.py
+tools/eval_developer_task_execution_dependency_profile.py
+tools/eval_developer_task_execution_dependency_profile_windows.py
+tools/pipeline.py
+tools/eval_package_boundaries.py
+```
+
+Public API:
+
+```text
+build_developer_task_execution_dependency_profile_contract(
+    toolchain_report,
+    *,
+    project_root
+) -> DeveloperTaskExecutionDependencyProfileReport
+```
+
+Caller-controlled profile IDs, declaration paths, profile composition,
+target values, extras, resolver, source URL, artifact URL, version selection,
+environment additions or execution plan are forbidden.
+
+V1C3A0 remains host-only and non-authorizing:
+
+```text
+source_authority_selected     false
+network_used                  false
+artifact_download_attempted   false
+dependency_install_attempted  false
+dependency_executed           false
+sandbox_launched              false
+reusable_lease_issued         false
+execution_authorized          false
+```
+
+RC042 does not modify production/runtime source and creates no permanent
+dependency evidence.
+
+### Next Exact Action
+
+Implement and verify only V1C3A0 canonical dependency-profile and fixed-target
+contract within the exact six-file scope. Stop before resolver selection,
+network access, metadata acquisition, wheel acquisition or any V1C3A1
+authority.

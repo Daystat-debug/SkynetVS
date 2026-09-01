@@ -1879,3 +1879,73 @@ must never execute again.
 
 V1C2 is complete. V1C3A remains a separate planned source-provenance stage and
 has no acquisition, installation or guest-execution authority yet.
+
+## Roadmap Change 042 — V1C3A dependency-source boundary
+
+The stable trusted runtime remains unchanged:
+
+```text
+tag:
+skynet-trusted-runtime-v1b4
+
+commit:
+91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+
+runtime source:
+CPython 3.13.15 Windows embeddable AMD64
+```
+
+RC042 does not modify or reopen V1B4 and does not extend the runtime lease.
+It opens only the non-executable dependency-source architecture.
+
+The exact dependency profiles are:
+
+```text
+base:
+requirements.txt
+
+training:
+requirements-train.txt
+standalone minimal profile
+
+Whisper:
+requirements.txt + requirements-whisper.txt
+base plus optional overlay
+```
+
+The initial V1C3A/V1C3B source profile is the base profile only. Training and
+Whisper remain topology evidence and are not acquired or bundled.
+
+The dependency target is fixed to CPython 3.13.15 / win32 / AMD64. Host
+CPython 3.12, host site-packages, host pip cache and host wheel tags remain
+non-authoritative.
+
+V1C3A output is source evidence, not a runtime tree:
+
+```text
+no site-packages layout
+no scripts directory
+no generated pyc
+no import
+no package execution
+no Sandbox
+no runtime lease
+no execution authority
+```
+
+A candidate closure cannot enter the trusted runtime. Only a manually accepted,
+immutable V1C3A closure may be consumed by V1C3B, and only V1C3B may construct
+a deterministic dependency bundle.
+
+Transition source evidence:
+
+```text
+SkynetVS_V1C3A_RC042_ExactProfileTopologyContext_20260901_131209.txt
+bytes   5027022
+SHA256  f3777bb9346258e944915c3b3e391de844e426653a6683432f71fd6150ecfefa
+result  PASS
+```
+
+### Next Exact Action
+
+Implement the V1C3A0 non-network profile and fixed-target contract only.
