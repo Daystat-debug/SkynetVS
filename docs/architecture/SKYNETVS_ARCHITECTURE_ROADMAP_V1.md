@@ -5118,3 +5118,112 @@ Implement and verify only V1C3A0 canonical dependency-profile and fixed-target
 contract within the exact six-file scope. Stop before resolver selection,
 network access, metadata acquisition, wheel acquisition or any V1C3A1
 authority.
+
+## V1C3A0 implementation closure — dependency-profile and fixed-target contract
+
+V1C3A0 is implemented, independently hardened, verified and pushed while
+remaining non-authorizing.
+
+Implementation identity:
+
+```text
+commit:
+b7bd0b9ad449b0f10def37e27d9f93f272e996a1
+
+parent:
+3ef32e30a97ad56e67c851ba562f689f5e9ea864
+
+tree:
+cdf7591e242696a9976362801c6f200f26c71ded
+
+subject:
+feat: add V1C3A0 dependency profile target contract
+```
+
+Exact implementation scope:
+
+```text
+modules/developer/developer_task_execution_dependency_profile.py
+modules/developer/developer_task_execution_dependency_profile_policy.py
+tools/eval_developer_task_execution_dependency_profile.py
+tools/eval_developer_task_execution_dependency_profile_windows.py
+tools/eval_package_boundaries.py
+tools/pipeline.py
+```
+
+The implementation preserves the RC042 architecture lock:
+
+- the three dependency profiles and their composition are fixed by policy;
+- the initial V1C3A/V1C3B profile remains `skynetvs-python-base-v1`;
+- the dependency target remains CPython 3.13.15 / Windows / AMD64;
+- V1C0B1 policy lineage is pinned and upstream drift fails closed;
+- committed declaration identity binds Git mode `100644`, object type `blob`,
+  exact object ID, exact bytes and SHA-256;
+- caller-controlled profile, target, resolver, URL, version, environment or
+  execution-plan authority is not exposed.
+
+Verification evidence:
+
+```text
+SkynetVS_V1C3A0_HardeningRepair_20260902_141550.txt
+bytes   945238
+SHA256  bd6dfc7eb6c27b0d9dbd18ebfea6be9c1732438fefad99e89bc6504f34d775fc
+result  PASS
+
+SkynetVS_V1C3A0_FinalCommitPreflight_20260902_162359.json
+bytes   6905
+SHA256  e76c98bbd6e2de45cd437ace8d83c7b5d4a501f2b21767bdd1a2a85df45220fc
+result  PASS
+future tree  cdf7591e242696a9976362801c6f200f26c71ded
+
+SkynetVS_V1C3A0_FinalCommitPush_20260902_173836_ed90fd3595c6.json
+bytes   9912
+SHA256  b7ec7432d8b4ef08400b2df2463dd96742da0a8cee14906b61046e2fdf0e1343
+result  PASS
+
+SkynetVS_V1C3A0_DocsClosureSource_20260902_174838.json
+bytes   51499
+SHA256  ca74c4b18d11884d3cb0d48ccc8ef2c80d35b5d92fa0b67842ec14616855bdd3
+result  PASS
+```
+
+The hardening evaluation completed `10/10` generic V1C3A0 cases, `1/1`
+Windows host-only smoke and `28/28` package-boundary cases. The dedicated
+V1C3A0 flow passed before and after the implementation commit; the hardening
+run also completed the full pipeline check successfully.
+
+Final implementation safety state:
+
+```text
+source_authority_selected     false
+dependency_network_used       false
+artifact_download_attempted   false
+dependency_install_attempted  false
+dependency_executed           false
+sandbox_launched              false
+candidate_interpreter_executed false
+reusable_lease_issued         false
+execution_authorized          false
+repository/index              clean
+HEAD == origin/main           true
+remote main == HEAD           true
+```
+
+Status transition:
+
+```text
+RC041   PASSED / CONSUMED / IMMUTABLE / CLOSED
+V1C2    COMPLETE
+RC042   ARCHITECTURE LOCK RECORDED
+V1C3A0  IMPLEMENTED / VERIFIED / PUSHED / NON-AUTHORIZING
+V1C3A1  NOT OPEN
+```
+
+### Next Exact Action
+
+Perform a read-only V1C3A1 architecture/security audit against the exact
+V1C3A0 implementation baseline. Define and review the bounded resolver
+proposal, authoritative PyPI Simple API acquisition boundary, redirect and
+environment policy, candidate-manifest contract and acquisition evidence
+limits before any resolver is selected or any dependency metadata or wheel is
+downloaded. Do not open network acquisition until that audit is reviewed.

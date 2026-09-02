@@ -1949,3 +1949,94 @@ result  PASS
 ### Next Exact Action
 
 Implement the V1C3A0 non-network profile and fixed-target contract only.
+
+## V1C3A0 dependency-profile contract closure
+
+V1C3A0 is implemented and pushed without modifying or reopening the trusted
+runtime.
+
+Implementation identity:
+
+```text
+commit:
+b7bd0b9ad449b0f10def37e27d9f93f272e996a1
+
+parent:
+3ef32e30a97ad56e67c851ba562f689f5e9ea864
+
+tree:
+cdf7591e242696a9976362801c6f200f26c71ded
+```
+
+The trusted runtime remains:
+
+```text
+tag:
+skynet-trusted-runtime-v1b4
+
+commit:
+91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+
+runtime source:
+CPython 3.13.15 Windows embeddable AMD64
+```
+
+V1C3A0 adds only the canonical dependency-profile/fixed-target source contract.
+It does not add packages to the trusted runtime, construct `site-packages`,
+install a resolver, execute package code, launch Sandbox or extend a runtime
+lease.
+
+The fixed dependency target intentionally matches the trusted-runtime Python
+identity:
+
+```text
+implementation_name            cpython
+implementation_version         3.13.15
+python_version                 3.13
+python_full_version            3.13.15
+os_name                        nt
+sys_platform                   win32
+platform_system                Windows
+platform_machine               AMD64
+platform_python_implementation CPython
+requested_extras               []
+```
+
+Host CPython, host site-packages, host caches and resolver output remain
+non-authoritative.
+
+Implementation evidence:
+
+```text
+hardening PASS:
+bd6dfc7eb6c27b0d9dbd18ebfea6be9c1732438fefad99e89bc6504f34d775fc
+
+final commit preflight PASS:
+e76c98bbd6e2de45cd437ace8d83c7b5d4a501f2b21767bdd1a2a85df45220fc
+
+final commit/push PASS:
+b7ec7432d8b4ef08400b2df2463dd96742da0a8cee14906b61046e2fdf0e1343
+```
+
+Current boundary:
+
+```text
+V1B4   UNCHANGED / TRUSTED
+V1C3A0 IMPLEMENTED / VERIFIED / PUSHED / NON-AUTHORIZING
+V1C3A1 NOT OPEN
+
+dependency network             false
+artifact download              false
+dependency install             false
+dependency execution           false
+Sandbox                        false
+candidate interpreter          false
+reusable lease                 false
+execution authorization        false
+```
+
+### Next Exact Action
+
+Review V1C3A1 as a separate host acquisition boundary. No resolver, PyPI
+metadata, wheel bytes or candidate dependency may enter the trusted runtime or
+become execution authority merely because V1C3A0 is complete.

@@ -3440,3 +3440,148 @@ do not expand acquisition beyond requirements.txt
 
 Implement and verify the non-network V1C3A0 profile and target contract.
 Stop before V1C3A1.
+
+## V1C3A0 implementation closure — verified and pushed
+
+V1C3A0 is complete as a non-network, non-authorizing profile/target contract.
+
+Implementation:
+
+```text
+commit:
+b7bd0b9ad449b0f10def37e27d9f93f272e996a1
+
+parent:
+3ef32e30a97ad56e67c851ba562f689f5e9ea864
+
+tree:
+cdf7591e242696a9976362801c6f200f26c71ded
+
+subject:
+feat: add V1C3A0 dependency profile target contract
+```
+
+Exact changed scope:
+
+```text
+A  modules/developer/developer_task_execution_dependency_profile.py
+A  modules/developer/developer_task_execution_dependency_profile_policy.py
+A  tools/eval_developer_task_execution_dependency_profile.py
+A  tools/eval_developer_task_execution_dependency_profile_windows.py
+M  tools/eval_package_boundaries.py
+M  tools/pipeline.py
+```
+
+Verified policy identity:
+
+```text
+policy:
+skynetvs-v1c3a0-dependency-profile-target-contract-v1
+
+fingerprint:
+370e5d2c246be240b9d1a47fdebcc1250302155ea0e6128b6580079d5691748a
+```
+
+The final contract fixes:
+
+```text
+initial profile:
+skynetvs-python-base-v1
+
+declaration:
+requirements.txt
+
+target:
+CPython 3.13.15 / Windows / AMD64
+
+requested extras:
+[]
+```
+
+The training profile and optional Whisper overlay remain topology-bound but are
+not selected by the initial V1C3A/V1C3B scope.
+
+The source review added two explicit fail-closed protections before commit:
+
+1. pinned V1C0B1 policy ID/fingerprint/parser lineage must match the imported
+   current V1C0B1 constants;
+2. committed declaration identity independently requires Git mode `100644`,
+   object type `blob`, pinned object ID, exact bytes and SHA-256.
+
+Regression coverage confirms both lineage drift and Git tree-mode drift fail
+closed.
+
+Evidence:
+
+```text
+hardening:
+SkynetVS_V1C3A0_HardeningRepair_20260902_141550.txt
+SHA256 bd6dfc7eb6c27b0d9dbd18ebfea6be9c1732438fefad99e89bc6504f34d775fc
+
+final preflight:
+SkynetVS_V1C3A0_FinalCommitPreflight_20260902_162359.json
+SHA256 e76c98bbd6e2de45cd437ace8d83c7b5d4a501f2b21767bdd1a2a85df45220fc
+
+commit/push:
+SkynetVS_V1C3A0_FinalCommitPush_20260902_173836_ed90fd3595c6.json
+SHA256 b7ec7432d8b4ef08400b2df2463dd96742da0a8cee14906b61046e2fdf0e1343
+
+docs source:
+SkynetVS_V1C3A0_DocsClosureSource_20260902_174838.json
+SHA256 ca74c4b18d11884d3cb0d48ccc8ef2c80d35b5d92fa0b67842ec14616855bdd3
+```
+
+Verification summary:
+
+```text
+generic V1C3A0 evaluator      10 / 10 PASS
+Windows host-only smoke        1 / 1  PASS
+package boundaries            28 / 28 PASS
+dedicated pre-commit flow      PASS
+dedicated post-commit flow     PASS
+full pipeline hardening check  PASS
+
+HEAD:
+b7bd0b9ad449b0f10def37e27d9f93f272e996a1
+
+origin/main:
+b7bd0b9ad449b0f10def37e27d9f93f272e996a1
+
+remote refs/heads/main:
+b7bd0b9ad449b0f10def37e27d9f93f272e996a1
+
+repository/index:
+clean
+```
+
+No dependency authority was opened:
+
+```text
+dependency network            false
+artifact download             false
+dependency install            false
+dependency execution          false
+Sandbox                       false
+candidate interpreter         false
+reusable lease                false
+execution authorization       false
+```
+
+Current state:
+
+```text
+RC041   PASSED / CONSUMED / IMMUTABLE / CLOSED
+V1C2    COMPLETE
+RC042   ARCHITECTURE LOCK RECORDED
+V1C3A0  IMPLEMENTED / VERIFIED / PUSHED / NON-AUTHORIZING
+V1C3A1  NOT OPEN
+```
+
+The final V1C3A0 commit/push launcher is consumed and must not be rerun.
+
+### Next Exact Action
+
+Perform a read-only V1C3A1 architecture/security audit. Do not select or run a
+resolver, access PyPI, download metadata or wheels, install dependencies,
+execute a candidate dependency, launch Sandbox or open any reusable capability
+until the V1C3A1 resolver/acquisition contract is reviewed.
