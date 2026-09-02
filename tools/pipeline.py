@@ -117,6 +117,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task same-run runtime capability lease", _python_cmd("tools/eval_developer_task_execution_runtime_lease.py")),
             Step("Evaluate developer task executable environment inventory", _python_cmd("tools/eval_developer_task_execution_environment_inventory.py")),
             Step("Evaluate developer task canonical host toolchain observation", _python_cmd("tools/eval_developer_task_execution_toolchain_observation.py")),
+            Step("Evaluate developer task canonical dependency profile target contract", _python_cmd("tools/eval_developer_task_execution_dependency_profile.py")),
             Step("Evaluate developer task canonical patched workspace snapshot", _python_cmd("tools/eval_developer_task_execution_workspace_snapshot.py")),
             Step("Evaluate developer task typed compile AST plan capability", _python_cmd("tools/eval_developer_task_execution_compile_ast_plan.py")),
             Step("Evaluate developer task canonical compile AST contract", _python_cmd("tools/eval_developer_task_execution_compile_ast_contract.py")),
@@ -624,6 +625,15 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate developer task executable environment inventory", _python_cmd("tools/eval_developer_task_execution_environment_inventory.py")),
             Step("Evaluate developer task canonical host toolchain observation", _python_cmd("tools/eval_developer_task_execution_toolchain_observation.py")),
             Step("Evaluate developer task canonical host toolchain observation Windows smoke", _python_cmd("tools/eval_developer_task_execution_toolchain_observation_windows.py")),
+        ],
+        "developer_task_execution_dependency_profile": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
+            Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
+            Step("Evaluate developer task executable environment inventory", _python_cmd("tools/eval_developer_task_execution_environment_inventory.py")),
+            Step("Evaluate developer task canonical host toolchain observation", _python_cmd("tools/eval_developer_task_execution_toolchain_observation.py")),
+            Step("Evaluate developer task canonical dependency profile target contract", _python_cmd("tools/eval_developer_task_execution_dependency_profile.py")),
+            Step("Evaluate developer task canonical dependency profile Windows host-only smoke", _python_cmd("tools/eval_developer_task_execution_dependency_profile_windows.py")),
         ],
         "developer_task_execution_workspace_snapshot": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
