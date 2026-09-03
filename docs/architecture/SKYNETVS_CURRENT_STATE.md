@@ -3585,3 +3585,198 @@ Perform a read-only V1C3A1 architecture/security audit. Do not select or run a
 resolver, access PyPI, download metadata or wheels, install dependencies,
 execute a candidate dependency, launch Sandbox or open any reusable capability
 until the V1C3A1 resolver/acquisition contract is reviewed.
+
+## Roadmap Change 043 — V1C3A1 architecture/security lock
+
+RC043 records the target-matched resolver and mediated acquisition contract
+without opening resolver or network authority.
+
+```text
+baseline:
+aa01155fb5b015faabc4aaf297c6cd7906334d9d
+
+tree:
+a2b8a22df5015976e269e006c9a33dfb5d60512d
+
+decision:
+skynetvs-v1c3a1-target-matched-resolver-mediated-acquisition-lock-v1
+
+fingerprint:
+65649ffa282db0b625c58f687adb16e1b41d5f5ada679985ee7dde4d77e61d73
+```
+
+Evidence:
+
+```text
+architecture source
+2b253ba8792f62eb96ef7568584b1baeb8a6b72c67340fd2c4aa325e7cbe804d
+
+pip 25.3 identity
+0dbfa21e4ed2a5f23394c74a15008bbe5e54fcaec1f133ac44fce4c3719f304a
+
+marker semantics
+df57117b18af5a0fa0fc0962741ff3af3e90dc5816553f7179a1130f1726af26
+```
+
+The measured project `.venv` pip 25.3 runs under CPython 3.12.10 and is
+rejected as the target resolver. Exact local source proves its root and
+transitive PEP 508 markers use the running interpreter environment; the fixed
+target is CPython 3.13.15. `--python-version` does not repair this boundary.
+There is no host-3.12 fallback.
+
+The no-extras scope is graph-wide. Non-empty extras on any root or transitive
+requirement fail closed; `extra` markers are evaluated only with the empty value.
+
+The fixed target does not pin `platform_release` or `platform_version`, even
+though pip's running marker environment contains both. RC043 therefore rejects
+root or transitive markers that reference either value, `dependency_groups` or
+any unknown/unsupported marker variable. Bound marker values must match the
+fixed target; Core Metadata may additionally use only the empty `extra` for the
+initial no-extras profile.
+
+V1C3A1 is internally sequenced without expanding the top-level roadmap:
+
+```text
+V1C3A1A  non-network policy/report contract
+V1C3A1B  target-matched resolver capsule bootstrap and offline verification
+V1C3A1C  bounded mediated candidate acquisition
+```
+
+A future resolver capsule must be a fresh external CPython 3.13.15 Windows
+AMD64 copy, separate from `.venv`, the repository and stable V1B4. The exact
+CPython source ZIP remains:
+
+```text
+bytes   11009825
+SHA256  d1f04d990aee1253d8569e8e5104e30fa9f5fa830899f14843448872d936a2cf
+```
+
+The measured project `.venv` `pip==25.3` identity is rejection/observation
+evidence only. RC043 selects the `pip` family but no exact resolver-tool
+version. Before first use, a separately accepted exact version requires
+authoritative pip Simple metadata/wheel bytes, offline wheel/RECORD and tree
+verification, deterministic non-executing extraction, exact capsule/entry
+point/argv/environment/output identities and a proven OS egress guard.
+
+The resolver has no direct external network. It can use only a numeric
+loopback project broker. Raw authoritative Simple bytes are retained. A
+canonical logical resolver view and stable route-map projection are closure
+material; the actually served JSON, port/token and raw resolver report are
+attempt-specific run-envelope evidence only. A canonical proposal projection
+maps every resolver-report URL back to source authority and removes unpinned or
+attempt-local fields before closure hashing.
+
+Resolver, broker and archive-metadata parsing workers require independently
+proven restricted-token, no-child-process, no-inherited-handle, job-object and
+attempt-root-only write confinement before first use. Resolver and broker also
+require separate OS default-deny egress proofs. Exact committed code/import and
+interpreter identities are required for every active component. RC043 does not
+choose the Windows mechanisms.
+
+The broker is the sole external actor and may access only exact allowlisted
+HTTPS origins:
+
+```text
+pypi.org:443
+files.pythonhosted.org:443
+```
+
+Initial provenance is limited to `pypi.org:443`; any other secure provenance
+origin requires a separate roadmap review. Redirects and retries are zero.
+Proxy/index/credential/custom-CA/client-certificate/netrc/keyring/user-config
+fallback is forbidden.
+
+Authority remains:
+
+```text
+PyPI Simple API JSON v1, major 1, minor >= 4
+raw required project keys: meta/name/files/versions
+optional project-status: explicit absent/present evidence
+selection requires filename/url/hashes/size and hashes.sha256
+optional file fields: explicit absent/present evidence
+strict duplicate-key/UTF-8/API-version/name/bounds validation
+graph-wide non-empty extras rejected
+exact files.pythonhosted.org wheel URL from verified Simple response
+external Core Metadata when advertised
+otherwise bounded exact-wheel METADATA candidate, reverified in V1C3A2
+exact provenance bytes when present
+declared and actual wheel SHA-256 equality
+```
+
+Resolver output is proposal-only. V1C3A1 candidate evidence is non-executable
+and cannot enter V1C3B before V1C3A2 offline verification and V1C3A3 manual
+immutable acceptance. Volatile DNS/TLS/peer/header/timing evidence is bound in
+the run envelope but excluded from the deterministic closure fingerprint;
+selection-critical URLs, status/media/encoding and raw body hashes remain in
+the closure.
+
+Active attempts are serial, bounded and create-once. The fixed limits include
+128 projects/nodes, 1024 graph edges, 2048 upstream and 8192 loopback requests,
+16 MiB per Simple response, 4 MiB per Core Metadata/provenance object, 256 MiB
+per wheel, 2 GiB total wheel bytes, bounded JSON/Core Metadata/marker parsing,
+16384 archive entries and a 100:1 candidate-METADATA ratio. Limit exhaustion
+fails closed.
+
+### Final lineage and resolver-tool gates
+
+```text
+V1C0B2
+skynetvs-v1c0b2-external-source-authority-lock-v1
+80da155e8de0ce9f6d17565541173b701c2d5c9c8a8c13f1fcab9a57dbdb3d5e
+
+V1C3A0
+skynetvs-v1c3a0-dependency-profile-target-contract-v1
+370e5d2c246be240b9d1a47fdebcc1250302155ea0e6128b6580079d5691748a
+policy blob c383035a4363b0943aa25c53ac1ee3b0757e930b
+```
+
+V1C3A1A must fail closed on missing, duplicate or changed V1C0B2 identity; on
+current/imported V1C3A0 policy drift; on dependency-profile report lineage
+drift; or when copied profile/declaration/extras/target values differ from the
+bound V1C3A0 contract.
+
+RC043 selects the pip family but no executable version. Project `.venv` pip
+25.3 remains rejected observation evidence. An exact version may be selected
+only in V1C3A1B after a fresh release/security review and exact acquired-wheel
+source audit; automatic latest/range/fallback semantics are forbidden.
+
+Before any pip import or execution, the resolver-tool wheel requires exact
+`METADATA`/`WHEEL`/`RECORD` verification, complete SHA-256 RECORD-to-archive
+set equality, deterministic extraction, valid SPDX `License-Expression`, every
+`License-File` byte and a create-once manual tool-acceptance result. The wheel
+must be pure `py3-none-any`, dependency-free and target-compatible; failed or
+partial acceptance cannot be promoted.
+
+Current transition target:
+
+```text
+RC043   ARCHITECTURE LOCK RECORDED
+V1C3A1  CURRENT / V1C3A1A NON-NETWORK CONTRACT ONLY
+         ACTIVE ACQUISITION BLOCKED
+
+resolver selected          false
+resolver executed          false
+network authority opened   false
+metadata/wheel download    false
+dependency install/execute false
+Sandbox                    false
+reusable lease             false
+execution authorization    false
+```
+
+Exact V1C3A1A mutable scope:
+
+```text
+modules/developer/developer_task_execution_dependency_acquisition.py
+modules/developer/developer_task_execution_dependency_acquisition_policy.py
+tools/eval_developer_task_execution_dependency_acquisition.py
+tools/eval_developer_task_execution_dependency_acquisition_windows.py
+tools/pipeline.py
+tools/eval_package_boundaries.py
+```
+
+### Next Exact Action
+
+Implement only the non-network V1C3A1A policy/report contract. No resolver-tool
+download, capsule construction, egress guard, broker network, resolver
+execution, dependency metadata/wheel acquisition, installation or execution.

@@ -2040,3 +2040,110 @@ execution authorization        false
 Review V1C3A1 as a separate host acquisition boundary. No resolver, PyPI
 metadata, wheel bytes or candidate dependency may enter the trusted runtime or
 become execution authority merely because V1C3A0 is complete.
+
+## RC043 — V1C3A1 resolver capsule remains separate from trusted V1B4
+
+RC043 does not modify, repurpose or reopen the trusted runtime.
+
+```text
+stable tag:
+skynet-trusted-runtime-v1b4
+
+stable commit:
+91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+
+trusted Python:
+CPython 3.13.15 Windows embeddable AMD64
+```
+
+Decision:
+
+```text
+skynetvs-v1c3a1-target-matched-resolver-mediated-acquisition-lock-v1
+65649ffa282db0b625c58f687adb16e1b41d5f5ada679985ee7dde4d77e61d73
+```
+
+The measured project `.venv` pip 25.3 / CPython 3.12.10 is rejected as the
+V1C3A1 target resolver because PEP 508 markers follow the running resolver
+interpreter rather than the fixed target. The fixed target does not pin
+`platform_release` or `platform_version`; metadata referencing either value, an
+unknown marker variable or unsupported marker syntax fails closed rather than
+borrowing mutable host state.
+
+A future resolver uses a separate fresh external capsule. It may reuse only the
+exact trusted CPython source ZIP identity as source material:
+
+```text
+bytes:
+11009825
+
+SHA256:
+d1f04d990aee1253d8569e8e5104e30fa9f5fa830899f14843448872d936a2cf
+```
+
+That capsule is not `skynet-trusted-runtime-v1b4`, receives no trusted-runtime
+tag or lease and cannot alter the stable runtime tree. It has no inherited
+site-packages, user site or `ensurepip`. A separately verified exact pip wheel
+may later be deterministically extracted into the capsule without executing
+`pip install`; exact `_pth`, extracted-tree and entry-point identities are
+required.
+
+The resolver capsule receives no direct external network. Any future proposal
+uses a proven loopback-only egress guard and a project-owned numeric-loopback
+broker with a separate default-deny upstream guard. The broker preserves
+authoritative upstream bytes. A canonical logical view/route map is deterministic
+closure material; actual served URLs and the raw resolver report remain only in
+the create-once attempt envelope and are normalized before closure hashing.
+
+Resolver, broker and archive-metadata workers require separate restricted
+processes, no inherited handles or child processes, kill-on-job-close
+containment, a read-only capsule and write access only to the fresh attempt
+root. Every active component also requires exact committed code/import and
+interpreter identity. The exact Windows mechanisms remain unselected until
+host-only proofs.
+
+The no-extras scope is graph-wide, all parser/archive limits are exact, and the
+broker's acquired bytes remain non-authoritative candidates until offline
+V1C3A2 verification and manual immutable V1C3A3 acceptance.
+
+### Resolver-tool lineage and pre-execution acceptance
+
+RC043 also binds the V1C0B2 authority decision `skynetvs-v1c0b2-external-source-authority-lock-v1` /
+`80da155e8de0ce9f6d17565541173b701c2d5c9c8a8c13f1fcab9a57dbdb3d5e` and the V1C3A0 policy `skynetvs-v1c3a0-dependency-profile-target-contract-v1` /
+`370e5d2c246be240b9d1a47fdebcc1250302155ea0e6128b6580079d5691748a`. The V1C3A1A contract must cross-check both current lineages and
+must not treat copied scope/target values as independent authority.
+
+No pip version is selected by RC043. The observed `.venv` pip 25.3 is not a
+fallback. A future exact version requires separate V1C3A1B source/security,
+wheel, RECORD and license acceptance. Before any import or `python -m pip`
+execution, every resolver-tool wheel file must be SHA-256/size-bound through
+RECORD, every declared license file must be present and captured, the exact
+license expression/evidence must be manually accepted, and the deterministic
+extracted capsule tree must match the accepted wheel. None of this modifies or
+extends trusted V1B4.
+
+Current boundary:
+
+```text
+V1B4    UNCHANGED / TRUSTED
+RC043   ARCHITECTURE LOCK ONLY
+V1C3A1  V1C3A1A NON-NETWORK CONTRACT MAY FOLLOW
+         ACTIVE ACQUISITION BLOCKED
+
+resolver selected          false
+resolver executed          false
+network authority opened   false
+metadata downloaded        false
+wheel downloaded           false
+dependency installed       false
+dependency executed        false
+Sandbox launched           false
+reusable runtime lease     false
+execution authorized       false
+```
+
+### Next Exact Action
+
+Implement only the V1C3A1A non-network acquisition contract. Do not construct
+or run the resolver capsule, modify V1B4, access PyPI or create dependency
+artifact authority.

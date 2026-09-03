@@ -5227,3 +5227,613 @@ proposal, authoritative PyPI Simple API acquisition boundary, redirect and
 environment policy, candidate-manifest contract and acquisition evidence
 limits before any resolver is selected or any dependency metadata or wheel is
 downloaded. Do not open network acquisition until that audit is reviewed.
+
+## Roadmap Change 043 — V1C3A1 target-matched resolver capsule and mediated acquisition lock
+
+RC043 is a Pro architecture/docs transition. It does not expand the top-level
+roadmap and does not authorize dependency resolution, external network use,
+metadata or wheel acquisition, installation, package import/execution, Sandbox
+launch, a reusable lease or execution authority.
+
+Entering baseline:
+
+```text
+HEAD / origin/main:
+aa01155fb5b015faabc4aaf297c6cd7906334d9d
+
+tree:
+a2b8a22df5015976e269e006c9a33dfb5d60512d
+
+V1C3A0:
+IMPLEMENTED / VERIFIED / PUSHED / DOCS CLOSED / NON-AUTHORIZING
+
+V1C3A1:
+NOT OPEN
+```
+
+Decision identity:
+
+```text
+decision ID:
+skynetvs-v1c3a1-target-matched-resolver-mediated-acquisition-lock-v1
+
+policy fingerprint:
+65649ffa282db0b625c58f687adb16e1b41d5f5ada679985ee7dde4d77e61d73
+```
+
+Reviewed evidence:
+
+```text
+SkynetVS_V1C3A1_ArchitectureAuditSource_20260902_201437.txt
+bytes   1204842
+SHA256  2b253ba8792f62eb96ef7568584b1baeb8a6b72c67340fd2c4aa325e7cbe804d
+
+SkynetVS_V1C3A1_ResolverCandidateIdentityAudit_20260902_232339.json
+bytes   175140
+SHA256  0dbfa21e4ed2a5f23394c74a15008bbe5e54fcaec1f133ac44fce4c3719f304a
+
+SkynetVS_V1C3A1_ResolverMarkerSemanticsAudit_20260903_010029.json
+bytes   49920
+SHA256  df57117b18af5a0fa0fc0962741ff3af3e90dc5816553f7179a1130f1726af26
+```
+
+### Resolver eligibility decision
+
+The measured project-host candidate is:
+
+```text
+pip                           25.3
+running interpreter           CPython 3.12.10
+pip distribution manifest     a41debbc8862b902055f1b5b913cdf1a60d2323b814f91ff05091b9cdc51b81d
+```
+
+It is observation evidence only and is rejected as the V1C3A1 target resolver.
+There is no host-3.12 fallback.
+
+Exact local pip source proves that `--python-version` controls wheel tags and
+`Requires-Python`, while root and transitive PEP 508 markers are evaluated from
+the running resolver interpreter's default environment. The V1C3A0 target is
+CPython 3.13.15, so the project `.venv` pip cannot produce a target-bound
+proposal.
+
+```text
+resolver_marker_environment_not_target_bound
+resolver_host_python_full_version_mismatch
+```
+
+### V1C3A1 internal order
+
+RC043 does not add a new top-level roadmap stage. V1C3A1 is internally ordered:
+
+```text
+V1C3A1A
+non-network acquisition policy/report contract
+NO RESOLVER / NO NETWORK / NO ARTIFACT
+
+V1C3A1B
+target-matched resolver capsule bootstrap and offline resolver-tool verification
+SEPARATE BROKER-ONLY TOOL ACQUISITION / NO RESOLUTION
+
+V1C3A1C
+bounded mediated dependency candidate acquisition
+TARGET-MATCHED RESOLVER / CANDIDATE ONLY / NO INSTALL
+```
+
+Completion of one substage does not authorize the next.
+
+### Fixed initial scope and target
+
+The acquisition scope remains exactly:
+
+```text
+profile       skynetvs-python-base-v1
+declaration   requirements.txt
+extras        []
+```
+
+The training and Whisper profiles remain not acquired, not resolved, not
+bundled and not executed. Any scope expansion requires a separate roadmap
+decision.
+
+The no-extras scope is graph-wide, not only a root-command setting. A root or
+transitive requirement that requests any non-empty extra fails closed before
+its name is authorized. `Provides-Extra` is retained as evidence only and does
+not activate an extra. `Requires-Dist` may contain an `extra` marker, but every
+package is evaluated only with the empty extra; the resolver report and the
+independent graph must contain no non-empty requested extras.
+
+The fixed target remains:
+
+```text
+implementation_name            cpython
+implementation_version         3.13.15
+python_version                 3.13
+python_full_version            3.13.15
+os_name                        nt
+sys_platform                   win32
+platform_system                Windows
+platform_machine               AMD64
+platform_python_implementation CPython
+requested_extras               []
+```
+
+### Marker-environment completeness
+
+The exact pip audit also shows `platform_release` and `platform_version` in
+`default_environment()`, but V1C3A0 intentionally does not pin either value.
+RC042 already requires any dependency marker that needs an unpinned target
+value to fail closed. Target matching therefore means equality for every
+pinned marker key, not silent acceptance of the resolver host's remaining
+values.
+
+For the initial profile, committed root markers may use only:
+
+```text
+implementation_name
+implementation_version
+os_name
+platform_machine
+platform_python_implementation
+platform_system
+python_full_version
+python_version
+sys_platform
+```
+
+Strictly parsed `Requires-Dist` markers may additionally use `extra`; because
+the initial profile requests no extras, the only evaluation value is the empty
+extra. `platform_release`, `platform_version`, `dependency_groups`, unknown
+variables and unsupported syntax/operators fail the attempt before a
+dependency name is authorized or exposed to the resolver. Resolver and
+project-owned marker decisions must match exactly.
+
+### Target-matched resolver capsule
+
+A future resolver may run only inside a fresh external capsule whose running
+values for every pinned marker key equal the fixed target. The complete running
+`default_environment()` is captured, while metadata that references an
+unpinned marker key is rejected under the rule above. The capsule is separate
+from the project `.venv`, repository and stable V1B4 runtime and does not
+become a trusted runtime.
+
+Its Python source is the exact CPython 3.13.15 Windows embeddable AMD64 ZIP:
+
+```text
+bytes:
+11009825
+
+SHA256:
+d1f04d990aee1253d8569e8e5104e30fa9f5fa830899f14843448872d936a2cf
+```
+
+The measured project `.venv` `pip==25.3` identity remains rejection and
+observation evidence only. RC043 selects the `pip` tool family but no exact
+resolver-tool version or executable. Before first use, exact authoritative pip
+metadata and wheel bytes, target-compatible wheel and `Requires-Python`,
+non-yanked/non-pre-release state, declared/actual SHA-256 equality, wheel and
+RECORD verification, license evidence, provenance absence or verified
+presence, deterministic extraction tree, entry point, capsule Python, `_pth`,
+ordered argv, environment and output identities must be accepted. The exact
+acquired wheel source must independently reproduce the reviewed marker,
+loopback, retry/range, configuration/keyring and report semantics; a matching
+version string is insufficient.
+
+Bootstrap uses project-owned deterministic wheel extraction; `pip install`,
+`ensurepip`, inherited site-packages and `import site` are forbidden.
+
+### Mediated network boundary
+
+The resolver process receives no direct external network. It may communicate
+only with a project-owned broker on numeric loopback. Before first resolver use,
+an independently reviewed host-only proof must establish an OS egress guard
+that denies resolver non-loopback traffic. RC043 does not select that mechanism.
+
+The broker is the sole external network actor. It performs one serial bounded
+request at a time, with zero automatic retries, `Accept-Encoding: identity`,
+no inherited proxy/index/credential state and exact response-byte capture.
+Resolver-requested names are not authority: a project is fetchable only when
+it is an exact committed root or a strictly parsed transitive name from
+previously captured authoritative Core Metadata.
+
+The authoritative upstream Simple JSON body is preserved unchanged. A strict
+parser first builds a canonical logical resolver-view projection with stable
+logical object IDs and no port, attempt token or absolute path. The deterministic
+closure binds that canonical projection and its SHA-256.
+
+Only for a specific attempt is the logical view rendered into served JSON by
+substituting the numeric-loopback base and high-entropy attempt route. Every
+external file or metadata URL becomes an attempt-local loopback object route.
+The exact served bytes, actual port/token and raw route paths are create-once
+run-envelope evidence only and are not closure-fingerprint material.
+
+A canonical route-map projection binds each stable logical route ID to the
+authority class, canonical upstream URL, normalized project, filename, declared
+size and declared SHA-256 where applicable. External URLs are never exposed to
+the resolver. Unknown methods, routes, ranges or objects fail closed, and every
+name, URL and artifact in the raw resolver report must reconcile through this
+map.
+
+Before first use, exact accepted pip source must prove the loopback method,
+status, retry/resume, timeout, configuration/keyring and range surface. The
+resolver, broker and candidate archive-metadata reader must also run as separate
+restricted non-administrative workers with no inherited handles, no child-
+process creation, kill-on-job-close containment, read-only capsule bytes and
+write access only to the fresh external attempt root. Repository, stable V1B4
+and credential-store writes are forbidden.
+
+The resolver requires an OS default-deny guard permitting only loopback. The
+broker requires a distinct OS default-deny guard permitting only exact DNS
+egress and TCP 443 peer sets for the allowlisted upstream hosts; application
+hostname, SNI, certificate and peer-address checks remain mandatory. Neither
+Windows guard/confinement mechanism is selected by RC043. Separate host-only
+proofs are mandatory before the first external request or untrusted-byte parse.
+
+Every active component—resolver launcher, broker/transport, Simple/Core Metadata
+parser, resolver-view generator, archive reader and confinement verifier—must
+bind its committed Git blob/bytes/SHA-256, complete import closure, interpreter
+or runtime identity, ordered argv, working directory, standard handles and
+constructed environment. Dynamic plugins, user/host site-packages and
+PATH-selected imports are forbidden.
+
+The loopback route token has at least 256 bits of OS-CSPRNG entropy but is a
+namespace/collision defense, not source authority. It cannot authorize a new
+project or upstream fetch. Each authoritative upstream object is fetched at
+most once; repeat resolver reads are served from the immutable captured object.
+
+Initial exact upstream origins are:
+
+```text
+Simple JSON              https://pypi.org:443
+wheel/Core Metadata      https://files.pythonhosted.org:443
+provenance               https://pypi.org:443
+```
+
+A provenance URL outside the initial allowlist fails closed and requires
+roadmap review. URLs require HTTPS, implicit port 443, no userinfo/query/
+fragment, exact normalized project paths and a trailing slash. Redirect count
+is exactly zero. Relative and scheme-relative URLs fail closed.
+
+The broker validates hostname/SNI, requires TLS 1.2 or newer and default system
+trust, rejects custom CA/client certificates and rejects loopback, private,
+link-local, multicast or reserved upstream peer addresses. TLS version,
+cipher, leaf-certificate SHA-256 and peer IP are captured as transport
+evidence. Transport trust does not replace metadata and artifact hashes.
+
+### Authoritative source and artifact contract
+
+The V1C0B2 source authority remains unchanged:
+
+```text
+metadata:
+PyPI Simple Repository API JSON v1
+supported major 1
+minimum minor 4
+media type application/vnd.pypi.simple.v1+json
+
+artifacts:
+exact HTTPS wheel URLs under files.pythonhosted.org
+returned by a verified project response
+```
+
+Every upstream response requires HTTP 200; any redirect, content encoding
+other than identity, credential challenge or unexpected origin fails closed.
+Exact raw bytes, headers under bounded size, SHA-256 and request-ledger entry
+are retained.
+
+A raw project response must contain `meta`, `name`, `files` and `versions`.
+`project-status` is optional in the API, but canonical evidence must record
+whether it was absent or present and, when present, its status/reason. A
+non-active project status blocks selection.
+
+SkynetVS accepts a raw file record for selection only when `filename`, `url`,
+`hashes`, `size` and a SHA-256 hash are present and valid. Optional
+`requires-python`, `yanked`, `core-metadata`, `upload-time` and `provenance`
+fields are normalized to explicit present/absent evidence rather than silently
+invented.
+
+Simple JSON parsing is strict UTF-8 without BOM. Duplicate object keys,
+non-finite or non-integer size values, invalid Unicode, excessive nesting or
+members, a mismatched normalized project name, duplicate normalized file
+identities or unsupported selection-critical semantics fail closed. Core
+Metadata uses a separate project-owned bounded parser for supported metadata
+versions 2.1 through 2.4; conflicting identity fields, excessive headers/lines/
+requirements, unsupported requirement syntax or marker variables fail closed.
+
+Wheel candidates require exact filename parsing, target tags, size and
+index-declared SHA-256, and the downloaded bytes must produce the same SHA-256.
+Yanked and pre-release files, sdists, local builds, direct URLs, VCS,
+extra-index and host-cache fallback remain forbidden before resolver view
+generation.
+
+An external Core Metadata sidecar is fetched only when truthfully advertised,
+and its advertised and actual hashes must match. If no sidecar is advertised,
+V1C3A1 may first fetch the exact selected wheel, prove declared/actual SHA-256
+equality and extract only `.dist-info/METADATA` with a bounded non-executing
+archive reader. Unsafe paths, duplicates, Windows case collisions, encrypted or
+symlink entries, unsupported compression, expanded-size or compression-ratio
+violations fail closed. That candidate metadata may authorize a transitive name
+only after strict parsing and must be independently reverified from the wheel
+in V1C3A2.
+
+Provenance absence is explicit. Present provenance is captured exactly; its
+version-1 attestation subject filename and SHA-256 must bind the wheel before
+V1C3A3. Present but unverified provenance blocks acceptance. Attestation proves
+publishing identity, not package safety.
+
+Resolver output remains proposal-only. Independently captured Simple, Core
+Metadata, provenance and wheel bytes are the only candidate source evidence.
+
+### Resolver invocation and environment
+
+Before first use, an exact ordered argv byte representation and SHA-256 must
+bind a target-capsule `python -m pip` proposal using at least:
+
+```text
+--isolated
+--dry-run
+--report=<fresh external path>
+--ignore-installed
+--only-binary=:all:
+--no-cache-dir
+--disable-pip-version-check
+--no-input
+--progress-bar=off
+--platform=win_amd64
+--python-version=3.13.15
+--implementation=cp
+--abi=cp313
+--index-url=http://127.0.0.1:<ephemeral-port>/<attempt-route>/simple/
+--requirement=<exact canonical requirements copy>
+```
+
+`--extra-index-url`, `--find-links`, `--trusted-host`, proxy/certificate
+options, `--pre`, `--no-deps`, `--ignore-requires-python`, editable/direct/VCS/
+local requirements, sdists and builds are forbidden.
+
+Each active worker environment is constructed from an empty template. Only the
+minimum Windows process variables, fresh attempt-local user/temp/cache roots
+and exact isolation values may be added. Resolver Python uses
+`PYTHONUTF8=1`, `PYTHONDONTWRITEBYTECODE=1`, `PYTHONNOUSERSITE=1`,
+`PYTHONHASHSEED=0` and `PYTHONSAFEPATH=1`, runs with the attempt root as its
+working directory, closed stdin and no shell.
+
+All inherited `PIP_*`, `PYTHON*`, `XDG_*`, `UV_*`, proxy, custom CA, client-
+certificate, netrc and virtualenv inputs are scrubbed before those exact values
+are constructed. User/global/site pip configuration and keyring are forbidden;
+`--isolated` alone is not proof of global-config absence. The exact accepted
+pip source must establish the no-config, disabled-keyring, zero retry/resume and
+loopback timeout contract before first use.
+
+### Fixed acquisition bounds
+
+```text
+concurrent upstream requests       1
+automatic retries                  0
+redirects                          0
+distinct projects                  128
+dependency graph nodes             128
+dependency graph edges             1024
+Simple file records/project        8192
+compatible wheels/project          256
+selected wheels                    256
+HTTP requests                      2048
+URL bytes                          4096
+response-header bytes              65536
+Simple response bytes              16777216
+Core Metadata bytes                4194304
+provenance bytes                   4194304
+wheel bytes each                   268435456
+total metadata bytes               268435456
+total wheel bytes                  2147483648
+connect timeout seconds            10
+TLS timeout seconds                15
+read-idle timeout seconds          60
+request deadline seconds           180
+resolver deadline seconds          1800
+resolver report bytes              33554432
+stdout/stderr bytes each            8388608
+loopback requests                    8192
+JSON object/array items each         16384
+JSON string UTF-8 bytes              4194304
+Core Metadata header fields          8192
+Core Metadata line bytes             65536
+Requires-Dist fields                 4096
+requirement UTF-8 bytes              8192
+marker AST nodes / nesting           1024 / 64
+wheel archive entries                16384
+wheel central-directory bytes        8388608
+wheel member-name UTF-8 bytes        1024
+candidate METADATA bytes             4194304
+candidate METADATA ratio             100
+candidate METADATA members           1
+```
+
+Candidate wheel metadata accepts only stored or deflated entries, requires
+central/local filename agreement and CRC verification, and applies the exact
+archive limits above before exposing parsed metadata.
+
+Limit exhaustion, integer overflow, truncation, timeout or parser-bound
+exhaustion fails closed with no fallback.
+
+### Candidate manifest and immutable evidence
+
+V1C3A1 produces only a non-authoritative candidate. Canonical JSON uses UTF-8
+without BOM, LF, final LF, sorted object keys, compact separators and no NaN.
+Arrays have explicit deterministic ordering for projects, artifacts,
+dependency edges, request records, license files and attestations.
+
+The create-once attempt run envelope binds raw upstream responses, raw served
+resolver-view bytes, actual loopback URLs, raw resolver report, stdout/stderr,
+absolute paths/processes and DNS/TLS/peer/header/timing evidence. That raw layer
+is exact evidence but is not the deterministic closure fingerprint.
+
+The deterministic closure instead binds the policy/fingerprint, Git/
+declaration/profile/target identities, exact active-component code/runtime
+identities, capsule and ordered argv/environment, egress/confinement proofs,
+canonical logical resolver-view and stable route-map projections, and a strict
+canonical resolver-proposal projection. The proposal projection maps every raw
+loopback URL back to authoritative object identity, retains only pinned target
+environment keys, and excludes attempt ports/tokens/paths, PIDs, timestamps and
+unpinned resolver-report environment values. It also binds exact response/
+artifact hashes, package graph, marker/extra decisions and enforced bounds.
+
+Volatile transport observations remain bound in the attempt run envelope but
+outside the deterministic closure fingerprint: wall-clock timing, DNS answer
+ordering, peer IP, TLS version/cipher, leaf-certificate SHA-256 and transport-
+only response headers. The closure still binds selection-critical HTTP facts:
+authoritative URL, status, media type, content encoding, raw body byte count and
+raw body SHA-256.
+
+Every active attempt uses a fresh external root, content-addressed objects,
+create-once evidence and a separate create-once terminal result. Existing
+evidence is never overwritten, replaced or rename-finalized. Failed and partial
+attempts remain preserved and cannot be promoted or rerun under the same
+attempt identity.
+
+The candidate cannot enter V1C3B. V1C3A2 offline independent verification and
+V1C3A3 manual immutable acceptance remain mandatory.
+
+### Upstream lineage and drift closure
+
+RC043 derives authority from two exact upstream contracts and does not create
+parallel sources of truth.
+
+```text
+V1C0B2 external source authority
+decision ID   skynetvs-v1c0b2-external-source-authority-lock-v1
+fingerprint   80da155e8de0ce9f6d17565541173b701c2d5c9c8a8c13f1fcab9a57dbdb3d5e
+
+V1C3A0 dependency profile/target
+policy ID     skynetvs-v1c3a0-dependency-profile-target-contract-v1
+fingerprint   370e5d2c246be240b9d1a47fdebcc1250302155ea0e6128b6580079d5691748a
+source blob   c383035a4363b0943aa25c53ac1ee3b0757e930b
+source bytes  19634
+source SHA256 6cf4fa336a97ab9eba51aa9bee2f5912edaac1c35b696f89fc612fe95928b3c7
+commit        b7bd0b9ad449b0f10def37e27d9f93f272e996a1
+tree          cdf7591e242696a9976362801c6f200f26c71ded
+```
+
+V1C3A1A must find exactly one current committed V1C0B2 identity block and fail
+closed when it is absent, duplicated or changed. It must also compare the
+current imported V1C3A0 policy ID/fingerprint with the pinned values above,
+verify the exact committed policy source identity, and require the supplied
+dependency-profile report to carry the same lineage.
+
+The profile ID, declaration object identity, requested extras and fixed target
+copied into RC043 must independently equal the current V1C3A0 policy/report.
+Any mismatch produces a typed lineage failure and requires a separate roadmap
+review; copied values in RC043 are not independent authority.
+
+### Resolver-tool version, wheel, RECORD and license acceptance
+
+RC043 selects no executable resolver-tool version. The measured project
+`.venv` pip 25.3 remains observation/rejection evidence only. V1C3A1B must
+choose one exact pip version through a separate create-once decision after
+fresh official release/security-advisory review and an exact acquired-wheel
+source-semantics audit. `latest`, version ranges, automatic upgrade, downgrade
+or fallback are forbidden. A known unresolved issue affecting the planned
+resolver use fails closed.
+
+No acquired pip code may be imported or executed—not even `python -m pip
+--version`—until resolver-tool acceptance is complete. The selected artifact
+must be one non-yanked, non-pre-release, pure-Python wheel with no build tag,
+exact `py3-none-any` compatibility, no `.data` tree, native/executable payload
+or `Requires-Dist`, and `Requires-Python` must admit CPython 3.13.15.
+
+The wheel must classify uniquely as ZIP, with no prepended/trailing or
+concatenated archive payload, overlapping member ranges, duplicate names,
+unsafe Windows paths, encryption, links or special files. Exactly one matching
+`.dist-info` directory is allowed. `METADATA`, `WHEEL`, `RECORD`,
+`pip/__init__.py` and `pip/__main__.py` are required; `RECORD.jws`,
+`RECORD.p7s`, `INSTALLER`, `REQUESTED`, `direct_url.json`, bytecode, native
+libraries and generated console launchers are forbidden.
+
+`WHEEL` must declare Wheel-Version 1.0, `Root-Is-Purelib: true`, exact tag
+`py3-none-any` and no Build field. Resolver-tool Core Metadata must be version
+2.4 for this candidate family, bind the exact selected Name/Version, admit the
+fixed target and contain zero `Requires-Dist` fields.
+
+`RECORD` is preserved as raw evidence and parsed as strict UTF-8 CSV with
+exactly three columns. Every regular archive file has exactly one canonical
+forward-slash row. The one `RECORD` self-row has empty hash and size; every
+other row must use SHA-256, URL-safe base64 without padding and an exact
+non-negative decimal size matching the uncompressed member bytes. Missing,
+unlisted, duplicate, weak-hash or mismatched rows fail closed. A separately
+sorted canonical RECORD projection and SHA-256 are bound to acceptance.
+
+Metadata 2.4 must provide a valid case-normalized SPDX `License-Expression` and
+at least one `License-File`. No expression is inferred from legacy text or
+classifiers. Every declared forward-slash relative path must map to the exact
+`.dist-info/licenses/` member, and the declared set must equal the complete
+licenses subtree. Each license file is strict UTF-8 text, RECORD-bound by exact
+size/SHA-256 and included in a sorted license manifest. The exact expression,
+all license bytes and an explicit create-once manual evidence acceptance are
+required before resolver execution; this is not automatic legal inference.
+
+Extraction uses only a project-owned verifier/extractor. `pip install`, wheel
+installer execution and script generation remain forbidden. Only RECORD-bound
+regular members are written; no `INSTALLER`, `REQUESTED`, `direct_url.json` or
+`.pyc` is generated. Every extracted file is rechecked against RECORD, and an
+exact sorted path/mode/bytes/SHA-256 capsule-tree manifest must match the
+accepted wheel. The capsule remains read-only before and during first use.
+
+The resolver-tool acceptance envelope binds the exact version, authoritative
+Simple/wheel/provenance evidence, raw `METADATA`/`WHEEL`/`RECORD`, canonical
+RECORD and license manifests, deterministic extracted tree, capsule Python and
+`_pth`, module entry point/import closure, source-semantics audit and fresh
+security-review identity. Failed or partial tool acceptance is not promotable
+and cannot be rerun under the same attempt identity.
+
+### V1C3A1A exact implementation scope
+
+After the RC043 docs transition, only the non-network V1C3A1A contract may be
+implemented in:
+
+```text
+modules/developer/developer_task_execution_dependency_acquisition.py
+modules/developer/developer_task_execution_dependency_acquisition_policy.py
+tools/eval_developer_task_execution_dependency_acquisition.py
+tools/eval_developer_task_execution_dependency_acquisition_windows.py
+tools/pipeline.py
+tools/eval_package_boundaries.py
+```
+
+Planned public API:
+
+```text
+build_developer_task_execution_dependency_acquisition_contract(
+    dependency_profile_report,
+    *,
+    project_root
+) -> DeveloperTaskExecutionDependencyAcquisitionReport
+```
+
+Caller-controlled profile, target, resolver, URL, origin, redirect, proxy,
+credential, environment, bounds, version selection, artifact or execution
+authority is forbidden.
+
+Status after the eventual RC043 docs commit:
+
+```text
+RC043   ARCHITECTURE LOCK RECORDED
+V1C3A1  CURRENT / V1C3A1A NON-NETWORK CONTRACT ONLY
+         ACTIVE ACQUISITION BLOCKED
+
+resolver selected          false
+resolver executed          false
+network authority opened   false
+metadata downloaded        false
+wheel downloaded           false
+dependency installed       false
+dependency executed        false
+Sandbox launched           false
+reusable lease issued      false
+execution authorized       false
+```
+
+### Next Exact Action
+
+Implement and verify only V1C3A1A's non-network policy/report contract in the
+exact six-file scope. Stop before resolver-tool acquisition, capsule
+materialization, OS egress-guard activation, broker network access, resolver
+execution or permanent acquisition evidence.
