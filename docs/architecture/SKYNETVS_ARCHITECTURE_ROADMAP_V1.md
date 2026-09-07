@@ -5837,3 +5837,164 @@ Implement and verify only V1C3A1A's non-network policy/report contract in the
 exact six-file scope. Stop before resolver-tool acquisition, capsule
 materialization, OS egress-guard activation, broker network access, resolver
 execution or permanent acquisition evidence.
+
+## V1C3A1A implementation closure — non-network dependency acquisition contract
+
+V1C3A1A is implemented, hardened, independently preflighted, committed and
+pushed while remaining non-network and non-authorizing. This append-only
+closure does not alter the RC043 architecture lock and does not open V1C3A1B.
+
+Exact implementation identity:
+
+```text
+commit:
+875669d81caf7c91347fe6b532926803aca3153c
+
+parent:
+8bdce8742f6114b6b203066ecb9abb603ad1e798
+
+tree:
+f522f22c09a1679d191c2679021439c1cb03e769
+
+subject:
+feat: add V1C3A1A non-network dependency acquisition contract
+```
+
+Exact policy lineage:
+
+```text
+V1C3A1A policy ID:
+skynetvs-v1c3a1a-non-network-dependency-acquisition-contract-v1
+
+V1C3A1A policy fingerprint:
+5ed6c7bd3e1c3b180fc7344fb5078d3279ad9b597553fe25bf75cd5d45964dac
+
+RC043 decision ID:
+skynetvs-v1c3a1-target-matched-resolver-mediated-acquisition-lock-v1
+
+RC043 policy fingerprint:
+65649ffa282db0b625c58f687adb16e1b41d5f5ada679985ee7dde4d77e61d73
+```
+
+Exact committed implementation scope:
+
+```text
+A modules/developer/developer_task_execution_dependency_acquisition.py
+  blob 0bff5ba2f7ca4d50ad054e2d9bb8bbae81e123c0
+  raw SHA256 73a397f188741c095cd08186ab1ff3e3b3d92ad9edf2d20055bb351196f29e95
+
+A modules/developer/developer_task_execution_dependency_acquisition_policy.py
+  blob 7ed744e783f9dd1ad46e56891c6471560ed2c749
+  raw SHA256 2d5da2e1f7b276000dfb8da23ccd1ccb0d05ceca996c28c323637890963cf7f8
+
+A tools/eval_developer_task_execution_dependency_acquisition.py
+  blob a87dfb30149bb533a0f10e363d01c89a331e94a2
+  raw SHA256 62903f49b9c51bbb09a0cee040a7993091e43d58a2279c6a19b3c5ff282f1a4f
+
+A tools/eval_developer_task_execution_dependency_acquisition_windows.py
+  blob 508380515eec5c73ed55f5a2400da83b80475b46
+  raw SHA256 826df56bdf6c2f4d5403070935ae4597a32ec15344062111463eeff3f0dfc698
+
+M tools/eval_package_boundaries.py
+  blob ef098a42fce3057093323b1ec169be367ddd48bf
+  raw SHA256 59e4afe9920196baec6f02128a253a14d73c76d96da00260e811849494f55789
+
+M tools/pipeline.py
+  blob 30fe0bc204342a806c176f18be4365d6aca62bd4
+  raw SHA256 65d5aa30632cfe7aad38f4585680e37f5738c02e173c1ddb3ed8d4fa6db23722
+```
+
+Verification/evidence chain:
+
+```text
+V2.3 hardened implementation candidate:
+SkynetVS_V1C3A1A_ImplementationCandidateV2_3_20260904_003207.json
+bytes 168769
+SHA256 4a1b8b5678324d6502ee3945387f9547d1fcabc408dbc14c4e8ff87fd7b051b0
+result PASS
+
+final implementation preflight:
+SkynetVS_V1C3A1A_FinalImplementationPreflight_20260904_004555.json
+bytes 5953
+SHA256 944121a2ae0ef4f6f49aecf449941e9b24ca7c49ba0abbae102f65b6cc28ed23
+result PASS
+future tree f522f22c09a1679d191c2679021439c1cb03e769
+
+final implementation commit/push:
+SkynetVS_V1C3A1A_FinalCommitPush_20260907_135004_a3a3aeecbfb7.json
+bytes 15829
+SHA256 276ba53d163552165b7aeef9ced3c5b09f24c67851f360383784d434ff7b4897
+result PASS
+launcher consumed true
+
+docs-closure exact-source audit:
+SkynetVS_V1C3A1A_DocsClosureExactSourceAudit_20260907_135525.txt
+bytes 669444
+SHA256 26bde49177841742837d0ad0ac860942a60e597c34aafa9690297c51673a30bd
+result PASS
+```
+
+The final commit preserved the complete RC043 canonical policy preimage. The
+dedicated non-network acquisition flow passed before and after the commit, the
+committed tree equals the preflighted future tree, HEAD/origin/remote main were
+equal after push, and the repository/index were clean.
+
+The implementation binds source-authority semantics as policy only. It does
+not select an active authority response or artifact and does not perform
+resolver-tool selection or execution.
+
+Final V1C3A1A safety state:
+
+```text
+source authority contract bound   true
+source authority selected         false
+
+resolver selected                 false
+resolver executed                 false
+resolver-tool version selected    false
+resolver-tool imported            false
+
+dependency network used           false
+metadata downloaded               false
+wheel downloaded                  false
+dependency installed              false
+dependency executed               false
+
+Sandbox launched                  false
+candidate interpreter executed    false
+reusable lease issued             false
+execution authorized              false
+
+active acquisition                BLOCKED
+```
+
+The GitHub network operation used only to push the already verified
+implementation commit is repository transport and is not dependency acquisition
+network authority.
+
+Status transition after this docs closure:
+
+```text
+RC043    ARCHITECTURE LOCK RECORDED
+
+V1C3A1A  IMPLEMENTED / VERIFIED / PUSHED / DOCS CLOSED
+          NON-NETWORK / NON-AUTHORIZING
+
+V1C3A1B  NOT OPEN
+V1C3A1C  NOT OPEN
+
+ACTIVE ACQUISITION BLOCKED
+```
+
+### Next Exact Action
+
+Perform a fresh READ-ONLY / HOST-ONLY V1C3A1B transition/source audit against
+the exact closed V1C3A1A baseline. The audit must bind the exact current
+acquisition policy/source, RC043 resolver-tool acceptance requirements,
+resolver-capsule source topology and the future broker/egress/confinement
+boundaries before any active acquisition authority is opened.
+
+Do not select an exact pip version, access PyPI, download metadata or wheel
+bytes, construct or execute a resolver capsule, activate OS egress guards,
+create permanent acquisition evidence, install dependencies or open V1C3A1B
+until that audit is reviewed.

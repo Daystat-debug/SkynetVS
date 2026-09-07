@@ -2147,3 +2147,98 @@ execution authorized       false
 Implement only the V1C3A1A non-network acquisition contract. Do not construct
 or run the resolver capsule, modify V1B4, access PyPI or create dependency
 artifact authority.
+
+## V1C3A1A closure — acquisition contract remains outside trusted V1B4
+
+V1C3A1A is committed at
+`875669d81caf7c91347fe6b532926803aca3153c` with tree
+`f522f22c09a1679d191c2679021439c1cb03e769`. Its policy is:
+
+```text
+skynetvs-v1c3a1a-non-network-dependency-acquisition-contract-v1
+5ed6c7bd3e1c3b180fc7344fb5078d3279ad9b597553fe25bf75cd5d45964dac
+```
+
+The implementation binds the complete RC043 architecture policy:
+
+```text
+skynetvs-v1c3a1-target-matched-resolver-mediated-acquisition-lock-v1
+65649ffa282db0b625c58f687adb16e1b41d5f5ada679985ee7dde4d77e61d73
+```
+
+It does not modify, extend or repurpose the trusted runtime:
+
+```text
+stable tag:
+skynet-trusted-runtime-v1b4
+
+stable commit:
+91d8c37fc4afe7ef138e36063e7bc22014da8a2c
+
+trusted Python:
+CPython 3.13.15 Windows embeddable AMD64
+```
+
+No dependency bytes entered trusted V1B4. No resolver tool was selected,
+imported or executed. No resolver capsule was constructed. No PyPI metadata,
+Core Metadata, wheel, RECORD, license or provenance object was downloaded.
+No dependency was installed or executed, no Sandbox was launched and no
+runtime lease or execution authority was issued.
+
+```text
+source authority contract bound   true
+source authority selected         false
+resolver selected                 false
+resolver executed                 false
+resolver-tool version selected    false
+resolver-tool imported            false
+dependency network used           false
+metadata downloaded               false
+wheel downloaded                  false
+dependency installed              false
+dependency executed               false
+Sandbox launched                  false
+candidate interpreter executed    false
+reusable runtime lease            false
+execution authorized              false
+```
+
+The normal GitHub push of the already verified repository commit is not
+dependency acquisition and does not alter the trusted-runtime boundary.
+
+Exact closure evidence:
+
+```text
+final commit/push:
+SkynetVS_V1C3A1A_FinalCommitPush_20260907_135004_a3a3aeecbfb7.json
+SHA256 276ba53d163552165b7aeef9ced3c5b09f24c67851f360383784d434ff7b4897
+
+docs exact-source audit:
+SkynetVS_V1C3A1A_DocsClosureExactSourceAudit_20260907_135525.txt
+SHA256 26bde49177841742837d0ad0ac860942a60e597c34aafa9690297c51673a30bd
+```
+
+Current boundary after this docs closure:
+
+```text
+V1B4     UNCHANGED / TRUSTED
+
+RC043    ARCHITECTURE LOCK RECORDED
+V1C3A1A  IMPLEMENTED / VERIFIED / PUSHED / DOCS CLOSED
+          NON-NETWORK / NON-AUTHORIZING
+
+V1C3A1B  NOT OPEN
+V1C3A1C  NOT OPEN
+
+ACTIVE ACQUISITION BLOCKED
+```
+
+### Next Exact Action
+
+Perform only a READ-ONLY / HOST-ONLY V1C3A1B transition/source audit. Any
+future resolver capsule remains a separate untrusted host acquisition tool and
+does not become part of trusted V1B4 merely because V1C3A1A is closed.
+
+Do not select/import/execute pip, access PyPI, download resolver-tool or
+dependency artifacts, activate broker/egress authority, install packages or
+issue a reusable runtime capability before that audit is reviewed.

@@ -3780,3 +3780,124 @@ tools/eval_package_boundaries.py
 Implement only the non-network V1C3A1A policy/report contract. No resolver-tool
 download, capsule construction, egress guard, broker network, resolver
 execution, dependency metadata/wheel acquisition, installation or execution.
+
+## V1C3A1A implementation closure — 2026-09-07
+
+This append-only operational closure supersedes the earlier RC043
+`Implement only V1C3A1A` next-action text without rewriting historical RC043
+evidence.
+
+Exact implementation baseline:
+
+```text
+HEAD / origin/main / remote main:
+875669d81caf7c91347fe6b532926803aca3153c
+
+parent:
+8bdce8742f6114b6b203066ecb9abb603ad1e798
+
+tree:
+f522f22c09a1679d191c2679021439c1cb03e769
+
+subject:
+feat: add V1C3A1A non-network dependency acquisition contract
+```
+
+Contract identity:
+
+```text
+policy ID:
+skynetvs-v1c3a1a-non-network-dependency-acquisition-contract-v1
+
+policy fingerprint:
+5ed6c7bd3e1c3b180fc7344fb5078d3279ad9b597553fe25bf75cd5d45964dac
+
+RC043:
+skynetvs-v1c3a1-target-matched-resolver-mediated-acquisition-lock-v1
+65649ffa282db0b625c58f687adb16e1b41d5f5ada679985ee7dde4d77e61d73
+```
+
+The committed implementation is the exact six-file V1C3A1A scope. The final
+dedicated flow passed both before and after commit, the preflighted future tree
+equals the committed tree, the implementation was pushed normally to
+`origin/main`, and the repository/index were clean after push.
+
+Exact primary closure evidence:
+
+```text
+candidate V2.3:
+4a1b8b5678324d6502ee3945387f9547d1fcabc408dbc14c4e8ff87fd7b051b0
+
+final implementation preflight:
+944121a2ae0ef4f6f49aecf449941e9b24ca7c49ba0abbae102f65b6cc28ed23
+
+final commit/push result:
+276ba53d163552165b7aeef9ced3c5b09f24c67851f360383784d434ff7b4897
+
+docs-closure exact-source audit:
+26bde49177841742837d0ad0ac860942a60e597c34aafa9690297c51673a30bd
+```
+
+Operational safety state:
+
+```text
+source_authority_bound          true
+source_authority_selected       false
+resolver_selected               false
+resolver_executed               false
+resolver_tool_version_selected  false
+resolver_tool_imported          false
+dependency_network_used         false
+metadata_downloaded             false
+wheel_downloaded                false
+dependency_installed            false
+dependency_executed             false
+Sandbox                         false
+candidate_interpreter_executed  false
+reusable_lease_issued           false
+execution_authorized            false
+active_acquisition              BLOCKED
+```
+
+The only network use in the implementation closure was the normal GitHub
+repository push. It did not open dependency-source, resolver, broker or runtime
+network authority.
+
+Current operational state after this docs closure:
+
+```text
+RC041    PASSED / CONSUMED / IMMUTABLE / CLOSED
+V1C2     COMPLETE
+
+RC042    ARCHITECTURE LOCK RECORDED
+V1C3A0   IMPLEMENTED / VERIFIED / PUSHED / DOCS CLOSED / NON-AUTHORIZING
+
+RC043    ARCHITECTURE LOCK RECORDED
+V1C3A1A  IMPLEMENTED / VERIFIED / PUSHED / DOCS CLOSED
+          NON-NETWORK / NON-AUTHORIZING
+
+V1C3A1B  NOT OPEN
+V1C3A1C  NOT OPEN
+ACTIVE ACQUISITION BLOCKED
+```
+
+### Next Exact Action
+
+Run a fresh READ-ONLY / HOST-ONLY V1C3A1B transition/source audit. It must
+review the exact committed V1C3A1A policy and implementation together with
+RC043's resolver-tool wheel/RECORD/license/source-security acceptance,
+target-matched capsule, broker, OS egress and worker-confinement requirements.
+
+Until that audit is reviewed:
+
+```text
+exact pip version selection     FORBIDDEN
+PyPI access                     FORBIDDEN
+resolver-tool metadata/wheel    FORBIDDEN
+resolver capsule construction   FORBIDDEN
+resolver import/execution       FORBIDDEN
+broker external network         FORBIDDEN
+egress-guard activation         FORBIDDEN
+dependency acquisition          FORBIDDEN
+V1C3A1B                         NOT OPEN
+```
