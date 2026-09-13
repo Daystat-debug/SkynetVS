@@ -1,0 +1,126 @@
+{
+  "files": {
+    ".gitattributes": {
+      "bytes": 113,
+      "sha256": "2b4b6ecfe9d9af613f09764a1ac0dfd3ebff40f87d496d2fb48b0ebc2c3bc283"
+    },
+    ".gitignore": {
+      "bytes": 143,
+      "sha256": "533085375eb5782fde22899333e329985170cc6c0260ae2f86180a61dfed1934"
+    },
+    "BUILD_PLAN.json": {
+      "bytes": 2811,
+      "sha256": "23ebb667d5f98bf30fa505ac7271d9700f3b6c4cef071bc0b9479365e434c9e1"
+    },
+    "PROVENANCE.json": {
+      "bytes": 8621,
+      "sha256": "4b24058c165a77fb41d9161ffffd75e73e783d4508cfa1d913996e7473ed4d35"
+    },
+    "README_RU.md": {
+      "bytes": 3977,
+      "sha256": "accb4ceb3f486ca35f45e3a9cff26f515945d428bfd320b389a403668d6847c9"
+    },
+    "check_source_baseline.py": {
+      "bytes": 3122,
+      "sha256": "ca09d03611d43155e15efb7eab124ed7484de2fe3b923f3ee237d45cbcd74f0b"
+    },
+    "evidence/SkynetVS_V1C3A1B_GateLeaseHandoffNativeFixtureV2_b4c54808c1824a948f25f1019f071abd.json": {
+      "bytes": 50349,
+      "sha256": "5b28e6d8f8ff8b08482434f9d1164d5af145919a4f89fe6137a53b10a0dcfb03"
+    },
+    "evidence/SkynetVS_V1C3A1B_P00EpochStoreNativeFixture_d42470b224954bdb8004240b7432acb8.json": {
+      "bytes": 72607,
+      "sha256": "931e48ef72807899caee1f4a033bf453863dd1139540c47c2dbbf93fd7287183"
+    },
+    "src/EpochNativeContracts.cs": {
+      "bytes": 7287,
+      "sha256": "de4d781cffb7843f416e7eb456b45aa98cb07c9765a20697e656e0d9db12aa27"
+    },
+    "src/EpochNativeIo.cs": {
+      "bytes": 3690,
+      "sha256": "05eecaee41c14bff0e72577d1ab3e83d31010edf36c887ba2e9f4303e61bc2ae"
+    },
+    "src/GateHandoffContracts.cs": {
+      "bytes": 7910,
+      "sha256": "9593476cb512dd61cffff63f54f47ff88e4187e01e27a2ecc08128416322514f"
+    },
+    "src/GateHandoffProtocol.cs": {
+      "bytes": 11366,
+      "sha256": "df3e32c816b0ea4fda2257358d5f92bf090520c4e039be8a885bd2ea47d52b9e"
+    },
+    "src/GateHandoffWire.cs": {
+      "bytes": 3089,
+      "sha256": "b513d4a80fe0fef419786dabb38501904fa2855d960217f62591f49cc047bc45"
+    },
+    "src/GateNativeAggregate.cs": {
+      "bytes": 11699,
+      "sha256": "5de4a6f7eee2d66c078d73ca68a28a6527f5fd30239850d793485c0f74bef127"
+    },
+    "src/GateNativeCommon.cs": {
+      "bytes": 10304,
+      "sha256": "99ff8924b4a5268652131f516b4f81dd3b3201dc653d7f9e0bebda8fba28ecf0"
+    },
+    "src/GateNativeCoordinator.cs": {
+      "bytes": 6971,
+      "sha256": "fcfcdf042434f8188cae4d4dcc2865de82a9b098bb27e88a7abc16846c01f7f7"
+    },
+    "src/GateNativeEntryPoints.cs": {
+      "bytes": 7688,
+      "sha256": "e75461623bb70ec25455784bd73b92c17e1d0c17da2a533625109857b9369052"
+    },
+    "src/GateNativeLaunch.cs": {
+      "bytes": 7528,
+      "sha256": "377d45f4114301e2883620b1660154f864e2427394f28c5ee6e424c13356390f"
+    },
+    "src/GateNativeReceiver.cs": {
+      "bytes": 6555,
+      "sha256": "0d66a0b1c69abda494fdde634ce07a7676e5c651fb94edac0c2e2ec36227473a"
+    },
+    "src/GateNativeWindows.cs": {
+      "bytes": 23372,
+      "sha256": "1310e08cdd3387b83f9bf972512d664fe6831a49b9ffb9045a0aed2d39d86ab4"
+    },
+    "src/GatePipeEndpointRights.cs": {
+      "bytes": 5395,
+      "sha256": "87ae87cd93571ab73f002673e71a9b061e3c6cf9b13399f0061770085a71af49"
+    },
+    "src/InstallationRegistration.cs": {
+      "bytes": 18109,
+      "sha256": "deee1f7cdc86049fcc9bf20bf739209db4e9cf89c9f686fce0b12c5161673a4b"
+    },
+    "src/NativeGateLeaseAdapter.cs": {
+      "bytes": 6065,
+      "sha256": "43a0357bdb3bd19fe8ff1505469613c330956287ec27b2a759214ebf734293fc"
+    },
+    "src/P00AnchorEpochContracts.cs": {
+      "bytes": 13461,
+      "sha256": "7511529c2dd30af986106d76f68db28899cbe2f6f43adf246e48a6860b7c5089"
+    },
+    "src/P00EpochNativeReadTransport.cs": {
+      "bytes": 14518,
+      "sha256": "f4ca7c11b197bc8a6df4b94e280e42086239154fe4df93ad63d9902c352aaecc"
+    },
+    "src/ParentChainContracts.cs": {
+      "bytes": 9001,
+      "sha256": "32c59cd3e553989004a1c85c8f5d2d635c612b5f00dfb272b0c81b5d23dc1a01"
+    },
+    "src/ParentChainNativeApi.cs": {
+      "bytes": 6643,
+      "sha256": "8115a1cca65828ce5658a2d238e51c0d266940076b9b2a19795227050ebec679"
+    },
+    "src/ParentChainNtTransport.cs": {
+      "bytes": 9017,
+      "sha256": "6dc85cf19a2b3549ab2caf71fce5cb13e511d7b937f5fb78b0618e72c0deb927"
+    },
+    "src/RestrictedGateLaunch.cs": {
+      "bytes": 18887,
+      "sha256": "a90f8f5a105c62e7eb6401b9fbbf1f91c3fddbf61060abc2fe2fbf321a4f8e22"
+    },
+    "src/SameHandleFileObserver.cs": {
+      "bytes": 23845,
+      "sha256": "3ced371dadaf317b998b0095261e5247c9b55865340f2e41e9466c1e6db198c9"
+    }
+  },
+  "kind": "TRUSTED_HOST_SOURCE_BASELINE_V1",
+  "scope": "SOURCE_BASELINE_ONLY_NOT_INSTALLED"
+}

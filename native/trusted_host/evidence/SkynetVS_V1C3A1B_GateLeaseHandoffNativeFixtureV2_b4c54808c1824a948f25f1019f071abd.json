@@ -1,0 +1,1075 @@
+{
+  "actions": {
+    "ACL_modified": false,
+    "compiler_launch_attempted": true,
+    "external_network_intentionally_used": false,
+    "fixture_created": true,
+    "git_called": false,
+    "installed_store_opened": false,
+    "native_coordinator_started": true,
+    "native_gate_challenge_observed": true,
+    "native_handoff_observed": true,
+    "native_launch_attempted": true,
+    "native_pair_observed": true,
+    "old_suites_or_launchers_executed": false,
+    "registry_written": false,
+    "repository_modified": false,
+    "service_installed_or_started": false
+  },
+  "ancestors_after": {
+    "downloads": {
+      "C:\\": {
+        "birth_ns": 1735720866618535100,
+        "device": 10667028923078290118,
+        "inode": 1407374883553285,
+        "kind": 16384
+      },
+      "C:\\Users": {
+        "birth_ns": 1711956076184434800,
+        "device": 10667028923078290118,
+        "inode": 281474976714192,
+        "kind": 16384
+      },
+      "C:\\Users\\User": {
+        "birth_ns": 1735708756944059100,
+        "device": 10667028923078290118,
+        "inode": 1407374883612862,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads": {
+        "birth_ns": 1735708756964174500,
+        "device": 10667028923078290118,
+        "inode": 844424930226893,
+        "kind": 16384
+      }
+    },
+    "package": {
+      "C:\\": {
+        "birth_ns": 1735720866618535100,
+        "device": 10667028923078290118,
+        "inode": 1407374883553285,
+        "kind": 16384
+      },
+      "C:\\Users": {
+        "birth_ns": 1711956076184434800,
+        "device": 10667028923078290118,
+        "inode": 281474976714192,
+        "kind": 16384
+      },
+      "C:\\Users\\User": {
+        "birth_ns": 1735708756944059100,
+        "device": 10667028923078290118,
+        "inode": 1407374883612862,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads": {
+        "birth_ns": 1735708756964174500,
+        "device": 10667028923078290118,
+        "inode": 844424930226893,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads\\SkynetVS_V1C3A1B_GateLeaseHandoff_NativeFixture_V2": {
+        "birth_ns": 1789251972400281800,
+        "device": 10667028923078290118,
+        "inode": 358317645352781283,
+        "kind": 16384
+      }
+    }
+  },
+  "ancestors_before": {
+    "downloads": {
+      "C:\\": {
+        "birth_ns": 1735720866618535100,
+        "device": 10667028923078290118,
+        "inode": 1407374883553285,
+        "kind": 16384
+      },
+      "C:\\Users": {
+        "birth_ns": 1711956076184434800,
+        "device": 10667028923078290118,
+        "inode": 281474976714192,
+        "kind": 16384
+      },
+      "C:\\Users\\User": {
+        "birth_ns": 1735708756944059100,
+        "device": 10667028923078290118,
+        "inode": 1407374883612862,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads": {
+        "birth_ns": 1735708756964174500,
+        "device": 10667028923078290118,
+        "inode": 844424930226893,
+        "kind": 16384
+      }
+    },
+    "package": {
+      "C:\\": {
+        "birth_ns": 1735720866618535100,
+        "device": 10667028923078290118,
+        "inode": 1407374883553285,
+        "kind": 16384
+      },
+      "C:\\Users": {
+        "birth_ns": 1711956076184434800,
+        "device": 10667028923078290118,
+        "inode": 281474976714192,
+        "kind": 16384
+      },
+      "C:\\Users\\User": {
+        "birth_ns": 1735708756944059100,
+        "device": 10667028923078290118,
+        "inode": 1407374883612862,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads": {
+        "birth_ns": 1735708756964174500,
+        "device": 10667028923078290118,
+        "inode": 844424930226893,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads\\SkynetVS_V1C3A1B_GateLeaseHandoff_NativeFixture_V2": {
+        "birth_ns": 1789251972400281800,
+        "device": 10667028923078290118,
+        "inode": 358317645352781283,
+        "kind": 16384
+      }
+    }
+  },
+  "assemblies": {
+    "coordinator": {
+      "bytes": 100864,
+      "main_class": "SkynetVS.G1.GateLeaseHandoffNativeV1.GateNativeCoordinatorEntryPoint",
+      "path": "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateLeaseHandoffNativeCoordinator.exe",
+      "sha256": "bcee380fe85fef3eef5945842a844613834bdff89877d87b46ef7cf2787aa426"
+    },
+    "receiver": {
+      "bytes": 100864,
+      "main_class": "SkynetVS.G1.GateLeaseHandoffNativeV1.GateNativeReceiverEntryPoint",
+      "path": "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateLeaseHandoffChild.exe",
+      "sha256": "fa6d4585b6428f8f655c60d0589267afc4704e76d8182ec0040574bfb1f8c22c"
+    }
+  },
+  "build_input_identities": {
+    "GateHandoffContracts.cs": {
+      "bytes": 7910,
+      "sha256": "9593476cb512dd61cffff63f54f47ff88e4187e01e27a2ecc08128416322514f"
+    },
+    "GateHandoffProtocol.cs": {
+      "bytes": 11366,
+      "sha256": "df3e32c816b0ea4fda2257358d5f92bf090520c4e039be8a885bd2ea47d52b9e"
+    },
+    "GateHandoffWire.cs": {
+      "bytes": 3089,
+      "sha256": "b513d4a80fe0fef419786dabb38501904fa2855d960217f62591f49cc047bc45"
+    },
+    "GateLeaseHandoffChild.exe": {
+      "bytes": 100864,
+      "sha256": "fa6d4585b6428f8f655c60d0589267afc4704e76d8182ec0040574bfb1f8c22c"
+    },
+    "GateLeaseHandoffNativeCoordinator.exe": {
+      "bytes": 100864,
+      "sha256": "bcee380fe85fef3eef5945842a844613834bdff89877d87b46ef7cf2787aa426"
+    },
+    "GateNativeAggregate.cs": {
+      "bytes": 11699,
+      "sha256": "5de4a6f7eee2d66c078d73ca68a28a6527f5fd30239850d793485c0f74bef127"
+    },
+    "GateNativeCommon.cs": {
+      "bytes": 10304,
+      "sha256": "99ff8924b4a5268652131f516b4f81dd3b3201dc653d7f9e0bebda8fba28ecf0"
+    },
+    "GateNativeCoordinator.cs": {
+      "bytes": 6971,
+      "sha256": "fcfcdf042434f8188cae4d4dcc2865de82a9b098bb27e88a7abc16846c01f7f7"
+    },
+    "GateNativeEntryPoints.cs": {
+      "bytes": 7688,
+      "sha256": "e75461623bb70ec25455784bd73b92c17e1d0c17da2a533625109857b9369052"
+    },
+    "GateNativeLaunch.cs": {
+      "bytes": 7528,
+      "sha256": "377d45f4114301e2883620b1660154f864e2427394f28c5ee6e424c13356390f"
+    },
+    "GateNativeReceiver.cs": {
+      "bytes": 6555,
+      "sha256": "0d66a0b1c69abda494fdde634ce07a7676e5c651fb94edac0c2e2ec36227473a"
+    },
+    "GateNativeWindows.cs": {
+      "bytes": 23372,
+      "sha256": "1310e08cdd3387b83f9bf972512d664fe6831a49b9ffb9045a0aed2d39d86ab4"
+    },
+    "GatePipeEndpointRights.cs": {
+      "bytes": 5395,
+      "sha256": "87ae87cd93571ab73f002673e71a9b061e3c6cf9b13399f0061770085a71af49"
+    },
+    "InstallationRegistration.cs": {
+      "bytes": 18109,
+      "sha256": "deee1f7cdc86049fcc9bf20bf739209db4e9cf89c9f686fce0b12c5161673a4b"
+    },
+    "RestrictedGateLaunch.cs": {
+      "bytes": 18887,
+      "sha256": "a90f8f5a105c62e7eb6401b9fbbf1f91c3fddbf61060abc2fe2fbf321a4f8e22"
+    },
+    "SameHandleFileObserver.cs": {
+      "bytes": 23845,
+      "sha256": "3ced371dadaf317b998b0095261e5247c9b55865340f2e41e9466c1e6db198c9"
+    },
+    "compile_coordinator.rsp": {
+      "bytes": 2363,
+      "sha256": "8c4276262bda849351cfc9c52358d3146d69c52e6b64de162949bda0867aa1b8"
+    },
+    "compile_receiver.rsp": {
+      "bytes": 2348,
+      "sha256": "bdb128b0166698178a2985d442ed57672e91aaa4add45ab50f8e3d58466baf48"
+    }
+  },
+  "build_path": "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6",
+  "claims": {
+    "authority_admitted": false,
+    "child_exit_host_verified": false,
+    "cross_process_gate_retention_verified": false,
+    "epoch_acceptance_authenticated": false,
+    "execution_authorized": false,
+    "gate_origin_authenticated": false,
+    "installed_store_opened": false,
+    "native_handoff_executed": false,
+    "native_inheritance_verified": false,
+    "p00_delivery_accepted": false,
+    "p01_producer_implemented": false,
+    "production_basis_issued": false,
+    "registry_written": false,
+    "service_installed_or_started": false
+  },
+  "cleanup": {
+    "build_removed": true,
+    "errors": [],
+    "fixture_removed": true,
+    "preflight_passed": true,
+    "removed_paths": [
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateHandoff_Fixture_b4c54808c1824a948f25f1019f071abd\\Lifecycle.gate",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateHandoff_Fixture_b4c54808c1824a948f25f1019f071abd",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateHandoffContracts.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateHandoffProtocol.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateHandoffWire.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateNativeAggregate.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateNativeCommon.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateNativeCoordinator.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateNativeEntryPoints.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateNativeLaunch.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateNativeReceiver.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateNativeWindows.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GatePipeEndpointRights.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\InstallationRegistration.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\RestrictedGateLaunch.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\SameHandleFileObserver.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\compile_coordinator.rsp",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateLeaseHandoffNativeCoordinator.exe",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\compile_receiver.rsp",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateLeaseHandoffChild.exe",
+      "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6"
+    ]
+  },
+  "compilations": {
+    "coordinator": {
+      "command": [
+        "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe",
+        "/noconfig",
+        "@C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\compile_coordinator.rsp"
+      ],
+      "elapsed_ms": 78,
+      "error": null,
+      "exit_confirmed": true,
+      "pid": 10632,
+      "returncode": 0,
+      "started": true,
+      "stderr": "",
+      "stderr_bytes": 0,
+      "stdout": "",
+      "stdout_bytes": 0,
+      "stop_reason": null,
+      "stream_errors": [],
+      "streams_stopped": true,
+      "termination_attempted": false
+    },
+    "receiver": {
+      "command": [
+        "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe",
+        "/noconfig",
+        "@C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\compile_receiver.rsp"
+      ],
+      "elapsed_ms": 78,
+      "error": null,
+      "exit_confirmed": true,
+      "pid": 11028,
+      "returncode": 0,
+      "started": true,
+      "stderr": "",
+      "stderr_bytes": 0,
+      "stdout": "",
+      "stdout_bytes": 0,
+      "stop_reason": null,
+      "stream_errors": [],
+      "streams_stopped": true,
+      "termination_attempted": false
+    }
+  },
+  "compiler_and_reference_identities": {
+    "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\System.Core.dll": {
+      "bytes": 1551024,
+      "sha256": "fd1097aed825d392a5dc8d19384381d4bb2a43498ea1c9d917f5d80c66600e1b"
+    },
+    "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\System.dll": {
+      "bytes": 3545264,
+      "sha256": "2b3c17c6208a0b4b6beb94e1a066f99ba06cdb2ea919479e99d47e8c6d96dc71"
+    },
+    "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe": {
+      "bytes": 2569832,
+      "sha256": "46809206887326d2d24db1eff1f3064de972c3451abe766b49111450a5e08e00"
+    },
+    "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\mscorlib.dll": {
+      "bytes": 5445432,
+      "sha256": "5bffb20e1217bad314143d7e5c4c809bf9f522e8a0a063c8e7e9b25113de26eb"
+    }
+  },
+  "created_at_utc": "2026-09-12T22:26:19.812564+00:00",
+  "diagnostic_observations": {
+    "cross_process_gate_retention_observed": true,
+    "exact_sharing_sequence_observed": true,
+    "production_origin_proven": false,
+    "receiver_exit_accepted_by_coordinator": true
+  },
+  "entrypoint": {
+    "bytes": 41027,
+    "sha256": "4a0ebb22e329a2f42b3f28c14712a6d6ac59be193ccaed01a0690249c10a0958"
+  },
+  "error": null,
+  "expected_protocol_binding": {
+    "gate_identity": {
+      "file_id_128_hex": "97f9030000001b000000000000000000",
+      "volume_serial_hex": "9408e64a08e62ac6"
+    },
+    "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+    "parent_creation_filetime": 134337255795872393,
+    "parent_pid": 31400,
+    "run_id": "b4c54808c1824a948f25f1019f071abd"
+  },
+  "fixture_after": {
+    "alternate_data_streams_enumerated": false,
+    "continuous_namespace_proven": false,
+    "gate": {
+      "content": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "identity": {
+        "file_id_128_hex": "97f9030000001b000000000000000000",
+        "volume_serial_hex": "9408e64a08e62ac6"
+      },
+      "observation": {
+        "attributes": 32,
+        "birth_ns": 1789251980406440300,
+        "ctime_ns": 1789251980406440300,
+        "device": 10667028923078290118,
+        "inode": 7599824371448215,
+        "kind": 32768,
+        "links": 1,
+        "mtime_ns": 1789251980406440300,
+        "size": 0
+      }
+    },
+    "kind": "FRESH_GATE_FIXTURE_SNAPSHOT_V1",
+    "parent_gate_handle_retained": false,
+    "root": {
+      "entries": [
+        "Lifecycle.gate"
+      ],
+      "identity": {
+        "file_id_128_hex": "63f903000000cc020000000000000000",
+        "volume_serial_hex": "9408e64a08e62ac6"
+      },
+      "observation": {
+        "attributes": 16,
+        "birth_ns": 1789251980405940200,
+        "ctime_ns": 1789251980405940200,
+        "device": 10667028923078290118,
+        "inode": 201536083325090147,
+        "kind": 16384,
+        "mtime_ns": 1789251980406440300
+      }
+    },
+    "security_descriptor_observed_by_parent": false
+  },
+  "fixture_before": {
+    "alternate_data_streams_enumerated": false,
+    "continuous_namespace_proven": false,
+    "gate": {
+      "content": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "identity": {
+        "file_id_128_hex": "97f9030000001b000000000000000000",
+        "volume_serial_hex": "9408e64a08e62ac6"
+      },
+      "observation": {
+        "attributes": 32,
+        "birth_ns": 1789251980406440300,
+        "ctime_ns": 1789251980406440300,
+        "device": 10667028923078290118,
+        "inode": 7599824371448215,
+        "kind": 32768,
+        "links": 1,
+        "mtime_ns": 1789251980406440300,
+        "size": 0
+      }
+    },
+    "kind": "FRESH_GATE_FIXTURE_SNAPSHOT_V1",
+    "parent_gate_handle_retained": false,
+    "root": {
+      "entries": [
+        "Lifecycle.gate"
+      ],
+      "identity": {
+        "file_id_128_hex": "63f903000000cc020000000000000000",
+        "volume_serial_hex": "9408e64a08e62ac6"
+      },
+      "observation": {
+        "attributes": 16,
+        "birth_ns": 1789251980405940200,
+        "ctime_ns": 1789251980405940200,
+        "device": 10667028923078290118,
+        "inode": 201536083325090147,
+        "kind": 16384,
+        "mtime_ns": 1789251980406440300
+      }
+    },
+    "security_descriptor_observed_by_parent": false
+  },
+  "fixture_created_paths": [
+    "C:\\Users\\User\\Downloads\\SkynetVS_GateHandoff_Fixture_b4c54808c1824a948f25f1019f071abd",
+    "C:\\Users\\User\\Downloads\\SkynetVS_GateHandoff_Fixture_b4c54808c1824a948f25f1019f071abd\\Lifecycle.gate"
+  ],
+  "fixture_path": "C:\\Users\\User\\Downloads\\SkynetVS_GateHandoff_Fixture_b4c54808c1824a948f25f1019f071abd",
+  "historical_inputs": {
+    "accepted_native_sources_unchanged": 14,
+    "accepted_pipe_rights_source_repair_v2": {
+      "bytes": 23584,
+      "sha256": "1dcfb1b7da66bddc060b615be25a5325e8e354ffd2828843e77de93ed9923495"
+    },
+    "added_vs_v1": [
+      "GatePipeEndpointRights.cs"
+    ],
+    "changed_vs_v1": [
+      "GateNativeAggregate.cs",
+      "GateNativeWindows.cs"
+    ],
+    "historical_build_or_fixture_read_run_modified": false,
+    "historical_paths_followed": false,
+    "historical_report_promoted": false,
+    "historical_tests_or_launchers_executed": false,
+    "immutable_native_fixture_error_v1": {
+      "bytes": 26777,
+      "sha256": "124865c2d08398a84a6d8b7c272bf74e64e3cdea2e0d2be8b971239392577553"
+    },
+    "native_rights_behavior_previously_proven": false,
+    "new_csharp_sources": 0,
+    "old_error_trace_replayed_as_data_only": true,
+    "repair_id": "CONTROLLED_PIPE_ENDPOINT_ACCESS_V2"
+  },
+  "host_readonly_api_calls": [
+    "QueryDosDeviceW",
+    "GetDriveTypeW",
+    "GetCurrentProcessId",
+    "GetCurrentProcess",
+    "GetProcessTimes",
+    "QueryDosDeviceW",
+    "GetDriveTypeW",
+    "GetProcessId",
+    "GetProcessTimes",
+    "GetProcessId",
+    "GetProcessTimes",
+    "QueryDosDeviceW",
+    "GetDriveTypeW"
+  ],
+  "kind": "V1C3A1B_GATE_LEASE_HANDOFF_NATIVE_FIXTURE_V2",
+  "limitations": [
+    "New V2 disposable cross-process run after accepted pipe-rights repair; old V1 ERROR and its retained work stay immutable.",
+    "Both exact original reports (6d1376 PASS and 7ec ERROR) are required before compilation, native execution and cleanup.",
+    "Four raw pipe endpoints must close in a fixed prefix before the unchanged 12-role close sequence. No arbitrary extra closes.",
+    "Fourteen repaired native C# sources unchanged from 6d1376. Only coordinator and receiver compile; no managed or historical suite runs.",
+    "One fresh directory/empty gate file. Parent closes fixture streams before launching the coordinator.",
+    "One dedicated coordinator creates one receiver using exact three-handle list and job-at-creation; no broad-inheritance fallback.",
+    "Outer PID/creation checked through Popen-owned handle; receiver identity/exit checked by accepted coordinator and matched raw GH1 replies.",
+    "The outer launcher does not independently query the receiver process handle. On error it does not infer receiver exit from coordinator exit.",
+    "Receiver close and exit are separate events; post-exit exclusive probe is gated by confirmed clean receiver completion.",
+    "Read/write access is requested for the sharing probe, but no gate data is written; only IPC endpoints receive protocol writes.",
+    "Normal success does not exercise kill-on-job-close, forced pending, crashes, durability or installation protection.",
+    "Unknown completion, timeout, nonzero exit, kill, extra output, drift or cleanup error never passes; remaining files are retained.",
+    "CPython 3.12.10 lstat identities and source hashes are point-in-time bindings, not runtime/loader attestation or hostile same-user protection.",
+    "No parent-side descriptor or alternate-data-stream enumeration. Ordinary entries/content/metadata are checked before/after.",
+    "Compiler/CLR/kernel may use OS services. Fixed protocol deadlines do not guarantee interruption of kernel/process creation stalls.",
+    "Repeat guard is not a concurrency lock; preserve partial or ERROR evidence and do not automatically repeat."
+  ],
+  "locality_after": {
+    "C:": {
+      "continuous_mapping_proven": false,
+      "current_dos_device": "\\Device\\HarddiskVolume3",
+      "drive": "C:",
+      "drive_type": 3,
+      "local_fixed_mapping_observed": true,
+      "network_history_proven": false,
+      "protected_provenance": false
+    }
+  },
+  "locality_before": {
+    "C:": {
+      "continuous_mapping_proven": false,
+      "current_dos_device": "\\Device\\HarddiskVolume3",
+      "drive": "C:",
+      "drive_type": 3,
+      "local_fixed_mapping_observed": true,
+      "network_history_proven": false,
+      "protected_provenance": false
+    }
+  },
+  "native_command": [
+    "C:\\Users\\User\\Downloads\\SkynetVS_GateNativeFixtureV2Build_b4c54808c1824a948f25f1019f071abd_o28u2yt6\\GateLeaseHandoffNativeCoordinator.exe",
+    "--native-gate-coordinator",
+    "b4c54808c1824a948f25f1019f071abd",
+    "ac4737e07ef04022a256077d5a4b8fb0",
+    "31400",
+    "134337255795872393",
+    "97f9030000001b000000000000000000",
+    "9408e64a08e62ac6",
+    "fa6d4585b6428f8f655c60d0589267afc4704e76d8182ec0040574bfb1f8c22c",
+    "DISPOSABLE_CROSS_PROCESS_GATE_ONLY_V1"
+  ],
+  "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+  "p00_status": "NOT_ACCEPTED",
+  "p01_status": "NOT_IMPLEMENTED",
+  "parent_fixture_handles_retained_during_native": false,
+  "parent_process": {
+    "creation_filetime": 134337255795872393,
+    "pid": 31400,
+    "pseudo_handle_closed": false,
+    "source": "CURRENT_PROCESS_PSEUDO_HANDLE"
+  },
+  "payload_manifest": {
+    "bytes": 5699,
+    "sha256": "1622b3cc9a4a39af41021b3b610f5385b9e625d26d613494064f081154886c4f"
+  },
+  "phase": "complete_native_disposable_cross_process_gate_handoff_v2",
+  "repair_id": "CONTROLLED_PIPE_ENDPOINT_ACCESS_V2",
+  "result": "PASS_NATIVE_GATE_LEASE_HANDOFF_FIXTURE_V2",
+  "run_id": "b4c54808c1824a948f25f1019f071abd",
+  "runtime": {
+    "bytecode_writes_disabled": true,
+    "isolated": true,
+    "platform": "win32",
+    "site_disabled": true,
+    "version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+  },
+  "schema_version": 1,
+  "state": {
+    "D01": "OBSERVED_NATIVE_DIAGNOSTIC / CONSUMED / MUST NOT RERUN",
+    "R02": "ACCESS_DENIED / CONSUMED / MUST NOT RERUN",
+    "RC044": "NOT CREATED",
+    "V1C3A1B": "NOT OPEN",
+    "V1C3A1C": "NOT OPEN",
+    "active_acquisition": "BLOCKED"
+  },
+  "supervision": {
+    "coordinator_after": {
+      "borrowed_handle_closed": false,
+      "creation_filetime": 134337255805602759,
+      "pid": 15460,
+      "source": "BORROWED_POPEN_PROCESS_HANDLE"
+    },
+    "coordinator_before": {
+      "borrowed_handle_closed": false,
+      "creation_filetime": 134337255805602759,
+      "pid": 15460,
+      "source": "BORROWED_POPEN_PROCESS_HANDLE"
+    },
+    "creation_attempted": true,
+    "elapsed_ms": 391,
+    "error": null,
+    "exit_confirmed": true,
+    "messages": [
+      {
+        "claims": {
+          "authority_admitted": false,
+          "child_exit_host_verified": false,
+          "cross_process_gate_retention_verified": false,
+          "epoch_acceptance_authenticated": false,
+          "execution_authorized": false,
+          "gate_origin_authenticated": false,
+          "installed_store_opened": false,
+          "native_handoff_executed": false,
+          "native_inheritance_verified": false,
+          "p00_delivery_accepted": false,
+          "p01_producer_implemented": false,
+          "production_basis_issued": false,
+          "registry_written": false,
+          "service_installed_or_started": false
+        },
+        "creation_filetime": "134337255805602759",
+        "kind": "GATE_NATIVE_COORDINATOR_ARMED",
+        "native_execution": true,
+        "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+        "pid": 15460,
+        "result": {
+          "deadline_ms": 49639187,
+          "parent_creation": "134337255795872393",
+          "parent_pid": 31400
+        },
+        "run_id": "b4c54808c1824a948f25f1019f071abd"
+      },
+      {
+        "claims": {
+          "authority_admitted": false,
+          "child_exit_host_verified": false,
+          "cross_process_gate_retention_verified": false,
+          "epoch_acceptance_authenticated": false,
+          "execution_authorized": false,
+          "gate_origin_authenticated": false,
+          "installed_store_opened": false,
+          "native_handoff_executed": false,
+          "native_inheritance_verified": false,
+          "p00_delivery_accepted": false,
+          "p01_producer_implemented": false,
+          "production_basis_issued": false,
+          "registry_written": false,
+          "service_installed_or_started": false
+        },
+        "creation_filetime": "134337255805602759",
+        "kind": "GATE_NATIVE_COORDINATOR_RESULT",
+        "native_execution": true,
+        "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+        "pid": 15460,
+        "result": {
+          "backend": {
+            "aborted": false,
+            "all_owned_handles_closed": true,
+            "backend": "WINDOWS_GATE_HANDOFF_DIAGNOSTIC_NOT_P00",
+            "baseline_duplicate_calls": 1,
+            "baseline_file_calls": 76,
+            "child_exit_confirmed": true,
+            "cleanup_errors": [],
+            "clock_watchdog_calls_not_in_counter": true,
+            "close_order": [
+              "RawParentControlWrite",
+              "RawChildControlRead",
+              "RawChildReportWrite",
+              "RawParentReportRead",
+              "TransferGateCopy",
+              "ChildControlRead",
+              "ChildReportWrite",
+              "OriginalGate",
+              "ExclusiveProbe2",
+              "ParentControlWrite",
+              "ParentReportRead",
+              "ReceiverThread",
+              "ReceiverProcess",
+              "ReceiverImage",
+              "FixtureRoot",
+              "ContainmentJob"
+            ],
+            "instrumented_win_calls": 1691,
+            "job_membership_observed": true,
+            "native_domain_terminal": false,
+            "pipe_endpoint_rights_observed": true,
+            "probe_statuses": [
+              "c0000043",
+              "00000000"
+            ],
+            "protected_work_after_gate_close": false,
+            "reply_frames_base64": [
+              "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wxfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDB8NDk2MzExODd8NDk2MzkxODcK",
+              "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wyfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDB8NDk2MzExODd8NDk2MzkxODcK",
+              "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wzfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDF8NDk2MzExODd8NDk2MzkxODcK"
+            ]
+          },
+          "handoff": {
+            "claims": {
+              "authority_admitted": false,
+              "child_exit_host_verified": false,
+              "cross_process_gate_retention_verified": false,
+              "epoch_acceptance_authenticated": false,
+              "execution_authorized": false,
+              "gate_origin_authenticated": false,
+              "installed_store_opened": false,
+              "native_handoff_executed": false,
+              "native_inheritance_verified": false,
+              "p00_delivery_accepted": false,
+              "p01_producer_implemented": false,
+              "production_basis_issued": false,
+              "registry_written": false,
+              "service_installed_or_started": false
+            },
+            "cleanup_errors": [],
+            "complete": true,
+            "failed": false,
+            "native_execution": true,
+            "source_domain": "WINDOWS_GATE_HANDOFF_DIAGNOSTIC_NOT_P00",
+            "status": "OBSERVED_NATIVE_HANDOFF_NOT_P00",
+            "trace": [
+              "observe_original",
+              "prepare_exact_three_handles",
+              "start_suspended",
+              "close_parent_transfer_copy",
+              "resume_once",
+              "child_ready",
+              "close_parent_original_gate",
+              "child_alive_before_probe",
+              "exclusive_while_only_child_holds",
+              "request_child_held_recheck",
+              "child_still_holds_same_gate",
+              "child_alive_after_probe",
+              "request_child_release",
+              "child_gate_closed",
+              "wait_same_child_exit",
+              "exclusive_after_confirmed_exit",
+              "close_ipc_and_process"
+            ]
+          }
+        },
+        "run_id": "b4c54808c1824a948f25f1019f071abd"
+      },
+      {
+        "claims": {
+          "authority_admitted": false,
+          "child_exit_host_verified": false,
+          "cross_process_gate_retention_verified": false,
+          "epoch_acceptance_authenticated": false,
+          "execution_authorized": false,
+          "gate_origin_authenticated": false,
+          "installed_store_opened": false,
+          "native_handoff_executed": false,
+          "native_inheritance_verified": false,
+          "p00_delivery_accepted": false,
+          "p01_producer_implemented": false,
+          "production_basis_issued": false,
+          "registry_written": false,
+          "service_installed_or_started": false
+        },
+        "creation_filetime": "134337255805602759",
+        "kind": "GATE_NATIVE_COORDINATOR_FINAL",
+        "native_execution": true,
+        "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+        "pid": 15460,
+        "result": {
+          "complete": true,
+          "owned_handoff_handles_closed": true,
+          "production_basis_issued": false,
+          "watchdog_active_through_output": true,
+          "watchdog_parent_close_pending": true
+        },
+        "run_id": "b4c54808c1824a948f25f1019f071abd"
+      }
+    ],
+    "pid": 15460,
+    "receiver_exit_confirmed_by_validated_protocol": true,
+    "reported_coordinator_error": null,
+    "result": "OBSERVED_NATIVE_GATE_HANDOFF_COORDINATOR_V2",
+    "returncode": 0,
+    "started": true,
+    "stderr_base64": "",
+    "stderr_bytes": 0,
+    "stdout_base64": "eyJjbGFpbXMiOnsiYXV0aG9yaXR5X2FkbWl0dGVkIjpmYWxzZSwiY2hpbGRfZXhpdF9ob3N0X3ZlcmlmaWVkIjpmYWxzZSwiY3Jvc3NfcHJvY2Vzc19nYXRlX3JldGVudGlvbl92ZXJpZmllZCI6ZmFsc2UsImVwb2NoX2FjY2VwdGFuY2VfYXV0aGVudGljYXRlZCI6ZmFsc2UsImV4ZWN1dGlvbl9hdXRob3JpemVkIjpmYWxzZSwiZ2F0ZV9vcmlnaW5fYXV0aGVudGljYXRlZCI6ZmFsc2UsImluc3RhbGxlZF9zdG9yZV9vcGVuZWQiOmZhbHNlLCJuYXRpdmVfaGFuZG9mZl9leGVjdXRlZCI6ZmFsc2UsIm5hdGl2ZV9pbmhlcml0YW5jZV92ZXJpZmllZCI6ZmFsc2UsInAwMF9kZWxpdmVyeV9hY2NlcHRlZCI6ZmFsc2UsInAwMV9wcm9kdWNlcl9pbXBsZW1lbnRlZCI6ZmFsc2UsInByb2R1Y3Rpb25fYmFzaXNfaXNzdWVkIjpmYWxzZSwicmVnaXN0cnlfd3JpdHRlbiI6ZmFsc2UsInNlcnZpY2VfaW5zdGFsbGVkX29yX3N0YXJ0ZWQiOmZhbHNlfSwiY3JlYXRpb25fZmlsZXRpbWUiOiIxMzQzMzcyNTU4MDU2MDI3NTkiLCJraW5kIjoiR0FURV9OQVRJVkVfQ09PUkRJTkFUT1JfQVJNRUQiLCJuYXRpdmVfZXhlY3V0aW9uIjp0cnVlLCJub25jZSI6ImFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwIiwicGlkIjoxNTQ2MCwicmVzdWx0Ijp7ImRlYWRsaW5lX21zIjo0OTYzOTE4NywicGFyZW50X2NyZWF0aW9uIjoiMTM0MzM3MjU1Nzk1ODcyMzkzIiwicGFyZW50X3BpZCI6MzE0MDB9LCJydW5faWQiOiJiNGM1NDgwOGMxODI0YTk0OGYyNWYxMDE5ZjA3MWFiZCJ9CnsiY2xhaW1zIjp7ImF1dGhvcml0eV9hZG1pdHRlZCI6ZmFsc2UsImNoaWxkX2V4aXRfaG9zdF92ZXJpZmllZCI6ZmFsc2UsImNyb3NzX3Byb2Nlc3NfZ2F0ZV9yZXRlbnRpb25fdmVyaWZpZWQiOmZhbHNlLCJlcG9jaF9hY2NlcHRhbmNlX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJleGVjdXRpb25fYXV0aG9yaXplZCI6ZmFsc2UsImdhdGVfb3JpZ2luX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJpbnN0YWxsZWRfc3RvcmVfb3BlbmVkIjpmYWxzZSwibmF0aXZlX2hhbmRvZmZfZXhlY3V0ZWQiOmZhbHNlLCJuYXRpdmVfaW5oZXJpdGFuY2VfdmVyaWZpZWQiOmZhbHNlLCJwMDBfZGVsaXZlcnlfYWNjZXB0ZWQiOmZhbHNlLCJwMDFfcHJvZHVjZXJfaW1wbGVtZW50ZWQiOmZhbHNlLCJwcm9kdWN0aW9uX2Jhc2lzX2lzc3VlZCI6ZmFsc2UsInJlZ2lzdHJ5X3dyaXR0ZW4iOmZhbHNlLCJzZXJ2aWNlX2luc3RhbGxlZF9vcl9zdGFydGVkIjpmYWxzZX0sImNyZWF0aW9uX2ZpbGV0aW1lIjoiMTM0MzM3MjU1ODA1NjAyNzU5Iiwia2luZCI6IkdBVEVfTkFUSVZFX0NPT1JESU5BVE9SX1JFU1VMVCIsIm5hdGl2ZV9leGVjdXRpb24iOnRydWUsIm5vbmNlIjoiYWM0NzM3ZTA3ZWYwNDAyMmEyNTYwNzdkNWE0YjhmYjAiLCJwaWQiOjE1NDYwLCJyZXN1bHQiOnsiYmFja2VuZCI6eyJhYm9ydGVkIjpmYWxzZSwiYWxsX293bmVkX2hhbmRsZXNfY2xvc2VkIjp0cnVlLCJiYWNrZW5kIjoiV0lORE9XU19HQVRFX0hBTkRPRkZfRElBR05PU1RJQ19OT1RfUDAwIiwiYmFzZWxpbmVfZHVwbGljYXRlX2NhbGxzIjoxLCJiYXNlbGluZV9maWxlX2NhbGxzIjo3NiwiY2hpbGRfZXhpdF9jb25maXJtZWQiOnRydWUsImNsZWFudXBfZXJyb3JzIjpbXSwiY2xvY2tfd2F0Y2hkb2dfY2FsbHNfbm90X2luX2NvdW50ZXIiOnRydWUsImNsb3NlX29yZGVyIjpbIlJhd1BhcmVudENvbnRyb2xXcml0ZSIsIlJhd0NoaWxkQ29udHJvbFJlYWQiLCJSYXdDaGlsZFJlcG9ydFdyaXRlIiwiUmF3UGFyZW50UmVwb3J0UmVhZCIsIlRyYW5zZmVyR2F0ZUNvcHkiLCJDaGlsZENvbnRyb2xSZWFkIiwiQ2hpbGRSZXBvcnRXcml0ZSIsIk9yaWdpbmFsR2F0ZSIsIkV4Y2x1c2l2ZVByb2JlMiIsIlBhcmVudENvbnRyb2xXcml0ZSIsIlBhcmVudFJlcG9ydFJlYWQiLCJSZWNlaXZlclRocmVhZCIsIlJlY2VpdmVyUHJvY2VzcyIsIlJlY2VpdmVySW1hZ2UiLCJGaXh0dXJlUm9vdCIsIkNvbnRhaW5tZW50Sm9iIl0sImluc3RydW1lbnRlZF93aW5fY2FsbHMiOjE2OTEsImpvYl9tZW1iZXJzaGlwX29ic2VydmVkIjp0cnVlLCJuYXRpdmVfZG9tYWluX3Rlcm1pbmFsIjpmYWxzZSwicGlwZV9lbmRwb2ludF9yaWdodHNfb2JzZXJ2ZWQiOnRydWUsInByb2JlX3N0YXR1c2VzIjpbImMwMDAwMDQzIiwiMDAwMDAwMDAiXSwicHJvdGVjdGVkX3dvcmtfYWZ0ZXJfZ2F0ZV9jbG9zZSI6ZmFsc2UsInJlcGx5X2ZyYW1lc19iYXNlNjQiOlsiUjBneGZHSTBZelUwT0RBNFl6RTRNalJoT1RRNFpqSTFaakV3TVRsbU1EY3hZV0prZkdGak5EY3pOMlV3TjJWbU1EUXdNakpoTWpVMk1EYzNaRFZoTkdJNFptSXdmREUxTkRZd2ZERXpORE16TnpJMU5UZ3dOVFl3TWpjMU9Yd3lNakkwZkRFek5ETXpOekkxTlRnd056RTJOVFkyTTN3eGZEazNaamt3TXpBd01EQXdNREZpTURBd01EQXdNREF3TURBd01EQXdNREF3ZkRrME1EaGxOalJoTURobE5qSmhZelo4WVdVNU5EQmtNRGczTVROaU5XSmxaR0kxTVdRNFpEZ3daVFZpT0RabU5URXlNemxtTTJZek9EQmtPR015WmpBMFpEZGlNek5rTmpZek4yUTJPV1JqTTN3eGZEQjhORGsyTXpFeE9EZDhORGsyTXpreE9EY0siLCJSMGd4ZkdJMFl6VTBPREE0WXpFNE1qUmhPVFE0WmpJMVpqRXdNVGxtTURjeFlXSmtmR0ZqTkRjek4yVXdOMlZtTURRd01qSmhNalUyTURjM1pEVmhOR0k0Wm1Jd2ZERTFORFl3ZkRFek5ETXpOekkxTlRnd05UWXdNamMxT1h3eU1qSTBmREV6TkRNek56STFOVGd3TnpFMk5UWTJNM3d5ZkRrM1pqa3dNekF3TURBd01ERmlNREF3TURBd01EQXdNREF3TURBd01EQXdmRGswTURobE5qUmhNRGhsTmpKaFl6WjhZV1U1TkRCa01EZzNNVE5pTldKbFpHSTFNV1E0WkRnd1pUVmlPRFptTlRFeU16bG1NMll6T0RCa09HTXlaakEwWkRkaU16TmtOall6TjJRMk9XUmpNM3d4ZkRCOE5EazJNekV4T0RkOE5EazJNemt4T0RjSyIsIlIwZ3hmR0kwWXpVME9EQTRZekU0TWpSaE9UUTRaakkxWmpFd01UbG1NRGN4WVdKa2ZHRmpORGN6TjJVd04yVm1NRFF3TWpKaE1qVTJNRGMzWkRWaE5HSTRabUl3ZkRFMU5EWXdmREV6TkRNek56STFOVGd3TlRZd01qYzFPWHd5TWpJMGZERXpORE16TnpJMU5UZ3dOekUyTlRZMk0zd3pmRGszWmprd016QXdNREF3TURGaU1EQXdNREF3TURBd01EQXdNREF3TURBd2ZEazBNRGhsTmpSaE1EaGxOakpoWXpaOFlXVTVOREJrTURnM01UTmlOV0psWkdJMU1XUTRaRGd3WlRWaU9EWm1OVEV5TXpsbU0yWXpPREJrT0dNeVpqQTBaRGRpTXpOa05qWXpOMlEyT1dSak0zd3hmREY4TkRrMk16RXhPRGQ4TkRrMk16a3hPRGNLIl19LCJoYW5kb2ZmIjp7ImNsYWltcyI6eyJhdXRob3JpdHlfYWRtaXR0ZWQiOmZhbHNlLCJjaGlsZF9leGl0X2hvc3RfdmVyaWZpZWQiOmZhbHNlLCJjcm9zc19wcm9jZXNzX2dhdGVfcmV0ZW50aW9uX3ZlcmlmaWVkIjpmYWxzZSwiZXBvY2hfYWNjZXB0YW5jZV9hdXRoZW50aWNhdGVkIjpmYWxzZSwiZXhlY3V0aW9uX2F1dGhvcml6ZWQiOmZhbHNlLCJnYXRlX29yaWdpbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwiaW5zdGFsbGVkX3N0b3JlX29wZW5lZCI6ZmFsc2UsIm5hdGl2ZV9oYW5kb2ZmX2V4ZWN1dGVkIjpmYWxzZSwibmF0aXZlX2luaGVyaXRhbmNlX3ZlcmlmaWVkIjpmYWxzZSwicDAwX2RlbGl2ZXJ5X2FjY2VwdGVkIjpmYWxzZSwicDAxX3Byb2R1Y2VyX2ltcGxlbWVudGVkIjpmYWxzZSwicHJvZHVjdGlvbl9iYXNpc19pc3N1ZWQiOmZhbHNlLCJyZWdpc3RyeV93cml0dGVuIjpmYWxzZSwic2VydmljZV9pbnN0YWxsZWRfb3Jfc3RhcnRlZCI6ZmFsc2V9LCJjbGVhbnVwX2Vycm9ycyI6W10sImNvbXBsZXRlIjp0cnVlLCJmYWlsZWQiOmZhbHNlLCJuYXRpdmVfZXhlY3V0aW9uIjp0cnVlLCJzb3VyY2VfZG9tYWluIjoiV0lORE9XU19HQVRFX0hBTkRPRkZfRElBR05PU1RJQ19OT1RfUDAwIiwic3RhdHVzIjoiT0JTRVJWRURfTkFUSVZFX0hBTkRPRkZfTk9UX1AwMCIsInRyYWNlIjpbIm9ic2VydmVfb3JpZ2luYWwiLCJwcmVwYXJlX2V4YWN0X3RocmVlX2hhbmRsZXMiLCJzdGFydF9zdXNwZW5kZWQiLCJjbG9zZV9wYXJlbnRfdHJhbnNmZXJfY29weSIsInJlc3VtZV9vbmNlIiwiY2hpbGRfcmVhZHkiLCJjbG9zZV9wYXJlbnRfb3JpZ2luYWxfZ2F0ZSIsImNoaWxkX2FsaXZlX2JlZm9yZV9wcm9iZSIsImV4Y2x1c2l2ZV93aGlsZV9vbmx5X2NoaWxkX2hvbGRzIiwicmVxdWVzdF9jaGlsZF9oZWxkX3JlY2hlY2siLCJjaGlsZF9zdGlsbF9ob2xkc19zYW1lX2dhdGUiLCJjaGlsZF9hbGl2ZV9hZnRlcl9wcm9iZSIsInJlcXVlc3RfY2hpbGRfcmVsZWFzZSIsImNoaWxkX2dhdGVfY2xvc2VkIiwid2FpdF9zYW1lX2NoaWxkX2V4aXQiLCJleGNsdXNpdmVfYWZ0ZXJfY29uZmlybWVkX2V4aXQiLCJjbG9zZV9pcGNfYW5kX3Byb2Nlc3MiXX19LCJydW5faWQiOiJiNGM1NDgwOGMxODI0YTk0OGYyNWYxMDE5ZjA3MWFiZCJ9CnsiY2xhaW1zIjp7ImF1dGhvcml0eV9hZG1pdHRlZCI6ZmFsc2UsImNoaWxkX2V4aXRfaG9zdF92ZXJpZmllZCI6ZmFsc2UsImNyb3NzX3Byb2Nlc3NfZ2F0ZV9yZXRlbnRpb25fdmVyaWZpZWQiOmZhbHNlLCJlcG9jaF9hY2NlcHRhbmNlX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJleGVjdXRpb25fYXV0aG9yaXplZCI6ZmFsc2UsImdhdGVfb3JpZ2luX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJpbnN0YWxsZWRfc3RvcmVfb3BlbmVkIjpmYWxzZSwibmF0aXZlX2hhbmRvZmZfZXhlY3V0ZWQiOmZhbHNlLCJuYXRpdmVfaW5oZXJpdGFuY2VfdmVyaWZpZWQiOmZhbHNlLCJwMDBfZGVsaXZlcnlfYWNjZXB0ZWQiOmZhbHNlLCJwMDFfcHJvZHVjZXJfaW1wbGVtZW50ZWQiOmZhbHNlLCJwcm9kdWN0aW9uX2Jhc2lzX2lzc3VlZCI6ZmFsc2UsInJlZ2lzdHJ5X3dyaXR0ZW4iOmZhbHNlLCJzZXJ2aWNlX2luc3RhbGxlZF9vcl9zdGFydGVkIjpmYWxzZX0sImNyZWF0aW9uX2ZpbGV0aW1lIjoiMTM0MzM3MjU1ODA1NjAyNzU5Iiwia2luZCI6IkdBVEVfTkFUSVZFX0NPT1JESU5BVE9SX0ZJTkFMIiwibmF0aXZlX2V4ZWN1dGlvbiI6dHJ1ZSwibm9uY2UiOiJhYzQ3MzdlMDdlZjA0MDIyYTI1NjA3N2Q1YTRiOGZiMCIsInBpZCI6MTU0NjAsInJlc3VsdCI6eyJjb21wbGV0ZSI6dHJ1ZSwib3duZWRfaGFuZG9mZl9oYW5kbGVzX2Nsb3NlZCI6dHJ1ZSwicHJvZHVjdGlvbl9iYXNpc19pc3N1ZWQiOmZhbHNlLCJ3YXRjaGRvZ19hY3RpdmVfdGhyb3VnaF9vdXRwdXQiOnRydWUsIndhdGNoZG9nX3BhcmVudF9jbG9zZV9wZW5kaW5nIjp0cnVlfSwicnVuX2lkIjoiYjRjNTQ4MDhjMTgyNGE5NDhmMjVmMTAxOWYwNzFhYmQifQo=",
+    "stdout_bytes": 5261,
+    "stop_reason": null,
+    "stream_errors": [],
+    "streams_stopped": true,
+    "termination_attempted": false,
+    "validated_session": {
+      "backend": {
+        "aborted": false,
+        "all_owned_handles_closed": true,
+        "backend": "WINDOWS_GATE_HANDOFF_DIAGNOSTIC_NOT_P00",
+        "baseline_duplicate_calls": 1,
+        "baseline_file_calls": 76,
+        "child_exit_confirmed": true,
+        "cleanup_errors": [],
+        "clock_watchdog_calls_not_in_counter": true,
+        "close_order": [
+          "RawParentControlWrite",
+          "RawChildControlRead",
+          "RawChildReportWrite",
+          "RawParentReportRead",
+          "TransferGateCopy",
+          "ChildControlRead",
+          "ChildReportWrite",
+          "OriginalGate",
+          "ExclusiveProbe2",
+          "ParentControlWrite",
+          "ParentReportRead",
+          "ReceiverThread",
+          "ReceiverProcess",
+          "ReceiverImage",
+          "FixtureRoot",
+          "ContainmentJob"
+        ],
+        "instrumented_win_calls": 1691,
+        "job_membership_observed": true,
+        "native_domain_terminal": false,
+        "pipe_endpoint_rights_observed": true,
+        "probe_statuses": [
+          "c0000043",
+          "00000000"
+        ],
+        "protected_work_after_gate_close": false,
+        "reply_frames_base64": [
+          "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wxfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDB8NDk2MzExODd8NDk2MzkxODcK",
+          "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wyfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDB8NDk2MzExODd8NDk2MzkxODcK",
+          "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wzfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDF8NDk2MzExODd8NDk2MzkxODcK"
+        ]
+      },
+      "decoded_receiver_replies": [
+        {
+          "child_creation": 134337255807165663,
+          "child_pid": 2224,
+          "deadline_ms": 49639187,
+          "descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+          "gate_closed": false,
+          "gate_id": "97f9030000001b000000000000000000",
+          "gate_volume": "9408e64a08e62ac6",
+          "inheritance_cleared": true,
+          "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+          "parent_creation": 134337255805602759,
+          "parent_pid": 15460,
+          "run_id": "b4c54808c1824a948f25f1019f071abd",
+          "sequence": 1,
+          "started_ms": 49631187
+        },
+        {
+          "child_creation": 134337255807165663,
+          "child_pid": 2224,
+          "deadline_ms": 49639187,
+          "descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+          "gate_closed": false,
+          "gate_id": "97f9030000001b000000000000000000",
+          "gate_volume": "9408e64a08e62ac6",
+          "inheritance_cleared": true,
+          "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+          "parent_creation": 134337255805602759,
+          "parent_pid": 15460,
+          "run_id": "b4c54808c1824a948f25f1019f071abd",
+          "sequence": 2,
+          "started_ms": 49631187
+        },
+        {
+          "child_creation": 134337255807165663,
+          "child_pid": 2224,
+          "deadline_ms": 49639187,
+          "descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+          "gate_closed": true,
+          "gate_id": "97f9030000001b000000000000000000",
+          "gate_volume": "9408e64a08e62ac6",
+          "inheritance_cleared": true,
+          "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+          "parent_creation": 134337255805602759,
+          "parent_pid": 15460,
+          "run_id": "b4c54808c1824a948f25f1019f071abd",
+          "sequence": 3,
+          "started_ms": 49631187
+        }
+      ],
+      "gate_descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+      "handoff": {
+        "claims": {
+          "authority_admitted": false,
+          "child_exit_host_verified": false,
+          "cross_process_gate_retention_verified": false,
+          "epoch_acceptance_authenticated": false,
+          "execution_authorized": false,
+          "gate_origin_authenticated": false,
+          "installed_store_opened": false,
+          "native_handoff_executed": false,
+          "native_inheritance_verified": false,
+          "p00_delivery_accepted": false,
+          "p01_producer_implemented": false,
+          "production_basis_issued": false,
+          "registry_written": false,
+          "service_installed_or_started": false
+        },
+        "cleanup_errors": [],
+        "complete": true,
+        "failed": false,
+        "native_execution": true,
+        "source_domain": "WINDOWS_GATE_HANDOFF_DIAGNOSTIC_NOT_P00",
+        "status": "OBSERVED_NATIVE_HANDOFF_NOT_P00",
+        "trace": [
+          "observe_original",
+          "prepare_exact_three_handles",
+          "start_suspended",
+          "close_parent_transfer_copy",
+          "resume_once",
+          "child_ready",
+          "close_parent_original_gate",
+          "child_alive_before_probe",
+          "exclusive_while_only_child_holds",
+          "request_child_held_recheck",
+          "child_still_holds_same_gate",
+          "child_alive_after_probe",
+          "request_child_release",
+          "child_gate_closed",
+          "wait_same_child_exit",
+          "exclusive_after_confirmed_exit",
+          "close_ipc_and_process"
+        ]
+      },
+      "production_origin_proven": false,
+      "receiver_process": {
+        "creation_filetime": 134337255807165663,
+        "identity_verification_source": "ACCEPTED_COORDINATOR_HELD_HANDLE_AND_MATCHED_REPLIES",
+        "pid": 2224
+      }
+    }
+  },
+  "validated_session": {
+    "backend": {
+      "aborted": false,
+      "all_owned_handles_closed": true,
+      "backend": "WINDOWS_GATE_HANDOFF_DIAGNOSTIC_NOT_P00",
+      "baseline_duplicate_calls": 1,
+      "baseline_file_calls": 76,
+      "child_exit_confirmed": true,
+      "cleanup_errors": [],
+      "clock_watchdog_calls_not_in_counter": true,
+      "close_order": [
+        "RawParentControlWrite",
+        "RawChildControlRead",
+        "RawChildReportWrite",
+        "RawParentReportRead",
+        "TransferGateCopy",
+        "ChildControlRead",
+        "ChildReportWrite",
+        "OriginalGate",
+        "ExclusiveProbe2",
+        "ParentControlWrite",
+        "ParentReportRead",
+        "ReceiverThread",
+        "ReceiverProcess",
+        "ReceiverImage",
+        "FixtureRoot",
+        "ContainmentJob"
+      ],
+      "instrumented_win_calls": 1691,
+      "job_membership_observed": true,
+      "native_domain_terminal": false,
+      "pipe_endpoint_rights_observed": true,
+      "probe_statuses": [
+        "c0000043",
+        "00000000"
+      ],
+      "protected_work_after_gate_close": false,
+      "reply_frames_base64": [
+        "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wxfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDB8NDk2MzExODd8NDk2MzkxODcK",
+        "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wyfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDB8NDk2MzExODd8NDk2MzkxODcK",
+        "R0gxfGI0YzU0ODA4YzE4MjRhOTQ4ZjI1ZjEwMTlmMDcxYWJkfGFjNDczN2UwN2VmMDQwMjJhMjU2MDc3ZDVhNGI4ZmIwfDE1NDYwfDEzNDMzNzI1NTgwNTYwMjc1OXwyMjI0fDEzNDMzNzI1NTgwNzE2NTY2M3wzfDk3ZjkwMzAwMDAwMDFiMDAwMDAwMDAwMDAwMDAwMDAwfDk0MDhlNjRhMDhlNjJhYzZ8YWU5NDBkMDg3MTNiNWJlZGI1MWQ4ZDgwZTViODZmNTEyMzlmM2YzODBkOGMyZjA0ZDdiMzNkNjYzN2Q2OWRjM3wxfDF8NDk2MzExODd8NDk2MzkxODcK"
+      ]
+    },
+    "decoded_receiver_replies": [
+      {
+        "child_creation": 134337255807165663,
+        "child_pid": 2224,
+        "deadline_ms": 49639187,
+        "descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+        "gate_closed": false,
+        "gate_id": "97f9030000001b000000000000000000",
+        "gate_volume": "9408e64a08e62ac6",
+        "inheritance_cleared": true,
+        "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+        "parent_creation": 134337255805602759,
+        "parent_pid": 15460,
+        "run_id": "b4c54808c1824a948f25f1019f071abd",
+        "sequence": 1,
+        "started_ms": 49631187
+      },
+      {
+        "child_creation": 134337255807165663,
+        "child_pid": 2224,
+        "deadline_ms": 49639187,
+        "descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+        "gate_closed": false,
+        "gate_id": "97f9030000001b000000000000000000",
+        "gate_volume": "9408e64a08e62ac6",
+        "inheritance_cleared": true,
+        "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+        "parent_creation": 134337255805602759,
+        "parent_pid": 15460,
+        "run_id": "b4c54808c1824a948f25f1019f071abd",
+        "sequence": 2,
+        "started_ms": 49631187
+      },
+      {
+        "child_creation": 134337255807165663,
+        "child_pid": 2224,
+        "deadline_ms": 49639187,
+        "descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+        "gate_closed": true,
+        "gate_id": "97f9030000001b000000000000000000",
+        "gate_volume": "9408e64a08e62ac6",
+        "inheritance_cleared": true,
+        "nonce": "ac4737e07ef04022a256077d5a4b8fb0",
+        "parent_creation": 134337255805602759,
+        "parent_pid": 15460,
+        "run_id": "b4c54808c1824a948f25f1019f071abd",
+        "sequence": 3,
+        "started_ms": 49631187
+      }
+    ],
+    "gate_descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+    "handoff": {
+      "claims": {
+        "authority_admitted": false,
+        "child_exit_host_verified": false,
+        "cross_process_gate_retention_verified": false,
+        "epoch_acceptance_authenticated": false,
+        "execution_authorized": false,
+        "gate_origin_authenticated": false,
+        "installed_store_opened": false,
+        "native_handoff_executed": false,
+        "native_inheritance_verified": false,
+        "p00_delivery_accepted": false,
+        "p01_producer_implemented": false,
+        "production_basis_issued": false,
+        "registry_written": false,
+        "service_installed_or_started": false
+      },
+      "cleanup_errors": [],
+      "complete": true,
+      "failed": false,
+      "native_execution": true,
+      "source_domain": "WINDOWS_GATE_HANDOFF_DIAGNOSTIC_NOT_P00",
+      "status": "OBSERVED_NATIVE_HANDOFF_NOT_P00",
+      "trace": [
+        "observe_original",
+        "prepare_exact_three_handles",
+        "start_suspended",
+        "close_parent_transfer_copy",
+        "resume_once",
+        "child_ready",
+        "close_parent_original_gate",
+        "child_alive_before_probe",
+        "exclusive_while_only_child_holds",
+        "request_child_held_recheck",
+        "child_still_holds_same_gate",
+        "child_alive_after_probe",
+        "request_child_release",
+        "child_gate_closed",
+        "wait_same_child_exit",
+        "exclusive_after_confirmed_exit",
+        "close_ipc_and_process"
+      ]
+    },
+    "production_origin_proven": false,
+    "receiver_process": {
+      "creation_filetime": 134337255807165663,
+      "identity_verification_source": "ACCEPTED_COORDINATOR_HELD_HANDLE_AND_MATCHED_REPLIES",
+      "pid": 2224
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "automatic_restore_allowed": false,
+  "execution_authorized": false,
+  "forbidden_automatic_actions": [
+    "compile",
+    "execute",
+    "service-install",
+    "service-start",
+    "registry-write",
+    "ACL-change",
+    "enrollment",
+    "fixture-rerun",
+    "commit",
+    "push"
+  ],
+  "installed_root_resolver_implemented": false,
+  "kind": "TRUSTED_HOST_DIAGNOSTIC_SOURCE_BUILD_PLAN_V1",
+  "pipeline_registration": false,
+  "production_host_entrypoint": null,
+  "runtime_approved": false,
+  "source_globs_allowed": false,
+  "status": "SOURCE_BASELINE_NOT_A_PRODUCTION_RELEASE",
+  "targets": {
+    "epoch_store_source_library": {
+      "kind": "library",
+      "library_target_previously_compiled": false,
+      "main": null,
+      "run_by_landing": false,
+      "sources": [
+        "src/EpochNativeContracts.cs",
+        "src/EpochNativeIo.cs",
+        "src/InstallationRegistration.cs",
+        "src/NativeGateLeaseAdapter.cs",
+        "src/P00AnchorEpochContracts.cs",
+        "src/P00EpochNativeReadTransport.cs",
+        "src/ParentChainContracts.cs",
+        "src/ParentChainNativeApi.cs",
+        "src/ParentChainNtTransport.cs",
+        "src/SameHandleFileObserver.cs"
+      ]
+    },
+    "gate_coordinator_diagnostic": {
+      "kind": "exe",
+      "main": "SkynetVS.G1.GateLeaseHandoffNativeV1.GateNativeCoordinatorEntryPoint",
+      "run_by_landing": false,
+      "sources": [
+        "src/GateHandoffContracts.cs",
+        "src/GateHandoffProtocol.cs",
+        "src/GateHandoffWire.cs",
+        "src/GateNativeAggregate.cs",
+        "src/GateNativeCommon.cs",
+        "src/GateNativeCoordinator.cs",
+        "src/GateNativeEntryPoints.cs",
+        "src/GateNativeLaunch.cs",
+        "src/GateNativeReceiver.cs",
+        "src/GateNativeWindows.cs",
+        "src/GatePipeEndpointRights.cs",
+        "src/InstallationRegistration.cs",
+        "src/RestrictedGateLaunch.cs",
+        "src/SameHandleFileObserver.cs"
+      ]
+    },
+    "gate_receiver_diagnostic": {
+      "kind": "exe",
+      "main": "SkynetVS.G1.GateLeaseHandoffNativeV1.GateNativeReceiverEntryPoint",
+      "run_by_landing": false,
+      "sources": [
+        "src/GateHandoffContracts.cs",
+        "src/GateHandoffProtocol.cs",
+        "src/GateHandoffWire.cs",
+        "src/GateNativeAggregate.cs",
+        "src/GateNativeCommon.cs",
+        "src/GateNativeCoordinator.cs",
+        "src/GateNativeEntryPoints.cs",
+        "src/GateNativeLaunch.cs",
+        "src/GateNativeReceiver.cs",
+        "src/GateNativeWindows.cs",
+        "src/GatePipeEndpointRights.cs",
+        "src/InstallationRegistration.cs",
+        "src/RestrictedGateLaunch.cs",
+        "src/SameHandleFileObserver.cs"
+      ]
+    }
+  },
+  "toolchain_note": "C#5/x64/.NET Framework pins are historical diagnostic inputs, not approval of a production runtime."
+}

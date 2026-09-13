@@ -1,0 +1,10 @@
+# Source/evidence only. A later reviewed builder must keep outputs separate.
+*.exe
+*.dll
+*.pdb
+*.obj
+*.log
+__pycache__/
+*.py[cod]
+build/
+dist/

@@ -1,0 +1,313 @@
+{
+  "current_repo_baseline": "2194e7a8f79386952033cfc6525dc02a06db209f",
+  "evidence_semantics": "Exact copies of original diagnostic reports; source/hash bindings only. Historical errors are not replaced. No fixture was rerun by this landing.",
+  "kind": "TRUSTED_HOST_SOURCE_BASELINE_PROVENANCE_V1",
+  "known_error_history": [
+    {
+      "preservation": "Original report/build/fixture remain in Downloads; not opened by landing",
+      "run_id": "7ec6720f894b4b659337dcc6095e1482",
+      "sha256": "124865c2d08398a84a6d8b7c272bf74e64e3cdea2e0d2be8b971239392577553",
+      "status": "IMMUTABLE_ERROR"
+    },
+    {
+      "preservation": "unchanged outside this subtree",
+      "run_id": "5367afdeb64249449fad1ebbb66ef36b",
+      "status": "IMMUTABLE_ERROR"
+    }
+  ],
+  "native_sources": {
+    "src/EpochNativeContracts.cs": {
+      "identity": {
+        "bytes": 7287,
+        "sha256": "de4d781cffb7843f416e7eb456b45aa98cb07c9765a20697e656e0d9db12aa27"
+      },
+      "origins": [
+        {
+          "member": "EpochNativeContracts.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/EpochNativeIo.cs": {
+      "identity": {
+        "bytes": 3690,
+        "sha256": "05eecaee41c14bff0e72577d1ab3e83d31010edf36c887ba2e9f4303e61bc2ae"
+      },
+      "origins": [
+        {
+          "member": "EpochNativeIo.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/GateHandoffContracts.cs": {
+      "identity": {
+        "bytes": 7910,
+        "sha256": "9593476cb512dd61cffff63f54f47ff88e4187e01e27a2ecc08128416322514f"
+      },
+      "origins": [
+        {
+          "member": "sources/GateHandoffContracts.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateHandoffProtocol.cs": {
+      "identity": {
+        "bytes": 11366,
+        "sha256": "df3e32c816b0ea4fda2257358d5f92bf090520c4e039be8a885bd2ea47d52b9e"
+      },
+      "origins": [
+        {
+          "member": "sources/GateHandoffProtocol.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateHandoffWire.cs": {
+      "identity": {
+        "bytes": 3089,
+        "sha256": "b513d4a80fe0fef419786dabb38501904fa2855d960217f62591f49cc047bc45"
+      },
+      "origins": [
+        {
+          "member": "sources/GateHandoffWire.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateNativeAggregate.cs": {
+      "identity": {
+        "bytes": 11699,
+        "sha256": "5de4a6f7eee2d66c078d73ca68a28a6527f5fd30239850d793485c0f74bef127"
+      },
+      "origins": [
+        {
+          "member": "sources/GateNativeAggregate.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateNativeCommon.cs": {
+      "identity": {
+        "bytes": 10304,
+        "sha256": "99ff8924b4a5268652131f516b4f81dd3b3201dc653d7f9e0bebda8fba28ecf0"
+      },
+      "origins": [
+        {
+          "member": "sources/GateNativeCommon.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateNativeCoordinator.cs": {
+      "identity": {
+        "bytes": 6971,
+        "sha256": "fcfcdf042434f8188cae4d4dcc2865de82a9b098bb27e88a7abc16846c01f7f7"
+      },
+      "origins": [
+        {
+          "member": "sources/GateNativeCoordinator.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateNativeEntryPoints.cs": {
+      "identity": {
+        "bytes": 7688,
+        "sha256": "e75461623bb70ec25455784bd73b92c17e1d0c17da2a533625109857b9369052"
+      },
+      "origins": [
+        {
+          "member": "sources/GateNativeEntryPoints.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateNativeLaunch.cs": {
+      "identity": {
+        "bytes": 7528,
+        "sha256": "377d45f4114301e2883620b1660154f864e2427394f28c5ee6e424c13356390f"
+      },
+      "origins": [
+        {
+          "member": "sources/GateNativeLaunch.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateNativeReceiver.cs": {
+      "identity": {
+        "bytes": 6555,
+        "sha256": "0d66a0b1c69abda494fdde634ce07a7676e5c651fb94edac0c2e2ec36227473a"
+      },
+      "origins": [
+        {
+          "member": "sources/GateNativeReceiver.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GateNativeWindows.cs": {
+      "identity": {
+        "bytes": 23372,
+        "sha256": "1310e08cdd3387b83f9bf972512d664fe6831a49b9ffb9045a0aed2d39d86ab4"
+      },
+      "origins": [
+        {
+          "member": "sources/GateNativeWindows.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/GatePipeEndpointRights.cs": {
+      "identity": {
+        "bytes": 5395,
+        "sha256": "87ae87cd93571ab73f002673e71a9b061e3c6cf9b13399f0061770085a71af49"
+      },
+      "origins": [
+        {
+          "member": "sources/GatePipeEndpointRights.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/InstallationRegistration.cs": {
+      "identity": {
+        "bytes": 18109,
+        "sha256": "deee1f7cdc86049fcc9bf20bf739209db4e9cf89c9f686fce0b12c5161673a4b"
+      },
+      "origins": [
+        {
+          "member": "sources/InstallationRegistration.cs",
+          "package": "gate_handoff"
+        },
+        {
+          "member": "reference/InstallationRegistration.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/NativeGateLeaseAdapter.cs": {
+      "identity": {
+        "bytes": 6065,
+        "sha256": "43a0357bdb3bd19fe8ff1505469613c330956287ec27b2a759214ebf734293fc"
+      },
+      "origins": [
+        {
+          "member": "NativeGateLeaseAdapter.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/P00AnchorEpochContracts.cs": {
+      "identity": {
+        "bytes": 13461,
+        "sha256": "7511529c2dd30af986106d76f68db28899cbe2f6f43adf246e48a6860b7c5089"
+      },
+      "origins": [
+        {
+          "member": "reference/P00AnchorEpochContracts.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/P00EpochNativeReadTransport.cs": {
+      "identity": {
+        "bytes": 14518,
+        "sha256": "f4ca7c11b197bc8a6df4b94e280e42086239154fe4df93ad63d9902c352aaecc"
+      },
+      "origins": [
+        {
+          "member": "P00EpochNativeReadTransport.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/ParentChainContracts.cs": {
+      "identity": {
+        "bytes": 9001,
+        "sha256": "32c59cd3e553989004a1c85c8f5d2d635c612b5f00dfb272b0c81b5d23dc1a01"
+      },
+      "origins": [
+        {
+          "member": "reference/ParentChainContracts.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/ParentChainNativeApi.cs": {
+      "identity": {
+        "bytes": 6643,
+        "sha256": "8115a1cca65828ce5658a2d238e51c0d266940076b9b2a19795227050ebec679"
+      },
+      "origins": [
+        {
+          "member": "reference/ParentChainNativeApi.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/ParentChainNtTransport.cs": {
+      "identity": {
+        "bytes": 9017,
+        "sha256": "6dc85cf19a2b3549ab2caf71fce5cb13e511d7b937f5fb78b0618e72c0deb927"
+      },
+      "origins": [
+        {
+          "member": "reference/ParentChainNtTransport.cs",
+          "package": "epoch_store"
+        }
+      ]
+    },
+    "src/RestrictedGateLaunch.cs": {
+      "identity": {
+        "bytes": 18887,
+        "sha256": "a90f8f5a105c62e7eb6401b9fbbf1f91c3fddbf61060abc2fe2fbf321a4f8e22"
+      },
+      "origins": [
+        {
+          "member": "sources/RestrictedGateLaunch.cs",
+          "package": "gate_handoff"
+        }
+      ]
+    },
+    "src/SameHandleFileObserver.cs": {
+      "identity": {
+        "bytes": 23845,
+        "sha256": "3ced371dadaf317b998b0095261e5247c9b55865340f2e41e9466c1e6db198c9"
+      },
+      "origins": [
+        {
+          "member": "sources/SameHandleFileObserver.cs",
+          "package": "gate_handoff"
+        },
+        {
+          "member": "reference/SameHandleFileObserver.cs",
+          "package": "epoch_store"
+        }
+      ]
+    }
+  },
+  "source_changes": [],
+  "source_copy_is_runtime_approval": false,
+  "source_package_identities": {
+    "epoch_store": {
+      "bytes": 114362,
+      "sha256": "a93641819c8c478938af9c533670bf6931596bfdc56a5e47e8bfe04a4f955235"
+    },
+    "gate_handoff": {
+      "bytes": 129466,
+      "sha256": "6de1d9a1900db251595daf8ddff1018af8a33bd7c26fa97d57aa2e30cd647c7c"
+    }
+  },
+  "state": {
+    "P00": "NOT_ACCEPTED",
+    "P01": "NOT_IMPLEMENTED",
+    "RC044": "NOT CREATED",
+    "V1C3A1B": "NOT OPEN",
+    "V1C3A1C": "NOT OPEN",
+    "acquisition": "BLOCKED"
+  },
+  "upstream_manifest_members_verified": 69
+}

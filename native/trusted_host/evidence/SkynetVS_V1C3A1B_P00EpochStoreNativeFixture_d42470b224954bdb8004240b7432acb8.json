@@ -1,0 +1,1427 @@
+{
+  "actions": {
+    "ACL_modified": false,
+    "WFP_called": false,
+    "authority_admitted": false,
+    "compiler_launch_attempted": true,
+    "execution_authorized": false,
+    "external_network_intentionally_used": false,
+    "fixture_created": true,
+    "git_called": false,
+    "installed_store_opened": false,
+    "native_child_handoff_executed": false,
+    "native_child_started": true,
+    "native_fixture_executed": true,
+    "native_gate_challenge_executed": true,
+    "native_launch_attempted": true,
+    "native_registry_read": false,
+    "new_grant_or_CONSUMED": false,
+    "old_launchers_or_suites_rerun": false,
+    "real_watchdog_executed": true,
+    "registry_written": false,
+    "repository_modified": false,
+    "service_installed_or_started": false
+  },
+  "ancestors_after": {
+    "downloads": {
+      "C:\\": {
+        "birth_ns": 1735720866618535100,
+        "device": 10667028923078290118,
+        "inode": 1407374883553285,
+        "kind": 16384
+      },
+      "C:\\Users": {
+        "birth_ns": 1711956076184434800,
+        "device": 10667028923078290118,
+        "inode": 281474976714192,
+        "kind": 16384
+      },
+      "C:\\Users\\User": {
+        "birth_ns": 1735708756944059100,
+        "device": 10667028923078290118,
+        "inode": 1407374883612862,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads": {
+        "birth_ns": 1735708756964174500,
+        "device": 10667028923078290118,
+        "inode": 844424930226893,
+        "kind": 16384
+      }
+    },
+    "package": {
+      "C:\\": {
+        "birth_ns": 1735720866618535100,
+        "device": 10667028923078290118,
+        "inode": 1407374883553285,
+        "kind": 16384
+      },
+      "C:\\Users": {
+        "birth_ns": 1711956076184434800,
+        "device": 10667028923078290118,
+        "inode": 281474976714192,
+        "kind": 16384
+      },
+      "C:\\Users\\User": {
+        "birth_ns": 1735708756944059100,
+        "device": 10667028923078290118,
+        "inode": 1407374883612862,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads": {
+        "birth_ns": 1735708756964174500,
+        "device": 10667028923078290118,
+        "inode": 844424930226893,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads\\SkynetVS_V1C3A1B_P00EpochStore_NativeFixture_V1": {
+        "birth_ns": 1789217170443194400,
+        "device": 10667028923078290118,
+        "inode": 12947848929105651,
+        "kind": 16384
+      }
+    }
+  },
+  "ancestors_before": {
+    "downloads": {
+      "C:\\": {
+        "birth_ns": 1735720866618535100,
+        "device": 10667028923078290118,
+        "inode": 1407374883553285,
+        "kind": 16384
+      },
+      "C:\\Users": {
+        "birth_ns": 1711956076184434800,
+        "device": 10667028923078290118,
+        "inode": 281474976714192,
+        "kind": 16384
+      },
+      "C:\\Users\\User": {
+        "birth_ns": 1735708756944059100,
+        "device": 10667028923078290118,
+        "inode": 1407374883612862,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads": {
+        "birth_ns": 1735708756964174500,
+        "device": 10667028923078290118,
+        "inode": 844424930226893,
+        "kind": 16384
+      }
+    },
+    "package": {
+      "C:\\": {
+        "birth_ns": 1735720866618535100,
+        "device": 10667028923078290118,
+        "inode": 1407374883553285,
+        "kind": 16384
+      },
+      "C:\\Users": {
+        "birth_ns": 1711956076184434800,
+        "device": 10667028923078290118,
+        "inode": 281474976714192,
+        "kind": 16384
+      },
+      "C:\\Users\\User": {
+        "birth_ns": 1735708756944059100,
+        "device": 10667028923078290118,
+        "inode": 1407374883612862,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads": {
+        "birth_ns": 1735708756964174500,
+        "device": 10667028923078290118,
+        "inode": 844424930226893,
+        "kind": 16384
+      },
+      "C:\\Users\\User\\Downloads\\SkynetVS_V1C3A1B_P00EpochStore_NativeFixture_V1": {
+        "birth_ns": 1789217170443194400,
+        "device": 10667028923078290118,
+        "inode": 12947848929105651,
+        "kind": 16384
+      }
+    }
+  },
+  "assembly": {
+    "bytes": 110592,
+    "main_class": "SkynetVS.G1.P00EpochStoreFixtureV1.EpochStoreFixtureNativeEntryPoint",
+    "path": "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\P00EpochStoreFixtureNativeChild.exe",
+    "sha256": "ead9cdd89e4595ebc4a066ba7432d6626f5923a3c6a37d6300c816466c2c3694"
+  },
+  "build_input_identities": {
+    "CaptureContract.cs": {
+      "bytes": 6380,
+      "sha256": "d9ae5ff974f5b5284341538cae5b593d5e549f427f01d9446c1862fc02bbe9ca"
+    },
+    "CaptureLifetime.cs": {
+      "bytes": 7583,
+      "sha256": "a5070b27b87ca5bf29c2b510dff11683696cfe246b45841e3bc2e820ecb54a0e"
+    },
+    "EpochGateShareChallenge.cs": {
+      "bytes": 12018,
+      "sha256": "38236a37ba41b382d23cb6975f3761c5eeb2c844c1a48d34d7b45e64154442f8"
+    },
+    "EpochNativeContracts.cs": {
+      "bytes": 7287,
+      "sha256": "de4d781cffb7843f416e7eb456b45aa98cb07c9765a20697e656e0d9db12aa27"
+    },
+    "EpochNativeIo.cs": {
+      "bytes": 3690,
+      "sha256": "05eecaee41c14bff0e72577d1ab3e83d31010edf36c887ba2e9f4303e61bc2ae"
+    },
+    "EpochStoreFixtureChild.cs": {
+      "bytes": 16590,
+      "sha256": "d68d54ce7a01cc7f86bb13109b1ac494f6479abd1f005f7e542cd69cffa9825e"
+    },
+    "EpochStoreFixtureContract.cs": {
+      "bytes": 7568,
+      "sha256": "4154b708186b7a8bd7b67d60ec8dda7093518913e1004987cf214ee5377b8356"
+    },
+    "InstallationRegistration.cs": {
+      "bytes": 18109,
+      "sha256": "deee1f7cdc86049fcc9bf20bf739209db4e9cf89c9f686fce0b12c5161673a4b"
+    },
+    "NativeGateLeaseAdapter.cs": {
+      "bytes": 6065,
+      "sha256": "43a0357bdb3bd19fe8ff1505469613c330956287ec27b2a759214ebf734293fc"
+    },
+    "P00AnchorEpochContracts.cs": {
+      "bytes": 13461,
+      "sha256": "7511529c2dd30af986106d76f68db28899cbe2f6f43adf246e48a6860b7c5089"
+    },
+    "P00EpochNativeReadTransport.cs": {
+      "bytes": 14518,
+      "sha256": "f4ca7c11b197bc8a6df4b94e280e42086239154fe4df93ad63d9902c352aaecc"
+    },
+    "ParentChainContracts.cs": {
+      "bytes": 9001,
+      "sha256": "32c59cd3e553989004a1c85c8f5d2d635c612b5f00dfb272b0c81b5d23dc1a01"
+    },
+    "ParentChainNativeApi.cs": {
+      "bytes": 6643,
+      "sha256": "8115a1cca65828ce5658a2d238e51c0d266940076b9b2a19795227050ebec679"
+    },
+    "ParentChainNtTransport.cs": {
+      "bytes": 9017,
+      "sha256": "6dc85cf19a2b3549ab2caf71fce5cb13e511d7b937f5fb78b0618e72c0deb927"
+    },
+    "SameHandleFileObserver.cs": {
+      "bytes": 23845,
+      "sha256": "3ced371dadaf317b998b0095261e5247c9b55865340f2e41e9466c1e6db198c9"
+    },
+    "compile_native.rsp": {
+      "bytes": 2431,
+      "sha256": "9f261e0ec3be6dff8a487e8dba1f412e288647f827bbe7da5ab838e009c526a8"
+    }
+  },
+  "build_path": "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121",
+  "claims": {
+    "authority_admitted": false,
+    "candidate_set_verified": false,
+    "child_gate_handoff_implemented": false,
+    "continuous_namespace_proven": false,
+    "effective_access_calculated": false,
+    "epoch_acceptance_authenticated": false,
+    "execution_authorized": false,
+    "gate_origin_verified": false,
+    "installation_registration_authenticated": false,
+    "installed_path_resolution_implemented": false,
+    "lifecycle_history_proven": false,
+    "live_context_created": false,
+    "native_child_handoff_implemented": false,
+    "native_gate_sharing_host_verified": false,
+    "native_read_semantics_host_verified": false,
+    "native_registry_policy_observed": false,
+    "native_store_read": false,
+    "p00_delivery_accepted": false,
+    "p01_producer_implemented": false,
+    "platform_acl_host_verified": false,
+    "platform_policy_implemented": false,
+    "policies_resolved": false,
+    "production_basis_issued": false,
+    "production_profile_approved": false,
+    "protected_provenance": false,
+    "protected_root_admitted": false,
+    "read_lease_created": false,
+    "registry_protection_proven": false,
+    "root_origin_authenticated": false,
+    "root_registration_authenticated": false,
+    "runtime_attestation": false,
+    "service_identity_verified": false,
+    "trusted_start_implemented": false
+  },
+  "cleanup": {
+    "build_removed": true,
+    "errors": [],
+    "fixture_removed": true,
+    "preflight_passed": true,
+    "removed_paths": [
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\host\\InstallAnchor.bin",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store\\Acceptances\\0c6af7c71c652bd8f9a2d6c959c4adca.bin",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store\\Lifecycle.gate",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store\\Lifecycle.state",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store\\Acceptances",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\host",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\EpochGateShareChallenge.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\EpochStoreFixtureChild.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\EpochStoreFixtureContract.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\CaptureContract.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\CaptureLifetime.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\EpochNativeContracts.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\EpochNativeIo.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\InstallationRegistration.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\NativeGateLeaseAdapter.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\P00AnchorEpochContracts.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\P00EpochNativeReadTransport.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\ParentChainContracts.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\ParentChainNativeApi.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\ParentChainNtTransport.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\SameHandleFileObserver.cs",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\compile_native.rsp",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\P00EpochStoreFixtureNativeChild.exe",
+      "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121"
+    ]
+  },
+  "compile": {
+    "command": [
+      "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe",
+      "/noconfig",
+      "@C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\compile_native.rsp"
+    ],
+    "elapsed_ms": 94,
+    "error": null,
+    "exit_confirmed": true,
+    "pid": 28524,
+    "returncode": 0,
+    "started": true,
+    "stderr": "",
+    "stderr_bytes": 0,
+    "stdout": "",
+    "stdout_bytes": 0,
+    "stop_reason": null,
+    "stream_errors": [],
+    "streams_stopped": true,
+    "termination_attempted": false
+  },
+  "compiler_and_reference_identities": {
+    "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\System.Core.dll": {
+      "bytes": 1551024,
+      "sha256": "fd1097aed825d392a5dc8d19384381d4bb2a43498ea1c9d917f5d80c66600e1b"
+    },
+    "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\System.dll": {
+      "bytes": 3545264,
+      "sha256": "2b3c17c6208a0b4b6beb94e1a066f99ba06cdb2ea919479e99d47e8c6d96dc71"
+    },
+    "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe": {
+      "bytes": 2569832,
+      "sha256": "46809206887326d2d24db1eff1f3064de972c3451abe766b49111450a5e08e00"
+    },
+    "C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\mscorlib.dll": {
+      "bytes": 5445432,
+      "sha256": "5bffb20e1217bad314143d7e5c4c809bf9f522e8a0a063c8e7e9b25113de26eb"
+    }
+  },
+  "created_at_utc": "2026-09-12T12:46:18.395623+00:00",
+  "diagnostic_observations": {
+    "gate_share_sequence_observed": true,
+    "production_origin_proven": false,
+    "relative_native_reads_observed": true
+  },
+  "entrypoint": {
+    "bytes": 42082,
+    "sha256": "7bd66f648a7848a4f91e387034c0ea16fb42415f684a9f503be026e80659a624"
+  },
+  "error": null,
+  "expectation": {
+    "enrollment": false,
+    "identity": {
+      "bytes": 2027,
+      "sha256": "5f5078571b323b58548b9e8883926aa676a9375145e9fc64236989388349a79a"
+    },
+    "value": {
+      "acceptance_bytes": 1270,
+      "acceptance_sha256": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503",
+      "anchor_base64": "eyJkZWxpdmVyeV9yZXZpZXdfaWQiOiI4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OCIsImZvcm1hdF92ZXJzaW9uIjoxLCJnYXRlX2lkZW50aXR5Ijp7ImZpbGVfaWRfMTI4X2hleCI6ImQ5YTEwNjAwMDAwMDIwMDAwMDAwMDAwMDAwMDAwMDAwIiwidm9sdW1lX3NlcmlhbF9oZXgiOiI5NDA4ZTY0YTA4ZTYyYWM2In0sImhvc3RfbWFuaWZlc3RfZGlnZXN0IjoiMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIsImhvc3RfcmVsZWFzZV9pZCI6IjAzOGI0MWI2OTkwODQ1ZThhZDNkYmYyNDkxNzRiMzg4IiwiaW5pdGlhbF9wb2xpY3lfc2V0X2RpZ2VzdCI6IjU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTUiLCJpbnN0YWxsYXRpb25fbmFtZXNwYWNlX2lkIjoiZDQyNDcwYjIyNDk1NGJkYjgwMDQyNDBiNzQzMmFjYjgiLCJraW5kIjoiUDAwX0lOU1RBTExfQU5DSE9SX1YxIiwibGlmZWN5Y2xlX3Byb3RvY29sX2lkIjoiUDAwX0xJRkVDWUNMRV9GUk9aRU5fVjEiLCJvYnNlcnZlcl9jbG9zdXJlX2RpZ2VzdCI6IjQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQiLCJvc19ib3VuZGFyeV9kaWdlc3QiOiI3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3IiwicmVhZGVyX3NpZCI6IlMtMS01LTgwLTEtMi0zLTQtNSIsInN0YXRlX3N0b3JlX3Nsb3QiOiJQMDBfTElGRUNZQ0xFX1YxX0VOUk9MTEVEX1NMT1QiLCJzdG9yZV9yb290X2lkZW50aXR5Ijp7ImZpbGVfaWRfMTI4X2hleCI6ImE1YTEwNjAwMDAwMDBmMDAwMDAwMDAwMDAwMDAwMDAwIiwidm9sdW1lX3NlcmlhbF9oZXgiOiI5NDA4ZTY0YTA4ZTYyYWM2In0sInRocmVhdF9tb2RlbF9kaWdlc3QiOiI2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2Iiwid3JpdGVyX3NpZHMiOlsiUy0xLTUtMTgiLCJTLTEtNS0zMi01NDQiXX0K",
+      "anchor_identity": {
+        "file_id_128_hex": "e4a10600000088010000000000000000",
+        "volume_serial_hex": "9408e64a08e62ac6"
+      },
+      "host_identity": {
+        "file_id_128_hex": "96a10600000057000000000000000000",
+        "volume_serial_hex": "9408e64a08e62ac6"
+      },
+      "kind": "P00_STORE_FIXTURE_EXPECTATION_V1",
+      "nonce": "038b41b6990845e8ad3dbf249174b388",
+      "run_id": "d42470b224954bdb8004240b7432acb8",
+      "state_bytes": 423,
+      "state_sha256": "85cd7076dad3fae42f4f95e9e3fff92c29edb8d4403e6101ae8395dd1b07ca2a"
+    }
+  },
+  "expected_protocol_binding": {
+    "gate_identity": {
+      "file_id_128_hex": "d9a10600000020000000000000000000",
+      "volume_serial_hex": "9408e64a08e62ac6"
+    },
+    "nonce": "038b41b6990845e8ad3dbf249174b388",
+    "parent_creation_filetime": 134336907780692072,
+    "parent_pid": 22284,
+    "records": {
+      "Acceptance": {
+        "bytes": 1270,
+        "sha256": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503"
+      },
+      "InstallAnchor": {
+        "bytes": 1083,
+        "sha256": "f2cc67b1e4b9cc1fbdee984f3ccbee9c4fd1a76bc42f6e9a6d60aee6a7ed0387"
+      },
+      "State": {
+        "bytes": 423,
+        "sha256": "85cd7076dad3fae42f4f95e9e3fff92c29edb8d4403e6101ae8395dd1b07ca2a"
+      }
+    },
+    "run_id": "d42470b224954bdb8004240b7432acb8"
+  },
+  "fixture_after": {
+    "continuous_namespace_proven": false,
+    "nodes": {
+      ".": {
+        "entries": [
+          "host",
+          "store"
+        ],
+        "identity": {
+          "file_id_128_hex": "03a106000000db010000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 16,
+          "birth_ns": 1789217178774492900,
+          "ctime_ns": 1789217178774492900,
+          "device": 10667028923078290118,
+          "inode": 133700613937996035,
+          "kind": 16384,
+          "mtime_ns": 1789217178774492900
+        }
+      },
+      "host": {
+        "entries": [
+          "InstallAnchor.bin"
+        ],
+        "identity": {
+          "file_id_128_hex": "96a10600000057000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 16,
+          "birth_ns": 1789217178774492900,
+          "ctime_ns": 1789217178774492900,
+          "device": 10667028923078290118,
+          "inode": 24488322974261654,
+          "kind": 16384,
+          "mtime_ns": 1789217178775887700
+        }
+      },
+      "host/InstallAnchor.bin": {
+        "content": {
+          "bytes": 1083,
+          "sha256": "f2cc67b1e4b9cc1fbdee984f3ccbee9c4fd1a76bc42f6e9a6d60aee6a7ed0387"
+        },
+        "identity": {
+          "file_id_128_hex": "e4a10600000088010000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 32,
+          "birth_ns": 1789217178775887700,
+          "ctime_ns": 1789217178775887700,
+          "device": 10667028923078290118,
+          "inode": 110338190871011812,
+          "kind": 32768,
+          "links": 1,
+          "mtime_ns": 1789217178775887700,
+          "size": 1083
+        }
+      },
+      "store": {
+        "entries": [
+          "Acceptances",
+          "Lifecycle.gate",
+          "Lifecycle.state"
+        ],
+        "identity": {
+          "file_id_128_hex": "a5a1060000000f000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 16,
+          "birth_ns": 1789217178774492900,
+          "ctime_ns": 1789217178774492900,
+          "device": 10667028923078290118,
+          "inode": 4222124651094437,
+          "kind": 16384,
+          "mtime_ns": 1789217178777172900
+        }
+      },
+      "store/Acceptances": {
+        "entries": [
+          "0c6af7c71c652bd8f9a2d6c959c4adca.bin"
+        ],
+        "identity": {
+          "file_id_128_hex": "b2a1060000000c000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 16,
+          "birth_ns": 1789217178774492900,
+          "ctime_ns": 1789217178774492900,
+          "device": 10667028923078290118,
+          "inode": 3377699720962482,
+          "kind": 16384,
+          "mtime_ns": 1789217178779175800
+        }
+      },
+      "store/Acceptances/0c6af7c71c652bd8f9a2d6c959c4adca.bin": {
+        "content": {
+          "bytes": 1270,
+          "sha256": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503"
+        },
+        "identity": {
+          "file_id_128_hex": "fda10600000051010000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 32,
+          "birth_ns": 1789217178779175800,
+          "ctime_ns": 1789217178779175800,
+          "device": 10667028923078290118,
+          "inode": 94857067151925757,
+          "kind": 32768,
+          "links": 1,
+          "mtime_ns": 1789217178779175800,
+          "size": 1270
+        }
+      },
+      "store/Lifecycle.gate": {
+        "content": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "identity": {
+          "file_id_128_hex": "d9a10600000020000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 32,
+          "birth_ns": 1789217178774993800,
+          "ctime_ns": 1789217178774993800,
+          "device": 10667028923078290118,
+          "inode": 9007199255175641,
+          "kind": 32768,
+          "links": 1,
+          "mtime_ns": 1789217178774993800,
+          "size": 0
+        }
+      },
+      "store/Lifecycle.state": {
+        "content": {
+          "bytes": 423,
+          "sha256": "85cd7076dad3fae42f4f95e9e3fff92c29edb8d4403e6101ae8395dd1b07ca2a"
+        },
+        "identity": {
+          "file_id_128_hex": "f6a106000000e9000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 32,
+          "birth_ns": 1789217178777172900,
+          "ctime_ns": 1789217178777172900,
+          "device": 10667028923078290118,
+          "inode": 65583669574017526,
+          "kind": 32768,
+          "links": 1,
+          "mtime_ns": 1789217178777172900,
+          "size": 423
+        }
+      }
+    },
+    "parent_fixture_handles_retained": false,
+    "path_observation_only": true,
+    "scope": "FRESH_DISPOSABLE_P00_EPOCH_STORE_ONLY",
+    "security_descriptor_parent_snapshot": false
+  },
+  "fixture_before": {
+    "continuous_namespace_proven": false,
+    "nodes": {
+      ".": {
+        "entries": [
+          "host",
+          "store"
+        ],
+        "identity": {
+          "file_id_128_hex": "03a106000000db010000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 16,
+          "birth_ns": 1789217178774492900,
+          "ctime_ns": 1789217178774492900,
+          "device": 10667028923078290118,
+          "inode": 133700613937996035,
+          "kind": 16384,
+          "mtime_ns": 1789217178774492900
+        }
+      },
+      "host": {
+        "entries": [
+          "InstallAnchor.bin"
+        ],
+        "identity": {
+          "file_id_128_hex": "96a10600000057000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 16,
+          "birth_ns": 1789217178774492900,
+          "ctime_ns": 1789217178774492900,
+          "device": 10667028923078290118,
+          "inode": 24488322974261654,
+          "kind": 16384,
+          "mtime_ns": 1789217178775887700
+        }
+      },
+      "host/InstallAnchor.bin": {
+        "content": {
+          "bytes": 1083,
+          "sha256": "f2cc67b1e4b9cc1fbdee984f3ccbee9c4fd1a76bc42f6e9a6d60aee6a7ed0387"
+        },
+        "identity": {
+          "file_id_128_hex": "e4a10600000088010000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 32,
+          "birth_ns": 1789217178775887700,
+          "ctime_ns": 1789217178775887700,
+          "device": 10667028923078290118,
+          "inode": 110338190871011812,
+          "kind": 32768,
+          "links": 1,
+          "mtime_ns": 1789217178775887700,
+          "size": 1083
+        }
+      },
+      "store": {
+        "entries": [
+          "Acceptances",
+          "Lifecycle.gate",
+          "Lifecycle.state"
+        ],
+        "identity": {
+          "file_id_128_hex": "a5a1060000000f000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 16,
+          "birth_ns": 1789217178774492900,
+          "ctime_ns": 1789217178774492900,
+          "device": 10667028923078290118,
+          "inode": 4222124651094437,
+          "kind": 16384,
+          "mtime_ns": 1789217178777172900
+        }
+      },
+      "store/Acceptances": {
+        "entries": [
+          "0c6af7c71c652bd8f9a2d6c959c4adca.bin"
+        ],
+        "identity": {
+          "file_id_128_hex": "b2a1060000000c000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 16,
+          "birth_ns": 1789217178774492900,
+          "ctime_ns": 1789217178774492900,
+          "device": 10667028923078290118,
+          "inode": 3377699720962482,
+          "kind": 16384,
+          "mtime_ns": 1789217178779175800
+        }
+      },
+      "store/Acceptances/0c6af7c71c652bd8f9a2d6c959c4adca.bin": {
+        "content": {
+          "bytes": 1270,
+          "sha256": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503"
+        },
+        "identity": {
+          "file_id_128_hex": "fda10600000051010000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 32,
+          "birth_ns": 1789217178779175800,
+          "ctime_ns": 1789217178779175800,
+          "device": 10667028923078290118,
+          "inode": 94857067151925757,
+          "kind": 32768,
+          "links": 1,
+          "mtime_ns": 1789217178779175800,
+          "size": 1270
+        }
+      },
+      "store/Lifecycle.gate": {
+        "content": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "identity": {
+          "file_id_128_hex": "d9a10600000020000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 32,
+          "birth_ns": 1789217178774993800,
+          "ctime_ns": 1789217178774993800,
+          "device": 10667028923078290118,
+          "inode": 9007199255175641,
+          "kind": 32768,
+          "links": 1,
+          "mtime_ns": 1789217178774993800,
+          "size": 0
+        }
+      },
+      "store/Lifecycle.state": {
+        "content": {
+          "bytes": 423,
+          "sha256": "85cd7076dad3fae42f4f95e9e3fff92c29edb8d4403e6101ae8395dd1b07ca2a"
+        },
+        "identity": {
+          "file_id_128_hex": "f6a106000000e9000000000000000000",
+          "volume_serial_hex": "9408e64a08e62ac6"
+        },
+        "observation": {
+          "attributes": 32,
+          "birth_ns": 1789217178777172900,
+          "ctime_ns": 1789217178777172900,
+          "device": 10667028923078290118,
+          "inode": 65583669574017526,
+          "kind": 32768,
+          "links": 1,
+          "mtime_ns": 1789217178777172900,
+          "size": 423
+        }
+      }
+    },
+    "parent_fixture_handles_retained": false,
+    "path_observation_only": true,
+    "scope": "FRESH_DISPOSABLE_P00_EPOCH_STORE_ONLY",
+    "security_descriptor_parent_snapshot": false
+  },
+  "fixture_created_paths": [
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8",
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\host",
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store",
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store\\Acceptances",
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store\\Lifecycle.gate",
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\host\\InstallAnchor.bin",
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store\\Lifecycle.state",
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8\\store\\Acceptances\\0c6af7c71c652bd8f9a2d6c959c4adca.bin"
+  ],
+  "fixture_files": {
+    "host/InstallAnchor.bin": {
+      "bytes": 1083,
+      "sha256": "f2cc67b1e4b9cc1fbdee984f3ccbee9c4fd1a76bc42f6e9a6d60aee6a7ed0387"
+    },
+    "store/Acceptances/0c6af7c71c652bd8f9a2d6c959c4adca.bin": {
+      "bytes": 1270,
+      "sha256": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503"
+    },
+    "store/Lifecycle.gate": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "store/Lifecycle.state": {
+      "bytes": 423,
+      "sha256": "85cd7076dad3fae42f4f95e9e3fff92c29edb8d4403e6101ae8395dd1b07ca2a"
+    }
+  },
+  "fixture_path": "C:\\Users\\User\\Downloads\\SkynetVS_P00Store_Fixture_d42470b224954bdb8004240b7432acb8",
+  "historical_inputs": {
+    "accepted_fixture_source_repair_v2": {
+      "bytes": 45440,
+      "sha256": "4f536bebcc581f99bb37e0a7b15d2b86080022bcb3e2bae1c49b37ae7e470dc7"
+    },
+    "historical_error_promoted": false,
+    "historical_paths_followed": false,
+    "immutable_compile_error_v1": {
+      "bytes": 12438,
+      "sha256": "47356d050543617f1c57663c3d5ff51124194ad4a537d3a8edcfea9f82a368e1"
+    },
+    "native_csharp_sources_unchanged_from_repair": 15,
+    "old_builds_read_run_or_modified": false,
+    "old_suites_or_launchers_executed": false,
+    "supervisor_unchanged": true
+  },
+  "host_readonly_api_calls": [
+    "QueryDosDeviceW",
+    "GetDriveTypeW",
+    "GetCurrentProcessId",
+    "GetCurrentProcess",
+    "GetProcessTimes",
+    "QueryDosDeviceW",
+    "GetDriveTypeW",
+    "QueryDosDeviceW",
+    "GetDriveTypeW"
+  ],
+  "kind": "V1C3A1B_P00_EPOCH_STORE_NATIVE_FIXTURE_V1",
+  "limitations": [
+    "First real disposable epoch-store/sharing fixture only. No production store, enrollment, registry, service or ACL writes.",
+    "Fifteen native C# files and supervisor are unchanged from the accepted 19445 source repair. No managed suite reruns.",
+    "Fresh synthetic records embed current run/nonce and observed file identities. SID and approval fields remain synthetic metadata.",
+    "Parent creates four files/four directories and then closes all its fixture streams before one native child.",
+    "Sharing challenge opens with write access but never writes; only exact c0000043 while held and success after release pass.",
+    "Gate closes last among seven owner handles. Separate witness root closes after the challenge; no gate handoff.",
+    "No forced-pending or crash/durability challenge. Unexpected pending, timeout, kill or unknown exit are ERROR, not PASS.",
+    "Child reports repeated raw security/metadata checks, not P00 root provenance, effective access or continuous namespace proof.",
+    "CPython 3.12.10 lstat identities are point-in-time expectations, not an adversarial path-safety or enrollment proof.",
+    "No parent-side ACL snapshot or alternate-data-stream enumeration is claimed. Exact inventory covers ordinary directory entries.",
+    "No guarantee against kernel/process-start stalls. The watchdog/stop requests do not prove exit until confirmed.",
+    "Path/hash/Framework checks are integrity observations, not runtime attestation or proof against same-user races.",
+    "Any error preserves remaining new work and create-once report. Old ERROR/build identities are not opened or modified.",
+    "Repeat guard is not a concurrency lock. A crash may leave a partial reserved report; preserve it, no automatic retry."
+  ],
+  "locality_after": {
+    "C:": {
+      "continuous_mapping_proven": false,
+      "current_dos_device": "\\Device\\HarddiskVolume3",
+      "drive": "C:",
+      "drive_type": 3,
+      "local_fixed_mapping_observed": true,
+      "network_history_proven": false,
+      "protected_provenance": false
+    }
+  },
+  "locality_before": {
+    "C:": {
+      "continuous_mapping_proven": false,
+      "current_dos_device": "\\Device\\HarddiskVolume3",
+      "drive": "C:",
+      "drive_type": 3,
+      "local_fixed_mapping_observed": true,
+      "network_history_proven": false,
+      "protected_provenance": false
+    }
+  },
+  "native_command": [
+    "C:\\Users\\User\\Downloads\\SkynetVS_P00StoreNativeBuild_d42470b224954bdb8004240b7432acb8_u19ja121\\P00EpochStoreFixtureNativeChild.exe",
+    "--epoch-store-fixture-child",
+    "22284",
+    "134336907780692072",
+    "d42470b224954bdb8004240b7432acb8",
+    "038b41b6990845e8ad3dbf249174b388",
+    "eyJhY2NlcHRhbmNlX2J5dGVzIjoxMjcwLCJhY2NlcHRhbmNlX3NoYTI1NiI6IjhjYmQ1OGI5MzBkZGE5YThiNzJkYTc3ODZjNjJjZmI1MzZlZDkxMmZmNThmNjhkOTMzYzhjOTY3N2U5ODg1MDMiLCJhbmNob3JfYmFzZTY0IjoiZXlKa1pXeHBkbVZ5ZVY5eVpYWnBaWGRmYVdRaU9pSTRPRGc0T0RnNE9EZzRPRGc0T0RnNE9EZzRPRGc0T0RnNE9EZzRPRGc0T0NJc0ltWnZjbTFoZEY5MlpYSnphVzl1SWpveExDSm5ZWFJsWDJsa1pXNTBhWFI1SWpwN0ltWnBiR1ZmYVdSZk1USTRYMmhsZUNJNkltUTVZVEV3TmpBd01EQXdNREl3TURBd01EQXdNREF3TURBd01EQXdNREF3SWl3aWRtOXNkVzFsWDNObGNtbGhiRjlvWlhnaU9pSTVOREE0WlRZMFlUQTRaVFl5WVdNMkluMHNJbWh2YzNSZmJXRnVhV1psYzNSZlpHbG5aWE4wSWpvaU16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek16TXpNek15SXNJbWh2YzNSZmNtVnNaV0Z6WlY5cFpDSTZJakF6T0dJME1XSTJPVGt3T0RRMVpUaGhaRE5rWW1ZeU5Ea3hOelJpTXpnNElpd2lhVzVwZEdsaGJGOXdiMnhwWTNsZmMyVjBYMlJwWjJWemRDSTZJalUxTlRVMU5UVTFOVFUxTlRVMU5UVTFOVFUxTlRVMU5UVTFOVFUxTlRVMU5UVTFOVFUxTlRVMU5UVTFOVFUxTlRVMU5UVTFOVFUxTlRVMU5UVTFOVFVpTENKcGJuTjBZV3hzWVhScGIyNWZibUZ0WlhOd1lXTmxYMmxrSWpvaVpEUXlORGN3WWpJeU5EazFOR0prWWpnd01EUXlOREJpTnpRek1tRmpZamdpTENKcmFXNWtJam9pVURBd1gwbE9VMVJCVEV4ZlFVNURTRTlTWDFZeElpd2liR2xtWldONVkyeGxYM0J5YjNSdlkyOXNYMmxrSWpvaVVEQXdYMHhKUmtWRFdVTk1SVjlHVWs5YVJVNWZWakVpTENKdlluTmxjblpsY2w5amJHOXpkWEpsWDJScFoyVnpkQ0k2SWpRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRME5EUTBORFEwTkRRaUxDSnZjMTlpYjNWdVpHRnllVjlrYVdkbGMzUWlPaUkzTnpjM056YzNOemMzTnpjM056YzNOemMzTnpjM056YzNOemMzTnpjM056YzNOemMzTnpjM056YzNOemMzTnpjM056YzNOemMzTnpjM056YzNOemMzSWl3aWNtVmhaR1Z5WDNOcFpDSTZJbE10TVMwMUxUZ3dMVEV0TWkwekxUUXROU0lzSW5OMFlYUmxYM04wYjNKbFgzTnNiM1FpT2lKUU1EQmZURWxHUlVOWlEweEZYMVl4WDBWT1VrOU1URVZFWDFOTVQxUWlMQ0p6ZEc5eVpWOXliMjkwWDJsa1pXNTBhWFI1SWpwN0ltWnBiR1ZmYVdSZk1USTRYMmhsZUNJNkltRTFZVEV3TmpBd01EQXdNREJtTURBd01EQXdNREF3TURBd01EQXdNREF3SWl3aWRtOXNkVzFsWDNObGNtbGhiRjlvWlhnaU9pSTVOREE0WlRZMFlUQTRaVFl5WVdNMkluMHNJblJvY21WaGRGOXRiMlJsYkY5a2FXZGxjM1FpT2lJMk5qWTJOalkyTmpZMk5qWTJOalkyTmpZMk5qWTJOalkyTmpZMk5qWTJOalkyTmpZMk5qWTJOalkyTmpZMk5qWTJOalkyTmpZMk5qWTJOalkyTmpZMklpd2lkM0pwZEdWeVgzTnBaSE1pT2xzaVV5MHhMVFV0TVRnaUxDSlRMVEV0TlMwek1pMDFORFFpWFgwSyIsImFuY2hvcl9pZGVudGl0eSI6eyJmaWxlX2lkXzEyOF9oZXgiOiJlNGExMDYwMDAwMDA4ODAxMDAwMDAwMDAwMDAwMDAwMCIsInZvbHVtZV9zZXJpYWxfaGV4IjoiOTQwOGU2NGEwOGU2MmFjNiJ9LCJob3N0X2lkZW50aXR5Ijp7ImZpbGVfaWRfMTI4X2hleCI6Ijk2YTEwNjAwMDAwMDU3MDAwMDAwMDAwMDAwMDAwMDAwIiwidm9sdW1lX3NlcmlhbF9oZXgiOiI5NDA4ZTY0YTA4ZTYyYWM2In0sImtpbmQiOiJQMDBfU1RPUkVfRklYVFVSRV9FWFBFQ1RBVElPTl9WMSIsIm5vbmNlIjoiMDM4YjQxYjY5OTA4NDVlOGFkM2RiZjI0OTE3NGIzODgiLCJydW5faWQiOiJkNDI0NzBiMjI0OTU0YmRiODAwNDI0MGI3NDMyYWNiOCIsInN0YXRlX2J5dGVzIjo0MjMsInN0YXRlX3NoYTI1NiI6Ijg1Y2Q3MDc2ZGFkM2ZhZTQyZjRmOTVlOWUzZmZmOTJjMjllZGI4ZDQ0MDNlNjEwMWFlODM5NWRkMWIwN2NhMmEifQo=",
+    "DISPOSABLE_EPOCH_STORE_AND_SHARING_ONLY_V1"
+  ],
+  "nonce": "038b41b6990845e8ad3dbf249174b388",
+  "p00_status": "NOT_ACCEPTED",
+  "p01_status": "NOT_IMPLEMENTED",
+  "parent_fixture_handles_retained_during_native": false,
+  "parent_process": {
+    "creation_filetime": 134336907780692072,
+    "pid": 22284,
+    "pseudo_handle_closed": false,
+    "source": "CURRENT_PROCESS_PSEUDO_HANDLE"
+  },
+  "payload_manifest": {
+    "bytes": 5598,
+    "sha256": "c36a5693123493f441d312cba7619359458ddf3dae21e8730c21efd04f06480d"
+  },
+  "phase": "complete_native_disposable_p00_epoch_store_fixture",
+  "result": "PASS_NATIVE_P00_EPOCH_STORE_FIXTURE",
+  "run_id": "d42470b224954bdb8004240b7432acb8",
+  "runtime": {
+    "bytecode_writes_disabled": true,
+    "isolated": true,
+    "platform": "win32",
+    "site_disabled": true,
+    "version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+  },
+  "schema_version": 1,
+  "state": {
+    "D01": "OBSERVED_NATIVE_DIAGNOSTIC / CONSUMED / MUST NOT RERUN",
+    "R02": "ACCESS_DENIED / CONSUMED / MUST NOT RERUN",
+    "RC044": "NOT CREATED",
+    "V1C3A1B": "NOT OPEN",
+    "V1C3A1C": "NOT OPEN",
+    "active_acquisition": "BLOCKED"
+  },
+  "supervision": {
+    "elapsed_ms": 218,
+    "error": null,
+    "exit_confirmed": true,
+    "messages": [
+      {
+        "absolute_watchdog_active": true,
+        "claims": {
+          "authority_admitted": false,
+          "candidate_set_verified": false,
+          "child_gate_handoff_implemented": false,
+          "continuous_namespace_proven": false,
+          "effective_access_calculated": false,
+          "epoch_acceptance_authenticated": false,
+          "execution_authorized": false,
+          "gate_origin_verified": false,
+          "installation_registration_authenticated": false,
+          "installed_path_resolution_implemented": false,
+          "lifecycle_history_proven": false,
+          "live_context_created": false,
+          "native_child_handoff_implemented": false,
+          "native_gate_sharing_host_verified": false,
+          "native_read_semantics_host_verified": false,
+          "native_registry_policy_observed": false,
+          "native_store_read": false,
+          "p00_delivery_accepted": false,
+          "p01_producer_implemented": false,
+          "platform_acl_host_verified": false,
+          "platform_policy_implemented": false,
+          "policies_resolved": false,
+          "production_basis_issued": false,
+          "production_profile_approved": false,
+          "protected_provenance": false,
+          "protected_root_admitted": false,
+          "read_lease_created": false,
+          "registry_protection_proven": false,
+          "root_origin_authenticated": false,
+          "root_registration_authenticated": false,
+          "runtime_attestation": false,
+          "service_identity_verified": false,
+          "trusted_start_implemented": false
+        },
+        "kind": "EPOCH_STORE_FIXTURE_ARMED",
+        "native_execution": true,
+        "nonce": "038b41b6990845e8ad3dbf249174b388",
+        "parent_creation_filetime": 134336907780692072,
+        "parent_pid": 22284,
+        "pid": 25128,
+        "run_id": "d42470b224954bdb8004240b7432acb8",
+        "scope": "DISPOSABLE_EPOCH_STORE_AND_SHARING_ONLY_V1",
+        "store_operations_started": false
+      },
+      {
+        "claims": {
+          "authority_admitted": false,
+          "candidate_set_verified": false,
+          "child_gate_handoff_implemented": false,
+          "continuous_namespace_proven": false,
+          "effective_access_calculated": false,
+          "epoch_acceptance_authenticated": false,
+          "execution_authorized": false,
+          "gate_origin_verified": false,
+          "installation_registration_authenticated": false,
+          "installed_path_resolution_implemented": false,
+          "lifecycle_history_proven": false,
+          "live_context_created": false,
+          "native_child_handoff_implemented": false,
+          "native_gate_sharing_host_verified": false,
+          "native_read_semantics_host_verified": false,
+          "native_registry_policy_observed": false,
+          "native_store_read": false,
+          "p00_delivery_accepted": false,
+          "p01_producer_implemented": false,
+          "platform_acl_host_verified": false,
+          "platform_policy_implemented": false,
+          "policies_resolved": false,
+          "production_basis_issued": false,
+          "production_profile_approved": false,
+          "protected_provenance": false,
+          "protected_root_admitted": false,
+          "read_lease_created": false,
+          "registry_protection_proven": false,
+          "root_origin_authenticated": false,
+          "root_registration_authenticated": false,
+          "runtime_attestation": false,
+          "service_identity_verified": false,
+          "trusted_start_implemented": false
+        },
+        "kind": "EPOCH_STORE_FIXTURE_RESULT",
+        "native_execution": true,
+        "nonce": "038b41b6990845e8ad3dbf249174b388",
+        "observation": {
+          "challenge": {
+            "child_handoff_performed": false,
+            "cleanup_errors": [],
+            "complete": true,
+            "gate_descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+            "gate_identity": {
+              "file_id_128_hex": "d9a10600000020000000000000000000",
+              "volume_serial_hex": "9408e64a08e62ac6"
+            },
+            "native_execution": true,
+            "open_attempts": 3,
+            "steps": [
+              {
+                "closed_before_refusal": true,
+                "same_gate": true,
+                "status_hex": "00000000",
+                "step": "compatible_reader"
+              },
+              {
+                "compatible_reader_already_closed": true,
+                "no_handle_returned": true,
+                "status_hex": "c0000043",
+                "step": "maintenance_while_held"
+              },
+              {
+                "closed": true,
+                "same_gate": true,
+                "status_hex": "00000000",
+                "step": "maintenance_after_release",
+                "write_performed": false
+              }
+            ],
+            "successful_closes": 2,
+            "terminal": false,
+            "write_performed": false
+          },
+          "claims": {
+            "authority_admitted": false,
+            "candidate_set_verified": false,
+            "child_gate_handoff_implemented": false,
+            "continuous_namespace_proven": false,
+            "effective_access_calculated": false,
+            "epoch_acceptance_authenticated": false,
+            "execution_authorized": false,
+            "gate_origin_verified": false,
+            "installation_registration_authenticated": false,
+            "installed_path_resolution_implemented": false,
+            "lifecycle_history_proven": false,
+            "live_context_created": false,
+            "native_child_handoff_implemented": false,
+            "native_gate_sharing_host_verified": false,
+            "native_read_semantics_host_verified": false,
+            "native_registry_policy_observed": false,
+            "native_store_read": false,
+            "p00_delivery_accepted": false,
+            "p01_producer_implemented": false,
+            "platform_acl_host_verified": false,
+            "platform_policy_implemented": false,
+            "policies_resolved": false,
+            "production_basis_issued": false,
+            "production_profile_approved": false,
+            "protected_provenance": false,
+            "protected_root_admitted": false,
+            "read_lease_created": false,
+            "registry_protection_proven": false,
+            "root_origin_authenticated": false,
+            "root_registration_authenticated": false,
+            "runtime_attestation": false,
+            "service_identity_verified": false,
+            "trusted_start_implemented": false
+          },
+          "cleanup_errors": [],
+          "complete": true,
+          "kind": "EPOCH_STORE_FIXTURE_SESSION_V1",
+          "native_counters": {
+            "challenge_open": 3,
+            "file": 598,
+            "read": 11,
+            "root_open": 3,
+            "store_open_device": 54
+          },
+          "native_execution": true,
+          "owner": {
+            "child_lease_transfer_available": false,
+            "claims": {
+              "authority_admitted": false,
+              "candidate_set_verified": false,
+              "child_gate_handoff_implemented": false,
+              "continuous_namespace_proven": false,
+              "effective_access_calculated": false,
+              "epoch_acceptance_authenticated": false,
+              "execution_authorized": false,
+              "gate_origin_verified": false,
+              "installation_registration_authenticated": false,
+              "installed_path_resolution_implemented": false,
+              "lifecycle_history_proven": false,
+              "live_context_created": false,
+              "native_child_handoff_implemented": false,
+              "native_gate_sharing_host_verified": false,
+              "native_read_semantics_host_verified": false,
+              "native_registry_policy_observed": false,
+              "native_store_read": false,
+              "p00_delivery_accepted": false,
+              "p01_producer_implemented": false,
+              "platform_acl_host_verified": false,
+              "platform_policy_implemented": false,
+              "policies_resolved": false,
+              "production_basis_issued": false,
+              "production_profile_approved": false,
+              "protected_provenance": false,
+              "protected_root_admitted": false,
+              "read_lease_created": false,
+              "registry_protection_proven": false,
+              "root_origin_authenticated": false,
+              "root_registration_authenticated": false,
+              "runtime_attestation": false,
+              "service_identity_verified": false,
+              "trusted_start_implemented": false
+            },
+            "error": null,
+            "installed_path_resolved": false,
+            "kind": "P00_EPOCH_NATIVE_STORE_DIAGNOSTIC_V1",
+            "receipt_consumed": true,
+            "root_expectations_authenticated": false,
+            "selection_digest": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503",
+            "session_id": "05ce85f3ba4e4c38be7bac2be47b6e2f",
+            "source_domain": "NATIVE_EPOCH_STORE_DIAGNOSTIC_NOT_ENROLLMENT",
+            "state": "EPOCH_STORE_DIAGNOSTIC_COMPLETED_NOT_P00",
+            "transport": {
+              "claims": {
+                "authority_admitted": false,
+                "candidate_set_verified": false,
+                "child_gate_handoff_implemented": false,
+                "continuous_namespace_proven": false,
+                "effective_access_calculated": false,
+                "epoch_acceptance_authenticated": false,
+                "execution_authorized": false,
+                "gate_origin_verified": false,
+                "installation_registration_authenticated": false,
+                "installed_path_resolution_implemented": false,
+                "lifecycle_history_proven": false,
+                "live_context_created": false,
+                "native_child_handoff_implemented": false,
+                "native_gate_sharing_host_verified": false,
+                "native_read_semantics_host_verified": false,
+                "native_registry_policy_observed": false,
+                "native_store_read": false,
+                "p00_delivery_accepted": false,
+                "p01_producer_implemented": false,
+                "platform_acl_host_verified": false,
+                "platform_policy_implemented": false,
+                "policies_resolved": false,
+                "production_basis_issued": false,
+                "production_profile_approved": false,
+                "protected_provenance": false,
+                "protected_root_admitted": false,
+                "read_lease_created": false,
+                "registry_protection_proven": false,
+                "root_origin_authenticated": false,
+                "root_registration_authenticated": false,
+                "runtime_attestation": false,
+                "service_identity_verified": false,
+                "trusted_start_implemented": false
+              },
+              "cleanup_errors": [],
+              "close_attempts": 7,
+              "close_order": [
+                "Acceptance",
+                "AcceptanceDirectory",
+                "State",
+                "StoreRoot",
+                "InstallAnchor",
+                "HostReleaseRoot",
+                "Gate"
+              ],
+              "close_successes": 7,
+              "dispatch_calls": 200,
+              "handles_may_remain": false,
+              "owned_count": 7,
+              "process_exit_required": false,
+              "retained_frame": false,
+              "source_domain": "NATIVE_EPOCH_STORE_DIAGNOSTIC_NOT_ENROLLMENT",
+              "transferred_roots": 2
+            }
+          },
+          "process_exit_required": false,
+          "records": {
+            "Acceptance": {
+              "bytes": 1270,
+              "sha256": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503"
+            },
+            "InstallAnchor": {
+              "bytes": 1083,
+              "sha256": "f2cc67b1e4b9cc1fbdee984f3ccbee9c4fd1a76bc42f6e9a6d60aee6a7ed0387"
+            },
+            "State": {
+              "bytes": 423,
+              "sha256": "85cd7076dad3fae42f4f95e9e3fff92c29edb8d4403e6101ae8395dd1b07ca2a"
+            }
+          },
+          "witness_is_separate_from_owner_roots": true,
+          "witness_root_closed": true
+        },
+        "parent_creation_filetime": 134336907780692072,
+        "parent_pid": 22284,
+        "pid": 25128,
+        "run_id": "d42470b224954bdb8004240b7432acb8",
+        "scope": "DISPOSABLE_EPOCH_STORE_AND_SHARING_ONLY_V1"
+      },
+      {
+        "absolute_watchdog_active_through_output": true,
+        "claims": {
+          "authority_admitted": false,
+          "candidate_set_verified": false,
+          "child_gate_handoff_implemented": false,
+          "continuous_namespace_proven": false,
+          "effective_access_calculated": false,
+          "epoch_acceptance_authenticated": false,
+          "execution_authorized": false,
+          "gate_origin_verified": false,
+          "installation_registration_authenticated": false,
+          "installed_path_resolution_implemented": false,
+          "lifecycle_history_proven": false,
+          "live_context_created": false,
+          "native_child_handoff_implemented": false,
+          "native_gate_sharing_host_verified": false,
+          "native_read_semantics_host_verified": false,
+          "native_registry_policy_observed": false,
+          "native_store_read": false,
+          "p00_delivery_accepted": false,
+          "p01_producer_implemented": false,
+          "platform_acl_host_verified": false,
+          "platform_policy_implemented": false,
+          "policies_resolved": false,
+          "production_basis_issued": false,
+          "production_profile_approved": false,
+          "protected_provenance": false,
+          "protected_root_admitted": false,
+          "read_lease_created": false,
+          "registry_protection_proven": false,
+          "root_origin_authenticated": false,
+          "root_registration_authenticated": false,
+          "runtime_attestation": false,
+          "service_identity_verified": false,
+          "trusted_start_implemented": false
+        },
+        "kind": "EPOCH_STORE_FIXTURE_FINAL",
+        "native_execution": true,
+        "no_native_child_lease_transfer": true,
+        "nonce": "038b41b6990845e8ad3dbf249174b388",
+        "parent_creation_filetime": 134336907780692072,
+        "parent_handle_closed": true,
+        "parent_pid": 22284,
+        "pid": 25128,
+        "run_id": "d42470b224954bdb8004240b7432acb8",
+        "scope": "DISPOSABLE_EPOCH_STORE_AND_SHARING_ONLY_V1"
+      }
+    ],
+    "pid": 25128,
+    "result": "OBSERVED_NATIVE_EPOCH_STORE_FIXTURE_CHILD",
+    "returncode": 0,
+    "started": true,
+    "stderr_base64": "",
+    "stderr_bytes": 0,
+    "stdout_base64": "eyJraW5kIjoiRVBPQ0hfU1RPUkVfRklYVFVSRV9BUk1FRCIsInJ1bl9pZCI6ImQ0MjQ3MGIyMjQ5NTRiZGI4MDA0MjQwYjc0MzJhY2I4Iiwibm9uY2UiOiIwMzhiNDFiNjk5MDg0NWU4YWQzZGJmMjQ5MTc0YjM4OCIsInBpZCI6MjUxMjgsInBhcmVudF9waWQiOjIyMjg0LCJwYXJlbnRfY3JlYXRpb25fZmlsZXRpbWUiOjEzNDMzNjkwNzc4MDY5MjA3Miwic2NvcGUiOiJESVNQT1NBQkxFX0VQT0NIX1NUT1JFX0FORF9TSEFSSU5HX09OTFlfVjEiLCJuYXRpdmVfZXhlY3V0aW9uIjp0cnVlLCJjbGFpbXMiOnsiaW5zdGFsbGF0aW9uX3JlZ2lzdHJhdGlvbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwicmVnaXN0cnlfcHJvdGVjdGlvbl9wcm92ZW4iOmZhbHNlLCJyb290X3JlZ2lzdHJhdGlvbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwic2VydmljZV9pZGVudGl0eV92ZXJpZmllZCI6ZmFsc2UsInByb3RlY3RlZF9yb290X2FkbWl0dGVkIjpmYWxzZSwicHJvdGVjdGVkX3Byb3ZlbmFuY2UiOmZhbHNlLCJjYW5kaWRhdGVfc2V0X3ZlcmlmaWVkIjpmYWxzZSwiYXV0aG9yaXR5X2FkbWl0dGVkIjpmYWxzZSwibGl2ZV9jb250ZXh0X2NyZWF0ZWQiOmZhbHNlLCJleGVjdXRpb25fYXV0aG9yaXplZCI6ZmFsc2UsInJ1bnRpbWVfYXR0ZXN0YXRpb24iOmZhbHNlLCJjb250aW51b3VzX25hbWVzcGFjZV9wcm92ZW4iOmZhbHNlLCJyZWFkX2xlYXNlX2NyZWF0ZWQiOmZhbHNlLCJwb2xpY2llc19yZXNvbHZlZCI6ZmFsc2UsInByb2R1Y3Rpb25fcHJvZmlsZV9hcHByb3ZlZCI6ZmFsc2UsInAwMF9kZWxpdmVyeV9hY2NlcHRlZCI6ZmFsc2UsInAwMV9wcm9kdWNlcl9pbXBsZW1lbnRlZCI6ZmFsc2UsInRydXN0ZWRfc3RhcnRfaW1wbGVtZW50ZWQiOmZhbHNlLCJlcG9jaF9hY2NlcHRhbmNlX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJnYXRlX29yaWdpbl92ZXJpZmllZCI6ZmFsc2UsIm5hdGl2ZV9zdG9yZV9yZWFkIjpmYWxzZSwiY2hpbGRfZ2F0ZV9oYW5kb2ZmX2ltcGxlbWVudGVkIjpmYWxzZSwicHJvZHVjdGlvbl9iYXNpc19pc3N1ZWQiOmZhbHNlLCJsaWZlY3ljbGVfaGlzdG9yeV9wcm92ZW4iOmZhbHNlLCJuYXRpdmVfcmVnaXN0cnlfcG9saWN5X29ic2VydmVkIjpmYWxzZSwiZWZmZWN0aXZlX2FjY2Vzc19jYWxjdWxhdGVkIjpmYWxzZSwicGxhdGZvcm1fYWNsX2hvc3RfdmVyaWZpZWQiOmZhbHNlLCJwbGF0Zm9ybV9wb2xpY3lfaW1wbGVtZW50ZWQiOmZhbHNlLCJpbnN0YWxsZWRfcGF0aF9yZXNvbHV0aW9uX2ltcGxlbWVudGVkIjpmYWxzZSwicm9vdF9vcmlnaW5fYXV0aGVudGljYXRlZCI6ZmFsc2UsIm5hdGl2ZV9yZWFkX3NlbWFudGljc19ob3N0X3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX2dhdGVfc2hhcmluZ19ob3N0X3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX2NoaWxkX2hhbmRvZmZfaW1wbGVtZW50ZWQiOmZhbHNlfSwiYWJzb2x1dGVfd2F0Y2hkb2dfYWN0aXZlIjp0cnVlLCJzdG9yZV9vcGVyYXRpb25zX3N0YXJ0ZWQiOmZhbHNlfQp7ImtpbmQiOiJFUE9DSF9TVE9SRV9GSVhUVVJFX1JFU1VMVCIsInJ1bl9pZCI6ImQ0MjQ3MGIyMjQ5NTRiZGI4MDA0MjQwYjc0MzJhY2I4Iiwibm9uY2UiOiIwMzhiNDFiNjk5MDg0NWU4YWQzZGJmMjQ5MTc0YjM4OCIsInBpZCI6MjUxMjgsInBhcmVudF9waWQiOjIyMjg0LCJwYXJlbnRfY3JlYXRpb25fZmlsZXRpbWUiOjEzNDMzNjkwNzc4MDY5MjA3Miwic2NvcGUiOiJESVNQT1NBQkxFX0VQT0NIX1NUT1JFX0FORF9TSEFSSU5HX09OTFlfVjEiLCJuYXRpdmVfZXhlY3V0aW9uIjp0cnVlLCJjbGFpbXMiOnsiaW5zdGFsbGF0aW9uX3JlZ2lzdHJhdGlvbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwicmVnaXN0cnlfcHJvdGVjdGlvbl9wcm92ZW4iOmZhbHNlLCJyb290X3JlZ2lzdHJhdGlvbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwic2VydmljZV9pZGVudGl0eV92ZXJpZmllZCI6ZmFsc2UsInByb3RlY3RlZF9yb290X2FkbWl0dGVkIjpmYWxzZSwicHJvdGVjdGVkX3Byb3ZlbmFuY2UiOmZhbHNlLCJjYW5kaWRhdGVfc2V0X3ZlcmlmaWVkIjpmYWxzZSwiYXV0aG9yaXR5X2FkbWl0dGVkIjpmYWxzZSwibGl2ZV9jb250ZXh0X2NyZWF0ZWQiOmZhbHNlLCJleGVjdXRpb25fYXV0aG9yaXplZCI6ZmFsc2UsInJ1bnRpbWVfYXR0ZXN0YXRpb24iOmZhbHNlLCJjb250aW51b3VzX25hbWVzcGFjZV9wcm92ZW4iOmZhbHNlLCJyZWFkX2xlYXNlX2NyZWF0ZWQiOmZhbHNlLCJwb2xpY2llc19yZXNvbHZlZCI6ZmFsc2UsInByb2R1Y3Rpb25fcHJvZmlsZV9hcHByb3ZlZCI6ZmFsc2UsInAwMF9kZWxpdmVyeV9hY2NlcHRlZCI6ZmFsc2UsInAwMV9wcm9kdWNlcl9pbXBsZW1lbnRlZCI6ZmFsc2UsInRydXN0ZWRfc3RhcnRfaW1wbGVtZW50ZWQiOmZhbHNlLCJlcG9jaF9hY2NlcHRhbmNlX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJnYXRlX29yaWdpbl92ZXJpZmllZCI6ZmFsc2UsIm5hdGl2ZV9zdG9yZV9yZWFkIjpmYWxzZSwiY2hpbGRfZ2F0ZV9oYW5kb2ZmX2ltcGxlbWVudGVkIjpmYWxzZSwicHJvZHVjdGlvbl9iYXNpc19pc3N1ZWQiOmZhbHNlLCJsaWZlY3ljbGVfaGlzdG9yeV9wcm92ZW4iOmZhbHNlLCJuYXRpdmVfcmVnaXN0cnlfcG9saWN5X29ic2VydmVkIjpmYWxzZSwiZWZmZWN0aXZlX2FjY2Vzc19jYWxjdWxhdGVkIjpmYWxzZSwicGxhdGZvcm1fYWNsX2hvc3RfdmVyaWZpZWQiOmZhbHNlLCJwbGF0Zm9ybV9wb2xpY3lfaW1wbGVtZW50ZWQiOmZhbHNlLCJpbnN0YWxsZWRfcGF0aF9yZXNvbHV0aW9uX2ltcGxlbWVudGVkIjpmYWxzZSwicm9vdF9vcmlnaW5fYXV0aGVudGljYXRlZCI6ZmFsc2UsIm5hdGl2ZV9yZWFkX3NlbWFudGljc19ob3N0X3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX2dhdGVfc2hhcmluZ19ob3N0X3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX2NoaWxkX2hhbmRvZmZfaW1wbGVtZW50ZWQiOmZhbHNlfSwib2JzZXJ2YXRpb24iOnsia2luZCI6IkVQT0NIX1NUT1JFX0ZJWFRVUkVfU0VTU0lPTl9WMSIsImNvbXBsZXRlIjp0cnVlLCJuYXRpdmVfZXhlY3V0aW9uIjp0cnVlLCJvd25lciI6eyJraW5kIjoiUDAwX0VQT0NIX05BVElWRV9TVE9SRV9ESUFHTk9TVElDX1YxIiwic3RhdGUiOiJFUE9DSF9TVE9SRV9ESUFHTk9TVElDX0NPTVBMRVRFRF9OT1RfUDAwIiwic2Vzc2lvbl9pZCI6IjA1Y2U4NWYzYmE0ZTRjMzhiZTdiYWMyYmU0N2I2ZTJmIiwicmVjZWlwdF9jb25zdW1lZCI6dHJ1ZSwic2VsZWN0aW9uX2RpZ2VzdCI6IjhjYmQ1OGI5MzBkZGE5YThiNzJkYTc3ODZjNjJjZmI1MzZlZDkxMmZmNThmNjhkOTMzYzhjOTY3N2U5ODg1MDMiLCJzb3VyY2VfZG9tYWluIjoiTkFUSVZFX0VQT0NIX1NUT1JFX0RJQUdOT1NUSUNfTk9UX0VOUk9MTE1FTlQiLCJlcnJvciI6bnVsbCwidHJhbnNwb3J0Ijp7InNvdXJjZV9kb21haW4iOiJOQVRJVkVfRVBPQ0hfU1RPUkVfRElBR05PU1RJQ19OT1RfRU5ST0xMTUVOVCIsIm93bmVkX2NvdW50Ijo3LCJ0cmFuc2ZlcnJlZF9yb290cyI6MiwiZGlzcGF0Y2hfY2FsbHMiOjIwMCwiY2xvc2VfYXR0ZW1wdHMiOjcsImNsb3NlX3N1Y2Nlc3NlcyI6NywiY2xvc2Vfb3JkZXIiOlsiQWNjZXB0YW5jZSIsIkFjY2VwdGFuY2VEaXJlY3RvcnkiLCJTdGF0ZSIsIlN0b3JlUm9vdCIsIkluc3RhbGxBbmNob3IiLCJIb3N0UmVsZWFzZVJvb3QiLCJHYXRlIl0sImNsZWFudXBfZXJyb3JzIjpbXSwiaGFuZGxlc19tYXlfcmVtYWluIjpmYWxzZSwicHJvY2Vzc19leGl0X3JlcXVpcmVkIjpmYWxzZSwicmV0YWluZWRfZnJhbWUiOmZhbHNlLCJjbGFpbXMiOnsiaW5zdGFsbGF0aW9uX3JlZ2lzdHJhdGlvbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwicmVnaXN0cnlfcHJvdGVjdGlvbl9wcm92ZW4iOmZhbHNlLCJyb290X3JlZ2lzdHJhdGlvbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwic2VydmljZV9pZGVudGl0eV92ZXJpZmllZCI6ZmFsc2UsInByb3RlY3RlZF9yb290X2FkbWl0dGVkIjpmYWxzZSwicHJvdGVjdGVkX3Byb3ZlbmFuY2UiOmZhbHNlLCJjYW5kaWRhdGVfc2V0X3ZlcmlmaWVkIjpmYWxzZSwiYXV0aG9yaXR5X2FkbWl0dGVkIjpmYWxzZSwibGl2ZV9jb250ZXh0X2NyZWF0ZWQiOmZhbHNlLCJleGVjdXRpb25fYXV0aG9yaXplZCI6ZmFsc2UsInJ1bnRpbWVfYXR0ZXN0YXRpb24iOmZhbHNlLCJjb250aW51b3VzX25hbWVzcGFjZV9wcm92ZW4iOmZhbHNlLCJyZWFkX2xlYXNlX2NyZWF0ZWQiOmZhbHNlLCJwb2xpY2llc19yZXNvbHZlZCI6ZmFsc2UsInByb2R1Y3Rpb25fcHJvZmlsZV9hcHByb3ZlZCI6ZmFsc2UsInAwMF9kZWxpdmVyeV9hY2NlcHRlZCI6ZmFsc2UsInAwMV9wcm9kdWNlcl9pbXBsZW1lbnRlZCI6ZmFsc2UsInRydXN0ZWRfc3RhcnRfaW1wbGVtZW50ZWQiOmZhbHNlLCJlcG9jaF9hY2NlcHRhbmNlX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJnYXRlX29yaWdpbl92ZXJpZmllZCI6ZmFsc2UsIm5hdGl2ZV9zdG9yZV9yZWFkIjpmYWxzZSwiY2hpbGRfZ2F0ZV9oYW5kb2ZmX2ltcGxlbWVudGVkIjpmYWxzZSwicHJvZHVjdGlvbl9iYXNpc19pc3N1ZWQiOmZhbHNlLCJsaWZlY3ljbGVfaGlzdG9yeV9wcm92ZW4iOmZhbHNlLCJuYXRpdmVfcmVnaXN0cnlfcG9saWN5X29ic2VydmVkIjpmYWxzZSwiZWZmZWN0aXZlX2FjY2Vzc19jYWxjdWxhdGVkIjpmYWxzZSwicGxhdGZvcm1fYWNsX2hvc3RfdmVyaWZpZWQiOmZhbHNlLCJwbGF0Zm9ybV9wb2xpY3lfaW1wbGVtZW50ZWQiOmZhbHNlLCJpbnN0YWxsZWRfcGF0aF9yZXNvbHV0aW9uX2ltcGxlbWVudGVkIjpmYWxzZSwicm9vdF9vcmlnaW5fYXV0aGVudGljYXRlZCI6ZmFsc2UsIm5hdGl2ZV9yZWFkX3NlbWFudGljc19ob3N0X3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX2dhdGVfc2hhcmluZ19ob3N0X3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX2NoaWxkX2hhbmRvZmZfaW1wbGVtZW50ZWQiOmZhbHNlfX0sInJvb3RfZXhwZWN0YXRpb25zX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJpbnN0YWxsZWRfcGF0aF9yZXNvbHZlZCI6ZmFsc2UsImNoaWxkX2xlYXNlX3RyYW5zZmVyX2F2YWlsYWJsZSI6ZmFsc2UsImNsYWltcyI6eyJpbnN0YWxsYXRpb25fcmVnaXN0cmF0aW9uX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJyZWdpc3RyeV9wcm90ZWN0aW9uX3Byb3ZlbiI6ZmFsc2UsInJvb3RfcmVnaXN0cmF0aW9uX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJzZXJ2aWNlX2lkZW50aXR5X3ZlcmlmaWVkIjpmYWxzZSwicHJvdGVjdGVkX3Jvb3RfYWRtaXR0ZWQiOmZhbHNlLCJwcm90ZWN0ZWRfcHJvdmVuYW5jZSI6ZmFsc2UsImNhbmRpZGF0ZV9zZXRfdmVyaWZpZWQiOmZhbHNlLCJhdXRob3JpdHlfYWRtaXR0ZWQiOmZhbHNlLCJsaXZlX2NvbnRleHRfY3JlYXRlZCI6ZmFsc2UsImV4ZWN1dGlvbl9hdXRob3JpemVkIjpmYWxzZSwicnVudGltZV9hdHRlc3RhdGlvbiI6ZmFsc2UsImNvbnRpbnVvdXNfbmFtZXNwYWNlX3Byb3ZlbiI6ZmFsc2UsInJlYWRfbGVhc2VfY3JlYXRlZCI6ZmFsc2UsInBvbGljaWVzX3Jlc29sdmVkIjpmYWxzZSwicHJvZHVjdGlvbl9wcm9maWxlX2FwcHJvdmVkIjpmYWxzZSwicDAwX2RlbGl2ZXJ5X2FjY2VwdGVkIjpmYWxzZSwicDAxX3Byb2R1Y2VyX2ltcGxlbWVudGVkIjpmYWxzZSwidHJ1c3RlZF9zdGFydF9pbXBsZW1lbnRlZCI6ZmFsc2UsImVwb2NoX2FjY2VwdGFuY2VfYXV0aGVudGljYXRlZCI6ZmFsc2UsImdhdGVfb3JpZ2luX3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX3N0b3JlX3JlYWQiOmZhbHNlLCJjaGlsZF9nYXRlX2hhbmRvZmZfaW1wbGVtZW50ZWQiOmZhbHNlLCJwcm9kdWN0aW9uX2Jhc2lzX2lzc3VlZCI6ZmFsc2UsImxpZmVjeWNsZV9oaXN0b3J5X3Byb3ZlbiI6ZmFsc2UsIm5hdGl2ZV9yZWdpc3RyeV9wb2xpY3lfb2JzZXJ2ZWQiOmZhbHNlLCJlZmZlY3RpdmVfYWNjZXNzX2NhbGN1bGF0ZWQiOmZhbHNlLCJwbGF0Zm9ybV9hY2xfaG9zdF92ZXJpZmllZCI6ZmFsc2UsInBsYXRmb3JtX3BvbGljeV9pbXBsZW1lbnRlZCI6ZmFsc2UsImluc3RhbGxlZF9wYXRoX3Jlc29sdXRpb25faW1wbGVtZW50ZWQiOmZhbHNlLCJyb290X29yaWdpbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwibmF0aXZlX3JlYWRfc2VtYW50aWNzX2hvc3RfdmVyaWZpZWQiOmZhbHNlLCJuYXRpdmVfZ2F0ZV9zaGFyaW5nX2hvc3RfdmVyaWZpZWQiOmZhbHNlLCJuYXRpdmVfY2hpbGRfaGFuZG9mZl9pbXBsZW1lbnRlZCI6ZmFsc2V9fSwiY2hhbGxlbmdlIjp7ImNvbXBsZXRlIjp0cnVlLCJnYXRlX2lkZW50aXR5Ijp7InZvbHVtZV9zZXJpYWxfaGV4IjoiOTQwOGU2NGEwOGU2MmFjNiIsImZpbGVfaWRfMTI4X2hleCI6ImQ5YTEwNjAwMDAwMDIwMDAwMDAwMDAwMDAwMDAwMDAwIn0sImdhdGVfZGVzY3JpcHRvcl9zaGEyNTYiOiJhZTk0MGQwODcxM2I1YmVkYjUxZDhkODBlNWI4NmY1MTIzOWYzZjM4MGQ4YzJmMDRkN2IzM2Q2NjM3ZDY5ZGMzIiwib3Blbl9hdHRlbXB0cyI6Mywic3VjY2Vzc2Z1bF9jbG9zZXMiOjIsInRlcm1pbmFsIjpmYWxzZSwiY2xlYW51cF9lcnJvcnMiOltdLCJzdGVwcyI6W3sic3RlcCI6ImNvbXBhdGlibGVfcmVhZGVyIiwic3RhdHVzX2hleCI6IjAwMDAwMDAwIiwic2FtZV9nYXRlIjp0cnVlLCJjbG9zZWRfYmVmb3JlX3JlZnVzYWwiOnRydWV9LHsic3RlcCI6Im1haW50ZW5hbmNlX3doaWxlX2hlbGQiLCJzdGF0dXNfaGV4IjoiYzAwMDAwNDMiLCJub19oYW5kbGVfcmV0dXJuZWQiOnRydWUsImNvbXBhdGlibGVfcmVhZGVyX2FscmVhZHlfY2xvc2VkIjp0cnVlfSx7InN0ZXAiOiJtYWludGVuYW5jZV9hZnRlcl9yZWxlYXNlIiwic3RhdHVzX2hleCI6IjAwMDAwMDAwIiwic2FtZV9nYXRlIjp0cnVlLCJjbG9zZWQiOnRydWUsIndyaXRlX3BlcmZvcm1lZCI6ZmFsc2V9XSwid3JpdGVfcGVyZm9ybWVkIjpmYWxzZSwiY2hpbGRfaGFuZG9mZl9wZXJmb3JtZWQiOmZhbHNlLCJuYXRpdmVfZXhlY3V0aW9uIjp0cnVlfSwicmVjb3JkcyI6eyJTdGF0ZSI6eyJieXRlcyI6NDIzLCJzaGEyNTYiOiI4NWNkNzA3NmRhZDNmYWU0MmY0Zjk1ZTllM2ZmZjkyYzI5ZWRiOGQ0NDAzZTYxMDFhZTgzOTVkZDFiMDdjYTJhIn0sIkFjY2VwdGFuY2UiOnsiYnl0ZXMiOjEyNzAsInNoYTI1NiI6IjhjYmQ1OGI5MzBkZGE5YThiNzJkYTc3ODZjNjJjZmI1MzZlZDkxMmZmNThmNjhkOTMzYzhjOTY3N2U5ODg1MDMifSwiSW5zdGFsbEFuY2hvciI6eyJieXRlcyI6MTA4Mywic2hhMjU2IjoiZjJjYzY3YjFlNGI5Y2MxZmJkZWU5ODRmM2NjYmVlOWM0ZmQxYTc2YmM0MmY2ZTlhNmQ2MGFlZTZhN2VkMDM4NyJ9fSwid2l0bmVzc19yb290X2Nsb3NlZCI6dHJ1ZSwid2l0bmVzc19pc19zZXBhcmF0ZV9mcm9tX293bmVyX3Jvb3RzIjp0cnVlLCJwcm9jZXNzX2V4aXRfcmVxdWlyZWQiOmZhbHNlLCJjbGVhbnVwX2Vycm9ycyI6W10sIm5hdGl2ZV9jb3VudGVycyI6eyJyb290X29wZW4iOjMsImNoYWxsZW5nZV9vcGVuIjozLCJzdG9yZV9vcGVuX2RldmljZSI6NTQsInJlYWQiOjExLCJmaWxlIjo1OTh9LCJjbGFpbXMiOnsiaW5zdGFsbGF0aW9uX3JlZ2lzdHJhdGlvbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwicmVnaXN0cnlfcHJvdGVjdGlvbl9wcm92ZW4iOmZhbHNlLCJyb290X3JlZ2lzdHJhdGlvbl9hdXRoZW50aWNhdGVkIjpmYWxzZSwic2VydmljZV9pZGVudGl0eV92ZXJpZmllZCI6ZmFsc2UsInByb3RlY3RlZF9yb290X2FkbWl0dGVkIjpmYWxzZSwicHJvdGVjdGVkX3Byb3ZlbmFuY2UiOmZhbHNlLCJjYW5kaWRhdGVfc2V0X3ZlcmlmaWVkIjpmYWxzZSwiYXV0aG9yaXR5X2FkbWl0dGVkIjpmYWxzZSwibGl2ZV9jb250ZXh0X2NyZWF0ZWQiOmZhbHNlLCJleGVjdXRpb25fYXV0aG9yaXplZCI6ZmFsc2UsInJ1bnRpbWVfYXR0ZXN0YXRpb24iOmZhbHNlLCJjb250aW51b3VzX25hbWVzcGFjZV9wcm92ZW4iOmZhbHNlLCJyZWFkX2xlYXNlX2NyZWF0ZWQiOmZhbHNlLCJwb2xpY2llc19yZXNvbHZlZCI6ZmFsc2UsInByb2R1Y3Rpb25fcHJvZmlsZV9hcHByb3ZlZCI6ZmFsc2UsInAwMF9kZWxpdmVyeV9hY2NlcHRlZCI6ZmFsc2UsInAwMV9wcm9kdWNlcl9pbXBsZW1lbnRlZCI6ZmFsc2UsInRydXN0ZWRfc3RhcnRfaW1wbGVtZW50ZWQiOmZhbHNlLCJlcG9jaF9hY2NlcHRhbmNlX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJnYXRlX29yaWdpbl92ZXJpZmllZCI6ZmFsc2UsIm5hdGl2ZV9zdG9yZV9yZWFkIjpmYWxzZSwiY2hpbGRfZ2F0ZV9oYW5kb2ZmX2ltcGxlbWVudGVkIjpmYWxzZSwicHJvZHVjdGlvbl9iYXNpc19pc3N1ZWQiOmZhbHNlLCJsaWZlY3ljbGVfaGlzdG9yeV9wcm92ZW4iOmZhbHNlLCJuYXRpdmVfcmVnaXN0cnlfcG9saWN5X29ic2VydmVkIjpmYWxzZSwiZWZmZWN0aXZlX2FjY2Vzc19jYWxjdWxhdGVkIjpmYWxzZSwicGxhdGZvcm1fYWNsX2hvc3RfdmVyaWZpZWQiOmZhbHNlLCJwbGF0Zm9ybV9wb2xpY3lfaW1wbGVtZW50ZWQiOmZhbHNlLCJpbnN0YWxsZWRfcGF0aF9yZXNvbHV0aW9uX2ltcGxlbWVudGVkIjpmYWxzZSwicm9vdF9vcmlnaW5fYXV0aGVudGljYXRlZCI6ZmFsc2UsIm5hdGl2ZV9yZWFkX3NlbWFudGljc19ob3N0X3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX2dhdGVfc2hhcmluZ19ob3N0X3ZlcmlmaWVkIjpmYWxzZSwibmF0aXZlX2NoaWxkX2hhbmRvZmZfaW1wbGVtZW50ZWQiOmZhbHNlfX19Cnsia2luZCI6IkVQT0NIX1NUT1JFX0ZJWFRVUkVfRklOQUwiLCJydW5faWQiOiJkNDI0NzBiMjI0OTU0YmRiODAwNDI0MGI3NDMyYWNiOCIsIm5vbmNlIjoiMDM4YjQxYjY5OTA4NDVlOGFkM2RiZjI0OTE3NGIzODgiLCJwaWQiOjI1MTI4LCJwYXJlbnRfcGlkIjoyMjI4NCwicGFyZW50X2NyZWF0aW9uX2ZpbGV0aW1lIjoxMzQzMzY5MDc3ODA2OTIwNzIsInNjb3BlIjoiRElTUE9TQUJMRV9FUE9DSF9TVE9SRV9BTkRfU0hBUklOR19PTkxZX1YxIiwibmF0aXZlX2V4ZWN1dGlvbiI6dHJ1ZSwiY2xhaW1zIjp7Imluc3RhbGxhdGlvbl9yZWdpc3RyYXRpb25fYXV0aGVudGljYXRlZCI6ZmFsc2UsInJlZ2lzdHJ5X3Byb3RlY3Rpb25fcHJvdmVuIjpmYWxzZSwicm9vdF9yZWdpc3RyYXRpb25fYXV0aGVudGljYXRlZCI6ZmFsc2UsInNlcnZpY2VfaWRlbnRpdHlfdmVyaWZpZWQiOmZhbHNlLCJwcm90ZWN0ZWRfcm9vdF9hZG1pdHRlZCI6ZmFsc2UsInByb3RlY3RlZF9wcm92ZW5hbmNlIjpmYWxzZSwiY2FuZGlkYXRlX3NldF92ZXJpZmllZCI6ZmFsc2UsImF1dGhvcml0eV9hZG1pdHRlZCI6ZmFsc2UsImxpdmVfY29udGV4dF9jcmVhdGVkIjpmYWxzZSwiZXhlY3V0aW9uX2F1dGhvcml6ZWQiOmZhbHNlLCJydW50aW1lX2F0dGVzdGF0aW9uIjpmYWxzZSwiY29udGludW91c19uYW1lc3BhY2VfcHJvdmVuIjpmYWxzZSwicmVhZF9sZWFzZV9jcmVhdGVkIjpmYWxzZSwicG9saWNpZXNfcmVzb2x2ZWQiOmZhbHNlLCJwcm9kdWN0aW9uX3Byb2ZpbGVfYXBwcm92ZWQiOmZhbHNlLCJwMDBfZGVsaXZlcnlfYWNjZXB0ZWQiOmZhbHNlLCJwMDFfcHJvZHVjZXJfaW1wbGVtZW50ZWQiOmZhbHNlLCJ0cnVzdGVkX3N0YXJ0X2ltcGxlbWVudGVkIjpmYWxzZSwiZXBvY2hfYWNjZXB0YW5jZV9hdXRoZW50aWNhdGVkIjpmYWxzZSwiZ2F0ZV9vcmlnaW5fdmVyaWZpZWQiOmZhbHNlLCJuYXRpdmVfc3RvcmVfcmVhZCI6ZmFsc2UsImNoaWxkX2dhdGVfaGFuZG9mZl9pbXBsZW1lbnRlZCI6ZmFsc2UsInByb2R1Y3Rpb25fYmFzaXNfaXNzdWVkIjpmYWxzZSwibGlmZWN5Y2xlX2hpc3RvcnlfcHJvdmVuIjpmYWxzZSwibmF0aXZlX3JlZ2lzdHJ5X3BvbGljeV9vYnNlcnZlZCI6ZmFsc2UsImVmZmVjdGl2ZV9hY2Nlc3NfY2FsY3VsYXRlZCI6ZmFsc2UsInBsYXRmb3JtX2FjbF9ob3N0X3ZlcmlmaWVkIjpmYWxzZSwicGxhdGZvcm1fcG9saWN5X2ltcGxlbWVudGVkIjpmYWxzZSwiaW5zdGFsbGVkX3BhdGhfcmVzb2x1dGlvbl9pbXBsZW1lbnRlZCI6ZmFsc2UsInJvb3Rfb3JpZ2luX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJuYXRpdmVfcmVhZF9zZW1hbnRpY3NfaG9zdF92ZXJpZmllZCI6ZmFsc2UsIm5hdGl2ZV9nYXRlX3NoYXJpbmdfaG9zdF92ZXJpZmllZCI6ZmFsc2UsIm5hdGl2ZV9jaGlsZF9oYW5kb2ZmX2ltcGxlbWVudGVkIjpmYWxzZX0sInBhcmVudF9oYW5kbGVfY2xvc2VkIjp0cnVlLCJhYnNvbHV0ZV93YXRjaGRvZ19hY3RpdmVfdGhyb3VnaF9vdXRwdXQiOnRydWUsIm5vX25hdGl2ZV9jaGlsZF9sZWFzZV90cmFuc2ZlciI6dHJ1ZX0K",
+    "stdout_bytes": 10107,
+    "stop_reason": null,
+    "stream_errors": [],
+    "streams_stopped": true,
+    "termination_attempted": false
+  },
+  "validated_session": {
+    "challenge": {
+      "child_handoff_performed": false,
+      "cleanup_errors": [],
+      "complete": true,
+      "gate_descriptor_sha256": "ae940d08713b5bedb51d8d80e5b86f51239f3f380d8c2f04d7b33d6637d69dc3",
+      "gate_identity": {
+        "file_id_128_hex": "d9a10600000020000000000000000000",
+        "volume_serial_hex": "9408e64a08e62ac6"
+      },
+      "native_execution": true,
+      "open_attempts": 3,
+      "steps": [
+        {
+          "closed_before_refusal": true,
+          "same_gate": true,
+          "status_hex": "00000000",
+          "step": "compatible_reader"
+        },
+        {
+          "compatible_reader_already_closed": true,
+          "no_handle_returned": true,
+          "status_hex": "c0000043",
+          "step": "maintenance_while_held"
+        },
+        {
+          "closed": true,
+          "same_gate": true,
+          "status_hex": "00000000",
+          "step": "maintenance_after_release",
+          "write_performed": false
+        }
+      ],
+      "successful_closes": 2,
+      "terminal": false,
+      "write_performed": false
+    },
+    "claims": {
+      "authority_admitted": false,
+      "candidate_set_verified": false,
+      "child_gate_handoff_implemented": false,
+      "continuous_namespace_proven": false,
+      "effective_access_calculated": false,
+      "epoch_acceptance_authenticated": false,
+      "execution_authorized": false,
+      "gate_origin_verified": false,
+      "installation_registration_authenticated": false,
+      "installed_path_resolution_implemented": false,
+      "lifecycle_history_proven": false,
+      "live_context_created": false,
+      "native_child_handoff_implemented": false,
+      "native_gate_sharing_host_verified": false,
+      "native_read_semantics_host_verified": false,
+      "native_registry_policy_observed": false,
+      "native_store_read": false,
+      "p00_delivery_accepted": false,
+      "p01_producer_implemented": false,
+      "platform_acl_host_verified": false,
+      "platform_policy_implemented": false,
+      "policies_resolved": false,
+      "production_basis_issued": false,
+      "production_profile_approved": false,
+      "protected_provenance": false,
+      "protected_root_admitted": false,
+      "read_lease_created": false,
+      "registry_protection_proven": false,
+      "root_origin_authenticated": false,
+      "root_registration_authenticated": false,
+      "runtime_attestation": false,
+      "service_identity_verified": false,
+      "trusted_start_implemented": false
+    },
+    "cleanup_errors": [],
+    "complete": true,
+    "kind": "EPOCH_STORE_FIXTURE_SESSION_V1",
+    "native_counters": {
+      "challenge_open": 3,
+      "file": 598,
+      "read": 11,
+      "root_open": 3,
+      "store_open_device": 54
+    },
+    "native_execution": true,
+    "owner": {
+      "child_lease_transfer_available": false,
+      "claims": {
+        "authority_admitted": false,
+        "candidate_set_verified": false,
+        "child_gate_handoff_implemented": false,
+        "continuous_namespace_proven": false,
+        "effective_access_calculated": false,
+        "epoch_acceptance_authenticated": false,
+        "execution_authorized": false,
+        "gate_origin_verified": false,
+        "installation_registration_authenticated": false,
+        "installed_path_resolution_implemented": false,
+        "lifecycle_history_proven": false,
+        "live_context_created": false,
+        "native_child_handoff_implemented": false,
+        "native_gate_sharing_host_verified": false,
+        "native_read_semantics_host_verified": false,
+        "native_registry_policy_observed": false,
+        "native_store_read": false,
+        "p00_delivery_accepted": false,
+        "p01_producer_implemented": false,
+        "platform_acl_host_verified": false,
+        "platform_policy_implemented": false,
+        "policies_resolved": false,
+        "production_basis_issued": false,
+        "production_profile_approved": false,
+        "protected_provenance": false,
+        "protected_root_admitted": false,
+        "read_lease_created": false,
+        "registry_protection_proven": false,
+        "root_origin_authenticated": false,
+        "root_registration_authenticated": false,
+        "runtime_attestation": false,
+        "service_identity_verified": false,
+        "trusted_start_implemented": false
+      },
+      "error": null,
+      "installed_path_resolved": false,
+      "kind": "P00_EPOCH_NATIVE_STORE_DIAGNOSTIC_V1",
+      "receipt_consumed": true,
+      "root_expectations_authenticated": false,
+      "selection_digest": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503",
+      "session_id": "05ce85f3ba4e4c38be7bac2be47b6e2f",
+      "source_domain": "NATIVE_EPOCH_STORE_DIAGNOSTIC_NOT_ENROLLMENT",
+      "state": "EPOCH_STORE_DIAGNOSTIC_COMPLETED_NOT_P00",
+      "transport": {
+        "claims": {
+          "authority_admitted": false,
+          "candidate_set_verified": false,
+          "child_gate_handoff_implemented": false,
+          "continuous_namespace_proven": false,
+          "effective_access_calculated": false,
+          "epoch_acceptance_authenticated": false,
+          "execution_authorized": false,
+          "gate_origin_verified": false,
+          "installation_registration_authenticated": false,
+          "installed_path_resolution_implemented": false,
+          "lifecycle_history_proven": false,
+          "live_context_created": false,
+          "native_child_handoff_implemented": false,
+          "native_gate_sharing_host_verified": false,
+          "native_read_semantics_host_verified": false,
+          "native_registry_policy_observed": false,
+          "native_store_read": false,
+          "p00_delivery_accepted": false,
+          "p01_producer_implemented": false,
+          "platform_acl_host_verified": false,
+          "platform_policy_implemented": false,
+          "policies_resolved": false,
+          "production_basis_issued": false,
+          "production_profile_approved": false,
+          "protected_provenance": false,
+          "protected_root_admitted": false,
+          "read_lease_created": false,
+          "registry_protection_proven": false,
+          "root_origin_authenticated": false,
+          "root_registration_authenticated": false,
+          "runtime_attestation": false,
+          "service_identity_verified": false,
+          "trusted_start_implemented": false
+        },
+        "cleanup_errors": [],
+        "close_attempts": 7,
+        "close_order": [
+          "Acceptance",
+          "AcceptanceDirectory",
+          "State",
+          "StoreRoot",
+          "InstallAnchor",
+          "HostReleaseRoot",
+          "Gate"
+        ],
+        "close_successes": 7,
+        "dispatch_calls": 200,
+        "handles_may_remain": false,
+        "owned_count": 7,
+        "process_exit_required": false,
+        "retained_frame": false,
+        "source_domain": "NATIVE_EPOCH_STORE_DIAGNOSTIC_NOT_ENROLLMENT",
+        "transferred_roots": 2
+      }
+    },
+    "process_exit_required": false,
+    "records": {
+      "Acceptance": {
+        "bytes": 1270,
+        "sha256": "8cbd58b930dda9a8b72da7786c62cfb536ed912ff58f68d933c8c9677e988503"
+      },
+      "InstallAnchor": {
+        "bytes": 1083,
+        "sha256": "f2cc67b1e4b9cc1fbdee984f3ccbee9c4fd1a76bc42f6e9a6d60aee6a7ed0387"
+      },
+      "State": {
+        "bytes": 423,
+        "sha256": "85cd7076dad3fae42f4f95e9e3fff92c29edb8d4403e6101ae8395dd1b07ca2a"
+      }
+    },
+    "witness_is_separate_from_owner_roots": true,
+    "witness_root_closed": true
+  }
+}

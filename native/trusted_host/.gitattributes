@@ -1,0 +1,2 @@
+# Preserve the exact accepted source/evidence bytes across Git checkouts.
+* -text -filter -working-tree-encoding
