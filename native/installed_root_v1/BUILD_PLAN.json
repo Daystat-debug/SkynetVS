@@ -1,0 +1,27 @@
+{
+  "baseline_sources": [
+    "../trusted_host/src/InstallationRegistration.cs",
+    "../trusted_host/src/SameHandleFileObserver.cs",
+    "../trusted_host/src/ParentChainContracts.cs",
+    "../trusted_host/src/ParentChainNativeApi.cs",
+    "../trusted_host/src/ParentChainNtTransport.cs"
+  ],
+  "kind": "INSTALLED_ROOT_EXPLICIT_BUILD_PLAN_V1",
+  "managed_main": "SkynetVS.G1.InstalledRootCandidateV1.InstalledRootManagedTests",
+  "managed_sources": [
+    "InstalledRootContract.cs",
+    "InstalledRootReadOnly.cs",
+    "InstalledRootWindows.cs",
+    "InstalledRootEntryPoint.cs",
+    "InstalledRootManagedTests.cs"
+  ],
+  "native_execution_by_this_runner": false,
+  "native_main": "SkynetVS.G1.InstalledRootCandidateV1.InstalledRootEntryPoint",
+  "native_sources": [
+    "InstalledRootContract.cs",
+    "InstalledRootReadOnly.cs",
+    "InstalledRootWindows.cs",
+    "InstalledRootEntryPoint.cs"
+  ],
+  "production_host_approved": false
+}

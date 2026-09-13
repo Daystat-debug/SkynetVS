@@ -1,0 +1,43 @@
+{
+  "P00": "NOT_ACCEPTED",
+  "P01": "NOT_IMPLEMENTED",
+  "absence": "Missing private component -> INSTALLED_PATH_NOT_OBSERVED; permission/metadata/cleanup/timeout -> ROOT_READ_ERROR. Outside installed layout -> no directory opens.",
+  "claims_false": [
+    "root_origin_authenticated",
+    "p00_delivery_accepted",
+    "p01_producer_implemented",
+    "runtime_attestation",
+    "service_identity_verified",
+    "enrollment_accepted",
+    "loaded_image_identity_proven",
+    "epoch_acceptance_authenticated",
+    "authority_admitted",
+    "execution_authorized",
+    "continuous_namespace_proven",
+    "acl_policy_accepted",
+    "live_root_pair_released"
+  ],
+  "deadline_ms": 8000,
+  "inputs": "OS known folder paths and current native executable image path only",
+  "kind": "INSTALLED_ROOT_CANDIDATE_V1",
+  "known_folder_flags": "KF_FLAG_DONT_VERIFY only, NOT CREATE, NOT INIT, not env or default path fallback",
+  "layout": [
+    "<nativeProgramFiles>/SkynetVS/TrustedHost/releases/<32-lower-nonzero-hex>/Guard.exe",
+    "<ProgramData>/SkynetVS-Trust/LifecycleV1"
+  ],
+  "native_api_calls_this_source_check": false,
+  "native_entry_watchdog_ms": 12000,
+  "not_implemented": [
+    "Production enrollment/startup",
+    "SCM service entrypoint",
+    "loader closure approval",
+    "ACL policy evaluation",
+    "gate/store/record reads in this slice",
+    "live root transfer to epoch owner",
+    "continuous namespace proof",
+    "success identity of loaded module"
+  ],
+  "ownership": "Retain every directory handle along two branches plus Guard.exe observation; exact before/after stability; reverse cleanup. Detached output only.",
+  "paths_profile": "Ordinary uppercase-drive DOS local ASCII paths only; max2048/max16segments/max120percomponent. UNC/device/extended/short alias syntax/device names/ADS/dot/expansion rejected; unsupported locales fail closed.",
+  "release_source": "Current executable path: a locator, NOT loading/integrity/enrollment attestation."
+}
