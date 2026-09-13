@@ -1,0 +1,29 @@
+{
+  "baseline_sources": [
+    "native/trusted_host/src/EpochNativeContracts.cs",
+    "native/trusted_host/src/EpochNativeIo.cs",
+    "native/trusted_host/src/InstallationRegistration.cs",
+    "native/trusted_host/src/NativeGateLeaseAdapter.cs",
+    "native/trusted_host/src/P00AnchorEpochContracts.cs",
+    "native/trusted_host/src/P00EpochNativeReadTransport.cs",
+    "native/trusted_host/src/ParentChainContracts.cs",
+    "native/trusted_host/src/ParentChainNativeApi.cs",
+    "native/trusted_host/src/ParentChainNtTransport.cs",
+    "native/trusted_host/src/SameHandleFileObserver.cs",
+    "native/installed_root_v1/InstalledRootContract.cs",
+    "native/installed_root_v1/InstalledRootEntryPoint.cs",
+    "native/installed_root_v1/InstalledRootReadOnly.cs",
+    "native/installed_root_v1/InstalledRootWindows.cs"
+  ],
+  "bridge_sources": [
+    "LiveRootEpochBridge.cs"
+  ],
+  "managed_argument": "--managed-bridge-only",
+  "managed_main": "SkynetVS.G1.LiveRootEpochBridgeV1.BridgeManagedTests",
+  "native_execution": false,
+  "old_suites_executed": false,
+  "test_sources": [
+    "BridgeManagedFixture.cs",
+    "BridgeManagedTests.cs"
+  ]
+}

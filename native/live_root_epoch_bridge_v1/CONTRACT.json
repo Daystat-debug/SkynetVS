@@ -1,0 +1,35 @@
+{
+  "attachment": "only exact P00EpochNativeReadTransport.ForManagedTests; no fallible work between successful return and ledger transfer flags",
+  "claims_false": [
+    "root_origin_authenticated",
+    "p00_delivery_accepted",
+    "p01_producer_implemented",
+    "runtime_attestation",
+    "service_identity_verified",
+    "enrollment_accepted",
+    "loaded_image_identity_proven",
+    "epoch_acceptance_authenticated",
+    "authority_admitted",
+    "execution_authorized",
+    "continuous_namespace_proven",
+    "acl_policy_accepted",
+    "live_root_pair_released"
+  ],
+  "cleanup": "close untransferred spine/image in reverse order; then transport.CloseAll; gate globally last when acquired; no retry after close failure",
+  "deadline": "one original 8000ms root deadline enforced by SharedClock before each nested EpochWindow check",
+  "expectation": "pre-supplied independent synthetic vector; not generated from current observed roots/anchor",
+  "head": "ad9aea12571152d72ac1ff89d9b66615e67f4e02",
+  "kind": "LIVE_ROOT_EPOCH_BRIDGE_SOURCE_MANAGED_ONLY_V1",
+  "lifetime": "single aggregate owns spine, image and nested epoch transport; no raw lease returned",
+  "native_factory": "unconditionally refused",
+  "source_views": "one IManagedBridgeCalls object; distinct immutable-expected root/epoch domain names",
+  "state": {
+    "P00": "NOT_ACCEPTED",
+    "P01": "NOT_IMPLEMENTED",
+    "RC044": "NOT CREATED",
+    "V1C3A1B": "NOT OPEN",
+    "V1C3A1C": "NOT OPEN",
+    "acquisition": "BLOCKED"
+  },
+  "terminal": "unknown completion, numeric handle alias or origin loss prevents BOTH cleanup groups; simulated retained NT frames freed only after completed test"
+}
