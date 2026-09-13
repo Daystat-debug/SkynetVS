@@ -1,0 +1,60 @@
+{
+  "kind": "GUARD_START_CANDIDATE_BUILD_PROFILE_V1",
+  "sdk": "10.0.112",
+  "runtime_packs": "10.0.12",
+  "rid": "win-x64",
+  "msvc": "14.50.35717",
+  "windows_sdk_release": "10.0.26100.9169",
+  "windows_sdk_directory": "10.0.26100.0",
+  "lp01_approval_message": 46,
+  "source_build_only": true,
+  "raw_package_inputs": [
+    {
+      "path": "microsoft.aspnetcore.app.runtime.win-x64/10.0.12/microsoft.aspnetcore.app.runtime.win-x64.10.0.12.nupkg",
+      "bytes": 12760211,
+      "sha256": "59025d88c8f5178e8569f91c7cbc56ad3ead3d83a777477d17fade3f9cdd8103"
+    },
+    {
+      "path": "microsoft.dotnet.ilcompiler/10.0.12/microsoft.dotnet.ilcompiler.10.0.12.nupkg",
+      "bytes": 94736,
+      "sha256": "0b340ade975c2cf3d93d518adddec1e5d910c090b7756e6d37d19b772edc7b8d"
+    },
+    {
+      "path": "microsoft.net.illink.tasks/10.0.12/microsoft.net.illink.tasks.10.0.12.nupkg",
+      "bytes": 1536960,
+      "sha256": "37aa984da51fdc01cc7d57a8647893392f3539cdd5a1d32ce4982be5309bc08b"
+    },
+    {
+      "path": "microsoft.netcore.app.runtime.nativeaot.win-x64/10.0.12/microsoft.netcore.app.runtime.nativeaot.win-x64.10.0.12.nupkg",
+      "bytes": 29492822,
+      "sha256": "94e38c861bdd0ef6e5f04492538b66ada2f30876907363a61aa9f03f42fb3406"
+    },
+    {
+      "path": "microsoft.netcore.app.runtime.win-x64/10.0.12/microsoft.netcore.app.runtime.win-x64.10.0.12.nupkg",
+      "bytes": 39968868,
+      "sha256": "0f63dee7ca4383cb16848966f81e439399e2058e1671ebe27e5eaf4b200e8691"
+    },
+    {
+      "path": "microsoft.windowsdesktop.app.runtime.win-x64/10.0.12/microsoft.windowsdesktop.app.runtime.win-x64.10.0.12.nupkg",
+      "bytes": 39172884,
+      "sha256": "68bce56d2402969d82ac77fbd2b2a54f55fda86ea060366e6ddb832353dab80a"
+    },
+    {
+      "path": "runtime.win-x64.microsoft.dotnet.ilcompiler/10.0.12/runtime.win-x64.microsoft.dotnet.ilcompiler.10.0.12.nupkg",
+      "bytes": 11908112,
+      "sha256": "7f63d47aea10cd7ac3dd7a2ca04474c7cb683e36ef86b49190382b0c891fbe99"
+    }
+  ],
+  "fresh_offline_restore": true,
+  "copy_old_assets": false,
+  "run_guard": false,
+  "production_origin": "CLOSED",
+  "required_hardening": [
+    "CFG",
+    "ASLR",
+    "DEP",
+    "CET_COMPAT",
+    "DEPENDENTLOADFLAGS_0x0800"
+  ],
+  "native_retention": "TrimmerRootAssembly Guard + map/mstat capture; no execution; no semantic acceptance"
+}

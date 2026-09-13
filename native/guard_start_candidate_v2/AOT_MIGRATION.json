@@ -1,0 +1,65 @@
+{
+  "kind": "GSC_AOT_API_MIGRATION_V2",
+  "scope": "source/build-only",
+  "predecessor_result_preserved": "GUARD_START_CANDIDATE_SOURCE_ADDED_BUILD_CAPTURED_NEEDS_REVIEW",
+  "expression_replacements": 5,
+  "files": [
+    {
+      "origin": "native/trusted_host/src/ParentChainNativeApi.cs",
+      "origin_identity": {
+        "bytes": 6643,
+        "sha256": "8115a1cca65828ce5658a2d238e51c0d266940076b9b2a19795227050ebec679"
+      },
+      "candidate_path": "migration/ParentChainNativeApi.cs",
+      "candidate_identity": {
+        "bytes": 6625,
+        "sha256": "3a75a289333dccf1c874a733e87644e2faad8aa61e7f3d6eba1e22ca2f243fb5"
+      },
+      "operations": [
+        {
+          "old": "Marshal.SizeOf(typeof(UnicodeString))",
+          "new": "Marshal.SizeOf<UnicodeString>()",
+          "occurrences": 1
+        },
+        {
+          "old": "Marshal.SizeOf(typeof(ObjectAttributes))",
+          "new": "Marshal.SizeOf<ObjectAttributes>()",
+          "occurrences": 1
+        },
+        {
+          "old": "Marshal.SizeOf(typeof(IoStatusBlock))",
+          "new": "Marshal.SizeOf<IoStatusBlock>()",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "origin": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "origin_identity": {
+        "bytes": 18893,
+        "sha256": "523df1eb8c0c9300551b7bb42e5fa9ec47678f23194409d0b4310d0c3aa67585"
+      },
+      "candidate_path": "migration/LiveRootEpochBridge.cs",
+      "candidate_identity": {
+        "bytes": 18881,
+        "sha256": "753e51a03c8b1a1c20d0101c9b8915500e0ad9324562a5ad38ce54591d6c9dd3"
+      },
+      "operations": [
+        {
+          "old": "Enum.GetValues(typeof(StoreRole))",
+          "new": "Enum.GetValues<StoreRole>()",
+          "occurrences": 2
+        }
+      ]
+    }
+  ],
+  "baseline_files_modified": false,
+  "v1_candidate_modified": false,
+  "struct_fields_layout_pack_charset_modified": false,
+  "cleanup_deadline_ownership_order_modified": false,
+  "entrypoint_modified": false,
+  "new_runtime_tests_executed": false,
+  "windows_aot_build_required": true,
+  "warning_suppression_added": false,
+  "native_factory_enabled": false
+}

@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>Guard</AssemblyName>
+    <RootNamespace>SkynetVS.G1.GuardStartCandidateV1</RootNamespace>
+    <StartupObject>SkynetVS.G1.GuardStartCandidateV1.CandidateEntryPoint</StartupObject>
+    <SelfContained>true</SelfContained>
+    <PublishAot>true</PublishAot>
+    <RuntimeFrameworkVersion>10.0.12</RuntimeFrameworkVersion>
+    <TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>14.0</LangVersion>
+    <DefineConstants>GUARD_START_CANDIDATE_V1</DefineConstants>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <ControlFlowGuard>Guard</ControlFlowGuard>
+    <CETCompat>true</CETCompat>
+    <IlcUseEnvironmentalTools>true</IlcUseEnvironmentalTools>
+    <IlcGenerateMapFile>true</IlcGenerateMapFile>
+    <IlcGenerateMstatFile>true</IlcGenerateMstatFile>
+    <IlcGenerateDgmlFile>true</IlcGenerateDgmlFile>
+    <IlcGenerateMetadataLog>true</IlcGenerateMetadataLog>
+    <IlcFoldIdenticalMethodBodies>false</IlcFoldIdenticalMethodBodies>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <IlcTreatWarningsAsErrors>false</IlcTreatWarningsAsErrors>
+    <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+    <SuppressAotAnalysisWarnings>false</SuppressAotAnalysisWarnings>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <NuGetAudit>false</NuGetAudit>
+    <RestoreIgnoreFailedSources>false</RestoreIgnoreFailedSources>
+    <UseSharedCompilation>false</UseSharedCompilation>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <EnableSourceLink>false</EnableSourceLink>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CandidateEntryPoint.cs" />
+    <Compile Include="../trusted_host/src/EpochNativeContracts.cs" />
+    <Compile Include="../trusted_host/src/EpochNativeIo.cs" />
+    <Compile Include="../trusted_host/src/InstallationRegistration.cs" />
+    <Compile Include="../trusted_host/src/P00AnchorEpochContracts.cs" />
+    <Compile Include="../trusted_host/src/P00EpochNativeReadTransport.cs" />
+    <Compile Include="../trusted_host/src/ParentChainContracts.cs" />
+    <Compile Include="../trusted_host/src/ParentChainNativeApi.cs" />
+    <Compile Include="../trusted_host/src/ParentChainNtTransport.cs" />
+    <Compile Include="../trusted_host/src/SameHandleFileObserver.cs" />
+    <Compile Include="../installed_root_v1/InstalledRootContract.cs" />
+    <Compile Include="../installed_root_v1/InstalledRootReadOnly.cs" />
+    <Compile Include="../installed_root_v1/InstalledRootWindows.cs" />
+    <Compile Include="../live_root_epoch_bridge_v1/LiveRootEpochBridge.cs" />
+    <Compile Include="../p00_enrollment_expectation_v1/EnrollmentExpectationBoundary.cs" />
+    <!-- Deliberately retain all integrated candidate code for AOT migration analysis. -->
+    <TrimmerRootAssembly Include="Guard" />
+    <LinkerArg Include="/DEPENDENTLOADFLAG:0x800" />
+    <LinkerArg Include="/DYNAMICBASE" />
+    <LinkerArg Include="/HIGHENTROPYVA" />
+    <LinkerArg Include="/NXCOMPAT" />
+  </ItemGroup>
+  <Target Name="CaptureCandidateCompileInputs" BeforeTargets="CoreCompile">
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)/compile-inputs.txt" Lines="@(Compile->'%(FullPath)')" Overwrite="true" Encoding="UTF-8" />
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)/compile-defines.txt" Lines="$(DefineConstants)" Overwrite="true" Encoding="UTF-8" />
+  </Target>
+  <Target Name="CaptureCandidateNativeInputs" AfterTargets="WriteIlcRspFileForCompilation">
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)/native-linker-args.txt" Lines="@(LinkerArg)" Overwrite="true" Encoding="UTF-8" />
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)/native-directpinvokes.txt" Lines="@(DirectPInvoke);@(DirectPInvokeList->'%(FullPath)')" Overwrite="true" Encoding="UTF-8" />
+  </Target>
+</Project>

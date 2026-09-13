@@ -1,0 +1,72 @@
+[
+  {
+    "path": "native/trusted_host/src/EpochNativeContracts.cs",
+    "bytes": 7287,
+    "sha256": "de4d781cffb7843f416e7eb456b45aa98cb07c9765a20697e656e0d9db12aa27"
+  },
+  {
+    "path": "native/trusted_host/src/EpochNativeIo.cs",
+    "bytes": 3690,
+    "sha256": "05eecaee41c14bff0e72577d1ab3e83d31010edf36c887ba2e9f4303e61bc2ae"
+  },
+  {
+    "path": "native/trusted_host/src/InstallationRegistration.cs",
+    "bytes": 18109,
+    "sha256": "deee1f7cdc86049fcc9bf20bf739209db4e9cf89c9f686fce0b12c5161673a4b"
+  },
+  {
+    "path": "native/trusted_host/src/P00AnchorEpochContracts.cs",
+    "bytes": 13461,
+    "sha256": "7511529c2dd30af986106d76f68db28899cbe2f6f43adf246e48a6860b7c5089"
+  },
+  {
+    "path": "native/trusted_host/src/P00EpochNativeReadTransport.cs",
+    "bytes": 14518,
+    "sha256": "f4ca7c11b197bc8a6df4b94e280e42086239154fe4df93ad63d9902c352aaecc"
+  },
+  {
+    "path": "native/trusted_host/src/ParentChainContracts.cs",
+    "bytes": 9001,
+    "sha256": "32c59cd3e553989004a1c85c8f5d2d635c612b5f00dfb272b0c81b5d23dc1a01"
+  },
+  {
+    "path": "native/trusted_host/src/ParentChainNativeApi.cs",
+    "bytes": 6643,
+    "sha256": "8115a1cca65828ce5658a2d238e51c0d266940076b9b2a19795227050ebec679"
+  },
+  {
+    "path": "native/trusted_host/src/ParentChainNtTransport.cs",
+    "bytes": 9017,
+    "sha256": "6dc85cf19a2b3549ab2caf71fce5cb13e511d7b937f5fb78b0618e72c0deb927"
+  },
+  {
+    "path": "native/trusted_host/src/SameHandleFileObserver.cs",
+    "bytes": 23845,
+    "sha256": "3ced371dadaf317b998b0095261e5247c9b55865340f2e41e9466c1e6db198c9"
+  },
+  {
+    "path": "native/installed_root_v1/InstalledRootContract.cs",
+    "bytes": 6172,
+    "sha256": "09a579a06e7c345476826bbeb295eda6c90864ed6a7a8302768aad9fa3a94de9"
+  },
+  {
+    "path": "native/installed_root_v1/InstalledRootReadOnly.cs",
+    "bytes": 10023,
+    "sha256": "85a54b124058c49d57e70772c818430dd4455b02160b40a097538822d7c70a30"
+  },
+  {
+    "path": "native/installed_root_v1/InstalledRootWindows.cs",
+    "bytes": 6451,
+    "sha256": "537b3cbed053b9699354c0d8a0819278ae36f30eb84a7f3980b96370ecd9ce59"
+  },
+  {
+    "path": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+    "bytes": 18893,
+    "sha256": "523df1eb8c0c9300551b7bb42e5fa9ec47678f23194409d0b4310d0c3aa67585"
+  },
+  {
+    "path": "native/p00_enrollment_expectation_v1/EnrollmentExpectationBoundary.cs",
+    "bytes": 11095,
+    "sha256": "f3786bf3193333378d7bbc900406223403c9a528772cb9257e59baaec931a9bf"
+  }
+]

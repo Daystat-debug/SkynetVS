@@ -1,0 +1,258 @@
+{
+  "kind": "SOURCE_INTEROP_INVENTORY",
+  "imports": [
+    {
+      "source": "native/trusted_host/src/EpochNativeIo.cs",
+      "line": 68,
+      "module": "ntdll.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"ntdll.dll\",EntryPoint=\"NtReadFile\",ExactSpelling=true,SetLastError=false,CallingConvention=CallingConvention.Winapi)]\n        private static extern int NtReadFile(IntPtr file,IntPtr evt,IntPtr apc,IntPtr apcContext,\n            IntPtr iosb,IntPtr buffer,uint length,IntPtr offset,IntPtr key);\n    }\n}",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNativeApi.cs",
+      "line": 80,
+      "module": "ntdll.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"ntdll.dll\",EntryPoint=\"NtCreateFile\",ExactSpelling=true,SetLastError=false)]\n        private static extern int NtCreateFile(out IntPtr handle,uint access,ref ObjectAttributes attributes,\n            out IoStatusBlock status,IntPtr allocation,uint fileAttributes,uint sharing,uint disposition,\n            uint options,IntPtr ea,uint eaLength);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNativeApi.cs",
+      "line": 85,
+      "module": "ntdll.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"ntdll.dll\",EntryPoint=\"NtQueryVolumeInformationFile\",ExactSpelling=true,SetLastError=false)]\n        private static extern int NtQueryVolumeInformationFile(IntPtr handle,out IoStatusBlock status,\n            IntPtr output,uint length,int informationClass);\n    }\n    internal sealed class NativeChainApi : IChainApi",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNtTransport.cs",
+      "line": 161,
+      "module": "ntdll.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"ntdll.dll\",EntryPoint=\"NtCreateFile\",ExactSpelling=true,SetLastError=false,CallingConvention=CallingConvention.Winapi)]\n        private static extern int NtCreateFile(IntPtr resultHandle,uint access,IntPtr attributes,IntPtr iosb,\n            IntPtr allocation,uint fileAttributes,uint share,uint disposition,uint options,IntPtr ea,uint eaLength);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"ntdll.dll\",EntryPoint=\"NtQueryVolumeInformationFile\",ExactSpelling=true,SetLastError=false,CallingConvention=CallingConvention.Winapi)]",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNtTransport.cs",
+      "line": 165,
+      "module": "ntdll.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"ntdll.dll\",EntryPoint=\"NtQueryVolumeInformationFile\",ExactSpelling=true,SetLastError=false,CallingConvention=CallingConvention.Winapi)]\n        private static extern int NtQueryVolumeInformationFile(IntPtr handle,IntPtr iosb,IntPtr output,uint length,int informationClass);\n    }\n}",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "line": 360,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"CreateFileW\",ExactSpelling=true,CharSet=CharSet.Unicode,SetLastError=true)]\n        private static extern IntPtr CreateFileW(string p,uint a,uint s,IntPtr sa,uint d,uint f,IntPtr t);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"GetFileInformationByHandleEx\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool GetFileInformationByHandleEx(IntPtr h,int c,IntPtr b,uint s);",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "line": 363,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"GetFileInformationByHandleEx\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool GetFileInformationByHandleEx(IntPtr h,int c,IntPtr b,uint s);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"GetFileType\",ExactSpelling=true,SetLastError=true)]\n        private static extern uint GetFileType(IntPtr h);",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "line": 366,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"GetFileType\",ExactSpelling=true,SetLastError=true)]\n        private static extern uint GetFileType(IntPtr h);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"advapi32.dll\",EntryPoint=\"GetKernelObjectSecurity\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool GetKernelObjectSecurity(IntPtr h,uint i,IntPtr b,uint s,out uint needed);",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "line": 369,
+      "module": "advapi32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"advapi32.dll\",EntryPoint=\"GetKernelObjectSecurity\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool GetKernelObjectSecurity(IntPtr h,uint i,IntPtr b,uint s,out uint needed);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"ReadFile\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool ReadFile(IntPtr h,IntPtr b,uint c,out uint n,IntPtr overlapped);",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "line": 372,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"ReadFile\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool ReadFile(IntPtr h,IntPtr b,uint c,out uint n,IntPtr overlapped);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"SetFilePointerEx\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool SetFilePointerEx(IntPtr h,long d,out long p,uint m);",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "line": 375,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"SetFilePointerEx\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool SetFilePointerEx(IntPtr h,long d,out long p,uint m);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"CloseHandle\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool CloseHandle(IntPtr h);",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "line": 378,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",EntryPoint=\"CloseHandle\",ExactSpelling=true,SetLastError=true)]\n        [return:MarshalAs(UnmanagedType.Bool)] private static extern bool CloseHandle(IntPtr h);\n    }\n}",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/installed_root_v1/InstalledRootWindows.cs",
+      "line": 97,
+      "module": "shell32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"shell32.dll\",ExactSpelling=true)]\n        private static extern int SHGetKnownFolderPath(ref Guid id,uint flags,IntPtr token,out IntPtr path);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"ole32.dll\",ExactSpelling=true)] private static extern void CoTaskMemFree(IntPtr pointer);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/installed_root_v1/InstalledRootWindows.cs",
+      "line": 100,
+      "module": "ole32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"ole32.dll\",ExactSpelling=true)] private static extern void CoTaskMemFree(IntPtr pointer);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",ExactSpelling=true,CharSet=CharSet.Unicode,SetLastError=true)]\n        private static extern uint GetModuleFileNameW(IntPtr module,StringBuilder path,uint size);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/installed_root_v1/InstalledRootWindows.cs",
+      "line": 102,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",ExactSpelling=true,CharSet=CharSet.Unicode,SetLastError=true)]\n        private static extern uint GetModuleFileNameW(IntPtr module,StringBuilder path,uint size);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",ExactSpelling=true,CharSet=CharSet.Unicode)]\n        private static extern uint GetDriveTypeW(string root);",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/installed_root_v1/InstalledRootWindows.cs",
+      "line": 105,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",ExactSpelling=true,CharSet=CharSet.Unicode)]\n        private static extern uint GetDriveTypeW(string root);\n        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",ExactSpelling=true,CharSet=CharSet.Unicode,SetLastError=true)]\n        private static extern IntPtr CreateFileW(string path,uint access,uint sharing,IntPtr security,uint creation,uint flags,IntPtr template);",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    },
+    {
+      "source": "native/installed_root_v1/InstalledRootWindows.cs",
+      "line": 108,
+      "module": "kernel32.dll",
+      "excerpt": "        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]\n        [DllImport(\"kernel32.dll\",ExactSpelling=true,CharSet=CharSet.Unicode,SetLastError=true)]\n        private static extern IntPtr CreateFileW(string path,uint access,uint sharing,IntPtr security,uint creation,uint flags,IntPtr template);\n    }\n}",
+      "explicit_System32_attribute": true,
+      "candidate_main_invokes": false,
+      "aot_directness": "DETERMINED_BY_PINNED_WINDOWS_APIS_AND_ILC_RESPONSE; attribute alone does not constrain direct PInvoke",
+      "managed_callback_marshaled": false
+    }
+  ],
+  "review_notes": [
+    "No supplied baseline file declares an unmanaged callback delegate; NT APC parameters are IntPtr.Zero at call sites.",
+    "Managed Func<T>/anonymous delegates remain managed dispatch only.",
+    "No new LibraryImport/source-generated rewrite in V1; baseline code is unchanged.",
+    "NativeShape contains disabled legacy by-ref declarations: retained for compatibility review, never called by Main."
+  ],
+  "declarations_requiring_retention_or_layout_review": [
+    {
+      "source": "native/trusted_host/src/InstallationRegistration.cs",
+      "line": 133,
+      "text": "internal static readonly string[] PolicyNames={\"registry_private\",\"registry_platform_parent\",\"filesystem_platform_parent\",\"authority_private\",\"ledger_private\",\"scm_configuration\",\"service_process_object\",\"service_primary_token\",\"pipe_security\",\"loader\"};"
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNativeApi.cs",
+      "line": 42,
+      "text": "{\"UNICODE_STRING.size\",Marshal.SizeOf(typeof(UnicodeString))},"
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNativeApi.cs",
+      "line": 44,
+      "text": "{\"OBJECT_ATTRIBUTES.size\",Marshal.SizeOf(typeof(ObjectAttributes))},"
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNativeApi.cs",
+      "line": 50,
+      "text": "{\"IO_STATUS_BLOCK.size\",Marshal.SizeOf(typeof(IoStatusBlock))},"
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNtTransport.cs",
+      "line": 89,
+      "text": "Marshal.StructureToPtr(us,Unicode.Pointer,false);"
+    },
+    {
+      "source": "native/trusted_host/src/ParentChainNtTransport.cs",
+      "line": 93,
+      "text": "Marshal.StructureToPtr(oa,Attributes.Pointer,false);"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 119,
+      "text": "FileFacts a=StoreSnapshot.CopyFacts(RootCall<FileFacts>(delegate { return roots.Facts(n.Handle); })); Pulse(); Validate(n,a);"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 120,
+      "text": "DeviceFacts d=RootCall<DeviceFacts>(delegate { return roots.Device(n.Handle); }); Pulse();"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 122,
+      "text": "byte[] raw=RootCall<byte[]>(delegate { return roots.Security(n.Handle); });"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 125,
+      "text": "FileFacts b=StoreSnapshot.CopyFacts(RootCall<FileFacts>(delegate { return roots.Facts(n.Handle); })); Pulse(); Validate(n,b);"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 132,
+      "text": "Node n=Acquire(path.Drive,true,delegate { return roots.OpenVolume(path.Drive); });"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 136,
+      "text": "n=Acquire(text,true,delegate { return roots.OpenRelative(parent.Handle,one,true); });"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 145,
+      "text": "LocationInput last=RootCall<LocationInput>(delegate { return roots.Locations(); }); Pulse();"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 198,
+      "text": "LocationInput location=RootCall<LocationInput>(delegate { return roots.Locations(); }); Pulse();"
+    },
+    {
+      "source": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "line": 208,
+      "text": "Node image=Acquire(plan.Image.Text,false,delegate { return roots.OpenRelative(host.Handle,\"Guard.exe\",false); });"
+    }
+  ]
+}

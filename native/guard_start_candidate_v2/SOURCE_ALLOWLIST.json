@@ -1,0 +1,77 @@
+{
+  "kind": "GSC_V2_EFFECTIVE_COMPILE_ALLOWLIST",
+  "compile_files": [
+    {
+      "path": "native/trusted_host/src/EpochNativeContracts.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/trusted_host/src/EpochNativeIo.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/trusted_host/src/InstallationRegistration.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/trusted_host/src/P00AnchorEpochContracts.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/trusted_host/src/P00EpochNativeReadTransport.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/trusted_host/src/ParentChainContracts.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/trusted_host/src/ParentChainNtTransport.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/installed_root_v1/InstalledRootContract.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/installed_root_v1/InstalledRootReadOnly.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/installed_root_v1/InstalledRootWindows.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/EnrollmentExpectationBoundary.cs",
+      "mode": "byte_identical_baseline"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/migration/ParentChainNativeApi.cs",
+      "mode": "candidate_owned_aot_adaptation",
+      "origin": "native/trusted_host/src/ParentChainNativeApi.cs"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/migration/LiveRootEpochBridge.cs",
+      "mode": "candidate_owned_aot_adaptation",
+      "origin": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/CandidateEntryPoint.cs",
+      "mode": "unchanged_refusing_entrypoint"
+    }
+  ],
+  "count": 15,
+  "origins_copied_for_review_but_not_compiled": [
+    "native/trusted_host/src/ParentChainNativeApi.cs",
+    "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs"
+  ],
+  "unchanged_baseline_files": 12,
+  "adapted_candidate_files": 2,
+  "entrypoint": "same exact V1 source",
+  "diagnostic_rooting_retained": true,
+  "semantic_migration_accepted": false
+}

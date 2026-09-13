@@ -1,0 +1,41 @@
+--- native/trusted_host/src/ParentChainNativeApi.cs
++++ native/guard_start_candidate_v2/migration/ParentChainNativeApi.cs
+@@ -39,15 +39,15 @@
+         {
+             Limits.Need(IntPtr.Size==8,"native_abi","Only x64 layout is described");
+             return new Dictionary<string,object> {
+-                {"UNICODE_STRING.size",Marshal.SizeOf(typeof(UnicodeString))},
++                {"UNICODE_STRING.size",Marshal.SizeOf<UnicodeString>()},
+                 {"UNICODE_STRING.Buffer",Marshal.OffsetOf(typeof(UnicodeString),"Buffer").ToInt32()},
+-                {"OBJECT_ATTRIBUTES.size",Marshal.SizeOf(typeof(ObjectAttributes))},
++                {"OBJECT_ATTRIBUTES.size",Marshal.SizeOf<ObjectAttributes>()},
+                 {"OBJECT_ATTRIBUTES.RootDirectory",Marshal.OffsetOf(typeof(ObjectAttributes),"RootDirectory").ToInt32()},
+                 {"OBJECT_ATTRIBUTES.ObjectName",Marshal.OffsetOf(typeof(ObjectAttributes),"ObjectName").ToInt32()},
+                 {"OBJECT_ATTRIBUTES.Attributes",Marshal.OffsetOf(typeof(ObjectAttributes),"Attributes").ToInt32()},
+                 {"OBJECT_ATTRIBUTES.SecurityDescriptor",Marshal.OffsetOf(typeof(ObjectAttributes),"SecurityDescriptor").ToInt32()},
+                 {"OBJECT_ATTRIBUTES.SecurityQualityOfService",Marshal.OffsetOf(typeof(ObjectAttributes),"SecurityQualityOfService").ToInt32()},
+-                {"IO_STATUS_BLOCK.size",Marshal.SizeOf(typeof(IoStatusBlock))},
++                {"IO_STATUS_BLOCK.size",Marshal.SizeOf<IoStatusBlock>()},
+                 {"IO_STATUS_BLOCK.Information",Marshal.OffsetOf(typeof(IoStatusBlock),"Information").ToInt32()}
+             };
+         }
+--- native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs
++++ native/guard_start_candidate_v2/migration/LiveRootEpochBridge.cs
+@@ -165,7 +165,7 @@
+             Rules.Need(Binary.Equal(transport.ReadRecord(transport.Ref(StoreRole.Acceptance)),acceptance.Raw()),"BRIDGE_ACCEPTANCE_DRIFT");
+             Rules.Need(Binary.Equal(transport.ReadRecord(transport.Ref(StoreRole.State)),state.Raw()),"BRIDGE_STATE_DRIFT");
+             EpochCodec.Bind(anchor,state,acceptance);
+-            foreach(StoreRole role in Enum.GetValues(typeof(StoreRole)))transport.Observe(transport.Ref(role));
++            foreach(StoreRole role in Enum.GetValues<StoreRole>())transport.Observe(transport.Ref(role));
+             Pulse();
+         }
+         private void Cleanup()
+@@ -294,7 +294,7 @@
+         }
+         private string RoleFor(IntPtr handle)
+         {
+-            foreach(StoreRole role in Enum.GetValues(typeof(StoreRole))) {
++            foreach(StoreRole role in Enum.GetValues<StoreRole>()) {
+                 StoreRef r=transport.Ref(role); if(r!=null && r.Handle==handle)return role.ToString();
+             }
+             throw new RootFailure("BRIDGE_CLOSE_UNKNOWN_HANDLE",true);
