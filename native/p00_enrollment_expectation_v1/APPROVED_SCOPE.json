@@ -1,0 +1,51 @@
+{
+  "approved_text": "Согласовываю этот P00 host/store/enrollment architecture scope. Готовь source-only следующий этап; install/SCM/ACL/enrollment пока не разрешаю.",
+  "authorized_now": [
+    "source-only implementation",
+    "compilation of diagnostic library and new managed tests",
+    "new synthetic tests",
+    "additive unstaged source after strict PASS"
+  ],
+  "conversation_message": 8,
+  "fixed_layout": {
+    "acceptance": "Acceptances\\<acceptance_id>.bin",
+    "anchor": "InstallAnchor.bin",
+    "gate": "Lifecycle.gate",
+    "host": "<native Program Files>\\SkynetVS\\TrustedHost\\releases\\<release_id>",
+    "image": "Guard.exe",
+    "state": "Lifecycle.state",
+    "store": "<native ProgramData>\\SkynetVS-Trust\\LifecycleV1"
+  },
+  "host": {
+    "bootstrap_first": true,
+    "new_service_count": 0,
+    "runtime_account": "NT SERVICE\\SkynetVSGuard",
+    "service_name": "SkynetVSGuard",
+    "service_type": "SERVICE_WIN32_OWN_PROCESS"
+  },
+  "kind": "USER_APPROVED_P00_SOURCE_SCOPE_V1",
+  "lifecycle": {
+    "acceptance": "create-once; old evidence retained",
+    "anchor": "immutable per host generation",
+    "gate": "create-once OS object; never replace during enrolled namespace",
+    "runtime_access": "read-only",
+    "state": "mutable operational state"
+  },
+  "not_a_runtime_authority_or_importable_approval": true,
+  "not_authorized": [
+    "install",
+    "SCM edits or service start",
+    "ACL edits",
+    "enrollment execution",
+    "provisioning",
+    "git add/commit/push",
+    "native bridge execution",
+    "production P00/P01"
+  ],
+  "not_selected": [
+    "production runtime/loader/build closure",
+    "service SID mode and effective token/process protection",
+    "OS/parent/delegated-writer model acceptance",
+    "native enrolled-start issuer and supervision"
+  ]
+}

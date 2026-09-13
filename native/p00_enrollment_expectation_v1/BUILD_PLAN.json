@@ -1,0 +1,35 @@
+{
+  "baseline_sources": [
+    "native/trusted_host/src/EpochNativeContracts.cs",
+    "native/trusted_host/src/EpochNativeIo.cs",
+    "native/trusted_host/src/InstallationRegistration.cs",
+    "native/trusted_host/src/NativeGateLeaseAdapter.cs",
+    "native/trusted_host/src/P00AnchorEpochContracts.cs",
+    "native/trusted_host/src/P00EpochNativeReadTransport.cs",
+    "native/trusted_host/src/ParentChainContracts.cs",
+    "native/trusted_host/src/ParentChainNativeApi.cs",
+    "native/trusted_host/src/ParentChainNtTransport.cs",
+    "native/trusted_host/src/SameHandleFileObserver.cs",
+    "native/installed_root_v1/InstalledRootContract.cs",
+    "native/installed_root_v1/InstalledRootEntryPoint.cs",
+    "native/installed_root_v1/InstalledRootReadOnly.cs",
+    "native/installed_root_v1/InstalledRootWindows.cs",
+    "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs"
+  ],
+  "library_test_factories": "EXCLUDED_BY_PREPROCESSOR; asserted using ReflectionOnlyLoadFrom metadata in the NEW suite",
+  "managed_argument": "--managed-enrollment-only",
+  "managed_define": "P00_ENROLLMENT_MANAGED_TESTS",
+  "managed_main": "SkynetVS.G1.P00EnrollmentExpectationV1.EnrollmentExpectationManagedTests",
+  "native_execution": false,
+  "new_sources": [
+    "EnrollmentExpectationBoundary.cs"
+  ],
+  "old_suites_executed": false,
+  "test_baseline_sources": [
+    "native/live_root_epoch_bridge_v1/BridgeManagedFixture.cs"
+  ],
+  "test_sources": [
+    "EnrollmentManagedVectors.cs",
+    "EnrollmentExpectationManagedTests.cs"
+  ]
+}
