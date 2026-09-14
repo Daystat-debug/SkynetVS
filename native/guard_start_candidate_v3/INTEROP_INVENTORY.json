@@ -1,0 +1,48 @@
+{
+  "project_pinvokes": [
+    {
+      "module": "advapi32.dll",
+      "entrypoint": "StartServiceCtrlDispatcherW",
+      "binding": "DirectPInvoke",
+      "stdcall": true,
+      "unicode": true,
+      "marshalling": "blittable pointers/int/uint only"
+    },
+    {
+      "module": "advapi32.dll",
+      "entrypoint": "RegisterServiceCtrlHandlerExW",
+      "binding": "DirectPInvoke",
+      "stdcall": true,
+      "unicode": true,
+      "marshalling": "blittable pointers/int/uint only"
+    },
+    {
+      "module": "advapi32.dll",
+      "entrypoint": "SetServiceStatus",
+      "binding": "DirectPInvoke",
+      "stdcall": true,
+      "unicode": true,
+      "marshalling": "blittable pointers/int/uint only"
+    }
+  ],
+  "callbacks": [
+    {
+      "name": "ServiceMain",
+      "signature": "void __stdcall(uint32 argc, pointer argv)",
+      "unmanaged_callers_only": true,
+      "args_dereferenced": false,
+      "public_export_requested": false
+    },
+    {
+      "name": "Handler",
+      "signature": "uint32 __stdcall(uint32 control,uint32 eventType,pointer eventData,pointer context)",
+      "unmanaged_callers_only": true,
+      "args_dereferenced": false,
+      "public_export_requested": false
+    }
+  ],
+  "pin_lifetime": "fixed UTF-16 name and two-entry stack table through dispatcher return; no delegate/GCHandle lifetime",
+  "status_ownership": "one ServiceMain instance; handler does not report status; no CloseHandle of SERVICE_STATUS_HANDLE",
+  "runtime_native_abi_verified": false,
+  "system_runtime_imports": "captured from final PE, not counted as only these three calls"
+}

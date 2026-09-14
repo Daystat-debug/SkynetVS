@@ -1,0 +1,7 @@
+bin/
+obj/
+local-feed/
+compile-inputs.txt
+compile-defines.txt
+native-linker-args.txt
+native-directpinvokes.txt

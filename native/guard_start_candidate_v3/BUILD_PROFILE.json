@@ -1,0 +1,24 @@
+{
+  "name": "GuardStartCandidateV3_SERVICE_REFUSAL_BOOTSTRAP",
+  "deployable": false,
+  "sdk": "10.0.112",
+  "runtime": "10.0.12",
+  "rid": "win-x64",
+  "local_restore": true,
+  "run_candidate": false,
+  "guards": [
+    "CFG",
+    "CETCompat",
+    "DEPENDENTLOADFLAG0x800",
+    "warnings_as_errors"
+  ],
+  "entry_shape": "Main -> dispatcher -> ServiceMain -> registration -> START_PENDING -> exact refusing factory -> STOPPED(error)",
+  "main_success_exit": false,
+  "service_running_path": false,
+  "callback_args_dereferenced": false,
+  "startup_may_modify_scm_status_if_run": true,
+  "runner_invokes_service_apis": false,
+  "trusted_origin_implemented": false,
+  "full_guard_production_shape": false,
+  "semantic_migration_accepted": false
+}

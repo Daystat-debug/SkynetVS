@@ -1,0 +1,9 @@
+{
+  "kind": "LP01_SOURCE_BUILD_SCOPE_ACCEPTANCE",
+  "user_message": 46,
+  "policy": "SP01_LP01_PROJECT_RELEASE_AND_WINDOWS_PLATFORM",
+  "approved_scope": "GuardStartCandidate_V1 source/build-only",
+  "production_start_implemented": false,
+  "native_factory_enabled": false,
+  "install_scm_acl_enrollment_allowed": false
+}

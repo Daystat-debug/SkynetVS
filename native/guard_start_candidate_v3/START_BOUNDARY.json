@@ -1,0 +1,43 @@
+{
+  "kind": "SERVICE_REFUSAL_BOOTSTRAP_NOT_ORIGIN",
+  "lp01_approved_message": 46,
+  "constraints": {
+    "service_name": "SkynetVSGuard",
+    "own_process": true,
+    "prospective_account": "NT SERVICE\\SkynetVSGuard",
+    "prospective_service_sid_type": 3,
+    "prospective_required_privileges": [
+      "SeChangeNotifyPrivilege"
+    ],
+    "machine_settings_applied": false
+  },
+  "not_attestations": [
+    "SCM dispatcher connection",
+    "fixed service-name literal",
+    "callback entry",
+    "current-process self-check",
+    "JSON approval flag",
+    "source hash beside its binary"
+  ],
+  "missing_before_admission": [
+    "independent enrolled release origin",
+    "protected SCM selection and service/token/process baseline",
+    "B07 old-capability/platform applicability",
+    "independent seed and actual native same-owner aggregate",
+    "runtime migration verification"
+  ],
+  "factory": "existing unconditional refusal, extracted without changed body",
+  "forbidden": [
+    "success ticket",
+    "SERVICE_RUNNING",
+    "worker",
+    "record acquisition",
+    "enrollment",
+    "installation",
+    "token/ACL change"
+  ],
+  "B02": "NOT_ACCEPTED",
+  "P00": "NOT_ACCEPTED",
+  "P01": "NOT_IMPLEMENTED",
+  "acquisition": "BLOCKED"
+}

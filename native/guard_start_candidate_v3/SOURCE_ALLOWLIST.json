@@ -1,0 +1,13 @@
+{
+  "compile": [
+    "native/guard_start_candidate_v3/ServiceEntryPoint.cs",
+    "native/guard_start_candidate_v3/ServiceNative.cs",
+    "native/guard_start_candidate_v3/OriginRefusal.cs"
+  ],
+  "compile_only_native_abi": "abi/service_abi.cpp",
+  "whole_assembly_root": false,
+  "baseline_only_for_preservation_not_compile": true,
+  "test_seed_factory_compiled": false,
+  "reader_bridge_migration_proved": false,
+  "reason": "New service refusal entry closure only. V2 remains separate migration evidence; no empty-main claim of R01/R07."
+}

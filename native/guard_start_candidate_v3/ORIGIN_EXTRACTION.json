@@ -1,0 +1,36 @@
+{
+  "origin": "native/p00_enrollment_expectation_v1/EnrollmentExpectationBoundary.cs",
+  "origin_identity": {
+    "bytes": 11095,
+    "sha256": "f3786bf3193333378d7bbc900406223403c9a528772cb9257e59baaec931a9bf"
+  },
+  "ranges": [
+    {
+      "start": 515,
+      "end": 649,
+      "identity": {
+        "bytes": 134,
+        "sha256": "6a0ec38967393e8973a996c4b8460e61c55829a793fc79bda8b9024639dc334c"
+      }
+    },
+    {
+      "start": 10600,
+      "end": 11092,
+      "identity": {
+        "bytes": 492,
+        "sha256": "0baaba424c98984f9aad161efef00e2b23a2c9be1146c522024631bbdf21bef2"
+      }
+    }
+  ],
+  "insert_before": "        internal static object OpenInstalled()",
+  "insert_text": "        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]\n",
+  "prefix": "// Exact refusing types extracted from the pinned enrollment baseline; no seed/session/bridge.\nusing System;\nnamespace SkynetVS.G1.P00EnrollmentExpectationV1\n{\n",
+  "suffix": "\n}\n",
+  "output_identity": {
+    "bytes": 904,
+    "sha256": "c42d5d0f1d68cbbcbc6623539255c27352c108fcd551ba0069293af96b02ac1b"
+  },
+  "authority_changes": false,
+  "method_bodies_byte_identical": true,
+  "annotation_only": "NoInlining keeps the real refusing call auditable in the native map."
+}

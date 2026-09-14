@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>Guard</AssemblyName>
+    <RootNamespace>SkynetVS.G1.GuardStartCandidateV3</RootNamespace>
+    <StartupObject>SkynetVS.G1.GuardStartCandidateV3.ServiceEntryPoint</StartupObject>
+    <SelfContained>true</SelfContained>
+    <PublishAot>true</PublishAot>
+    <RuntimeFrameworkVersion>10.0.12</RuntimeFrameworkVersion>
+    <TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>14.0</LangVersion>
+    <DefineConstants>GUARD_START_CANDIDATE_V3</DefineConstants>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <ControlFlowGuard>Guard</ControlFlowGuard>
+    <CETCompat>true</CETCompat>
+    <IlcUseEnvironmentalTools>true</IlcUseEnvironmentalTools>
+    <IlcGenerateMapFile>true</IlcGenerateMapFile>
+    <IlcGenerateMstatFile>true</IlcGenerateMstatFile>
+    <IlcGenerateDgmlFile>true</IlcGenerateDgmlFile>
+    <IlcGenerateMetadataLog>true</IlcGenerateMetadataLog>
+    <IlcFoldIdenticalMethodBodies>false</IlcFoldIdenticalMethodBodies>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <IlcTreatWarningsAsErrors>true</IlcTreatWarningsAsErrors>
+    <ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors>
+    <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+    <SuppressAotAnalysisWarnings>false</SuppressAotAnalysisWarnings>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <NuGetAudit>false</NuGetAudit>
+    <RestoreIgnoreFailedSources>false</RestoreIgnoreFailedSources>
+    <UseSharedCompilation>false</UseSharedCompilation>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <EnableSourceLink>false</EnableSourceLink>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <LinkerArg Include="/DEPENDENTLOADFLAG:0x800" />
+    <LinkerArg Include="/DYNAMICBASE" />
+    <LinkerArg Include="/HIGHENTROPYVA" />
+    <LinkerArg Include="/NXCOMPAT" />
+    <Compile Include="ServiceEntryPoint.cs" />
+    <Compile Include="ServiceNative.cs" />
+    <Compile Include="OriginRefusal.cs" />
+    <DirectPInvoke Include="advapi32!StartServiceCtrlDispatcherW" />
+    <DirectPInvoke Include="advapi32!RegisterServiceCtrlHandlerExW" />
+    <DirectPInvoke Include="advapi32!SetServiceStatus" />
+    <NativeLibrary Include="advapi32.lib" />
+  </ItemGroup>
+  <Target Name="CaptureCandidateCompileInputs" BeforeTargets="CoreCompile">
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)/compile-inputs.txt" Lines="@(Compile-&gt;'%(FullPath)')" Overwrite="true" Encoding="UTF-8" />
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)/compile-defines.txt" Lines="$(DefineConstants)" Overwrite="true" Encoding="UTF-8" />
+  </Target>
+  <Target Name="CaptureCandidateNativeInputs" AfterTargets="WriteIlcRspFileForCompilation">
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)/native-linker-args.txt" Lines="@(LinkerArg)" Overwrite="true" Encoding="UTF-8" />
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)/native-directpinvokes.txt" Lines="@(DirectPInvoke);@(DirectPInvokeList-&gt;'%(FullPath)')" Overwrite="true" Encoding="UTF-8" />
+  </Target>
+</Project>
