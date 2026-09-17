@@ -1,0 +1,26 @@
+{
+  "kind": "SERVICE_CALLBACK_HARNESS_BOUNDARY_V2",
+  "current_authorization": "SOURCE_BUILD_ONLY",
+  "execution_runner_included": false,
+  "trace_validator_does_not_execute": true,
+  "runtime_permission_obtained": false,
+  "real_service_provider_compiled": false,
+  "main_and_callbacks": "exact linked V3 source bytes",
+  "new_native_code": "two statically linked test callback trampolines",
+  "callbacks_entered_during_build": false,
+  "future_test_process_identity": "ordinary user process, no service identity claim",
+  "scope_not_proven": [
+    "real SCM",
+    "real service PInvoke calls",
+    "service SID or token baseline",
+    "authenticated start",
+    "V2 migration runtime",
+    "concurrency",
+    "production origin"
+  ],
+  "historical_results_unchanged": true,
+  "B02": "NOT_ACCEPTED",
+  "P00": "NOT_ACCEPTED",
+  "P01": "NOT_IMPLEMENTED",
+  "acquisition": "BLOCKED"
+}

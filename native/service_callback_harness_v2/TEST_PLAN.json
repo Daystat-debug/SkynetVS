@@ -1,0 +1,713 @@
+{
+  "kind": "SERVICE_CALLBACK_HARNESS_TEST_PLAN_V1",
+  "mode": "PLANNED_NOT_EXECUTED",
+  "test_count": 18,
+  "cases": [
+    {
+      "case": "SCBH001",
+      "description": "closed_origin_refusal",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "status_stopped",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH002",
+      "description": "dispatcher_false",
+      "expected_exit_code": 81,
+      "dispatch_calls": 1,
+      "register_calls": 0,
+      "service_calls": 0,
+      "service_returns": 0,
+      "handler_calls": 0,
+      "statuses": [],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "dispatcher_false"
+      ]
+    },
+    {
+      "case": "SCBH003",
+      "description": "dispatcher_exception",
+      "expected_exit_code": 80,
+      "dispatch_calls": 1,
+      "register_calls": 0,
+      "service_calls": 0,
+      "service_returns": 0,
+      "handler_calls": 0,
+      "statuses": [],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "dispatcher_throw"
+      ]
+    },
+    {
+      "case": "SCBH004",
+      "description": "register_zero",
+      "expected_exit_code": 82,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "register_zero",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH005",
+      "description": "register_exception",
+      "expected_exit_code": 80,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "register_throw",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH006",
+      "description": "pending_false",
+      "expected_exit_code": 83,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 83,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "pending_false",
+        "status_stopped",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH007",
+      "description": "pending_exception",
+      "expected_exit_code": 80,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 80,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "pending_throw",
+        "status_stopped",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH008",
+      "description": "stopped_false_no_retry",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "status_stopped",
+        "stopped_false",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH009",
+      "description": "stopped_exception_no_retry",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "status_stopped",
+        "stopped_throw",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH010",
+      "description": "duplicate_service_callback",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 2,
+      "service_returns": 2,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "status_stopped",
+        "service_return",
+        "service_call",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH011",
+      "description": "register_reentrant_callback",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 2,
+      "service_returns": 2,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "register_reenter",
+        "service_call",
+        "service_return",
+        "status_pending",
+        "status_stopped",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH012",
+      "description": "pending_reentrant_callback",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 2,
+      "service_returns": 2,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "pending_reenter",
+        "service_call",
+        "service_return",
+        "status_stopped",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH013",
+      "description": "handler_matrix_pending",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 9,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [
+        {
+          "code": 0,
+          "result": 120
+        },
+        {
+          "code": 1,
+          "result": 120
+        },
+        {
+          "code": 2,
+          "result": 120
+        },
+        {
+          "code": 3,
+          "result": 120
+        },
+        {
+          "code": 4,
+          "result": 0
+        },
+        {
+          "code": 5,
+          "result": 120
+        },
+        {
+          "code": 128,
+          "result": 120
+        },
+        {
+          "code": 255,
+          "result": 120
+        },
+        {
+          "code": 4294967295,
+          "result": 120
+        }
+      ],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "status_stopped",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH014",
+      "description": "handler_matrix_after_terminal_adversarial",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 9,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [
+        {
+          "code": 0,
+          "result": 120
+        },
+        {
+          "code": 1,
+          "result": 120
+        },
+        {
+          "code": 2,
+          "result": 120
+        },
+        {
+          "code": 3,
+          "result": 120
+        },
+        {
+          "code": 4,
+          "result": 0
+        },
+        {
+          "code": 5,
+          "result": 120
+        },
+        {
+          "code": 128,
+          "result": 120
+        },
+        {
+          "code": 255,
+          "result": 120
+        },
+        {
+          "code": 4294967295,
+          "result": 120
+        }
+      ],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "status_stopped",
+        "service_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "handler_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH015",
+      "description": "ignored_service_argv",
+      "expected_exit_code": 78,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "status_stopped",
+        "service_return",
+        "dispatcher_true"
+      ]
+    },
+    {
+      "case": "SCBH016",
+      "description": "dispatcher_true_without_callback",
+      "expected_exit_code": 80,
+      "dispatch_calls": 1,
+      "register_calls": 0,
+      "service_calls": 0,
+      "service_returns": 0,
+      "handler_calls": 0,
+      "statuses": [],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "dispatcher_no_callback"
+      ]
+    },
+    {
+      "case": "SCBH017",
+      "description": "dispatcher_false_after_callback",
+      "expected_exit_code": 81,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 1,
+      "service_returns": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "status_pending",
+        "status_stopped",
+        "service_return",
+        "dispatcher_false_after_callback"
+      ]
+    },
+    {
+      "case": "SCBH018",
+      "description": "duplicate_callback_after_register_failure",
+      "expected_exit_code": 82,
+      "dispatch_calls": 1,
+      "register_calls": 1,
+      "service_calls": 2,
+      "service_returns": 2,
+      "handler_calls": 0,
+      "statuses": [],
+      "controls": [],
+      "events": [
+        "dispatcher_enter",
+        "service_call",
+        "register",
+        "register_zero",
+        "service_return",
+        "service_call",
+        "service_return",
+        "dispatcher_true"
+      ]
+    }
+  ],
+  "fresh_process_per_case": true,
+  "all_expected_exit_codes_nonzero": true,
+  "coverage_exclusions": [
+    "real SCM routing and callbacks scheduling",
+    "race/concurrent delivery",
+    "production token/process identity",
+    "real PInvoke ABI through ADVAPI32 DLL",
+    "successful trusted origin",
+    "V2 reader/bridge semantic migration",
+    "reentry of private Main",
+    "catastrophic native faults or process termination after STOPPED"
+  ]
+}
