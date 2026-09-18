@@ -1,0 +1,632 @@
+{
+  "kind": "SCBH2_R05_OBSERVED_CASE_MATRIX_V1",
+  "run_id": "d0b5c66b01e84fdd99bfef143979d845",
+  "source": "Actual saved stdout, exit observations and job journal, not newly generated traces",
+  "cases": [
+    {
+      "case": "SCBH001",
+      "description": "closed_origin_refusal",
+      "pid": 33060,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 719,
+        "sha256": "e951fff09fb38c4cd80b64bdf732156009d1aa457b2bf8665213a5472b73d88e"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 2,
+      "last_journal_sequence": 32,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH002",
+      "description": "dispatcher_false",
+      "pid": 14436,
+      "exit_code": 81,
+      "stdout": {
+        "bytes": 409,
+        "sha256": "5e81500bbff7eb5c0a85fe3723da3367c2a56eeaa1f7349fd9693666b9b0ca71"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 0,
+      "handler_calls": 0,
+      "statuses": [],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 33,
+      "last_journal_sequence": 63,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH003",
+      "description": "dispatcher_exception",
+      "pid": 9292,
+      "exit_code": 80,
+      "stdout": {
+        "bytes": 409,
+        "sha256": "44835f36f8031248313299ff4522ed62c5b4e37d6312cd0e7b15d00031e2ecc8"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 0,
+      "handler_calls": 0,
+      "statuses": [],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 64,
+      "last_journal_sequence": 94,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH004",
+      "description": "register_zero",
+      "pid": 5756,
+      "exit_code": 82,
+      "stdout": {
+        "bytes": 467,
+        "sha256": "c88e9ea62c8c60c943cf19fa88c64eeb1f5ca4241837a80f9f8bfa81c6c6ba2a"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 95,
+      "last_journal_sequence": 125,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH005",
+      "description": "register_exception",
+      "pid": 29064,
+      "exit_code": 80,
+      "stdout": {
+        "bytes": 468,
+        "sha256": "92a169cee5811f8be118598197236a592a2656afbcb3648589857f2fce417fc0"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [],
+      "raw_query_count": 22,
+      "completion_event_count": 3,
+      "first_journal_sequence": 126,
+      "last_journal_sequence": 158,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH006",
+      "description": "pending_false",
+      "pid": 10588,
+      "exit_code": 83,
+      "stdout": {
+        "bytes": 735,
+        "sha256": "2cdd6b87723ddd86ddc8bc5f75236acc0db9602559cccb928df934aa9b66eaf6"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 83,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 22,
+      "completion_event_count": 3,
+      "first_journal_sequence": 159,
+      "last_journal_sequence": 191,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH007",
+      "description": "pending_exception",
+      "pid": 2492,
+      "exit_code": 80,
+      "stdout": {
+        "bytes": 735,
+        "sha256": "5fe1918d5497179ed3c53fd325a715565b41334c81e4ac1c4a4752c25f4ed9d5"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 80,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 192,
+      "last_journal_sequence": 222,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH008",
+      "description": "stopped_false_no_retry",
+      "pid": 20824,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 735,
+        "sha256": "a5852e6fa3635d80c4c916fde2602f98e1b703d6aecff9c3886727123dd0dde1"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 223,
+      "last_journal_sequence": 253,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH009",
+      "description": "stopped_exception_no_retry",
+      "pid": 5456,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 735,
+        "sha256": "782ae2ac6065bd83a0cabf9d3df8f7e01920824cba01f53ea551d2d7dce58ab3"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 254,
+      "last_journal_sequence": 284,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH010",
+      "description": "duplicate_service_callback",
+      "pid": 22348,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 751,
+        "sha256": "bc7c909c32acebcf80b18879bd205d13007a2b7c4d794223f9abea2add0ed987"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 2,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 285,
+      "last_journal_sequence": 315,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH011",
+      "description": "register_reentrant_callback",
+      "pid": 26744,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 770,
+        "sha256": "5ca236e74e9a3c390e81538728bad225b115b86d6a0cf2583078fd3ad237983b"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 2,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 22,
+      "completion_event_count": 3,
+      "first_journal_sequence": 316,
+      "last_journal_sequence": 348,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH012",
+      "description": "pending_reentrant_callback",
+      "pid": 15228,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 769,
+        "sha256": "021e5d00683875e70bdcc2a567488ab4275ae2f3b71e65a794c835965cd38233"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 2,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 349,
+      "last_journal_sequence": 379,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH013",
+      "description": "handler_matrix_pending",
+      "pid": 5684,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 1098,
+        "sha256": "03de09f12913b1964ae4dfd3868af346c9b8cc3a732f406b196333a9ebb3018b"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 9,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 380,
+      "last_journal_sequence": 410,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH014",
+      "description": "handler_matrix_after_terminal_adversarial",
+      "pid": 20804,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 1098,
+        "sha256": "0e25a5648ea16f54053f74e8e2c55f7bf8aa4770ce694c770ebeacd63c290e72"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 9,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 411,
+      "last_journal_sequence": 441,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH015",
+      "description": "ignored_service_argv",
+      "pid": 2340,
+      "exit_code": 78,
+      "stdout": {
+        "bytes": 719,
+        "sha256": "4fc0f3ef8cd2a9d691ae844b9f06417966ef61abf10330c421b658fa80ad7a30"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 22,
+      "completion_event_count": 3,
+      "first_journal_sequence": 442,
+      "last_journal_sequence": 474,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH016",
+      "description": "dispatcher_true_without_callback",
+      "pid": 27652,
+      "exit_code": 80,
+      "stdout": {
+        "bytes": 415,
+        "sha256": "7e087f8d30b50a9e74da655e538c1916fa92d6adb9b2d83657205f0f14517f22"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 0,
+      "handler_calls": 0,
+      "statuses": [],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 475,
+      "last_journal_sequence": 505,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH017",
+      "description": "dispatcher_false_after_callback",
+      "pid": 24608,
+      "exit_code": 81,
+      "stdout": {
+        "bytes": 735,
+        "sha256": "36a43170e9224a6d3d6eac841bc804eacf393ea3f401ea70de68c87e96d126d0"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 1,
+      "handler_calls": 0,
+      "statuses": [
+        {
+          "service_type": 16,
+          "state": 2,
+          "controls_accepted": 0,
+          "win32_exit": 0,
+          "specific_exit": 0,
+          "checkpoint": 1,
+          "wait_hint": 1000
+        },
+        {
+          "service_type": 16,
+          "state": 1,
+          "controls_accepted": 0,
+          "win32_exit": 1066,
+          "specific_exit": 78,
+          "checkpoint": 0,
+          "wait_hint": 0
+        }
+      ],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 506,
+      "last_journal_sequence": 536,
+      "synthetic_provider_accepted": true
+    },
+    {
+      "case": "SCBH018",
+      "description": "duplicate_callback_after_register_failure",
+      "pid": 29280,
+      "exit_code": 82,
+      "stdout": {
+        "bytes": 499,
+        "sha256": "dff20eb208093bc469844a295aec089fb7e28aa3c6675ecda1718d4d3f32b3f2"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_calls": 2,
+      "handler_calls": 0,
+      "statuses": [],
+      "raw_query_count": 20,
+      "completion_event_count": 3,
+      "first_journal_sequence": 537,
+      "last_journal_sequence": 567,
+      "synthetic_provider_accepted": true
+    }
+  ],
+  "note": "SCBH017 process exit=81 while STOPPED specific_exit=78. Low-level supervision.case_accepted=false is intentional; per-case orchestration accepts only after trace, stability and persistence gates."
+}

@@ -1,0 +1,676 @@
+{
+  "kind": "SCBH2_R05_EVIDENCE_SOURCE_BINDINGS_V1",
+  "checkpoint": {
+    "branch": "main",
+    "head": "811431d5ffb89faf6a59dacbb768b97aae06f31b",
+    "tree": "2007f0c8e02bf05668bf321519279f72f6a7a0f9",
+    "parent": "50c9f0786f50c34c5404341f8076916c7add0680"
+  },
+  "evidence_files": [
+    {
+      "name": "SkynetVS_ServiceCallbackHarnessV2_Runtime_R05.zip",
+      "bytes": 2570967,
+      "sha256": "7242f9e8b5d5711fdc36714b06ddfc84acfb6a0a941749baff4b5f1ff8cf3313"
+    },
+    {
+      "name": "SkynetVS_ServiceCallbackHarnessV2RuntimeR05_d0b5c66b01e84fdd99bfef143979d845.json",
+      "bytes": 554486,
+      "sha256": "b7b283836103637c1008e91483938fabe1a5aefebf69fc492375a6823ded57f5"
+    },
+    {
+      "name": "SkynetVS_ServiceCallbackHarnessV2RuntimeR05_d0b5c66b01e84fdd99bfef143979d845_Review.zip",
+      "bytes": 721206,
+      "sha256": "f322f04732bc2d05d16a6ff068c7c8492531cd7263bf4015bee052d88f1351cb"
+    },
+    {
+      "name": "SkynetVS_ServiceCallbackHarnessV2_Runtime_R05.once.json",
+      "bytes": 1575,
+      "sha256": "5a59af8f18cab123e1679fc4cc99ef8009624e2d2b96943362bc3a1c296478d2"
+    }
+  ],
+  "sources": [
+    {
+      "path": "native/guard_start_candidate_v1/.gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/.gitignore",
+      "bytes": 110,
+      "sha256": "f392bc2f39e13e2bc75745dd66153fbbee1c9e107284aef39383f5f68465a898"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/BUILD_PROFILE.json",
+      "bytes": 2326,
+      "sha256": "17aeddb776b0fd5666f2e968eb6c9cd417f4f644ca121dc0b146ec66a0c1aa3d"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/CandidateEntryPoint.cs",
+      "bytes": 927,
+      "sha256": "50db4fcd6fe85bdf92478ec684342f36c710c4507d3e5a4fab465762294272e3"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/Directory.Build.props",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/Directory.Build.targets",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/GuardStartCandidate.csproj",
+      "bytes": 4621,
+      "sha256": "7c02eda174d1a17f36c21700f4aaaf1460a5e8d28b88961e7e4418441b2212cc"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/INTEROP_INVENTORY.json",
+      "bytes": 19252,
+      "sha256": "d3efa0536887f33cd12657d249ee6e877bc5059d188e80da9014151a49d0a625"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/LP01_ACCEPTANCE.json",
+      "bytes": 322,
+      "sha256": "602376459a00e900216cbfb4a384d35c2c767891478ce9f6ce3a5c8ef1225ea6"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/MIGRATION_REVIEW_RU.md",
+      "bytes": 9247,
+      "sha256": "26532e631809762f5639859d3306b712c3d9289062942579ecc3845a5bda7280"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/NuGet.Config",
+      "bytes": 367,
+      "sha256": "4872a1143cf9e74d5eb3e700ec2cdd031135a2fd6bea8fa225bcb519ba665946"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/README_RU.md",
+      "bytes": 1034,
+      "sha256": "98d71dc43d3d34e6879f8779da447affabf2838fa11fcef09b13ce784126b9fa"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/SOURCE_ALLOWLIST.json",
+      "bytes": 2464,
+      "sha256": "55051dee664ff7586215db155e8512c1ab2c951741ce3a41107ed52177a8ca3e"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/global.json",
+      "bytes": 105,
+      "sha256": "68c8058c2833fc3219c0f9f50672d53fe1898f772ac00a5545d1cd6d0ac0e608"
+    },
+    {
+      "path": "native/guard_start_candidate_v1/packages.lock.json",
+      "bytes": 1237,
+      "sha256": "8ee9e0e4585905baef0430dea36164a9bd027943f008c766d099a413e4063b59"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/.gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/.gitignore",
+      "bytes": 110,
+      "sha256": "f392bc2f39e13e2bc75745dd66153fbbee1c9e107284aef39383f5f68465a898"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/AOT_MIGRATION.diff",
+      "bytes": 2827,
+      "sha256": "105a2cb38f62a539afca2ab6b7551972390c4669cdabc1a2652f467aa3abc771"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/AOT_MIGRATION.json",
+      "bytes": 2144,
+      "sha256": "5c47ce0d9bfb24257a311f931ce3393e3755c648680ab84c46d191dd04454fe5"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/BUILD_PROFILE.json",
+      "bytes": 2556,
+      "sha256": "3d603e33c69da22a333525ed0fbe218997bd837bda2cab31f12e9d1aeaa2c1bb"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/CandidateEntryPoint.cs",
+      "bytes": 927,
+      "sha256": "50db4fcd6fe85bdf92478ec684342f36c710c4507d3e5a4fab465762294272e3"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/Directory.Build.props",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/Directory.Build.targets",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/GuardStartCandidate.csproj",
+      "bytes": 4658,
+      "sha256": "94209ef5204021e4ff5d27829153f34266bf0752fb21cdf1bea202a9c48ac694"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/INTEROP_INVENTORY.json",
+      "bytes": 20080,
+      "sha256": "abc773fecdb0638e59f42d776f35c6f5eaf655dd3c1fb8232ded752fec8d91d8"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/LP01_ACCEPTANCE.json",
+      "bytes": 322,
+      "sha256": "602376459a00e900216cbfb4a384d35c2c767891478ce9f6ce3a5c8ef1225ea6"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/MIGRATION_REVIEW_RU.md",
+      "bytes": 3048,
+      "sha256": "710064a99202644134ece58265f18456829a2710750c5c39753eec8db64aaa47"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/NuGet.Config",
+      "bytes": 367,
+      "sha256": "4872a1143cf9e74d5eb3e700ec2cdd031135a2fd6bea8fa225bcb519ba665946"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/README_RU.md",
+      "bytes": 1067,
+      "sha256": "f2c230aa967db3cab537bc47bc810b4a5cf2e9ea2886772e25ef1dc736028aba"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/SOURCE_ALLOWLIST.json",
+      "bytes": 2460,
+      "sha256": "5d9026962d3559b80d3abde1a39cb1a08961f370e520dfb1177a2d6058d79cd1"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/global.json",
+      "bytes": 105,
+      "sha256": "68c8058c2833fc3219c0f9f50672d53fe1898f772ac00a5545d1cd6d0ac0e608"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/migration/LiveRootEpochBridge.cs",
+      "bytes": 18881,
+      "sha256": "753e51a03c8b1a1c20d0101c9b8915500e0ad9324562a5ad38ce54591d6c9dd3"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/migration/ParentChainNativeApi.cs",
+      "bytes": 6625,
+      "sha256": "3a75a289333dccf1c874a733e87644e2faad8aa61e7f3d6eba1e22ca2f243fb5"
+    },
+    {
+      "path": "native/guard_start_candidate_v2/packages.lock.json",
+      "bytes": 1237,
+      "sha256": "8ee9e0e4585905baef0430dea36164a9bd027943f008c766d099a413e4063b59"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/.gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/.gitignore",
+      "bytes": 110,
+      "sha256": "f392bc2f39e13e2bc75745dd66153fbbee1c9e107284aef39383f5f68465a898"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/BUILD_PROFILE.json",
+      "bytes": 745,
+      "sha256": "29a04bdfc8e1191cd40e3db3f17671a4ba453c770b1cfe68f87819f540c98427"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/Directory.Build.props",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/Directory.Build.targets",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/GuardStartCandidate.csproj",
+      "bytes": 3905,
+      "sha256": "93bc0c695f1cbfa31373a8ae0e8f5c33c1c0f0199db07a3d58174db8546c491f"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/INTEROP_INVENTORY.json",
+      "bytes": 1589,
+      "sha256": "b14154a7be551f499d1fe6db695fbc654b2b463c88a8a60d61b896d1369f17d4"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/LP01_ACCEPTANCE.json",
+      "bytes": 322,
+      "sha256": "602376459a00e900216cbfb4a384d35c2c767891478ce9f6ce3a5c8ef1225ea6"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/NuGet.Config",
+      "bytes": 367,
+      "sha256": "4872a1143cf9e74d5eb3e700ec2cdd031135a2fd6bea8fa225bcb519ba665946"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/ORIGIN_EXTRACTION.json",
+      "bytes": 1308,
+      "sha256": "c7935a276e98e3c5a41f7563975692068221c826edf689914a903fc318cd49df"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/OriginRefusal.cs",
+      "bytes": 904,
+      "sha256": "c42d5d0f1d68cbbcbc6623539255c27352c108fcd551ba0069293af96b02ac1b"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/README_RU.md",
+      "bytes": 2479,
+      "sha256": "e28fa931a2b29ae936f62e13b57fddf2bbda4e9c9ee399d810da13f69fb981d2"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/SOURCE_ALLOWLIST.json",
+      "bytes": 541,
+      "sha256": "316bbb62c78e211fedcb69f3a15ae0fe6759aa6d369ba208bf308980c735bf48"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/START_BOUNDARY.json",
+      "bytes": 1245,
+      "sha256": "7f586e1cc141d51666557b71db55e46d1f7ab14d1ed49dbe5e5a47c78e7181a4"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/ServiceEntryPoint.cs",
+      "bytes": 5959,
+      "sha256": "ae02e35d95cba9da77b6137ebec98b421611a8f6753f99939d9681aaca83003a"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/ServiceNative.cs",
+      "bytes": 1857,
+      "sha256": "5ec4f9f0d057b102bc91a1df6fee3903c8f660cc77d37346be75ab9b3c7b07a4"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/abi/service_abi.cpp",
+      "bytes": 2292,
+      "sha256": "8c59d46596d9ebe9ee6bb5a1febe9f80be916fb4f47e14439b279f56af904311"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/global.json",
+      "bytes": 105,
+      "sha256": "68c8058c2833fc3219c0f9f50672d53fe1898f772ac00a5545d1cd6d0ac0e608"
+    },
+    {
+      "path": "native/guard_start_candidate_v3/packages.lock.json",
+      "bytes": 1237,
+      "sha256": "8ee9e0e4585905baef0430dea36164a9bd027943f008c766d099a413e4063b59"
+    },
+    {
+      "path": "native/installed_root_v1/.gitattributes",
+      "bytes": 39,
+      "sha256": "a6a5573df44e04392e72bf69aa5c8d3a54147787f6a8e3517cf331e896ba8c05"
+    },
+    {
+      "path": "native/installed_root_v1/BUILD_PLAN.json",
+      "bytes": 938,
+      "sha256": "74785ebd23bd6e0e7ee1b40f7e848f9b9280a8161cb85e125d5a90048119ce2b"
+    },
+    {
+      "path": "native/installed_root_v1/CONTRACT.json",
+      "bytes": 1970,
+      "sha256": "4b08895f3102cca943bb9bfc438d29c646229761f68d52513e22fec779f4dc0c"
+    },
+    {
+      "path": "native/installed_root_v1/InstalledRootContract.cs",
+      "bytes": 6172,
+      "sha256": "09a579a06e7c345476826bbeb295eda6c90864ed6a7a8302768aad9fa3a94de9"
+    },
+    {
+      "path": "native/installed_root_v1/InstalledRootEntryPoint.cs",
+      "bytes": 1501,
+      "sha256": "ec21e2b9e0beedaa1324f12177ba657ff2c6c933775774bf3ec0bc0c281ed9d4"
+    },
+    {
+      "path": "native/installed_root_v1/InstalledRootManagedTests.cs",
+      "bytes": 13957,
+      "sha256": "d3f4c3a16f5e156ecaaef9242151cfeddafd292326a6e6ea63f23324ce338593"
+    },
+    {
+      "path": "native/installed_root_v1/InstalledRootReadOnly.cs",
+      "bytes": 10023,
+      "sha256": "85a54b124058c49d57e70772c818430dd4455b02160b40a097538822d7c70a30"
+    },
+    {
+      "path": "native/installed_root_v1/InstalledRootWindows.cs",
+      "bytes": 6451,
+      "sha256": "537b3cbed053b9699354c0d8a0819278ae36f30eb84a7f3980b96370ecd9ce59"
+    },
+    {
+      "path": "native/installed_root_v1/README_RU.md",
+      "bytes": 3711,
+      "sha256": "fe94484f1609948b4d4fd529a14c4cd84aac1bec3604de77dc531d23dfdd4f98"
+    },
+    {
+      "path": "native/installed_root_v1/TEST_CASES.json",
+      "bytes": 1782,
+      "sha256": "5ce304df5866742135f565e581f59aaf074fc29f66a6495de6c831c54e736d38"
+    },
+    {
+      "path": "native/live_root_epoch_bridge_v1/.gitattributes",
+      "bytes": 35,
+      "sha256": "c0b5ceb408197b2afb1e7bd025b6c27a8ee5bdd6b38fbfb34a4e13e2025e6d44"
+    },
+    {
+      "path": "native/live_root_epoch_bridge_v1/BUILD_PLAN.json",
+      "bytes": 1145,
+      "sha256": "ea9509040fb104aa0355435b6d850be246b6e3666b6f6b1f82f904e9617a1ccb"
+    },
+    {
+      "path": "native/live_root_epoch_bridge_v1/BridgeManagedFixture.cs",
+      "bytes": 10224,
+      "sha256": "b967061d6f075ec3500edb353fbfa4f3506aeca9f11ed79e7652dd1739726d13"
+    },
+    {
+      "path": "native/live_root_epoch_bridge_v1/BridgeManagedTests.cs",
+      "bytes": 17222,
+      "sha256": "3f58a426cbf225e7785d49959c9115b9cb3fe62a34cbe73e174935bcefec5797"
+    },
+    {
+      "path": "native/live_root_epoch_bridge_v1/CONTRACT.json",
+      "bytes": 1668,
+      "sha256": "143fade797fff24e7ab6a33db836f323c31c7b46f07eb418bc2315a3473912ce"
+    },
+    {
+      "path": "native/live_root_epoch_bridge_v1/LiveRootEpochBridge.cs",
+      "bytes": 18893,
+      "sha256": "523df1eb8c0c9300551b7bb42e5fa9ec47678f23194409d0b4310d0c3aa67585"
+    },
+    {
+      "path": "native/live_root_epoch_bridge_v1/README_RU.md",
+      "bytes": 2931,
+      "sha256": "f7792031e55aba62bc6594a4498899b28a652c29385eedfa5bdfe576f4ebb81d"
+    },
+    {
+      "path": "native/live_root_epoch_bridge_v1/TEST_CASES.json",
+      "bytes": 2373,
+      "sha256": "bebbc196b1a794742f5c3a6fdc28f39a802ada39c9f74f27803409e10ed5724f"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/.gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/APPROVED_SCOPE.json",
+      "bytes": 1855,
+      "sha256": "f12eccde7a44b2c87b2390c0af5035746b1df353cd02c6910f12a47d8e23e007"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/BUILD_PLAN.json",
+      "bytes": 1528,
+      "sha256": "3185a106a9c7b2bf6557fecc9790346896d80d94b1ae952ac2074c4bbd39356d"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/CONTRACT.json",
+      "bytes": 2648,
+      "sha256": "a6fb488e6c388384a9a2c9655c5a3e692efd4e44097b99c4808bcfa754a674fd"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/EnrollmentExpectationBoundary.cs",
+      "bytes": 11095,
+      "sha256": "f3786bf3193333378d7bbc900406223403c9a528772cb9257e59baaec931a9bf"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/EnrollmentExpectationManagedTests.cs",
+      "bytes": 19152,
+      "sha256": "a72b568f53abd9eaea8b2c0c2e0a7effd0ea6cd65424073abc707369f703354d"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/EnrollmentManagedVectors.cs",
+      "bytes": 2709,
+      "sha256": "b2c7e50a63f0a78ec83edd1423c57449a805f8fde3ca8f82d6bf15b82cff2bc0"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/README_RU.md",
+      "bytes": 2888,
+      "sha256": "0e12801a22811d10d8210e69e40d75c9942ef1309c274efd79c008e18e1aa54b"
+    },
+    {
+      "path": "native/p00_enrollment_expectation_v1/TEST_CASES.json",
+      "bytes": 2982,
+      "sha256": "3b8790d0155428f9a93058f0e92db06f2fd05e914f0f2b7552c3de3985a135d7"
+    },
+    {
+      "path": "native/service_callback_harness_v2/.gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "native/service_callback_harness_v2/.gitignore",
+      "bytes": 123,
+      "sha256": "2548bfd750d98f72bcea0ea8b284f3ef4b6118ab70adcf190c7c822ca0891718"
+    },
+    {
+      "path": "native/service_callback_harness_v2/BUILD_PROFILE.json",
+      "bytes": 1049,
+      "sha256": "2a673070f6533bf424facd4ffc4c87299a7c9aa1b5d38c07d3c47ef73de3e410"
+    },
+    {
+      "path": "native/service_callback_harness_v2/CallbackDriver.cs",
+      "bytes": 772,
+      "sha256": "c0649835d600b350f43b7fecd438a0ed0f074cfce39106dff8b806418b9550fd"
+    },
+    {
+      "path": "native/service_callback_harness_v2/Directory.Build.props",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea"
+    },
+    {
+      "path": "native/service_callback_harness_v2/Directory.Build.targets",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea"
+    },
+    {
+      "path": "native/service_callback_harness_v2/HARNESS_BOUNDARY.json",
+      "bytes": 883,
+      "sha256": "94fac1a7747f541b2d837e39bf31143914a415cdfafb64f9eef4148ed0efeeb0"
+    },
+    {
+      "path": "native/service_callback_harness_v2/NuGet.Config",
+      "bytes": 367,
+      "sha256": "4872a1143cf9e74d5eb3e700ec2cdd031135a2fd6bea8fa225bcb519ba665946"
+    },
+    {
+      "path": "native/service_callback_harness_v2/README_RU.md",
+      "bytes": 5968,
+      "sha256": "32837063af8cac620f88e2b6d5b079ea5656391790c1d1e0cdcee565721b7521"
+    },
+    {
+      "path": "native/service_callback_harness_v2/SOURCE_BINDINGS.json",
+      "bytes": 1135,
+      "sha256": "dfd574e1f93861b942b4b15b922e7b190f7d301dc2e2d89e37e6a58d812cedce"
+    },
+    {
+      "path": "native/service_callback_harness_v2/ServiceCallbackHarness.csproj",
+      "bytes": 4043,
+      "sha256": "85e7b4d09d1ebf5fd02ceb94f3a3fd78d75df890621285dcef31248cce280cff"
+    },
+    {
+      "path": "native/service_callback_harness_v2/ServiceNative.TestOnly.cs",
+      "bytes": 9494,
+      "sha256": "a16954a2545d6ba820bfa3f843b922dc06b37130129f0e1eb9c694917996b1df"
+    },
+    {
+      "path": "native/service_callback_harness_v2/ServiceTypes.cs",
+      "bytes": 861,
+      "sha256": "70ab7a3ac323fd34a7de41490ecdaa23d83f8f8a9ef4b0bb4b04f4f6c47e6c8f"
+    },
+    {
+      "path": "native/service_callback_harness_v2/TEST_PLAN.json",
+      "bytes": 16524,
+      "sha256": "874439c5a1713e99bf46407ceb162c836e5592495a24f71ec2f54f9fd39d87d6"
+    },
+    {
+      "path": "native/service_callback_harness_v2/global.json",
+      "bytes": 105,
+      "sha256": "68c8058c2833fc3219c0f9f50672d53fe1898f772ac00a5545d1cd6d0ac0e608"
+    },
+    {
+      "path": "native/service_callback_harness_v2/native/callback_driver.cpp",
+      "bytes": 1411,
+      "sha256": "61a535c10c82d732a0661144b3758696d165eb8b796a92bb0562aa1c2b0a2b50"
+    },
+    {
+      "path": "native/service_callback_harness_v2/packages.lock.json",
+      "bytes": 1237,
+      "sha256": "8ee9e0e4585905baef0430dea36164a9bd027943f008c766d099a413e4063b59"
+    },
+    {
+      "path": "native/trusted_host/.gitattributes",
+      "bytes": 113,
+      "sha256": "2b4b6ecfe9d9af613f09764a1ac0dfd3ebff40f87d496d2fb48b0ebc2c3bc283"
+    },
+    {
+      "path": "native/trusted_host/.gitignore",
+      "bytes": 143,
+      "sha256": "533085375eb5782fde22899333e329985170cc6c0260ae2f86180a61dfed1934"
+    },
+    {
+      "path": "native/trusted_host/BUILD_PLAN.json",
+      "bytes": 2811,
+      "sha256": "23ebb667d5f98bf30fa505ac7271d9700f3b6c4cef071bc0b9479365e434c9e1"
+    },
+    {
+      "path": "native/trusted_host/PROVENANCE.json",
+      "bytes": 8621,
+      "sha256": "4b24058c165a77fb41d9161ffffd75e73e783d4508cfa1d913996e7473ed4d35"
+    },
+    {
+      "path": "native/trusted_host/README_RU.md",
+      "bytes": 3977,
+      "sha256": "accb4ceb3f486ca35f45e3a9cff26f515945d428bfd320b389a403668d6847c9"
+    },
+    {
+      "path": "native/trusted_host/SOURCE_BASELINE.json",
+      "bytes": 4619,
+      "sha256": "8acea1bf6c313fec159c473e03c5a7cb2474dcd6ab0e7d387a127e805a408e90"
+    },
+    {
+      "path": "native/trusted_host/check_source_baseline.py",
+      "bytes": 3122,
+      "sha256": "ca09d03611d43155e15efb7eab124ed7484de2fe3b923f3ee237d45cbcd74f0b"
+    },
+    {
+      "path": "native/trusted_host/evidence/SkynetVS_V1C3A1B_GateLeaseHandoffNativeFixtureV2_b4c54808c1824a948f25f1019f071abd.json",
+      "bytes": 50349,
+      "sha256": "5b28e6d8f8ff8b08482434f9d1164d5af145919a4f89fe6137a53b10a0dcfb03"
+    },
+    {
+      "path": "native/trusted_host/evidence/SkynetVS_V1C3A1B_P00EpochStoreNativeFixture_d42470b224954bdb8004240b7432acb8.json",
+      "bytes": 72607,
+      "sha256": "931e48ef72807899caee1f4a033bf453863dd1139540c47c2dbbf93fd7287183"
+    },
+    {
+      "path": "native/trusted_host/src/EpochNativeContracts.cs",
+      "bytes": 7287,
+      "sha256": "de4d781cffb7843f416e7eb456b45aa98cb07c9765a20697e656e0d9db12aa27"
+    },
+    {
+      "path": "native/trusted_host/src/EpochNativeIo.cs",
+      "bytes": 3690,
+      "sha256": "05eecaee41c14bff0e72577d1ab3e83d31010edf36c887ba2e9f4303e61bc2ae"
+    },
+    {
+      "path": "native/trusted_host/src/GateHandoffContracts.cs",
+      "bytes": 7910,
+      "sha256": "9593476cb512dd61cffff63f54f47ff88e4187e01e27a2ecc08128416322514f"
+    },
+    {
+      "path": "native/trusted_host/src/GateHandoffProtocol.cs",
+      "bytes": 11366,
+      "sha256": "df3e32c816b0ea4fda2257358d5f92bf090520c4e039be8a885bd2ea47d52b9e"
+    },
+    {
+      "path": "native/trusted_host/src/GateHandoffWire.cs",
+      "bytes": 3089,
+      "sha256": "b513d4a80fe0fef419786dabb38501904fa2855d960217f62591f49cc047bc45"
+    },
+    {
+      "path": "native/trusted_host/src/GateNativeAggregate.cs",
+      "bytes": 11699,
+      "sha256": "5de4a6f7eee2d66c078d73ca68a28a6527f5fd30239850d793485c0f74bef127"
+    },
+    {
+      "path": "native/trusted_host/src/GateNativeCommon.cs",
+      "bytes": 10304,
+      "sha256": "99ff8924b4a5268652131f516b4f81dd3b3201dc653d7f9e0bebda8fba28ecf0"
+    },
+    {
+      "path": "native/trusted_host/src/GateNativeCoordinator.cs",
+      "bytes": 6971,
+      "sha256": "fcfcdf042434f8188cae4d4dcc2865de82a9b098bb27e88a7abc16846c01f7f7"
+    },
+    {
+      "path": "native/trusted_host/src/GateNativeEntryPoints.cs",
+      "bytes": 7688,
+      "sha256": "e75461623bb70ec25455784bd73b92c17e1d0c17da2a533625109857b9369052"
+    },
+    {
+      "path": "native/trusted_host/src/GateNativeLaunch.cs",
+      "bytes": 7528,
+      "sha256": "377d45f4114301e2883620b1660154f864e2427394f28c5ee6e424c13356390f"
+    },
+    {
+      "path": "native/trusted_host/src/GateNativeReceiver.cs",
+      "bytes": 6555,
+      "sha256": "0d66a0b1c69abda494fdde634ce07a7676e5c651fb94edac0c2e2ec36227473a"
+    },
+    {
+      "path": "native/trusted_host/src/GateNativeWindows.cs",
+      "bytes": 23372,
+      "sha256": "1310e08cdd3387b83f9bf972512d664fe6831a49b9ffb9045a0aed2d39d86ab4"
+    },
+    {
+      "path": "native/trusted_host/src/GatePipeEndpointRights.cs",
+      "bytes": 5395,
+      "sha256": "87ae87cd93571ab73f002673e71a9b061e3c6cf9b13399f0061770085a71af49"
+    },
+    {
+      "path": "native/trusted_host/src/InstallationRegistration.cs",
+      "bytes": 18109,
+      "sha256": "deee1f7cdc86049fcc9bf20bf739209db4e9cf89c9f686fce0b12c5161673a4b"
+    },
+    {
+      "path": "native/trusted_host/src/NativeGateLeaseAdapter.cs",
+      "bytes": 6065,
+      "sha256": "43a0357bdb3bd19fe8ff1505469613c330956287ec27b2a759214ebf734293fc"
+    },
+    {
+      "path": "native/trusted_host/src/P00AnchorEpochContracts.cs",
+      "bytes": 13461,
+      "sha256": "7511529c2dd30af986106d76f68db28899cbe2f6f43adf246e48a6860b7c5089"
+    },
+    {
+      "path": "native/trusted_host/src/P00EpochNativeReadTransport.cs",
+      "bytes": 14518,
+      "sha256": "f4ca7c11b197bc8a6df4b94e280e42086239154fe4df93ad63d9902c352aaecc"
+    },
+    {
+      "path": "native/trusted_host/src/ParentChainContracts.cs",
+      "bytes": 9001,
+      "sha256": "32c59cd3e553989004a1c85c8f5d2d635c612b5f00dfb272b0c81b5d23dc1a01"
+    },
+    {
+      "path": "native/trusted_host/src/ParentChainNativeApi.cs",
+      "bytes": 6643,
+      "sha256": "8115a1cca65828ce5658a2d238e51c0d266940076b9b2a19795227050ebec679"
+    },
+    {
+      "path": "native/trusted_host/src/ParentChainNtTransport.cs",
+      "bytes": 9017,
+      "sha256": "6dc85cf19a2b3549ab2caf71fce5cb13e511d7b937f5fb78b0618e72c0deb927"
+    },
+    {
+      "path": "native/trusted_host/src/RestrictedGateLaunch.cs",
+      "bytes": 18887,
+      "sha256": "a90f8f5a105c62e7eb6401b9fbbf1f91c3fddbf61060abc2fe2fbf321a4f8e22"
+    },
+    {
+      "path": "native/trusted_host/src/SameHandleFileObserver.cs",
+      "bytes": 23845,
+      "sha256": "3ced371dadaf317b998b0095261e5247c9b55865340f2e41e9466c1e6db198c9"
+    }
+  ],
+  "files": 128,
+  "bytes": 703153,
+  "no_runtime_or_build_grant": true
+}

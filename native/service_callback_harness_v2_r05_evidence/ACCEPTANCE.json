@@ -1,0 +1,105 @@
+{
+  "kind": "SCBH2_R05_SYNTHETIC_PROVIDER_ACCEPTANCE_V1",
+  "review_message": 73,
+  "run_id": "d0b5c66b01e84fdd99bfef143979d845",
+  "result": "R05_18_OF_18_ACCEPTED_SYNTHETIC_PROVIDER_ONLY",
+  "source_runtime_result": "SERVICE_CALLBACK_HARNESS_V2_R05_18_CASES_PASS_SYNTHETIC_PROVIDER_ONLY",
+  "acceptance_scope": "ONLY_THE_18_FIXED_CASES_IN_THIS_UNCHANGED_HARNESS_BUILD",
+  "source_checkpoint": {
+    "branch": "main",
+    "head": "811431d5ffb89faf6a59dacbb768b97aae06f31b",
+    "tree": "2007f0c8e02bf05668bf321519279f72f6a7a0f9",
+    "parent": "50c9f0786f50c34c5404341f8076916c7add0680"
+  },
+  "case_ids": [
+    "SCBH001",
+    "SCBH002",
+    "SCBH003",
+    "SCBH004",
+    "SCBH005",
+    "SCBH006",
+    "SCBH007",
+    "SCBH008",
+    "SCBH009",
+    "SCBH010",
+    "SCBH011",
+    "SCBH012",
+    "SCBH013",
+    "SCBH014",
+    "SCBH015",
+    "SCBH016",
+    "SCBH017",
+    "SCBH018"
+  ],
+  "passed_cases": 18,
+  "created_processes": 18,
+  "create_attempts": 18,
+  "console_mode": "DETACHED_PROCESS",
+  "creation_flags": "0x0008040c",
+  "job_active_process_limit": 1,
+  "harness_exe": {
+    "bytes": 1086464,
+    "sha256": "6e79c8df6b182f36af3ceabcdc3c31f08b8a70d5444db4d5a7a744cd2af24bf7"
+  },
+  "test_plan": {
+    "bytes": 16524,
+    "sha256": "874439c5a1713e99bf46407ceb162c836e5592495a24f71ec2f54f9fd39d87d6"
+  },
+  "observed_raw_job_queries": 368,
+  "observed_completion_packets": 54,
+  "observed_journal_records": 567,
+  "all_exits_expected": true,
+  "all_stderr_empty": true,
+  "forced_terminations_observed": 0,
+  "identity_capture_open_attempts": 0,
+  "runtime_authorization_72_consumed": true,
+  "repeat_or_resume_authorized": false,
+  "historical_states_preserved": {
+    "harness_v1": "ERROR",
+    "R01": "ERROR",
+    "R02": "REVIEW_REQUIRED",
+    "R03": "REVIEW_REQUIRED",
+    "R04": "DIAGNOSTIC_ONLY_NOT_CASE_ACCEPTANCE",
+    "Guard_V1": "NEEDS_REVIEW",
+    "Guard_V2": "INTEGRATION_AOT_BUILD_PASS_NOT_PRODUCTION",
+    "Guard_V3": "SERVICE_REFUSAL_BUILD_PASS_NOT_PRODUCTION"
+  },
+  "real_scm_tested": false,
+  "real_service_pinvoke_tested": false,
+  "guard_executed": false,
+  "production_callback_runtime_accepted": false,
+  "V2_migration_runtime_accepted": false,
+  "concurrency_accepted": false,
+  "production_origin_implemented": false,
+  "native_factory_enabled": false,
+  "B02": "NOT_ACCEPTED",
+  "P00": "NOT_ACCEPTED",
+  "P01": "NOT_IMPLEMENTED",
+  "acquisition": "BLOCKED",
+  "completion_history_complete": false,
+  "job_is_filesystem_or_network_sandbox": false,
+  "independent_loaded_image_attestation": false,
+  "evidence_files": [
+    {
+      "name": "SkynetVS_ServiceCallbackHarnessV2_Runtime_R05.zip",
+      "bytes": 2570967,
+      "sha256": "7242f9e8b5d5711fdc36714b06ddfc84acfb6a0a941749baff4b5f1ff8cf3313"
+    },
+    {
+      "name": "SkynetVS_ServiceCallbackHarnessV2RuntimeR05_d0b5c66b01e84fdd99bfef143979d845.json",
+      "bytes": 554486,
+      "sha256": "b7b283836103637c1008e91483938fabe1a5aefebf69fc492375a6823ded57f5"
+    },
+    {
+      "name": "SkynetVS_ServiceCallbackHarnessV2RuntimeR05_d0b5c66b01e84fdd99bfef143979d845_Review.zip",
+      "bytes": 721206,
+      "sha256": "f322f04732bc2d05d16a6ff068c7c8492531cd7263bf4015bee052d88f1351cb"
+    },
+    {
+      "name": "SkynetVS_ServiceCallbackHarnessV2_Runtime_R05.once.json",
+      "bytes": 1575,
+      "sha256": "5a59af8f18cab123e1679fc4cc99ef8009624e2d2b96943362bc3a1c296478d2"
+    }
+  ],
+  "next_boundary": "Keep real SCM/start/token/origin work separate. Do not reopen the accepted synthetic suite or install a service under this evidence record."
+}
