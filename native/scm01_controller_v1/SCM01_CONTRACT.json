@@ -1,0 +1,167 @@
+{
+  "kind": "SCM01_CONTROLLER_SCOPE_82",
+  "design_approval_message": 82,
+  "runtime_authorized": false,
+  "source_contract": {
+    "path": "SCM01_CONTRACT_PROPOSAL.json",
+    "bytes": 7356,
+    "sha256": "c2b69767c37e90a82c91f605dd1ece92b053f3771468e46d4fe487a6404e49f1"
+  },
+  "design": {
+    "kind": "SCM01_NATIVE_SERVICE_REFUSAL_CONTRACT_PROPOSAL",
+    "message": 81,
+    "status": "REVIEW_ONLY_NOT_APPLIED",
+    "runtime_authorized": false,
+    "controller_delivered": false,
+    "checkpoint": {
+      "head": "26126296aed8179d27c3b4d37f99f2add62f9891",
+      "tree": "e8be376471e81868873f5590625c9d350f9c969c",
+      "parent": "811431d5ffb89faf6a59dacbb768b97aae06f31b",
+      "branch": "main",
+      "origin_main": "26126296aed8179d27c3b4d37f99f2add62f9891",
+      "basis": "User recovery console in message 80, not independently queried in message 81",
+      "status_reported": "clean",
+      "index_identity_current": null
+    },
+    "purpose": "ONE_REAL_SCM_REFUSAL_OBSERVATION_OF_UNCHANGED_V3_NOT_PRODUCTION_ACCEPTANCE",
+    "candidate": {
+      "source_root": "native/guard_start_candidate_v3",
+      "review": {
+        "path": "C:\\Users\\User\\Downloads\\SkynetVS_GuardStartCandidateV3_cfb35fd060b3419aaf5af4d04b89597d_Review.zip",
+        "bytes": 1749757,
+        "sha256": "b06308da151502363b470cea101508e9a18d2654f0a77200bd91d0da582e4c68"
+      },
+      "member": "publish/Guard.exe",
+      "bytes": 882176,
+      "sha256": "66736793b396c1c5682ce149df199db34d63499c916d299aa6106f11b3f68fdb",
+      "unchanged": true,
+      "harness_exe_allowed": false,
+      "real_Guard_exe_execution_is_new_permission": true
+    },
+    "recommended_environment": {
+      "type": "Disposable isolated Windows x64 VM or equivalent dedicated disposable guest",
+      "selected_guest": null,
+      "working_host_allowed": false,
+      "guest_network": "disabled before test",
+      "host_writeable_shares": "none during test",
+      "host_secrets_or_enrollment": "absent",
+      "clean_checkpoint_required": true,
+      "out_of_guest_stop_reset_available": true,
+      "claim": "Lab isolation proposal, not automatically applied or attested by JSON"
+    },
+    "proposed_service": {
+      "name": "SkynetVSGuard",
+      "existing_service_action": "ABORT; never adopt, reconfigure, stop, start or delete existing entry",
+      "service_type": 16,
+      "start_type": 3,
+      "error_control": 0,
+      "account": "NT SERVICE\\SkynetVSGuard",
+      "password": null,
+      "local_system_fallback": false,
+      "binary_path": "Quoted exact guest-local per-run copy of pinned Guard.exe; no arguments",
+      "image_directory": "New guest-local lab directory, outside production releases/store; actual path and inherited ACL verified before authorization",
+      "explicit_ACL_edits": false,
+      "service_sid_type_3_applied": false,
+      "required_privileges_list_applied": false,
+      "profile_caveat": "Name/account/type preserved; effective SID/token/privilege settings are recorded, not a production-profile acceptance; no auto-fix or widening permissions. SCM implicit object/security creation is a real future write."
+    },
+    "future_attempt_budget": {
+      "CreateServiceW": 1,
+      "StartServiceW": 1,
+      "DeleteService": 1,
+      "Guard_manual_CreateProcess": 0,
+      "ControlService": 0,
+      "retries_or_resume": false,
+      "failure_actions": "No restart/reboot/run-command; verify absence before start, never configure to mask a failure",
+      "triggers": "None; verify before start"
+    },
+    "proposed_observations": {
+      "prestart": "Freshly created service STOPPED with initial exit fields recorded, exact config and absence of recovery/triggers; durable mutation intent before each operation",
+      "start": "Store BOOL and immediate error only on failure; call once. Nonzero alone does not accept the case. Zero is REVIEW/ERROR, never silently accepted as expected startup failure.",
+      "poll": "QueryServiceStatusEx raw structure, return code, returned byte count and timestamps; bounded polling, not a complete trace",
+      "expected_terminal": {
+        "ServiceType": 16,
+        "CurrentState": 1,
+        "ControlsAccepted": 0,
+        "Win32ExitCode": 1066,
+        "ServiceSpecificExitCode": 78,
+        "CheckPoint": 0,
+        "WaitHint": 0
+      },
+      "observed_running_or_other_state": "FAIL/review and halt; no further starts",
+      "start_pending_observation_required": false,
+      "process_exit_78_required": false,
+      "process_exit_confirmed_by_status": false,
+      "handler_callback_accepted": false,
+      "pid_for_termination_from_status_allowed": false
+    },
+    "containment_difference": "SCM owns process creation; R05 job-at-create, pipes and DETACHED_PROCESS do not apply to Guard. No fake claim of inherited controller job. Guest containment is separate.",
+    "future_cleanup": {
+      "scope": "Only the service object actually created by this run, on its retained creation handle with config recheck",
+      "delete_is_not_stop": true,
+      "service_absence_gate": "Close every owned service handle, then bounded OpenService read must yield ERROR_SERVICE_DOES_NOT_EXIST (1060); MARKED_FOR_DELETE/ACCESS_DENIED is not success",
+      "unknown_or_hung_process": "No taskkill/name scan or trusting stopped/pending PID; preserve evidence and use independently available guest shutdown/reset",
+      "process_zero_claim": "Not derived from SERVICE_STOPPED or DeleteService",
+      "guest_retirement_evidence_required": true,
+      "erase_logs_allowed": false,
+      "old_Downloads_evidence_delete_allowed": false
+    },
+    "controller_requirements": {
+      "shape": "Separate explicit native API client, not new service or injected shim; no reflection or ServiceNative replacement",
+      "rights": "Minimal manager CONNECT|CREATE_SERVICE and service QUERY_CONFIG|QUERY_STATUS|START|DELETE|READ_CONTROL as justified; no ALL_ACCESS or token adjustment",
+      "input_mode": "Self-contained signed-off capsule; no live project imports or user-switchable image/service/account",
+      "timeouts": "Observer/deletion deadlines must be fixed and tested before runtime. Blocking SCM RPC is not claimed forcibly cancellable; out-of-guest watchdog required.",
+      "journal": "Exclusive one-shot marker in guest plus host-side authorization consumption; append intents/results with raw codes; ambiguous Create/Start never replayed",
+      "output": "Evidence capture only; no boolean service response or raw JSON can mint P00; historical artifacts unmodified"
+    },
+    "next_delivery": {
+      "scope": "CONTROLLER_SOURCE_BUILD_ONLY_AFTER_SCM01_DESIGN_APPROVAL",
+      "real_API_execution": false,
+      "requirements": [
+        "ABI declarations from exact SDK with compile-only checks",
+        "Controller control-flow tests using fakes explicitly not SCM tests",
+        "Atomic create-not-adopt guard and one-shot budgets",
+        "Terminal status evaluator independent of localized console and process exit",
+        "Crash/partial state handling, DeleteService pending semantics, no unknown-PID killing",
+        "No native runtime until named guest, paths, ACL observations, controller build identities and separate execution consent exist"
+      ]
+    },
+    "not_accepted": [
+      "real Handler matrix",
+      "complete transition history",
+      "service process natural exit code",
+      "production token/SCM/image origin",
+      "Guard V2 runtime migration",
+      "production loader B02 closure",
+      "P00 or enrollment",
+      "P01 acquisition",
+      "all jobs or platforms"
+    ],
+    "preserved_state": {
+      "R01": "ERROR",
+      "R02": "REVIEW_REQUIRED",
+      "R03": "REVIEW_REQUIRED",
+      "R04": "DIAGNOSTIC_ONLY",
+      "R05": "18/18_SYNTHETIC_PROVIDER_ONLY",
+      "B02": "NOT_ACCEPTED",
+      "P00": "NOT_ACCEPTED",
+      "P01": "NOT_IMPLEMENTED",
+      "acquisition": "BLOCKED",
+      "native_factory": "CLOSED"
+    }
+  },
+  "delivery_shape": "PYTHON_EXPLICIT_WIN32_CLIENT_PLUS_CPP_HEADER_ABI_COMPILE_ONLY",
+  "public_entrypoint": "REFUSE_92_BEFORE_NATIVE_BACKEND_IMPORT",
+  "native_constructor": "ALWAYS_CLOSED_IN_V1",
+  "timing_proposal": {
+    "status_seconds": 30,
+    "deletion_seconds": 10,
+    "poll_seconds": 0.1,
+    "max_status_polls": 301,
+    "max_delete_polls": 101,
+    "config_buffer_bytes": 8192,
+    "security_buffer_bytes": 8192,
+    "hard_rpc_cancellation": false
+  },
+  "timings_runtime_approval_pending": true
+}

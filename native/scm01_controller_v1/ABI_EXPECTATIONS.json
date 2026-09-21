@@ -1,0 +1,148 @@
+{
+  "kind": "SCM01_WIN64_ABI_EXPECTATIONS_V1",
+  "structures": {
+    "SERVICE_STATUS_PROCESS": {
+      "size": 36,
+      "alignment": 4,
+      "offsets": {
+        "dwServiceType": 0,
+        "dwCurrentState": 4,
+        "dwControlsAccepted": 8,
+        "dwWin32ExitCode": 12,
+        "dwServiceSpecificExitCode": 16,
+        "dwCheckPoint": 20,
+        "dwWaitHint": 24,
+        "dwProcessId": 28,
+        "dwServiceFlags": 32
+      }
+    },
+    "QUERY_SERVICE_CONFIGW": {
+      "size": 64,
+      "alignment": 8,
+      "offsets": {
+        "dwServiceType": 0,
+        "dwStartType": 4,
+        "dwErrorControl": 8,
+        "lpBinaryPathName": 16,
+        "lpLoadOrderGroup": 24,
+        "dwTagId": 32,
+        "lpDependencies": 40,
+        "lpServiceStartName": 48,
+        "lpDisplayName": 56
+      }
+    },
+    "SC_ACTION": {
+      "size": 8,
+      "alignment": 4,
+      "offsets": {
+        "Type": 0,
+        "Delay": 4
+      }
+    },
+    "SERVICE_FAILURE_ACTIONSW": {
+      "size": 40,
+      "alignment": 8,
+      "offsets": {
+        "dwResetPeriod": 0,
+        "lpRebootMsg": 8,
+        "lpCommand": 16,
+        "cActions": 24,
+        "lpsaActions": 32
+      }
+    },
+    "SERVICE_TRIGGER_INFO": {
+      "size": 24,
+      "alignment": 8,
+      "offsets": {
+        "cTriggers": 0,
+        "pTriggers": 8,
+        "pReserved": 16
+      }
+    },
+    "SERVICE_DELAYED_AUTO_START_INFO": {
+      "size": 4,
+      "alignment": 4,
+      "offsets": {
+        "fDelayedAutostart": 0
+      }
+    },
+    "SERVICE_FAILURE_ACTIONS_FLAG": {
+      "size": 4,
+      "alignment": 4,
+      "offsets": {
+        "fFailureActionsOnNonCrashFailures": 0
+      }
+    },
+    "SERVICE_SID_INFO": {
+      "size": 4,
+      "alignment": 4,
+      "offsets": {
+        "dwServiceSidType": 0
+      }
+    },
+    "SERVICE_REQUIRED_PRIVILEGES_INFOW": {
+      "size": 8,
+      "alignment": 8,
+      "offsets": {
+        "pmszRequiredPrivileges": 0
+      }
+    },
+    "SERVICE_LAUNCH_PROTECTED_INFO": {
+      "size": 4,
+      "alignment": 4,
+      "offsets": {
+        "dwLaunchProtected": 0
+      }
+    }
+  },
+  "constants": {
+    "SC_MANAGER_CONNECT": 1,
+    "SC_MANAGER_CREATE_SERVICE": 2,
+    "SERVICE_QUERY_CONFIG": 1,
+    "SERVICE_QUERY_STATUS": 4,
+    "SERVICE_START": 16,
+    "DELETE": 65536,
+    "READ_CONTROL": 131072,
+    "SERVICE_WIN32_OWN_PROCESS": 16,
+    "SERVICE_DEMAND_START": 3,
+    "SERVICE_ERROR_IGNORE": 0,
+    "SERVICE_STOPPED": 1,
+    "SERVICE_START_PENDING": 2,
+    "SC_STATUS_PROCESS_INFO": 0,
+    "ERROR_SERVICE_DOES_NOT_EXIST": 1060,
+    "ERROR_SERVICE_MARKED_FOR_DELETE": 1072,
+    "ERROR_SERVICE_EXISTS": 1073,
+    "ERROR_INSUFFICIENT_BUFFER": 122,
+    "ERROR_SERVICE_SPECIFIC_ERROR": 1066,
+    "SERVICE_CONFIG_FAILURE_ACTIONS": 2,
+    "SERVICE_CONFIG_DELAYED_AUTO_START_INFO": 3,
+    "SERVICE_CONFIG_FAILURE_ACTIONS_FLAG": 4,
+    "SERVICE_CONFIG_SERVICE_SID_INFO": 5,
+    "SERVICE_CONFIG_REQUIRED_PRIVILEGES_INFO": 6,
+    "SERVICE_CONFIG_TRIGGER_INFO": 8,
+    "SERVICE_CONFIG_LAUNCH_PROTECTED": 12,
+    "OWNER_SECURITY_INFORMATION": 1,
+    "GROUP_SECURITY_INFORMATION": 2,
+    "DACL_SECURITY_INFORMATION": 4
+  },
+  "functions": {
+    "OpenSCManagerW": "SC_HANDLE (WINAPI*)(LPCWSTR, LPCWSTR, DWORD)",
+    "OpenServiceW": "SC_HANDLE (WINAPI*)(SC_HANDLE, LPCWSTR, DWORD)",
+    "CreateServiceW": "SC_HANDLE (WINAPI*)(SC_HANDLE, LPCWSTR, LPCWSTR, DWORD, DWORD, DWORD, DWORD, LPCWSTR, LPCWSTR, LPDWORD, LPCWSTR, LPCWSTR, LPCWSTR)",
+    "StartServiceW": "BOOL (WINAPI*)(SC_HANDLE, DWORD, LPCWSTR*)",
+    "QueryServiceStatusEx": "BOOL (WINAPI*)(SC_HANDLE, SC_STATUS_TYPE, LPBYTE, DWORD, LPDWORD)",
+    "QueryServiceConfigW": "BOOL (WINAPI*)(SC_HANDLE, LPQUERY_SERVICE_CONFIGW, DWORD, LPDWORD)",
+    "QueryServiceConfig2W": "BOOL (WINAPI*)(SC_HANDLE, DWORD, LPBYTE, DWORD, LPDWORD)",
+    "QueryServiceObjectSecurity": "BOOL (WINAPI*)(SC_HANDLE, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, LPDWORD)",
+    "DeleteService": "BOOL (WINAPI*)(SC_HANDLE)",
+    "CloseServiceHandle": "BOOL (WINAPI*)(SC_HANDLE)"
+  },
+  "scalar_widths": {
+    "void*": 8,
+    "SC_HANDLE": 8,
+    "DWORD": 4,
+    "BOOL": 4,
+    "WCHAR": 2,
+    "SC_STATUS_TYPE": 4
+  }
+}

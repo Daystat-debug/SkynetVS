@@ -1,0 +1,29 @@
+{
+  "kind": "SCM01_CONTROLLER_BUILD_SCOPE_V1",
+  "approval_message": 82,
+  "source_build_authorized": true,
+  "runtime_authorized": false,
+  "controller_implementation": "Python explicit Win32 API client",
+  "python_modules": [
+    "controller_main.py",
+    "runtime_gate.py",
+    "scm01_contract.py",
+    "scm01_engine.py",
+    "scm01_journal.py",
+    "scm01_native.py"
+  ],
+  "python_compile_only": true,
+  "abi_compile": "MSVC cl.exe /c against pinned isolated Windows SDK; 97 static_assert checks",
+  "abi_linked": false,
+  "abi_executed": false,
+  "controller_exe_created": false,
+  "controller_entrypoint_executed": false,
+  "dotnet_aot_or_guard_rebuild": false,
+  "guard_and_harness_executed": false,
+  "real_scm_calls": false,
+  "source_landing_after_all_checks": true,
+  "target": "native/scm01_controller_v1",
+  "git_add_commit_push": false,
+  "tests_locally_only": "Python control-flow fakes + temporary actual Git + explicitly mocked MSVC; no Windows runtime acceptance",
+  "excluded": "VM selection, provisioning, ACL/access check, runtime authorization/capsule issuer, host-side one-shot consumer and guest shutdown/reset remain prerequisites for a separate future runtime package"
+}
