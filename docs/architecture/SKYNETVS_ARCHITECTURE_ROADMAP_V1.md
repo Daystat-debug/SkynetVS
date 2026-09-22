@@ -1,5 +1,13 @@
 # SkynetVS Architecture Roadmap V1
 
+> **Оперативная запись #108 / 2026-09-22:** для закрытого модельного core выбран
+> Source107 V2; пользователь разрешил 22 новых файла и два canonical docs после
+> отдельного preflight. Runtime, commit и push не разрешены. Текущее описание —
+> в разделе «Source107 V2 — согласование source-only переноса #108» в конце файла.
+> Старые next-action записи сохраняются как история; факт применения подтверждает
+> отдельный apply report, а не наличие этого текста.
+
+
 > **Оперативная запись #98 / 2026-09-22:** SCM01-WSB01 согласован только как
 > лабораторный дизайн с одной недоверенной writable Output-папкой. Runtime
 > не разрешён. Актуальные границы и Next Exact Action — в разделе SCM01-WSB01
@@ -6358,3 +6366,138 @@ native factory                CLOSED
 пользователя #98; checkpoint report
 `SkynetVS_DocsReconciliation95CommitPushV1_b247c7015d6f4585a0ddfa823332258c.json`.
 Proposal #97 сохраняется историческим: его поля `PROPOSED` не переписываются.
+
+## Source107 V2 — согласование source-only переноса #108
+
+**2026-09-22: SOURCE LANDING APPROVED AFTER SEPARATE PREFLIGHT / NO COMMIT OR RUNTIME GRANT.**
+
+### Решение и неизменная цель
+
+После принятия лабораторного SCM01-WSB01 (#98, docs commit `a666c5a1...`) scope #105
+определил закрытое модельное ядро. В #106 пользователь разрешил подготовку 22 файлов
+и offline-проверки вне своего repository. Review #107 исправил два дефекта модели;
+актуальная поставка для переноса — только **Source107 V2**.
+
+В #108 отдельно разрешены **22 добавления** в `native/scm01_wsb01_adapter_v1/` и
+изменения только этого Roadmap и `SKYNETVS_CURRENT_STATE.md`, после отдельного
+preflight. Это разрешение на source landing, не факт уже выполненного apply.
+Staging, commit/push и Windows/runtime-действия не входят в разрешение.
+Работа остаётся prerequisite Developer Safety Kernel / V1C3A1; новый RC не создаётся.
+
+Последняя подтверждённая точка перед этим переносом:
+
+```text
+branch       main
+HEAD         a666c5a1f9c2bb53f75cf36715913f419f1c6ca7
+tree         4119691020466bdda62594f852707274345d5ce2
+parent       a05b28b95cab6eacb4b92ef8079206ee6939873b
+subject      docs: record SCM01-WSB01 lab profile
+```
+
+Это исходный checkpoint, не hash будущего source commit. Последний local snapshot —
+SourceClosure103 `4a9a815c519746a8940d33565e40b96a`; последний remote read — Docs100
+`5ffcaebaa53f450c8b131a9ce900644c`. Новое состояние устанавливается отдельными отчётами,
+не переносится автоматически из сохранённого evidence.
+
+### Exact source delivery
+
+```text
+SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip
+bytes   52915
+SHA256  80abd6b7276667175129c9e0ee1d3f71af82343d67a89d8e0f4b3083f65f22be
+target  native/scm01_wsb01_adapter_v1/
+files   22
+```
+
+Состав: `.gitattributes`, `.gitignore`, `README_RU.md`, `SOURCE_SCOPE.json`,
+`SOURCE_BINDINGS.json`, `PROTOCOL.json`, `TEST_PLAN.json`, `__init__.py`,
+`adapter_main.py`, `wsb01_policy.py`, `wsb01_contract.py`, `wsb01_layout.py`,
+`wsb01_transcript.py`, `wsb01_state.py`, `wsb01_ports.py`, `wsb01_runtime_gate.py`,
+`tests/__init__.py` и пять файлов `tests/test_{contract,layout,transcript,state,closed_boundary}.py`.
+Точный байтовый список — `SOURCE_MANIFEST_107.json` в Review107.
+
+Все 22 файла переносятся неизменными. `SOURCE_SCOPE.json` и `SOURCE_BINDINGS.json`
+остаются исходными snapshots подготовки #106/#107: их историческое
+`repository_apply_authorized=false` не переписывается и не служит runtime gate.
+Более позднее условное разрешение #108 фиксируется здесь и во внешнем
+`APPROVAL_108.json`. Старый Source106 V1 сохраняется как historical, но не применяется.
+
+### Что реализовано и что исправлено
+
+Core содержит canonical JSON/JSONL contract, лексический layout и metadata catalog,
+hash/sequence transcript checks, модель SCM trace и детерминированный reducer.
+PlannedEffect описывает действие как данные; исполнителя Windows-действий нет.
+Публичный entrypoint всегда `RUNTIME_CLOSED_SOURCE_ONLY` / 92. Runtime issuer отсутствует.
+
+Review #107 исправил в `wsb01_state.reduce_model`:
+
+- **R107-01:** корректно оформленный failure terminal немедленно выставляет sticky
+  failure и `FAILED_ACTIVE_UNKNOWN`, сохраняя bytes до установления retirement.
+- **R107-02:** позднее корректное normal/forced retirement observation учитывается,
+  но deadline failure остаётся. `FAILED_RETIRED` не является успешным экспериментом.
+
+Относительно Source106 изменились только `wsb01_state.py`, `tests/test_state.py`,
+`TEST_PLAN.json`, `SOURCE_SCOPE.json`, `README_RU.md`; 17 файлов сохранены побайтово.
+Wire protocol и прежние reference pins не менялись. Исторические 60/60 Source106
+не отменяются, но новые regressions показывают неполноту прежнего test coverage.
+
+### Уровень evidence
+
+`DELIVERY_VALIDATION_107.json` сообщает два полных прохода **65/65** на Source107:
+source-копия и файлы из окончательного ZIP; 44 исходных case + 21 regression.
+Дополнительно: 288 wrong-order checks, 52 late-retirement checks; entrypoint CLOSED/92.
+Это сохранённый offline evidence **CPython 3.13.5 / Linux**. Python 3.12 проверен
+AST-синтаксически; исполнения новой ревизии на Windows/Python 3.12 пока нет.
+
+Старые project evaluators и consumed grants не повторялись. Модельные результаты
+`MODEL_BENIGN_TRACE_VALID`, `MODEL_SCM_REFUSAL_TRACE_VALID`, `MODEL_FAILURE_TRACE_VALID`
+имеют domain `OFFLINE_MODEL`, `runtime_authorized=false`, `crypto_verified=false`.
+Последний результат означает корректную модель неудачи, не успешный run.
+Benign trace не содержит Guard и имеет нулевые SCM budgets.
+
+### Границы сохраняются
+
+Windows Sandbox уже выбран: `traditional_wsb_logoncommand_v1`. Принятое исключение
+SCM01-WSB01 — одна свежая недоверенная writable Output mapping — не переоткрывается.
+Input/Runtime/Control read-only для гостя; repository/.git/host .venv/весь Downloads/
+credentials/enrollment не отображаются в guest. Limits/signatures не являются
+дисковой квотой или защитой от злонамеренного guest disk-fill.
+
+Существующие `native/scm01_controller_v1/`, Guard V1/V2/V3, Harness, `modules/`,
+`tools/`, pipeline, runtime bundle и historical attestations не изменяются.
+Никакого monkeypatch/test-factory bypass старого SCM01 gate. Guard V3 не
+пересобирается и не исполняется; его pin и будущие SCM budgets остаются прежними.
+
+```text
+Source107 V2                 corrected / offline validated
+Source landing              approved after separate preflight; report required
+New source commit           not authorized by #108
+Existing/new runtime gate   CLOSED
+Sandbox / guest bootstrap   NOT AUTHORIZED
+real SCM / Guard / install  NOT AUTHORIZED
+ACL / enrollment            NOT AUTHORIZED
+B02 / P00                   NOT_ACCEPTED
+P01                         NOT_IMPLEMENTED
+V1C3A1B / V1C3A1C           NOT OPEN
+RC044                       NOT CREATED
+R05                         18/18 SYNTHETIC_PROVIDER_ONLY / historical consumed
+acquisition                 BLOCKED
+native factory              CLOSED
+```
+
+### Next Exact Action
+
+Отдельный read-only preflight должен подтвердить неизменный checkpoint, clean
+worktree/empty staging, отсутствие target directory, exact Source107 и кандидаты
+двух docs. Только после PASS выполнить отдельный source-only apply: 22 новых файла,
+два изменённых документа, staging пуст. Не повторять разрешение #108 и не запускать
+старые apply/commit/collectors.
+
+После apply проверить фактический report и достигнутое состояние. Commit/push требуют
+отдельного согласования; разрешение #108 их не даёт. Windows/Python offline validation
+также не считать выполненной по Linux evidence и не запускать скрыто из preflight.
+
+Реальные providers, session/stop binding, guest capsule/runtime topology, native FS,
+CNG verification, persistent host ledger и физическая Control publication остаются
+отдельной будущей работой. Benign Sandbox и real SCM потребуют разных последующих
+runtime grants. Handoff обновляется при каждом следующем значимом шаге.

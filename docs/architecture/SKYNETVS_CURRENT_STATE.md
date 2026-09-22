@@ -1,5 +1,13 @@
 # SkynetVS Current State
 
+> **Оперативная запись #108 / 2026-09-22:** для закрытого модельного core выбран
+> Source107 V2; пользователь разрешил 22 новых файла и два canonical docs после
+> отдельного preflight. Runtime, commit и push не разрешены. Текущее описание —
+> в разделе «Source107 V2 — согласование source-only переноса #108» в конце файла.
+> Старые next-action записи сохраняются как история; факт применения подтверждает
+> отдельный apply report, а не наличие этого текста.
+
+
 > **Оперативная запись #98 / 2026-09-22:** SCM01-WSB01 согласован только как
 > лабораторный дизайн с одной недоверенной writable Output-папкой. Runtime
 > не разрешён. Актуальные границы и Next Exact Action — в разделе SCM01-WSB01
@@ -4123,3 +4131,96 @@ integration без Guard/SCM, затем review evidence, и только пос
 Подробное согласованное решение — раздел SCM01-WSB01 / сообщение #98 в
 `SKYNETVS_ARCHITECTURE_ROADMAP_V1.md`; основание — исторический разбор #97 и
 согласование пользователя #98. Старые Sandbox attestations не переписываются.
+
+## Source107 V2 — согласование source-only переноса #108
+
+**2026-09-22: условное разрешение source landing получено; runtime CLOSED.**
+Этот раздел заменяет прежний Next Exact Action в части выбора/согласования source
+scope. Он не изменяет исторические статусы и не удостоверяет успех apply сам по себе.
+
+### Подтверждённая исходная точка
+
+```text
+HEAD   a666c5a1f9c2bb53f75cf36715913f419f1c6ca7
+tree   4119691020466bdda62594f852707274345d5ce2
+parent a05b28b95cab6eacb4b92ef8079206ee6939873b
+branch main
+```
+
+Local clean/staging-empty snapshot: SourceClosure103
+`4a9a815c519746a8940d33565e40b96a`; последнее remote equality: Docs100
+`5ffcaebaa53f450c8b131a9ce900644c`. Это baseline до нового source landing, не
+выдуманный future commit и не новое измерение пользовательского компьютера.
+
+### Разрешение и исходники
+
+#106 разрешил scope #105: подготовку закрытого core и offline-тесты вне repository.
+Review #107 заменил Source106 V1 как кандидат на **Source107 V2**, исправив
+немедленный sticky failure после failure terminal и учёт позднего retirement
+без отмены deadline failure. Все 22 файла остаются в одном новом каталоге:
+
+```text
+native/scm01_wsb01_adapter_v1/
+SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip
+52915 bytes
+80abd6b7276667175129c9e0ee1d3f71af82343d67a89d8e0f4b3083f65f22be
+```
+
+Пользователь #108 разрешил добавление этих 22 файлов и обновление двух canonical
+docs **после отдельного preflight**. Git add/commit/push и любые runtime-полномочия
+не разрешены. Повторного согласования этого source-only scope не требуется.
+
+Source107 metadata не редактируется при переносе: исторические поля
+`NOT_APPLIED` / `repository_apply_authorized=false` описывают момент подготовки.
+Разрешение #108 и фактический apply report — отдельные, более поздние records.
+До такого отчёта наличие candidate package не является доказательством применения.
+
+### Проверки и их предел
+
+Сохранённый Review107 сообщает **65/65 дважды**: исходная копия и final ZIP;
+44 scope105 + 21 regression case; 288 wrong-order и 52 late-retirement checks.
+Среда — CPython 3.13.5 / Linux. Python 3.12 AST only; Windows/Python3.12 execution
+пока отсутствует. В source-landing preflight новые core-тесты и старые evaluators
+не запускаются.
+
+Core — модель, не runtime adapter. Все результаты `OFFLINE_MODEL`,
+`runtime_authorized=false`, `crypto_verified=false`; entrypoint CLOSED/92.
+`MODEL_FAILURE_TRACE_VALID` — корректно описанная неудача, не успех.
+Нет native provider, effect executor, .wsb/.ps1, CNG, guest bootstrap или SCM calls.
+
+### Неизменные решения и статусы
+
+Windows Sandbox уже выбран: `traditional_wsb_logoncommand_v1`. Не выбирать новую VM
+с нуля. SCM01-WSB01 с одной недоверенной writable Output уже согласован; защита диска
+от malicious guest-writer не заявляется. Старые SCM01/Guard/source pins не менять,
+test-only backend не использовать для обхода закрытого gate.
+
+```text
+Source scope #105 / source landing #108  APPROVED (landing after preflight)
+Source107 V2                            corrected / offline validated
+User source apply                      requires separate successful report
+Commit/push                             NOT AUTHORIZED by #108
+Sandbox / guest bootstrap               NOT AUTHORIZED
+real SCM / Guard / install              NOT AUTHORIZED
+ACL / enrollment                        NOT AUTHORIZED
+SCM01 runtime                           CLOSED
+B02 / P00                               NOT_ACCEPTED
+P01                                     NOT_IMPLEMENTED
+V1C3A1B / V1C3A1C                       NOT OPEN
+RC044                                   NOT CREATED
+R05                                     SYNTHETIC_PROVIDER_ONLY / consumed
+acquisition                             BLOCKED
+native factory                          CLOSED
+```
+
+### Next Exact Action
+
+Выполнить отдельный read-only preflight для Source107 V2 + этих двух docs.
+После PASS — отдельный apply-only с 22 additions и 2 modifications, без staging.
+Затем проверить apply report и обновить Handoff достигнутым состоянием. Не
+запрашивать повторно разрешение #108; не выдавать commit/push или runtime команды
+без отдельного согласования. Не повторять SourceAudit102/Closure103 и Docs100.
+
+Windows offline suite, native/platform integration, session/stop proof, guest runtime,
+CNG и persistent host ledger пока не закрыты. Benign integration без Guard/SCM и
+real-SCM эксперимент остаются двумя отдельными будущими разрешениями.

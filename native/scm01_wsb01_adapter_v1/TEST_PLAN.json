@@ -1,0 +1,538 @@
+{
+  "kind": "SCM01_WSB01_CLOSED_CORE_TEST_PLAN_V1",
+  "status": "IMPLEMENTED_RESULTS_IN_DELIVERY_REPORT",
+  "cases": [
+    {
+      "id": "CON01",
+      "group": "contract",
+      "name": "canonical roundtrip",
+      "expected": "One serializer+parser for request/ready/authorization-spec/terminal, canonical exact sets.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON01_"
+    },
+    {
+      "id": "CON02",
+      "group": "contract",
+      "name": "duplicate fields",
+      "expected": "Reject repeated key before last-value overwrite.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON02_"
+    },
+    {
+      "id": "CON03",
+      "group": "contract",
+      "name": "unexpected/missing fields",
+      "expected": "Reject fields_invalid; no silent fill.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON03_"
+    },
+    {
+      "id": "CON04",
+      "group": "contract",
+      "name": "field-order consistency",
+      "expected": "Canonical sorted serialization at every object, array order preserved; no conflicting key-order rule.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON04_"
+    },
+    {
+      "id": "CON05",
+      "group": "contract",
+      "name": "UTF-8 and BOM",
+      "expected": "Reject invalid encoding/BOM/surrogate data outside schema.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON05_"
+    },
+    {
+      "id": "CON06",
+      "group": "contract",
+      "name": "number types",
+      "expected": "Reject bool-as-int, float, NaN/Infinity, overlong integers.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON06_"
+    },
+    {
+      "id": "CON07",
+      "group": "contract",
+      "name": "depth and allocation bounds",
+      "expected": "Reject depth/size before uncontrolled recursive parse; bound each journal record.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON07_"
+    },
+    {
+      "id": "CON08",
+      "group": "contract",
+      "name": "EOF",
+      "expected": "Reject CRLF/noncanonical JSON and extra/missing final LF for new protocol only.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON08_"
+    },
+    {
+      "id": "CON09",
+      "group": "contract",
+      "name": "raw configuration row",
+      "expected": "Fixture with nine raw 8192-byte buffers (147456 hex characters) retained; fits 256 KiB row.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON09_"
+    },
+    {
+      "id": "CON10",
+      "group": "contract",
+      "name": "oversize data",
+      "expected": "Reject file, row, record-count and total-byte overrun; never truncate-and-PASS.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_contract.py",
+      "test_name_prefix": "test_CON10_"
+    },
+    {
+      "id": "LAY01",
+      "group": "layout",
+      "name": "mapping permissions",
+      "expected": "Input/Runtime/Control RO; only Output RW from start.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_layout.py",
+      "test_name_prefix": "test_LAY01_"
+    },
+    {
+      "id": "LAY02",
+      "group": "layout",
+      "name": "forbidden roots",
+      "expected": "Reject repo/.git/.venv/general Downloads/credentials root mapping.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_layout.py",
+      "test_name_prefix": "test_LAY02_"
+    },
+    {
+      "id": "LAY03",
+      "group": "layout",
+      "name": "path aliases",
+      "expected": "Reject traversal, UNC/ADS, reserved/unsafe components and case-insensitive collisions in plan.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_layout.py",
+      "test_name_prefix": "test_LAY03_"
+    },
+    {
+      "id": "LAY04",
+      "group": "layout",
+      "name": "root overlap",
+      "expected": "Reject Output/input/control overlap and accepted-host-store sharing.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_layout.py",
+      "test_name_prefix": "test_LAY04_"
+    },
+    {
+      "id": "LAY05",
+      "group": "layout",
+      "name": "catalog membership",
+      "expected": "Success requires exact four names; failure or extra entry blocks acceptance.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_layout.py",
+      "test_name_prefix": "test_LAY05_"
+    },
+    {
+      "id": "LAY06",
+      "group": "layout",
+      "name": "type and limits",
+      "expected": "Reject directory/reparse/symlink/unknown metadata and overflow as model facts, not native proof.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_layout.py",
+      "test_name_prefix": "test_LAY06_"
+    },
+    {
+      "id": "TRA01",
+      "group": "transcript",
+      "name": "wrong identity",
+      "expected": "Reject wrong run/nonce/profile/policy/source/runtime/image binding.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA01_"
+    },
+    {
+      "id": "TRA02",
+      "group": "transcript",
+      "name": "ready mutation",
+      "expected": "Reject replaced ready bytes/key after pin.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA02_"
+    },
+    {
+      "id": "TRA03",
+      "group": "transcript",
+      "name": "Output authority",
+      "expected": "Reject approved=true/action in Output; no control dispatch.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA03_"
+    },
+    {
+      "id": "TRA04",
+      "group": "transcript",
+      "name": "authorization binding",
+      "expected": "Reject altered ready/key/request/session-binding hash and duplicate authorization marker.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA04_"
+    },
+    {
+      "id": "TRA05",
+      "group": "transcript",
+      "name": "hash DAG",
+      "expected": "Exclude self references; test each single-artifact bit change.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA05_"
+    },
+    {
+      "id": "TRA06",
+      "group": "transcript",
+      "name": "journal sequence",
+      "expected": "Reject gap, duplicate, reorder and partial final record.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA06_"
+    },
+    {
+      "id": "TRA07",
+      "group": "transcript",
+      "name": "mutation budgets",
+      "expected": "Model intent precedes create/start/delete; no retry after unknown result.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA07_"
+    },
+    {
+      "id": "TRA08",
+      "group": "transcript",
+      "name": "service-owned cleanup",
+      "expected": "Existing service/config drift/running state prohibits adopt/delete; do not reinterpret failure.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA08_"
+    },
+    {
+      "id": "TRA09",
+      "group": "transcript",
+      "name": "raw status",
+      "expected": "Decode exact 36 bytes and require tuple 16/1/0/1066/78/0/0 for model refusal.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA09_"
+    },
+    {
+      "id": "TRA10",
+      "group": "transcript",
+      "name": "signature domain",
+      "expected": "Fake valid signature stays model-only; crypto_verified=false.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA10_"
+    },
+    {
+      "id": "TRA11",
+      "group": "transcript",
+      "name": "cross-scope replay",
+      "expected": "Benign/old V1B4/Harness transcript cannot satisfy SCM model experiment.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA11_"
+    },
+    {
+      "id": "TRA12",
+      "group": "transcript",
+      "name": "post-exit stable snapshot",
+      "expected": "Changed terminal/journal/ready after model retirement invalidates candidate.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_transcript.py",
+      "test_name_prefix": "test_TRA12_"
+    },
+    {
+      "id": "STA01",
+      "group": "state",
+      "name": "benign model success",
+      "expected": "Complete trace with zero Guard/SCM actions; MODEL result only.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA01_"
+    },
+    {
+      "id": "STA02",
+      "group": "state",
+      "name": "refusal model success",
+      "expected": "Exact model service tuple, owned absence and normal retirement; no real acceptance.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA02_"
+    },
+    {
+      "id": "STA03",
+      "group": "state",
+      "name": "failed consume",
+      "expected": "No launch if consumption intent/result not established; ambiguity burns reservation.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA03_"
+    },
+    {
+      "id": "STA04",
+      "group": "state",
+      "name": "launch failure",
+      "expected": "One launch attempt consumed; no reuse/retry.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA04_"
+    },
+    {
+      "id": "STA05",
+      "group": "state",
+      "name": "failed authorization publication",
+      "expected": "Consume authorization budget before publication; no second publication after uncertain outcome.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA05_"
+    },
+    {
+      "id": "STA06",
+      "group": "state",
+      "name": "deadline",
+      "expected": "Host monotonic clock controls decisions; guest clock cannot extend budgets or retirement window.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA06_"
+    },
+    {
+      "id": "STA07",
+      "group": "state",
+      "name": "forced cleanup",
+      "expected": "Failure flag sticky even when model cleanup succeeds.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA07_"
+    },
+    {
+      "id": "STA08",
+      "group": "state",
+      "name": "launcher-only exit",
+      "expected": "No acceptance based only on transient launcher; unknown/missing session observation fails.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA08_"
+    },
+    {
+      "id": "STA09",
+      "group": "state",
+      "name": "unknown retirement",
+      "expected": "Quarantine model, no accepted-output copy, no new launch; preserve evidence.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA09_"
+    },
+    {
+      "id": "STA10",
+      "group": "state",
+      "name": "repeated/wrong-order event",
+      "expected": "Reject illegal transition and duplicate terminal.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_state.py",
+      "test_name_prefix": "test_STA10_"
+    },
+    {
+      "id": "CLO01",
+      "group": "closed_boundary",
+      "name": "entrypoint refuses",
+      "expected": "Returns closed/92 before any native, filesystem or process dispatch.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_closed_boundary.py",
+      "test_name_prefix": "test_CLO01_"
+    },
+    {
+      "id": "CLO02",
+      "group": "closed_boundary",
+      "name": "JSON cannot open gate",
+      "expected": "None, arbitrary object, approved=true and offline receipt all refused.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_closed_boundary.py",
+      "test_name_prefix": "test_CLO02_"
+    },
+    {
+      "id": "CLO03",
+      "group": "closed_boundary",
+      "name": "no native/active imports",
+      "expected": "AST/import graph permits only new core+stdlib; no ctypes/subprocess/WinDLL/old *_windows.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_closed_boundary.py",
+      "test_name_prefix": "test_CLO03_"
+    },
+    {
+      "id": "CLO04",
+      "group": "closed_boundary",
+      "name": "no actual credentials/markers",
+      "expected": "Offline trace IDs are test data; source tests never publish a live permit or consumed marker.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_closed_boundary.py",
+      "test_name_prefix": "test_CLO04_"
+    },
+    {
+      "id": "CLO05",
+      "group": "closed_boundary",
+      "name": "old sources unchanged",
+      "expected": "New delivery allowlist exact; historical pins are references, not edited/imported code.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_closed_boundary.py",
+      "test_name_prefix": "test_CLO05_"
+    },
+    {
+      "id": "CLO06",
+      "group": "closed_boundary",
+      "name": "typed model outputs",
+      "expected": "No helper/callback default can make a model result a live acceptance.",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT",
+      "test_file": "test_closed_boundary.py",
+      "test_name_prefix": "test_CLO06_"
+    }
+  ],
+  "count": 44,
+  "project_tests_executed": false,
+  "native_tests_executed": false,
+  "basis_message": 105,
+  "implementation_message": 106,
+  "scope": "NEW_CORE_OFFLINE_ONLY",
+  "supplemental_cases": [
+    {
+      "id": "REG01",
+      "test_file": "test_contract.py",
+      "test_method": "test_REG01_policy_cannot_widen",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG02",
+      "test_file": "test_contract.py",
+      "test_method": "test_REG02_model_only_schema",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG03",
+      "test_file": "test_contract.py",
+      "test_method": "test_REG03_no_mutable_aliases",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG04",
+      "test_file": "test_transcript.py",
+      "test_method": "test_REG04_pending_and_deletion_not_absence",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG05",
+      "test_file": "test_transcript.py",
+      "test_method": "test_REG05_failure_transcript_stays_failure",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG06",
+      "test_file": "test_transcript.py",
+      "test_method": "test_REG06_forged_final_claims",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG07",
+      "test_file": "test_state.py",
+      "test_method": "test_REG07_event_cross_scope",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG08",
+      "test_file": "test_state.py",
+      "test_method": "test_REG08_cannot_publish_wrong_commit",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG09",
+      "test_file": "test_closed_boundary.py",
+      "test_method": "test_REG09_protocol_file_matches_code",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG10",
+      "test_file": "test_closed_boundary.py",
+      "test_method": "test_REG10_initializers_empty",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG11",
+      "test_file": "test_contract.py",
+      "test_method": "test_REG11_huge_python_integer_bounded_before_string_conversion",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG12",
+      "test_file": "test_contract.py",
+      "test_method": "test_REG12_exact_input_types",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG13",
+      "test_file": "test_transcript.py",
+      "test_method": "test_REG13_crypto_domain_must_be_bytes",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG14",
+      "test_file": "test_transcript.py",
+      "test_method": "test_REG14_failed_create_never_owns_other_handle",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG15",
+      "test_file": "test_transcript.py",
+      "test_method": "test_REG15_absence_requires_closed_handles",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG16",
+      "test_file": "test_transcript.py",
+      "test_method": "test_REG16_poll_budgets",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG17",
+      "test_file": "test_state.py",
+      "test_method": "test_REG17_failure_terminal_is_immediately_sticky",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG18",
+      "test_file": "test_state.py",
+      "test_method": "test_REG18_late_normal_retirement_recorded_as_failure",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG19",
+      "test_file": "test_state.py",
+      "test_method": "test_REG19_late_forced_retirement_recorded_as_failure",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG20",
+      "test_file": "test_state.py",
+      "test_method": "test_REG20_late_unbound_or_unknown_retirement_rejected",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    },
+    {
+      "id": "REG21",
+      "test_file": "test_state.py",
+      "test_method": "test_REG21_failed_terminal_never_recovers_to_success",
+      "status": "IMPLEMENTED_OFFLINE_TEST_RESULT_IN_DELIVERY_REPORT"
+    }
+  ],
+  "supplemental_count": 21,
+  "review_revision_message": 107
+}

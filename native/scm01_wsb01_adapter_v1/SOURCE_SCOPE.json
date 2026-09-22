@@ -1,0 +1,81 @@
+{
+  "kind": "SCM01_WSB01_CLOSED_CORE_SOURCE_SCOPE_V1",
+  "status": "PREPARED_CLOSED_CORE_MODEL_ONLY_NOT_APPLIED",
+  "scope_message": 105,
+  "implementation_approval_message": 106,
+  "scope_105_sha256": "17d225604871a2a8d57240fc4618cc7a1f37285970b116106d49d4562c880e11",
+  "basis": {
+    "head": "a666c5a1f9c2bb53f75cf36715913f419f1c6ca7",
+    "tree": "4119691020466bdda62594f852707274345d5ce2",
+    "parent": "a05b28b95cab6eacb4b92ef8079206ee6939873b",
+    "source_audit_run": "5f7819bd662942ef899d8cfcd0a36092",
+    "source_closure_run": "4a9a815c519746a8940d33565e40b96a"
+  },
+  "target_directory": "native/scm01_wsb01_adapter_v1",
+  "new_file_count": 22,
+  "relative_files": [
+    ".gitattributes",
+    ".gitignore",
+    "README_RU.md",
+    "SOURCE_SCOPE.json",
+    "SOURCE_BINDINGS.json",
+    "PROTOCOL.json",
+    "TEST_PLAN.json",
+    "__init__.py",
+    "adapter_main.py",
+    "wsb01_policy.py",
+    "wsb01_contract.py",
+    "wsb01_layout.py",
+    "wsb01_transcript.py",
+    "wsb01_state.py",
+    "wsb01_ports.py",
+    "wsb01_runtime_gate.py",
+    "tests/__init__.py",
+    "tests/test_contract.py",
+    "tests/test_layout.py",
+    "tests/test_transcript.py",
+    "tests/test_state.py",
+    "tests/test_closed_boundary.py"
+  ],
+  "existing_code_modifications": [],
+  "repository_apply_authorized": false,
+  "runtime_authorized": false,
+  "approved_operations": [
+    "prepare_22_new_files_outside_user_repository",
+    "offline_tests_of_new_core_only"
+  ],
+  "prohibited": [
+    "Windows SCM backend",
+    "CNG signer/verifier implementation",
+    "physical WSB launcher/stop provider",
+    "guest bootstrap scripts/tasks",
+    "runtime grant issuer",
+    "live filesystem Output consumer",
+    "live executable copy",
+    "runnable .wsb/.ps1 capsule",
+    "dependency acquisition",
+    "any claimed Windows/runtime acceptance"
+  ],
+  "runtime_gate": "UNCONDITIONAL_CLOSED_NO_ISSUER",
+  "model_result_domain": "OFFLINE_MODEL",
+  "runtime_imports_of_old_project_code": false,
+  "future_documentation_changes": {
+    "when": "only after review of new source/tests; separate approved docs update",
+    "paths": [
+      "docs/architecture/SKYNETVS_CURRENT_STATE.md",
+      "docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md"
+    ]
+  },
+  "limitations": [
+    "No native cryptography, Windows ABI, session binding, physical filesystem or live runtime acceptance.",
+    "Immutable Python models are not a persistent ledger or a boundary against hostile in-process code.",
+    "SCM trace validator checks the new model format; it is not a parser for legacy SCM01 native journal bytes.",
+    "Explicit ERROR closes the model SCM mutation path. Host failure cleanup is modelled separately."
+  ],
+  "source_review_revision": 107,
+  "delivery_revision": "SOURCE_V2_REVIEW107",
+  "review_corrections": [
+    "R107_01_immediate_failure_terminal",
+    "R107_02_retirement_observation_after_deadline"
+  ]
+}
