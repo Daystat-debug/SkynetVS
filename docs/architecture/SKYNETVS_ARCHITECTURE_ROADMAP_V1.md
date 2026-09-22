@@ -1,5 +1,10 @@
 # SkynetVS Architecture Roadmap V1
 
+> **Оперативная запись #98 / 2026-09-22:** SCM01-WSB01 согласован только как
+> лабораторный дизайн с одной недоверенной writable Output-папкой. Runtime
+> не разрешён. Актуальные границы и Next Exact Action — в разделе SCM01-WSB01
+> в конце этого документа; прежние operational next-action записи исторические.
+
 **Дата фиксации:** 2026-07-30
 **Последнее обновление:** 2026-09-22
 **Статус:** LOCKED
@@ -6143,3 +6148,213 @@ dependency acquisition и не должно задним числом созда
 
 После его review отдельно решается, разрешать ли ровно один SCM01
 CreateService/StartService/DeleteService run в fresh Windows Sandbox.
+
+## SCM01-WSB01 — согласованный лабораторный профиль, сообщение #98
+
+Дата решения: **2026-09-22**. Статус: **DESIGN ACCEPTED / DOCS ONLY / RUNTIME
+NOT AUTHORIZED**. Основание — архитектурный разбор #97 и прямое согласование
+пользователя в сообщении #98. Это отдельный лабораторный профиль внутри
+подготовительной ветки RC043, не новый top-level roadmap stage и не RC044.
+
+### Граница согласования
+
+Пользователь согласовал:
+
+> Принимаю SCM01-WSB01 как лабораторный профиль для неизменного Guard V3:
+> одна недоверенная writable Output-папка, без заявления о защите диска от
+> злонамеренного гостя. Готовь только docs-only фиксацию; Sandbox, guest
+> bootstrap, реальный SCM, Guard, install/ACL/enrollment пока не разрешаю.
+
+Настоящая запись заменяет предыдущий operational next-action «согласовать
+SCM01/Sandbox compatibility» только в части принятия дизайна и Output-исключения.
+Она не заменяет исторические evidence, не объявляет реализацию адаптера готовой
+и не разрешает source/build или active шаги следующего этапа.
+
+Базовый checkpoint перед этой docs-only фиксацией:
+
+```text
+HEAD / origin/main по принятому commit/push report:
+a05b28b95cab6eacb4b92ef8079206ee6939873b
+parent: b4783b056ab7c8de4023de8147f31511be1d41d3
+tree:   df0cfd69969d97f7f5ed66902e5cc079672a02af
+subject: docs: reconcile native prerequisite roadmap
+```
+
+Это baseline решения, не заранее известный hash будущего documentation commit.
+
+### Явное исключение для Output и сохранение SCM01 V1
+
+Старый `native/scm01_controller_v1/SCM01_CONTRACT.json` сохраняется без изменений:
+`design.recommended_environment.host_writeable_shares = "none during test"`.
+SCM01-WSB01 не объявляется эквивалентом этого запрета. Для нового лабораторного
+профиля согласована **ровно одна свежая, изначально пустая, выделенная Output
+mapping**, доступная гостю для записи и недоверенная с начала сессии.
+
+Это расширение поверхности записи гостя. Подпись, allowlist имён, размер
+принимаемого результата и host deadline не являются дисковой квотой и не
+защищают host disk от заполнения злонамеренным гостем. Профиль предназначен
+только для неизменного trusted-source refusal-кандидата Guard V3, не для
+произвольного вредоносного кода. Quota-backed storage, VHD и новый транспорт
+не добавляются этим решением.
+
+Existing SCM01 V1 entrypoint и native constructor остаются **CLOSED**.
+`approved=true`, monkeypatch и test-only backend не являются runtime-допуском.
+Будущая обвязка требует отдельного versioned source review и нового разрешения.
+Исторические SCM01, Sandbox, R01–R05 результаты и consumed markers не меняются.
+
+### Лабораторная среда и доставка — принятый дизайн, не runtime evidence
+
+Первый существующий кандидат стенда — `traditional_wsb_logoncommand_v1`.
+Создание другой VM с нуля сейчас не требуется. Три логические роли:
+
+| Роль | Условие |
+|---|---|
+| Input | Read-only для гостя; фиксированные allowlisted входные bytes на весь run |
+| Control | Read-only для гостя; только host-produced one-shot запись, связанная с ready/nonce |
+| Output | Единственная guest-writable host mapping; недоверенный транспорт, не источник полномочий |
+
+В гостя не отображаются repository, `.git`, host `.venv`, весь Downloads,
+credentials, реальные пользовательские данные или production enrollment.
+Сеть и clipboard выключены; остальные redirections и Protected Client требуют
+проверенного platform profile, без молчаливого fallback.
+
+Guard/runtime/controller доставляются через Input, копируются в guest-local
+каталоги и повторно проверяются по составу, размерам и hashes. SCM получает
+только quoted абсолютный guest-local путь к Guard, без дополнительных аргументов.
+Путь не поступает из Output; запуск службы из общей папки не допускается.
+
+Неизменный образ из ранее рассмотренного V3 evidence:
+
+```text
+Guard.exe bytes: 882176
+SHA-256: 66736793b396c1c5682ce149df199db34d63499c916d299aa6106f11b3f68fdb
+rebuild: false
+```
+
+Pin определяет конкретный кандидат, но не доказывает production origin.
+Предпочтительный отдельный guest runtime из #97 — прежний pinned CPython
+3.13.15 embeddable AMD64; exact import closure, `_pth`, source compatibility
+и наличие архива остаются предметом будущей проверки. Нового download,
+запуска interpreter, pip/ensurepip или dependency installation здесь нет.
+
+Guest-local code/image, signing state и journal должны быть защищены от
+service identity. Это нужно подтвердить по path chain/reparse/inherited ACL,
+а не по названию каталога. Automatic ACL/profile repair и выдача недостающих
+привилегий не допускаются. Возможный SYSTEM bootstrap trusted controller,
+включая scheduled task, требует отдельного guest-local разрешения; он не
+означает LocalSystem fallback для Guard или elevation рабочей Windows.
+
+### Протокол evidence и одноразового допуска — требования к будущей обвязке
+
+Host permanent consumed marker резервируется до запуска любого нового
+гостевого кода. Run ID, nonce, capsule и source identities связываются с
+конкретной свежей сессией. Гость не получает права записи в host marker.
+
+До service mutation trusted guest controller проверяет входы и guest-local
+paths, создаёт ephemeral ECDSA P-256 key и публикует bounded ready. Host
+закрепляет точные ready bytes и public key, затем создаёт Control authorization,
+связанный с ready hash. Output не выдаёт команды или разрешения.
+
+Local journal сохраняет sequence и intent-before-mutation. Подписанный terminal
+связывает профиль, run/nonce, capsule/source/runtime/image, ready/authorization,
+raw journal/SCM replies и бюджеты. Private key в mapping не сериализуется.
+Pinning не является hardware remote attestation и не защищает от уже
+скомпрометированного guest administrator/kernel.
+
+Пока сессия активна, готовность и progress не являются финальным PASS. После
+доказанного нормального закрытия выбранной сессии host повторно проверяет exact
+bytes, подпись, raw journal, budgets/state machine и стабильность входов.
+Принятый snapshot переносится в отдельное host-owned хранилище, не отображаемое
+гостю. Содержимое Output не исполняется и не превращается в source/configuration.
+
+Числа из #97 остаются предварительными design ceilings, **не принятыми runtime
+параметрами и не реализованной квотой**: ready 64 KiB, terminal 1 MiB, journal
+8 MiB, total accepted evidence 16 MiB, до 16 предусмотренных regular files;
+общий host deadline предлагался 300 s. Окончательные parser/record bounds,
+таймауты и stop mechanism должны быть отдельно зафиксированы до real SCM.
+
+### Service contract не расширяется
+
+```text
+service name:                 SkynetVSGuard
+service account:              NT SERVICE\SkynetVSGuard
+service type:                 SERVICE_WIN32_OWN_PROCESS (16)
+start type:                   SERVICE_DEMAND_START (3)
+error control:                SERVICE_ERROR_IGNORE (0)
+future CreateServiceW limit:  <= 1
+future StartServiceW limit:   <= 1
+future DeleteService limit:   <= 1
+ControlService:               0
+direct Guard CreateProcess:   0
+```
+
+Эти верхние пределы относятся к будущему отдельно разрешённому эксперименту.
+**Сейчас число разрешённых SCM/Guard запусков равно нулю.** Existing service
+не усыновляется, не перенастраивается и не удаляется; ошибки создания не
+разрешают retry. Для собственного объекта используются retained handle и
+повторная проверка configuration. LocalSystem fallback отсутствует.
+
+Ожидаемый, но ещё не измеренный на real SCM terminal tuple:
+
+```text
+ServiceType / CurrentState / ControlsAccepted = 16 / 1 / 0
+Win32ExitCode / ServiceSpecificExitCode        = 1066 / 78
+CheckPoint / WaitHint                         = 0 / 0
+```
+
+`SERVICE_RUNNING` не добавляется. Одного успешного StartService недостаточно.
+DeleteService возможен не более одного раза только в предусмотренной ветке
+cleanup собственного stopped-объекта с неизменным config; отсутствие записи
+подтверждается отдельно. STOPPED/удаление записи не означают process exit или
+retirement гостя. R05 не становится real-SCM доказательством.
+
+### Внешнее завершение и readiness gates
+
+Host lifecycle/watchdog должен быть независим от блокирующего guest SCM RPC.
+Нельзя закрывать прежнюю/чужую сессию ради теста, считать transient launcher PID
+lifetime гостя или завершать Guard по имени/PID из STOPPED status. Требуется
+привязка именно новой сессии и проверенный внешний stop. Forced cleanup не
+превращает run в PASS; при UNKNOWN retirement дальнейшие запуски и приём
+результата закрыты, возможные активные artifacts сохраняются.
+
+Наличие `wsb` CLI и его текущие stop/session semantics не считаются проверенными.
+CLI не является неявным fallback. Перезагрузка внутри гостя не подменяет
+требование новой сессии после подтверждённого закрытия прежней.
+
+Порядок дальнейших допусков:
+
+1. Закрыть эту docs-only запись отдельным проверенным commit/push.
+2. Определить exact source-only scope нового ограниченного versioned Sandbox
+   adapter и отдельно согласовать его реализацию/проверки. Старый SCM01 V1 не открывать.
+3. После source review отдельно согласовать benign integration нового профиля
+   без Guard/real SCM. Это не повтор старых consumed тестов.
+4. Только после review benign evidence рассматривать отдельный one-shot real-SCM
+   refusal grant. До него service mutation и Guard execution запрещены.
+
+### Состояние и Next Exact Action
+
+```text
+SCM01-WSB01 design             ACCEPTED FOR LAB / DOCS ONLY
+SCM01-WSB01 implementation     NOT IMPLEMENTED
+SCM01 public runtime gate     CLOSED
+Sandbox / guest bootstrap     NOT AUTHORIZED
+real SCM / Guard              NOT AUTHORIZED
+install / ACL / enrollment    NOT AUTHORIZED
+B02 / P00                     NOT_ACCEPTED
+P01                           NOT_IMPLEMENTED
+R05                           18/18 SYNTHETIC_PROVIDER_ONLY / historical
+V1C3A1B / V1C3A1C             NOT OPEN
+RC044                         NOT CREATED
+active acquisition            BLOCKED
+native factory                CLOSED
+```
+
+Текущее действие — только применение и отдельный docs-only commit/push этой
+записи. Следующее содержательное действие после closure — exact-source review
+ограниченного адаптера; не запуск Sandbox и не выдача runtime-разрешения.
+
+Источники решения: неизменный `REVIEW_97_RU.md` и `DESIGN_PROPOSAL_97.json` из
+`SkynetVS_SCM01_WindowsSandbox_Compatibility_97_Review.zip`; прямое согласование
+пользователя #98; checkpoint report
+`SkynetVS_DocsReconciliation95CommitPushV1_b247c7015d6f4585a0ddfa823332258c.json`.
+Proposal #97 сохраняется историческим: его поля `PROPOSED` не переписываются.

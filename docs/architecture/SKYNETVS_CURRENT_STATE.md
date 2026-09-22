@@ -1,5 +1,10 @@
 # SkynetVS Current State
 
+> **Оперативная запись #98 / 2026-09-22:** SCM01-WSB01 согласован только как
+> лабораторный дизайн с одной недоверенной writable Output-папкой. Runtime
+> не разрешён. Актуальные границы и Next Exact Action — в разделе SCM01-WSB01
+> в конце этого документа; прежние operational next-action записи исторические.
+
 ## 1. Метаданные
 
 - Дата обновления: `2026-09-22`
@@ -4018,3 +4023,103 @@ Guard real SCM execution                  NOT AUTHORIZED
 dependency acquisition                    BLOCKED
 RC044                                     NOT CREATED
 ```
+
+## SCM01-WSB01 — оперативная фиксация согласования #98
+
+**2026-09-22: DESIGN ACCEPTED / DOCS ONLY / NO RUNTIME AUTHORITY.**
+Этот блок заменяет прежний Next Exact Action о необходимости согласовать
+SCM01/Sandbox compatibility в части лабораторного дизайна. Исторические
+контракты, статусы ошибок и consumed evidence остаются неизменными.
+
+### Baseline этого решения
+
+```text
+a05b28b95cab6eacb4b92ef8079206ee6939873b
+parent: b4783b056ab7c8de4023de8147f31511be1d41d3
+tree:   df0cfd69969d97f7f5ed66902e5cc079672a02af
+subject: docs: reconcile native prerequisite roadmap
+```
+
+Это принятая точка до текущего изменения документации, не hash будущего
+commit. Основание: commit/push report
+`SkynetVS_DocsReconciliation95CommitPushV1_b247c7015d6f4585a0ddfa823332258c.json`.
+
+### Что именно принято
+
+Пользователь #98 принял лабораторный SCM01-WSB01 для **неизменного Guard V3**:
+одна свежая выделенная недоверенная writable Output-папка, без заявления о
+защите хостового диска от злонамеренного гостя. Разрешена только docs-only
+фиксация. Sandbox, guest bootstrap, реальный SCM, Guard, install/ACL/enrollment
+этим согласованием не разрешены.
+
+Windows Sandbox сохраняется первым существующим кандидатом стенда:
+`traditional_wsb_logoncommand_v1`. Input и Control read-only для гостя;
+Output — единственная guest-writable host mapping, недоверенная с начала
+сессии. Repository, `.git`, host `.venv`, весь Downloads, credentials и
+production enrollment не отображаются в гостя; сеть/clipboard выключены.
+
+Это **явное исключение** из старого `host_writeable_shares = "none during test"`,
+не эквивалент запрета и не изменение старого
+`native/scm01_controller_v1/SCM01_CONTRACT.json`. V1 entrypoint/native
+constructor остаются CLOSED; bypass через monkeypatch/test backend/JSON
+`approved=true` запрещён. Guard не пересобирается:
+
+```text
+Guard.exe: 882176 bytes
+SHA-256: 66736793b396c1c5682ce149df199db34d63499c916d299aa6106f11b3f68fdb
+```
+
+Будущий адаптер должен обеспечить guest-local delivery, exact hashes,
+host-consumed marker до guest launch, ephemeral key и pin ready до service
+mutation, one-shot Control authorization, signed raw journal/terminal и
+повторную host-проверку после normal session retirement. Это требования к
+будущей реализации, а не измеренный результат.
+
+Подпись, ограничения чтения и allowlist не ограничивают объём записей гостя
+в Output. Защита от disk-fill/DoS злонамеренного guest-writer не заявляется.
+Числовые parser/размерные пределы и 300 s host deadline из #97 остаются
+предварительными до отдельной фиксации; они не являются runtime grant.
+
+Служба сохраняет `SkynetVSGuard`, `NT SERVICE\SkynetVSGuard`, OWN_PROCESS,
+DEMAND_START; будущий grant может предусматривать не более одной попытки
+Create/Start/Delete. Сейчас ни одна попытка не разрешена. Existing service
+не принимается под управление; LocalSystem fallback и automatic ACL repair
+нет. Ожидаемый tuple `16 / 1 / 0 / 1066 / 78 / 0 / 0` ещё не измерен на SCM.
+
+STOPPED/удаление записи не доказывают process exit или guest retirement.
+Внешний stop/session binding ещё требует свежей проверки, не зависит от
+зависшего guest RPC и не подменяется transient launcher PID. Forced cleanup
+не даёт PASS; UNKNOWN retirement закрывает дальнейшие запуски.
+
+### Текущие границы
+
+```text
+SCM01-WSB01 design             ACCEPTED FOR LAB / DOCS ONLY
+SCM01-WSB01 adapter            NOT IMPLEMENTED
+SCM01 runtime gate            CLOSED
+Sandbox / guest bootstrap     NOT AUTHORIZED
+real SCM / Guard              NOT AUTHORIZED
+install / ACL / enrollment    NOT AUTHORIZED
+B02 / P00                     NOT_ACCEPTED
+P01                           NOT_IMPLEMENTED
+R05                           18/18 SYNTHETIC_PROVIDER_ONLY / historical
+V1C3A1B / V1C3A1C             NOT OPEN
+RC044                         NOT CREATED
+active acquisition            BLOCKED
+native factory                CLOSED
+```
+
+### Next Exact Action
+
+Завершить эту docs-only фиксацию проверенным отдельным commit/push. После
+closure определить exact source-only scope нового versioned Sandbox adapter
+и отдельно согласовать его реализацию/проверки; не открывать старый V1.
+
+Дальнейшие active шаги разделены: сначала отдельно разрешённая benign Sandbox
+integration без Guard/SCM, затем review evidence, и только после этого —
+отдельный one-shot real-SCM refusal grant. Документационное согласование не
+разрешает даже benign launch, scheduled bootstrap task или guest interpreter.
+
+Подробное согласованное решение — раздел SCM01-WSB01 / сообщение #98 в
+`SKYNETVS_ARCHITECTURE_ROADMAP_V1.md`; основание — исторический разбор #97 и
+согласование пользователя #98. Старые Sandbox attestations не переписываются.
