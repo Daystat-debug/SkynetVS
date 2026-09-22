@@ -2,7 +2,7 @@
 
 ## 1. Метаданные
 
-- Дата обновления: `2026-08-25`
+- Дата обновления: `2026-09-22`
 - Ветка: `main`
 - Проверенный code baseline перед этим documentation commit: `f0a2da9bf96d9010b6df42ae79104e58c15a9838`
 - Название code baseline: `fix: verify signed controller evidence over untrusted WSB transport`
@@ -3900,4 +3900,121 @@ broker external network         FORBIDDEN
 egress-guard activation         FORBIDDEN
 dependency acquisition          FORBIDDEN
 V1C3A1B                         NOT OPEN
+```
+
+## Оперативная сверка 2026-09-22 — актуальное состояние native prerequisites
+
+Этот раздел восстанавливает оперативную точку handoff после документационного
+разрыва, возникшего после V1C3A1A closure. Он не создаёт RC044 и не выдаёт
+нового runtime/acquisition authority.
+
+### Актуальный checkpoint
+
+Read-only capture `6f0121a9ec93499c8901aa931547ae9e` подтвердил:
+
+```text
+branch           main
+HEAD             b4783b056ab7c8de4023de8147f31511be1d41d3
+tree             059a07fd8a3be8707e805c655b387c4db8f463cc
+parent           26126296aed8179d27c3b4d37f99f2add62f9891
+status           clean
+staging          empty
+index bytes      50590
+index SHA-256    7fca409a7870e262339139e477fed58850eaa2f329fda192b1ee63603321d235
+repository write false
+network          false
+tests            false
+Sandbox          false
+real SCM         false
+Guard            false
+```
+
+Capture локальный: fresh remote query не выполнялся. Последнее проверенное
+`origin/main == HEAD` остаётся из
+`SkynetVS_SCM01ControllerCommitPushV1_ca32993387e746b6ac2c1dc9dc2fe865.json`.
+
+Шесть architecture docs и 148 последующих source/doc/support files сверены с
+committed objects. Три historical Sandbox docs отличаются от review copies
+только LF/CRLF; их текст совпадает и они не требуют переписывания.
+
+### Восстановленная причинная линия
+
+V1C3A1A закрыл non-network contract, после чего V1C3A1B source audit подтвердил,
+что RC043 требует отдельного host confinement / OS egress prerequisite.
+Измеренный ordinary-user WFP write path получил `ACCESS_DENIED`, после чего
+проектирование продолжилось через узкий bootstrap-first `SkynetVSGuard`
+control plane, P00 trusted-start/epoch basis, SP01/LP01 start/loader profiles,
+Guard callback boundary и SCM01.
+
+Это продолжение security prerequisites RC043, а не открытие resolver/network
+authority. `V1C3A1B` и `V1C3A1C` по-прежнему не открыты.
+
+Repository lineage после docs closure:
+
+```text
+2194e7a  docs: close V1C3A1A non-network acquisition contract
+20c2af9  chore: add trusted host diagnostic source baseline
+ad9aea1  chore: add installed root reader source baseline
+8910de1  chore: add live root epoch bridge source baseline
+1eb699b  chore: add p00 enrollment expectation source baseline
+b77f560  chore: add guard start candidate source baselines
+50c9f07  chore: add guard service refusal source baseline
+811431d  chore: add service callback harness v2 source baseline
+2612629  docs: record service callback harness r05 evidence
+b4783b0  chore: add scm01 controller source baseline
+```
+
+### Acceptance boundaries
+
+```text
+RC041 / V1C2       historical closure preserved
+RC043              architecture lock preserved
+V1C3A1A            IMPLEMENTED / VERIFIED / DOCS CLOSED
+V1C3A1B            NOT OPEN
+V1C3A1C            NOT OPEN
+RC044              NOT CREATED
+
+B02                NOT_ACCEPTED
+P00                NOT_ACCEPTED
+P01                NOT_IMPLEMENTED
+active acquisition BLOCKED
+native factory      CLOSED
+
+R01                ERROR / immutable
+R02 / R03          REVIEW_REQUIRED / immutable
+R04                DIAGNOSTIC_ONLY
+R05                18/18 SYNTHETIC_PROVIDER_ONLY / consumed
+SCM01               source/build baseline only
+SCM01 runtime       CLOSED
+```
+
+R05 не является real-SCM evidence. SCM01 source/build PASS не выполнял
+controller runtime, `CreateServiceW`, `StartServiceW`, Guard, ACL/enrollment или
+production factory.
+
+### Windows Sandbox
+
+Windows Sandbox уже существует в проекте как verified
+`traditional_wsb_logoncommand_v1`; спрашивать о наличии новой VM с нуля не
+нужно. Historical lifecycle/signed-boundary/trusted-runtime evidence сохраняется.
+
+Для SCM01 ещё требуется отдельная compatibility decision. Текущий SCM01
+contract запрещает writable host shares during test, а старый Sandbox output
+mapping writable. Нельзя скрыто перенести прежний `.wsb` transport в SCM01 или
+ослабить contract только ради запуска.
+
+### Next Exact Action
+
+Подготовить и отдельно review-нуть SCM01-on-Windows-Sandbox compatibility
+contract: guest-local image/staging, evidence export, guest retirement /
+external stop-reset, absence of host secrets, one-shot service-object semantics
+и точные границы writable mappings.
+
+До этого:
+
+```text
+CreateService/StartService/DeleteService  NOT AUTHORIZED
+Guard real SCM execution                  NOT AUTHORIZED
+dependency acquisition                    BLOCKED
+RC044                                     NOT CREATED
 ```

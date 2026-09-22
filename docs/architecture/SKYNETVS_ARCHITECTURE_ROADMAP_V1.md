@@ -1,7 +1,7 @@
 # SkynetVS Architecture Roadmap V1
 
 **Дата фиксации:** 2026-07-30
-**Последнее обновление:** 2026-08-25
+**Последнее обновление:** 2026-09-22
 **Статус:** LOCKED
 **Стабильная база:** `skynet-runtime-foundation-v1` → `09f8708`
 **Назначение документа:** сохранить архитектурную последовательность между чатами и не допускать скрытого расширения этапов.
@@ -5998,3 +5998,148 @@ Do not select an exact pip version, access PyPI, download metadata or wheel
 bytes, construct or execute a resolver capsule, activate OS egress guards,
 create permanent acquisition evidence, install dependencies or open V1C3A1B
 until that audit is reviewed.
+
+## Документационная сверка 2026-09-22 — восстановление native prerequisite lineage после RC043
+
+Этот раздел фиксирует уже выполненную additive source/evidence работу, которая
+после закрытия V1C3A1A перестала своевременно отражаться в двух основных
+оперативных документах. Раздел **не создаёт RC044**, не открывает V1C3A1B или
+V1C3A1C и не превращает source/build/synthetic evidence в production trust.
+
+### Точная точка разрыва и свежая локальная привязка
+
+Последний прежний documentation closure:
+
+```text
+2194e7a8f79386952033cfc6525dc02a06db209f
+docs: close V1C3A1A non-network acquisition contract
+parent: 875669d81caf7c91347fe6b532926803aca3153c
+```
+
+Read-only reconciliation capture `6f0121a9ec93499c8901aa931547ae9e`
+повторно привязал локальные committed objects к текущей точке:
+
+```text
+HEAD:   b4783b056ab7c8de4023de8147f31511be1d41d3
+tree:   059a07fd8a3be8707e805c655b387c4db8f463cc
+parent: 26126296aed8179d27c3b4d37f99f2add62f9891
+branch: main
+status: clean
+index:  50590 bytes
+SHA256: 7fca409a7870e262339139e477fed58850eaa2f329fda192b1ee63603321d235
+```
+
+Capture не обращался к remote и не изменял repository. Последний подтверждённый
+`origin/main == b4783b0...` остаётся из SCM01 commit/push evidence.
+
+Проверены шесть architecture docs и 148 последующих source/doc/support файлов.
+Три historical Windows Sandbox attestation docs имели только CRLF/LF
+представление между review-копией и committed blob; нормализованный текст
+совпадает. Эти historical documents не изменяются этой сверкой.
+
+### Почему native ветка относится к RC043
+
+RC043 требует до первого resolver/broker acquisition отдельно доказать:
+
+- ограниченный non-admin worker/process boundary;
+- отсутствие inherited handles и child-process expansion;
+- Job containment;
+- OS default-deny egress для resolver с разрешением только loopback;
+- отдельный default-deny egress для broker;
+- точную identity/provenance активных компонентов.
+
+RC043 намеренно **не выбрал Windows guard/confinement mechanism**.
+
+Последующий V1C3A1B transition/source audit и native security work исследовали
+именно этот незакрытый prerequisite. После измеренного WFP `ACCESS_DENIED`
+для ordinary-user write transaction был принят дизайн отдельного
+bootstrap-first `SkynetVSGuard` как узкого privileged control plane. Он не
+заменяет resolver/broker, не является внешним HTTP/DNS actor и не открывает
+acquisition сам по себе.
+
+### Additive repository checkpoints после 2194e7a
+
+| Commit | Срез | Добавлено |
+|---|---|---:|
+| `20c2af947f715b4ff4fb6a5590700639c66c92a2` | `native/trusted_host/` | 31 |
+| `ad9aea12571152d72ac1ff89d9b66615e67f4e02` | `native/installed_root_v1/` | 10 |
+| `8910de15d59501cc1dd1c34de39364e5855730ed` | `native/live_root_epoch_bridge_v1/` | 8 |
+| `1eb699b90e65b0adfd5be73535818e88e99e297b` | `native/p00_enrollment_expectation_v1/` | 9 |
+| `b77f560e157edd33f1e96ae2cb52739a5bb209d7` | Guard V1/V2 source baselines | 34 |
+| `50c9f0786f50c34c5404341f8076916c7add0680` | Guard V3 service-refusal source baseline | 19 |
+| `811431d5ffb89faf6a59dacbb768b97aae06f31b` | ServiceCallbackHarness V2 source baseline | 17 |
+| `26126296aed8179d27c3b4d37f99f2add62f9891` | R05 evidence | 5 |
+| `b4783b056ab7c8de4023de8147f31511be1d41d3` | SCM01 controller source baseline | 15 |
+
+Эти commits additive относительно основной Python/V1C3A1A линии. Они
+документируют prerequisite research/source baselines; сами по себе не
+открывают V1C3A1B.
+
+### Границы доказанного
+
+- Native epoch-store и gate-handoff fixtures подтвердили конкретные Windows
+  механики, но не production origin/P00.
+- Installed-root, live-root bridge и enrollment-expectation slices являются
+  source/managed boundaries; production trusted root/enrollment не принят.
+- Guard V1 остаётся historical `NEEDS_REVIEW`.
+- Guard V2 — source/build baseline, не production runtime.
+- Guard V3 — `SERVICE_REFUSAL_BOOTSTRAP_ONLY`; real service API присутствует в
+  source, но его build evidence не является SCM/runtime acceptance.
+- ServiceCallbackHarness V1 остаётся immutable `ERROR`.
+- R01 остаётся immutable `ERROR`; R02/R03 — `REVIEW_REQUIRED`; R04 —
+  `DIAGNOSTIC_ONLY`.
+- R05 подтвердил 18/18 новых callback scenarios только через
+  `SYNTHETIC_PROVIDER_ONLY`; real SCM/Guard/production origin не проверены.
+- SCM01 controller committed только как source/build baseline. Его public
+  runtime gate закрыт; `CreateServiceW`/`StartServiceW`, Guard и SCM runtime не
+  выполнялись.
+
+### Windows Sandbox сохраняется как существующий backend
+
+`traditional_wsb_logoncommand_v1` остаётся исторически verified backend с
+измеренными lifecycle, self-shutdown, process-set exit, signed SYSTEM-controller
+boundary и trusted-runtime evidence. Новая native ветка не отменяет и не
+заменяет Windows Sandbox.
+
+Для SCM01 Windows Sandbox является первым уже существующим кандидатом
+одноразового guest. Однако прямой reuse **не принят**: SCM01 contract требует
+`host_writeable_shares = none during test`, тогда как исторический Sandbox
+transport использовал writable host output mapping. Перед SCM01 runtime нужен
+отдельный design review export/guest-retirement channel либо явная,
+документированная корректировка условия. Старые Sandbox evidence не являются
+новым runtime разрешением.
+
+### Текущий operational state
+
+```text
+RC041 / V1C2              CLOSED / COMPLETE — historical
+RC042                     ARCHITECTURE LOCK RECORDED
+RC043                     ARCHITECTURE LOCK RECORDED
+V1C3A1A                   IMPLEMENTED / VERIFIED / DOCS CLOSED
+V1C3A1B                   NOT OPEN
+V1C3A1C                   NOT OPEN
+RC044                     NOT CREATED
+
+B02                       NOT_ACCEPTED
+P00                       NOT_ACCEPTED
+P01                       NOT_IMPLEMENTED
+active acquisition        BLOCKED
+native factory            CLOSED
+
+SCBH R01                  ERROR / immutable
+SCBH R02 / R03            REVIEW_REQUIRED / immutable
+SCBH R04                  DIAGNOSTIC_ONLY
+SCBH R05                  18/18 SYNTHETIC_PROVIDER_ONLY / consumed
+SCM01 runtime             CLOSED
+```
+
+### Следующее точное действие
+
+До новых runtime/authority действий требуется отдельный architecture decision
+для SCM01-on-Windows-Sandbox compatibility: guest-local Guard delivery,
+evidence export без скрытого writable-share weakening, external stop/reset
+semantics и one-shot SCM mutation authority. Это решение не должно открывать
+dependency acquisition и не должно задним числом создавать RC044.
+
+После его review отдельно решается, разрешать ли ровно один SCM01
+CreateService/StartService/DeleteService run в fresh Windows Sandbox.
