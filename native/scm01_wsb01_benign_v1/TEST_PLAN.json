@@ -1,0 +1,508 @@
+{
+  "kind": "SCM01_WSB01_BENIGN119_TEST_PLAN_V4",
+  "status": "SOURCE119_TESTS_IMPLEMENTED",
+  "case_count": 64,
+  "cases": [
+    {
+      "id": "BN115-CONTRACT-01",
+      "group": "contract",
+      "description": "Canonical sorted ASCII/LF encoding and bounded depth; parity with reference recipe",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CONTRACT-02",
+      "group": "contract",
+      "description": "Reject duplicate/unknown keys, NaN/float/bool-as-int and scalar overflow",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CONTRACT-03",
+      "group": "contract",
+      "description": "Reject OFFLINE_MODEL and future SCM schema/domain on every live wire message",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CONTRACT-04",
+      "group": "contract",
+      "description": "Reject arbitrary scenario, command, argv, nonzero SCM budget or Guard descriptor",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CONTRACT-05",
+      "group": "contract",
+      "description": "Bind READY to request/runtime/capsule/layout/policy/schema pins",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CONTRACT-06",
+      "group": "contract",
+      "description": "Bind authorization to exact ready key and host session-binding record",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CONTRACT-07",
+      "group": "contract",
+      "description": "Reject malformed/truncated completion markers; bounded PENDING only for absence/sharing",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CONTRACT-08",
+      "group": "contract",
+      "description": "Reconstruct acyclic hashes without embedding own manifest/request hash in ancestors",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LAYOUT_CAPSULE-01",
+      "group": "layout_capsule",
+      "description": "Only four mappings: Input Runtime Control RO and Output RW; full fixed XML assertions",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LAYOUT_CAPSULE-02",
+      "group": "layout_capsule",
+      "description": "Reject overlaps with repo .git .venv credentials accepted-store and whole Downloads",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LAYOUT_CAPSULE-03",
+      "group": "layout_capsule",
+      "description": "Reject UNC ADS device names traversal short aliases duplicate case and reparse metadata",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LAYOUT_CAPSULE-04",
+      "group": "layout_capsule",
+      "description": "Capsule contains only fixed guest/runtime shared modules; no tests/SCM/Guard entrypoints",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LAYOUT_CAPSULE-05",
+      "group": "layout_capsule",
+      "description": "Guest runtime retains exact 37-file inventory; no host .venv fallback",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LAYOUT_CAPSULE-06",
+      "group": "layout_capsule",
+      "description": "Bootstrap copy mismatch stops before interpreter; no install or ACL repair",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LAYOUT_CAPSULE-07",
+      "group": "layout_capsule",
+      "description": "Runtime _pth/import path isolation; no accidental CWD or environment injection",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LAYOUT_CAPSULE-08",
+      "group": "layout_capsule",
+      "description": "Unsupported mandatory WSB settings cause refusal without silent downgrade",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LEDGER-01",
+      "group": "ledger",
+      "description": "No grant or malformed grant: zero launch attempts",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LEDGER-02",
+      "group": "ledger",
+      "description": "Operator grant not manufactured by guest files/model receipt/JSON approved flag",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LEDGER-03",
+      "group": "ledger",
+      "description": "Concurrent reservation: exactly one CREATE_NEW winner; other stops",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LEDGER-04",
+      "group": "ledger",
+      "description": "Partial consumed record and unknown flush poison grant; no rewrite",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LEDGER-05",
+      "group": "ledger",
+      "description": "Launch attempt recorded before native call; failed call does not refund budget",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LEDGER-06",
+      "group": "ledger",
+      "description": "Authorization intent/attempt recorded once; data-only partial publication does not retry",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LEDGER-07",
+      "group": "ledger",
+      "description": "Unknown commit publication remains UNKNOWN even if worker later exits",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-LEDGER-08",
+      "group": "ledger",
+      "description": "Restart with unresolved launch blocks new run; no auto deletion/adoption",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-STATE-01",
+      "group": "state",
+      "description": "Strict normal phase order including anchor before ready pin and auth before terminal",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-STATE-02",
+      "group": "state",
+      "description": "Failure terminal immediately sticky; later normal retirement never clears failure",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-STATE-03",
+      "group": "state",
+      "description": "Late valid retirement records completion while retaining timeout failure (R107-02)",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-STATE-04",
+      "group": "state",
+      "description": "Launcher exit alone not retirement; live persistent anchor blocks acceptance",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-STATE-05",
+      "group": "state",
+      "description": "Forced cleanup permanently forbids successful receipt",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-STATE-06",
+      "group": "state",
+      "description": "Wrong run/nonce/boot/anchor observation invalidates binding",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-STATE-07",
+      "group": "state",
+      "description": "Monotonic host deadlines cannot be extended by guest ticks or late heartbeat",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-STATE-08",
+      "group": "state",
+      "description": "Failure/unknown/terminal states forbid relaunch and second authorization",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-EVIDENCE-01",
+      "group": "evidence",
+      "description": "Successful benign digest roundtrip expected result calculated on host",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-EVIDENCE-02",
+      "group": "evidence",
+      "description": "READY signature proof-of-possession does not become SYSTEM/source-origin assertion",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-EVIDENCE-03",
+      "group": "evidence",
+      "description": "Key replacement after pin rejected, including another valid key",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-EVIDENCE-04",
+      "group": "evidence",
+      "description": "Cross-domain valid-looking signature never accepted; domain prehash explicit",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-EVIDENCE-05",
+      "group": "evidence",
+      "description": "Journal sequence, exact result and termination shape checked; no SCM events",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-EVIDENCE-06",
+      "group": "evidence",
+      "description": "Extra files, excessive size, failure.json or changed signature/hash reject success",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-EVIDENCE-07",
+      "group": "evidence",
+      "description": "Post-exit stable exact snapshot and native receipts required before accepted-store",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-EVIDENCE-08",
+      "group": "evidence",
+      "description": "Fake crypto/retirement receipts cannot create live successful verdict",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-WINDOWS_BINDINGS-01",
+      "group": "windows_bindings",
+      "description": "Process32First false + ERROR_NO_MORE_FILES distinguished from other errors",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-WINDOWS_BINDINGS-02",
+      "group": "windows_bindings",
+      "description": "Mid-enumeration Process32Next failure never reports empty/complete",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-WINDOWS_BINDINGS-03",
+      "group": "windows_bindings",
+      "description": "GetProcessTimes/image/token metadata unavailable produces UNKNOWN not absence",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-WINDOWS_BINDINGS-04",
+      "group": "windows_bindings",
+      "description": "PID reused or path/creation mismatch refuses cleanup/identity adoption",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-WINDOWS_BINDINGS-05",
+      "group": "windows_bindings",
+      "description": "TerminateProcess success plus Wait timeout remains unconfirmed cleanup",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-WINDOWS_BINDINGS-06",
+      "group": "windows_bindings",
+      "description": "CNG prehash exactly once, 72-byte public blob and 64-byte signature, NTSTATUS failures closed",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-WINDOWS_BINDINGS-07",
+      "group": "windows_bindings",
+      "description": "File same-handle bounded read rechecks FileID/volume/link/size and all path components",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-WINDOWS_BINDINGS-08",
+      "group": "windows_bindings",
+      "description": "CREATE_NEW short write, flush failure, sharing violation and handle-close cleanup covered",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-ORCHESTRATOR-01",
+      "group": "orchestrator",
+      "description": "Exactly one supervisor-bound artifact worker; worker has no Sandbox launch function",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-ORCHESTRATOR-02",
+      "group": "orchestrator",
+      "description": "Suspended worker assigned to own job before resume; no Sandbox service in Job",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-ORCHESTRATOR-03",
+      "group": "orchestrator",
+      "description": "DETACHED_PROCESS instead of CREATE_NO_WINDOW; unexpected extra PID is failure not exemption",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-ORCHESTRATOR-04",
+      "group": "orchestrator",
+      "description": "Hung mapping read does not block host watchdog; no worker restart",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-ORCHESTRATOR-05",
+      "group": "orchestrator",
+      "description": "Bounded pipe frames/sequence and no leaked inherited handles to Sandbox",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-ORCHESTRATOR-06",
+      "group": "orchestrator",
+      "description": "Complete empty baseline and validated persistent anchor before authorization",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-ORCHESTRATOR-07",
+      "group": "orchestrator",
+      "description": "New foreign/replacement anchor after pin aborts; never kill by image name",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-ORCHESTRATOR-08",
+      "group": "orchestrator",
+      "description": "Supervisor crash/restart ledger keeps UNKNOWN; accepted publication failure never triggers rerun",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CLOSED_ENTRYPOINTS-01",
+      "group": "closed_entrypoints",
+      "description": "Source-only main always CLOSED/92 despite --unsafe --allow-runtime approved=true",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CLOSED_ENTRYPOINTS-02",
+      "group": "closed_entrypoints",
+      "description": "Import all proposed modules with native DLL/subprocess/network calls forbidden",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CLOSED_ENTRYPOINTS-03",
+      "group": "closed_entrypoints",
+      "description": "No old SCM01 test-factory/monkeypatch into live path",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CLOSED_ENTRYPOINTS-04",
+      "group": "closed_entrypoints",
+      "description": "Guest bootstrap not invoked by tests/preflight; no scheduled task registration strings",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CLOSED_ENTRYPOINTS-05",
+      "group": "closed_entrypoints",
+      "description": "Guard binary absent from capsule and output accepted inventory",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CLOSED_ENTRYPOINTS-06",
+      "group": "closed_entrypoints",
+      "description": "No download/install/privilege/ACL/enrollment fallback anywhere",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CLOSED_ENTRYPOINTS-07",
+      "group": "closed_entrypoints",
+      "description": "All fake outcomes explicitly OFFLINE_MODEL and not runtime issuer",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    },
+    {
+      "id": "BN115-CLOSED_ENTRYPOINTS-08",
+      "group": "closed_entrypoints",
+      "description": "Existing 22 core bytes and historical modules unchanged by package preparation",
+      "execution_domain": "OFFLINE_FAKE_OR_STATIC_SOURCE_ONLY"
+    }
+  ],
+  "future_tests_not_authorized": [
+    "host-only CNG known-answer/invalid-signature test with real bcrypt",
+    "native filesystem sharing/nofollow short-write fixtures outside repository",
+    "process-enumeration/own-child handle and Job smoke, no Sandbox",
+    "one fresh BEN01 Sandbox run after distinct grant"
+  ],
+  "no_historical_evaluators_rerun": true,
+  "result": "IMPLEMENTED_SOURCE_OFFLINE_FAKE_TESTS_NOT_RUNTIME_ACCEPTANCE",
+  "native_or_guest_execution_authorized": false,
+  "baseline_cases": 64,
+  "regression_cases": 92,
+  "total_test_methods": 156,
+  "regression_descriptions": {
+    "REG01": "Real artifact algorithm over in-memory FS/CNG-shaped fakes; fake receipt rejected by finalizer.",
+    "REG02": "Control flush uncertainty permanently poisons worker publication.",
+    "REG03": "Frame sequence cap matches 1200-supervisor-poll cap.",
+    "REG04": "Chunked exact artifact roundtrip and bounded partial frames.",
+    "REG05": "Boot-correlation read error still closes enumeration handle.",
+    "REG06": "Foreign logon identity cannot bind persistent anchor.",
+    "REG07": "Released retained process handles cannot be reused.",
+    "REG08": "Unrecognized ledger files fail closed.",
+    "REG09": "Inheritance-reset failure cleans up a just-created pre-Job child.",
+    "REG10": "Fragmented STOP frame across several reads is assembled before dispatch.",
+    "REG11": "EOF before a complete frame is refused; no new exchange is scheduled.",
+    "REG12": "Artifact processor refuses POSTEXIT before a completed TERMINAL observation.",
+    "REG13": "Full READY/PUBLISH/TERMINAL/POSTEXIT observation codec over fake FS/CNG remains untrusted.",
+    "REG14": "LOCAL_NATIVE_CHECKS packet label cannot turn decoded data into an admitted native receipt.",
+    "REG15": "IPC request/session/hash substitution is refused.",
+    "REG16": "IPC artifact metadata requires consistent size, final path, regular file, non-reparse and single link.",
+    "REG17": "Single-exchange mailbox returns pending without blocking the supervisor.",
+    "REG18": "Mailbox protocol error poisons the exchange; no automatic retry.",
+    "REG19": "Worker context owns and closes all roots over a fake FS provider.",
+    "REG20": "Worker context construction failure closes already opened fake roots.",
+    "REG21": "Retirement observed before delayed terminal IPC is retained, then independently validated.",
+    "REG22": "Every new public native/worker assembly entry refuses caller-created permits before side effects.",
+    "REG23": "Own-worker fake process identity, pipes, Job and stop/close ownership are retained.",
+    "REG24": "Failure after child creation performs own-child cleanup only.",
+    "REG25": "Extra Job PID prevents resume and causes cleanup rather than an exception to the limit.",
+    "REG26": "Supervisor incarnation drift refuses later owned-worker observations.",
+    "REG27": "Retained source handle pins reject metadata drift without reopening arbitrary files.",
+    "REG28": "Retained source hash mismatch closes handles already opened.",
+    "REG29": "Static source uses time.monotonic_ns for both process scan and orchestrator ticks.",
+    "REG30": "Pure guest load plan binds eight exact module byte members without importing guest code.",
+    "REG31": "Guest member byte changes and alias/traversal names are refused.",
+    "REG32": "AST relative import graph is resolved to exact eight-member capsule; no guest imports executed.",
+    "REG33": "Host-side guest loader entry remains closed even with a constructed plan.",
+    "REG34": "Static standalone loader uses canonical package names and byte-only imports after all hashes.",
+    "REG35": "Static PS/Python inventories agree with the eight-member guest capsule and keep early CLOSED.",
+    "REG36": "Guest runtime/request/manifest order mismatches are refused.",
+    "REG37": "Pure NativeContextSpec binds exact source set, config rendering and fixed worker program.",
+    "REG38": "Missing/changed native context source pins are refused.",
+    "REG39": "Native static inventory refuses incomplete roots and missing retained runtime; no positive runtime claim.",
+    "REG40": "A structurally valid context descriptor is not a native or execution permit.",
+    "REG41": "Publication uncertainty persistence failure returns a failure outcome and preserves existing own-worker cleanup without restart.",
+    "REG42": "A READY processed after the host deadline cannot schedule authorization publication.",
+    "REG43": "Non-dictionary capsule manifest rows are rejected as contract errors.",
+    "REG44": "Static standalone decoder contains depth prescan and float/nonfinite/integer bounds; guest not run.",
+    "REG45": "startup roundtrip preserves exact context.",
+    "REG46": "startup not a permit even with native label.",
+    "REG47": "startup source edit rejected.",
+    "REG48": "context unknown nested fields and duplicates rejected.",
+    "REG49": "wrong first process identity fails.",
+    "REG50": "wrong first executable or script fails.",
+    "REG51": "INIT ACK before BIND and one attempt.",
+    "REG52": "bad startup ACK poisoned no retry.",
+    "REG53": "startup ACK hashes exact.",
+    "REG54": "startup fragmentation preserves full data.",
+    "REG55": "early codec matches main codec.",
+    "REG56": "worker first entry denies before IO.",
+    "REG57": "worker init wait nonblocking fake completion.",
+    "REG58": "hung startup stops before launch.",
+    "REG59": "late ack and clock regression refused.",
+    "REG60": "native source initialization precedes sandbox.",
+    "REG61": "worker byte graph exact source only.",
+    "REG62": "no wire protocol or native seal from startup.",
+    "REG63": "guest fixed startup four arguments.",
+    "REG64": "guest argv extra cli flags not authority.",
+    "REG65": "guest startup request hash drift refused.",
+    "REG66": "guest startup bootstrap pin refused.",
+    "REG67": "guest startup fixed local paths.",
+    "REG68": "guest first route gate before io source.",
+    "REG69": "guest pin reads precede byte loader source.",
+    "REG70": "guest plan not carried as permit attribute.",
+    "REG71": "ps fixed argument order source.",
+    "REG72": "ps no added runtime paths or issuer.",
+    "REG73": "early decoders source identical not guest execution.",
+    "REG74": "no new guest module or member.",
+    "REG75": "guest startup data never opens gates.",
+    "REG76": "guest not in modules after all host checks.",
+    "REG77": "Pure first-frame codec preserves exact startup bytes and run ID.",
+    "REG78": "Pure initial envelope rejects outer/inner run substitution before loader.",
+    "REG79": "Pure initial run ID rejects bool/non-string/uppercase/invalid lengths.",
+    "REG80": "Pure initial envelope exact fields, INIT command and integer sequence zero.",
+    "REG81": "Pure initial payload/context/request_hex shapes and malformed request rejected.",
+    "REG82": "Pure initial codec size, depth, canonical encoding, duplicate/noninteger rejection.",
+    "REG83": "Source AST: early frame binding before loader and identity; late recheck remains before ACK.",
+    "REG84": "Pure first-frame data cannot open authority; AST helper is stdlib JSON only without I/O.",
+    "REG85": "Pure native context source cap 262144 accepted, 262145/bool/negative refused.",
+    "REG86": "Pure native context and worker ingress agree at both sides of the source-size bound.",
+    "REG87": "Source AST: explicit capsule/layout imports occur exactly once before guest entry import.",
+    "REG88": "Source-only eager import graph satisfies immediate sys.modules helper lookups.",
+    "REG89": "In-memory missing-import mutation is detected; function-local imports are not eager loading.",
+    "REG90": "Source AST eager imports remain inside eight-member guest capsule.",
+    "REG91": "Source AST hash checks and installed finder precede helper imports.",
+    "REG92": "Source AST guest barriers remain unconditional; guest and ctypes absent in test process."
+  },
+  "baseline_adjustments": [
+    {
+      "method": "test_LAYOUT_CAPSULE04_exact_capsule_subset",
+      "change": "Expected guest subset changes from seven to eight; benign_capsule.py is included to close guest relative imports. The repository file set remains 32."
+    }
+  ],
+  "source118_coverage_note": "REG45-REG59,REG62-REG67,REG74-REG76 exercise host pure/fake/closed checks. REG60-REG61,REG68-REG73 inspect source/AST; no worker loader/Win32 pump/guest module/PS execution.",
+  "baseline_adjustments_118": [],
+  "source119_coverage_note": "REG77-REG82,REG85-REG86: pure host checks; REG84: pure plus AST; REG83,REG87-REG92: source AST/module-presence observations. Neither actual byte loader nor guest/PS/native bodies are executed.",
+  "baseline_adjustments_119": [],
+  "previous_140_methods_ast_preserved": true
+}

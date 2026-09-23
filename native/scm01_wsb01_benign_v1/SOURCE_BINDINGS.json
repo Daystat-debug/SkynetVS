@@ -1,0 +1,1013 @@
+{
+  "kind": "SCM01_WSB01_BENIGN116_SOURCE_BINDINGS",
+  "basis_head": "0fc3e19a6fe8f59f3b71b9d682630cfb1b7c0427",
+  "basis_tree": "206c105decec0190f2e29a5090999389f79e28c3",
+  "references": [
+    {
+      "path": "docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md",
+      "bytes": 367040,
+      "sha256": "5b9b653b61af406519ad98718772ed5b375d85e6d8268e557d076604db8a6762",
+      "blob_oid": "731bea8e2a8611a78904d98fe4e557887c571f99",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_Source109_Apply_V1.zip",
+        "member": "SkynetVS_SCM01_WSB01_Source109_Apply_V1/candidate_docs/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md"
+      }
+    },
+    {
+      "path": "docs/architecture/SKYNETVS_CURRENT_STATE.md",
+      "bytes": 222817,
+      "sha256": "29f750e920ac2d6cc7f467756abe36a2957e9aa33bb1e66869812fe67d6e9663",
+      "blob_oid": "11a05311bf19f3f5f4a61e88d68dd80224ec066d",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_Source109_Apply_V1.zip",
+        "member": "SkynetVS_SCM01_WSB01_Source109_Apply_V1/candidate_docs/SKYNETVS_CURRENT_STATE.md"
+      }
+    },
+    {
+      "path": "docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md",
+      "bytes": 120969,
+      "sha256": "a571129f90950046f8095b6538e8f7083bf318357f085255888af52c5ece94af",
+      "blob_oid": "08d28e227a2595d1d429e54f7791434abb4abc54",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/docs/architecture/SKYNETVS_TRUSTED_PYTHON_RUNTIME_V1.md"
+      }
+    },
+    {
+      "path": "docs/architecture/SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md",
+      "bytes": 5266,
+      "sha256": "e9ca7fa65508cccc8001b33c8ef0073531736a4825db64ffbd8b1928dc51508e",
+      "blob_oid": "4f7696b9ceef36124bff164cbbb39a8908448b4d",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/docs/architecture/SKYNETVS_WINDOWS_SANDBOX_ACTIVE_ATTESTATION_V1.md"
+      }
+    },
+    {
+      "path": "docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md",
+      "bytes": 6778,
+      "sha256": "285c05ffd2e42ee9da35c25daf99d562c0382441397e788948b11d321391eae7",
+      "blob_oid": "7985693516d533ae7249c14de43976819f885e96",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/docs/architecture/SKYNETVS_WINDOWS_SANDBOX_LIFECYCLE_ATTESTATION_V1.md"
+      }
+    },
+    {
+      "path": "docs/architecture/SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md",
+      "bytes": 9950,
+      "sha256": "200e95457b12d13cd796377437fe3156f4b73fb319802c445a69bcb3d3760e9d",
+      "blob_oid": "d6ddcd7abf58bdd19ac8a81a475d6dd67d096e0b",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/docs/architecture/SKYNETVS_WINDOWS_SANDBOX_SIGNED_BOUNDARY_ATTESTATION_V1.md"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_contract.py",
+      "bytes": 3908,
+      "sha256": "869a81dbc39c86c68027cc562c315a49dd79f73e406c38bef4a32fd33ad2756e",
+      "blob_oid": "39c0e233cf7f4a9c1c7ad3312707592248376ac3",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_contract.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_backend_host.py",
+      "bytes": 25511,
+      "sha256": "b892883dcf40c89e96a4f0535d772f8b1f6e9a2f40d84dde561e8d1ac8044a4a",
+      "blob_oid": "702e44bf23014708e0fca9b203aebc27fadee6b7",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_backend_host.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_backend_lifecycle.py",
+      "bytes": 35021,
+      "sha256": "3844408a5ea59ad1c8da33bca6fd3d76b35483a347063c250ae7acea193942e4",
+      "blob_oid": "701a6721b7db81e2faa32f6045bd10cbaca50e8c",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_backend_lifecycle.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_backend_lifecycle_payload.py",
+      "bytes": 33358,
+      "sha256": "5f5711635d78adfaed96681e1fc78e5745aaa9f6a3ae203d9db30e89419e39ba",
+      "blob_oid": "20177b63475ad3e86903dee14873d9d5a76b1dba",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_backend_lifecycle_payload.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_backend_lifecycle_windows.py",
+      "bytes": 20291,
+      "sha256": "2e7177e2979fad5db3275ef1e626fff27bc83f4ecccd21ef5e06b41a3f3ec72f",
+      "blob_oid": "0f358a056637e92d0b06355648307c39b80ef0bf",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_backend_lifecycle_windows.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_backend_policy.py",
+      "bytes": 9203,
+      "sha256": "1832d2763111079fa1f66d5fa5fab7fcac3dc41fcdfcf5cbc2186ee3a2a54f13",
+      "blob_oid": "ed68a0601969013002df58f437d1b6bc739f5705",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_backend_policy.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_boundary_crypto.py",
+      "bytes": 8424,
+      "sha256": "89cf50c84f21d8722d19baeff9acc02704902ecca182e5dd76e9e8078c7f7a83",
+      "blob_oid": "78e843b6279c911aa0480d16f90be86683616f25",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_boundary_crypto.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_boundary_policy.py",
+      "bytes": 6621,
+      "sha256": "f4d1666a123257997d396144427d3da8ca8cc75ce9e1373ec6b512c1da45f5b7",
+      "blob_oid": "43f65251208f9867044bec6205437bc3a0558159",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_boundary_policy.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_boundary_worker_payload.py",
+      "bytes": 49654,
+      "sha256": "bafd8554f6b9d806f008fe977064c65eb86cca52116b9f34325977cf05de0b06",
+      "blob_oid": "13703b1aeee93f9f929e25c5a48e06a8211dac54",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_boundary_worker_payload.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_attestation.py",
+      "bytes": 11741,
+      "sha256": "a30c6bfd7ef97234c738e771ceacfb056081fd67b5c5690fcf48a327afea7476",
+      "blob_oid": "37873f52596e2b937d7f08f73e4a86f60e1a74ad",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_attestation.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_attestation_contract.py",
+      "bytes": 38737,
+      "sha256": "a9c5a5cd4df0b4d42928173fcd01badca4f870206207f1cd033696f2615caf48",
+      "blob_oid": "d10c687b34463049cf09f11bf998dde6416b5141",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_attestation_contract.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_attestation_payload.py",
+      "bytes": 66163,
+      "sha256": "4745be6a69c7835f934a23ad1d758022a3035ffeea88619aa03f8c03fa1ba72e",
+      "blob_oid": "7c9f38ac9589a50f32d7d45843a36e6390c7d6ae",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_attestation_payload.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_attestation_policy.py",
+      "bytes": 12908,
+      "sha256": "7a211e9e3e2cc60697265b094860853c43b4a3c10548fb48554b03e403ff7ab5",
+      "blob_oid": "7474647cccffde9a5c8998aeb7f155c489827c12",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_attestation_policy.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_attestation_verifier.py",
+      "bytes": 39856,
+      "sha256": "ef3c14e987ddec68ffa610f3a389d04b29ec2371acebf7aa9c4eed8890fe8453",
+      "blob_oid": "14a40b929f1c58b506790b83c9c70c1b23244f74",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_attestation_verifier.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_bundle.py",
+      "bytes": 58492,
+      "sha256": "b051e5d50d08457d2b7a9408bea24fd516e48a17a78fa79a5e8eb5981556bda7",
+      "blob_oid": "fa36c8cbcb45769009619b91e6d40d86513763b4",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_bundle.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_composition.py",
+      "bytes": 71872,
+      "sha256": "b37820aa629c5d13bff9c151ff7b14a6e0c9862865e00207749f30d818ad0125",
+      "blob_oid": "f412b325f5895f49f0e7a61e6f3ffc3ee2ca2f56",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_composition.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_composition_fs.py",
+      "bytes": 40752,
+      "sha256": "f410dd101f343f1c8e52ddd62470f1c56076f6241be4c300bc12a7288a6a4c5b",
+      "blob_oid": "8158b2edd3d2e52f44694500a78b70b4c402a0f0",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_composition_fs.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_lease.py",
+      "bytes": 26947,
+      "sha256": "08b5f91e70353d733587b9ae0dbb2b3de6996ff2facd234115f7b73924e34d5e",
+      "blob_oid": "a08566026401880b9ccbec650052decba89bb7d2",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_lease.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_lease_policy.py",
+      "bytes": 11061,
+      "sha256": "18a33f837a9ee999898b0b37bccb28d051fe62b0c34933ccd066adc2555f1212",
+      "blob_oid": "085e67349a2f72f076dcb4e92723783b2eadb9ff",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_lease_policy.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_execution_runtime_policy.py",
+      "bytes": 22348,
+      "sha256": "d0a6bf765c64ce38cff8c927f30586472c3815de64fbcad44b27c7b8023fa6ca",
+      "blob_oid": "58eb29863fd12c7c31e5ce7cf978feb5939dffff",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_execution_runtime_policy.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_preflight.py",
+      "bytes": 15919,
+      "sha256": "a398cc930d6be0265fa06d2bb6aec6940d4ba154cf1dc91e0c1424f1e76f1881",
+      "blob_oid": "216c7bcd8838fe5b6ae1886177e04d8a0579dd07",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_preflight.py"
+      }
+    },
+    {
+      "path": "modules/developer/developer_task_workspace_cleanup_fs.py",
+      "bytes": 15864,
+      "sha256": "631305cbe2f0c047505f517a51297b94f3392cabc49ba0810d6772493563c7b5",
+      "blob_oid": "85e2c65b6121e5968152ba24ef79cfbd73d0eea8",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/modules/developer/developer_task_workspace_cleanup_fs.py"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/.gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+      "blob_oid": "fa1385d99a319b43c06f5309d1aae9fdd3adea46",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/.gitattributes"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/.gitignore",
+      "bytes": 110,
+      "sha256": "f392bc2f39e13e2bc75745dd66153fbbee1c9e107284aef39383f5f68465a898",
+      "blob_oid": "2390858f74c6d7668a8f168cbe537aa9771f473e",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/.gitignore"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/BUILD_PROFILE.json",
+      "bytes": 745,
+      "sha256": "29a04bdfc8e1191cd40e3db3f17671a4ba453c770b1cfe68f87819f540c98427",
+      "blob_oid": "c31ebd4aa58894c677c85ce79cb1a4112aea7595",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/BUILD_PROFILE.json"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/Directory.Build.props",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea",
+      "blob_oid": "058246e40862046ca3e0e99c26508fed3b024525",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/Directory.Build.props"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/Directory.Build.targets",
+      "bytes": 12,
+      "sha256": "17284cb74605517cbec8a8153505da71a685b28694b67b5ef80608cd79b1c0ea",
+      "blob_oid": "058246e40862046ca3e0e99c26508fed3b024525",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/Directory.Build.targets"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/GuardStartCandidate.csproj",
+      "bytes": 3905,
+      "sha256": "93bc0c695f1cbfa31373a8ae0e8f5c33c1c0f0199db07a3d58174db8546c491f",
+      "blob_oid": "88da678e1068bbc56496bf067309f5a592fec1d5",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/GuardStartCandidate.csproj"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/INTEROP_INVENTORY.json",
+      "bytes": 1589,
+      "sha256": "b14154a7be551f499d1fe6db695fbc654b2b463c88a8a60d61b896d1369f17d4",
+      "blob_oid": "a1854df2db5eaef7af02049544bd2074ec070937",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/INTEROP_INVENTORY.json"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/LP01_ACCEPTANCE.json",
+      "bytes": 322,
+      "sha256": "602376459a00e900216cbfb4a384d35c2c767891478ce9f6ce3a5c8ef1225ea6",
+      "blob_oid": "bc3a7f8bc1a29af40154cffc6d8681baffe40708",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/LP01_ACCEPTANCE.json"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/NuGet.Config",
+      "bytes": 367,
+      "sha256": "4872a1143cf9e74d5eb3e700ec2cdd031135a2fd6bea8fa225bcb519ba665946",
+      "blob_oid": "3aa627978f36a6e597e9a059b0c4b77d6676ad98",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/NuGet.Config"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/ORIGIN_EXTRACTION.json",
+      "bytes": 1308,
+      "sha256": "c7935a276e98e3c5a41f7563975692068221c826edf689914a903fc318cd49df",
+      "blob_oid": "3120bef90429a2a4a01e3ab5c1f6954db7f8b33c",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/ORIGIN_EXTRACTION.json"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/OriginRefusal.cs",
+      "bytes": 904,
+      "sha256": "c42d5d0f1d68cbbcbc6623539255c27352c108fcd551ba0069293af96b02ac1b",
+      "blob_oid": "c070d219e49808dad54b4eb932f01dd622996fe6",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/OriginRefusal.cs"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/README_RU.md",
+      "bytes": 2479,
+      "sha256": "e28fa931a2b29ae936f62e13b57fddf2bbda4e9c9ee399d810da13f69fb981d2",
+      "blob_oid": "437cc13b8d21b9d9993d85e0ba7aea7f031e73ed",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/README_RU.md"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/SOURCE_ALLOWLIST.json",
+      "bytes": 541,
+      "sha256": "316bbb62c78e211fedcb69f3a15ae0fe6759aa6d369ba208bf308980c735bf48",
+      "blob_oid": "9957c1ee6b13f594654ecfa40b3ae762293c72de",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/SOURCE_ALLOWLIST.json"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/START_BOUNDARY.json",
+      "bytes": 1245,
+      "sha256": "7f586e1cc141d51666557b71db55e46d1f7ab14d1ed49dbe5e5a47c78e7181a4",
+      "blob_oid": "91763316573cd5f8bf4d6f5f50316155ce5e7a6d",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/START_BOUNDARY.json"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/ServiceEntryPoint.cs",
+      "bytes": 5959,
+      "sha256": "ae02e35d95cba9da77b6137ebec98b421611a8f6753f99939d9681aaca83003a",
+      "blob_oid": "8a7b810db57a9fc72edac411a21a06221cd211f4",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/ServiceEntryPoint.cs"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/ServiceNative.cs",
+      "bytes": 1857,
+      "sha256": "5ec4f9f0d057b102bc91a1df6fee3903c8f660cc77d37346be75ab9b3c7b07a4",
+      "blob_oid": "32a21a21807634892f9fef44eb8cce70e0698dc4",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/ServiceNative.cs"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/abi/service_abi.cpp",
+      "bytes": 2292,
+      "sha256": "8c59d46596d9ebe9ee6bb5a1febe9f80be916fb4f47e14439b279f56af904311",
+      "blob_oid": "2d7d1e7d93956d99f6e95003303565f1760616ae",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/abi/service_abi.cpp"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/global.json",
+      "bytes": 105,
+      "sha256": "68c8058c2833fc3219c0f9f50672d53fe1898f772ac00a5545d1cd6d0ac0e608",
+      "blob_oid": "0281582fa546abb6e03fcbbcca4f54e686678205",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/global.json"
+      }
+    },
+    {
+      "path": "native/guard_start_candidate_v3/packages.lock.json",
+      "bytes": 1237,
+      "sha256": "8ee9e0e4585905baef0430dea36164a9bd027943f008c766d099a413e4063b59",
+      "blob_oid": "4e111a5656aa493d20c7e70e848d51e2e4872eb4",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/guard_start_candidate_v3/packages.lock.json"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/.gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+      "blob_oid": "fa1385d99a319b43c06f5309d1aae9fdd3adea46",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/.gitattributes"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/.gitignore",
+      "bytes": 25,
+      "sha256": "ead9b62dcf8cee95887c3e52b2fb0782cae898863e64da457a8687a3fe79e5e3",
+      "blob_oid": "9efa3e4d25b471084559f25cc0fd6af0b4972b85",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/.gitignore"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/ABI_EXPECTATIONS.json",
+      "bytes": 4144,
+      "sha256": "6f5ddfe63a7cf119c95cc2f0f298748d85f2e74754810adf3cd3cc0784a639b9",
+      "blob_oid": "1f491ceb86bd929f892969e02d65fbb571c87961",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/ABI_EXPECTATIONS.json"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/BUILD_SCOPE.json",
+      "bytes": 1198,
+      "sha256": "5ad044d16a2c2c89827cbe36de105b7f28bf2691ef4a495739eac3fe9f950406",
+      "blob_oid": "688c2d6ceb8c29b9e1b8b7bfc451e15265667ea7",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/BUILD_SCOPE.json"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/README_RU.md",
+      "bytes": 7172,
+      "sha256": "ec6a730f9dda29e9dccd8841e4e5a4b33c9c3392af6b5d9aecd6a939d0296979",
+      "blob_oid": "127538b5b6e55c140cd37ddea56dcd5c9c296c24",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/README_RU.md"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/SCM01_CONTRACT.json",
+      "bytes": 8440,
+      "sha256": "50a5ee7179b7546762c9925c5e00ce2d032e6dcd83fd621be362838375b2b08f",
+      "blob_oid": "319328ead124252fc5e0158328fe649d78fa4668",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/SCM01_CONTRACT.json"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/SOURCE_BINDINGS.json",
+      "bytes": 25194,
+      "sha256": "2c9d7a615635bbe7f0a9868c5f726157eff25768de6c75d6582afc03a65ecccf",
+      "blob_oid": "52e5a9eaf658bba0b6802d48e47c451fdf36b70e",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/SOURCE_BINDINGS.json"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/TEST_PLAN.json",
+      "bytes": 6910,
+      "sha256": "a250ca42fbead519ce14ed632cee4b9f883f34429b504532d236fa48eabb751b",
+      "blob_oid": "5e70769dcaa269514b093a6d04188d9ae099134b",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/TEST_PLAN.json"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/abi/scm01_abi.cpp",
+      "bytes": 10242,
+      "sha256": "b07c899f6f3777d9b830ebda270c9d21d35e5a7cec43d64b02b021c878ee405f",
+      "blob_oid": "f34f021522c06a7d80b77dea08a40525e28f4df2",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/abi/scm01_abi.cpp"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/controller_main.py",
+      "bytes": 374,
+      "sha256": "83241ea6966ee2ecfe9ab08fed6e7e3b003bfbf4d0f469e796d38f3735f34346",
+      "blob_oid": "2da9b94dc38b05de8d3b61abb7bc4d409646bfaf",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/controller_main.py"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/runtime_gate.py",
+      "bytes": 297,
+      "sha256": "49a5d5e1457bccda56f2cdbc4714b85346739ce11f733240a956bf7ff84e4c10",
+      "blob_oid": "90ec28f3682886090f6126718cf237152e480a1e",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/runtime_gate.py"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/scm01_contract.py",
+      "bytes": 6208,
+      "sha256": "2a6443b3435d2a9806a19b82a2769cf0f23221d57b522cb3244832099f614aa3",
+      "blob_oid": "b35382937f598684e77f2c6651f8b8b007b5ceb2",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/scm01_contract.py"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/scm01_engine.py",
+      "bytes": 8055,
+      "sha256": "f88aa8f5d9e08b40a41da349432eb09180e27fc6f0f1aef926ce93b8ee3fffa9",
+      "blob_oid": "15b7135f356fedacd7b3fdee9d0bd3cf19650886",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/scm01_engine.py"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/scm01_journal.py",
+      "bytes": 2797,
+      "sha256": "c3364a38e0cc30637b1b28f80f2c7f8b86f66eab2ce33a773c993a15daa8b8b4",
+      "blob_oid": "a65250f9c32feb40aac69267a1bf139abc3d2b1e",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/scm01_journal.py"
+      }
+    },
+    {
+      "path": "native/scm01_controller_v1/scm01_native.py",
+      "bytes": 15289,
+      "sha256": "2198e58b8cb282aa61774845fb9e4a3891c61873b5a374aff707639d2de7a5cc",
+      "blob_oid": "ed875ada66557969591a5870e2726f53b3916ab7",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/native/scm01_controller_v1/scm01_native.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/.gitattributes",
+      "bytes": 14,
+      "sha256": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+      "blob_oid": "fcadb2cf97913f58a2523f535336e725c6b59d1f",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/.gitattributes"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/.gitignore",
+      "bytes": 19,
+      "sha256": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
+      "blob_oid": "7a60b85e148f80966a550e5ab6a762a907c69ca6",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/.gitignore"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/PROTOCOL.json",
+      "bytes": 4889,
+      "sha256": "095278a6a7a43c305cfcceceb4da3a2ad21af4766a87848e721efb369bf2aa0c",
+      "blob_oid": "7ce2d1ba6bb23b575599b4742835853e35586b39",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/PROTOCOL.json"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/README_RU.md",
+      "bytes": 7777,
+      "sha256": "3dd41dd09c8367cad93022c1f2ec6b59815ee1fec95610d04b5f71e8f8b5b082",
+      "blob_oid": "52e0bfa111b820af5d103690cdea3414c2cf8597",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/README_RU.md"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/SOURCE_BINDINGS.json",
+      "bytes": 24300,
+      "sha256": "ccca772a42ce716113e75ee3b1b7c214d961eb2dadec9fd7912f4b9a98f7ec81",
+      "blob_oid": "90762a7d0df30b6fe4ef4924d4ce6687cf349834",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/SOURCE_BINDINGS.json"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/SOURCE_SCOPE.json",
+      "bytes": 2900,
+      "sha256": "40470f2e51c03755586bd783f3e8e6172f7c5f71086a94bde8b6264ddc02cb86",
+      "blob_oid": "310b109b222529c8a7f8dc3631888d019133bd79",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/SOURCE_SCOPE.json"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/TEST_PLAN.json",
+      "bytes": 19780,
+      "sha256": "bb3d561ea0b1a8e24215eb8b01bf9bc4dc85ee45e0b5fda32835c2f9069df890",
+      "blob_oid": "3595e037f3e49cf8337b01514a10283ecda33d91",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/TEST_PLAN.json"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "blob_oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/__init__.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/adapter_main.py",
+      "bytes": 655,
+      "sha256": "c44e06ddaae2d24b259691331df7e768da08f78778ceb989e9fce4d46f76d244",
+      "blob_oid": "5f761ca5dac144a3ee6562e8282f4cbf62665331",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/adapter_main.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/tests/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "blob_oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/tests/__init__.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/tests/test_closed_boundary.py",
+      "bytes": 5702,
+      "sha256": "4ba4453ad53865850a3928f7efe658562fcfc2f87d0c654b0c8c18a2e76eb3a0",
+      "blob_oid": "b9f2239272a756b142e907e67ac9e8c7120efdfa",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/tests/test_closed_boundary.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/tests/test_contract.py",
+      "bytes": 14235,
+      "sha256": "7f2791853a9814e3f8e4946e7ce696e2e56b0255cc91d988f5bdc6cb9b362cf6",
+      "blob_oid": "3ac2aa1416f82e528850e49f29b1fc345ba8c700",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/tests/test_contract.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/tests/test_layout.py",
+      "bytes": 3946,
+      "sha256": "2be73c8b5fb291d23743ec5a5c42cf86829c651942927872a8ce3d7fa52e0532",
+      "blob_oid": "24fbe5f3344514768cde3955469bdd3a8dc43968",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/tests/test_layout.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/tests/test_state.py",
+      "bytes": 14450,
+      "sha256": "416c919357074b00bdaf5e59a95110343aa951498dce983045519bcaa2dc58eb",
+      "blob_oid": "e702b4d6c8b3c6a0e6a3f9fbd0df8a0148734fa8",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/tests/test_state.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/tests/test_transcript.py",
+      "bytes": 12839,
+      "sha256": "a44ea00c5fc8192ff177876e2e3b5f5e38af823bff40700c2d5acbbe078848e4",
+      "blob_oid": "6d17e634b3e5169e4377b60e3c7931799279c4e6",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/tests/test_transcript.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/wsb01_contract.py",
+      "bytes": 17982,
+      "sha256": "9379787d537887391693b5e3e0f392ea62cd2cc6f748dc9d43a828d8faadad2a",
+      "blob_oid": "f5b66185bf3cf1e5f65f52c77afea39821b0be5f",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/wsb01_contract.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/wsb01_layout.py",
+      "bytes": 6217,
+      "sha256": "2d77ed9a63e7f5a6fbc380873ceac9da6951bdc15cf69412a9f9eb43d38b6208",
+      "blob_oid": "a7a11326880b05ff83d7192d938c6b6c102b1f87",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/wsb01_layout.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/wsb01_policy.py",
+      "bytes": 3772,
+      "sha256": "2feec8d7a7e010c7730e0e15aa9bd53a2a70ca1aeb2509541dcacff3388f4681",
+      "blob_oid": "7fe3afe7a66e3bf8d95a6ac17a619a5fc581fee3",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/wsb01_policy.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/wsb01_ports.py",
+      "bytes": 3557,
+      "sha256": "905bac24172ea4dc2ee6cf67ee353115e2a2fe99a916df5d83fbbc677d05ca8f",
+      "blob_oid": "896c25b5a8d7bdd2b28ad8cd112c6a1d71824271",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/wsb01_ports.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/wsb01_runtime_gate.py",
+      "bytes": 303,
+      "sha256": "cf9f989b54e1e43a1a61f3d0a656e0bb9da76cc0cf594faf52f677c39aab6178",
+      "blob_oid": "6fa816174895f0bdef484641af0dbd649461c22f",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/wsb01_runtime_gate.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/wsb01_state.py",
+      "bytes": 12217,
+      "sha256": "238ec8fcbc9fb99991374b194fc1f0be55ee1b01e6ca1926298e0cac37a1958d",
+      "blob_oid": "e66a3b20f163522f9de8a95691bd822cb413c71a",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/wsb01_state.py"
+      }
+    },
+    {
+      "path": "native/scm01_wsb01_adapter_v1/wsb01_transcript.py",
+      "bytes": 17081,
+      "sha256": "dc33f89fa23c4ef30a9b7fea25c339196fbf1c34209b266d771e4d7832800933",
+      "blob_oid": "2bf09f3233f4f38fdd2bbd8cd4ece6df782a3985",
+      "provenance": {
+        "archive": "SkynetVS_SCM01_WSB01_ClosedCore107_Source_V2.zip",
+        "member": "native/scm01_wsb01_adapter_v1/wsb01_transcript.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_backend_host.py",
+      "bytes": 20328,
+      "sha256": "faecc510933871bfd129e8c9e3b44526badd994e6b9a78c3cdc3517b3910ae72",
+      "blob_oid": "9d1091dd7aed6601fd42ad7196fc4b405a9d2b86",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_backend_host.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_backend_host_windows.py",
+      "bytes": 816,
+      "sha256": "05de6c18fdfd3f1ebfaee463edcf7e0f3bc9c33dd8f7c872d9ca41157d44d6e1",
+      "blob_oid": "57f5fdbcf530fd33533f51f23d8bd76eb8224a04",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_backend_host_windows.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_backend_lifecycle.py",
+      "bytes": 36807,
+      "sha256": "7f6d490310019f3e689b76b5fbda666358840bab5480b06e845aadd76ce81362",
+      "blob_oid": "4cd0c15d3d742220915d0faf847ad5375530a517",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_backend_lifecycle.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_backend_lifecycle_windows.py",
+      "bytes": 7368,
+      "sha256": "b76fa7d73e5ea554dffc5975d57f129d1ab0a56263b472c0ca46b61e951a79dd",
+      "blob_oid": "042c291e74af32c6d5056bd0da393734b6e5f2e4",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_backend_lifecycle_windows.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_attestation.py",
+      "bytes": 43860,
+      "sha256": "6248857e28766aecd49750d8ed4047b639d8c08a05efdba64db23c8f8cf58a06",
+      "blob_oid": "df7ece50781a1834bf0fcf4d0ad53da80f0916b6",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_attestation.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_attestation_crypto_windows.py",
+      "bytes": 5161,
+      "sha256": "45b9cdc02ff8fa8f04f6d68ffbb4419c604b5a839085dcf3705a7e24ffd298c8",
+      "blob_oid": "ffc24156da2b5cffcc92603b9f2edb1aea7ad8dc",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_attestation_crypto_windows.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_attestation_verifier.py",
+      "bytes": 43790,
+      "sha256": "8aaae12082a44cc10e45c6461f947769e1ab78b981b7f6a25127528ea02ad372",
+      "blob_oid": "812819351d118892393cf09f8ce6cb4b2f935a45",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_attestation_verifier.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_attestation_windows.py",
+      "bytes": 8956,
+      "sha256": "fccdd757bac6e3f07ff667d7f2bf1b01b00a8c289ff03aec92577f72493ded19",
+      "blob_oid": "fb59eb5b7f023b6a152ecb335eb34a87ea9d37fa",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_attestation_windows.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_bundle.py",
+      "bytes": 22891,
+      "sha256": "c3b2ef03dccc59acbedec530ef42a1176de4851d794a0ad54374409e24c8d2b0",
+      "blob_oid": "a8ccfdca6699fb717fcc0e22996161cdef4305f7",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_bundle.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_bundle_windows.py",
+      "bytes": 8114,
+      "sha256": "1ece2a94a44c735ce293d3f7c0be4710feb259890b939c89d2b4758e460495bb",
+      "blob_oid": "4d09813e57cd30f82bd4fbb790db492d910478cf",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_bundle_windows.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_composition.py",
+      "bytes": 45457,
+      "sha256": "1724c73914ba627bf24b7a5115c3ae90d5f963e761984e73b17e54f8e2f63d65",
+      "blob_oid": "fcdd9a4f4a2f7664708a605fe7baabe295e37bcf",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_composition.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_composition_windows.py",
+      "bytes": 7674,
+      "sha256": "15ea84f373d84d7328e34134bb1ac93108fada7ec6be770984ef9dca68001c50",
+      "blob_oid": "057164978d3e7f0481fb5d0cc5425cc3abea04e3",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_composition_windows.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_lease.py",
+      "bytes": 26283,
+      "sha256": "60782de1aa1e1322391853eba8d643c1be5f2fd2991fcd24b88386817de753d6",
+      "blob_oid": "9b032db7fc1fef6430e1a3538574567d743b62e6",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_lease.py"
+      }
+    },
+    {
+      "path": "tools/eval_developer_task_execution_runtime_lease_windows.py",
+      "bytes": 6741,
+      "sha256": "fac77077bbf00eaf5fad5d7819c38c6f5b4a15cca40fce3a000eb7e786f6adba",
+      "blob_oid": "8a3f30415bf55c3ea0076b68c262d5935db50938",
+      "provenance": {
+        "archive": "SourceAudit102/SourceClosure103",
+        "member": "committed/tools/eval_developer_task_execution_runtime_lease_windows.py"
+      }
+    }
+  ],
+  "recipes": [
+    {
+      "file": "benign_contract.py",
+      "source": "native/scm01_wsb01_adapter_v1/wsb01_contract.py",
+      "lines": "139-210",
+      "use": "bounded canonical parser recipe; no live import"
+    },
+    {
+      "file": "benign_windows_crypto.py",
+      "source": "modules/developer/developer_task_execution_boundary_crypto.py",
+      "lines": "1-239",
+      "use": "public blob/on-curve and prehash wrapper pattern; independent guarded provider"
+    },
+    {
+      "file": "benign_windows_session.py",
+      "source": "modules/developer/developer_task_execution_backend_lifecycle_windows.py",
+      "lines": "321-512",
+      "use": "known process set/identity retention; explicit enum completion correction"
+    },
+    {
+      "file": "benign_windows_fs.py",
+      "source": "modules/developer/developer_task_execution_runtime_composition_fs.py",
+      "lines": "317-416,876-929",
+      "use": "bounded read/create once; native same-handle implementation; no old active code imports"
+    }
+  ]
+}

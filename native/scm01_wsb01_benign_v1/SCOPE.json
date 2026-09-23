@@ -1,0 +1,331 @@
+{
+  "kind": "SCM01_WSB01_BENIGN119_SOURCE_SCOPE_V4",
+  "status": "SOURCE_REVIEW_CORRECTED_OFFLINE_TESTED_REVIEW_REQUIRED_NOT_APPLIED",
+  "profile": "SCM01-WSB01-BEN01",
+  "target_directory": "native/scm01_wsb01_benign_v1",
+  "new_files": 32,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "category": "metadata",
+      "responsibility": "Фиксированные text/eol для новых файлов; старые attributes не менять",
+      "proposed_interfaces": []
+    },
+    {
+      "path": ".gitignore",
+      "category": "metadata",
+      "responsibility": "Только local pycache/evidence; не скрывать source",
+      "proposed_interfaces": [
+        ""
+      ]
+    },
+    {
+      "path": "README_RU.md",
+      "category": "metadata",
+      "responsibility": "Source-only/benign-only граница, запуск по отдельному будущему grant",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "SCOPE.json",
+      "category": "metadata",
+      "responsibility": "SCM01-WSB01-BEN01; exact 32 paths; запреты/границы",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "SOURCE_BINDINGS.json",
+      "category": "metadata",
+      "responsibility": "Exact 98 reference identities и extracted recipes; hash generated only from actual delivery",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "BENIGN_PROTOCOL.json",
+      "category": "metadata",
+      "responsibility": "Новый домен; без live aliases к OFFLINE_MODEL",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "TEST_PLAN.json",
+      "category": "metadata",
+      "responsibility": "64 planned source/fake tests + отдельные ещё не разрешённые host-smoke/live этапы",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "__init__.py",
+      "category": "pure",
+      "responsibility": "Пустой package initializer; no native load",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "benign_main.py",
+      "category": "closed_entry",
+      "responsibility": "Публичный entrypoint CLOSED/92 до отдельно reviewed live issuer",
+      "proposed_interfaces": [
+        "main(argv) -> int"
+      ]
+    },
+    {
+      "path": "benign_contract.py",
+      "category": "pure",
+      "responsibility": "Bounded canonical codec + новые exact схемы; без импорта ModelCryptoObservation",
+      "proposed_interfaces": [
+        "parse_benign(kind, raw) -> BenignDocument",
+        "serialize_benign(kind, fields) -> bytes",
+        "parse_completion(kind, raw) -> Completion"
+      ]
+    },
+    {
+      "path": "benign_layout.py",
+      "category": "pure",
+      "responsibility": "Exact четыре mapping роли и чистый XML render; без чтения диска",
+      "proposed_interfaces": [
+        "plan_layout(spec) -> BoundLayout",
+        "render_wsb(layout, bootstrap_pin) -> bytes"
+      ]
+    },
+    {
+      "path": "benign_capsule.py",
+      "category": "pure",
+      "responsibility": "Состав guest capsule, acyclic manifest, retained runtime inventory validation; никаких downloads",
+      "proposed_interfaces": [
+        "build_capsule(source_bytes, runtime_manifest) -> CapsulePlan",
+        "validate_runtime_inventory(files, expected) -> RuntimePins"
+      ]
+    },
+    {
+      "path": "benign_ledger.py",
+      "category": "host_source",
+      "responsibility": "Consumed grant + launch/auth intents через sealed FS port; no delete/reset/reissue",
+      "proposed_interfaces": [
+        "reserve_grant(descriptor, fs) -> ReservedGrant",
+        "record_launch_intent(grant, fs) -> LaunchIntent",
+        "record_outcome(grant, observation, fs) -> None"
+      ]
+    },
+    {
+      "path": "benign_state.py",
+      "category": "pure",
+      "responsibility": "Runtime event bookkeeping с доменом benign; sticky failure, deadlines, unknown; не issuer",
+      "proposed_interfaces": [
+        "transition_benign(state, host_event) -> Transition"
+      ]
+    },
+    {
+      "path": "benign_evidence.py",
+      "category": "pure",
+      "responsibility": "Hash/schema/journal binding; final verdict требует настоящие provider receipts, не bool из JSON",
+      "proposed_interfaces": [
+        "validate_ready(expected, raw) -> ReadyCandidate",
+        "validate_terminal(expected, raw_snapshot) -> TerminalCandidate",
+        "finalize_lab(expected, native_receipts, snapshots) -> LabVerdict"
+      ]
+    },
+    {
+      "path": "benign_orchestrator.py",
+      "category": "host_source",
+      "responsibility": "Один launch, независимый watchdog, frame budget, exact cleanup handles; default gate closed",
+      "proposed_interfaces": [
+        "orchestrate_benign(bound_context, permit) -> LabOutcome"
+      ]
+    },
+    {
+      "path": "benign_worker.py",
+      "category": "host_source",
+      "responsibility": "Ровно один artifact worker: mappings/codec/CNG; ни launch Sandbox, ни kill service",
+      "proposed_interfaces": [
+        "serve_bound_channel(channel, context) -> WorkerOutcome"
+      ]
+    },
+    {
+      "path": "benign_windows_fs.py",
+      "category": "native_source",
+      "responsibility": "Lazy guarded Win32 binding: nofollow metadata/identity/limited read/create-new/flush; no ACL rewrite",
+      "proposed_interfaces": [
+        "open_bound_root(path, permit) -> RootHandle",
+        "read_bounded(root, name, cap) -> FileSnapshot",
+        "publish_once(root, name, bytes) -> PublicationReceipt"
+      ]
+    },
+    {
+      "path": "benign_windows_crypto.py",
+      "category": "native_source",
+      "responsibility": "Lazy guarded bcrypt ECDSA-P256; explicit prehash, public-only export, key cleanup",
+      "proposed_interfaces": [
+        "create_ephemeral_signer(permit) -> Signer",
+        "verify_signature(key_blob, domain, payload, signature, permit) -> CryptoReceipt"
+      ]
+    },
+    {
+      "path": "benign_windows_session.py",
+      "category": "native_source",
+      "responsibility": "Полный Toolhelp scan/error handling, exact process handles, launch fixed wsb, child Job; no VM-disposal claim",
+      "proposed_interfaces": [
+        "probe_host_readonly(permit) -> HostSnapshot",
+        "snapshot_complete(permit) -> ProcessSnapshot",
+        "launch_bound(layout, permit) -> LaunchReceipt",
+        "observe_bound(binding) -> Observation",
+        "cleanup_bound(binding, budget) -> CleanupOutcome"
+      ]
+    },
+    {
+      "path": "benign_runtime_gate.py",
+      "category": "closed_gate",
+      "responsibility": "Никаких serialized grants/approved=True/fake-to-live constructors. Source revision always denies public launch",
+      "proposed_interfaces": [
+        "require_benign_run_authority() -> raises RuntimeClosed"
+      ]
+    },
+    {
+      "path": "payload/guest_entry.py",
+      "category": "guest_source",
+      "responsibility": "Fixed digest task, ephemeral signing, ready/auth/journal/terminal; no SCM/Guard/admin bootstrap",
+      "proposed_interfaces": [
+        "main_fixed_guest(request_path, fixed_roots) -> int"
+      ]
+    },
+    {
+      "path": "payload/guest_bootstrap.ps1",
+      "category": "guest_source",
+      "responsibility": "Fixed LogonCommand source: WDAG, hash/copy/recheck, one interpreter, shutdown; no tasks/accounts/ACL/SCM",
+      "proposed_interfaces": [
+        "fixed script; no caller command or arbitrary argv"
+      ]
+    },
+    {
+      "path": "tests/__init__.py",
+      "category": "pure",
+      "responsibility": "Пустой",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "tests/test_contract.py",
+      "category": "fake_tests",
+      "responsibility": "8 wire/domain/codec cases",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "tests/test_layout_capsule.py",
+      "category": "fake_tests",
+      "responsibility": "8 mapping/payload/runtime cases",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "tests/test_ledger.py",
+      "category": "fake_tests",
+      "responsibility": "8 consumed/partial/crash cases",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "tests/test_state.py",
+      "category": "fake_tests",
+      "responsibility": "8 sticky failure/time/retirement cases",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "tests/test_evidence.py",
+      "category": "fake_tests",
+      "responsibility": "8 cross-artifact/signature-binding cases",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "tests/test_windows_bindings.py",
+      "category": "fake_tests",
+      "responsibility": "8 native ABI/fault-injection cases, no DLL loading",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "tests/test_orchestrator.py",
+      "category": "fake_tests",
+      "responsibility": "8 supervisor/worker deadlock-budget cases",
+      "proposed_interfaces": []
+    },
+    {
+      "path": "tests/test_closed_entrypoints.py",
+      "category": "fake_tests",
+      "responsibility": "8 no-side-effect/closed/runtime isolation cases",
+      "proposed_interfaces": []
+    }
+  ],
+  "unchanged_paths": [
+    "native/scm01_wsb01_adapter_v1/",
+    "native/scm01_controller_v1/",
+    "native/guard_start_candidate_v3/",
+    "modules/",
+    "tools/"
+  ],
+  "documentation_candidates": [
+    "docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md",
+    "docs/architecture/SKYNETVS_CURRENT_STATE.md"
+  ],
+  "current_permission": "32 source files and offline/fake checks only outside user repository",
+  "next_preparation_request": "32 concrete source files and offline fake tests outside user repository; separately review source/docs landing",
+  "entrypoint_default": "CLOSED / 92",
+  "live_grant_issuer": "NOT_IMPLEMENTED_INITIAL_CLOSED_DELIVERY",
+  "model_to_live_conversion": false,
+  "approval_message": 116,
+  "approved_scope_message": 115,
+  "runtime_authorized": false,
+  "native_smoke_authorized": false,
+  "repository_apply_authorized": false,
+  "native_cross_process_receipt_admission": "FIRST_PROCESS_DATA_ROUTE_CORRECTIONS_SOURCE_REVIEWED; NO_NATIVE_EXECUTION_OR_LOCAL_ISSUER",
+  "scope_acceptance_closed": false,
+  "all_live_transport_glue_complete": false,
+  "review_blockers": [
+    {
+      "id": "B116-01",
+      "state": "DATA_BINDING_SOURCE_REVIEW_CORRECTED_NATIVE_ADMISSION_OPEN",
+      "detail": "Initial outer/inner run_id is checked by a pure helper before byte loading/identity; original post-loader recheck retained. Source-member cap agrees before reservation. Native ingress, pump and local issuer remain unexecuted/unaccepted."
+    },
+    {
+      "id": "B116-02",
+      "state": "EAGER_HELPER_SOURCE_CORRECTED_GUEST_ADMISSION_OPEN",
+      "detail": "Two needed helper modules are explicitly imported through the verified byte finder before entry return. AST eager graph and a missing-import mutation are checked; guest/loader/PS not executed; local issuer still absent."
+    },
+    {
+      "id": "R116-03",
+      "state": "UNCHANGED_SUPERVISOR_PROCESS_INCARNATION_ONLY",
+      "detail": "No OS boot GUID, VM identity, hypervisor disposal or rollback-resistant ledger claim."
+    }
+  ],
+  "source_revision": 4,
+  "previous_revision": "Source118 V3 preserved; focused first-process corrections in Source119 V4",
+  "reviewed_in_message": 3,
+  "source_body_prepared": [
+    "bounded own-worker observation codec",
+    "private own-worker process/Job/handle binding",
+    "dedicated synchronous-I/O thread with nonblocking supervisor mailbox",
+    "retained executable/source file handles",
+    "finite native context/static inventory validator",
+    "eight-member guest bytegraph loader source and native guest context construction"
+  ],
+  "corrections_117": [
+    "fragmented IPC frames are not prematurely treated as truncated",
+    "retirement before delayed terminal reply is retained",
+    "no action after a transition has set sticky failure/deadline",
+    "publication-failure persistence error returns failure outcome; original finally cleanup is preserved",
+    "capsule row types are checked before field access"
+  ],
+  "first_process_routes": {
+    "worker": "_worker_first_process -> inherited pipes -> INIT -> exact byte graph -> own ProcessIdentity -> INIT_ACK -> BIND -> serve_native_worker",
+    "guest": "PS fixed four hashes/ID args -> _guest_first_process -> bounded local bytes -> verified eight-module loader -> checked data plan + separate local permit -> main_fixed_guest",
+    "public_entrypoints": "CLOSED / 92; no invocation of either first-process body",
+    "process_local_issuers": "NOT_IMPLEMENTED_BY_DESIGN; no permit transmitted in argv/IPC"
+  },
+  "changes_118": [
+    "Separate canonical startup data envelope/ACK, not a permit or native receipt",
+    "One startup attempt; mismatch/replay/late ACK fail; native path waits before guest launch",
+    "First pinned worker byte-loader source from exact ten-member sibling graph; private pipe handles checked",
+    "Fixed PS->guest byte hashes and route; loader_plan independent from local permit object",
+    "INIT and BIND reserve two IPC sequences; raw message protocol unchanged",
+    "32 new regression methods REG45-REG76; existing methods retained unchanged"
+  ],
+  "review_chat": "C02",
+  "source_delivery_number": 119,
+  "source_delivery_number_is_chat_message_number": false,
+  "changes_119": [
+    "C02M003-F01: explicitly import capsule/layout helpers inside verified guest byte graph; no new capsule member",
+    "C02M003-F02: pure initial envelope/run binding before worker byte loader and own-process observation; later recheck retained",
+    "C02M003-F03: NativeContextSpec source member limit 262144 agrees with ingress and first-loader; interpreter limit unchanged",
+    "REG77-REG92: 16 new pure/static regressions; all previous 140 test method ASTs preserved",
+    "No gate, permit issuer, native wrapper, PowerShell, wire protocol or reference source change"
+  ]
+}

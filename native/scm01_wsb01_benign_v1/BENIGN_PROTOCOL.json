@@ -1,0 +1,297 @@
+{
+  "kind": "SCM01_WSB01_BENIGN_PROTOCOL_V1",
+  "policy": {
+    "profile": "SCM01-WSB01-BEN01",
+    "backend": "traditional_wsb_logoncommand_v1",
+    "guest_identity": "existing WDAGUtilityAccount; no SYSTEM task/account/ACL mutation",
+    "host_processes": {
+      "supervisor": 1,
+      "artifact_worker": 1,
+      "worker_job_active_process_limit": 1,
+      "worker_creation_flags": [
+        "CREATE_SUSPENDED",
+        "DETACHED_PROCESS",
+        "CREATE_UNICODE_ENVIRONMENT"
+      ],
+      "sandbox_in_worker_job": false,
+      "launch_budget": 1
+    },
+    "retirement": {
+      "basis": "EXCLUSIVE_HOST_KNOWN_PROCESSSET_V1",
+      "hypervisor_disposal_proven": false,
+      "same_user_host_adversary_protection": false,
+      "requires_exclusive_operator_session": true,
+      "required_empty_complete_scans": 3,
+      "minimum_scan_spacing_ms": 250,
+      "foreign_pid_cleanup": false,
+      "force_implies_failure": true
+    },
+    "budgets": {
+      "ready_seconds": 120,
+      "guest_authorization_seconds": 90,
+      "terminal_after_publication_seconds": 60,
+      "shutdown_grace_seconds": 45,
+      "host_absolute_seconds": 300,
+      "cleanup_seconds": 10
+    },
+    "limits": {
+      "request": 32768,
+      "ready": 65536,
+      "authorization": 16384,
+      "completion_marker": 4096,
+      "journal": 65536,
+      "journal_records": 16,
+      "record": 8192,
+      "terminal": 65536,
+      "failure": 16384,
+      "signature": 64,
+      "accepted_raw_snapshot": 262144
+    },
+    "required_output": [
+      "ready.json",
+      "ready.sig",
+      "ready.commit.json",
+      "journal.jsonl",
+      "terminal.json",
+      "terminal.sig",
+      "terminal.commit.json"
+    ],
+    "optional_failure": "failure.json",
+    "real_scm_budget": 0,
+    "guard_payload": null,
+    "disk_quota_claimed": false
+  },
+  "wire": {
+    "constant_fields": {
+      "schema": "SKYNETVS_SCM01_WSB01_BENIGN_V1",
+      "version": 1,
+      "profile": "SCM01-WSB01",
+      "experiment": "SCM01-WSB01-BEN01",
+      "evidence_domain": "BENIGN_SANDBOX_LAB",
+      "scenario": "fixed_digest_roundtrip",
+      "guard": null
+    },
+    "message_fields": {
+      "request": [
+        "capsule_sha256",
+        "evidence_domain",
+        "experiment",
+        "grant_id",
+        "guard",
+        "kind",
+        "layout_sha256",
+        "nonce",
+        "policy_sha256",
+        "profile",
+        "run_id",
+        "runtime_sha256",
+        "scenario",
+        "schema",
+        "schema_sha256",
+        "scm_budget",
+        "source_sha256",
+        "version",
+        "wsb_sha256"
+      ],
+      "ready": [
+        "capsule_sha256",
+        "evidence_domain",
+        "experiment",
+        "guest_runtime",
+        "kind",
+        "layout_sha256",
+        "nonce",
+        "policy_sha256",
+        "profile",
+        "public_key_blob_hex",
+        "request_sha256",
+        "run_id",
+        "runtime_sha256",
+        "schema",
+        "schema_sha256",
+        "source_sha256",
+        "version",
+        "wsb_sha256"
+      ],
+      "ready_commit": [
+        "evidence_domain",
+        "experiment",
+        "kind",
+        "nonce",
+        "profile",
+        "ready_sha256",
+        "ready_signature_sha256",
+        "run_id",
+        "schema",
+        "version"
+      ],
+      "authorization": [
+        "evidence_domain",
+        "experiment",
+        "grant_id",
+        "kind",
+        "nonce",
+        "profile",
+        "public_key_sha256",
+        "ready_sha256",
+        "ready_signature_sha256",
+        "request_sha256",
+        "run_id",
+        "scenario",
+        "schema",
+        "scm_budget",
+        "session_binding_sha256",
+        "version"
+      ],
+      "authorization_commit": [
+        "authorization_sha256",
+        "evidence_domain",
+        "experiment",
+        "kind",
+        "nonce",
+        "profile",
+        "run_id",
+        "schema",
+        "version"
+      ],
+      "journal_record": [
+        "data",
+        "event",
+        "evidence_domain",
+        "experiment",
+        "guest_monotonic_ns",
+        "kind",
+        "nonce",
+        "profile",
+        "run_id",
+        "schema",
+        "sequence",
+        "version"
+      ],
+      "terminal": [
+        "authorization_commit_sha256",
+        "authorization_sha256",
+        "capsule_sha256",
+        "evidence_domain",
+        "experiment",
+        "journal_bytes",
+        "journal_records",
+        "journal_sha256",
+        "kind",
+        "layout_sha256",
+        "nonce",
+        "policy_sha256",
+        "profile",
+        "public_key_sha256",
+        "ready_sha256",
+        "request_sha256",
+        "response_sha256",
+        "result",
+        "run_id",
+        "runtime_sha256",
+        "schema",
+        "schema_sha256",
+        "session_binding_sha256",
+        "source_sha256",
+        "version",
+        "wsb_sha256"
+      ],
+      "terminal_commit": [
+        "evidence_domain",
+        "experiment",
+        "journal_sha256",
+        "kind",
+        "nonce",
+        "profile",
+        "run_id",
+        "schema",
+        "terminal_sha256",
+        "terminal_signature_sha256",
+        "version"
+      ],
+      "failure": [
+        "code",
+        "evidence_domain",
+        "experiment",
+        "kind",
+        "message",
+        "nonce",
+        "profile",
+        "run_id",
+        "schema",
+        "version"
+      ]
+    },
+    "scalar_rules": {
+      "ids": "run_id/grant_id 32 lowercase hex; nonce 64 lowercase hex",
+      "sha256": "64 lowercase hex",
+      "version": "exact int 1, not bool",
+      "counts": "uint64 integers unless smaller explicit bound; not bool",
+      "public_key_blob_hex": "144 lowercase hex chars: 72-byte CNG P256 public blob",
+      "floats": "forbidden",
+      "unknown_fields": "forbidden",
+      "duplicate_keys": "forbidden"
+    },
+    "encoding": "ensure_ascii=True; recursive sort_keys=True; compact; exactly one LF; strict bounded parser",
+    "scm_budget_fields": {
+      "create": 0,
+      "start": 0,
+      "delete": 0,
+      "control_service": 0,
+      "manual_guard_spawn": 0
+    },
+    "guest_runtime_fields": [
+      "major",
+      "minor",
+      "micro",
+      "pointer_bits",
+      "isolated",
+      "no_site",
+      "dont_write_bytecode"
+    ],
+    "guest_runtime_evidence_warning": "Self-report compared against fixed runtime descriptor; not independent OS provenance or host Python equality",
+    "journal_events": {
+      "BEGIN": [],
+      "AUTHORIZATION_OBSERVED": [
+        "authorization_sha256",
+        "authorization_commit_sha256"
+      ],
+      "BENIGN_COMPLETED": [
+        "response_sha256"
+      ],
+      "FINAL": [
+        "result"
+      ],
+      "ERROR": [
+        "code"
+      ]
+    },
+    "journal_success_order": [
+      "BEGIN",
+      "AUTHORIZATION_OBSERVED",
+      "BENIGN_COMPLETED",
+      "FINAL"
+    ],
+    "journal_success_result": "BENIGN_TASK_COMPLETED",
+    "journal_failure_result": "BENIGN_TASK_FAILED",
+    "shutdown": "Bootstrap requests one fixed shutdown only after guest interpreter returns; terminal/journal do not falsely attest shutdown requested or VM disposal. Host observes retirement independently.",
+    "hash_scopes": {
+      "policy_sha256": "SHA256(canonical static policy object), no embedded computed policy hash",
+      "schema_sha256": "SHA256(canonical static wire descriptor), no embedded computed schema hash",
+      "source_sha256": "SHA256(canonical sorted executable-source manifest for .py/.ps1 files only); excludes metadata manifests to avoid self-reference",
+      "capsule_sha256": "SHA256(canonical sorted exact guest-code member manifest); excludes manifest itself and run/request data",
+      "runtime_sha256": "SHA256(pinned retained runtime content manifest); fixed runtime identities not guessed from version",
+      "layout_sha256": "SHA256(canonical role paths/settings/config hash descriptor); wsb config excludes request hash",
+      "response_sha256": "SHA256(fixed roundtrip domain bytes + exact request bytes)"
+    },
+    "signature": {
+      "algorithm": "ECDSA_P256_SHA256_CNG",
+      "ready_domain": "SKYNETVS/SCM01-WSB01/BENIGN_SANDBOX_LAB/READY/V1\u0000",
+      "terminal_domain": "SKYNETVS/SCM01-WSB01/BENIGN_SANDBOX_LAB/TERMINAL/V1\u0000",
+      "api_input": "SHA256(domain_bytes + exact_payload_bytes), one prehash",
+      "public_blob_bytes": 72,
+      "raw_signature_bytes": 64,
+      "host_verdict_requires_real_provider": true
+    }
+  }
+}

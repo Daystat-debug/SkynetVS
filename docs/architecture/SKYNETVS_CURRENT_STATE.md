@@ -4224,3 +4224,141 @@ native factory                          CLOSED
 Windows offline suite, native/platform integration, session/stop proof, guest runtime,
 CNG и persistent host ledger пока не закрыты. Benign integration без Guard/SCM и
 real-SCM эксперимент остаются двумя отдельными будущими разрешениями.
+
+## Source-only дополнение #116 — BEN01: source-кандидат подготовлен, приёмка открыта
+
+Архитектура SCM01-WSB01-BEN01 и scope #115 согласованы пользователем в #116.
+Подготовлены 32 новых файла отдельно от репозитория. В этом сообщении нет разрешения
+на применение в Git, native smoke, Sandbox, guest bootstrap, SCM/Guard, install,
+изменение ACL/enrollment или runtime grant. Public entrypoints остаются CLOSED / 92.
+
+Выполнены 64 offline/fake/static-case метода плана #115 и 9 regression-методов:
+73/73 на подготовленных байтах и 73/73 из окончательного ZIP, CPython 3.13.5 / Linux.
+Windows native ABI, PowerShell parser и guest bootstrap не исполнялись.
+Существующий WindowsOffline113 относится к прежнему closed core, НЕ к Source116.
+
+Кандидат НЕ закрывает весь implementation scope: B116-01 — admitted native IPC
+peer-to-receipt/context assembly; B116-02 — проверенный guest capsule loader/entry routing.
+R116-03 — review точной supervisor-incarnation привязки вместо OS boot GUID.
+Нельзя удалить gates, заменить домен fake receipt или принять JSON-флаг за разрешение.
+
+Последний подтверждённый HEAD остаётся 0fc3e19a6fe8f59f3b71b9d682630cfb1b7c0427,
+tree 206c105decec0190f2e29a5090999389f79e28c3. Source116 в Git НЕ применён.
+Следующий шаг: review/достройка отмеченных source-стыков в рамках уже согласованного
+source-only scope; только потом отдельно согласованное source/docs landing.
+Sandbox backend traditional_wsb_logoncommand_v1 и одна недоверенная Output mapping
+не переоткрываются. B02/P00 NOT_ACCEPTED, P01 NOT_IMPLEMENTED, RC044 NOT CREATED,
+V1C3A1B/V1C3A1C NOT OPEN, acquisition BLOCKED; native/runtime gate CLOSED.
+
+
+## Source117 V2 — BEN01 source-only review, 2026-09-23
+
+Архитектура/scope #115 приняты пользователем в #116. По разрешению подготовки вне Git
+создан новый 32-file Source117 V2: 13 файлов изменены, 19 сохранены относительно Source116.
+108 offline/fake/static methods (64 baseline + REG01–REG44) прошли на prepared source
+и на final ZIP; 0 failures/errors/skips. Среда Linux/CPython3.13.5. Guest/PS/native
+код не импортировался/не выполнялся; audit guarded suite не наблюдал writes/subprocess/
+sockets/ctypes.dlopen. Это не Windows/guest/native acceptance.
+
+Добавлены gated own-worker channel/pump/context source и guest eight-member byte loader.
+Исправлены fragmented-frame handling, раннее retirement при delayed terminal IPC,
+попытка publication после позднего READY и возврат failure при ошибке persistence.
+Native first-process worker ingress и bootstrap-to-loader/permit handoff всё ещё
+REVIEW REQUIRED; scope acceptance не закрыт. Live issuer отсутствует намеренно.
+
+32 new source и этот документальный кандидат НЕ применены. Canonical user HEAD
+остаётся 0fc3e19a6fe8f59f3b71b9d682630cfb1b7c0427 по последним имеющимся evidence.
+Source111/WindowsOffline113 относятся к старому closed core и не повторяются.
+B02/P00 NOT_ACCEPTED, P01 NOT_IMPLEMENTED, V1C3A1B/C NOT OPEN, RC044 NOT CREATED,
+acquisition BLOCKED; Sandbox/guest bootstrap/SCM/Guard/install/ACL/enrollment/native smoke
+и Git apply не разрешены. Public gates CLOSED/92.
+
+Следующий exact action: source review новой assembly и завершение first-process
+entry-admission по уже разрешённому source-only scope. Никакого нового запуска.
+
+
+## BEN01 source review #118 — first-process routes prepared; runtime remains CLOSED
+
+**Дата:** 2026-09-23. **Статус записи:** неприменённый documentation candidate.
+
+В рамках разрешения #116 на 32 source-файла вне пользовательского Git подготовлен
+Source118 V3 в `native/scm01_wsb01_benign_v1/`. Относительно Source117 V2 изменены
+10 файлов, 22 побайтово сохранены. Source117 и предыдущие evidence сохранены.
+
+Worker first-process source теперь описывает фиксированный INIT envelope, bounded
+inherited-pipe чтение, проверку pinned byte graph и собственной ProcessIdentity,
+exact INIT_ACK до Sandbox launch и отдельный BIND (sequence 1). Guest route описывает
+четыре фиксированных startup args, чтение request/capsule/bootstrap hashes, retained
+runtime inventory, eight-member byte graph и явный loader_plan отдельно от permit.
+INIT/ACK, JSON, CLI hashes и data plans НЕ являются authority.
+
+Public host/worker/guest/PowerShell gates остаются CLOSED/92. Оба process-local issuer
+отсутствуют намеренно; их закрытые барьеры проверяются до I/O. Native/guest вызовы,
+PowerShell parser, actual byte-loader и pipe pump не выполнялись. Нельзя заменить
+admission удалением exit92, передачей approved=true или переносом Python permit
+между процессами как JSON.
+
+Prepared-source и final-ZIP guarded suite дали по 140/140: 64 baseline methods +
+76 regression methods, включая REG45–REG76 (32 новых). Failures/errors/skipped=0;
+154 subtests; 90 wrong-order и 2000 mutation probes на каждый запуск. Из mutations
+1945 rejected, 55 schema-valid, 0 unexpected; schema-valid != evidence acceptance.
+Предыдущие 108 test methods сохранены структурно (AST comparison) и входят в 140;
+отдельного нового запуска старого Source117 suite на этом шаге не заявляется.
+
+Проверены 32 source identities до/после и 98 сохранённых reference bytes. Среда:
+Linux / CPython 3.13.5; Python 3.12 только AST feature_version, не исполнение нового
+кандидата на Windows. Audit counts writes/fs_mutation/subprocess/socket/ctypes.dlopen=0.
+Audit hook — контроль доверенной test phase, не OS isolation against hostile code.
+
+B116-01/B116-02: FIRST-PROCESS SOURCE ROUTES PREPARED / SOURCE REVIEW REQUIRED.
+Scope acceptance остаётся OPEN; native/live admission не приняты. R116-03 остаётся
+SUPERVISOR_PROCESS_INCARNATION_V1, не OS boot GUID или Microsoft VM identity.
+Никакой новый Sandbox/SCM/Guard/production grant из этой поставки не следует.
+
+Source ZIP: `SkynetVS_SCM01_WSB01_Benign118_Source_V3.zip`, 126638 bytes,
+SHA-256 `2e2711624dcb0ad22806fbfda046eaf921d1d67773e9527c7e661a2c0fbeba9f`.
+
+Последний подтверждённый user HEAD остаётся `0fc3e19a6fe8f59f3b71b9d682630cfb1b7c0427`,
+tree `206c105decec0190f2e29a5090999389f79e28c3`. Это сохранённое наблюдение, не новая
+проверка текущего ПК. Source118 и данный draft не применены, новых Git commits нет.
+
+**Next Exact Action:** focused source review Source118 first-process data/authority
+маршрутов и bounded framing. То же разрешение на source-only подготовку не запрашивать
+повторно. Будущие Git landing, host-native smoke, benign Sandbox и real SCM требуют
+раздельных разрешений. Не повторять consumed Source109/110/111/WindowsOffline113.
+
+
+## Source119 V4 — focused first-process corrections (C02, сообщение #3)
+
+Дата: 2026-09-23. UNAPPLIED documentation candidate, не запись в пользовательский Git.
+Source119 — номер поставки после Source118; новое основное сообщение #3, не #119.
+
+По точным Source118 bytes закрыты три конкретных source finding: eager guest helper
+import (capsule/layout до возврата byte-loader), early initial run_id binding до
+worker byte-loader/own-process observation с сохранённым поздним recheck, единый
+source-member cap 262144 в NativeContextSpec и worker ingress. Local issuers не добавлены.
+
+Source119 V4: 32 файла, 8 изменены, 24 сохранены. Старые 140 test method AST неизменны,
+добавлены REG77–REG92. Prepared-source и final-ZIP guarded suite: по 156/156, 0/0/0,
+191 subtests; 90 wrong-order и 2000 seeded mutation probes на run (1945 rejected,
+55 schema-valid, 0 unexpected). Linux/CPython3.13.5, -I -S -B. Python3.12 — только
+AST feature_version. Guest/PS/byte-loaders/native bodies не исполнялись; test-phase
+writes/fs_mutation/subprocess/socket/ctypes.dlopen/guest-exec counts=0. Не OS sandbox.
+
+Source118 отдельно воспроизведён 140/140 на unmodified bytes/harness в isolated/no-site
+процессе. Предшествующий обычный container-run с preloaded ctypes и 1 assertion failure
+сохранён как NOT_ACCEPTANCE; это не ошибка user Windows-run и не скрытый PASS.
+98 saved reference bytes проверены; текущий пользовательский Git/remote не опрашивались.
+
+Public host/worker/guest/PS gates CLOSED/92; local issuers NOT_IMPLEMENTED_BY_DESIGN;
+scope acceptance OPEN по native/local admission. Full live transport не принят.
+Backend traditional_wsb_logoncommand_v1, одна Output RW, retained runtime pins и
+supervisor-incarnation limitations сохранены. Native wrappers, PS, wire protocol,
+SOURCE_BINDINGS, старые core/SCM01/Guard/modules/tools не менялись.
+
+Source ZIP: SkynetVS_SCM01_WSB01_Benign119_Source_V4.zip; 131662 bytes;
+SHA-256 bc26906c4125f37b1f541f42c9fcd79eb57972dba14b47908d5997d3aabbf0be.
+Saved user HEAD: 0fc3e19a6fe8f59f3b71b9d682630cfb1b7c0427;
+tree 206c105decec0190f2e29a5090999389f79e28c3. Source/doc candidates NOT APPLIED.
+Следующее действие: отдельное разрешение на read-only source/docs landing preflight;
+apply/commit/push, native smoke, Sandbox/BEN01 и real SCM — раздельные grants.
