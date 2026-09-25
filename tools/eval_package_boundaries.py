@@ -316,7 +316,8 @@ LEGACY_DESKTOP_REFERENCES = {
 
 
 
-# HWA02-A parallel pure boundary; no runtime/host adapter is wired by this slice.
+# HWA02-A core plus the exact HWA02-B1 timer bridge. The bridge is injected
+# from main and is the only production module allowed to import HWA02-A core.
 ACTION_EXECUTION_IMPORTS = {
     "modules/action_contract.py": {
         "__future__", "dataclasses", "enum", "hashlib", "json", "re",
@@ -328,6 +329,11 @@ ACTION_EXECUTION_IMPORTS = {
     "modules/action_broker.py": {
         "__future__", "dataclasses", "typing", "modules.action_contract",
         "modules.action_authority",
+    },
+    "modules/timer_action_runtime.py": {
+        "__future__", "dataclasses", "enum", "os", "threading", "uuid", "typing",
+        "modules.action_contract", "modules.action_authority", "modules.action_broker",
+        "modules.action_error",
     },
 }
 
@@ -1140,7 +1146,7 @@ def main() -> int:
     )
 
     action_presence = {path: (PROJECT_ROOT / path).is_file() for path in ACTION_EXECUTION_IMPORTS}
-    check("ACTION EXECUTION PURE MODULES EXIST", action_presence,
+    check("ACTION EXECUTION BOUNDARY MODULES EXIST", action_presence,
           {path: True for path in ACTION_EXECUTION_IMPORTS})
     action_imports = {}
     for relative, allowed in ACTION_EXECUTION_IMPORTS.items():
@@ -1152,7 +1158,7 @@ def main() -> int:
         actual = set(_module_imports(parsed))
         if actual != allowed:
             action_imports[relative] = sorted(actual.symmetric_difference(allowed))
-    check("ACTION EXECUTION HAS EXACT PURE DEPENDENCIES", action_imports, {})
+    check("ACTION EXECUTION BOUNDARY HAS EXACT DEPENDENCIES", action_imports, {})
 
     action_names = {p[:-3].replace("/", ".") for p in ACTION_EXECUTION_IMPORTS}
     action_wiring = []
@@ -1170,7 +1176,11 @@ def main() -> int:
         if relative.startswith("modules/"):
             native_imports.extend(f"{relative}: {name}" for name in sorted(imported_names)
                                   if name == "native" or name.startswith("native."))
-    check("HWA02 A REMAINS UNWIRED FROM PRODUCTION RUNTIME", action_wiring, [])
+    check(
+        "HWA02 B1 HAS EXACT PRODUCTION RUNTIME WIRING",
+        action_wiring,
+        ["main.py: modules.timer_action_runtime"],
+    )
     check("MODULES HAVE NO STATIC NATIVE IMPORTS", native_imports, [])
 
     print()

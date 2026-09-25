@@ -6852,3 +6852,110 @@ package boundaries, HWA01 source/fake regression, source AST topology и сох�
 HWA02-B остаётся отдельной миграцией existing Actions через trusted composition, с сохранением
 TTS ordering, confirmation, structured failures и repeat-history. HWA02-C/D, новый host adapter,
 реальный host-worker effect и fault/native acceptance не открываются этим срезом.
+## HWA02-B1 — Timer Action Runtime Bridge V1 (C02 #61–#63)
+
+**Дата:** 2026-09-26. **Decision ID:** `skynetvs-hwa02b1-timer-runtime-bridge-v1`.
+**Статус этой записи:** SOURCE CANDIDATE / PREPARED / NOT APPLIED.
+
+### HWA02-A reconciliation
+
+HWA02-A уже committed и normally pushed:
+
+```text
+HEAD / origin/main:
+247e4a30f5da9131199cb74da2858c39f0c5c771
+
+tree:
+ec32a56e322be0acfdb2d4982c864f3e1318b1e9
+
+parent:
+550e043331f4b32070c24c2138abf39294ae4503
+
+subject:
+feat: add HWA02-A action execution boundary
+
+worktree clean; staging empty
+```
+
+CommitPush V1 run `35659de6b9b644dcb767e216bb0565b4` verified one add, one commit and one
+normal non-force push. HWA02-A evaluator was 94/94 PASS with 155 subtests, package boundaries
+32/32 and HWA01 regression 114/114. Its once marker is consumed/immutable and must not be
+rerun or removed.
+
+### Architecture lock
+
+Transition audit C02 #60 showed that a blind `Router -> broker -> Actions` wrapper would lose
+bounded legacy `ActionExecutionError` information because HWA02-A deliberately forbids output
+on FAILED/UNKNOWN. Architecture Lock V1 from C02 #61 therefore keeps the HWA02-A result contract
+unchanged and uses an attempt-local typed receipt inside the timer adapter.
+
+The receipt contains no raw exception, detail, user message or arbitrary context. It is accepted
+only when action/request/policy/attempt identity match the exact broker result. It may enrich only
+`FAILED / executor_reported_failure`; it can never turn DENIED or UNKNOWN into ordinary failure.
+UNKNOWN keeps `MAY_HAVE_OCCURRED` and is never automatically retried.
+
+The public production capability is `TimerAutomaticPort`; it can prepare/execute only:
+
+```text
+SET_TIMER     duration_seconds: exact int, 1..86400
+CANCEL_TIMER  no parameters
+```
+
+`TimerActionOwner` stays at trusted composition and can close future admissions. The issuer and
+grants never enter NLU/meta, executor or verifier. This is a cooperative same-process Python
+boundary, not an OS sandbox.
+
+### Exact B1 candidate scope
+
+```text
+ADD    modules/timer_action_runtime.py
+ADD    tools/eval_timer_action_runtime.py
+MODIFY main.py
+MODIFY modules/command_processor.py
+MODIFY modules/command_runtime.py
+MODIFY tools/eval_action_execution_boundary.py
+MODIFY tools/eval_package_boundaries.py
+MODIFY tools/pipeline.py
+MODIFY docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
+MODIFY docs/architecture/SKYNETVS_CURRENT_STATE.md
+```
+
+2 ADD + 8 MODIFY, 0 DELETE. `modules/actions.py`, `modules/router.py`,
+`modules/timer_service.py`, all three HWA02-A production modules and all HWA01/native files remain
+byte-for-byte unchanged.
+
+`main.py` captures the existing `_exec_set_timer` / `_exec_cancel_timer` bound methods once,
+constructs one timer boundary and injects only `TimerAutomaticPort` into `CommandProcessor`.
+For the migrated pair command_runtime creates the exact immutable request before reply generation;
+a later mutation of legacy slots therefore cannot change the dispatched request. Once a timer
+intent is on the B1 path, refusal/failure never falls back to `Router.execute`.
+
+All other intents remain on the legacy Router/Actions path. Confirmation, reminders, repeat
+history, volume/media and HWA01/native execution are outside B1.
+
+### Candidate verification prepared in C02 #63
+
+Portable/source verification on the reconstructed exact checkpoint:
+
+```text
+HWA02-B1 timer action runtime evaluator  56/56 PASS
+HWA02-A evaluator                       94/94 PASS; 155 subtests
+package boundaries                      32/32 PASS
+legacy command_runtime                   9/9 PASS
+legacy timer_command_runtime             3/3 PASS
+HWA01 source regression                114/114 PASS
+```
+
+No real TimerService was invoked by the new evaluator; callbacks/TTS/router are in-memory fakes.
+No HWA01 worker, native execution, Sandbox, guest or runtime network was opened. Linux runtime
+architecture audit is not an acceptance gate for this candidate because its existing
+`modules/audio_output.py` import requires Windows-only `ctypes.HRESULT`; that host mismatch is
+not classified as a B1 defect. Full `check` was not run.
+
+### Next Exact Action
+
+Prepare an exact HWA02-B1 source candidate package from these ten paths and verify it on Windows
+against committed `247e4a30...` without applying it. Required first Windows gates: candidate
+identity/scope, Python 3.12 syntax, dedicated `timer_action_runtime`, HWA02-A, package boundaries,
+legacy command/timer runtime and HWA01 source regression. No real timer effect, native worker,
+Sandbox, staging, commit or push is authorized by this record.

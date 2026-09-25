@@ -36,11 +36,25 @@ PRE_SPEECH_EXECUTE_INTENTS = {
 }
 
 
+HWA02B1_TIMER_INTENTS = frozenset({
+    "SET_TIMER",
+    "CANCEL_TIMER",
+})
+
+
 class LoggerLike(Protocol):
     def event(self, kind: str, payload: dict[str, Any]) -> None:
         ...
 
     def inbox(self, text: str, meta: Mapping[str, Any]) -> None:
+        ...
+
+
+class TimerActionPortLike(Protocol):
+    def prepare(self, *, intent: str, slots: dict[str, Any]) -> Any:
+        ...
+
+    def execute(self, request: Any) -> None:
         ...
 
 
@@ -183,6 +197,7 @@ def handle_command_runtime(
     reply_text_func: ReplyTextFunc,
     current_mode_name_func: ModeNameFunc,
     cancel_cmd_timer_func: CancelTimerFunc,
+    timer_actions: TimerActionPortLike | None = None,
 ) -> CommandRuntimeResult:
     """
     Выполняет runtime-ветку после understanding + decision + outcome.
@@ -281,6 +296,33 @@ def handle_command_runtime(
             last_tts_end=last_tts_end,
         )
 
+    timer_request: Any | None = None
+    timer_migrated = timer_actions is not None and intent in HWA02B1_TIMER_INTENTS
+
+    if timer_migrated:
+        try:
+            slots = meta_dict.get("slots")
+            timer_request = timer_actions.prepare(
+                intent=intent,
+                slots=slots,
+            )
+        except Exception as e:
+            return _handle_action_failure(
+                raw_text=raw_text,
+                final_text=final_text,
+                meta=meta_dict,
+                intent=intent,
+                error=e,
+                learning_memory=learning_memory,
+                logger=logger,
+                stt=stt,
+                tts=tts,
+                say_func=say_func,
+                current_mode_name_func=current_mode_name_func,
+                previous_last_tts_end=None,
+                success_reply_spoken=False,
+            )
+
     text_out = reply_text_func(meta_dict)
 
     if outcome.kind == OUTCOME_INTERRUPTIBLE_REPLY:
@@ -294,7 +336,10 @@ def handle_command_runtime(
 
     if intent in PRE_SPEECH_EXECUTE_INTENTS:
         try:
-            router.execute(meta_dict)
+            if timer_migrated:
+                timer_actions.execute(timer_request)
+            else:
+                router.execute(meta_dict)
         except Exception as e:
             return _handle_action_failure(
                 raw_text=raw_text,

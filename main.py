@@ -55,6 +55,7 @@ from modules.timer_service import (
     TimerFiredEvent,
     TimerService,
 )
+from modules.timer_action_runtime import compose_timer_action_runtime
 from modules.reminder_repository import ReminderRepository
 from modules.reminder_runtime import (
     build_reminder_fired_message,
@@ -323,6 +324,16 @@ def main():
         event_func=logger.event,
         runtime_health_provider=lambda: collect_and_publish_runtime_health(print_report=False),
     )
+
+    timer_start_handler = actions._exec_set_timer
+    timer_cancel_handler = actions._exec_cancel_timer
+    timer_action_owner, timer_actions = compose_timer_action_runtime(
+        start_timer=lambda seconds, _handler=timer_start_handler: _handler(
+            {"duration_seconds": seconds}
+        ),
+        cancel_timer=lambda _handler=timer_cancel_handler: _handler({}),
+    )
+
     router = Router(actions, settings=SETTINGS)
     runtime_health_monitor = RuntimeServiceHealthMonitor(
         enabled=SETTINGS.runtime_health_monitor_enable,
@@ -428,6 +439,7 @@ def main():
         reply_text_func=lambda m: _reply_text(router, dict(m)),
         current_mode_name_func=current_mode_name,
         cancel_cmd_timer_func=cancel_cmd_timer,
+        timer_actions=timer_actions,
         print_func=print,
     )
 
@@ -635,6 +647,11 @@ def main():
     except KeyboardInterrupt:
         print("\n[STOP] SkynetVS")
     finally:
+        try:
+            timer_action_owner.close()
+        except Exception as e:
+            print(f"[WARN] timer action boundary close failed: {type(e).__name__}")
+
         shutdown_runtime_services(
             cancel_command_timer_func=cancel_cmd_timer,
             tts=tts,

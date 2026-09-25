@@ -885,20 +885,37 @@ class SourceTests(unittest.TestCase):
                         if module in constrained:
                             self.assertIn(node.func.attr, constrained[module])
 
-    def test_no_production_runtime_wiring(self):
+    def test_production_runtime_wiring_is_exact_hwa02b1_timer_bridge(self):
         names = {path[:-3].replace("/", ".") for path in NEW_MODULES}
         files = [PROJECT_ROOT / "main.py", *sorted((PROJECT_ROOT / "modules").rglob("*.py"))]
+        wiring = {}
         for path in files:
-            if path.relative_to(PROJECT_ROOT).as_posix() in NEW_MODULES:
+            relative = path.relative_to(PROJECT_ROOT).as_posix()
+            if relative in NEW_MODULES:
                 continue
             tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+            imported = set()
             for node in ast.walk(tree):
                 if isinstance(node, ast.Import):
-                    self.assertFalse(names.intersection(alias.name for alias in node.names), str(path))
+                    imported.update(alias.name for alias in node.names)
                 elif isinstance(node, ast.ImportFrom):
-                    self.assertNotIn(node.module, names, str(path))
+                    imported.add(node.module or "")
                     if node.module == "modules":
-                        self.assertFalse(names.intersection("modules." + alias.name for alias in node.names), str(path))
+                        imported.update("modules." + alias.name for alias in node.names)
+            used = sorted(imported & names)
+            if used:
+                wiring[relative] = used
+        self.assertEqual(wiring, {
+            "modules/timer_action_runtime.py": [
+                "modules.action_authority",
+                "modules.action_broker",
+                "modules.action_contract",
+            ],
+        })
+        main_tree = ast.parse((PROJECT_ROOT / "main.py").read_text(encoding="utf-8-sig"))
+        main_imports = [node.module for node in ast.walk(main_tree)
+                        if isinstance(node, ast.ImportFrom)]
+        self.assertEqual(main_imports.count("modules.timer_action_runtime"), 1)
 
     def test_no_static_modules_native_import(self):
         for path in (PROJECT_ROOT / "modules").rglob("*.py"):
@@ -975,8 +992,11 @@ def main() -> int:
     summary = {"kind": "HWA02_ACTION_EXECUTION_BOUNDARY_EVAL_V1", "result": "PASS" if ok else "FAIL",
                "tests_run": result.testsRun, "expected_tests": expected, "discovered_tests": discovered, "subtests": result.subtests,
                "failures": len(result.failures), "errors": len(result.errors), "skipped": len(result.skipped),
-               "audit_measured_suite": counters, "runtime_wired": False, "native_execution_authorized": False,
-               "host_executor_registered": False, "real_cross_process_test": False}
+               "audit_measured_suite": counters, "runtime_wired": True,
+               "runtime_wiring_profile": "HWA02B1_TIMER_PAIR_ONLY",
+               "runtime_actions": ["SET_TIMER", "CANCEL_TIMER"],
+               "native_execution_authorized": False, "host_executor_registered": False,
+               "real_cross_process_test": False}
     print("\n=== HWA02-A SUMMARY ===")
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
     return 0 if ok else 1

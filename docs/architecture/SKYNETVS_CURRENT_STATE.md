@@ -4575,3 +4575,49 @@ package boundaries, HWA01 source/fake regression, source AST topology и сох�
 HWA02-B остаётся отдельной миграцией existing Actions через trusted composition, с сохранением
 TTS ordering, confirmation, structured failures и repeat-history. HWA02-C/D, новый host adapter,
 реальный host-worker effect и fault/native acceptance не открываются этим срезом.
+## HWA02-B1 timer runtime bridge — source candidate prepared (C02 #61–#63)
+
+Current canonical baseline remains:
+
+```text
+HEAD / origin/main  247e4a30f5da9131199cb74da2858c39f0c5c771
+tree                ec32a56e322be0acfdb2d4982c864f3e1318b1e9
+subject             feat: add HWA02-A action execution boundary
+worktree            clean
+staging             empty
+```
+
+HWA02-A is now committed but only the new B1 source candidate wires it to production. The B1
+architecture lock selects an attempt-local bounded failure receipt rather than weakening
+`ActionResult`: raw exceptions/messages/context are never broker output, FAILED enrichment is
+accepted only for the exact in-flight request/policy/attempt, and UNKNOWN remains
+`MAY_HAVE_OCCURRED` with no retry.
+
+B1 migrates exactly `SET_TIMER` and `CANCEL_TIMER`. Trusted `main.py` composition creates one
+`TimerActionOwner` plus one restricted `TimerAutomaticPort`. The port is injected into
+`CommandProcessor`; issuer/grants do not enter meta/model/executor/verifier. The exact timer
+request is frozen before reply generation. Covered timer commands never fall back to the legacy
+Router after B1 admission/dispatch failure.
+
+Everything else remains legacy in this slice: confirmation, reminders, repeatable volume/media,
+`Router`, `Actions`, `TimerService`, HWA01/native and host-worker execution. `Actions`, `Router`,
+`TimerService`, all HWA02-A production files and all HWA01 files remain byte-identical.
+
+Candidate scope: 10 paths, 2 ADD + 8 MODIFY + 0 DELETE. Portable/source gates prepared in C02 #63:
+
+```text
+HWA02-B1 evaluator         56/56 PASS
+HWA02-A                    94/94 PASS; 155 subtests
+package boundaries         32/32 PASS
+legacy command_runtime      9/9 PASS
+legacy timer runtime        3/3 PASS
+HWA01                      114/114 PASS
+```
+
+The new evaluator uses only fake callbacks/TTS/router; no real timer was started. Native worker,
+Sandbox/guest and runtime network were not used. Full check was not run. Existing runtime
+architecture audit is Windows-host-specific and is not claimed on Linux.
+
+**Next exact action:** package these exact ten files, then perform Windows source/offline
+verification only. Do not apply/stage/commit/push the B1 candidate and do not run a real timer or
+native worker before that evidence is reviewed.
