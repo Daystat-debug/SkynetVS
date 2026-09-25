@@ -315,6 +315,23 @@ LEGACY_DESKTOP_REFERENCES = {
 }
 
 
+
+# HWA02-A parallel pure boundary; no runtime/host adapter is wired by this slice.
+ACTION_EXECUTION_IMPORTS = {
+    "modules/action_contract.py": {
+        "__future__", "dataclasses", "enum", "hashlib", "json", "re",
+    },
+    "modules/action_authority.py": {
+        "__future__", "dataclasses", "os", "threading", "time", "weakref",
+        "modules.action_contract",
+    },
+    "modules/action_broker.py": {
+        "__future__", "dataclasses", "typing", "modules.action_contract",
+        "modules.action_authority",
+    },
+}
+
+
 def _project_python_files() -> tuple[Path, ...]:
     paths = list(PROJECT_ROOT.glob("*.py"))
 
@@ -1121,6 +1138,40 @@ def main() -> int:
             "developer_compile_ast_live_acceptance_windows_unwired": True,
         },
     )
+
+    action_presence = {path: (PROJECT_ROOT / path).is_file() for path in ACTION_EXECUTION_IMPORTS}
+    check("ACTION EXECUTION PURE MODULES EXIST", action_presence,
+          {path: True for path in ACTION_EXECUTION_IMPORTS})
+    action_imports = {}
+    for relative, allowed in ACTION_EXECUTION_IMPORTS.items():
+        path = PROJECT_ROOT / relative
+        if not path.is_file():
+            action_imports[relative] = ["missing"]
+            continue
+        parsed = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        actual = set(_module_imports(parsed))
+        if actual != allowed:
+            action_imports[relative] = sorted(actual.symmetric_difference(allowed))
+    check("ACTION EXECUTION HAS EXACT PURE DEPENDENCIES", action_imports, {})
+
+    action_names = {p[:-3].replace("/", ".") for p in ACTION_EXECUTION_IMPORTS}
+    action_wiring = []
+    native_imports = []
+    runtime_paths = [PROJECT_ROOT / "main.py", *sorted((PROJECT_ROOT / "modules").rglob("*.py"))]
+    for path in runtime_paths:
+        relative = path.relative_to(PROJECT_ROOT).as_posix()
+        parsed = ast.parse(path.read_text(encoding="utf-8-sig"), filename=str(path))
+        imported_names = set(_module_imports(parsed))
+        for node in ast.walk(parsed):
+            if isinstance(node, ast.ImportFrom) and node.module == "modules":
+                imported_names.update("modules." + alias.name for alias in node.names)
+        if relative not in ACTION_EXECUTION_IMPORTS:
+            action_wiring.extend(f"{relative}: {name}" for name in sorted(imported_names & action_names))
+        if relative.startswith("modules/"):
+            native_imports.extend(f"{relative}: {name}" for name in sorted(imported_names)
+                                  if name == "native" or name.startswith("native."))
+    check("HWA02 A REMAINS UNWIRED FROM PRODUCTION RUNTIME", action_wiring, [])
+    check("MODULES HAVE NO STATIC NATIVE IMPORTS", native_imports, [])
 
     print()
     print("=== SUMMARY ===")

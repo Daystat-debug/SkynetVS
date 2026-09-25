@@ -6743,3 +6743,112 @@ non-Windows platform fixture, проверяют отказ **до ctypes/native
 не изменены, production14 V1==V2, и вычислить новый future tree V2 без записи в Git/worktree.
 Только после такого PASS допустима отдельная узкая repair-запись. Runtime authority, Source119
 native admission, Sandbox/guest и новый native run остаются CLOSED / NOT AUTHORIZED.
+
+## HWA02-A — Action Execution Boundary V1 (C02 #51)
+
+**Дата:** 2026-09-25. **Decision ID:** `skynetvs-hwa02a-action-execution-boundary-v1`.
+**Статус этой записи:** SOURCE CANDIDATE / PREPARED / NOT APPLIED / NO RUNTIME WIRING.
+
+### HWA01 reconciliation — доказанный Git checkpoint
+
+Предыдущие preparation/repair записи выше являются историческими. HWA01 закрытый source core
+уже committed и нормально pushed. StagedRecovery V1 run `f57983cfe0744007af7e2079231423b5`:
+
+```text
+HEAD / main / local origin/main:
+550e043331f4b32070c24c2138abf39294ae4503
+
+tree:
+cdb2bfab7dcba88042a4b7357cfba82e8232bf63
+
+parent:
+e3bedde8f946d96b8685be2716ea523d5c0d6e31
+
+subject:
+feat: add HWA01 host worker closed core
+
+worktree clean; staging empty; source/fake HWA01 114/114 PASS
+```
+
+Recovery исправил только по одному EOF LF в двух canonical docs, restage только их, затем
+один commit и normal push. Другие 26 landing paths не изменены. Старый CommitPush V1 остаётся
+FAILED/CONSUMED; StagedRecovery V1 — PASS/CONSUMED; markers не удаляются и не используются снова.
+Source capture `95e843129eba42e2b9d50a96752a560b` на этом HEAD подтвердил read-only snapshot:
+482 selected tracked files, 7258776 bytes. Capture ZIP SHA-256:
+`1817f630ba1d84e10848eb33c681024a08ee7c2ca7b14a7ad9dc40b2c92f0ef7`.
+Сеть в recovery использовалась только для Git remote checks/push, не runtime network authority.
+
+HWA01 exact Windows happy path остаётся OBSERVED, но post-commit offline closure / расширенная
+fault-acceptance matrix не объявляются выполненными этой записью. Source119/BEN01 native
+admission, Sandbox/guest, произвольный model code и reusable runtime authority остаются CLOSED.
+
+### Почему следующий срез параллельный
+
+В capture Router.execute вызывает Actions.execute, а command_runtime/confirmation_runtime
+используют Router. Подключение worker напрямую через mutable meta смешало бы данные и допуск.
+HWA02-A добавляет pure контракты и process-local domain отдельно; существующие routes/host effects
+не мигрируют и НЕ приобретают новую защиту до отдельного HWA02-B.
+
+HWA01 root *.py graph заморожен. Ни один файл native/scm01_host_worker_v1 не меняется. HWA02-A
+не импортирует native, старые Actions/Router/command/confirmation/main остаются побайтово прежними.
+
+### Locked contract
+
+Архитектурный lock перед кодом: SHA-256 `8b773f54229e0a4928d68c40bf33fa4de4ee0b07c347dcf5a26347366a45c964`.
+Полный lock входит во внешний candidate как `CONTRACT_LOCK_RU.md`; он evidence, не runtime permit.
+
+- ActionRequest — immutable/canonical bounded flat scalars. request_id + scope_id + action/version
+  + все параметры входят в fingerprint. Unknown/duplicate JSON keys, float, NaN, deep nesting,
+  неверные типы/размеры отвергаются. Meta/NLU confidence/approved/authorized не являются permit.
+- ActionSpec — доверенная immutable регистрация exact action/version, schema, executor_id,
+  policy_revision, risk/effect и budgets. Нет wildcard/default/dynamic import resolution.
+- compose_action_boundary — только trusted construction API. Возвращает отдельные issuer и
+  broker. Default ActionBroker пуст и deny-all. Нет production registration/caller в этом срезе.
+  Наличие issuer само является полномочием; B обязан держать его вне модели, command data,
+  executor и verifier, вызывать после policy/confirmation. HWA02-A НЕ аутентифицирует человека.
+- ActionGrant — opaque process-local exact identity, без constructor/subclass/copy/pickle;
+  ledger связывает его с exact request/policy/broker/executor/verifier, PID и monotonic expiry.
+  Atomic claim выполняется до проверки submitted request и перед dispatch. Local recognised
+  invalid attempt consumes; foreign domain не распознаёт и не потребляет оригинальный grant.
+- Same scope/request_id не переиздаётся в одном domain. Pending <=128, lifetime issued <=4096.
+  Expiry/GC снимают только pending entries; tombstones не эвиктируются. Новый domain/restart
+  не является durable exactly-once guarantee. Это задача будущего Task Runtime.
+- Registry immutable after construction; trusted executor/verifier objects и bound methods
+  фиксируются. Executor не получает grant/issuer. Exceptions не провоцируют retry.
+- SUCCEEDED требует exact verified evidence + bounded deadline. FAILED означает reported failure,
+  но не гарантирует отсутствие частичного эффекта. После dispatch exception/late/malformed reply
+  возвращается UNKNOWN/MAY_HAVE_OCCURRED. Raw exception/request secrets в result не копируются.
+- Synchronous deadline наблюдает lateness, но не прерывает зависший callback; revoke/close не
+  отменяют уже начатый effect. Hard cancellation/watchdog/OS lifetime — другой executor boundary.
+- Это cooperative Python boundary, не ОС-песочница от malicious same-process Python/reflection.
+  Verifier — trusted predicate, не независимая аттестация Windows. Grant не сериализуется в HWA lease.
+
+### Exact candidate scope
+
+```text
+ADD modules/action_contract.py
+ADD modules/action_authority.py
+ADD modules/action_broker.py
+ADD tools/eval_action_execution_boundary.py
+MODIFY tools/eval_package_boundaries.py
+MODIFY tools/pipeline.py
+MODIFY docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
+MODIFY docs/architecture/SKYNETVS_CURRENT_STATE.md
+```
+
+4 ADD + 4 MODIFY, 0 DELETE. Добавлен только source/in-memory evaluator, отдельный pipeline flow
+`action_execution_boundary` и тот же evaluator в `check` под `-I -S -B`. Старые pipeline steps
+сохраняются; full check автоматически не запускается и здесь не утверждается пройденным.
+Package boundary получает только дополнительные static gates, без ослабления старых.
+
+### Acceptance / Next Exact Action
+
+Проверить exact candidate на isolated копии capture: новые unit/source/in-memory cases,
+package boundaries, HWA01 source/fake regression, source AST topology и сохранность всех
+неизменяемых файлов. На Windows затем отдельно проверить source/offline candidate с report;
+это не native запуск и не выдача host authority. Apply/stage/commit/push этого HWA02-A candidate
+ещё НЕ разрешены и не выполнялись. Нельзя запускать полный check без проверки его текущего scope.
+
+HWA02-B остаётся отдельной миграцией existing Actions через trusted composition, с сохранением
+TTS ordering, confirmation, structured failures и repeat-history. HWA02-C/D, новый host adapter,
+реальный host-worker effect и fault/native acceptance не открываются этим срезом.
