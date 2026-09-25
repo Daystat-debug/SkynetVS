@@ -1,0 +1,11 @@
+{
+  "expected_methods": 114,
+  "host_portable_source_eval": true,
+  "kind": "SCM01_HOST_WORKER_V1_TEST_PLAN",
+  "launcher_specific_tests_excluded": 38,
+  "native_execution_in_landing_validation": false,
+  "platform_fixture_note": "Non-Windows refusal tests explicitly force the non-Windows branch and restore sys.platform; evaluator host may be Windows or Linux.",
+  "reason": "One-shot external launcher remains evidence tooling, not production interface.",
+  "runner": "python -m unittest discover -s native/scm01_host_worker_v1/tests -t . -p test_*.py",
+  "windows_one_shot_is_historical_evidence_not_repeatable_test": true
+}

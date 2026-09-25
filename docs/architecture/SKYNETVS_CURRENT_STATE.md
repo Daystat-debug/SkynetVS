@@ -4362,3 +4362,107 @@ Saved user HEAD: 0fc3e19a6fe8f59f3b71b9d682630cfb1b7c0427;
 tree 206c105decec0190f2e29a5090999389f79e28c3. Source/doc candidates NOT APPLIED.
 Следующее действие: отдельное разрешение на read-only source/docs landing preflight;
 apply/commit/push, native smoke, Sandbox/BEN01 и real SCM — раздельные grants.
+
+## HWA01 host-only worker — Windows happy path verified; source landing prepared (C02 #22–#29)
+
+**Дата:** 2026-09-24. **Статус:** Windows happy path VERIFIED / repository landing candidate PREPARED / runtime authority CLOSED.
+
+Эта запись является новой reconciliation-точкой. Исторический раздел Source119 выше сохраняется
+без переписывания, однако read-only capture #29 подтвердил фактический текущий Git checkpoint:
+
+```text
+branch  main
+HEAD    e3bedde8f946d96b8685be2716ea523d5c0d6e31
+tree    1e428aaac377edd68fdf615e90f1c4b29c0104ca
+status  clean
+staging empty
+```
+
+Таким образом, Source119 уже committed в пользовательском Git; формулировка `UNAPPLIED` в
+исторической записи Source119 описывает состояние на момент подготовки того документа и не
+является актуальным operational status. Read-only capture также подтвердил, что оба canonical
+docs равны HEAD и `native/scm01_host_worker_v1/` ещё отсутствует.
+
+### HWA01: что проверено
+
+После NS01 host-primitives diagnostics подготовлен отдельный production host-worker core с
+узким process-local admission. Он не открывает общий Source119/BEN01 native gate. Один
+разрешённый Windows one-shot `783c4e94687f4335820a6f1cb88920b1` завершился
+`HWA01_HOST_ONLY_FIXED_WORKER_PASS_OBSERVED`. Report: 74223 bytes, SHA-256
+`7c7c680644c629e969a6f27cb5dc445fcedb7267b4dfd2d902f3aa57bb2fea68`; supervisor once:
+276 bytes, SHA-256 `5747a11ebf6a5d45f5d4945bb46a1fe345a0705153bee539d5729677cb6740fb`.
+
+Наблюдалась exact цепочка: один CPython 3.12.10 worker создан `CREATE_SUSPENDED` уже с
+`PROC_THREAD_ATTRIBUTE_JOB_LIST`; до resume проверены retained identity, Job membership,
+неизменность program pins, закрытие parent copies child ends и non-inheritance остальных
+parent handles. `ResumeThread` вернул previous suspend count 1. Verifier проверил 6 fixed
+protocol frames и воспроизвёл 17 lifecycle observations. Worker завершился exit code 0, Job
+стал пустым, pending I/O=0, stderr=0; 53 resource acquisitions/53 releases, uncertain=0,
+unreleased=0, forced cleanup=false. Controller завершился самостоятельно без watchdog stop.
+Repository snapshot before/after совпал; network/Sandbox/guest/Git writes не выполнялись.
+
+Граница результата сохраняется:
+
+```text
+source119_native_admission = false
+runtime_authorized         = false
+native_acceptance          = false
+Sandbox / guest            CLOSED
+arbitrary/model code       NOT AUTHORIZED
+```
+
+Это принимает exact fixed-worker **happy path**, но не все fault/crash сценарии и не BEN01.
+Consumed HWA01/NS01 one-shot markers не удаляются и не переиспользуются.
+
+### Repository landing candidate
+
+Подготовлен `SkynetVS_HWA01_Source_V1.zip`: 55289 bytes, SHA-256
+`6fe8485a954a28898e301880b156748f2000e4e31696be0d1204e96df7c506a1`. Целевой
+`native/scm01_host_worker_v1/` содержит 24 файла: 14 production Python modules, 6 test files
+и README/SCOPE/TEST_PLAN/SOURCE_MANIFEST. Все 14 production-файлов побайтово совпадают с
+Windows-tested HWA01-C; только три test imports адаптированы к repo package layout. Repo-like
+source/fake suite: 114/114 PASS, 0 failures/errors/skips; новый Windows/native run не выполнялся.
+Public operator-facing entrypoint остаётся CLOSED/92.
+
+Для штатной регрессии landing candidate добавляет `tools/eval_scm01_host_worker.py`, отдельный
+pipeline flow `scm01_host_worker` и шаг того же evaluator в общем `check`. Evaluator выполняет
+114 source/fake tests в четырёх isolated `-I -S -B` Python-процессах; он не выдаёт native
+authority и не запускает Windows worker.
+One-shot launcher остаётся evidence tooling и в production repository не переносится.
+
+### Next Exact Action
+
+Следующий шаг — отдельный **read-only future-tree preflight** exact landing candidate: 24 новых
+файла host-worker package, новый evaluator, изменённый `tools/pipeline.py` и два canonical docs.
+Preflight должен подтвердить текущий checkpoint/clean state, exact baseline bytes, отсутствие
+target, Git attributes и вычислить future tree без записи в object store/index/worktree. Только
+после его PASS допускается отдельный source/docs apply с staging пустым. Commit/push и новый
+native/fault run остаются отдельными последующими действиями.
+
+## HWA01 landing V1 — Windows evaluator portability correction (C02 #31–#32)
+
+**Дата:** 2026-09-25. **Статус:** landing V1 worktree bytes WRITTEN / dedicated evaluator FAILED / repair candidate V2 PREPARED / staging EMPTY.
+
+Первый разрешённый source/docs landing run `070b7c48fdaa4fa5abd5372007e6ccf0` записал весь
+28-path candidate V1 в worktree, после чего остановился на `dedicated_eval_failed`. Failure
+snapshot подтвердил неизменные HEAD `e3bedde8f946d96b8685be2716ea523d5c0d6e31`, tree
+`1e428aaac377edd68fdf615e90f1c4b29c0104ca`, index/config и пустой staging. Native worker,
+Sandbox/guest, network, commit/push не запускались.
+
+Exact-source review локализовал ошибку в **двух source/fake regression assertions**, а не в
+14 production HWA01 modules. `test_native_api_source.py` содержал Linux-host assumptions:
+один тест требовал `sys.platform != 'win32'`, второй ожидал `fixed_child_environment` только
+потому, что preparation выполнялась на non-Windows. На реальном Windows evaluator эти условия
+не являются валидными тестовыми предусловиями.
+
+V2 не меняет ни одного production HWA01 Python-файла, `tools/pipeline.py` или evaluator.
+Исправление делает два negative regression tests host-portable: они временно устанавливают
+non-Windows platform fixture, проверяют отказ **до ctypes/native**, затем обязательно
+восстанавливают исходное значение. `README_RU.md`, `TEST_PLAN.json`, `SOURCE_MANIFEST.json`
+и canonical docs обновляются для фиксации причины. Число методов остаётся 114.
+
+Следующий шаг — read-only repair preflight над текущим dirty worktree: он обязан доказать,
+что все 28 текущих путей побайтово равны V1 landing candidate, staging пуст, HEAD/index/config
+не изменены, production14 V1==V2, и вычислить новый future tree V2 без записи в Git/worktree.
+Только после такого PASS допустима отдельная узкая repair-запись. Runtime authority, Source119
+native admission, Sandbox/guest и новый native run остаются CLOSED / NOT AUTHORIZED.

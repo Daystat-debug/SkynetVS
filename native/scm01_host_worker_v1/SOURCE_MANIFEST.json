@@ -1,0 +1,126 @@
+{
+  "file_count": 23,
+  "files": [
+    {
+      "bytes": 847,
+      "path": "README_RU.md",
+      "sha256": "5cf2e8f25e9e7f98d35a53c2fa028a4906fbe488fb30e2d9332865d577865646"
+    },
+    {
+      "bytes": 752,
+      "path": "SCOPE.json",
+      "sha256": "88e1d81116b9868612c5371a9a33584fc80b14fc748888c151961fb5a0f8d8a3"
+    },
+    {
+      "bytes": 629,
+      "path": "TEST_PLAN.json",
+      "sha256": "93cc5e5973d1fc041d33d1e06961a1f9a8eeedb9348c444aa8cf0ec650521196"
+    },
+    {
+      "bytes": 89,
+      "path": "__init__.py",
+      "sha256": "247a59d0a5bf6be121b77365dadd88ae06f42c082f54b5f5ff7a93e3b8af4c1d"
+    },
+    {
+      "bytes": 4320,
+      "path": "admission.py",
+      "sha256": "48b6c49f7c01304aab65ebeb23751920d22d7b45f3d5cbe6bec5a9514146e718"
+    },
+    {
+      "bytes": 4876,
+      "path": "bootstrap_data.py",
+      "sha256": "9a840265b226377f4e40a2641d5aff4e4bde344cc89298342cd94473cfba11fd"
+    },
+    {
+      "bytes": 6258,
+      "path": "contract.py",
+      "sha256": "1a143ae333f32e0211ae41b72f551a6296587298154a37a96e4018d4132579de"
+    },
+    {
+      "bytes": 8091,
+      "path": "controller.py",
+      "sha256": "0a628ddb882bb4e2bd893d98f99aaedb3b6aa87ba58a74b2ee4d63382a9e7b64"
+    },
+    {
+      "bytes": 7638,
+      "path": "host_worker_entry.py",
+      "sha256": "adf636071c78ba2a0179012c0bcb41139d7615697455e33a27a67d8a2133f35c"
+    },
+    {
+      "bytes": 3134,
+      "path": "journal.py",
+      "sha256": "6a0b43a72ca2d75bd5c46a8fa8dbc958010b850ac74bf6063b0d7d1f671b11f5"
+    },
+    {
+      "bytes": 11277,
+      "path": "lifecycle.py",
+      "sha256": "19a324fd4de04c1c72a69b08f16fe7f01d8b89fa67446372ffab05e1bedc07df"
+    },
+    {
+      "bytes": 6565,
+      "path": "protocol.py",
+      "sha256": "bff62ba67385acb30f44935edc46a29cce4ca09a3843bc99f78e37761c720602"
+    },
+    {
+      "bytes": 2351,
+      "path": "resources.py",
+      "sha256": "8fa439cb76600b61a85ec88e4463409d365b8c417da6049cbefbdf46a102cdb4"
+    },
+    {
+      "bytes": 0,
+      "path": "tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 9381,
+      "path": "tests/fake_ports.py",
+      "sha256": "0ec15d91b145967d695fc43c5f2d738fdb9298c07da1955a02fba4265cb71a75"
+    },
+    {
+      "bytes": 18652,
+      "path": "tests/test_contract_and_lifecycle.py",
+      "sha256": "e11ea23bf21c7fad56a31ca598c5e02eaa69a516387a5c39ab7ef69099290915"
+    },
+    {
+      "bytes": 17344,
+      "path": "tests/test_native_api_source.py",
+      "sha256": "6d1967c236a75551398907117371850d4b5506888f3c1dc2fcfa771dc69ed0ba"
+    },
+    {
+      "bytes": 17646,
+      "path": "tests/test_owner_and_admission.py",
+      "sha256": "1b33766419d6626bbd113e76505e531f730e001229a7457fcc695ea0f9def43a"
+    },
+    {
+      "bytes": 3987,
+      "path": "tests/test_source_boundary.py",
+      "sha256": "ed095dcc9ada6baf247522304c237e7e283957aac25500c9903f2d4a1c61a94b"
+    },
+    {
+      "bytes": 6070,
+      "path": "winabi.py",
+      "sha256": "43a578e74fe1c3643900fe243bb5bfb2a4c5bbf64fa81fd66f4d7be9b8830e61"
+    },
+    {
+      "bytes": 18750,
+      "path": "windows_api.py",
+      "sha256": "02ebe50b7b0921f778a968587864abd6576b49be4aaf49aa0edeb5410b29ed69"
+    },
+    {
+      "bytes": 16939,
+      "path": "windows_owner.py",
+      "sha256": "6b6360eeb8ef55516a1b95aebf44b059c31f759d3377e72c60d5bb96098bf68b"
+    },
+    {
+      "bytes": 1709,
+      "path": "worker.py",
+      "sha256": "340df11460d5c5d8f5f318ca39ec8cbe7b23e441588cf671ee56af3c577d5943"
+    }
+  ],
+  "kind": "SCM01_HOST_WORKER_SOURCE_V2_MANIFEST",
+  "production_python_files": 14,
+  "production_test_methods": 114,
+  "source_test_portability_revision": "V2",
+  "target": "native/scm01_host_worker_v1",
+  "v1_windows_production_bytes_preserved": true
+}

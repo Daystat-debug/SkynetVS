@@ -1,0 +1,22 @@
+{
+  "default_entrypoint": "CLOSED_92",
+  "first_windows_result": "HWA01_HOST_ONLY_FIXED_WORKER_PASS_OBSERVED",
+  "first_windows_run_id": "783c4e94687f4335820a6f1cb88920b1",
+  "forbidden": [
+    "arbitrary model code",
+    "shell command transport",
+    "Source119/BEN01 authority",
+    "Sandbox/guest authority",
+    "automatic retry of consumed one-shot"
+  ],
+  "guest_authorized": false,
+  "kind": "SCM01_HOST_WORKER_V1_LANDING_SCOPE",
+  "launcher_in_production_package": false,
+  "production_python_files": 14,
+  "production_test_methods": 114,
+  "profile": "HWA01_FIXED_SHA256_PROBE_V1",
+  "runtime_authorized": false,
+  "sandbox_authorized": false,
+  "source119_native_admission": false,
+  "trust_model": "TRUSTED_LOCAL_CPYTHON312_HOST_ONLY_V1"
+}
