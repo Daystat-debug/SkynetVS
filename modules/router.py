@@ -202,6 +202,20 @@ class Router:
         meta2 = self._resolve_meta(meta)
         return self._actions.handle(meta2)
 
+    def remember_boundary_volume_success(self, intent: str) -> None:
+        """Записывает только подтверждённый B2 volume-success без выполнения effect."""
+        if type(intent) is not str:
+            raise ValueError("volume_history_intent_type")
+
+        canonical_intent = intent.upper().strip()
+        if canonical_intent not in {"VOLUME_UP", "VOLUME_DOWN"}:
+            raise ValueError("volume_history_intent_not_allowed")
+
+        self._state.remember({
+            "intent": canonical_intent,
+            "slots": {},
+        })
+
     def execute(self, meta: Dict[str, Any]) -> None:
         meta2 = self._resolve_meta(meta)
         intent = (meta2.get("intent") or "").upper()

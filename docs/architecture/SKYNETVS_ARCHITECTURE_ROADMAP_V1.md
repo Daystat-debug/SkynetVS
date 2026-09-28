@@ -6959,3 +6959,16 @@ against committed `247e4a30...` without applying it. Required first Windows gate
 identity/scope, Python 3.12 syntax, dedicated `timer_action_runtime`, HWA02-A, package boundaries,
 legacy command/timer runtime and HWA01 source regression. No real timer effect, native worker,
 Sandbox, staging, commit or push is authorized by this record.
+
+
+## HWA02-B2 — bounded repeatable volume slice
+
+B2 extends the action boundary only to `VOLUME_UP` / `VOLUME_DOWN`. Repeat resolution stays
+inside `Router.preprocess`; exact requests are minted from the resolved intent. Repeat-history
+commit is separated from effect execution and runs only after verified broker success through a
+history-only sink. The request binds the trusted configured signed delta exactly.
+
+This slice intentionally excludes mute/set-volume/media actions and does not make remaining
+desktop commands a prerequisite for the first developer-task scenario. After B2 evidence, run
+a separate developer-task readiness review for the existing Developer Safety Kernel and the
+first observable `task -> isolated patch -> checks -> report -> human promotion` path.

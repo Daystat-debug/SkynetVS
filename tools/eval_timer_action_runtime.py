@@ -36,6 +36,28 @@ from modules.command_runtime import handle_command_runtime
 
 EXPECTED_TESTS = 56
 
+
+def _stable_ast_dump(node: ast.AST) -> str:
+    """Cross-version AST dump with empty fields included on Python 3.13+.
+
+    CPython 3.12 ast.dump includes empty/None fields by default. CPython 3.13
+    changed the default to omit them unless show_empty=True. This helper keeps
+    the topology fingerprint stable across both versions.
+    """
+    try:
+        return ast.dump(
+            node,
+            annotate_fields=True,
+            include_attributes=False,
+            show_empty=True,
+        )
+    except TypeError:
+        return ast.dump(
+            node,
+            annotate_fields=True,
+            include_attributes=False,
+        )
+
 def fail_unavailable(intent='SET_TIMER', **kw):
     fields = dict(intent=intent, operation='timer.start' if intent=='SET_TIMER' else 'timer.cancel',
                   detail='RAW PRIVATE DETAIL', user_message='UNTRUSTED MESSAGE',
@@ -533,14 +555,38 @@ class SourceTopologyTests(unittest.TestCase):
             with self.subTest(path=rel):
                 self.assertEqual(hashlib.sha256((PROJECT_ROOT/rel).read_bytes()).hexdigest(),sha)
 
-    def test_legacy_actions_router_timer_service_are_byte_identical(self):
-        expected={
+    def test_legacy_actions_timer_service_and_router_methods_are_preserved(self):
+        expected_files={
             "modules/actions.py":"dfdc9c8fd6acb5d239868c9dcb0ef9cc460bf346bf23f3d0715913940fcc1661",
-            "modules/router.py":"e6caa4453508dee41a6ab9d0115a155f7e0439ab8ba1b308857b4bdf9160449c",
             "modules/timer_service.py":"01d046642fe99d17d0194279bd8d9575a79b6416b8354e9a2641700d0f55710a",
         }
-        for rel,sha in expected.items():
-            with self.subTest(path=rel):self.assertEqual(hashlib.sha256((PROJECT_ROOT/rel).read_bytes()).hexdigest(),sha)
+        for rel,sha in expected_files.items():
+            with self.subTest(path=rel):
+                self.assertEqual(hashlib.sha256((PROJECT_ROOT/rel).read_bytes()).hexdigest(),sha)
+
+        expected_methods={
+            "__init__":"3e705818a0adb5faae22d25c64d1cec9ae27423b7a1e8bdb669b9e0b65b6a023",
+            "mode":"af3c804756c9a0a5ba40d1ae29fc5e08099b1dcd637cbe059b4816257e655757",
+            "_norm":"d9f0df7f3febcf0d739ca452431db04ab1f336e2c137b9ff6062f05b7f2ac7b2",
+            "_is_repeat_cmd":"4d4a75f48d34fc194ba689dbb26a979229b2e5f25f787bf5ef5ea0c4764e5233",
+            "_repeat_variant_intent":"36c37abcd44024e419d397a4404d15710bae53d3da8dd4cabdc04dee2c7d35ce",
+            "_already_resolved":"15e68f8a756027c8621d150d5dd9deff2801dd8db7b8cf422f81de1f047b19ab",
+            "_history_meta":"6fc7e4ed71a0c6f844f15d9eb70e5eee1c67515f4200fbdc6169a6c1cf072dd8",
+            "_variant_meta":"3481de2124fe67c3ee807b15d12846037c5824be235d28a5de12d0004d75af47",
+            "_clean_meta_for_history":"0ab85f5ddd9d10ba759b8641825fdcd1e42a41387e5acd07013734c7a40f44f2",
+            "_resolve_meta":"1a6d4178e3f844e58c4f68df8d096d13c4292587d868ccbaba436063820b2055",
+            "preprocess":"f9d5f4982d52e95b9241d4b0a4832c2e908869b44d4cd3a25eb0eec943c8c2b9",
+            "reply":"451d86d74059a46a0cbaeead9b0f43708f7a373ba2deb6364317a705771dadf9",
+            "execute":"5a7f572e8eb4f9fafb4488b3544d2747b17dec17e7f451e91e818024ba90fef7",
+        }
+        tree=ast.parse((PROJECT_ROOT/"modules/router.py").read_text(encoding="utf-8-sig"))
+        cls=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=="Router")
+        methods={n.name:n for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+        self.assertEqual(set(methods),set(expected_methods)|{"remember_boundary_volume_success"})
+        for name,sha in expected_methods.items():
+            with self.subTest(method=name):
+                raw=_stable_ast_dump(methods[name]).encode("utf-8")
+                self.assertEqual(hashlib.sha256(raw).hexdigest(),sha)
 
     def test_timer_runtime_import_allowlist(self):
         rel="modules/timer_action_runtime.py"

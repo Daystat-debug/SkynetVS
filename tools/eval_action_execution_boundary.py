@@ -885,7 +885,7 @@ class SourceTests(unittest.TestCase):
                         if module in constrained:
                             self.assertIn(node.func.attr, constrained[module])
 
-    def test_production_runtime_wiring_is_exact_hwa02b1_timer_bridge(self):
+    def test_production_runtime_wiring_is_exact_hwa02b1_b2_bridges(self):
         names = {path[:-3].replace("/", ".") for path in NEW_MODULES}
         files = [PROJECT_ROOT / "main.py", *sorted((PROJECT_ROOT / "modules").rglob("*.py"))]
         wiring = {}
@@ -911,11 +911,17 @@ class SourceTests(unittest.TestCase):
                 "modules.action_broker",
                 "modules.action_contract",
             ],
+            "modules/volume_action_runtime.py": [
+                "modules.action_authority",
+                "modules.action_broker",
+                "modules.action_contract",
+            ],
         })
         main_tree = ast.parse((PROJECT_ROOT / "main.py").read_text(encoding="utf-8-sig"))
         main_imports = [node.module for node in ast.walk(main_tree)
                         if isinstance(node, ast.ImportFrom)]
         self.assertEqual(main_imports.count("modules.timer_action_runtime"), 1)
+        self.assertEqual(main_imports.count("modules.volume_action_runtime"), 1)
 
     def test_no_static_modules_native_import(self):
         for path in (PROJECT_ROOT / "modules").rglob("*.py"):
@@ -993,8 +999,8 @@ def main() -> int:
                "tests_run": result.testsRun, "expected_tests": expected, "discovered_tests": discovered, "subtests": result.subtests,
                "failures": len(result.failures), "errors": len(result.errors), "skipped": len(result.skipped),
                "audit_measured_suite": counters, "runtime_wired": True,
-               "runtime_wiring_profile": "HWA02B1_TIMER_PAIR_ONLY",
-               "runtime_actions": ["SET_TIMER", "CANCEL_TIMER"],
+               "runtime_wiring_profile": "HWA02B1_TIMER_PLUS_HWA02B2_VOLUME",
+               "runtime_actions": ["SET_TIMER", "CANCEL_TIMER", "VOLUME_UP", "VOLUME_DOWN"],
                "native_execution_authorized": False, "host_executor_registered": False,
                "real_cross_process_test": False}
     print("\n=== HWA02-A SUMMARY ===")

@@ -62,6 +62,7 @@ class CommandProcessor:
         current_mode_name_func: ModeNameFunc,
         cancel_cmd_timer_func: CancelTimerFunc,
         timer_actions: Any | None = None,
+        volume_actions: Any | None = None,
         print_func: PrintFunc | None = print,
     ) -> None:
         self._router = router
@@ -78,6 +79,7 @@ class CommandProcessor:
         self._current_mode_name_func = current_mode_name_func
         self._cancel_cmd_timer_func = cancel_cmd_timer_func
         self._timer_actions = timer_actions
+        self._volume_actions = volume_actions
         self._print_func = print_func
 
     def _print(self, text: str) -> None:
@@ -160,6 +162,7 @@ class CommandProcessor:
             current_mode_name_func=self._current_mode_name_func,
             cancel_cmd_timer_func=self._cancel_cmd_timer_func,
             timer_actions=self._timer_actions,
+            volume_actions=self._volume_actions,
         )
 
         return CommandProcessorResult(

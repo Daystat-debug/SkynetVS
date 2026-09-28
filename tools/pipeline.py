@@ -98,6 +98,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate SCM01 host worker source contract", _python_cmd("tools/eval_scm01_host_worker.py")),
             Step("Evaluate action execution boundary", _python_cmd("-I", "-S", "-B", "tools/eval_action_execution_boundary.py")),
             Step("Evaluate HWA02-B1 timer action runtime", _python_cmd("tools/eval_timer_action_runtime.py")),
+            Step("Evaluate HWA02-B2 volume action runtime", _python_cmd("tools/eval_volume_action_runtime.py")),
             Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
             Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
             Step("Evaluate developer task patch integrity preflight", _python_cmd("tools/eval_developer_task_patch_integrity.py")),
@@ -353,6 +354,9 @@ def available_flows() -> dict[str, list[Step]]:
         ],
         "timer_action_runtime": [
             Step("Evaluate HWA02-B1 timer action runtime", _python_cmd("tools/eval_timer_action_runtime.py")),
+        ],
+        "volume_action_runtime": [
+            Step("Evaluate HWA02-B2 volume action runtime", _python_cmd("tools/eval_volume_action_runtime.py")),
         ],
         "scm01_host_worker": [
             Step("Evaluate SCM01 host worker source contract", _python_cmd("tools/eval_scm01_host_worker.py")),
@@ -919,6 +923,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  scm01_host_worker  Validate SCM01 host worker source/fake contract", log_file)
     _emit("  action_execution_boundary  Validate HWA02-A action contract and exact B1 timer wiring", log_file)
     _emit("  timer_action_runtime  Validate HWA02-B1 timer runtime bridge", log_file)
+    _emit("  volume_action_runtime  Validate HWA02-B2 volume/repeat runtime bridge", log_file)
     _emit("  core_package  Run core infrastructure package migration checks", log_file)
     _emit("  runtime_package  Run runtime coordination package migration checks", log_file)
     _emit("  learning_package  Run learning infrastructure package migration checks", log_file)

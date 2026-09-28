@@ -56,6 +56,7 @@ from modules.timer_service import (
     TimerService,
 )
 from modules.timer_action_runtime import compose_timer_action_runtime
+from modules.volume_action_runtime import compose_volume_action_runtime
 from modules.reminder_repository import ReminderRepository
 from modules.reminder_runtime import (
     build_reminder_fired_message,
@@ -335,6 +336,25 @@ def main():
     )
 
     router = Router(actions, settings=SETTINGS)
+
+    volume_change_handler = actions._execute_audio_control
+
+    def execute_boundary_volume(intent: str, delta: int, _handler=volume_change_handler):
+        state = _handler(
+            intent=intent,
+            operation="change_volume",
+            request={"delta": delta},
+            slots={},
+            action=lambda audio_control: audio_control.change_volume(delta),
+        )
+        return state.volume, state.muted
+
+    volume_action_owner, volume_actions = compose_volume_action_runtime(
+        step=SETTINGS.volume_step,
+        change_volume=execute_boundary_volume,
+        remember_volume_success=router.remember_boundary_volume_success,
+    )
+
     runtime_health_monitor = RuntimeServiceHealthMonitor(
         enabled=SETTINGS.runtime_health_monitor_enable,
         interval_sec=SETTINGS.runtime_health_monitor_interval_sec,
@@ -440,6 +460,7 @@ def main():
         current_mode_name_func=current_mode_name,
         cancel_cmd_timer_func=cancel_cmd_timer,
         timer_actions=timer_actions,
+        volume_actions=volume_actions,
         print_func=print,
     )
 
@@ -647,6 +668,11 @@ def main():
     except KeyboardInterrupt:
         print("\n[STOP] SkynetVS")
     finally:
+        try:
+            volume_action_owner.close()
+        except Exception as e:
+            print(f"[WARN] volume action boundary close failed: {type(e).__name__}")
+
         try:
             timer_action_owner.close()
         except Exception as e:

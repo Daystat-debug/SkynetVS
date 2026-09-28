@@ -335,6 +335,11 @@ ACTION_EXECUTION_IMPORTS = {
         "modules.action_contract", "modules.action_authority", "modules.action_broker",
         "modules.action_error",
     },
+    "modules/volume_action_runtime.py": {
+        "__future__", "dataclasses", "enum", "os", "threading", "uuid", "typing",
+        "modules.action_contract", "modules.action_authority", "modules.action_broker",
+        "modules.action_error",
+    },
 }
 
 
@@ -1177,9 +1182,9 @@ def main() -> int:
             native_imports.extend(f"{relative}: {name}" for name in sorted(imported_names)
                                   if name == "native" or name.startswith("native."))
     check(
-        "HWA02 B1 HAS EXACT PRODUCTION RUNTIME WIRING",
+        "HWA02 B1+B2 HAVE EXACT PRODUCTION RUNTIME WIRING",
         action_wiring,
-        ["main.py: modules.timer_action_runtime"],
+        ["main.py: modules.timer_action_runtime", "main.py: modules.volume_action_runtime"],
     )
     check("MODULES HAVE NO STATIC NATIVE IMPORTS", native_imports, [])
 

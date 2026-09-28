@@ -41,6 +41,11 @@ HWA02B1_TIMER_INTENTS = frozenset({
     "CANCEL_TIMER",
 })
 
+HWA02B2_VOLUME_INTENTS = frozenset({
+    "VOLUME_UP",
+    "VOLUME_DOWN",
+})
+
 
 class LoggerLike(Protocol):
     def event(self, kind: str, payload: dict[str, Any]) -> None:
@@ -55,6 +60,14 @@ class TimerActionPortLike(Protocol):
         ...
 
     def execute(self, request: Any) -> None:
+        ...
+
+
+class VolumeActionPortLike(Protocol):
+    def prepare(self, *, intent: str, slots: dict[str, Any]) -> Any:
+        ...
+
+    def execute(self, plan: Any) -> None:
         ...
 
 
@@ -198,6 +211,7 @@ def handle_command_runtime(
     current_mode_name_func: ModeNameFunc,
     cancel_cmd_timer_func: CancelTimerFunc,
     timer_actions: TimerActionPortLike | None = None,
+    volume_actions: VolumeActionPortLike | None = None,
 ) -> CommandRuntimeResult:
     """
     Выполняет runtime-ветку после understanding + decision + outcome.
@@ -298,11 +312,37 @@ def handle_command_runtime(
 
     timer_request: Any | None = None
     timer_migrated = timer_actions is not None and intent in HWA02B1_TIMER_INTENTS
+    volume_plan: Any | None = None
+    volume_migrated = volume_actions is not None and intent in HWA02B2_VOLUME_INTENTS
 
     if timer_migrated:
         try:
             slots = meta_dict.get("slots")
             timer_request = timer_actions.prepare(
+                intent=intent,
+                slots=slots,
+            )
+        except Exception as e:
+            return _handle_action_failure(
+                raw_text=raw_text,
+                final_text=final_text,
+                meta=meta_dict,
+                intent=intent,
+                error=e,
+                learning_memory=learning_memory,
+                logger=logger,
+                stt=stt,
+                tts=tts,
+                say_func=say_func,
+                current_mode_name_func=current_mode_name_func,
+                previous_last_tts_end=None,
+                success_reply_spoken=False,
+            )
+
+    if volume_migrated:
+        try:
+            slots = meta_dict.get("slots")
+            volume_plan = volume_actions.prepare(
                 intent=intent,
                 slots=slots,
             )
@@ -368,7 +408,10 @@ def handle_command_runtime(
     last_tts_end = say_func(stt, tts, text_out)
 
     try:
-        router.execute(meta_dict)
+        if volume_migrated:
+            volume_actions.execute(volume_plan)
+        else:
+            router.execute(meta_dict)
     except Exception as e:
         return _handle_action_failure(
             raw_text=raw_text,

@@ -4621,3 +4621,25 @@ architecture audit is Windows-host-specific and is not claimed on Linux.
 **Next exact action:** package these exact ten files, then perform Windows source/offline
 verification only. Do not apply/stage/commit/push the B1 candidate and do not run a real timer or
 native worker before that evidence is reviewed.
+
+
+## HWA02-B2 — Volume Repeat Boundary V1
+
+**Target tree state:** `VOLUME_UP` and `VOLUME_DOWN` are the only B2 actions routed through a
+new `VolumeAutomaticPort` on top of HWA02-A. B1 timers remain unchanged.
+
+The exact signed delta is captured from trusted `settings.volume_step` at composition and is
+part of the `ActionRequest`; NLU/meta cannot supply or mutate it. The request and immutable
+repeat record are prepared after `Router.preprocess` repeat resolution and before reply/TTS.
+A one-shot grant is issued only at dispatch.
+
+For migrated volume actions the legacy `Router.execute` path is not called after dispatch.
+Instead the port invokes the fixed `_execute_audio_control` callback and, only after broker
+`SUCCEEDED/VERIFIED`, invokes `Router.remember_boundary_volume_success`. DENIED/FAILED/UNKNOWN
+do not update repeat history and do not fall back to legacy execution. A history sink failure
+after verified audio is reported as `volume_history_commit_failed`; audio is not retried.
+
+The existing `AudioControl.change_volume` endpoint-refresh retry remains inside the trusted
+audio callback. B2 guarantees one broker dispatch/callback per grant, not one CoreAudio setter
+or a pre-bound device identity. `MUTE`, `UNMUTE`, `SET_VOLUME` and all `MUSIC_*` remain legacy.
+No HWA01/native authority is opened by this wiring.
