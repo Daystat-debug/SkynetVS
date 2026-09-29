@@ -6973,12 +6973,12 @@ desktop commands a prerequisite for the first developer-task scenario. After B2 
 a separate developer-task readiness review for the existing Developer Safety Kernel and the
 first observable `task -> isolated patch -> checks -> report -> human promotion` path.
 
-## DTR-A — Model Proposal Intake & Trusted Manifest Binding V1 (C02 #84–#85)
+## DTR-A — Model Proposal Intake & Trusted Manifest Binding V1 (C02 #84–#92)
 
 **Decision ID:** `skynetvs-dtra-proposal-rehearsal-bridge-v1`.
-**Статус этой записи:** SOURCE CANDIDATE / PREPARED / NOT APPLIED / DATA-ONLY.
+**Статус:** CLOSED / COMMITTED / PUSH VERIFIED / DATA-ONLY.
 
-Canonical base before this candidate:
+Implementation began from this canonical base:
 
 ```text
 HEAD / origin/main  47f171ea001b791e37abb5c0003078e386777560
@@ -7055,6 +7055,94 @@ The evaluator uses only in-memory fixtures/fakes and source inspection. No proje
 write, Git operation, provider/network call, Sandbox, patch execution, runtime authority or
 promotion occurred. Linux results are not Windows acceptance.
 
-**Next exact action:** package these exact seven candidate files and perform a Windows
-source/offline DTR-A verification on the canonical clean checkpoint. Do not apply/stage/commit/
-push the candidate and do not start DTR-B rehearsal execution before that evidence is reviewed.
+DTR-A closure was subsequently verified in C02 #92:
+
+```text
+commit       27f044a85dfeb704f13334c78f556bce51e9899a
+parent       47f171ea001b791e37abb5c0003078e386777560
+tree         cff85cb3e4d034e5a226298246b359300ca822d2
+origin/main  27f044a85dfeb704f13334c78f556bce51e9899a
+subject      feat: add DTR-A developer task proposal intake
+worktree     clean
+staging      empty
+```
+
+The verified current source set is 493 files with fingerprint
+`da2182674e205e3e1fa486a5fa7c32472108a0184488d17523008c035f9196b6`. DTR-A remains
+non-authorizing after closure: it binds proposal data to a trusted manifest but does not apply or
+execute the proposal.
+
+**Next exact action:** DTR-B non-promotable static rehearsal orchestration.
+
+
+## DTR-B — Non-Promotable Static Rehearsal Orchestrator V1 (C02 #93)
+
+**Decision ID:** `skynetvs-dtrb-static-rehearsal-orchestrator-v1`.
+**Статус этой записи:** SOURCE CANDIDATE / PREPARED / NOT APPLIED / NON-PROMOTABLE.
+
+Canonical base for this candidate:
+
+```text
+HEAD / origin/main  27f044a85dfeb704f13334c78f556bce51e9899a
+tree                cff85cb3e4d034e5a226298246b359300ca822d2
+selected sources    493
+source fingerprint  da2182674e205e3e1fa486a5fa7c32472108a0184488d17523008c035f9196b6
+```
+
+DTR-B composes existing verified Developer Safety Kernel stages; it does not introduce a new
+execution backend. The public boundary consumes an already accepted DTR-A
+`DeveloperTaskProposalPlan`, replays canonical DTR-A intake before any artifact write, materializes
+only the exact bound `.patch` bytes as inert task data, then uses the unchanged production APIs:
+
+```text
+run_developer_task_preflight
+create_developer_task_workspace
+apply_developer_task_patch
+run_developer_task_static_checks
+cleanup_developer_task_workspace
+```
+
+The source repository is never the patch target. Patch application occurs only in the independent
+repository workspace. The existing static gate runs `git_diff_check` and changed-Python
+`py_compile` without importing or executing changed code. The required final
+`pipeline(flow=check)` remains explicitly pending.
+
+Successful terminal state is therefore:
+
+```text
+STATIC_REHEARSAL_RECORDED_NOT_PROMOTABLE
+completed_checks            git_diff_check, py_compile
+pending_executable_checks   pipeline(flow=check)
+all_required_checks_passed  false
+behavioral_correctness      NOT_EVALUATED
+ready_to_promote            false
+runtime_authorized          false
+promotion_authorized        false
+```
+
+One unpredictable evidence root is created below a trusted caller-supplied artifact parent outside
+the source repository. The patch and aggregate result are retained there. If a verified workspace
+was created, the existing capability/marker-bound workspace cleanup is attempted exactly once.
+Cleanup uncertainty or inability to prove source-repository identity returns
+`REHEARSAL_STOP_REVIEW_REQUIRED`; DTR-B adds no retry, fallback or rollback loop. Existing Patch
+Apply may still use its own already-verified bounded rollback semantics internally.
+
+DTR-B does not call a model provider, open network access, run `python_module`, run the full
+`pipeline(check)`, launch Windows Sandbox/native workers, acquire dependencies, modify the source
+repository, stage/commit/push, or grant runtime/promotion authority.
+
+Exact first implementation scope:
+
+```text
+ADD    modules/developer/developer_task_rehearsal_contract.py
+ADD    modules/developer/developer_task_rehearsal_fs.py
+ADD    modules/developer/developer_task_rehearsal.py
+ADD    tools/eval_developer_task_rehearsal.py
+MODIFY tools/eval_package_boundaries.py
+MODIFY tools/pipeline.py
+MODIFY docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
+MODIFY docs/architecture/SKYNETVS_CURRENT_STATE.md
+```
+
+4 ADD + 4 MODIFY, 0 DELETE. DTR-A production code and the existing
+preflight/workspace/apply/static/cleanup production modules remain byte-identical.

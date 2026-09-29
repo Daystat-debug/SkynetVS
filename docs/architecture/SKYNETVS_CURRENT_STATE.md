@@ -4644,18 +4644,21 @@ audio callback. B2 guarantees one broker dispatch/callback per grant, not one Co
 or a pre-bound device identity. `MUTE`, `UNMUTE`, `SET_VOLUME` and all `MUSIC_*` remain legacy.
 No HWA01/native authority is opened by this wiring.
 
-## DTR-A proposal intake source candidate — C02 #84–#85
+## DTR-A proposal intake — CLOSED C02 #84–#92
 
-Current canonical base remains:
+Current canonical checkpoint after verified DTR-A closure:
 
 ```text
-HEAD / origin/main  47f171ea001b791e37abb5c0003078e386777560
-tree                d08e4243769e45891d35f2a3452ad2cde373e79c
-worktree            clean at accepted C02M082 checkpoint
+HEAD / origin/main  27f044a85dfeb704f13334c78f556bce51e9899a
+tree                cff85cb3e4d034e5a226298246b359300ca822d2
+source files        493
+source fingerprint  da2182674e205e3e1fa486a5fa7c32472108a0184488d17523008c035f9196b6
+worktree            clean
+staging             empty
 ```
 
-Architecture Lock `skynetvs-dtra-proposal-rehearsal-bridge-v1` is now implemented as a
-**prepared source candidate only**. DTR-A is a pure data boundary from one manually imported model
+Architecture Lock `skynetvs-dtra-proposal-rehearsal-bridge-v1` is implemented and committed.
+DTR-A is a pure data boundary from one manually imported model
 proposal to an immutable request/patch binding and an existing `DeveloperTaskManifest`.
 It has no provider transport, filesystem writer, Git/workspace/apply call, Sandbox admission,
 runtime authority or promotion path.
@@ -4692,10 +4695,10 @@ runtime_authorized      false
 promotion_authorized    false
 ```
 
-Candidate scope is exactly 7 paths: 3 ADD + 4 MODIFY. Existing Kernel contract/validator and all
-preflight/workspace/apply/static/execution APIs are preserved byte-for-byte.
+Implementation scope was exactly 7 paths: 3 ADD + 4 MODIFY. Existing Kernel contract/validator
+and all preflight/workspace/apply/static/execution APIs were preserved byte-for-byte.
 
-Prepared portable evidence:
+Verified evidence includes:
 
 ```text
 DTR-A intake             60/60 PASS; acceptance requirements T01-T16
@@ -4704,6 +4707,47 @@ developer task contract  18/18 PASS
 targeted pipeline flow   PASS
 ```
 
-No Windows acceptance has been claimed yet. No candidate apply/stage/commit/push is authorized by
-this record. The next action is Windows source/offline verification of this exact candidate; DTR-B
-orchestrator/rehearsal remains unopened.
+Windows source/offline, landing, commit preflight and one-shot commit/push closure all passed.
+Closure commit `27f044a85dfeb704f13334c78f556bce51e9899a` has exact parent
+`47f171ea001b791e37abb5c0003078e386777560`, tree
+`cff85cb3e4d034e5a226298246b359300ca822d2` and subject
+`feat: add DTR-A developer task proposal intake`. DTR-A remains non-authorizing after closure.
+
+The next stage is DTR-B non-promotable static rehearsal orchestration.
+
+
+## DTR-B static rehearsal source candidate — C02 #93
+
+Current canonical base is the closed DTR-A checkpoint:
+
+```text
+HEAD / origin/main  27f044a85dfeb704f13334c78f556bce51e9899a
+tree                cff85cb3e4d034e5a226298246b359300ca822d2
+sources             493
+worktree            clean
+staging             empty
+```
+
+Architecture Lock `skynetvs-dtrb-static-rehearsal-orchestrator-v1` is fixed before implementation.
+The candidate composes the existing DTR-A plan with the existing preflight, independent workspace,
+patch apply, static checks and workspace cleanup stages. It adds no executable-check backend.
+
+Successful rehearsal means only:
+
+```text
+STATIC_REHEARSAL_RECORDED_NOT_PROMOTABLE
+completed_checks            git_diff_check, py_compile
+pending_executable_checks   pipeline(flow=check)
+all_required_checks_passed  false
+behavioral_correctness      NOT_EVALUATED
+ready_to_promote            false
+```
+
+Changed code is never imported or executed in this slice. No provider call, network, Sandbox,
+native worker, dependency acquisition, source-repository mutation, Git promotion or runtime
+authority is part of DTR-B V1. One persistent evidence root keeps the exact inert patch and
+aggregate report; any successfully created executable workspace is removed through the existing
+verified cleanup capability before a successful terminal result.
+
+Candidate scope: 4 ADD + 4 MODIFY = 8 paths. Existing DTR-A, preflight, workspace, patch-apply,
+static-check and cleanup production modules remain unchanged.

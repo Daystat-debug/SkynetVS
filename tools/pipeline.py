@@ -101,6 +101,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate HWA02-B2 volume action runtime", _python_cmd("tools/eval_volume_action_runtime.py")),
             Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
             Step("Evaluate developer task proposal intake", _python_cmd("tools/eval_developer_task_proposal_intake.py")),
+            Step("Evaluate developer task static rehearsal", _python_cmd("tools/eval_developer_task_rehearsal.py")),
             Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
             Step("Evaluate developer task patch integrity preflight", _python_cmd("tools/eval_developer_task_patch_integrity.py")),
             Step("Evaluate developer task isolated patch index preflight", _python_cmd("tools/eval_developer_task_patch_index.py")),
@@ -370,6 +371,17 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
             Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
             Step("Evaluate developer task proposal intake", _python_cmd("tools/eval_developer_task_proposal_intake.py")),
+        ],
+        "developer_task_rehearsal": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
+            Step("Evaluate developer task proposal intake", _python_cmd("tools/eval_developer_task_proposal_intake.py")),
+            Step("Evaluate developer task complete preflight composition", _python_cmd("tools/eval_developer_task_preflight_composition.py")),
+            Step("Evaluate developer task independent repository workspace", _python_cmd("tools/eval_developer_task_workspace.py")),
+            Step("Evaluate developer task workspace cleanup lifecycle", _python_cmd("tools/eval_developer_task_workspace_cleanup.py")),
+            Step("Evaluate developer task patch apply", _python_cmd("tools/eval_developer_task_patch_apply.py")),
+            Step("Evaluate developer task static check evidence", _python_cmd("tools/eval_developer_task_check_static.py")),
+            Step("Evaluate DTR-B static rehearsal orchestrator", _python_cmd("tools/eval_developer_task_rehearsal.py")),
         ],
         "developer_task_preflight": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
@@ -925,6 +937,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  runtime_architecture_audit  Run final runtime ownership and fault-injection audit", log_file)
     _emit("  developer_task_contract  Validate the safe developer task manifest contract", log_file)
     _emit("  developer_task_proposal_intake  Validate DTR-A pure model proposal intake and manifest binding", log_file)
+    _emit("  developer_task_rehearsal  Validate DTR-B non-promotable static rehearsal orchestration", log_file)
     _emit("  developer_task_preflight  Validate developer task preflight safety gates", log_file)
     _emit("  package_boundaries  Validate production package layout boundaries", log_file)
     _emit("  scm01_host_worker  Validate SCM01 host worker source/fake contract", log_file)
