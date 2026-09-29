@@ -6972,3 +6972,89 @@ This slice intentionally excludes mute/set-volume/media actions and does not mak
 desktop commands a prerequisite for the first developer-task scenario. After B2 evidence, run
 a separate developer-task readiness review for the existing Developer Safety Kernel and the
 first observable `task -> isolated patch -> checks -> report -> human promotion` path.
+
+## DTR-A — Model Proposal Intake & Trusted Manifest Binding V1 (C02 #84–#85)
+
+**Decision ID:** `skynetvs-dtra-proposal-rehearsal-bridge-v1`.
+**Статус этой записи:** SOURCE CANDIDATE / PREPARED / NOT APPLIED / DATA-ONLY.
+
+Canonical base before this candidate:
+
+```text
+HEAD / origin/main  47f171ea001b791e37abb5c0003078e386777560
+tree                d08e4243769e45891d35f2a3452ad2cde373e79c
+selected sources    490
+source fingerprint  a85ee5bc89d78701bbf9e46d83f541e3485e56e16561c804581bb470cf7ade22
+```
+
+Architecture Lock V1 was fixed before implementation. `ARCHITECTURE_LOCK_RU.md` SHA-256:
+`89c880198fa9e54957b812879da58cdbe635e5ca93e54a20b81e8b331798c49f`.
+The lock grants no execution authority.
+
+DTR-A adds only a pure proposal/intake boundary in front of the existing Developer Safety
+Kernel. The initial transport profile is `manual_import`; it does not call a model provider,
+open network access or treat `browser_bridge` as admitted. A model response is untrusted data.
+It may supply only the exact proposal JSON fields `kind`, `schema_version`, `request_id`,
+`request_fingerprint`, `patch_text`, and `explanation`. Authority-bearing/unknown fields,
+duplicate keys, invalid UTF-8/BOM/surrogates, NaN/Infinity, wrappers/trailing data and oversized
+payloads fail closed.
+
+The trusted request binds the instruction, current full base commit/tree, bounded source context,
+one exact write target and the fixed check profile. Context bytes are copied into immutable
+process data and bound by SHA-256 plus exact Git blob OID. The first profile permits one existing
+`100644` Python module under `modules/` and explicitly excludes developer/runtime/core/authority,
+entrypoint/native/tools/tests/build safety surfaces. Even a manually constructed self-hashed
+request is revalidated against this profile before a manifest can be produced.
+
+The builder does not accept manifest authority fields from model output. It constructs the
+existing `DeveloperTaskManifest` with:
+
+```text
+origin          manual
+source_ref      dtr-proposal:<trusted request_id>
+source_sha256   SHA256(exact raw response bytes)
+patch_file      changes.patch
+patch_sha256    SHA256(exact patch_text UTF-8 bytes)
+allowed_files   exact trusted singleton target
+checks          git_diff_check -> py_compile(changed_python_files) -> pipeline(check)
+install_policy  manual_confirmation
+```
+
+The unchanged `validate_developer_task_manifest` remains the final schema/policy validator.
+The required final `pipeline(check)` is retained once and last even though DTR-A itself does not
+execute it. Successful intake returns only `PROPOSAL_BOUND_NOT_AUTHORIZED` with
+`authority_granted=false`, `runtime_authorized=false` and `promotion_authorized=false`.
+It creates no files, workspace, token/capability or Sandbox admission and does not parse/apply or
+execute the patch.
+
+Exact candidate scope:
+
+```text
+ADD    modules/developer/developer_task_proposal_contract.py
+ADD    modules/developer/developer_task_proposal_intake.py
+ADD    tools/eval_developer_task_proposal_intake.py
+MODIFY tools/eval_package_boundaries.py
+MODIFY tools/pipeline.py
+MODIFY docs/architecture/SKYNETVS_ARCHITECTURE_ROADMAP_V1.md
+MODIFY docs/architecture/SKYNETVS_CURRENT_STATE.md
+```
+
+3 ADD + 4 MODIFY, 0 DELETE. Existing `developer_task_contract.py`, validator,
+preflight/workspace/apply/static APIs, `main.py`, HWA02 and native code remain unchanged.
+
+Portable candidate gates prepared in C02 #85:
+
+```text
+DTR-A proposal intake evaluator       60/60 PASS; T01-T16 covered
+package boundaries                    32/32 PASS
+existing developer task contract      18/18 PASS
+targeted pipeline flow                 developer_task_proposal_intake PASS
+```
+
+The evaluator uses only in-memory fixtures/fakes and source inspection. No project/user repo
+write, Git operation, provider/network call, Sandbox, patch execution, runtime authority or
+promotion occurred. Linux results are not Windows acceptance.
+
+**Next exact action:** package these exact seven candidate files and perform a Windows
+source/offline DTR-A verification on the canonical clean checkpoint. Do not apply/stage/commit/
+push the candidate and do not start DTR-B rehearsal execution before that evidence is reviewed.

@@ -100,6 +100,7 @@ def available_flows() -> dict[str, list[Step]]:
             Step("Evaluate HWA02-B1 timer action runtime", _python_cmd("tools/eval_timer_action_runtime.py")),
             Step("Evaluate HWA02-B2 volume action runtime", _python_cmd("tools/eval_volume_action_runtime.py")),
             Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
+            Step("Evaluate developer task proposal intake", _python_cmd("tools/eval_developer_task_proposal_intake.py")),
             Step("Evaluate developer task repository preflight", _python_cmd("tools/eval_developer_task_preflight.py")),
             Step("Evaluate developer task patch integrity preflight", _python_cmd("tools/eval_developer_task_patch_integrity.py")),
             Step("Evaluate developer task isolated patch index preflight", _python_cmd("tools/eval_developer_task_patch_index.py")),
@@ -364,6 +365,11 @@ def available_flows() -> dict[str, list[Step]]:
         "developer_task_contract": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
             Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
+        ],
+        "developer_task_proposal_intake": [
+            Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
+            Step("Evaluate developer task contract", _python_cmd("tools/eval_developer_task_contract.py")),
+            Step("Evaluate developer task proposal intake", _python_cmd("tools/eval_developer_task_proposal_intake.py")),
         ],
         "developer_task_preflight": [
             Step("Evaluate package boundaries", _python_cmd("tools/eval_package_boundaries.py")),
@@ -918,6 +924,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  runtime_service_health  Run runtime service health integration evals", log_file)
     _emit("  runtime_architecture_audit  Run final runtime ownership and fault-injection audit", log_file)
     _emit("  developer_task_contract  Validate the safe developer task manifest contract", log_file)
+    _emit("  developer_task_proposal_intake  Validate DTR-A pure model proposal intake and manifest binding", log_file)
     _emit("  developer_task_preflight  Validate developer task preflight safety gates", log_file)
     _emit("  package_boundaries  Validate production package layout boundaries", log_file)
     _emit("  scm01_host_worker  Validate SCM01 host worker source/fake contract", log_file)
