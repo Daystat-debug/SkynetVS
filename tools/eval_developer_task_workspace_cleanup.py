@@ -755,6 +755,94 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temp_dir:
         _, _, parent, manifest, preflight, workspace_report = _prepare_workspace(Path(temp_dir))
+        workspace_root = Path(workspace_report.workspace_root)
+        victim = next(
+            path
+            for path in workspace_root.rglob("*")
+            if path.is_file() and path.name != cleanup_fs.WORKSPACE_MARKER_NAME
+        )
+        original_rmtree = cleanup_fs.shutil.rmtree
+        calls = 0
+
+        def descendant_missing_once(*args: Any, **kwargs: Any) -> None:
+            nonlocal calls
+            calls += 1
+
+            if calls == 1:
+                victim.unlink()
+                raise FileNotFoundError("forced descendant disappearance")
+
+            original_rmtree(*args, **kwargs)
+
+        with (
+            patch.object(cleanup_fs.shutil, "rmtree", side_effect=descendant_missing_once),
+            patch.object(cleanup_fs.time, "sleep", return_value=None),
+        ):
+            report = _cleanup(manifest, preflight, workspace_report, parent)
+
+        check(
+            "DESCENDANT FILENOTFOUND RETRIES INSTEAD OF FALSE REMOVAL",
+            {
+                "ok": report.ok,
+                "issue_codes": list(report.issue_codes),
+                "attempts": report.attempts,
+                "workspace_absent": not workspace_root.exists(),
+            },
+            {
+                "ok": True,
+                "issue_codes": [],
+                "attempts": 2,
+                "workspace_absent": True,
+            },
+        )
+
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temp_dir:
+        _, _, parent, manifest, preflight, workspace_report = _prepare_workspace(Path(temp_dir))
+        workspace_root = Path(workspace_report.workspace_root)
+
+        with (
+            patch.object(
+                cleanup_fs.shutil,
+                "rmtree",
+                side_effect=FileNotFoundError("forced persistent descendant disappearance"),
+            ),
+            patch.object(cleanup_fs.time, "sleep", return_value=None),
+        ):
+            report = _cleanup(manifest, preflight, workspace_report, parent)
+
+        check(
+            "PERSISTENT DESCENDANT FILENOTFOUND FAILS CLOSED",
+            {
+                "ok": report.ok,
+                "issue_codes": list(report.issue_codes),
+                "attempts": report.attempts,
+                "workspace_present": workspace_root.exists(),
+            },
+            {
+                "ok": False,
+                "issue_codes": ["workspace_cleanup_failed"],
+                "attempts": 5,
+                "workspace_present": True,
+            },
+        )
+
+    with patch.object(cleanup_fs.os, "name", "nt"):
+        check(
+            "WINDOWS RMTREE TARGET USES EXTENDED PATH",
+            {
+                "drive": cleanup_fs._rmtree_target_path(Path(r"C:\Users\User\workspace")),
+                "unc": cleanup_fs._rmtree_target_path(Path(r"\\server\share\workspace")),
+                "already_extended": cleanup_fs._rmtree_target_path(Path(r"\\?\C:\workspace")),
+            },
+            {
+                "drive": r"\\?\C:\Users\User\workspace",
+                "unc": r"\\?\UNC\server\share\workspace",
+                "already_extended": r"\\?\C:\workspace",
+            },
+        )
+
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temp_dir:
+        _, _, parent, manifest, preflight, workspace_report = _prepare_workspace(Path(temp_dir))
 
         with (
             patch.object(cleanup_fs.shutil, "rmtree", side_effect=PermissionError("permanent lock")),

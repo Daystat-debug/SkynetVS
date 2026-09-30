@@ -416,6 +416,18 @@ def _rmtree_windows_readonly_handler(
         return
 
 
+def _rmtree_target_path(workspace_root: Path) -> str:
+    value = os.fspath(workspace_root)
+
+    if os.name != "nt" or value.startswith("\\\\?\\"):
+        return value
+
+    if value.startswith("\\\\"):
+        return "\\\\?\\UNC\\" + value[2:]
+
+    return "\\\\?\\" + value
+
+
 def remove_verified_workspace(
     workspace_root: Path,
     initial_metadata: os.stat_result,
@@ -467,11 +479,31 @@ def remove_verified_workspace(
 
         try:
             shutil.rmtree(
-                workspace_root,
+                _rmtree_target_path(workspace_root),
                 onerror=_rmtree_windows_readonly_handler,
             )
-        except FileNotFoundError:
-            return DeveloperTaskWorkspaceRemovalResult(True, False, attempts)
+        except FileNotFoundError as exc:
+            try:
+                remaining = os.lstat(workspace_root)
+            except FileNotFoundError:
+                return DeveloperTaskWorkspaceRemovalResult(True, False, attempts)
+            except OSError as verify_exc:
+                last_error = f"{type(verify_exc).__name__}: {verify_exc}"
+            else:
+                if not _same_directory_identity(initial_metadata, remaining):
+                    raise DeveloperTaskWorkspaceCleanupFileSystemError(
+                        "workspace_cleanup_target_changed",
+                        "Workspace cleanup target identity changed after a partial removal failure.",
+                        actual=str(workspace_root),
+                        attempts=attempts,
+                    )
+                last_error = (
+                    "FileNotFoundError escaped shutil.rmtree while the verified "
+                    f"workspace root still exists: {exc}"
+                )
+
+            if index != len(delays) - 1:
+                continue
         except OSError as exc:
             last_error = f"{type(exc).__name__}: {exc}"
 
