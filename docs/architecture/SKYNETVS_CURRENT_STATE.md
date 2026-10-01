@@ -4751,3 +4751,85 @@ verified cleanup capability before a successful terminal result.
 
 Candidate scope: 4 ADD + 4 MODIFY = 8 paths. Existing DTR-A, preflight, workspace, patch-apply,
 static-check and cleanup production modules remain unchanged.
+
+
+## C03M021 — proposed V1C6 guest-source profile and versioned-check semantics
+
+This append-only design record follows accepted DTR-B R02 without modifying its
+request, manifest, once marker, evidence, or terminal static result. It records a
+proposed non-executing design, not runtime admission. Existing V1C3/V1C4/V1C5/V1C6
+prerequisites and closed native/public entrypoints are unchanged.
+
+Baseline for this record:
+HEAD bb764434a0b1644f2e0d789dae06fccdd8f85c45
+tree 28e4edb214f28e551c1a364dff3bc52dc214656b.
+
+Design descriptor:
+profile_id skynetvs-v1c6-guest-source-check-v1
+flow check_guest_source_v1
+revision 1
+canonical UTF-8 GUEST_PROFILE.json, sorted keys, compact JSON plus one LF:
+bytes 55390
+SHA256 94ad59f6812b8ebd74bd7718f5ff37f0fbee85383f9198a2a22e8f527d7caa6b.
+
+The source `check` topology has 103 steps. The explicit proposed profile selects
+101 in the original relative order and excludes only source ordinals 31 and 93:
+- 31 tools/eval_audio_control_windows.py: real default audio endpoint smoke;
+  guest hardware is not evidence about the original source host.
+- 93 tools/eval_developer_task_execution_dependency_acquisition.py: uses
+  PROJECT_ROOT Git HEAD and profile/acquisition validation. The initial source
+  snapshot profile carries no original .git; no fabricated HEAD or live .git mapping.
+
+All other entries are required IN DESIGN, not runtime-admitted or executed.
+The descriptor distinguishes historical Windows physical bytes from Git blob bytes.
+All 103 entrypoint blob OIDs were matched against the accepted R02 index: 88 use
+CRLF-to-LF material and 15 already match physical bytes. Guest runtime pins use
+Git blob bytes, never a Windows physical hash. Review-origin bb764434 is historical;
+new task base commit/tree bind separately, with protected entrypoint/topology
+revalidation and no implicit descendant authorization. Candidate patches may not
+modify protected selected entrypoints/helpers.
+The descriptor pins every selected source entrypoint/argv/identity; it is not a
+wildcard over future check versions. Any failed, missing, skipped, extra, duplicate,
+reordered, timed-out or unfinished step prevents profile success. No wrapper may
+change test expectations, inject new mocks or silently drop steps to obtain PASS.
+Existing baseline-owned fake tests do not grant real device, process, network,
+SCM, native worker or outer Sandbox authority.
+
+V1 remains unchanged and requires the original full pipeline(check), once and last.
+R02's pending V1 check is NOT satisfied by this 101-step profile. R01 and R02 remain
+consumed historical results; no JSON-to-capability reconstruction or resumed session.
+
+Proposed DTR_ONE_PYTHON_MODIFY_GUEST_SOURCE_V2 uses schema 2 and a distinct required
+final pipeline(check_guest_source_v1) bound to the descriptor hash. It is unsupported
+by current V1 code. No field-dropping, fallback or aliasing guest flow as `check`.
+Request binds profile/base/preimage; candidate tree binds at preflight; accepted
+runtime/dependency/Git/environment inputs bind the fresh execution plan. No circular
+or guessed bindings. The future composition obtains its own live typed snapshot
+before cleanup of its own session.
+
+Environment: clean guest-owned HOME/TEMP/log slots; no inherited host environment,
+PYTHONPATH, credentials, .venv, .env or source .git. Referenced source/text/data
+fixtures are exact inputs; .env.example is text only. NLU trained model is explicitly
+ABSENT (rules-only profile); this is not trained-model coverage or a predicted
+baseline pass. No user logs/reminders/model/cache is copied. Optional Whisper and
+training remain disabled. The fixed fake Whisper subprocess test is not permission
+for faster-whisper acquisition or execution.
+
+Use only previously approved CPython lineage and separately accepted V1C3A/B base
+dependency bundle / V1C3C portable Git. No runtime installation or host fallback.
+Synthetic Git and fixed Python-child needs are bound to a separate reviewed V1C4
+process/time/memory/output envelope before execution. Old compile/AST policy and
+its process limit stay unchanged. One profile check uses one fresh lease/snapshot/
+Sandbox, sequential protected steps, no arbitrary caller shell or argv.
+
+Profile completion is scoped evidence, not full V1 check equivalence:
+legacy_full_check_equivalent=false; excluded_legacy_ordinals=[31,93].
+Only future V1C7 may aggregate all mandatory V2 gates into V2 completion. A profile
+report alone never makes ready_to_promote or promotion_authorized true. Hardware,
+source-toolchain and no-model coverage gaps remain visible to impact/manual review.
+Controller signatures bind observed launch/exit/inputs/transport, not a proof of
+all semantic assertions inside a worker that imports untrusted candidate code.
+
+This record does not add runtime authority, download dependencies, run Sandbox,
+launch native code, create a new RC number, or reopen any consumed acceptance.
+Source candidate status: PREPARED_NOT_APPLIED. Production execution code unchanged.
