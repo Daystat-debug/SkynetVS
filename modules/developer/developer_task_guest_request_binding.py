@@ -367,7 +367,6 @@ def parse_developer_task_guest_request_binding_v2(
 def _non_authorizing_fields() -> dict[str, Any]:
     return {
         "validation_scope": "V2_REQUEST_SEMANTIC_BINDING_DATA_ONLY",
-        "request_binding_validated": True,
         "task_validated": False,
         "proposal_validated": False,
         "manifest_validated": False,
@@ -411,6 +410,7 @@ class DeveloperTaskGuestRequestBindingValidation:
                 self.binding.profile_sha256 if self.binding is not None else ""
             ),
             **_non_authorizing_fields(),
+            "request_binding_validated": self.ok,
         }
 
 
