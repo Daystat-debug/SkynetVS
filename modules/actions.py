@@ -80,11 +80,13 @@ class Actions:
         reminder_service: Optional[ReminderService] = None,
         event_func: Optional[Callable[[str, Dict[str, Any]], None]] = None,
         runtime_health_provider: Optional[Callable[[], RuntimeServiceHealthReport]] = None,
+        developer_task_ui_launch: Optional[Callable[[], str]] = None,
     ):
         self._audio = audio
         self._audio_output = audio_output
         self._event_func = event_func
         self._runtime_health_provider = runtime_health_provider
+        self._developer_task_ui_launch = developer_task_ui_launch
         self._screenshot_service = screenshot_service
         self._weather_service = weather_service
         self._volume_step = int(volume_step)
@@ -106,6 +108,7 @@ class Actions:
             "SET_VOLUME": self._exec_set_volume,
 
             "OPEN_APP": self._exec_open_app,
+            "OPEN_DEVELOPER_TASK": self._exec_open_developer_task,
             "OPEN_URL": self._exec_open_url,
             "SEARCH_WEB": self._exec_search_web,
             "SEARCH_YOUTUBE": self._exec_search_youtube,
@@ -145,6 +148,7 @@ class Actions:
             "AUDIO_OUTPUT_SPEAKERS": self._reply_audio_output_speakers,
             "SCREENSHOT": self._reply_screenshot,
             "OPEN_APP": self._reply_open_app,
+            "OPEN_DEVELOPER_TASK": self._reply_open_developer_task,
             "OPEN_URL": self._reply_open_url,
             "SEARCH_WEB": self._reply_search_web,
             "SEARCH_YOUTUBE": self._reply_search_youtube,
@@ -222,6 +226,31 @@ class Actions:
 
     def _reply_screenshot(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
         return meta.get("say") or "Делаю скриншот."
+
+    def _reply_open_developer_task(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
+        # The utterance is learned by the existing NLU model; the fixed,
+        # non-privileged capability is vetted once, never a voice-provided path.
+        _ = meta, slots
+        return "Открываю режим разработки."
+
+    def _exec_open_developer_task(self, slots: Dict[str, Any]) -> None:
+        _ = slots
+        if self._developer_task_ui_launch is None:
+            raise ActionExecutionError(
+                intent="OPEN_DEVELOPER_TASK", operation="open_developer_task_ui",
+                detail="DEVELOPER_UI_LAUNCH_NOT_CONFIGURED",
+                error_code="developer_ui_unavailable",
+                user_message="Режим разработки пока недоступен.",
+            )
+        try:
+            self._developer_task_ui_launch()
+        except Exception as exc:
+            raise ActionExecutionError(
+                intent="OPEN_DEVELOPER_TASK", operation="open_developer_task_ui",
+                detail=f"{type(exc).__name__}: {exc}",
+                error_code="developer_ui_launch_refused",
+                user_message="Не удалось открыть режим разработки. Проверь журнал запуска.",
+            ) from exc
 
     def _reply_open_app(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
         return meta.get("say") or "..."

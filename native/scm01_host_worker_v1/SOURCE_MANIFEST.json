@@ -37,9 +37,9 @@
       "sha256": "1a143ae333f32e0211ae41b72f551a6296587298154a37a96e4018d4132579de"
     },
     {
-      "bytes": 8091,
+      "bytes": 8872,
       "path": "controller.py",
-      "sha256": "0a628ddb882bb4e2bd893d98f99aaedb3b6aa87ba58a74b2ee4d63382a9e7b64"
+      "sha256": "5bd9aca524ab39fbdcfa85ba40c72aacd884ab1047e376e00426a91d7703defa"
     },
     {
       "bytes": 7638,
@@ -107,9 +107,9 @@
       "sha256": "02ebe50b7b0921f778a968587864abd6576b49be4aaf49aa0edeb5410b29ed69"
     },
     {
-      "bytes": 16939,
+      "bytes": 18097,
       "path": "windows_owner.py",
-      "sha256": "6b6360eeb8ef55516a1b95aebf44b059c31f759d3377e72c60d5bb96098bf68b"
+      "sha256": "6e8f92f57fa45bbfcd4102ebdb9cdbcaf3d773eaf1095206c4e59886134f21de"
     },
     {
       "bytes": 1709,
@@ -122,5 +122,5 @@
   "production_test_methods": 114,
   "source_test_portability_revision": "V2",
   "target": "native/scm01_host_worker_v1",
-  "v1_windows_production_bytes_preserved": true
+  "v1_windows_production_bytes_preserved": false
 }

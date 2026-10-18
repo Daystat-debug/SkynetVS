@@ -28,6 +28,15 @@ def _report_value(value):
 
 def _execute_with_owner(owner,journal,clock):
     """Algorithm shared with fake-port tests; returns observations, never a capability."""
+    try:
+        return _execute_owner_body(owner,journal,clock)
+    finally:
+        # Covers setup, failure recording and final diagnostic serialization too.
+        owner._retain_unresolved()
+
+
+def _execute_owner_body(owner,journal,clock):
+    """Existing composition body, enclosed by the owner retention boundary above."""
     plan=owner.plan
     started=clock();deadline=started+TOTAL_NS
     life=None
@@ -87,10 +96,16 @@ def _execute_with_owner(owner,journal,clock):
     except BaseException as exc:
         code=type(exc).__name__+':'+str(exc)[:180]
         result['errors'].append(code)
-        failed_at=clock()
-        if life is not None and life.phase not in ('FAILED','CLOSED'):
-            life.fail(code, max(life.last_ns,failed_at))
+        result['result']='HWA01_UNKNOWN'
         try:
+            failed_at=clock()
+            need(type(failed_at) is int and failed_at>=owner.last_ns and
+                 (life is None or failed_at>=life.last_ns),
+                 'failure_clock_regression_or_type')
+            # Carry this valid observation into cleanup's first monotonic check.
+            owner.last_ns=failed_at
+            if life is not None and life.phase not in ('FAILED','CLOSED'):
+                life.fail(code,failed_at)
             cleanup=owner.cleanup(failed_at+CLEANUP_NS)
             result['cleanup']=cleanup
             if life is not None and life.phase=='FAILED':
@@ -103,6 +118,8 @@ def _execute_with_owner(owner,journal,clock):
         try:journal.record('FAILED',{'result':result['result'],'errors':result['errors']})
         except BaseException as je:
             result['errors'].append('journal:'+type(je).__name__+':'+str(je)[:180])
+    # Reflect retention in diagnostics; the outer finally also covers their failure.
+    owner._retain_unresolved()
     result['create_attempted']=owner.create_attempted
     result['resume_attempted']=owner.resume_attempted
     result['forced_cleanup']=owner.forced

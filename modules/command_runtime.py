@@ -29,6 +29,7 @@ CancelTimerFunc = Callable[[], None]
 
 
 PRE_SPEECH_EXECUTE_INTENTS = {
+    "OPEN_DEVELOPER_TASK",
     "SET_TIMER",
     "CANCEL_TIMER",
     "CREATE_REMINDER",

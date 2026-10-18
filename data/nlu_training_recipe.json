@@ -1,0 +1,15 @@
+{
+  "schema": "SKYNETVS_NLU_FIT_WEIGHTS_V1",
+  "weights": [
+    {
+      "fit_repeats": 3,
+      "intent": "GREET",
+      "normalized_text_sha256": "c88eb878a5ccce277944a9d26811a58a0e56418b07532170badf3ad7042b34e6"
+    },
+    {
+      "intent": "STOP_LISTEN",
+      "normalized_text_sha256": "bc36feaf1450bb806d92d43aad1ebe020f834e9c434bde2bf85bb0b8882da1d8",
+      "fit_repeats": 4
+    }
+  ]
+}

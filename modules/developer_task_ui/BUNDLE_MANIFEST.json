@@ -1,0 +1,77 @@
+{
+  "files": {
+    "__init__.py": {
+      "bytes": 83,
+      "sha256": "bc386317836c51d23d0774b3f758e1059e998b6d1225ee428ee6a51ee4b39bbe"
+    },
+    "app/__init__.py": {
+      "bytes": 82,
+      "sha256": "fc9b6015ab2a6a750a99851bbd6b2ea14fdeec3f8b5869235b85b786caff1dfe"
+    },
+    "app/clipboard.py": {
+      "bytes": 5692,
+      "sha256": "5ed5b0f11410d7c6858820ace85ea1e5b5e15ad6618d7c31cd5a9bd2a524c140"
+    },
+    "app/core.py": {
+      "bytes": 16049,
+      "sha256": "fe1f11e0e26b34f7321a089195ed1f74afc4690992dc724a5352799edf7f5014"
+    },
+    "app/dtrb_receipt.py": {
+      "bytes": 10605,
+      "sha256": "a8136e32fc06618efb94ed2fd095581465b4442d9cecaf1a711fbe591be2526f"
+    },
+    "app/git_source.py": {
+      "bytes": 9461,
+      "sha256": "1bbddff552d21f683c39af7c49cdd880200138fa7462a054d8e27cff3dfdf7c5"
+    },
+    "app/patch_preview.py": {
+      "bytes": 10263,
+      "sha256": "1237dcb394efb356d405820e547a417d35d2dcf0420a13f4cf0da5021b3fa7ce"
+    },
+    "app/ui.py": {
+      "bytes": 34772,
+      "sha256": "056ea342b4a8206a307d596cb88923aafbe8e731b449563c90c117ebbc4f33a6"
+    },
+    "launch.py": {
+      "bytes": 5575,
+      "sha256": "4a5d744493960d277f392843a31fb4c94f40aa238f5540036f335472fbf296ed"
+    },
+    "reference/DTR_Request.json": {
+      "bytes": 36497,
+      "sha256": "a8e98765886619919c42f1edae5f3820faf0b944e18ce37dff58cf29d5bd703b"
+    },
+    "reference/DTR_Response.json": {
+      "bytes": 2031,
+      "sha256": "8559694d51ebffff29c4791073011759f052f25a16fcd2de8f223f8705b5643b"
+    },
+    "reference/M074_DTRB_Evidence.zip": {
+      "bytes": 43071,
+      "sha256": "1ce566fe3c12a233c6c029b3cf1331d1a798ec6f37bc3452d815d37cf5063d13"
+    },
+    "vendor/modules/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vendor/modules/developer/__init__.py": {
+      "bytes": 36,
+      "sha256": "94aa18834fc9628f5c93ea965d640d4d75898246854714d6d5885a028d9d9d1a"
+    },
+    "vendor/modules/developer/developer_task_contract.py": {
+      "bytes": 4057,
+      "sha256": "1ce09e2073d3ba80c80f090155fe8c163c4b45b5521efac7b31f002e97c3be10"
+    },
+    "vendor/modules/developer/developer_task_proposal_contract.py": {
+      "bytes": 7158,
+      "sha256": "ca486d44b3d469699466c079818852e829558574adce97e3bae725eae349660e"
+    },
+    "vendor/modules/developer/developer_task_proposal_intake.py": {
+      "bytes": 27082,
+      "sha256": "c8e4382582f6e87da172458dabd7b38f8aa9c698009e7fa38e86c4921f59acdb"
+    },
+    "vendor/modules/developer/developer_task_validator.py": {
+      "bytes": 22926,
+      "sha256": "ae1965b156144ffe9ff11e706a7d0fef12b68226d044ffd52bafe257a8f7b6b1"
+    }
+  },
+  "schema": "SKYNETVS_M092_UI_BUNDLE_V1"
+}

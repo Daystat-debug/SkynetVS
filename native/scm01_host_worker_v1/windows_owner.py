@@ -36,9 +36,22 @@ class WindowsOwner:
         self.stdout_eof=False
         self.stderr_eof=False
         self.cleanup_consumed=False
+        self._unresolved_retained=False
         self._claimed_lease=None
         self.retirement_observed=False
         self.last_ns=clock()
+
+    def _retain_unresolved(self):
+        """Keep incomplete native ownership alive without calling any provider.
+
+        Only this owner's confirmed terminal phases avoid retention. Retention
+        is sticky: it never authorizes retry or claims that cleanup completed.
+        """
+        if self._unresolved_retained or self.phase in ('RELEASED','FAILED_RETIRED'):
+            return
+        _QUARANTINED.append(self)
+        self._unresolved_retained=True
+        self.phase='UNKNOWN'
 
     def now(self, deadline):
         n=self.clock()
@@ -306,6 +319,14 @@ class WindowsOwner:
         """One forced-retirement attempt at most. Never upgrades failed work to success."""
         need(not self.cleanup_consumed,'cleanup_once')
         self.cleanup_consumed=True
+        try:
+            return self._cleanup_consumed_attempt(deadline)
+        finally:
+            # Includes clock/pause, handle adoption and result-building failures.
+            self._retain_unresolved()
+
+    def _cleanup_consumed_attempt(self,deadline):
+        """Body of the single cleanup call; entered only by cleanup above."""
         self._adopt_process_handles()
         errors=[]
         def attempt(fn):
@@ -324,6 +345,7 @@ class WindowsOwner:
             attempt(lambda op=op:self.api.cancel_io(op))
         clock_valid=True
         last=self.clock()
+        need(type(last) is int and last>=self.last_ns,'cleanup_clock_regression_or_type')
         while last<deadline:
             for op in list(self.api.operations):
                 if op.disposed:continue
@@ -348,11 +370,16 @@ class WindowsOwner:
             # Job may be closed to request kill-on-close, but process/I/O buffers stay held.
             if any(r.name=='job' and r.state=='OPEN' for r in self.resources.items):
                 attempt(lambda:self.resources.close_one('job'))
-            _QUARANTINED.append(self)
-        complete=(clock_valid and self.clock()<deadline and safe_to_release and
-                  self.resources.all_closed() and not errors)
+            self._retain_unresolved()
+        complete=False
+        if clock_valid:
+            finished=self.clock()
+            complete=(type(finished) is int and last<=finished<deadline and
+                      safe_to_release and self.resources.all_closed() and not errors and
+                      not self._unresolved_retained)
         self.phase='FAILED_RETIRED' if complete else 'UNKNOWN'
+        self._retain_unresolved()
         return dict(no_child_created=no_child,child_exited=exited,job_empty=empty,
                     io_quiescent=quiet,handles_released=self.resources.all_closed(),
                     forced=self.forced,errors=errors,cleanup_confirmed=complete,
-                    quarantined=not safe_to_release)
+                    quarantined=self._unresolved_retained)

@@ -1,0 +1,8 @@
+{
+  "kind": "DTR_PATCH_PROPOSAL_V1",
+  "schema_version": 1,
+  "request_id": "req:ui:effb494394d94f02bb8acaa3895bd716",
+  "request_fingerprint": "78c42397c92a10c46d34710b25a166dd72f2d69265917d739e1adc41a73ca080",
+  "patch_text": "diff --git a/modules/tts_edge.py b/modules/tts_edge.py\n--- a/modules/tts_edge.py\n+++ b/modules/tts_edge.py\n@@ -1,6 +1,7 @@\n from __future__ import annotations\n \n import asyncio\n+import math\n import os\n import platform\n import subprocess\n@@ -166,7 +167,12 @@\n             ducking_enable = os.getenv(\"AUDIO_DUCKING_ENABLE\", \"1\").strip() == \"1\"\n \n         if ducking_level is None:\n-            ducking_level = float(os.getenv(\"AUDIO_DUCKING_LEVEL\", \"0.25\"))\n+            try:\n+                env_level = float(os.getenv(\"AUDIO_DUCKING_LEVEL\", \"0.25\"))\n+            except ValueError:\n+                ducking_level = 0.25\n+            else:\n+                ducking_level = env_level if math.isfinite(env_level) else 0.25\n \n         self._ducker = _AudioDucker(\n             enabled=ducking_enable,\n",
+  "explanation": "В modules/tts_edge.py обработка значения AUDIO_DUCKING_LEVEL теперь использует 0.25, если строка пустая или не переводится в число; также отклоняет NaN и бесконечность как некорректные уровни. Для конечных числовых значений поведение не меняется, ограничение 0..1 по-прежнему выполняет _AudioDucker. Параметр ducking_level, переданный явно, и механизмы синтеза, воспроизведения, отмены и телеметрии не изменяются. Предложение не применялось к рабочему проекту, изменённый код не выполнялся; git_diff_check, py_compile, pipeline и проверка поведения не проводились."
+}

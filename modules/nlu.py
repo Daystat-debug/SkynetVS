@@ -23,6 +23,8 @@ from modules.duration_parser import (
 
 import joblib
 
+from modules.learning.voice_learning_phrase_lookup import match_approved_voice_phrase
+
 from modules.entity_registry import (
     APP_ALIASES as _APP_SYNS,
     APP_TITLES as _APP_TITLES,
@@ -707,6 +709,21 @@ def predict_candidates(
             }
         )
 
+    if include_rules:
+        learned_intent = match_approved_voice_phrase(t)
+        if learned_intent and not any(
+            row.get('source') == 'rule' and row.get('intent') is not None
+            for row in rows
+        ):
+            rows.append({
+                "intent": learned_intent,
+                "confidence": 1.0,
+                "source": "learned_exact",
+                "rule": "user_confirmed_voice_example",
+                "slots": _extract_slots_for_intent(learned_intent, t),
+                "accepted_by_threshold": True,
+            })
+
     pipe = _load_model()
     if not pipe:
         return rows[:limit]
@@ -834,6 +851,19 @@ def predict(text: str) -> Dict[str, Any]:
         slots = dict(set_volume_meta.get("slots") or {})
         set_volume_meta["say"] = _pick_response("SET_VOLUME", slots)
         return set_volume_meta
+
+    # M088: recall a user-approved phrase from the EXISTING label inbox.
+    # Built-in rules, reminders, and numeric commands take precedence.
+    learned_intent = match_approved_voice_phrase(t)
+    if learned_intent:
+        slots = _extract_slots_for_intent(learned_intent, t)
+        return {
+            "intent": learned_intent,
+            "confidence": 1.0,
+            "slots": slots,
+            "say": _pick_response(learned_intent, slots),
+            "_rule": "user_confirmed_voice_example",
+        }
 
     pipe = _load_model()
     if not pipe:

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import time
+import json
 import queue
 import threading
 import warnings
@@ -17,6 +18,7 @@ from modules.audio_control import AudioControl
 from modules.audio_output import AudioOutputControl
 from modules.desktop.screenshot import ScreenshotService
 from modules.actions import Actions
+from modules.developer_task_ui_launcher import DeveloperTaskUiLauncher
 from modules.router import Router
 from modules.core.logger import JsonlLogger, LoggerConfig
 from modules.core.config import Settings
@@ -30,6 +32,14 @@ from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
 from modules.reply_builder import build_reply_text
 from modules.phrase_event_processor import PhraseEventProcessor
+from modules.confirmation_runtime import (
+    ConfirmationRuntimeResult,
+    handle_pending_confirmation_phrase,
+)
+from modules.learning.confirmed_voice_learning import ConfirmedVoiceLearning
+from modules.learning.voice_learning_confirmation_bridge import VoiceLearningConfirmationBridge
+from modules.learning.voice_learning_entry_port import VoiceLearningEntryPort
+from modules.learning.voice_learning_labeled_store import ConfirmedLearningOutbox
 from modules.command_processor import CommandProcessor
 from modules.confirmation import (
     is_confirmation_no,
@@ -312,6 +322,8 @@ def main():
         )
         return report
 
+    developer_task_ui_launcher = DeveloperTaskUiLauncher()
+
     actions = Actions(
         audio=audio,
         volume_step=SETTINGS.volume_step,
@@ -324,6 +336,7 @@ def main():
         reminder_service=reminder_service,
         event_func=logger.event,
         runtime_health_provider=lambda: collect_and_publish_runtime_health(print_report=False),
+        developer_task_ui_launch=developer_task_ui_launcher.open,
     )
 
     timer_start_handler = actions._exec_set_timer
@@ -477,6 +490,49 @@ def main():
 
         return result.meta
 
+    # M084 preview: a single built-in control enters teaching of an existing,
+    # harmless GREET intent. No new NLU model, action or project file write.
+    # The fixed control phrase is not an application-command hardcode.
+    def report_learning_event(event: Any) -> None:
+        nonlocal last_tts_end
+        if event.message:
+            last_tts_end = say(stt, tts, event.message)
+
+    learning_confirmation_hook = handle_pending_confirmation_phrase
+    try:
+        learning_data = json.loads(
+            (Path(__file__).resolve().parent / "data" / "intents.json").read_text(encoding="utf-8")
+        )
+        learning_dialogue = ConfirmedVoiceLearning(
+            data=learning_data,
+            operator_allowed_intents=frozenset({"GREET"}),
+        )
+        learning_outbox = ConfirmedLearningOutbox(
+            data_dir=Path(__file__).resolve().parent / "data",
+            allowed_intents=frozenset({"GREET"}),
+        )
+        learning_bridge = VoiceLearningConfirmationBridge(
+            dialogue=learning_dialogue,
+            persist_confirmed=learning_outbox,
+            ordinary_confirmation=handle_pending_confirmation_phrase,
+            mode_manager=mode_manager,
+            result_type=ConfirmationRuntimeResult,
+            has_hotword=has_hotword,
+            strip_hotword=strip_hotword,
+            report_event=report_learning_event,
+        )
+        learning_confirmation_hook = VoiceLearningEntryPort(
+            bridge=learning_bridge,
+            has_hotword=has_hotword,
+            strip_hotword=strip_hotword,
+            operator_start_intent="GREET",
+            predict_nlu_intent=predict,
+            result_type=ConfirmationRuntimeResult,
+            report_start=report_learning_event,
+        )
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        print(f"[LEARNING] preview disabled: {type(exc).__name__}")
+
     phrase_event_processor = PhraseEventProcessor(
         tts=tts,
         stt=stt,
@@ -509,6 +565,7 @@ def main():
         router=router,
         print_func=print,
         time_func=time.time,
+        pending_confirmation_func=learning_confirmation_hook,
     )
 
     def handle_cmd_timeout_event(evt: dict) -> None:
