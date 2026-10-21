@@ -22,6 +22,7 @@ from .own_analyzer import (SCHEMA as OWN_SCHEMA, analyze_repository, format_own_
 from .proposals import propose_from_finding
 from .approved_patch import verify_candidate, apply_approved, rollback_approved, _changes_root
 from .context_search import search_repository, format_context, receipt_without_source
+from .context_bridge import correlate, format_summary
 
 
 class QuietTk(tk.Tk):
@@ -51,6 +52,7 @@ class DeveloperWindow:
         self.ai_apply_checked = None
         self.ai_last_receipt = None
         self.ai_context_text = None  # only memory; never save source excerpts in evidence
+        self.ai_bridge_summary = None  # privacy-safe text; never authorizes proposal/apply
         root.title("SkynetVS — AI-разработка")
         root.geometry(f"{min(1130, root.winfo_screenwidth() - 60)}x{min(780, root.winfo_screenheight() - 100)}")
         root.minsize(790, 560)
@@ -287,8 +289,9 @@ class DeveloperWindow:
                                                  command=self.copy_context)
         self.ai_context_copy_button.pack(side="left", padx=(6, 0))
         self.ai_context_copy_button.state(["disabled"])
-        ttk.Label(contextbar, text="Только чтение · 8 КБ · не создает diff",
-                  foreground="#365573").pack(side="left", padx=(12, 0))
+        self.ai_bridge_button = ttk.Button(contextbar, text="Поиск + AST (только чтение)",
+                                           command=self.start_context_ast_bridge)
+        self.ai_bridge_button.pack(side="left", padx=(6, 0))
 
         feedbackbar = ttk.Frame(frame)
         feedbackbar.pack(fill="x", pady=(1, 4))
@@ -925,6 +928,7 @@ class DeveloperWindow:
         """Explicit read-only opt-in; never enables any code-apply controls."""
         if self.ai_busy:
             return
+        self.ai_bridge_summary = None
         goal = self.ai_goal.get("1.0", "end-1c").strip()
         self.ai_busy = True
         self.ai_report = None
@@ -952,6 +956,51 @@ class DeveloperWindow:
         threading.Thread(target=worker, daemon=True).start()
         self.root.after(150, self.poll_ai_review)
 
+    def start_context_ast_bridge(self):
+        """One explicit read-only click: search and AST report for the SAME goal and HEAD.
+
+        Output cannot become an approved patch or enable any apply controls.
+        """
+        if self.ai_busy:
+            return
+        if self.ai_backend.get() != "own":
+            self.ai_info.set("Поиск + AST доступен только для собственного анализатора.")
+            return
+        goal = self.ai_goal.get("1.0", "end-1c").strip()
+        self.ai_busy = True
+        self.ai_report = None
+        self.ai_proposal = None
+        self.ai_proposal_finding_id = None
+        self.ai_apply_checked = None
+        self.ai_context_text = None
+        self.ai_bridge_summary = None
+        self._populate_own_findings({})
+        self.ai_proposal_button.state(["disabled"])
+        self.ai_verify_button.state(["disabled"])
+        self.ai_apply_button.state(["disabled"])
+        self.ai_proposal_copy_button.state(["disabled"])
+        self.ai_context_copy_button.state(["disabled"])
+        self.ai_button.state(["disabled"])
+        self.ai_context_button.state(["disabled"])
+        self.ai_bridge_button.state(["disabled"])
+        self.ai_info.set("Сопоставляю поиск и AST по одному запросу и Git HEAD…")
+        self.set_text(self.ai_text, "Только чтение. Diff, проверка и применение отключены.")
+
+        def worker():
+            try:
+                context = search_repository(self.repository, goal,
+                    notify=lambda msg: self.ai_queue.put(("progress", msg)))
+                analysis = analyze_repository(self.repository, goal,
+                    data_directory=user_analyzer_directory(),
+                    notify=lambda msg: self.ai_queue.put(("progress", msg)))
+                relation = correlate(goal, context, analysis,
+                                     expected_analyzer_schema=OWN_SCHEMA)
+                self.ai_queue.put(("bridge", (context, relation)))
+            except Exception as exc:
+                self.ai_queue.put(("error", str(exc)))
+        threading.Thread(target=worker, daemon=True).start()
+        self.root.after(150, self.poll_ai_review)
+
     def copy_context(self):
         if not self.ai_context_text or self.ai_busy:
             self.ai_info.set("Сначала выполни поиск кода и дождись завершения.")
@@ -963,6 +1012,7 @@ class DeveloperWindow:
     def start_ai_review(self):
         if self.ai_busy:
             return
+        self.ai_bridge_summary = None
         goal = self.ai_goal.get("1.0", "end-1c").strip()
         model = self.ai_model.get().strip()
         backend = self.ai_backend.get()
@@ -1021,6 +1071,30 @@ class DeveloperWindow:
                                goal_sha256=value["goal_sha256"])
                 except Exception as exc:
                     self.ai_info.set("Не удалось оформить контекст: " + str(exc))
+            elif kind == "bridge":
+                finished = True
+                try:
+                    context, relation = value
+                    if relation["approval_status"] != "NOT_AUTHORIZED" or not relation["no_patch_or_apply"]:
+                        raise ValueError("M137_BRIDGE_NOT_READ_ONLY")
+                    folder = self.store._folder("context_ast_bridge_")
+                    self.store.write(folder, "M137_BridgeReceipt.json", json_bytes(relation))
+                    self.ai_context_text = format_context(context)  # private memory only
+                    self.ai_context_copy_button.state(["!disabled"])
+                    self.ai_bridge_summary = format_summary(relation)
+                    if relation["analysis_goal_binding"] != "MATCHED_SHA256":
+                        self.ai_bridge_summary += ("\nВНИМАНИЕ: AST-отчёт не удостоверяет хеш цели; "
+                                                   "сопоставление носит вспомогательный характер.")
+                    self.set_text(self.ai_text, self.ai_bridge_summary)
+                    self.ai_info.set("Связь поиска с AST готова, только чтение. Квитанция: " + str(folder))
+                    self.event("M137_CONTEXT_AST_BRIDGE", commit=relation["git_commit"],
+                               inside=relation["counts"]["LINE_INSIDE_SELECTED_WINDOW"],
+                               total=relation["findings_considered"],
+                               goal_sha256=relation["goal_sha256"])
+                except Exception as exc:
+                    self.ai_context_text = None
+                    self.ai_context_copy_button.state(["disabled"])
+                    self.ai_info.set("Не удалось сопоставить поиск с AST: " + str(exc))
             elif kind == "report":
                 finished = True
                 self.ai_report = value
@@ -1051,10 +1125,16 @@ class DeveloperWindow:
             self.ai_busy = False
             self.ai_button.state(["!disabled"])
             self.ai_context_button.state(["!disabled"])
+            self.ai_bridge_button.state(["!disabled"])
         elif self.ai_busy:
             self.root.after(150, self.poll_ai_review)
 
     def copy_ai_report(self):
+        if self.ai_report is None and self.ai_bridge_summary is not None:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(self.ai_bridge_summary)
+            self.ai_info.set("Сводка поиска + AST скопирована. Код не изменён.")
+            return
         if self.ai_report is None:
             self.ai_info.set("Сначала выполни анализ.")
             return

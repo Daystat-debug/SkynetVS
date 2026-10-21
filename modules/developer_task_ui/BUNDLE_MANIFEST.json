@@ -16,6 +16,10 @@
       "bytes": 5692,
       "sha256": "5ed5b0f11410d7c6858820ace85ea1e5b5e15ad6618d7c31cd5a9bd2a524c140"
     },
+    "app/context_bridge.py": {
+      "bytes": 7003,
+      "sha256": "70ed23211c9e2e0b93d672a8e9df3fe6a5164c9b3a4036ca3dd93caef2ac68f2"
+    },
     "app/context_search.py": {
       "bytes": 11699,
       "sha256": "52045ba2fd5c2ef14dbc0798e785ca535fb18b524a381200adec9c44a4080f4b"
@@ -77,8 +81,8 @@
       "sha256": "f40461fdbcde8b67809ae6845022d7d2106b5fc6e7122bbe2d973359ab36a608"
     },
     "app/ui.py": {
-      "bytes": 68207,
-      "sha256": "64b26fdc47fb27fa1dc2d00fe4679652c8e748877e677e99b2afaeaaed60e511"
+      "bytes": 73001,
+      "sha256": "88bd29da9f5afcce48732ab4b5c2347616b70dc7f497a12b92327d64e07a0b63"
     },
     "launch.py": {
       "bytes": 7153,
