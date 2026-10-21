@@ -81,12 +81,14 @@ class Actions:
         event_func: Optional[Callable[[str, Dict[str, Any]], None]] = None,
         runtime_health_provider: Optional[Callable[[], RuntimeServiceHealthReport]] = None,
         developer_task_ui_launch: Optional[Callable[[], str]] = None,
+        lifecycle_request: Optional[Callable[[str], None]] = None,
     ):
         self._audio = audio
         self._audio_output = audio_output
         self._event_func = event_func
         self._runtime_health_provider = runtime_health_provider
         self._developer_task_ui_launch = developer_task_ui_launch
+        self._lifecycle_request = lifecycle_request
         self._screenshot_service = screenshot_service
         self._weather_service = weather_service
         self._volume_step = int(volume_step)
@@ -109,6 +111,8 @@ class Actions:
 
             "OPEN_APP": self._exec_open_app,
             "OPEN_DEVELOPER_TASK": self._exec_open_developer_task,
+            "EXIT_SKYNETVS": self._exec_exit_skynetvs,
+            "RESTART_SKYNETVS": self._exec_restart_skynetvs,
             "OPEN_URL": self._exec_open_url,
             "SEARCH_WEB": self._exec_search_web,
             "SEARCH_YOUTUBE": self._exec_search_youtube,
@@ -149,6 +153,8 @@ class Actions:
             "SCREENSHOT": self._reply_screenshot,
             "OPEN_APP": self._reply_open_app,
             "OPEN_DEVELOPER_TASK": self._reply_open_developer_task,
+            "EXIT_SKYNETVS": self._reply_exit_skynetvs,
+            "RESTART_SKYNETVS": self._reply_restart_skynetvs,
             "OPEN_URL": self._reply_open_url,
             "SEARCH_WEB": self._reply_search_web,
             "SEARCH_YOUTUBE": self._reply_search_youtube,
@@ -251,6 +257,22 @@ class Actions:
                 error_code="developer_ui_launch_refused",
                 user_message="Не удалось открыть режим разработки. Проверь журнал запуска.",
             ) from exc
+
+    def _reply_exit_skynetvs(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
+        return meta.get("say") or "Завершаю работу SkynetVS."
+
+    def _reply_restart_skynetvs(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
+        return meta.get("say") or "Перезапускаю SkynetVS."
+
+    def _exec_exit_skynetvs(self, slots: Dict[str, Any]) -> None:
+        if self._lifecycle_request is None:
+            raise RuntimeError("LIFECYCLE_NOT_CONNECTED")
+        self._lifecycle_request("exit")
+
+    def _exec_restart_skynetvs(self, slots: Dict[str, Any]) -> None:
+        if self._lifecycle_request is None:
+            raise RuntimeError("LIFECYCLE_NOT_CONNECTED")
+        self._lifecycle_request("restart")
 
     def _reply_open_app(self, meta: Dict[str, Any], slots: Dict[str, Any]) -> str:
         return meta.get("say") or "..."
@@ -678,6 +700,14 @@ class Actions:
         except Exception:
             return ""
 
+    def _note_window_close_issue(self, *, selector: str, stage: str, error: Exception | None = None) -> None:
+        # Structured and intentionally content-free: no window names, HWNDs or exception strings.
+        payload: Dict[str, Any] = {"selector": selector, "stage": stage}
+        if error is not None:
+            payload["error_type"] = type(error).__name__
+        # Logging must never interrupt the Windows EnumWindows callback.
+        self._emit_event("window_close_issue", payload)
+
     def _close_windows_by_image_names(self, image_names: list[str]) -> bool:
         if not image_names:
             return False
@@ -698,22 +728,25 @@ class Actions:
                 img = self._get_window_process_image(int(hwnd))
                 if img and img in image_names_lc:
                     hwnds.append(int(hwnd))
-            except Exception:
-                pass
+            except Exception as exc:
+                self._note_window_close_issue(selector="image_name", stage="enum_callback", error=exc)
             return True
 
         try:
             ctypes.windll.user32.EnumWindows(EnumWindowsProc(enum_proc), 0)
-        except Exception:
+        except Exception as exc:
+            self._note_window_close_issue(selector="image_name", stage="enum_call", error=exc)
             return False
 
         WM_CLOSE = 0x0010
         for hwnd in hwnds:
             try:
-                ctypes.windll.user32.PostMessageW(hwnd, WM_CLOSE, 0, 0)
+                posted = ctypes.windll.user32.PostMessageW(hwnd, WM_CLOSE, 0, 0)
+                if not posted:
+                    self._note_window_close_issue(selector="image_name", stage="post_rejected")
                 closed_any = True
-            except Exception:
-                pass
+            except Exception as exc:
+                self._note_window_close_issue(selector="image_name", stage="post_exception", error=exc)
 
         return closed_any
 
@@ -742,22 +775,25 @@ class Actions:
                     if pat in title:
                         hwnds.append(int(hwnd))
                         break
-            except Exception:
-                pass
+            except Exception as exc:
+                self._note_window_close_issue(selector="title_pattern", stage="enum_callback", error=exc)
             return True
 
         try:
             ctypes.windll.user32.EnumWindows(EnumWindowsProc(enum_proc), 0)
-        except Exception:
+        except Exception as exc:
+            self._note_window_close_issue(selector="title_pattern", stage="enum_call", error=exc)
             return False
 
         WM_CLOSE = 0x0010
         for hwnd in hwnds:
             try:
-                ctypes.windll.user32.PostMessageW(hwnd, WM_CLOSE, 0, 0)
+                posted = ctypes.windll.user32.PostMessageW(hwnd, WM_CLOSE, 0, 0)
+                if not posted:
+                    self._note_window_close_issue(selector="title_pattern", stage="post_rejected")
                 closed_any = True
-            except Exception:
-                pass
+            except Exception as exc:
+                self._note_window_close_issue(selector="title_pattern", stage="post_exception", error=exc)
 
         return closed_any
 
@@ -775,22 +811,25 @@ class Actions:
                 class_name = self._get_window_class_name(int(hwnd))
                 if class_name in {"CabinetWClass", "ExploreWClass"}:
                     hwnds.append(int(hwnd))
-            except Exception:
-                pass
+            except Exception as exc:
+                self._note_window_close_issue(selector="explorer_windows", stage="enum_callback", error=exc)
             return True
 
         try:
             ctypes.windll.user32.EnumWindows(EnumWindowsProc(enum_proc), 0)
-        except Exception:
+        except Exception as exc:
+            self._note_window_close_issue(selector="explorer_windows", stage="enum_call", error=exc)
             return False
 
         WM_CLOSE = 0x0010
         for hwnd in hwnds:
             try:
-                ctypes.windll.user32.PostMessageW(hwnd, WM_CLOSE, 0, 0)
+                posted = ctypes.windll.user32.PostMessageW(hwnd, WM_CLOSE, 0, 0)
+                if not posted:
+                    self._note_window_close_issue(selector="explorer_windows", stage="post_rejected")
                 closed_any = True
-            except Exception:
-                pass
+            except Exception as exc:
+                self._note_window_close_issue(selector="explorer_windows", stage="post_exception", error=exc)
 
         return closed_any
 
@@ -1326,9 +1365,11 @@ class Actions:
 
         try:
             WM_CLOSE = 0x0010
-            ctypes.windll.user32.PostMessageW(hwnd, WM_CLOSE, 0, 0)
-        except Exception:
-            pass
+            posted = ctypes.windll.user32.PostMessageW(hwnd, WM_CLOSE, 0, 0)
+            if not posted:
+                self._note_window_close_issue(selector="active_window", stage="post_rejected")
+        except Exception as exc:
+            self._note_window_close_issue(selector="active_window", stage="post_exception", error=exc)
 
     def _exec_close_app(self, slots: Dict[str, Any]) -> None:
         app_code = str(slots.get("app") or "").strip().lower()
@@ -1464,6 +1505,10 @@ class Actions:
         """
         intent = (meta.get("intent") or "").upper()
         slots = meta.get("slots") or {}
+
+        if intent in {"EXIT_SKYNETVS", "RESTART_SKYNETVS"}:
+            if meta.get("_voice_lifecycle_confirmed") is not True:
+                raise RuntimeError("LIFECYCLE_CONFIRMATION_REQUIRED")
 
         handler: Optional[Callable[[Dict[str, Any]], None]] = self._execute_handlers.get(intent)
         if handler:

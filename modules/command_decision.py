@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from dataclasses import asdict, dataclass
 from typing import Any, Dict, Iterable, List, Mapping, Sequence
 
@@ -24,7 +25,29 @@ DEFAULT_REQUIRED_SLOTS: Dict[str, Sequence[str]] = {
 
 DEFAULT_CONFIRM_REQUIRED_INTENTS = {
     "EMPTY_RECYCLE_BIN",
+    "EXIT_SKYNETVS",
+    "RESTART_SKYNETVS",
 }
+
+# These rules do not map utterances to intents. They prevent an NLU guess from
+# turning a request about music, another application or the PC into the
+# assistant's own lifecycle action.
+_LIFECYCLE_INTENTS = frozenset({"EXIT_SKYNETVS", "RESTART_SKYNETVS"})
+_LIFECYCLE_TARGET = re.compile(
+    r"\b(?:скайнет\w*|skynet|ассистент\w*|помощник\w*|себя|"
+    r"сво[юейй]\s+(?:работу|программу|процесс)|"
+    r"самого\s+себя|выключись|отключись|перезапустись|"
+    r"перезагрузись|закройся|запустись)\b", re.IGNORECASE)
+_LIFECYCLE_NOT_SELF = re.compile(
+    r"\b(?:компьютер\w*|windows|виндовс|систему|пк|"
+    r"музык\w*|трек\w*|песн\w*|плеер\w*|"
+    r"браузер\w*|блокнот\w*|дискорд\w*|калькулятор\w*)\b", re.IGNORECASE)
+
+
+def _lifecycle_scope_allowed(meta: Mapping[str, Any]) -> bool:
+    text = str(meta.get("_text") or "").lower().strip()
+    return bool(_LIFECYCLE_TARGET.search(text) and not _LIFECYCLE_NOT_SELF.search(text))
+
 
 
 @dataclass(frozen=True)
@@ -106,6 +129,12 @@ def build_command_decision(
     confirm_required_intents: Iterable[str] | None = None,
 ) -> CommandDecision:
     accepted = is_accepted(meta, accept_conf=accept_conf)
+
+    # Two protected actions must be both confidently classified and explicitly
+    # about SkynetVS itself. Deny OS/media/other-app requests regardless of NLU.
+    if accepted and _intent(meta) in _LIFECYCLE_INTENTS:
+        if _confidence(meta) < max(float(accept_conf), 0.48) or not _lifecycle_scope_allowed(meta):
+            accepted = False
 
     if not accepted:
         return CommandDecision(

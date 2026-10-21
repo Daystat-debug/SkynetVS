@@ -1,7 +1,9 @@
 """M092 local Developer Task window, booted in a separate -I -S -B process.
 
 This is not a security sandbox. It executes the checked bundled UI and contracts,
-never code from a proposed patch. It writes artifacts to a per-user data directory.
+except one M101 exact-hash-pinned AST-extracted audio method in synthetic mock tests;
+its one allowed patch requires typed user approval and a separate backup. No promotion.
+It writes artifacts to a per-user data directory.
 """
 from __future__ import annotations
 
@@ -40,7 +42,16 @@ def verify_bundle(root: Path) -> None:
         if not isinstance(name, str) or name.startswith("/") or ".." in name.split("/") or "\\" in name:
             raise ValueError("M092_MANIFEST_ENTRY_PATH_INVALID")
         data = (root / name).read_bytes()
-        if len(data) != record.get("bytes") or hashlib.sha256(data).hexdigest() != record.get("sha256"):
+        choices = [data]
+        if Path(name).suffix.lower() in {".py", ".json"}:
+            lf = data.replace(b"\r\n", b"\n")
+            crlf = lf.replace(b"\n", b"\r\n")
+            for value in (lf, crlf):
+                if value not in choices:
+                    choices.append(value)
+        if not any(len(value) == record.get("bytes") and
+                   hashlib.sha256(value).hexdigest() == record.get("sha256")
+                   for value in choices):
             raise ValueError("M092_BUNDLE_HASH_MISMATCH:" + name)
 
 
@@ -85,7 +96,7 @@ def main() -> int:
         window.update_idletasks()
         result["ui_opened"] = True
         print("WINDOW_READY=M092_EMBEDDED_DEVELOPER_TASK_UI", flush=True)
-        print("BUNDLED_M074_READ_ONLY; NO_PATCH_APPLY_OR_RUNTIME_PROMOTION", flush=True)
+        print("BUNDLED_M074_READ_ONLY; M101_SCOPED_TYPED_APPROVAL_ONLY; NO_PROMOTION", flush=True)
         window.mainloop()
         result["status"] = "M092_UI_SESSION_CLOSED"
     except Exception as exc:
@@ -98,6 +109,20 @@ def main() -> int:
         if app is not None:
             result["events"] = app.events
             result["dtrb_receipt_viewed"] = app.dtrb_view is not None
+            edits = [ev.get("event") for ev in app.events if ev.get("event") in
+                     ("M101_ONE_FILE_APPLIED", "M101_ONE_FILE_ROLLED_BACK")]
+            applied = "M101_ONE_FILE_APPLIED" in edits
+            verified = [ev for ev in app.events if ev.get("event") == "M101_MOCK_VERIFIED"]
+            result["patch_applied"] = applied  # ever applied, even if later rolled back
+            result["m101_patch_currently_present_by_event"] = bool(edits and edits[-1] == "M101_ONE_FILE_APPLIED")
+            result["m101_user_approval_recorded"] = applied
+            result["m101_mock_test_runs"] = len(verified)
+            result["changed_code_executed"] = bool(verified)  # scoped mock, not deployed execution
+            result["changed_code_execution_scope"] = (
+                "PINNED_AUDIO_DUCKER_AST_MOCK_ONLY" if verified else "NONE")
+            result["selected_target_code_executed"] = bool(verified)
+            result["selected_target_execution_scope"] = (
+                "PINNED_AUDIO_DUCKER_AST_MOCK_ONLY" if verified else "NONE")
         (run / "M092_UI_Result.json").write_text(
             json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )

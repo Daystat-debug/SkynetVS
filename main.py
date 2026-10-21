@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import time
 import json
+import os
 import queue
 import threading
 import warnings
@@ -85,6 +86,7 @@ from modules.runtime_service_health_monitor import (
     publish_runtime_service_health_transition,
 )
 from modules.runtime.runtime_shutdown import shutdown_runtime_services
+from modules.runtime.voice_lifecycle import VoiceLifecycle, schedule_restart_after_exit
 
 colorama_init()
 load_dotenv()
@@ -323,6 +325,7 @@ def main():
         return report
 
     developer_task_ui_launcher = DeveloperTaskUiLauncher()
+    voice_lifecycle = VoiceLifecycle()
 
     actions = Actions(
         audio=audio,
@@ -337,6 +340,7 @@ def main():
         event_func=logger.event,
         runtime_health_provider=lambda: collect_and_publish_runtime_health(print_report=False),
         developer_task_ui_launch=developer_task_ui_launcher.open,
+        lifecycle_request=voice_lifecycle.request,
     )
 
     timer_start_handler = actions._exec_set_timer
@@ -721,6 +725,9 @@ def main():
 
             if event_type == "phrase":
                 handle_phrase_event(evt)
+                if voice_lifecycle.requested is not None:
+                    print("[LIFECYCLE] confirmed " + voice_lifecycle.requested)
+                    break
                 continue
     except KeyboardInterrupt:
         print("\n[STOP] SkynetVS")
@@ -743,6 +750,18 @@ def main():
             event_func=logger.event,
             print_func=print,
         )
+
+    if voice_lifecycle.requested == "restart":
+        if os.environ.get("SKYNETVS_IDE_SUPERVISOR") == "1":
+            # M104: PyCharm Run supervisor remains alive and relaunches after
+            # this child has fully exited. Never spawn the M103 detached helper.
+            print("[LIFECYCLE] IDE supervisor restart requested", flush=True)
+            raise SystemExit(75)
+        try:
+            # Only after the main loop and the existing shutdown/finally path.
+            schedule_restart_after_exit(parent_pid=os.getpid())
+        except Exception as exc:
+            print("[LIFECYCLE] restart scheduling failed: " + type(exc).__name__)
 
 if __name__ == "__main__":
     main()

@@ -75,6 +75,8 @@ def handle_pending_confirmation_phrase(
 
         if confirm_decision.accepted and not confirm_decision.missing_slots:
             try:
+                if str(meta.get("intent") or "").upper() in {"EXIT_SKYNETVS", "RESTART_SKYNETVS"}:
+                    meta["_voice_lifecycle_confirmed"] = True
                 router.execute(meta)
             except Exception as e:
                 log_command_action_failure(

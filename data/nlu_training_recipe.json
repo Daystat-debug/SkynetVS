@@ -10,6 +10,16 @@
       "intent": "STOP_LISTEN",
       "normalized_text_sha256": "bc36feaf1450bb806d92d43aad1ebe020f834e9c434bde2bf85bb0b8882da1d8",
       "fit_repeats": 4
+    },
+    {
+      "intent": "MUSIC_RESTART",
+      "normalized_text_sha256": "468746c4ff42adf31e61484d88480238e4d9cc61c73ea700f41e2d42c2903e0c",
+      "fit_repeats": 4
+    },
+    {
+      "intent": "MUSIC_RESTART",
+      "normalized_text_sha256": "6f37a032e393f4375acab8b9d05489dc2cd5cbaf50cef437d9b082118204e1b2",
+      "fit_repeats": 4
     }
   ]
 }

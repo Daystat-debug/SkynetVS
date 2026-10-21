@@ -89,7 +89,7 @@ class _AudioDucker:
                     if bool(control.GetMute()):
                         continue
                 except Exception:
-                    pass
+                    continue
 
                 try:
                     current = float(control.GetMasterVolume())

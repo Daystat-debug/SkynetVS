@@ -1,7 +1,7 @@
 """Open the version-pinned in-project Developer Task UI.
 
 No Downloads runtime dependency, no user-supplied paths or shell arguments.
-The UI has no authority to apply patches, run modified code or promote a release.
+M101 permits only one hash-pinned user-confirmed audio fix; no generic apply, privileged action or promotion.
 """
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ import threading
 import uuid
 from pathlib import Path
 
-_BUNDLE_MANIFEST_SHA256 = "af82a04c66b9a7d2307aa119154ea132c75829ae3cadb12c6756b3ab5d5f92a1"
+_BUNDLE_MANIFEST_SHA256 = "04c10033ed3def7dd7d4a7872d6990e9870339d8a8b4b2848a9376a1f86dc14d"
 _BUNDLE_DIRECTORY = "developer_task_ui"
 
 
@@ -38,19 +38,35 @@ def _plain(path: Path, *, directory: bool = False) -> os.stat_result:
     return st
 
 
+def _data_variants(path: Path) -> list[bytes]:
+    raw = path.read_bytes()
+    variants = [raw]
+    # Git may check out LF or CRLF; accept ONLY byte-identical content
+    # except for that newline convention. Some M092 vendor files use CRLF.
+    if path.suffix.lower() in {".py", ".json"}:
+        lf = raw.replace(b"\r\n", b"\n")
+        crlf = lf.replace(b"\n", b"\r\n")
+        for option in (lf, crlf):
+            if option not in variants:
+                variants.append(option)
+    return variants
+
+
+def _matches_bytes(path: Path, size: int, sha256: str) -> bool:
+    return any(len(b) == size and hashlib.sha256(b).hexdigest() == sha256
+               for b in _data_variants(path))
+
+
 def _sha256_file(path: Path) -> str:
-    result = hashlib.sha256()
-    with path.open("rb") as src:
-        for chunk in iter(lambda: src.read(65536), b""):
-            result.update(chunk)
-    return result.hexdigest()
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _verify_bundle(root: Path) -> None:
     _plain(root, directory=True)
     manifest_path = root / "BUNDLE_MANIFEST.json"
     _plain(manifest_path)
-    if _sha256_file(manifest_path) != _BUNDLE_MANIFEST_SHA256:
+    if not any(hashlib.sha256(data).hexdigest() == _BUNDLE_MANIFEST_SHA256
+               for data in _data_variants(manifest_path)):
         raise DeveloperTaskUiLaunchError("M092_BUNDLE_MANIFEST_CHANGED")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if manifest.get("schema") != "SKYNETVS_M092_UI_BUNDLE_V1":
@@ -74,7 +90,7 @@ def _verify_bundle(root: Path) -> None:
             raise DeveloperTaskUiLaunchError("M092_MANIFEST_PATH_INVALID")
         file = root / name
         st = _plain(file)
-        if st.st_size != record.get("bytes") or _sha256_file(file) != record.get("sha256"):
+        if not _matches_bytes(file, record.get("bytes"), record.get("sha256")):
             raise DeveloperTaskUiLaunchError("M092_BUNDLE_FILE_CHANGED:" + name)
 
 

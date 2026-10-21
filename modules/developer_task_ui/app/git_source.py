@@ -113,7 +113,7 @@ class GitSourceReader:
             raise GitReadError("Текущий DTR-A требует Git SHA-1 из 40 символов; ответ Git не подходит.")
         return text
 
-    def capture(self, selected: Path) -> SourceSnapshot:
+    def capture(self, selected: Path, *, allow_proposal_lf_worktree: bool = False) -> SourceSnapshot:
         check_plain_path(self.repository, directory=True)
         # Worktrees with a .git redirect are not silently followed by this first UI.
         check_plain_path(self.repository / ".git", directory=True)
@@ -149,6 +149,11 @@ class GitSourceReader:
             # Only a documented CRLF working-copy transform; no custom Git filters invoked.
             if b"\r" not in content and work_before.replace(b"\r\n", b"\n") == content:
                 relation = "ONLY_WORKTREE_CRLF_TO_BLOB_LF"
+            elif (allow_proposal_lf_worktree and b"\r" not in work_before and
+                  b"\r" not in content.replace(b"\r\n", b"") and
+                  content.replace(b"\r\n", b"\n") == work_before):
+                # Only M100 own-proposal capture opts in; existing DTR-A callers keep refusal.
+                relation = "ONLY_WORKTREE_LF_TO_BLOB_CRLF_M100"
             else:
                 raise GitReadError("Рабочий файл отличается от версии HEAD не только переводами строк. Запрос не создан: незакоммиченные изменения не игнорируются. Выбери другой файл или разберём изменения отдельно; автоматического commit/отката нет.")
         if self._sha("rev-parse", "--verify", "HEAD^{commit}") != commit:
