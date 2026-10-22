@@ -25,8 +25,8 @@
       "sha256": "07fe2511201345a76219cde65754d3247f971fe6ac052c777341fe0f963043a4"
     },
     "app/context_search.py": {
-      "bytes": 11699,
-      "sha256": "52045ba2fd5c2ef14dbc0798e785ca535fb18b524a381200adec9c44a4080f4b"
+      "bytes": 13077,
+      "sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a"
     },
     "app/core.py": {
       "bytes": 16049,
