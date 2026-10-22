@@ -24,6 +24,7 @@ from .approved_patch import verify_candidate, apply_approved, rollback_approved,
 from .context_search import search_repository, format_context, receipt_without_source
 from .context_bridge import correlate
 from .context_scope_bridge import enrich_relationships, format_task_summary
+from .task_request_bridge import eligible_targets, verify_capture, bounded_title
 
 
 class QuietTk(tk.Tk):
@@ -54,6 +55,7 @@ class DeveloperWindow:
         self.ai_last_receipt = None
         self.ai_context_text = None  # only memory; never save source excerpts in evidence
         self.ai_bridge_summary = None  # privacy-safe text; never authorizes proposal/apply
+        self.ai_task_search_result = None  # private metadata; cleared when new analysis begins
         root.title("SkynetVS — AI-разработка")
         root.geometry(f"{min(1130, root.winfo_screenwidth() - 60)}x{min(780, root.winfo_screenheight() - 100)}")
         root.minsize(790, 560)
@@ -293,6 +295,16 @@ class DeveloperWindow:
         self.ai_bridge_button = ttk.Button(contextbar, text="Поиск + AST (только чтение)",
                                            command=self.start_context_ast_bridge)
         self.ai_bridge_button.pack(side="left", padx=(6, 0))
+        # Separate row: all original controls remain visible at 790x560.
+        taskbridgebar = ttk.Frame(frame)
+        taskbridgebar.pack(fill="x", pady=(0, 4))
+        self.ai_task_request_button = ttk.Button(
+            taskbridgebar, text="Из найденного кода → запрос на изменение…",
+            command=self.prepare_task_request_from_context)
+        self.ai_task_request_button.pack(side="left")
+        self.ai_task_request_button.state(["disabled"])
+        ttk.Label(taskbridgebar, text="DTR-A · один файл · без генерации и применения",
+                  foreground="#5a6474").pack(side="left", padx=8)
 
         feedbackbar = ttk.Frame(frame)
         feedbackbar.pack(fill="x", pady=(1, 4))
@@ -930,6 +942,8 @@ class DeveloperWindow:
         if self.ai_busy:
             return
         self.ai_bridge_summary = None
+        self.ai_task_search_result = None
+        self.ai_task_request_button.state(["disabled"])
         goal = self.ai_goal.get("1.0", "end-1c").strip()
         self.ai_busy = True
         self.ai_report = None
@@ -975,6 +989,8 @@ class DeveloperWindow:
         self.ai_apply_checked = None
         self.ai_context_text = None
         self.ai_bridge_summary = None
+        self.ai_task_search_result = None
+        self.ai_task_request_button.state(["disabled"])
         self._populate_own_findings({})
         self.ai_proposal_button.state(["disabled"])
         self.ai_verify_button.state(["disabled"])
@@ -1003,6 +1019,52 @@ class DeveloperWindow:
         threading.Thread(target=worker, daemon=True).start()
         self.root.after(150, self.poll_ai_review)
 
+    def prepare_task_request_from_context(self):
+        """Explicit user selection -> existing DTR-A binding; never generate/apply patch."""
+        try:
+            if self.ai_busy or self.ai_task_search_result is None:
+                raise ValueError("Сначала выполни поиск или «Поиск + AST».")
+            goal = self.ai_goal.get("1.0", "end-1c").strip()
+            from .core import validate_target
+            candidates = eligible_targets(goal, self.ai_task_search_result, validate_target)
+            if not candidates:
+                raise ValueError("В найденных фрагментах нет файлов, разрешённых DTR-A. "
+                                 "Уточни цель или выбери допустимый .py вручную.")
+            listing = "\n".join(f"{i}. {name}" for i, name in enumerate(candidates, 1))
+            selected_index = simpledialog.askinteger(
+                "Выбери файл для запроса DTR-A",
+                "Лексические кандидаты — НЕ доказанные ошибки.\n"
+                "Допускается один обычный файл до 64 КиБ.\n\n" + listing +
+                "\n\nНомер файла:", parent=self.root, minvalue=1, maxvalue=len(candidates))
+            if selected_index is None:
+                return
+            path = candidates[selected_index - 1]
+            if not messagebox.askyesno(
+                    "Создать локальный запрос на изменение?",
+                    "Будет заново проверен Git HEAD и полный файл " + path +
+                    " (до 64 КиБ). Запрос с содержимым одного файла сохраняется "
+                    "ТОЛЬКО в LocalAppData. Никаких отправок, генерации diff, "
+                    "исполнения кода или применения исправлений.\n\nПродолжить?",
+                    parent=self.root):
+                return
+            source = GitSourceReader(self.repository, find_git()).capture(
+                self.repository / path)
+            verify_capture(path, self.ai_task_search_result, source)
+            self.invalidate()
+            self.source = source
+            self.imported_session = False
+            self.set_task(bounded_title(goal), goal)
+            self.refresh_source()
+            if not self._legacy_visible:
+                self.toggle_legacy_tools()
+            if not self.prepare():
+                raise ValueError("DTR-A не принял задачу. Код не изменён.")
+            self.ai_info.set("DTR-A запрос подготовлен из найденного файла; diff не создан.")
+            self.event("M145_CONTEXT_TO_DTRA_REQUEST", base_commit=source.base_commit,
+                       path=path, goal_sha256=self.ai_task_search_result["goal_sha256"])
+        except Exception as exc:
+            self.fail(exc)
+
     def copy_context(self):
         if not self.ai_context_text or self.ai_busy:
             self.ai_info.set("Сначала выполни поиск кода и дождись завершения.")
@@ -1015,6 +1077,8 @@ class DeveloperWindow:
         if self.ai_busy:
             return
         self.ai_bridge_summary = None
+        self.ai_task_search_result = None
+        self.ai_task_request_button.state(["disabled"])
         goal = self.ai_goal.get("1.0", "end-1c").strip()
         model = self.ai_model.get().strip()
         backend = self.ai_backend.get()
@@ -1065,6 +1129,8 @@ class DeveloperWindow:
                     folder = self.store._folder("context_search_")
                     self.store.write(folder, "M134_ContextReceipt.json", json_bytes(receipt))
                     self.ai_context_text = format_context(value)
+                    self.ai_task_search_result = value
+                    self.ai_task_request_button.state(["!disabled"])
                     self.set_text(self.ai_text, self.ai_context_text)
                     self.ai_context_copy_button.state(["!disabled"])
                     self.ai_info.set("Контекст готов (не патч). Полученные исходники видны только в окне; квитанция: " + str(folder))
@@ -1082,6 +1148,8 @@ class DeveloperWindow:
                     folder = self.store._folder("context_ast_bridge_")
                     self.store.write(folder, "M139_TaskScopeReceipt.json", json_bytes(relation))
                     self.ai_context_text = format_context(context)  # private memory only
+                    self.ai_task_search_result = context
+                    self.ai_task_request_button.state(["!disabled"])
                     self.ai_context_copy_button.state(["!disabled"])
                     self.ai_bridge_summary = format_task_summary(relation)
                     if relation["analysis_goal_binding"] != "MATCHED_SHA256":
@@ -1095,6 +1163,8 @@ class DeveloperWindow:
                                goal_sha256=relation["goal_sha256"])
                 except Exception as exc:
                     self.ai_context_text = None
+                    self.ai_task_search_result = None
+                    self.ai_task_request_button.state(["disabled"])
                     self.ai_context_copy_button.state(["disabled"])
                     self.ai_info.set("Не удалось сопоставить поиск с AST: " + str(exc))
             elif kind == "report":
@@ -1120,6 +1190,8 @@ class DeveloperWindow:
                     self.ai_info.set("Не удалось сохранить отчёт: " + str(exc))
             elif kind == "error":
                 finished = True
+                self.ai_task_search_result = None
+                self.ai_task_request_button.state(["disabled"])
                 self.ai_info.set("Анализ не выполнен: " + value)
                 self.set_text(self.ai_text, "Ошибка: " + value + "\nНичего не изменено.")
                 self.event("M097_ANALYSIS_REFUSED", reason=value[:300])

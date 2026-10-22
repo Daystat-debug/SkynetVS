@@ -84,9 +84,13 @@
       "bytes": 20300,
       "sha256": "f40461fdbcde8b67809ae6845022d7d2106b5fc6e7122bbe2d973359ab36a608"
     },
+    "app/task_request_bridge.py": {
+      "bytes": 4118,
+      "sha256": "56f9532a5e960cb7c30e8c5ecefb4d9cebfb5dd45b479be8cf396979852a97bb"
+    },
     "app/ui.py": {
-      "bytes": 73148,
-      "sha256": "7b6dc4de7b0b7c21be090d0d9973bb65586bdf4eaf9f0ca318998dbc4c6f8488"
+      "bytes": 77876,
+      "sha256": "76670f9c40f085f435ea66451317db7209505de399c4171b12ad203e7a4fa5f9"
     },
     "launch.py": {
       "bytes": 7153,
