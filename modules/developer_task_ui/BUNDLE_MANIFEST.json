@@ -89,8 +89,8 @@
       "sha256": "56f9532a5e960cb7c30e8c5ecefb4d9cebfb5dd45b479be8cf396979852a97bb"
     },
     "app/ui.py": {
-      "bytes": 77876,
-      "sha256": "76670f9c40f085f435ea66451317db7209505de399c4171b12ad203e7a4fa5f9"
+      "bytes": 79202,
+      "sha256": "692604fab88c2cc25e70f89783ee9677ad8b778506b3e62cc126548e7a7ff90f"
     },
     "launch.py": {
       "bytes": 7153,
@@ -131,6 +131,10 @@
     "vendor/modules/developer/developer_task_validator.py": {
       "bytes": 22926,
       "sha256": "ae1965b156144ffe9ff11e706a7d0fef12b68226d044ffd52bafe257a8f7b6b1"
+    },
+    "app/goal_intent_gate.py": {
+      "bytes": 4955,
+      "sha256": "61fd7ab981dc9ce0112a8e7583f727cf32142e8ab655f5cb219cb06e2a9cf9e9"
     }
   },
   "schema": "SKYNETVS_M092_UI_BUNDLE_V1"

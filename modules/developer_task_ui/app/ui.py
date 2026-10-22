@@ -25,6 +25,7 @@ from .context_search import search_repository, format_context, receipt_without_s
 from .context_bridge import correlate
 from .context_scope_bridge import enrich_relationships, format_task_summary
 from .task_request_bridge import eligible_targets, verify_capture, bounded_title
+from .goal_intent_gate import classify_goal, CHANGE_EXPLICIT, READ_ONLY
 
 
 class QuietTk(tk.Tk):
@@ -1019,12 +1020,27 @@ class DeveloperWindow:
         threading.Thread(target=worker, daemon=True).start()
         self.root.after(150, self.poll_ai_review)
 
+    def _set_task_intent_gate(self, goal: str) -> str:
+        """Update UI only; no source reads or patch privileges are granted."""
+        decision = classify_goal(goal)
+        if decision.kind == CHANGE_EXPLICIT:
+            self.ai_task_request_button.state(["!disabled"])
+            return "Явное изменение: возможен ручной запрос DTR-A, не применение патча."
+        self.ai_task_request_button.state(["disabled"])
+        if decision.kind == READ_ONLY:
+            return "Цель — анализ без изменения. Контекст можно изучить или скопировать; DTR-A не создаётся."
+        return "Запрос неоднозначен: укажи конкретное требуемое изменение и ожидаемый результат, затем повтори поиск."
+
     def prepare_task_request_from_context(self):
         """Explicit user selection -> existing DTR-A binding; never generate/apply patch."""
         try:
             if self.ai_busy or self.ai_task_search_result is None:
                 raise ValueError("Сначала выполни поиск или «Поиск + AST».")
             goal = self.ai_goal.get("1.0", "end-1c").strip()
+            decision = classify_goal(goal)
+            if decision.kind != CHANGE_EXPLICIT:
+                self.ai_info.set(self._set_task_intent_gate(goal))
+                return  # no file chooser, source capture, local DTR-A request or apply
             from .core import validate_target
             candidates = eligible_targets(goal, self.ai_task_search_result, validate_target)
             if not candidates:
@@ -1130,10 +1146,11 @@ class DeveloperWindow:
                     self.store.write(folder, "M134_ContextReceipt.json", json_bytes(receipt))
                     self.ai_context_text = format_context(value)
                     self.ai_task_search_result = value
-                    self.ai_task_request_button.state(["!disabled"])
+                    task_mode_summary = self._set_task_intent_gate(
+                        self.ai_goal.get("1.0", "end-1c").strip())
                     self.set_text(self.ai_text, self.ai_context_text)
                     self.ai_context_copy_button.state(["!disabled"])
-                    self.ai_info.set("Контекст готов (не патч). Полученные исходники видны только в окне; квитанция: " + str(folder))
+                    self.ai_info.set("Контекст готов (не патч). " + task_mode_summary + " Квитанция: " + str(folder))
                     self.event("M134_READONLY_CONTEXT_FOUND", commit=value["git_commit"],
                                windows=len(value["contexts_metadata"]["8192"]["ranges"]),
                                goal_sha256=value["goal_sha256"])
@@ -1149,14 +1166,15 @@ class DeveloperWindow:
                     self.store.write(folder, "M139_TaskScopeReceipt.json", json_bytes(relation))
                     self.ai_context_text = format_context(context)  # private memory only
                     self.ai_task_search_result = context
-                    self.ai_task_request_button.state(["!disabled"])
+                    task_mode_summary = self._set_task_intent_gate(
+                        self.ai_goal.get("1.0", "end-1c").strip())
                     self.ai_context_copy_button.state(["!disabled"])
                     self.ai_bridge_summary = format_task_summary(relation)
                     if relation["analysis_goal_binding"] != "MATCHED_SHA256":
                         self.ai_bridge_summary += ("\nВНИМАНИЕ: AST-отчёт не удостоверяет хеш цели; "
                                                    "сопоставление носит вспомогательный характер.")
                     self.set_text(self.ai_text, self.ai_bridge_summary)
-                    self.ai_info.set("Связь поиска с AST готова, только чтение. Квитанция: " + str(folder))
+                    self.ai_info.set("Связь поиска с AST готова, только чтение. " + task_mode_summary + " Квитанция: " + str(folder))
                     self.event("M139_SCOPE_AWARE_CONTEXT_AST_BRIDGE", commit=relation["git_commit"],
                                inside=relation["counts"]["LINE_INSIDE_SELECTED_WINDOW"],
                                total=relation["findings_considered"],
