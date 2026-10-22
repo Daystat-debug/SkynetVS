@@ -22,7 +22,8 @@ from .own_analyzer import (SCHEMA as OWN_SCHEMA, analyze_repository, format_own_
 from .proposals import propose_from_finding
 from .approved_patch import verify_candidate, apply_approved, rollback_approved, _changes_root
 from .context_search import search_repository, format_context, receipt_without_source
-from .context_bridge import correlate, format_summary
+from .context_bridge import correlate
+from .context_scope_bridge import enrich_relationships, format_task_summary
 
 
 class QuietTk(tk.Tk):
@@ -995,6 +996,7 @@ class DeveloperWindow:
                     notify=lambda msg: self.ai_queue.put(("progress", msg)))
                 relation = correlate(goal, context, analysis,
                                      expected_analyzer_schema=OWN_SCHEMA)
+                relation = enrich_relationships(context, relation)
                 self.ai_queue.put(("bridge", (context, relation)))
             except Exception as exc:
                 self.ai_queue.put(("error", str(exc)))
@@ -1078,16 +1080,16 @@ class DeveloperWindow:
                     if relation["approval_status"] != "NOT_AUTHORIZED" or not relation["no_patch_or_apply"]:
                         raise ValueError("M137_BRIDGE_NOT_READ_ONLY")
                     folder = self.store._folder("context_ast_bridge_")
-                    self.store.write(folder, "M137_BridgeReceipt.json", json_bytes(relation))
+                    self.store.write(folder, "M139_TaskScopeReceipt.json", json_bytes(relation))
                     self.ai_context_text = format_context(context)  # private memory only
                     self.ai_context_copy_button.state(["!disabled"])
-                    self.ai_bridge_summary = format_summary(relation)
+                    self.ai_bridge_summary = format_task_summary(relation)
                     if relation["analysis_goal_binding"] != "MATCHED_SHA256":
                         self.ai_bridge_summary += ("\nВНИМАНИЕ: AST-отчёт не удостоверяет хеш цели; "
                                                    "сопоставление носит вспомогательный характер.")
                     self.set_text(self.ai_text, self.ai_bridge_summary)
                     self.ai_info.set("Связь поиска с AST готова, только чтение. Квитанция: " + str(folder))
-                    self.event("M137_CONTEXT_AST_BRIDGE", commit=relation["git_commit"],
+                    self.event("M139_SCOPE_AWARE_CONTEXT_AST_BRIDGE", commit=relation["git_commit"],
                                inside=relation["counts"]["LINE_INSIDE_SELECTED_WINDOW"],
                                total=relation["findings_considered"],
                                goal_sha256=relation["goal_sha256"])
