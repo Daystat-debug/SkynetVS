@@ -1,0 +1,8 @@
+{
+  "schema": "SKYNETVS_M154_NATIVE_DTRB_DIAGNOSTICS_V2",
+  "source_kind": "ACTUAL_NATIVE_DTRB_REHEARSAL_USER_PROJECT",
+  "engine_status": "STATIC_REHEARSAL_RECORDED_NOT_PROMOTABLE",
+  "failed_stages": [],
+  "issues": [],
+  "full_report_sha256": "fc218b218b4385dd4b189badb5fcbfbc5c83405eeeec861dbe34263d7146ebff"
+}

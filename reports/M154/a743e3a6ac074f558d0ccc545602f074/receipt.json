@@ -1,0 +1,23 @@
+{
+  "schema": "SKYNETVS_PUBLIC_RUN_RECEIPT_V1",
+  "project": "SkynetVS",
+  "stage": "M154",
+  "run_id": "a743e3a6ac074f558d0ccc545602f074",
+  "code_branch": "sandbox/m154",
+  "code_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "runner_package_sha256": "242a071f9b7a64448eae741a3fd52634c06e0ba2043816ed046b9602f1e67cf2",
+  "original_evidence_zip_sha256": "91a0de60d383103ed10ad2a722d8dd13fd4a87f1fc9b20d16a8782498f92e105",
+  "files": {
+    "summary.json": {
+      "sha256": "0a0ae4bcdaca973d519e62d0df84cf8bb150e44deac6a91f86377c064739f1c7",
+      "size_bytes": 2418
+    },
+    "diagnostics.json": {
+      "sha256": "7b30beaa1bc34fe78d52c9dae229f45863f9484360111febacd8cb4548c1c3fe",
+      "size_bytes": 315
+    }
+  },
+  "review_scope": "Summary and diagnostics consistency checked against the pinned request and response; full native result was not attached.",
+  "remaining_check": "pipeline(flow=check)",
+  "patch_applied_to_user_project": false
+}

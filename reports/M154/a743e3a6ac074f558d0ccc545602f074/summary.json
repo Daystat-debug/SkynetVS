@@ -1,0 +1,88 @@
+{
+  "schema": "SKYNETVS_M154_NATIVE_DTRB_LOCAL_REVIEW_V2",
+  "runner_revision": 2,
+  "status": "PASS_NATIVE_DTRB_STATIC_NOT_PROMOTABLE",
+  "dtrb_engine_status": "STATIC_REHEARSAL_RECORDED_NOT_PROMOTABLE",
+  "native_report_ok": true,
+  "source_kind": "ACTUAL_NATIVE_DTRB_REHEARSAL_USER_PROJECT",
+  "target": "modules/reminder_command_parser.py",
+  "request_id": "req:ui:89dd0420a8304adc9d97af51c8c5a71a",
+  "request_fingerprint": "94710a4d649ebc0c457716241f63129bd912d3ecd39f143aaaafa4fd14eff51e",
+  "request_sha256": "ccd0d10fac5263073b0c89e7f768a16ea47d4137d493234f7193d3d67e775570",
+  "response_sha256": "33186ad1bc1347c28b5a32f96dc1e35d1a4e2ac45f7a32af7af6a24792fea507",
+  "patch_sha256": "203278ddd82ffafc985b2ca6ba66878cc8d225100d3fa66fcc6b9e3b59b88c8b",
+  "base_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "base_tree": "4eef6337a01b9ca386ec17c8143a483973551fb7",
+  "target_blob_sha256": "baa794071678b853fd096b79b0dc9c175398034e3ef504d76e2bf26f7b032a12",
+  "before_equals_after": true,
+  "source_repository_unchanged": true,
+  "workspace_removed": true,
+  "patch_applied_in_isolated_workspace": true,
+  "result_recorded": true,
+  "completed_checks": [
+    "git_diff_check",
+    "py_compile"
+  ],
+  "pending_checks": [
+    {
+      "type": "pipeline",
+      "flow": "check"
+    }
+  ],
+  "stages": [
+    {
+      "stage": "DTRA_PLAN",
+      "ok": true
+    },
+    {
+      "stage": "SOURCE_BEFORE",
+      "ok": true
+    },
+    {
+      "stage": "ARTIFACT_LAYOUT",
+      "ok": true
+    },
+    {
+      "stage": "PATCH_MATERIALIZE",
+      "ok": true
+    },
+    {
+      "stage": "PREFLIGHT",
+      "ok": true
+    },
+    {
+      "stage": "WORKSPACE",
+      "ok": true
+    },
+    {
+      "stage": "PATCH_APPLY",
+      "ok": true
+    },
+    {
+      "stage": "STATIC_CHECKS",
+      "ok": true
+    },
+    {
+      "stage": "WORKSPACE_CLEANUP",
+      "ok": true
+    },
+    {
+      "stage": "SOURCE_AFTER",
+      "ok": true
+    }
+  ],
+  "issue_codes": [],
+  "terminal_stage": "RESULT_RECORD",
+  "pipeline_executed": false,
+  "behavioral_correctness": "NOT_EVALUATED_BY_DTRB",
+  "changed_code_executed": false,
+  "user_project_written_by_runner": false,
+  "source_repository_written_by_runner": false,
+  "authority_granted": false,
+  "runtime_authorized": false,
+  "promotion_authorized": false,
+  "installation_authorized": false,
+  "model_provider_called": false,
+  "network": false,
+  "official_m074_gui_zip": false
+}
