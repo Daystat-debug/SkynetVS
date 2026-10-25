@@ -1,0 +1,135 @@
+{
+  "base_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "checks": [
+    {
+      "argv": [
+        "{python}",
+        "-u",
+        "-B",
+        "{code}/tools/eval_reminder_command_parser.py"
+      ],
+      "id": "reminder_regression",
+      "timeout_seconds": 120
+    },
+    {
+      "argv": [
+        "{python}",
+        "-u",
+        "-B",
+        "{code}/tools/pipeline.py",
+        "check",
+        "--no-log"
+      ],
+      "id": "pipeline_full",
+      "timeout_seconds": 1800
+    }
+  ],
+  "coverage": [
+    "existing reminder parser cases plus four persistent regression cases",
+    "unmodified complete pipeline flow=check (103 configured steps, fail-fast)"
+  ],
+  "environment": {
+    "dependency_install": false,
+    "execution_scope": "independent clone of pinned Git base, with the two declared payload files",
+    "known_external_checks": [
+      "Windows audio smoke reads endpoint state",
+      "native evaluation fixtures use temporary directories and child processes"
+    ],
+    "model_activity_in_checks": "NOT_INSTRUMENTED",
+    "python": "existing C:/Project/SkynetVS/.venv/Scripts/python.exe",
+    "source_ignored_files_copied": false
+  },
+  "goal": "Проверить исправление завершающей пунктуации в командах списка напоминаний существующими и новыми регрессионными случаями, затем полным штатным pipeline check; автоматически опубликовать код и результат, включая FAIL.",
+  "lesson_tags": [
+    "pipeline",
+    "git",
+    "reports",
+    "failure",
+    "python"
+  ],
+  "payloads": [
+    {
+      "before_sha256": "baa794071678b853fd096b79b0dc9c175398034e3ef504d76e2bf26f7b032a12",
+      "path": "modules/reminder_command_parser.py",
+      "sha256": "87efc939cddd4f4546ac524babf97684142ae6768131a2ff77b783d72b46f097"
+    },
+    {
+      "before_sha256": "a2416635a91a16942b4c79f09bbdde7db6a6614f229bb448354d4ab80f8e3be9",
+      "path": "tools/eval_reminder_command_parser.py",
+      "sha256": "35b0f87c0488cfc2d6b8b034de77303b97f5341475de9726e3295c5b602e8b88"
+    }
+  ],
+  "preparation_evidence": {
+    "after": {
+      "case_count": 21,
+      "exit_code": 0,
+      "fail_count": 0,
+      "log_sha256": "b921398be93bdefe95c4215fa6dcfcecf0ec466302b27260ab6c221e1c833c7d",
+      "parser_sha256": "87efc939cddd4f4546ac524babf97684142ae6768131a2ff77b783d72b46f097"
+    },
+    "before": {
+      "case_count": 21,
+      "exit_code": 1,
+      "fail_count": 2,
+      "log_sha256": "efb805a26ccfdbcb4564f1acd7c564ef8410128f3ca98fd2a2c21ef7a8f86889",
+      "parser_sha256": "baa794071678b853fd096b79b0dc9c175398034e3ef504d76e2bf26f7b032a12"
+    },
+    "direct_eval_cli": {
+      "error_excerpt": "Traceback (most recent call last):\n  File \"<PREPARATION_WORKSPACE>/m154_msg068_work/regression_qa/after_fixture/tools/eval_reminder_command_parser.py\", line 8, in <module>\n    from dotenv import load_dotenv\nModuleNotFoundError: No module named 'dotenv'\n",
+      "exit_code": 1,
+      "log_sha256": "429627b8a21c810008e72f157d36d9b00cd455a8139d46840b06776646192b3c",
+      "status": "DEPENDENCY_UNAVAILABLE"
+    },
+    "environment": "Linux Python 3.12",
+    "existing_cases_unchanged": true,
+    "payloads": {
+      "modules/reminder_command_parser.py": {
+        "before_sha256": "baa794071678b853fd096b79b0dc9c175398034e3ef504d76e2bf26f7b032a12",
+        "sha256": "87efc939cddd4f4546ac524babf97684142ae6768131a2ff77b783d72b46f097",
+        "size_bytes": 7105
+      },
+      "tools/eval_reminder_command_parser.py": {
+        "before_sha256": "a2416635a91a16942b4c79f09bbdde7db6a6614f229bb448354d4ab80f8e3be9",
+        "sha256": "35b0f87c0488cfc2d6b8b034de77303b97f5341475de9726e3295c5b602e8b88",
+        "size_bytes": 9629
+      }
+    },
+    "production_diff": "Exactly the agreed one-line rstrip membership change.",
+    "scope": "Actual parser and unchanged eval main/CASES executed; only dotenv import/load setup omitted for local case QA. Direct CLI tested separately and failed on missing dependency. No fake dotenv or installs.",
+    "status": "REGRESSION_CASES_PASS_DIRECT_CLI_DEPENDENCY_BLOCKED"
+  },
+  "publication": {
+    "candidate_branch": "experiments/m154/<run_id>",
+    "on_test_failure": true,
+    "report_branch": "reports/m154"
+  },
+  "purpose": "REMINDER_FULL_PIPELINE_EXPERIMENT",
+  "related_proposal": {
+    "parser_bytes_match_previously_reviewed_proposal": true,
+    "request_fingerprint": "94710a4d649ebc0c457716241f63129bd912d3ecd39f143aaaafa4fd14eff51e",
+    "request_id": "req:ui:89dd0420a8304adc9d97af51c8c5a71a",
+    "request_sha256": "ccd0d10fac5263073b0c89e7f768a16ea47d4137d493234f7193d3d67e775570",
+    "response_sha256": "33186ad1bc1347c28b5a32f96dc1e35d1a4e2ac45f7a32af7af6a24792fea507",
+    "test_file_is_additional_user_authorized_experimental_scope": true
+  },
+  "remaining_checks": [
+    "Review the actual Windows full-pipeline evidence; assess any failed or skipped checks before applying the tested reminder change to the user checkout.",
+    "This ordinary user-authorized experiment does not grant native DTR-B authorization or promotion."
+  ],
+  "runner_provenance": {
+    "files_sha256": {
+      "development_lessons.py": "d82faf64a6df755808de5ad72c5c227ecd9c26fdd9aa8a53bb7c28dbc422590c",
+      "git_transport.py": "40edd083316797a2ca699c49679b35f2dbf471df8d29dbd47d2205eeb8d1e978",
+      "lessons.json": "920d23e9bdc34594ebbe13aef2a8fa54439cb531efd1fd78f5232cc13076f5e9",
+      "run.py": "4dc30cfd244bdee5228b9e1f1eea53d68f84621d8f3ebda1bd512d60dfc981be"
+    },
+    "modified": false,
+    "path_prefix": "tools/m154_workflow/",
+    "previous_windows_run": "ab2966ba927e474fb43df4c7d01799f1",
+    "previous_windows_tests": "35/35 PASS",
+    "source_commit": "75061168ac5147c90fa725cf41b26e4248571730"
+  },
+  "schema": "SKYNETVS_EXPERIMENT_PLAN_V1",
+  "stage": "M154",
+  "user_project_apply": false
+}

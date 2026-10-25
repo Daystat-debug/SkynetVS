@@ -1,0 +1,27 @@
+{
+  "base_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "candidate_commit": null,
+  "checks": [
+    {
+      "exit_code": null,
+      "name": "reminder_regression",
+      "status": "NOT_RUN"
+    },
+    {
+      "exit_code": null,
+      "name": "pipeline_full",
+      "status": "NOT_RUN"
+    }
+  ],
+  "exit_code": 2,
+  "is_analyzer_feedback": false,
+  "outcome": "SETUP_FAILED",
+  "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resolution": null,
+  "root_cause": null,
+  "run_id": "c4c656c39ffe46e0902f7f7eff7cb33e",
+  "schema": "SKYNETVS_DEVELOPMENT_OBSERVATION_V1",
+  "status": "observed_only",
+  "summary_sha256": "9e5a8378b258ba09d73d6925beaa39e23ab7f443ec07c033e73537877d60dce7",
+  "training_label": null
+}

@@ -1,0 +1,64 @@
+{
+  "agent_context_consumed_by_gui": false,
+  "agent_context_prepared": false,
+  "base_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "candidate_branch": null,
+  "candidate_commit": null,
+  "checks": [
+    {
+      "exit_code": null,
+      "name": "reminder_regression",
+      "status": "NOT_RUN"
+    },
+    {
+      "exit_code": null,
+      "name": "pipeline_full",
+      "status": "NOT_RUN"
+    }
+  ],
+  "code_commit_before_tests": false,
+  "exit_code": 2,
+  "finished_at": "2026-10-25T14:31:40+00:00",
+  "generated_files_auto_committed": false,
+  "model_activity_in_checks": "NOT_INSTRUMENTED",
+  "model_calls_by_runner": 0,
+  "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "pipeline_gate_closed": false,
+  "plan_sha256": "f15a9868d34f4143790f1d379e24705fbbcb28e41b8c8dd1c1a46ad1cdb19e40",
+  "post_check_status_sha256": null,
+  "post_check_worktree_dirty": null,
+  "purpose": "REMINDER_FULL_PIPELINE_EXPERIMENT",
+  "remaining_checks": [
+    "Review the actual Windows full-pipeline evidence; assess any failed or skipped checks before applying the tested reminder change to the user checkout.",
+    "This ordinary user-authorized experiment does not grant native DTR-B authorization or promotion."
+  ],
+  "run_id": "c4c656c39ffe46e0902f7f7eff7cb33e",
+  "runner_requested_model_training": false,
+  "schema": "SKYNETVS_M154_AUTOMATIC_EXPERIMENT_V1",
+  "selected_lesson_ids": [],
+  "source_dirty_files_copied": false,
+  "source_git_state_unchanged": true,
+  "source_snapshot_after": {
+    "config_sha256": "faa0468d5063f4a88a8b0f072afa34809ef15212fb988eec56b5a3f3a9dd4dea",
+    "dirty": false,
+    "head": "b7f78db7703bb58aa2e1819b5a2310171be07260",
+    "index_sha256": "a50ee3de6a78782a37a82939d981320c2a3792b7f0510d34c6c6f67c53c4cd45",
+    "refs_sha256": "fd92b218c64382b67125c25a750b96a9eb898c5691bd5fd613189c65c81aa861",
+    "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source_snapshot_before": {
+    "config_sha256": "faa0468d5063f4a88a8b0f072afa34809ef15212fb988eec56b5a3f3a9dd4dea",
+    "dirty": false,
+    "head": "b7f78db7703bb58aa2e1819b5a2310171be07260",
+    "index_sha256": "a50ee3de6a78782a37a82939d981320c2a3792b7f0510d34c6c6f67c53c4cd45",
+    "refs_sha256": "fd92b218c64382b67125c25a750b96a9eb898c5691bd5fd613189c65c81aa861",
+    "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source_snapshot_scope": "HEAD, refs, index, config, porcelain and tracked diff; ignored files are not observed",
+  "started_at": "2026-10-25T14:31:40+00:00",
+  "status": "SETUP_FAILED",
+  "user_project_applied": false,
+  "user_project_written_by_runner": false
+}

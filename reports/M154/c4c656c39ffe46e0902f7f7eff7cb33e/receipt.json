@@ -1,0 +1,35 @@
+{
+  "base_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "candidate_commit": null,
+  "files": {
+    "Development_Context.md": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "change.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "diagnostics.json": {
+      "sha256": "905625b7f22415e7e2d91995dde3f7c6c1e9345371fa37b8c163b3f11308f39e",
+      "size_bytes": 228
+    },
+    "observation.json": {
+      "sha256": "1ae1c899329daa255626a1ead6993ed25bf140571b3175f328a6c84a8d788d56",
+      "size_bytes": 758
+    },
+    "plan.json": {
+      "sha256": "f15a9868d34f4143790f1d379e24705fbbcb28e41b8c8dd1c1a46ad1cdb19e40",
+      "size_bytes": 5940
+    },
+    "summary.json": {
+      "sha256": "772a3bc7022c97f9e654b3b1661054a6dc45fc570692c71c25acf8551963d53d",
+      "size_bytes": 2882
+    }
+  },
+  "project": "SkynetVS",
+  "review_scope": "User-invoked experiment and automated check records; no DTR promotion or model-weight training.",
+  "run_id": "c4c656c39ffe46e0902f7f7eff7cb33e",
+  "schema": "SKYNETVS_PUBLIC_EXPERIMENT_RECEIPT_V1",
+  "stage": "M154"
+}

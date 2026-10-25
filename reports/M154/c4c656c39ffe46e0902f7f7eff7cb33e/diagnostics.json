@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "code": "BASE_COMMIT_MISMATCH",
+      "detail": "Source HEAD differs from the pinned experiment base.",
+      "stage": "READ_SOURCE"
+    }
+  ],
+  "schema": "SKYNETVS_M154_EXPERIMENT_DIAGNOSTICS_V1"
+}
