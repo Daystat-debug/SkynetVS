@@ -12,7 +12,7 @@ import re
 import time
 from typing import Any, Callable, Mapping
 
-from tools.label_inbox import add_example
+from modules.learning.intent_examples import add_example
 
 
 _ALLOWED_CONFIRM = frozenset(("да", "подтверждаю"))
@@ -156,7 +156,7 @@ class ConfirmedVoiceLearning:
             return DialogueEvent(self._phase, "CONFIRM_REQUIRED", f"Запомнить фразу «{text}» для {self._intent}? Скажи «да» или «нет».", True)
         if text not in _ALLOWED_CONFIRM:
             return DialogueEvent(self._phase, "CONFIRM_EXPLICIT_YES_REQUIRED", "Подтверди только словом «да» или отмени словом «нет».", True)
-        # No side effects; the unchanged existing label_inbox.add_example is used on COPY.
+        # The shared helper changes only this in-memory copy.
         output = copy.deepcopy(self._base)
         if not add_example(output, self._intent, self._phrase):
             self._reset()

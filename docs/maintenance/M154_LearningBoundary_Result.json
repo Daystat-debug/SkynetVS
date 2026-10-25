@@ -1,0 +1,48 @@
+{
+  "kind": "M154_LEARNING_BOUNDARY_RESULT_V1",
+  "package_id": "26d96f781f46e803ccc7d9d6c42a959cac5c7bb29dc3b0cd4916195c0694c4bd",
+  "base_commit": "75061168ac5147c90fa725cf41b26e4248571730",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 3.046,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "intent_examples",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 9,
+      "seconds": 0.297,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d2acfd70b0312cc438e39bfa58ce6bbdf018b59037cc1e81523f446c3179c63d"
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "modules/learning/confirmed_voice_learning.py": "0b7d9f3da4edd91fdc890a861cf3b9d13713fbb0d95b0e523779938e4fc47ea3",
+    "tools/label_inbox.py": "3ce517c75b53725cc480d37e7cc35a4bc42a40af9ad66e5f9742c6ade0a4202b",
+    "modules/learning/intent_examples.py": "6ba2185e59f268f3aeeb490163a0313990ec826d6b101f2be9982557c37362d2",
+    "tools/eval_intent_examples.py": "6c59e905fe5903b8563818df41a6b9b4a48784ac6bcf803bac0d0ff9190ea052"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "lesson": {
+    "rule": "Shared learning logic belongs in modules, not a CLI tool.",
+    "regression": "Runtime import without tools; direct and module CLI invocation.",
+    "root_cause": "confirmed_voice_learning imported tools.label_inbox.add_example"
+  }
+}

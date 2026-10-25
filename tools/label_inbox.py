@@ -2,8 +2,15 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Dict, Any, List, Tuple
+
+if __package__ in (None, ""):
+    # Preserve the documented direct invocation: python tools/label_inbox.py.
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from modules.learning.intent_examples import add_example
 
 INTENTS_PATH = Path("data/intents.json")
 INBOX_PATH = Path("data/inbox_unlabeled.jsonl")
@@ -28,41 +35,6 @@ def list_intent_names(data: Dict[str, Any]) -> List[str]:
         if name:
             names.append(name)
     return sorted(set(names))
-
-
-def add_example(data: Dict[str, Any], intent: str, text: str) -> bool:
-    """
-    Добавляет text в examples выбранного intent.
-    Возвращает True если добавили, False если уже был.
-    """
-    intent = intent.strip().upper()
-    text = " ".join(text.lower().split()).strip()
-    if not intent or not text:
-        return False
-
-    intents = data.get("intents") or []
-    # найти intent
-    target = None
-    for it in intents:
-        if str(it.get("intent") or "").strip().upper() == intent:
-            target = it
-            break
-    if target is None:
-        # если вдруг нет такого intent — создадим
-        target = {"intent": intent, "examples": []}
-        intents.append(target)
-        data["intents"] = intents
-
-    examples = target.get("examples")
-    if not isinstance(examples, list):
-        examples = []
-        target["examples"] = examples
-
-    if any((" ".join(str(x).lower().split()) == text) for x in examples):
-        return False
-
-    examples.append(text)
-    return True
 
 
 def read_jsonl(path: Path) -> List[Dict[str, Any]]:
