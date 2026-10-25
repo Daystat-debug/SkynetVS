@@ -1,0 +1,42 @@
+{
+  "status": "PASS_11_FOCUSED_GIT_CHECKS",
+  "environment": "Linux",
+  "python": "3.12.14",
+  "groups": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "test_probe.py"
+      ],
+      "tests": 7,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "test_workspace_check.py"
+      ],
+      "tests": 4,
+      "skipped": 0,
+      "exit_code": 0
+    }
+  ],
+  "network_used_by_tests": false,
+  "publication_scope": "DISPOSABLE_LOCAL_BARE_REPOSITORIES",
+  "windows_runtime_executed": false,
+  "logs_source": "Actual outputs of the two completed root tool calls, copied into preparation_qa.log.txt",
+  "files_sha256": {
+    "probe.py": "079ac05512158350e3594518d37098654106184e6adca0745026d0d5a4772014",
+    "test_probe.py": "4860e829407af33c5f978f103cc2c825a9abd3cfbcb2666037fb612162eb0f14",
+    "workspace_check.py": "1224fedb1d2e1b57fd196c96c3fdb66949b944ce412c8119d998fb09785e62d7",
+    "test_workspace_check.py": "ff794a295e0632c08cbe3170393842a67fd062486b68fc7271962359d7d2b597",
+    "preparation_qa.log.txt": "a26c18eb0731035bcdb517cde0cc95323123880cc224673bfb33042a4a302912"
+  }
+}

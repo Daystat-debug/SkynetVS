@@ -1,0 +1,62 @@
+{
+  "files": {
+    "diagnostics.json": {
+      "sha256": "339acc3b09add3c3d0e689adf17878a1bd264d3a3f00fccce7db538630e20066",
+      "size_bytes": 19
+    },
+    "summary.json": {
+      "sha256": "8de513729f2d75ba4a14fa2410e1eebe03af3c4c4677552f09e91027116cc227",
+      "size_bytes": 9804
+    },
+    "tool/development_lessons.py": {
+      "sha256": "d82faf64a6df755808de5ad72c5c227ecd9c26fdd9aa8a53bb7c28dbc422590c",
+      "size_bytes": 10373
+    },
+    "tool/git_transport.py": {
+      "sha256": "40edd083316797a2ca699c49679b35f2dbf471df8d29dbd47d2205eeb8d1e978",
+      "size_bytes": 18241
+    },
+    "tool/launch_template.ps1": {
+      "sha256": "8dab1a548a508517b5fca5a5e2ef225c3c96801144e7dcbbc1e97b778f690ac6",
+      "size_bytes": 9882
+    },
+    "tool/manifest.json": {
+      "sha256": "a7b1517c8c6b057be41d7c81a14b0d2199978e32b7d8c0acdee97a37ce2a6813",
+      "size_bytes": 2397
+    },
+    "tool/preparation_qa.json": {
+      "sha256": "90c222403fb8ae048491b09c900a25aa71e7dbf04cb1b033f837cb7ccdcf70f4",
+      "size_bytes": 1220
+    },
+    "tool/preparation_qa.log.txt": {
+      "sha256": "a26c18eb0731035bcdb517cde0cc95323123880cc224673bfb33042a4a302912",
+      "size_bytes": 2396
+    },
+    "tool/probe.py": {
+      "sha256": "079ac05512158350e3594518d37098654106184e6adca0745026d0d5a4772014",
+      "size_bytes": 13933
+    },
+    "tool/test_probe.py": {
+      "sha256": "4860e829407af33c5f978f103cc2c825a9abd3cfbcb2666037fb612162eb0f14",
+      "size_bytes": 8289
+    },
+    "tool/test_workspace_check.py": {
+      "sha256": "ff794a295e0632c08cbe3170393842a67fd062486b68fc7271962359d7d2b597",
+      "size_bytes": 6670
+    },
+    "tool/workflow_run.py": {
+      "sha256": "4dc30cfd244bdee5228b9e1f1eea53d68f84621d8f3ebda1bd512d60dfc981be",
+      "size_bytes": 35474
+    },
+    "tool/workspace_check.py": {
+      "sha256": "1224fedb1d2e1b57fd196c96c3fdb66949b944ce412c8119d998fb09785e62d7",
+      "size_bytes": 10062
+    }
+  },
+  "project": "SkynetVS",
+  "purpose": "WORKSPACE_BRANCH_AND_IGNORE_DIAGNOSTIC",
+  "run_id": "31b6bbdeb9824672a8cbc774ea9f9f81",
+  "schema": "SKYNETVS_M154_WORKSPACE_RECEIPT_V1",
+  "scope": "Read-only workspace observations and the exact trusted diagnostic source/tests. No project change or pipeline result.",
+  "stage": "M154"
+}

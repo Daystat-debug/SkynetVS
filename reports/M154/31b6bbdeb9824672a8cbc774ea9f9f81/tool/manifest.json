@@ -1,0 +1,63 @@
+{
+  "actions": [
+    "Read the explicit selected repository and the known script source if different.",
+    "Record branch/HEAD, ignore metadata and status counts without project writes.",
+    "Commit exact diagnostic source/tests and the public report in an independent report repository.",
+    "Push reports/m154 with normal Git authentication; preserve a pending local commit when offline."
+  ],
+  "expected_project": "https://github.com/Daystat-debug/SkynetVS.git",
+  "expected_reminder_base": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "files": {
+    "development_lessons.py": {
+      "sha256": "d82faf64a6df755808de5ad72c5c227ecd9c26fdd9aa8a53bb7c28dbc422590c",
+      "size_bytes": 10373
+    },
+    "git_transport.py": {
+      "sha256": "40edd083316797a2ca699c49679b35f2dbf471df8d29dbd47d2205eeb8d1e978",
+      "size_bytes": 18241
+    },
+    "launch_template.ps1": {
+      "sha256": "8dab1a548a508517b5fca5a5e2ef225c3c96801144e7dcbbc1e97b778f690ac6",
+      "size_bytes": 9882
+    },
+    "preparation_qa.json": {
+      "sha256": "90c222403fb8ae048491b09c900a25aa71e7dbf04cb1b033f837cb7ccdcf70f4",
+      "size_bytes": 1220
+    },
+    "preparation_qa.log.txt": {
+      "sha256": "a26c18eb0731035bcdb517cde0cc95323123880cc224673bfb33042a4a302912",
+      "size_bytes": 2396
+    },
+    "probe.py": {
+      "sha256": "079ac05512158350e3594518d37098654106184e6adca0745026d0d5a4772014",
+      "size_bytes": 13933
+    },
+    "test_probe.py": {
+      "sha256": "4860e829407af33c5f978f103cc2c825a9abd3cfbcb2666037fb612162eb0f14",
+      "size_bytes": 8289
+    },
+    "test_workspace_check.py": {
+      "sha256": "ff794a295e0632c08cbe3170393842a67fd062486b68fc7271962359d7d2b597",
+      "size_bytes": 6670
+    },
+    "workflow_run.py": {
+      "sha256": "4dc30cfd244bdee5228b9e1f1eea53d68f84621d8f3ebda1bd512d60dfc981be",
+      "size_bytes": 35474
+    },
+    "workspace_check.py": {
+      "sha256": "1224fedb1d2e1b57fd196c96c3fdb66949b944ce412c8119d998fb09785e62d7",
+      "size_bytes": 10062
+    }
+  },
+  "helper_origin_commit": "75061168ac5147c90fa725cf41b26e4248571730",
+  "known_script_source": "C:/Project/SkynetVS",
+  "message": 71,
+  "model_called": false,
+  "pipeline_run": false,
+  "project_write": false,
+  "purpose": "WORKSPACE_BRANCH_AND_IGNORE_DIAGNOSTIC",
+  "repair_applied": false,
+  "schema": "SKYNETVS_M154_WORKSPACE_CHECK_PACKAGE_V1",
+  "source_git_write": false,
+  "stage": "M154"
+}

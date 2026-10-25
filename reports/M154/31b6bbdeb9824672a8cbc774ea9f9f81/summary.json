@@ -1,0 +1,268 @@
+{
+  "errors": [],
+  "exit_code": 0,
+  "expected_reminder_base": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "finished_at": "2026-10-25T15:31:01+00:00",
+  "main_merged": false,
+  "observations": [
+    {
+      "label": "selected_repository",
+      "observation": {
+        "branch": "sandbox/m154",
+        "changed_path_categories": {},
+        "changed_path_count": 0,
+        "detached_head": false,
+        "expected_base": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+        "expected_base_object_available": true,
+        "git_directory": "C:\\Project\\SkynetVS\\.git",
+        "git_snapshot_after": {
+          "config": {
+            "kind": "file",
+            "sha256": "59ec765fbb86ea584d18847560b54f07011b8ea2a95cfc61a11c4b5d12c8aa27",
+            "size_bytes": 690
+          },
+          "head": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+          "index": {
+            "kind": "file",
+            "sha256": "27cbac466ce64bec040b8fa97059a40e9a116519c4aaa77ec5b4acd2c241ef77",
+            "size_bytes": 68619
+          },
+          "refs_sha256": "16a7ebd0bdfbf53ee6f54cb13a60ac0708b59da0c830be4cbc0ad426ba3c09b9",
+          "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "symbolic_head": "refs/heads/sandbox/m154"
+        },
+        "git_snapshot_before": {
+          "config": {
+            "kind": "file",
+            "sha256": "59ec765fbb86ea584d18847560b54f07011b8ea2a95cfc61a11c4b5d12c8aa27",
+            "size_bytes": 690
+          },
+          "head": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+          "index": {
+            "kind": "file",
+            "sha256": "27cbac466ce64bec040b8fa97059a40e9a116519c4aaa77ec5b4acd2c241ef77",
+            "size_bytes": 68619
+          },
+          "refs_sha256": "16a7ebd0bdfbf53ee6f54cb13a60ac0708b59da0c830be4cbc0ad426ba3c09b9",
+          "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "symbolic_head": "refs/heads/sandbox/m154"
+        },
+        "head": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+        "head_layout": {
+          "classification": "SOURCE_TREE",
+          "known_root_entries": [
+            ".env.example",
+            ".gitattributes",
+            ".gitignore",
+            "README.md",
+            "data",
+            "main.py",
+            "modules",
+            "native",
+            "tools",
+            "train"
+          ],
+          "other_root_entry_count": 6,
+          "root_entry_count": 16
+        },
+        "ignore_probes": [
+          {
+            "ignored_by_rules": false,
+            "kind": "file",
+            "matched": false,
+            "path": ".gitignore",
+            "pattern": "",
+            "pattern_truncated": false,
+            "rule_line": null,
+            "rule_source": "",
+            "tracked_in_index": true
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": ".env",
+            "pattern": ".env",
+            "pattern_truncated": false,
+            "rule_line": 4,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": ".idea/misc.xml",
+            "pattern": ".idea/",
+            "pattern_truncated": false,
+            "rule_line": 32,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": ".idea/SkynetVS.iml",
+            "pattern": ".idea/",
+            "pattern_truncated": false,
+            "rule_line": 32,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": "__pycache__/main.cpython-312.pyc",
+            "pattern": "__pycache__/",
+            "pattern_truncated": false,
+            "rule_line": 11,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "file",
+            "matched": true,
+            "path": ".venv/pyvenv.cfg",
+            "pattern": ".venv/",
+            "pattern_truncated": false,
+            "rule_line": 25,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": "venv/pyvenv.cfg",
+            "pattern": "venv/",
+            "pattern_truncated": false,
+            "rule_line": 26,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": "models/nlu_intent.joblib",
+            "pattern": "models/",
+            "pattern_truncated": false,
+            "rule_line": 42,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": "data/inbox_labeled.jsonl",
+            "pattern": "data/inbox_labeled.jsonl",
+            "pattern_truncated": false,
+            "rule_line": 70,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": "data/inbox_unlabeled.jsonl",
+            "pattern": "data/inbox_unlabeled.jsonl",
+            "pattern_truncated": false,
+            "rule_line": 69,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": "data/learning/alias_suggestions.jsonl",
+            "pattern": "data/learning/*.jsonl",
+            "pattern_truncated": false,
+            "rule_line": 68,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          },
+          {
+            "ignored_by_rules": true,
+            "kind": "missing",
+            "matched": true,
+            "path": "data/learning/command_history.jsonl",
+            "pattern": "data/learning/*.jsonl",
+            "pattern_truncated": false,
+            "rule_line": 68,
+            "rule_source": ".gitignore",
+            "tracked_in_index": false
+          }
+        ],
+        "inherited_git_environment_names": [],
+        "local_branch_refs": {
+          "main": "b7f78db7703bb58aa2e1819b5a2310171be07260",
+          "reports/m154": "acf82bc555515970c13c92d8428aa58d110a1300",
+          "sandbox/m154": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb"
+        },
+        "project_identity_basis": "expected GitHub origin URL; credentials and URL are not published",
+        "project_verified": true,
+        "raw_status_names_published": false,
+        "repairs_attempted": false,
+        "repository_root": "C:\\Project\\SkynetVS",
+        "repository_root_path_sha256": "2e39aa12565ae04f3e35fb5d12411e806755687450bb193b97499dbba936d864",
+        "root_gitignore": {
+          "expected_base": {
+            "oid": "0aaa7eb6e3cbf342b33544b6637dd0c8db767d14",
+            "present": true,
+            "sha256": "904ca6bce902fec65cd4173fd8aebed71672372f0a1e1d8276cc396d266c05da",
+            "size_bytes": 1338
+          },
+          "head": {
+            "oid": "0aaa7eb6e3cbf342b33544b6637dd0c8db767d14",
+            "present": true,
+            "sha256": "904ca6bce902fec65cd4173fd8aebed71672372f0a1e1d8276cc396d266c05da",
+            "size_bytes": 1338
+          },
+          "index": {
+            "oid": "0aaa7eb6e3cbf342b33544b6637dd0c8db767d14",
+            "present": true,
+            "sha256": "904ca6bce902fec65cd4173fd8aebed71672372f0a1e1d8276cc396d266c05da",
+            "size_bytes": 1338
+          },
+          "worktree": {
+            "bom": "NONE",
+            "kind": "file",
+            "line_count": 94,
+            "nul_byte_count": 0,
+            "raw_content_published": false,
+            "sha256": "de788f7591b8ef1644a7a93ceba4302c242c0ba742faf8f212f9eb38b63157d9",
+            "size_bytes": 1432
+          },
+          "worktree_matches_head": false
+        },
+        "runtime_contents_captured_or_published": false,
+        "runtime_files_opened_directly_by_probe": false,
+        "schema": "SKYNETVS_M154_WORKSPACE_PROBE_V1",
+        "selected_path": "C:\\Project\\SkynetVS",
+        "snapshot_scope": "HEAD, symbolic HEAD, refs, index, repository config, porcelain. Git may inspect tracked files for status; no runtime contents are captured or published. No complete filesystem byte audit.",
+        "source_git_state_unchanged": true,
+        "status": "COLLECTED",
+        "status_counts": {},
+        "tracked_ignored_categories": {},
+        "tracked_ignored_count": 0
+      }
+    }
+  ],
+  "pipeline_executed": false,
+  "purpose": "WORKSPACE_BRANCH_AND_IGNORE_DIAGNOSTIC",
+  "repair_applied": false,
+  "report_contains_user_runtime_file_contents": false,
+  "run_id": "31b6bbdeb9824672a8cbc774ea9f9f81",
+  "schema": "SKYNETVS_M154_WORKSPACE_DIAGNOSTIC_V1",
+  "scope": "Git metadata, ignore rules for fixed probe paths, counts and hashes; source file contents and arbitrary untracked names are not published.",
+  "selected_path_differs_from_previous_script_source": false,
+  "source_git_written": false,
+  "source_project_written": false,
+  "status": "COLLECTED"
+}
