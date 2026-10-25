@@ -1,0 +1,172 @@
+"""Real-Git transport checks; no network, no project repository writes."""
+from __future__ import annotations
+
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from git_transport import Transport, TransportError
+
+
+class TransportTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory(prefix="m154_git_test_")
+        self.root = Path(self.temporary.name)
+        self.remote = self.root / "remote.git"
+        self.code = self.root / "code"
+        self.git(self.root, "init", "--bare", "--quiet", str(self.remote))
+        self.git(self.root, "init", "--quiet", str(self.code))
+        (self.code / "example.py").write_bytes(b"value = 1\n")
+        self.git(self.code, "add", "--", "example.py")
+        self.git(self.code, "commit", "--quiet", "-m", "fixture base")
+        self.base = self.git(self.code, "rev-parse", "HEAD").strip().decode()
+        self.git(self.code, "push", "--quiet", str(self.remote), "HEAD:refs/heads/main", "HEAD:refs/heads/sandbox/m154")
+        self.base_refs = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/main", "refs/heads/sandbox/m154")
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def git(self, directory: Path, *arguments: str) -> bytes:
+        environment = {k: v for k, v in os.environ.items() if not k.upper().startswith("GIT_")}
+        environment.update(GIT_AUTHOR_NAME="M154 test", GIT_AUTHOR_EMAIL="test@example.invalid",
+                           GIT_COMMITTER_NAME="M154 test", GIT_COMMITTER_EMAIL="test@example.invalid")
+        return subprocess.run(["git", "--no-optional-locks", "-C", str(directory),
+                               "-c", "core.autocrlf=false", "-c", "commit.gpgsign=false",
+                               "-c", "core.hooksPath=" + os.devnull, "-c", "core.fsmonitor=false", *arguments],
+                              env=environment, check=True, stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE, timeout=30).stdout
+
+    def files(self, run: str, data: bytes = b'{"result":"FAIL","exit_code":2}\n') -> dict[str, bytes]:
+        return {"reports/M154/" + run + "/summary.json": data,
+                "reports/M154/" + run + "/diagnostics.json": b'{"issues":["TEST_FAILURE"]}\n'}
+
+    def make(self, run: str, remote: Path | None = None, data: bytes | None = None) -> Transport:
+        transport = Transport(self.root / ("queue_" + run), str(remote or self.remote))
+        transport.prepare_report(self.files(run) if data is None else self.files(run, data), run)
+        return transport
+
+    def test_failed_run_is_published_and_retry_creates_no_commit(self) -> None:
+        run = "a" * 32
+        transport = self.make(run)
+        result = transport.publish(self.code, self.base, "experiments/m154/" + run)
+        self.assertEqual("PUBLISHED", result["queue_state"])
+        first = result["report"]["commit"]
+        for path, data in self.files(run).items():
+            self.assertEqual(data, self.git(self.remote, "show", first + ":" + path))
+        retry = Transport(transport.state_dir, str(self.remote)).publish()
+        self.assertEqual(first, retry["report"]["commit"])
+        self.assertEqual(self.base_refs, self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/main", "refs/heads/sandbox/m154"))
+
+    def test_offline_first_commit_and_later_publication(self) -> None:
+        run = "b" * 32
+        late_remote = self.root / "later.git"
+        transport = self.make(run, late_remote)
+        local_commit = transport.state["local_commit"]
+        self.assertEqual(b"commit\n", self.git(transport.repo, "cat-file", "-t", local_commit))
+        result = transport.publish(self.code, self.base, "experiments/m154/" + run)
+        self.assertEqual("PENDING", result["queue_state"])
+        self.git(self.root, "init", "--bare", "--quiet", str(late_remote))
+        retried = Transport(transport.state_dir, str(late_remote)).publish()
+        self.assertEqual("PUBLISHED", retried["queue_state"])
+        self.assertEqual(local_commit, retried["local_report_commit"])
+
+    def test_report_append_preserves_other_runs(self) -> None:
+        left, right = self.make("c" * 32), self.make("d" * 32)
+        first = left.publish()["report"]["commit"]
+        second = right.publish()["report"]["commit"]
+        self.assertEqual(first, self.git(self.remote, "rev-parse", second + "^").strip().decode())
+        for run in ("c" * 32, "d" * 32):
+            for path, data in self.files(run).items():
+                self.assertEqual(data, self.git(self.remote, "show", second + ":" + path))
+
+    def test_refused_report_push_is_retried_against_new_parent(self) -> None:
+        first, rival = self.make("e" * 32), self.make("f" * 32)
+        original = first._git
+        interrupted = False
+
+        def raced(repo, args, **kwargs):
+            nonlocal interrupted
+            if args and args[0] == "push" and not interrupted:
+                interrupted = True
+                self.assertEqual("PUBLISHED", rival.publish()["queue_state"])
+            return original(repo, args, **kwargs)
+
+        first._git = raced
+        result = first.publish()
+        self.assertEqual("PUBLISHED", result["queue_state"])
+        for run in ("e" * 32, "f" * 32):
+            self.git(self.remote, "show", result["report"]["commit"] + ":" + next(iter(self.files(run))))
+
+    def test_remote_immutable_conflict_preserves_existing_report(self) -> None:
+        run = "1" * 32
+        first = self.make(run)
+        initial_commit = first.publish()["report"]["commit"]
+        other = Transport(self.root / "conflicting_queue", str(self.remote))
+        other.prepare_report(self.files(run, b'{"different":true}\n'), run)
+        result = other.publish()
+        self.assertEqual("CONFLICT", result["report"]["status"])
+        current = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/reports/m154").decode().split()[0]
+        self.assertEqual(initial_commit, current)
+
+    def test_candidate_failure_does_not_suppress_report(self) -> None:
+        run = "2" * 32
+        transport = self.make(run)
+        result = transport.publish(self.root / "missing_candidate", self.base, "experiments/m154/" + run)
+        self.assertEqual("PENDING", result["candidate"]["status"])
+        self.assertEqual("PUBLISHED", result["report"]["status"])
+        self.assertEqual("PENDING", result["queue_state"])
+
+    def test_existing_run_file_set_cannot_be_extended(self) -> None:
+        run = "6" * 32
+        first = self.make(run)
+        initial_commit = first.publish()["report"]["commit"]
+        extended = dict(self.files(run))
+        extended["reports/M154/" + run + "/extra.json"] = b'{"extra":true}\n'
+        other = Transport(self.root / "extended_queue", str(self.remote))
+        other.prepare_report(extended, run)
+        result = other.publish()
+        self.assertEqual("CONFLICT", result["report"]["status"])
+        current = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/reports/m154").decode().split()[0]
+        self.assertEqual(initial_commit, current)
+
+    def test_existing_candidate_ref_is_never_overwritten(self) -> None:
+        run = "3" * 32
+        self.git(self.code, "push", "--quiet", str(self.remote), self.base + ":refs/heads/experiments/m154/" + run)
+        (self.code / "example.py").write_bytes(b"value = 2\n")
+        self.git(self.code, "add", "--", "example.py")
+        self.git(self.code, "commit", "--quiet", "-m", "different candidate")
+        other = self.git(self.code, "rev-parse", "HEAD").strip().decode()
+        result = self.make(run).publish(self.code, other, "experiments/m154/" + run)
+        self.assertEqual("CONFLICT", result["candidate"]["status"])
+        self.assertEqual("PUBLISHED", result["report"]["status"])
+        existing = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/experiments/m154/" + run).decode().split()[0]
+        self.assertEqual(self.base, existing)
+
+    def test_local_bytes_and_candidate_binding_are_immutable(self) -> None:
+        run = "4" * 32
+        transport = self.make(run)
+        again = transport.prepare_report(self.files(run), run)
+        self.assertEqual(transport.state["local_commit"], again["local_commit"])
+        with self.assertRaisesRegex(TransportError, "LOCAL_RUN_IMMUTABLE_CONFLICT"):
+            transport.prepare_report(self.files(run, b"changed"), run)
+        with self.assertRaisesRegex(TransportError, "INVALID_CANDIDATE_BINDING"):
+            transport.publish(self.code, self.base, "main")
+
+    def test_recover_local_commit_if_state_write_was_interrupted(self) -> None:
+        run = "5" * 32
+        transport = self.make(run)
+        saved = transport.state["local_commit"]
+        transport.state_file.unlink()
+        recovered = Transport(transport.state_dir, str(self.remote))
+        result = recovered.prepare_report(self.files(run), run)
+        self.assertEqual(saved, result["local_commit"])
+        self.assertEqual("PUBLISHED", recovered.publish()["queue_state"])
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

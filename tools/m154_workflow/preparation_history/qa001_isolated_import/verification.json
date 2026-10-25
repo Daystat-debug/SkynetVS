@@ -1,0 +1,19 @@
+{
+  "schema": "SKYNETVS_PREPARATION_FIX_VERIFICATION_V1",
+  "attempt": "qa001_isolated_import",
+  "status": "PASS",
+  "exit_code": 0,
+  "command": [
+    "python",
+    "-I",
+    "-S",
+    "-B",
+    "tools/m154_workflow/test_git_transport.py"
+  ],
+  "tests_passed": 10,
+  "cause_status": "VERIFIED",
+  "cause": "The isolated Python launch did not add the script directory to the module search path; the test harness imported a sibling module before adding its explicitly trusted directory.",
+  "fix": "Add Path(__file__).resolve().parent to sys.path before importing git_transport; disable unrelated global Git hooks in disposable fixture commands.",
+  "source_after_sha256": "331c4ddc00ce9f420d2fb5409738aaf652bb12eb45ce2e50899fc386635fb56e",
+  "repair_patch_sha256": "15068e8cf2a56c40e684e58a9f4538e8ed8cd00cfca3724b28f1ec48da904817"
+}

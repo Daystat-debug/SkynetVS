@@ -1,0 +1,24 @@
+--- a/tools/m154_workflow/test_git_transport.py
++++ b/tools/m154_workflow/test_git_transport.py
+@@ -5,9 +5,11 @@
+ import os
+ from pathlib import Path
+ import subprocess
++import sys
+ import tempfile
+ import unittest
+ 
++sys.path.insert(0, str(Path(__file__).resolve().parent))
+ from git_transport import Transport, TransportError
+ 
+ 
+@@ -34,7 +36,8 @@
+         environment.update(GIT_AUTHOR_NAME="M154 test", GIT_AUTHOR_EMAIL="test@example.invalid",
+                            GIT_COMMITTER_NAME="M154 test", GIT_COMMITTER_EMAIL="test@example.invalid")
+         return subprocess.run(["git", "--no-optional-locks", "-C", str(directory),
+-                               "-c", "core.autocrlf=false", "-c", "commit.gpgsign=false", *arguments],
++                               "-c", "core.autocrlf=false", "-c", "commit.gpgsign=false",
++                               "-c", "core.hooksPath=" + os.devnull, "-c", "core.fsmonitor=false", *arguments],
+                               env=environment, check=True, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, timeout=30).stdout
+ 

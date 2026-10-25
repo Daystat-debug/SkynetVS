@@ -1,0 +1,160 @@
+{
+  "schema": "SKYNETVS_DEVELOPMENT_LESSONS_V1",
+  "lessons": [
+    {
+      "id": "M154.static-is-not-full-check",
+      "status": "verified",
+      "scope": "Проверки DTR-B",
+      "tags": [
+        "dtr",
+        "dtr-b",
+        "dtrb",
+        "static",
+        "pipeline",
+        "проверка",
+        "статический"
+      ],
+      "paths": [
+        "modules/developer/developer_task_rehearsal.py",
+        "modules/developer/developer_task_rehearsal_contract.py",
+        "tools/pipeline.py"
+      ],
+      "symptom": "Успешный статический прогон можно ошибочно принять за завершение всех проверок исправления.",
+      "cause": "Контракт успеха static DTR-B специально оставляет pipeline(flow=check) в pending и all_required_checks_passed=false.",
+      "prevention": "Сохранять отдельные статусы static, исполняющего pipeline и применения изменения. При static PASS не объявлять поведение проверенным или patch применённым.",
+      "evidence": [
+        "https://github.com/Daystat-debug/SkynetVS/blob/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb/modules/developer/developer_task_rehearsal_contract.py#L138-L146",
+        "https://github.com/Daystat-debug/SkynetVS/blob/8b737a94b5c9315a187d2de527948cf331c84cc2/reports/M154/a743e3a6ac074f558d0ccc545602f074/summary.json"
+      ],
+      "regression_check": "Проверить, что receipt статического успеха сохраняет pending pipeline и не получает статус полного PASS."
+    },
+    {
+      "id": "M154.keep-report-git-independent",
+      "status": "verified",
+      "scope": "Передача результатов через Git",
+      "tags": [
+        "git",
+        "reports",
+        "report",
+        "commit",
+        "fingerprint",
+        "отчёт",
+        "отчеты",
+        "публикация"
+      ],
+      "paths": [
+        "modules/developer/developer_task_preflight.py",
+        "modules/developer/developer_task_workspace_source.py",
+        "tools/m154_workflow/"
+      ],
+      "symptom": "Запись отчёта в проверяемый working tree или новый commit меняет состояние, к которому был привязан DTR-запрос.",
+      "cause": "Preflight требует exact HEAD==base_commit и чистое дерево; source fingerprint включает также refs, index и config.",
+      "prevention": "Публиковать результаты через независимую Git-копию и reports/m154; кандидат эксперимента хранить отдельно. В каждом отчёте указывать base и фактически проверенный candidate commit.",
+      "evidence": [
+        "https://github.com/Daystat-debug/SkynetVS/blob/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb/modules/developer/developer_task_preflight.py#L523-L580",
+        "https://github.com/Daystat-debug/SkynetVS/blob/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb/modules/developer/developer_task_workspace_source.py#L33-L46"
+      ],
+      "regression_check": "Сопоставить HEAD/status/refs/index/config исходной копии до и после публикации."
+    },
+    {
+      "id": "M154.preserve-nested-failure-evidence",
+      "status": "verified",
+      "scope": "Диагностика запуска и очистка",
+      "tags": [
+        "diagnostics",
+        "failure",
+        "failed",
+        "cleanup",
+        "stderr",
+        "rehearsal_failed_clean",
+        "диагностика",
+        "ошибка",
+        "очистка"
+      ],
+      "paths": [
+        "modules/developer/developer_task_rehearsal.py",
+        "tools/m154_workflow/"
+      ],
+      "symptom": "Старый M154 runner выводил REHEARSAL_FAILED_CLEAN с пустым списком верхнеуровневых issues, теряя полезную причину этапа.",
+      "cause": "В исходной обёртке выводился агрегированный список, хотя native report сохранял данные сбоя во вложенных стадиях; временный selftest report удалялся при завершении.",
+      "prevention": "Сохранять итог и вложенные диагностические коды до очистки. При ошибке публикации сохранять подготовленные данные для повторной отправки. Не объявлять длинный Windows-путь доказанной первопричиной старого отказа.",
+      "evidence": [
+        "sha256:a25fcbd5423ab41604c7dd08e6b4b73682ed27b11a6e64145a3c6d2b350ed819",
+        "sha256:242a071f9b7a64448eae741a3fd52634c06e0ba2043816ed046b9602f1e67cf2"
+      ],
+      "regression_check": "Искусственно вызвать ошибку дочернего процесса и убедиться, что код этапа и отчёт сохраняются после завершения."
+    },
+    {
+      "id": "M154.deduplicate-stripped-task-text",
+      "status": "verified",
+      "scope": "Формирование запроса DTR",
+      "tags": [
+        "prompt",
+        "title",
+        "instruction",
+        "strip",
+        "deduplication",
+        "дублирование",
+        "повтор"
+      ],
+      "paths": [
+        "modules/developer_task_ui/app/core.py"
+      ],
+      "symptom": "Раздел «Задача» повторял одну формулировку, когда title и instruction совпадали после удаления краевых пробелов.",
+      "cause": "Отдельный вывод title и instruction без сравнения нормализованных краёв воспроизводил одинаковый текст дважды.",
+      "prevention": "Сравнивать title.strip() и instruction.strip(); одинаковую формулировку выводить один раз, разные — обе. Сохранять request_id, request_fingerprint и структуру DTR_Request.json.",
+      "evidence": [
+        "https://github.com/Daystat-debug/SkynetVS/commit/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+        "https://github.com/Daystat-debug/SkynetVS/blob/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb/modules/developer_task_ui/app/core.py#L197-L206"
+      ],
+      "regression_check": "Проверить одинаковые строки, различающиеся только краевыми пробелами строки и действительно разные формулировки."
+    },
+    {
+      "id": "M154.distinguish-web-and-git-access",
+      "status": "verified",
+      "scope": "Диагностика доступа к репозиторию",
+      "tags": [
+        "git",
+        "github",
+        "ls-remote",
+        "clone",
+        "disabledError",
+        "доступ",
+        "репозиторий"
+      ],
+      "paths": [],
+      "symptom": "Отказ веб-просмотра страницы GitHub может быть ошибочно принят за недоступность репозитория целиком.",
+      "cause": "В M154 #66 веб-просмотр вернул DisabledError, а прямые ls-remote/clone в той же сессии успешно получили опубликованный отчёт.",
+      "prevention": "Раздельно фиксировать результат веб-просмотра и прямого Git. Проверять refs и нужные blobs доступным Git-клиентом; выбирать резервный транспорт по фактической ошибке. Не выводить зависимость доступа от модели по одному успешному запуску.",
+      "evidence": [
+        "sha256:6359ec544d3a5c46f17429e8480d915163212abe501a58a334fc9a39848b62ea",
+        "https://github.com/Daystat-debug/SkynetVS/tree/8b737a94b5c9315a187d2de527948cf331c84cc2/reports/M154/a743e3a6ac074f558d0ccc545602f074"
+      ],
+      "regression_check": "Сохранять в отчёте отдельные исходы каналов и фактически полученный remote commit."
+    },
+    {
+      "id": "M154.verify-isolated-test-imports",
+      "status": "verified",
+      "scope": "Изолированный Python-запуск тестов",
+      "tags": [
+        "python",
+        "isolated",
+        "imports",
+        "-I",
+        "импорт",
+        "тесты"
+      ],
+      "paths": [
+        "tools/m154_workflow/"
+      ],
+      "symptom": "Тест транспорта проходил при обычном запуске, но завершался ModuleNotFoundError в режиме python -I -S -B, используемом подготовленным пакетом.",
+      "cause": "До импорта git_transport тест не добавлял явно доверенный каталог соседнего модуля в sys.path; изолированный запуск не предоставлял этот путь автоматически.",
+      "prevention": "Проверять скрипт теми же флагами Python, что использует launcher. Если самостоятельный доверенный пакет импортирует соседние модули, добавить его точный каталог перед импортом; не рассчитывать на cwd или PYTHONPATH.",
+      "evidence": [
+        "sha256:f47f52fd36d0c3c9de792e4b30fe283a56c5b84a0f87bf3b4d969b5fbce989de",
+        "sha256:8cd1794d7a800b3fec94d70a860926041bfbc7a5555c7bfcd338a595f1fe822f"
+      ],
+      "regression_check": "python -I -S -B tools/m154_workflow/test_git_transport.py; подтверждён PASS 10 тестов после исправления."
+    }
+  ]
+}

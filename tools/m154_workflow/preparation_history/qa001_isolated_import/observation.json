@@ -1,0 +1,19 @@
+{
+  "schema": "SKYNETVS_PREPARATION_ATTEMPT_V1",
+  "attempt": "qa001_isolated_import",
+  "status": "FAIL",
+  "exit_code": 1,
+  "command": [
+    "python",
+    "-I",
+    "-S",
+    "-B",
+    "tools/m154_workflow/test_git_transport.py"
+  ],
+  "source_sha256": "f7680fbc36f30bfb991a353d49542284fcc311c301281541fb5a4c92c8d6e2bb",
+  "failure_log_sha256": "f47f52fd36d0c3c9de792e4b30fe283a56c5b84a0f87bf3b4d969b5fbce989de",
+  "error_code": "ModuleNotFoundError",
+  "missing_module": "git_transport",
+  "cause_status": "AWAITING_FIX_VERIFICATION",
+  "followup": "Add the explicitly trusted sibling module directory before importing the local helper; rerun the same isolated command."
+}
