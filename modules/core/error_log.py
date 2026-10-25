@@ -9,12 +9,14 @@ from pathlib import Path
 from typing import Any
 
 
-_ERROR_LOG_PATH = os.getenv("ERROR_LOG_PATH", "data/logs/errors.jsonl").strip()
+_DEFAULT_ERROR_LOG_PATH = "data/logs/errors.jsonl"
 
 
 def log_error(source: str, message: str, **extra: Any) -> None:
     try:
-        path = Path(_ERROR_LOG_PATH)
+        # Configuration may be loaded from .env after this module is imported.
+        configured_path = os.getenv("ERROR_LOG_PATH", "").strip()
+        path = Path(configured_path or _DEFAULT_ERROR_LOG_PATH)
         path.parent.mkdir(parents=True, exist_ok=True)
 
         row = {

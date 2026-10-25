@@ -1,0 +1,46 @@
+{
+  "kind": "M154_ERROR_LOG_PATH_RESULT_V1",
+  "package_id": "bd7e70fc2a09a7e70fd6677f40f178ea6e64a7a1b31b814f60fcba423221e5a1",
+  "base_commit": "36f405f7f715d99349683b8af0242edf251c23e2",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.547,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "error_log",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 9,
+      "seconds": 0.219,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "8516a65afeb2f64165decfaea58f3333e721a9671c7ab3031a443805c1000153"
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "modules/core/error_log.py": "ffb03c2f3f255df0bebe53486a87a6448c9f076a9b26071b5fffbab7424f4381",
+    "tools/eval_error_log.py": "5edc730cc6bd01bc838834496551b49e3933aaa6dd291e706788e76aa9e31dc4"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "lesson": {
+    "rule": "Read mutable environment configuration when the operation needs it.",
+    "regression": "Set ERROR_LOG_PATH after importing the logger; write to the new path.",
+    "root_cause": "ERROR_LOG_PATH was cached at import before main.load_dotenv()"
+  }
+}
