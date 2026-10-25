@@ -1,0 +1,62 @@
+{
+  "kind": "M154_ERROR_LOG_MAIN_REVIEW_V1",
+  "main_base": "2b6723a991ed5696b1269653fc97d7bf9f1b82d7",
+  "source_fix": "df25fd355178e2c8a84f1e025a74bccd5ec4c0c7",
+  "source_base": "36f405f7f715d99349683b8af0242edf251c23e2",
+  "selected_fix_commit": "e7fede5abcfabe299ae132f872c12c203d25fe80",
+  "selected_fix_tree": "16131a7813acf8ce685015f5b891cce7bde0dab2",
+  "selection": "two_code_files_and_original_windows_report",
+  "old_experiment_files_included": false,
+  "source_windows_checks": {
+    "python": "3.12.10",
+    "package_boundaries": {
+      "cases": 32,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "error_log": {
+      "cases": 9,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "report_sha256": "70a929efb62bf3430397be9dadf2984733fa49b990b7f8886795fdff13727663"
+  },
+  "main_candidate_checks": {
+    "platform": "Linux",
+    "python": "3.12.14",
+    "package_boundaries": {
+      "cases": 32,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "error_log": {
+      "cases": 9,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "git_diff_check": "PASS"
+  },
+  "verification_scope": "selected_fix_tree; this review is a documentation-only addition",
+  "main_candidate_windows_run": "NOT_RUN",
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "source_and_main_input_files_identical": true,
+  "files": [
+    {
+      "path": "modules/core/error_log.py",
+      "bytes": 1138,
+      "sha256": "ffb03c2f3f255df0bebe53486a87a6448c9f076a9b26071b5fffbab7424f4381"
+    },
+    {
+      "path": "tools/eval_error_log.py",
+      "bytes": 6524,
+      "sha256": "5edc730cc6bd01bc838834496551b49e3933aaa6dd291e706788e76aa9e31dc4"
+    },
+    {
+      "path": "docs/maintenance/M154_ErrorLogPath_Result.json",
+      "bytes": 1586,
+      "sha256": "70a929efb62bf3430397be9dadf2984733fa49b990b7f8886795fdff13727663"
+    }
+  ]
+}
