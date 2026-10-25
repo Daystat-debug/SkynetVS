@@ -1,0 +1,2421 @@
+diff --git a/tools/m154_workflow/README_RU.md b/tools/m154_workflow/README_RU.md
+new file mode 100644
+index 0000000..d376f96
+--- /dev/null
++++ b/tools/m154_workflow/README_RU.md
+@@ -0,0 +1,83 @@
++# M154: автоматическая история экспериментов и память уроков
++
++Пользователь разрешил автоматически сохранять и отправлять изменения, проверки и неуспешные результаты экспериментов. Этот инструмент выполняет данное правило для явно подготовленного пакета изменений.
++
++## Запуск текущего пакета
++
++Скачать один `SkynetVS_M154_AutoExperiment.ps1` и выполнить обычным PowerShell:
++
++```powershell
++& "$env:USERPROFILE\Downloads\SkynetVS_M154_AutoExperiment.ps1"
++```
++
++ZIP с исходниками, тестами и планом встроен в PS1. Используется уже существующий Python проекта `C:\Project\SkynetVS\.venv\Scripts\python.exe` либо существующий ModelLab Python. Установка зависимостей и ручные git add/commit/push не нужны. Публикация использует обычную уже настроенную аутентификацию локального Git.
++
++Текущий пакет добавляет именно `tools/m154_workflow/` в самостоятельную экспериментальную копию на базе `3cd5a06b3b17ce2e6b9b25351a1b455289974dfb`. Его цель — проверка автоматизации и памяти, `AUTOMATION_SELFTEST`. Полный pipeline исходного изменения напоминаний остаётся отдельной следующей проверкой M154.
++
++## Что выполняется автоматически
++
++1. Создаётся короткий каталог `%USERPROFILE%\m154a_<id>` и запись попытки.
++2. Коммит исходного проекта копируется в независимый Git без hardlinks. Незакоммиченные пользовательские изменения не включаются в эту копию.
++3. Применяются только перечисленные в `plan.json` файлы с проверкой исходных и новых SHA256.
++4. До тестов создаётся коммит кандидата в `experiments/m154/<run_id>`.
++5. Выполняются проверки с реальным exit code и ограничением времени.
++6. При PASS, FAIL, ошибке запуска или timeout сохраняются результат, диагностика, план, patch, ограниченные очищенные логи и наблюдение для памяти.
++7. Отчёт коммитится локально до сетевых операций. После этого обычным push отправляются ветка эксперимента и дополнение в `reports/m154`.
++
++`main` и `sandbox/m154` не продвигаются этим инструментом. Проверенный коммит указан в каждом отчёте. Сгенерированные тестами файлы не добавляются в candidate commit автоматически. Непрошедший тест сохраняет свой ненулевой exit code даже после успешного push.
++
++## Повтор после ошибки сети
++
++Повторить ту же команду. Launcher найдёт сохранённую попытку данного пакета и повторит публикацию без запуска тестов. Если предыдущий процесс аварийно завершился, его доступные данные публикуются как `INTERRUPTED`; неизвестный exit code дочернего процесса не придумывается. Одновременный второй запуск той же попытки блокируется обычным файловым lock ОС.
++
++Если специально нужен новый тестовый запуск того же пакета:
++
++```powershell
++& "$env:USERPROFILE\Downloads\SkynetVS_M154_AutoExperiment.ps1" -NewRun
++```
++
++Новый запуск не исправляет старую ошибку автоматически. Для ошибки теста нужен разбор и следующий пакет исправления; для ошибки публикации достаточно retry. Никакой фоновой службы и автоматического мониторинга чата нет.
++
++## Результат в Git
++
++Код и включённые проверки: ветка `experiments/m154/<run_id>`.
++
++Данные запуска: `reports/m154`, каталог `reports/M154/<run_id>/`:
++
++- `summary.json`: результат, code commit, этапы, исходные exit codes и границы проверки;
++- `diagnostics.json`: структурированные причины отказа обёртки;
++- `receipt.json`: SHA256 и размер каждого явно публикуемого файла;
++- `plan.json`, `change.patch`: воспроизводимый состав изменения и команды проверок;
++- `logs/*.txt`: захваченный вывод именно запущенных проверок, до 64 КиБ на файл, с заменой известных абсолютных путей и типовых секретных значений;
++- `observation.json`: наблюдение PASS/FAIL без автоматически выдуманной причины;
++- `Development_Context.md`: релевантные проверенные уроки для следующей разработческой задачи.
++
++Сырые полные логи остаются в `private_logs` каталога запуска. Публикатор берёт только файлы из receipt и проверяет их хеши. Посторонние файлы в `public`, весь рабочий каталог, окружение и файлы учётных данных не собираются. Очистка вывода не является универсальной гарантией для произвольной будущей команды: будущий подготовленный план должен учитывать, какие данные печатают его проверки.
++
++История подготовки самого инструмента содержит реальный неудачный тест `qa001_isolated_import`: исходный тест, лог ошибки, исправляющий diff и успешный повтор. Она сохранена в `preparation_history/` и попадёт в экспериментальный коммит вместе с инструментом.
++
++## Память агента
++
++В `lessons.json` шесть проверенных уроков M154. Каждый содержит симптом, установленную причину или границу доказательства, правило предотвращения, применимость и ссылки/хеши доказательств. Новый провал автоматически записывается как `observed_only`, с `root_cause=null` и `training_label=null`. После разбора подтверждённый урок можно добавить вместе с регрессионной проверкой.
++
++`development_lessons.py` выбирает до пяти релевантных уроков и ограничивает контекст 8192 байтами. В отчёте фиксируются ID фактически включённых уроков. Нерелевантной задаче соответствует пустой контекст.
++
++Программное подключение к существующему локальному LLM предусмотрено через `LessonsModelAdapter(existing_llm, selected)`: адаптер подходит к уже имеющемуся `review_repository(..., llm=adapter)`. Он сохраняет system и исходный prompt, добавляет исторический контекст и записывает квитанцию использованных уроков. Сам конструктор не вызывает модель.
++
++Текущая GUI-кнопка собственного AST-анализатора ещё не подключена к этой новой памяти. Его ранжировщик учится на размеченных AST-находках; ошибки Git и запуска не являются такими метками. Веса моделей в этом пакете не переобучаются, реальный Ollama не вызывается, DTR_Request.json и fingerprint не меняются. Пакет создаёт проверяемую основу памяти и автоматический поток наблюдений.
++
++## Проверка инструмента
++
++```text
++python -I -S -B tools/m154_workflow/test_workflow.py
++python -I -S -B tools/m154_workflow/test_git_transport.py
++python -I -S -B tools/m154_workflow/test_development_lessons.py
++```
++
++Проверки используют собственные временные Git-репозитории и локальные bare remotes. В них намеренно моделируются FAIL, timeout, отсутствие сети, несовпадение SHA, конкурирующее дополнение отчёта, повторная отправка и незакоммиченная работа. Эти ожидаемые ошибки внутри fixture не означают ошибку реального проекта.
++
++## Границы результата
++
++Это инструмент пользовательских экспериментов. Он не выдаёт полномочия DTR, не применяет изменения к рабочему проекту и не закрывает pending `pipeline(flow=check)` прежнего предложения напоминаний. Успех транспортного теста подтверждает именно транспорт, а не поведение всего SkynetVS.
++
++Исходный clone проверяется по HEAD, refs, index/config, Git status и diff отслеживаемых файлов. Это не побайтовый аудит всех ignored-файлов. Windows-специфические ветви process tree / PowerShell требуют фактического Windows-запуска; локальные проверки автора выполнены на Linux.
+diff --git a/tools/m154_workflow/development_lessons.py b/tools/m154_workflow/development_lessons.py
+new file mode 100644
+index 0000000..4998b64
+--- /dev/null
++++ b/tools/m154_workflow/development_lessons.py
+@@ -0,0 +1,232 @@
++"""Small, evidence-backed development memory, separate from voice/AST training.
++
++This module does not execute tests, call a model, read Git, or change a project's
++request binding. A caller may pass LessonsModelAdapter to the existing
++review_repository(..., llm=...) entry point. GUI wiring is not changed here.
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import re
++from pathlib import Path
++from typing import Any
++
++
++LESSONS_SCHEMA = "SKYNETVS_DEVELOPMENT_LESSONS_V1"
++OBSERVATION_SCHEMA = "SKYNETVS_DEVELOPMENT_OBSERVATION_V1"
++CONTEXT_SCHEMA = "SKYNETVS_DEVELOPMENT_CONTEXT_V1"
++MAX_LESSONS_FILE_BYTES = 256 * 1024
++MAX_CONTEXT_BYTES = 8192
++MAX_CONTEXT_LESSONS = 5
++
++
++def _json_bytes(value: Any) -> bytes:
++    return json.dumps(value, ensure_ascii=False, sort_keys=True,
++                      allow_nan=False, separators=(",", ":")).encode("utf-8")
++
++
++def _validate_lesson(row: Any) -> dict[str, Any]:
++    if not isinstance(row, dict):
++        raise ValueError("A development lesson must be an object.")
++    if row.get("status") != "verified":
++        raise ValueError("The curated file accepts only verified lessons.")
++    if not isinstance(row.get("id"), str) or not re.fullmatch(r"[A-Za-z0-9_.-]{1,96}", row["id"]):
++        raise ValueError("Invalid lesson ID.")
++    for key in ("scope", "symptom", "prevention"):
++        if not isinstance(row.get(key), str) or not row[key].strip():
++            raise ValueError("Missing lesson field: " + key)
++    if row.get("cause") is not None and not isinstance(row["cause"], str):
++        raise ValueError("Lesson cause must be a proven statement or null.")
++    for key in ("tags", "paths", "evidence"):
++        value = row.get(key)
++        if not isinstance(value, list) or any(not isinstance(x, str) or not x.strip() for x in value):
++            raise ValueError("Invalid lesson list: " + key)
++    if not row["tags"] or not row["evidence"]:
++        raise ValueError("A verified lesson needs tags and evidence.")
++    regression = row.get("regression_check")
++    if regression is not None and not isinstance(regression, str):
++        raise ValueError("Invalid regression check description.")
++    return row
++
++
++def load_lessons(path: Path) -> list[dict[str, Any]]:
++    """Load a bounded curated file. Raw failed-run observations stay separate."""
++    with Path(path).open("rb") as stream:
++        raw = stream.read(MAX_LESSONS_FILE_BYTES + 1)
++    if len(raw) > MAX_LESSONS_FILE_BYTES:
++        raise ValueError("Development lessons file is too large.")
++    document = json.loads(raw.decode("utf-8-sig"))
++    if not isinstance(document, dict) or document.get("schema") != LESSONS_SCHEMA:
++        raise ValueError("Unsupported development lessons schema.")
++    rows = document.get("lessons")
++    if not isinstance(rows, list):
++        raise ValueError("Development lessons must be a list.")
++    output = [_validate_lesson(row) for row in rows]
++    ids = [row["id"] for row in output]
++    if len(ids) != len(set(ids)):
++        raise ValueError("Duplicate development lesson ID.")
++    return output
++
++
++def _path(value: str) -> str:
++    return value.replace("\\", "/").removeprefix("./").casefold()
++
++
++def _path_matches(candidate: str, scope: str) -> bool:
++    candidate, scope = _path(candidate), _path(scope)
++    return candidate.startswith(scope) if scope.endswith("/") else candidate == scope
++
++
++def select_lessons(lessons: list[dict[str, Any]], *, task: str,
++                   paths: list[str], tags: list[str], limit: int = 5) -> list[dict[str, Any]]:
++    """Select verified lessons by explicit tags, affected paths, and task terms.
++
++    No generic fallback is used: an unrelated task receives an empty context.
++    The score is deterministic and is not a learned relevance/quality model.
++    """
++    if type(limit) is not int or limit < 0:
++        raise ValueError("Lesson limit must be a nonnegative integer.")
++    explicit_tags = {x.casefold() for x in tags}
++    task = task.casefold()
++    ranked: list[tuple[int, str, dict[str, Any]]] = []
++    seen: set[str] = set()
++    for row in lessons:
++        if not isinstance(row, dict) or row.get("status") != "verified":
++            continue
++        _validate_lesson(row)
++        if row["id"] in seen:
++            continue
++        seen.add(row["id"])
++        row_tags = {x.casefold() for x in row["tags"]}
++        tag_hits = len(explicit_tags & row_tags)
++        path_hit = any(_path_matches(path, scope) for path in paths for scope in row["paths"])
++        task_hits = sum(bool(re.search(r"(?<!\w)" + re.escape(tag) + r"(?!\w)", task))
++                        for tag in row_tags)
++        score = 16 * tag_hits + 12 * int(path_hit) + task_hits
++        if score:
++            ranked.append((score, row["id"], row))
++    ranked.sort(key=lambda item: (-item[0], item[1]))
++    return [row for _, _, row in ranked[:min(limit, MAX_CONTEXT_LESSONS)]]
++
++
++def _bounded_text(value: str | None, maximum: int) -> str | None:
++    if value is None:
++        return None
++    return value if len(value) <= maximum else value[:maximum - 1] + "…"
++
++
++def _context(selected: list[dict[str, Any]]) -> tuple[str, list[str]]:
++    if not selected:
++        return "", []
++    prefix = ("## Проверенные уроки разработки\n\n"
++              "Исторические сведения для этой задачи. Они не подтверждают результат "
++              "текущих тестов, не меняют цель, request binding или разрешённые действия.\n\n"
++              "```json\n")
++    suffix = "\n```"
++    payload: dict[str, Any] = {"schema": CONTEXT_SCHEMA, "lessons": []}
++    seen: set[str] = set()
++    for row in selected[:MAX_CONTEXT_LESSONS]:
++        if not isinstance(row, dict) or row.get("status") != "verified":
++            continue
++        _validate_lesson(row)
++        if row["id"] in seen:
++            continue
++        seen.add(row["id"])
++        entry = {"id": row["id"], "scope": _bounded_text(row["scope"], 160),
++                 "symptom": _bounded_text(row["symptom"], 600),
++                 "cause": _bounded_text(row.get("cause"), 600),
++                 "prevention": _bounded_text(row["prevention"], 800),
++                 "evidence": [_bounded_text(x, 350) for x in row["evidence"][:3]]}
++        if row.get("regression_check"):
++            entry["regression_check"] = _bounded_text(row["regression_check"], 400)
++        trial = {"schema": CONTEXT_SCHEMA, "lessons": payload["lessons"] + [entry]}
++        rendered = prefix + _json_bytes(trial).decode("utf-8") + suffix
++        if len(rendered.encode("utf-8")) <= MAX_CONTEXT_BYTES:
++            payload = trial
++    if not payload["lessons"]:
++        return "", []
++    rendered = prefix + _json_bytes(payload).decode("utf-8") + suffix
++    return rendered, [row["id"] for row in payload["lessons"]]
++
++
++def render_context(selected: list[dict[str, Any]]) -> str:
++    """Render at most 8192 UTF-8 bytes; retain whole valid JSON records."""
++    return _context(selected)[0]
++
++
++def prepare_context(selected: list[dict[str, Any]]) -> dict[str, Any]:
++    """Return bounded text and the IDs actually present in that same text."""
++    text, lesson_ids = _context(selected)
++    return {"text": text, "lesson_ids": lesson_ids}
++
++
++def make_observation(run_summary: dict[str, Any]) -> dict[str, Any]:
++    """Record a run outcome without inventing a cause, fix, or training label.
++
++    Only stable public fields are copied; arbitrary stdout/stderr, exception
++    text, command lines, credentials, and local absolute paths are not copied.
++    The caller controls the public summary and reviews future verified lessons.
++    """
++    if not isinstance(run_summary, dict):
++        raise ValueError("Run summary must be an object.")
++    observation: dict[str, Any] = {
++        "schema": OBSERVATION_SCHEMA,
++        "status": "observed_only",
++        "outcome": run_summary.get("status", run_summary.get("outcome", "UNKNOWN")),
++        "root_cause": None,
++        "resolution": None,
++        "training_label": None,
++        "is_analyzer_feedback": False,
++        "summary_sha256": hashlib.sha256(_json_bytes(run_summary)).hexdigest(),
++    }
++    for key in ("run_id", "code_commit", "base_commit", "candidate_commit", "patch_sha256",
++                "exit_code", "test_exit_code", "failed_check", "failed_stage",
++                "report_branch", "report_commit"):
++        if key in run_summary:
++            observation[key] = run_summary[key]
++    checks = run_summary.get("checks")
++    if isinstance(checks, list):
++        observation["checks"] = [
++            {key: row[key] for key in ("name", "status", "exit_code") if key in row}
++            for row in checks if isinstance(row, dict)
++        ]
++    return observation
++
++
++class LessonsModelAdapter:
++    """Add historical context through the existing injectable model interface.
++
++    Construction is offline. A real model is called only when the caller calls
++    generate(). Receipts record precisely the lesson IDs that fit in the prompt.
++    """
++
++    def __init__(self, llm: Any, selected: list[dict[str, Any]]) -> None:
++        self.llm = llm
++        self.model = getattr(llm, "model", "")
++        self.context, self.selected_ids = _context(selected)
++        self.receipts: list[dict[str, Any]] = []
++
++    def ensure_installed(self) -> Any:
++        return self.llm.ensure_installed()
++
++    def generate(self, *, system: str, prompt: str, max_tokens: int = 1500) -> dict[str, Any]:
++        augmented = prompt + ("\n\n" + self.context if self.context else "")
++        receipt = {
++            "schema": "SKYNETVS_DEVELOPMENT_CONTEXT_USE_V1",
++            "lesson_ids": list(self.selected_ids),
++            "context_sha256": hashlib.sha256(self.context.encode("utf-8")).hexdigest(),
++            "context_size_bytes": len(self.context.encode("utf-8")),
++            "base_prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
++            "augmented_prompt_sha256": hashlib.sha256(augmented.encode("utf-8")).hexdigest(),
++            "system_unchanged": True,
++            "status": "REQUEST_PREPARED",
++        }
++        self.receipts.append(receipt)
++        try:
++            result = self.llm.generate(system=system, prompt=augmented, max_tokens=max_tokens)
++        except Exception:
++            receipt["status"] = "MODEL_ERROR"
++            raise
++        receipt["status"] = "RESPONSE_RECEIVED"
++        return result
+diff --git a/tools/m154_workflow/git_transport.py b/tools/m154_workflow/git_transport.py
+new file mode 100644
+index 0000000..17e6e95
+--- /dev/null
++++ b/tools/m154_workflow/git_transport.py
+@@ -0,0 +1,348 @@
++"""M154: durable local report commits and ordinary, retryable Git publication.
++
++This module never commits a user's working tree. Candidate commits are supplied
++by the caller. Public report bytes are an explicit mapping; runtime directories
++and raw logs are never discovered or swept into a commit.
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import os
++from pathlib import Path
++import re
++import subprocess
++from typing import Any, Mapping
++import uuid
++
++
++SCHEMA = "SKYNETVS_M154_GIT_TRANSPORT_V1"
++FALLBACK_IDENTITY = {
++    "name": "SkynetVS experiment",
++    "email": "skynetvs-experiment@users.noreply.github.com",
++}
++HEX40 = re.compile(r"[0-9a-f]{40}\Z")
++RUN_ID = re.compile(r"[0-9a-f]{32}\Z")
++
++
++class TransportError(RuntimeError):
++    """A public-safe code; underlying Git stderr remains in a private log."""
++
++    def __init__(self, code: str, returncode: int | None = None):
++        super().__init__(code)
++        self.code = code
++        self.returncode = returncode
++
++
++def _atomic_json(path: Path, value: Any) -> None:
++    data = (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
++    temporary = path.with_name(path.name + "." + uuid.uuid4().hex + ".tmp")
++    with temporary.open("xb") as stream:
++        stream.write(data)
++        stream.flush()
++        os.fsync(stream.fileno())
++    os.replace(temporary, path)
++
++
++class Transport:
++    def __init__(
++        self,
++        state_dir: Path,
++        remote_url: str,
++        report_branch: str = "reports/m154",
++        identity: Mapping[str, str] | None = None,
++        git_executable: str = "git",
++    ) -> None:
++        self.state_dir = Path(state_dir).resolve()
++        self.state_dir.mkdir(parents=True, exist_ok=True)
++        self.repo = self.state_dir / "report.git"
++        self.state_file = self.state_dir / "state.json"
++        self.private_log = self.state_dir / "transport.private.jsonl"
++        self.hooks = self.state_dir / "empty-hooks"
++        self.hooks.mkdir(exist_ok=True)
++        self.remote_url = str(remote_url)
++        self.report_branch = report_branch
++        self.git_executable = git_executable
++        if not self.remote_url or any(c in self.remote_url for c in "\r\n\0"):
++            raise TransportError("INVALID_REMOTE")
++        if report_branch != "reports/m154":
++            raise TransportError("INVALID_REPORT_BRANCH")
++        given = dict(identity or {})
++        self.identity = {
++            key: given.get(key) or given.get("user." + key) or default
++            for key, default in FALLBACK_IDENTITY.items()
++        }
++        for value in self.identity.values():
++            if not isinstance(value, str) or not value.strip() or any(c in value for c in "\r\n\0<>"):
++                raise TransportError("INVALID_COMMIT_IDENTITY")
++        marker = self.state_dir / "transport.owner"
++        if not marker.exists():
++            if self.repo.exists() or self.state_file.exists():
++                raise TransportError("UNOWNED_TRANSPORT_DIRECTORY")
++            marker.write_text(SCHEMA + "\n", encoding="ascii")
++        elif marker.read_text(encoding="ascii") != SCHEMA + "\n":
++            raise TransportError("TRANSPORT_OWNER_MISMATCH")
++        if not self.repo.exists():
++            self._git(self.state_dir, ["init", "--bare", "--quiet", str(self.repo)], code="REPORT_INIT_FAILED")
++        if self._git(self.repo, ["rev-parse", "--is-bare-repository"]).strip() != b"true":
++            raise TransportError("REPORT_REPOSITORY_NOT_BARE")
++        self.state: dict[str, Any] | None = None
++        if self.state_file.exists():
++            self.state = json.loads(self.state_file.read_text(encoding="utf-8"))
++            if (self.state.get("schema") != SCHEMA or self.state.get("remote_url") != self.remote_url
++                    or self.state.get("report_branch") != self.report_branch):
++                raise TransportError("TRANSPORT_STATE_MISMATCH")
++
++    def _git(
++        self,
++        repository: Path,
++        arguments: list[str],
++        *,
++        input_bytes: bytes | None = None,
++        extra_env: Mapping[str, str] | None = None,
++        code: str = "GIT_COMMAND_FAILED",
++    ) -> bytes:
++        environment = {k: v for k, v in os.environ.items() if not k.upper().startswith("GIT_")}
++        environment.update({
++            "GIT_TERMINAL_PROMPT": "0",
++            "GCM_INTERACTIVE": "Never",
++            "GIT_AUTHOR_NAME": self.identity["name"],
++            "GIT_AUTHOR_EMAIL": self.identity["email"],
++            "GIT_COMMITTER_NAME": self.identity["name"],
++            "GIT_COMMITTER_EMAIL": self.identity["email"],
++        })
++        environment.update(extra_env or {})
++        command = [
++            self.git_executable, "--no-optional-locks", "-C", str(repository),
++            "-c", "core.autocrlf=false", "-c", "core.eol=lf",
++            "-c", "core.fsmonitor=false", "-c", "gc.auto=0",
++            "-c", "core.hooksPath=" + str(self.hooks),
++            "-c", "commit.gpgsign=false", "-c", "tag.gpgsign=false",
++            "-c", "push.followTags=false", "-c", "push.recurseSubmodules=no",
++            *arguments,
++        ]
++        try:
++            result = subprocess.run(command, input=input_bytes, stdout=subprocess.PIPE,
++                                    stderr=subprocess.PIPE, env=environment, shell=False,
++                                    timeout=60, check=False)
++        except subprocess.TimeoutExpired as exc:
++            self._private_error(code + "_TIMEOUT", exc.stderr or b"")
++            raise TransportError(code + "_TIMEOUT") from None
++        except OSError as exc:
++            self._private_error(code + "_START", type(exc).__name__.encode("ascii"))
++            raise TransportError(code + "_START") from None
++        if result.returncode:
++            self._private_error(code, result.stderr, result.returncode)
++            raise TransportError(code, result.returncode)
++        return result.stdout
++
++    def _private_error(self, code: str, stderr: bytes, returncode: int | None = None) -> None:
++        with self.private_log.open("a", encoding="utf-8") as stream:
++            stream.write(json.dumps({"code": code, "returncode": returncode,
++                                     "stderr": stderr.decode("utf-8", "replace")[-20000:]},
++                                    ensure_ascii=False) + "\n")
++
++    def _save(self) -> None:
++        assert self.state is not None
++        _atomic_json(self.state_file, self.state)
++
++    @staticmethod
++    def _checked_files(files: Mapping[str, bytes], run_id: str) -> dict[str, bytes]:
++        if not RUN_ID.fullmatch(run_id):
++            raise TransportError("INVALID_RUN_ID")
++        if not files or len(files) > 100:
++            raise TransportError("REPORT_SIZE_LIMIT")
++        prefix = "reports/M154/" + run_id + "/"
++        result = {}
++        for path, data in files.items():
++            if (not isinstance(path, str) or not path.startswith(prefix)
++                    or not re.fullmatch(r"[A-Za-z0-9_./-]{1,400}", path)
++                    or any(part in ("", ".", "..") for part in path.split("/"))
++                    or not isinstance(data, bytes)):
++                raise TransportError("INVALID_PUBLIC_REPORT_FILE")
++            result[path] = data
++        if sum(len(value) for value in result.values()) > 32 * 1024 * 1024:
++            raise TransportError("REPORT_SIZE_LIMIT")
++        return result
++
++    def prepare_report(self, files: Mapping[str, bytes], run_id: str) -> dict[str, Any]:
++        """Record exact public bytes locally, without any network command."""
++        checked = self._checked_files(files, run_id)
++        fingerprints = {path: {"sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data)}
++                        for path, data in sorted(checked.items())}
++        if self.state is not None:
++            old = {path: {"sha256": value["sha256"], "size_bytes": value["size_bytes"]}
++                   for path, value in self.state["files"].items()}
++            if self.state["run_id"] != run_id or old != fingerprints:
++                raise TransportError("LOCAL_RUN_IMMUTABLE_CONFLICT")
++            self._git(self.repo, ["cat-file", "-e", self.state["local_commit"] + "^{commit}"])
++            return {"status": "LOCAL_RECORDED", "local_commit": self.state["local_commit"],
++                    "local_ref": self.state["local_ref"], "run_id": run_id}
++        entries = {}
++        for path, data in checked.items():
++            oid = self._git(self.repo, ["hash-object", "-w", "--stdin"], input_bytes=data).decode("ascii").strip()
++            entries[path] = {**fingerprints[path], "blob": oid}
++        local_ref = "refs/local/reports/" + run_id
++        previous = self._git(self.repo, ["for-each-ref", "--format=%(objectname)", local_ref]).decode("ascii").strip()
++        if previous:
++            # Recover a crash after update-ref but before atomic state.json.
++            rows = self._git(self.repo, ["ls-tree", "-r", "-z", previous]).split(b"\0")
++            observed = {}
++            for row in rows:
++                if row:
++                    metadata, path = row.split(b"\t", 1)
++                    mode, kind, oid = metadata.decode("ascii").split(" ")
++                    observed[path.decode("utf-8")] = (mode, kind, oid)
++            expected = {path: ("100644", "blob", entry["blob"]) for path, entry in entries.items()}
++            if observed != expected:
++                raise TransportError("LOCAL_RUN_IMMUTABLE_CONFLICT")
++            commit = previous
++        else:
++            commit = self._commit(entries, parent=None, message="M154: preserve local run " + run_id)
++            self._git(self.repo, ["update-ref", local_ref, commit, ""])
++        self.state = {"schema": SCHEMA, "run_id": run_id, "remote_url": self.remote_url,
++                      "report_branch": self.report_branch, "files": entries,
++                      "local_commit": commit, "local_ref": local_ref,
++                      "candidate": None, "publish_calls": 0, "last_publication": None}
++        self._save()
++        return {"status": "LOCAL_RECORDED", "local_commit": commit,
++                "local_ref": local_ref, "run_id": run_id}
++
++    def _commit(self, entries: Mapping[str, Any], parent: str | None, message: str) -> str:
++        index = self.state_dir / ("index." + uuid.uuid4().hex)
++        env = {"GIT_INDEX_FILE": str(index)}
++        try:
++            self._git(self.repo, ["read-tree", parent] if parent else ["read-tree", "--empty"], extra_env=env)
++            for path, entry in sorted(entries.items()):
++                self._git(self.repo, ["update-index", "--add", "--cacheinfo", "100644", entry["blob"], path], extra_env=env)
++            tree = self._git(self.repo, ["write-tree"], extra_env=env).decode("ascii").strip()
++            args = ["commit-tree", tree, "-m", message]
++            if parent:
++                args += ["-p", parent]
++            return self._git(self.repo, args).decode("ascii").strip()
++        finally:
++            index.unlink(missing_ok=True)
++            index.with_name(index.name + ".lock").unlink(missing_ok=True)
++
++    def _remote_head(self, repository: Path, branch: str) -> str | None:
++        data = self._git(repository, ["ls-remote", "--heads", self.remote_url, "refs/heads/" + branch],
++                         code="REMOTE_QUERY_FAILED").decode("utf-8", "strict").strip()
++        if not data:
++            return None
++        rows = data.splitlines()
++        if len(rows) != 1:
++            raise TransportError("REMOTE_REF_AMBIGUOUS")
++        oid, reference = rows[0].split("\t", 1)
++        if not HEX40.fullmatch(oid) or reference != "refs/heads/" + branch:
++            raise TransportError("REMOTE_REF_INVALID")
++        return oid
++
++    def _publish_candidate(self, candidate: dict[str, str] | None) -> dict[str, Any]:
++        if candidate is None:
++            return {"status": "NOT_CREATED", "commit": None, "branch": None}
++        result: dict[str, Any] = {"status": "PENDING", "commit": candidate["commit"], "branch": candidate["branch"]}
++        try:
++            repository = Path(candidate["repository"])
++            actual = self._git(repository, ["rev-parse", candidate["commit"] + "^{commit}"],
++                               code="CANDIDATE_OBJECT_MISSING").decode("ascii").strip()
++            if actual != candidate["commit"]:
++                raise TransportError("CANDIDATE_OBJECT_MISMATCH")
++            existing = self._remote_head(repository, candidate["branch"])
++            if existing not in (None, candidate["commit"]):
++                result.update(status="CONFLICT", error_code="CANDIDATE_REF_CONFLICT")
++                return result
++            if existing is None:
++                self._git(repository, ["push", "--porcelain", self.remote_url,
++                                      candidate["commit"] + ":refs/heads/" + candidate["branch"]],
++                          code="CANDIDATE_PUSH_FAILED")
++            result["status"] = "PUBLISHED"
++        except TransportError as exc:
++            result["error_code"] = exc.code
++        return result
++
++    def _publish_report(self) -> dict[str, Any]:
++        assert self.state is not None
++        result: dict[str, Any] = {"status": "PENDING", "commit": None, "branch": self.report_branch}
++        entries = self.state["files"]
++        prefix = "reports/M154/" + self.state["run_id"] + "/"
++        for attempt in range(3):
++            try:
++                parent = self._remote_head(self.repo, self.report_branch)
++                if parent is not None:
++                    self._git(self.repo, ["fetch", "--quiet", "--no-tags", self.remote_url,
++                                          "refs/heads/" + self.report_branch], code="REPORT_FETCH_FAILED")
++                    parent = self._git(self.repo, ["rev-parse", "FETCH_HEAD^{commit}"]).decode("ascii").strip()
++                    existing: dict[str, tuple[str, str]] = {}
++                    rows = self._git(self.repo, ["ls-tree", "-r", "-z", parent, "--", prefix]).split(b"\0")
++                    for row in rows:
++                        if not row:
++                            continue
++                        metadata, path_bytes = row.split(b"\t", 1)
++                        mode, kind, oid = metadata.decode("ascii").split(" ")
++                        path = path_bytes.decode("utf-8", "strict")
++                        if kind != "blob" or mode != "100644":
++                            raise TransportError("REMOTE_RUN_IMMUTABLE_CONFLICT")
++                        existing[path] = (mode, oid)
++                    if any(path not in entries or entries[path]["blob"] != value[1]
++                           for path, value in existing.items()):
++                        raise TransportError("REMOTE_RUN_IMMUTABLE_CONFLICT")
++                    if existing and set(existing) != set(entries):
++                        # One report is published by one atomic Git commit. An
++                        # existing subset is another run definition, not an
++                        # interrupted upload that should be completed in place.
++                        raise TransportError("REMOTE_RUN_IMMUTABLE_CONFLICT")
++                    if set(existing) == set(entries):
++                        result.update(status="PUBLISHED", commit=parent)
++                        return result
++                commit = self._commit(entries, parent, "M154: record run " + self.state["run_id"])
++                self._git(self.repo, ["update-ref", "refs/local/publish/" + uuid.uuid4().hex, commit, ""])
++                self._git(self.repo, ["push", "--porcelain", self.remote_url,
++                                      commit + ":refs/heads/" + self.report_branch], code="REPORT_PUSH_FAILED")
++                result.update(status="PUBLISHED", commit=commit)
++                return result
++            except TransportError as exc:
++                result["error_code"] = exc.code
++                if exc.code == "REMOTE_RUN_IMMUTABLE_CONFLICT":
++                    result["status"] = "CONFLICT"
++                    return result
++                # Only a refused push can be an append race worth immediate retry.
++                if exc.code != "REPORT_PUSH_FAILED" or attempt == 2:
++                    return result
++        return result
++
++    def publish(
++        self,
++        candidate_repo: Path | None = None,
++        candidate_commit: str | None = None,
++        candidate_branch: str | None = None,
++    ) -> dict[str, Any]:
++        """Try both pushes. Failed candidate publication does not suppress reports.
++
++        Retry by constructing Transport with the same state directory and calling
++        publish() without arguments. Tests and candidate creation are not rerun.
++        """
++        if self.state is None:
++            raise TransportError("REPORT_NOT_PREPARED")
++        if any(value is not None for value in (candidate_repo, candidate_commit, candidate_branch)):
++            if (candidate_repo is None or not isinstance(candidate_commit, str)
++                    or not HEX40.fullmatch(candidate_commit)
++                    or candidate_branch != "experiments/m154/" + self.state["run_id"]):
++                raise TransportError("INVALID_CANDIDATE_BINDING")
++            candidate = {"repository": str(Path(candidate_repo).resolve()),
++                         "commit": candidate_commit, "branch": candidate_branch}
++            if self.state["candidate"] not in (None, candidate):
++                raise TransportError("CANDIDATE_BINDING_IMMUTABLE_CONFLICT")
++            self.state["candidate"] = candidate
++        self.state["publish_calls"] += 1
++        self._save()  # Candidate binding survives an interruption during networking.
++        candidate_result = self._publish_candidate(self.state["candidate"])
++        report_result = self._publish_report()
++        complete = (candidate_result["status"] in ("PUBLISHED", "NOT_CREATED")
++                    and report_result["status"] == "PUBLISHED")
++        blocked = "CONFLICT" in (candidate_result["status"], report_result["status"])
++        result = {"candidate": candidate_result, "report": report_result,
++                  "queue_state": "PUBLISHED" if complete else "BLOCKED" if blocked else "PENDING",
++                  "local_report_commit": self.state["local_commit"], "run_id": self.state["run_id"]}
++        self.state["last_publication"] = result
++        self._save()
++        return result
+diff --git a/tools/m154_workflow/launch_template.ps1 b/tools/m154_workflow/launch_template.ps1
+new file mode 100644
+index 0000000..57d9e89
+--- /dev/null
++++ b/tools/m154_workflow/launch_template.ps1
+@@ -0,0 +1,105 @@
++#requires -Version 5.1
++[CmdletBinding()]
++param([switch]$NewRun)
++
++$ErrorActionPreference = 'Stop'
++Set-StrictMode -Version Latest
++$repo = 'C:\Project\SkynetVS'
++$expectedSha256 = '__PACKAGE_SHA256__'
++$embeddedPackage = @'
++__PACKAGE_BASE64__
++'@
++$queueDirectory = Join-Path $env:LOCALAPPDATA 'SkynetVS\AutoExperiments'
++$pointer = Join-Path $queueDirectory ($expectedSha256 + '.json')
++$runRoot = $null
++
++function Quote-Argument([string]$Value) {
++    $quoted = [regex]::Replace($Value, '(\\*)"', '$1$1\"')
++    $quoted = [regex]::Replace($quoted, '(\\+)$', '$1$1')
++    return '"' + $quoted + '"'
++}
++
++function Invoke-ExperimentPython([string]$Executable, [string[]]$Arguments) {
++    $start = New-Object Diagnostics.ProcessStartInfo
++    $start.FileName = $Executable
++    $start.Arguments = ($Arguments | ForEach-Object { Quote-Argument $_ }) -join ' '
++    $start.UseShellExecute = $false
++    $process = New-Object Diagnostics.Process
++    $process.StartInfo = $start
++    try {
++        [void]$process.Start()
++        $process.WaitForExit()
++        return [int]$process.ExitCode
++    }
++    finally { $process.Dispose() }
++}
++
++try {
++    $packageBytes = [Convert]::FromBase64String($embeddedPackage)
++    $sha = [Security.Cryptography.SHA256]::Create()
++    try { $actualSha256 = ([BitConverter]::ToString($sha.ComputeHash($packageBytes))).Replace('-', '').ToLowerInvariant() }
++    finally { $sha.Dispose() }
++    if ($actualSha256 -cne $expectedSha256) { throw ('Package SHA256 mismatch: ' + $actualSha256) }
++    $candidates = @(
++        (Join-Path $repo '.venv\Scripts\python.exe'),
++        (Join-Path $env:LOCALAPPDATA 'SkynetVS\ModelLab\venv-torch210-cu128\Scripts\python.exe')
++    )
++    $python = $null
++    foreach ($candidate in $candidates) {
++        if (Test-Path -LiteralPath $candidate -PathType Leaf) { $python = $candidate; break }
++    }
++    if ($null -eq $python) { throw 'An existing SkynetVS Python interpreter is required. Nothing was installed.' }
++    if (-not (Test-Path -LiteralPath $queueDirectory -PathType Container)) {
++        New-Item -ItemType Directory -Path $queueDirectory -Force | Out-Null
++    }
++    $resume = $false
++    if (-not $NewRun -and (Test-Path -LiteralPath $pointer -PathType Leaf)) {
++        $saved = Get-Content -LiteralPath $pointer -Raw -Encoding UTF8 | ConvertFrom-Json
++        if ($saved.package_sha256 -cne $expectedSha256) { throw 'Saved run is bound to another package.' }
++        $runRoot = [IO.Path]::GetFullPath([string]$saved.run_root)
++        $expectedParent = [IO.Path]::GetFullPath($env:USERPROFILE).TrimEnd('\')
++        if ([IO.Path]::GetDirectoryName($runRoot) -ine $expectedParent -or [IO.Path]::GetFileName($runRoot) -cnotmatch '^m154a_[0-9a-f]{12}$') {
++            throw 'Saved run directory does not match the short user-profile run layout.'
++        }
++        if (-not (Test-Path -LiteralPath $runRoot -PathType Container)) { throw 'The saved run directory is missing. Use -NewRun only if a new test execution is intended.' }
++        $resume = $true
++    }
++    else {
++        $runRoot = Join-Path $env:USERPROFILE ('m154a_' + [guid]::NewGuid().ToString('N').Substring(0, 12))
++        if (Test-Path -LiteralPath $runRoot) { throw 'Run directory already exists.' }
++        New-Item -ItemType Directory -Path $runRoot | Out-Null
++    }
++    $extractionId = [guid]::NewGuid().ToString('N').Substring(0, 8)
++    $package = Join-Path $runRoot ('package_' + $extractionId + '.zip')
++    [IO.File]::WriteAllBytes($package, $packageBytes)
++    $bundle = Join-Path $runRoot ('p_' + $extractionId)
++    Expand-Archive -LiteralPath $package -DestinationPath $bundle -ErrorAction Stop
++    if (-not $resume) {
++        $record = @{ package_sha256 = $expectedSha256; run_root = $runRoot } | ConvertTo-Json
++        $utf8 = New-Object Text.UTF8Encoding($false)
++        [IO.File]::WriteAllText(($pointer + '.new'), $record, $utf8)
++        Move-Item -LiteralPath ($pointer + '.new') -Destination $pointer -Force
++    }
++    $stateDirectory = Join-Path $runRoot 'r'
++    $runner = Join-Path $bundle 'run.py'
++    if (-not (Test-Path -LiteralPath $runner -PathType Leaf)) { throw 'The preserved runner is missing.' }
++    Write-Host ('RUN_DIRECTORY=' + $stateDirectory)
++    Write-Host ('PACKAGE_SHA256=' + $actualSha256)
++    Write-Host 'ACTION=M154_AUTOMATIC_EXPERIMENT_COMMIT_CHECK_AND_PUSH'
++    Write-Host 'PURPOSE=AUTOMATION_SELFTEST; REAL_REMOTE_PUSH=TRUE; USER_PROJECT_APPLY=FALSE'
++    $arguments = @('-I', '-B', $runner, '--source', $repo, '--bundle', $bundle, '--run-dir', $stateDirectory)
++    if ($resume -and (Test-Path -LiteralPath (Join-Path $stateDirectory 'state.json') -PathType Leaf)) {
++        $arguments += '--retry'
++        Write-Host 'MODE=RETRY_SAVED_RESULT_WITHOUT_RETEST'
++    }
++    else { Write-Host 'MODE=NEW_EXPERIMENT' }
++    $code = Invoke-ExperimentPython -Executable $python -Arguments $arguments
++    Write-Host ('RUNNER_EXIT_CODE=' + $code)
++    if ($code -ne 0) { Write-Host 'The test result and publication result are printed separately above. The run remains available.' }
++    exit $code
++}
++catch {
++    Write-Host ('M154_AUTORUN_LAUNCHER_STOP=' + $_.Exception.Message)
++    if ($null -ne $runRoot) { Write-Host ('PRESERVED_RUN_ROOT=' + $runRoot) }
++    throw
++}
+diff --git a/tools/m154_workflow/lessons.json b/tools/m154_workflow/lessons.json
+new file mode 100644
+index 0000000..131c253
+--- /dev/null
++++ b/tools/m154_workflow/lessons.json
+@@ -0,0 +1,160 @@
++{
++  "schema": "SKYNETVS_DEVELOPMENT_LESSONS_V1",
++  "lessons": [
++    {
++      "id": "M154.static-is-not-full-check",
++      "status": "verified",
++      "scope": "Проверки DTR-B",
++      "tags": [
++        "dtr",
++        "dtr-b",
++        "dtrb",
++        "static",
++        "pipeline",
++        "проверка",
++        "статический"
++      ],
++      "paths": [
++        "modules/developer/developer_task_rehearsal.py",
++        "modules/developer/developer_task_rehearsal_contract.py",
++        "tools/pipeline.py"
++      ],
++      "symptom": "Успешный статический прогон можно ошибочно принять за завершение всех проверок исправления.",
++      "cause": "Контракт успеха static DTR-B специально оставляет pipeline(flow=check) в pending и all_required_checks_passed=false.",
++      "prevention": "Сохранять отдельные статусы static, исполняющего pipeline и применения изменения. При static PASS не объявлять поведение проверенным или patch применённым.",
++      "evidence": [
++        "https://github.com/Daystat-debug/SkynetVS/blob/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb/modules/developer/developer_task_rehearsal_contract.py#L138-L146",
++        "https://github.com/Daystat-debug/SkynetVS/blob/8b737a94b5c9315a187d2de527948cf331c84cc2/reports/M154/a743e3a6ac074f558d0ccc545602f074/summary.json"
++      ],
++      "regression_check": "Проверить, что receipt статического успеха сохраняет pending pipeline и не получает статус полного PASS."
++    },
++    {
++      "id": "M154.keep-report-git-independent",
++      "status": "verified",
++      "scope": "Передача результатов через Git",
++      "tags": [
++        "git",
++        "reports",
++        "report",
++        "commit",
++        "fingerprint",
++        "отчёт",
++        "отчеты",
++        "публикация"
++      ],
++      "paths": [
++        "modules/developer/developer_task_preflight.py",
++        "modules/developer/developer_task_workspace_source.py",
++        "tools/m154_workflow/"
++      ],
++      "symptom": "Запись отчёта в проверяемый working tree или новый commit меняет состояние, к которому был привязан DTR-запрос.",
++      "cause": "Preflight требует exact HEAD==base_commit и чистое дерево; source fingerprint включает также refs, index и config.",
++      "prevention": "Публиковать результаты через независимую Git-копию и reports/m154; кандидат эксперимента хранить отдельно. В каждом отчёте указывать base и фактически проверенный candidate commit.",
++      "evidence": [
++        "https://github.com/Daystat-debug/SkynetVS/blob/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb/modules/developer/developer_task_preflight.py#L523-L580",
++        "https://github.com/Daystat-debug/SkynetVS/blob/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb/modules/developer/developer_task_workspace_source.py#L33-L46"
++      ],
++      "regression_check": "Сопоставить HEAD/status/refs/index/config исходной копии до и после публикации."
++    },
++    {
++      "id": "M154.preserve-nested-failure-evidence",
++      "status": "verified",
++      "scope": "Диагностика запуска и очистка",
++      "tags": [
++        "diagnostics",
++        "failure",
++        "failed",
++        "cleanup",
++        "stderr",
++        "rehearsal_failed_clean",
++        "диагностика",
++        "ошибка",
++        "очистка"
++      ],
++      "paths": [
++        "modules/developer/developer_task_rehearsal.py",
++        "tools/m154_workflow/"
++      ],
++      "symptom": "Старый M154 runner выводил REHEARSAL_FAILED_CLEAN с пустым списком верхнеуровневых issues, теряя полезную причину этапа.",
++      "cause": "В исходной обёртке выводился агрегированный список, хотя native report сохранял данные сбоя во вложенных стадиях; временный selftest report удалялся при завершении.",
++      "prevention": "Сохранять итог и вложенные диагностические коды до очистки. При ошибке публикации сохранять подготовленные данные для повторной отправки. Не объявлять длинный Windows-путь доказанной первопричиной старого отказа.",
++      "evidence": [
++        "sha256:a25fcbd5423ab41604c7dd08e6b4b73682ed27b11a6e64145a3c6d2b350ed819",
++        "sha256:242a071f9b7a64448eae741a3fd52634c06e0ba2043816ed046b9602f1e67cf2"
++      ],
++      "regression_check": "Искусственно вызвать ошибку дочернего процесса и убедиться, что код этапа и отчёт сохраняются после завершения."
++    },
++    {
++      "id": "M154.deduplicate-stripped-task-text",
++      "status": "verified",
++      "scope": "Формирование запроса DTR",
++      "tags": [
++        "prompt",
++        "title",
++        "instruction",
++        "strip",
++        "deduplication",
++        "дублирование",
++        "повтор"
++      ],
++      "paths": [
++        "modules/developer_task_ui/app/core.py"
++      ],
++      "symptom": "Раздел «Задача» повторял одну формулировку, когда title и instruction совпадали после удаления краевых пробелов.",
++      "cause": "Отдельный вывод title и instruction без сравнения нормализованных краёв воспроизводил одинаковый текст дважды.",
++      "prevention": "Сравнивать title.strip() и instruction.strip(); одинаковую формулировку выводить один раз, разные — обе. Сохранять request_id, request_fingerprint и структуру DTR_Request.json.",
++      "evidence": [
++        "https://github.com/Daystat-debug/SkynetVS/commit/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
++        "https://github.com/Daystat-debug/SkynetVS/blob/3cd5a06b3b17ce2e6b9b25351a1b455289974dfb/modules/developer_task_ui/app/core.py#L197-L206"
++      ],
++      "regression_check": "Проверить одинаковые строки, различающиеся только краевыми пробелами строки и действительно разные формулировки."
++    },
++    {
++      "id": "M154.distinguish-web-and-git-access",
++      "status": "verified",
++      "scope": "Диагностика доступа к репозиторию",
++      "tags": [
++        "git",
++        "github",
++        "ls-remote",
++        "clone",
++        "disabledError",
++        "доступ",
++        "репозиторий"
++      ],
++      "paths": [],
++      "symptom": "Отказ веб-просмотра страницы GitHub может быть ошибочно принят за недоступность репозитория целиком.",
++      "cause": "В M154 #66 веб-просмотр вернул DisabledError, а прямые ls-remote/clone в той же сессии успешно получили опубликованный отчёт.",
++      "prevention": "Раздельно фиксировать результат веб-просмотра и прямого Git. Проверять refs и нужные blobs доступным Git-клиентом; выбирать резервный транспорт по фактической ошибке. Не выводить зависимость доступа от модели по одному успешному запуску.",
++      "evidence": [
++        "sha256:6359ec544d3a5c46f17429e8480d915163212abe501a58a334fc9a39848b62ea",
++        "https://github.com/Daystat-debug/SkynetVS/tree/8b737a94b5c9315a187d2de527948cf331c84cc2/reports/M154/a743e3a6ac074f558d0ccc545602f074"
++      ],
++      "regression_check": "Сохранять в отчёте отдельные исходы каналов и фактически полученный remote commit."
++    },
++    {
++      "id": "M154.verify-isolated-test-imports",
++      "status": "verified",
++      "scope": "Изолированный Python-запуск тестов",
++      "tags": [
++        "python",
++        "isolated",
++        "imports",
++        "-I",
++        "импорт",
++        "тесты"
++      ],
++      "paths": [
++        "tools/m154_workflow/"
++      ],
++      "symptom": "Тест транспорта проходил при обычном запуске, но завершался ModuleNotFoundError в режиме python -I -S -B, используемом подготовленным пакетом.",
++      "cause": "До импорта git_transport тест не добавлял явно доверенный каталог соседнего модуля в sys.path; изолированный запуск не предоставлял этот путь автоматически.",
++      "prevention": "Проверять скрипт теми же флагами Python, что использует launcher. Если самостоятельный доверенный пакет импортирует соседние модули, добавить его точный каталог перед импортом; не рассчитывать на cwd или PYTHONPATH.",
++      "evidence": [
++        "sha256:f47f52fd36d0c3c9de792e4b30fe283a56c5b84a0f87bf3b4d969b5fbce989de",
++        "sha256:8cd1794d7a800b3fec94d70a860926041bfbc7a5555c7bfcd338a595f1fe822f"
++      ],
++      "regression_check": "python -I -S -B tools/m154_workflow/test_git_transport.py; подтверждён PASS 10 тестов после исправления."
++    }
++  ]
++}
+diff --git a/tools/m154_workflow/preparation_history/qa001_isolated_import/failure.log.txt b/tools/m154_workflow/preparation_history/qa001_isolated_import/failure.log.txt
+new file mode 100644
+index 0000000..1b459a5
+--- /dev/null
++++ b/tools/m154_workflow/preparation_history/qa001_isolated_import/failure.log.txt
+@@ -0,0 +1,4 @@
++Traceback (most recent call last):
++  File "<WORKFLOW>/test_git_transport.py", line 11, in <module>
++    from git_transport import Transport, TransportError
++ModuleNotFoundError: No module named 'git_transport'
+diff --git a/tools/m154_workflow/preparation_history/qa001_isolated_import/observation.json b/tools/m154_workflow/preparation_history/qa001_isolated_import/observation.json
+new file mode 100644
+index 0000000..3af9a31
+--- /dev/null
++++ b/tools/m154_workflow/preparation_history/qa001_isolated_import/observation.json
+@@ -0,0 +1,19 @@
++{
++  "schema": "SKYNETVS_PREPARATION_ATTEMPT_V1",
++  "attempt": "qa001_isolated_import",
++  "status": "FAIL",
++  "exit_code": 1,
++  "command": [
++    "python",
++    "-I",
++    "-S",
++    "-B",
++    "tools/m154_workflow/test_git_transport.py"
++  ],
++  "source_sha256": "f7680fbc36f30bfb991a353d49542284fcc311c301281541fb5a4c92c8d6e2bb",
++  "failure_log_sha256": "f47f52fd36d0c3c9de792e4b30fe283a56c5b84a0f87bf3b4d969b5fbce989de",
++  "error_code": "ModuleNotFoundError",
++  "missing_module": "git_transport",
++  "cause_status": "AWAITING_FIX_VERIFICATION",
++  "followup": "Add the explicitly trusted sibling module directory before importing the local helper; rerun the same isolated command."
++}
+diff --git a/tools/m154_workflow/preparation_history/qa001_isolated_import/repair.patch b/tools/m154_workflow/preparation_history/qa001_isolated_import/repair.patch
+new file mode 100644
+index 0000000..4e94412
+--- /dev/null
++++ b/tools/m154_workflow/preparation_history/qa001_isolated_import/repair.patch
+@@ -0,0 +1,24 @@
++--- a/tools/m154_workflow/test_git_transport.py
+++++ b/tools/m154_workflow/test_git_transport.py
++@@ -5,9 +5,11 @@
++ import os
++ from pathlib import Path
++ import subprocess
+++import sys
++ import tempfile
++ import unittest
++ 
+++sys.path.insert(0, str(Path(__file__).resolve().parent))
++ from git_transport import Transport, TransportError
++ 
++ 
++@@ -34,7 +36,8 @@
++         environment.update(GIT_AUTHOR_NAME="M154 test", GIT_AUTHOR_EMAIL="test@example.invalid",
++                            GIT_COMMITTER_NAME="M154 test", GIT_COMMITTER_EMAIL="test@example.invalid")
++         return subprocess.run(["git", "--no-optional-locks", "-C", str(directory),
++-                               "-c", "core.autocrlf=false", "-c", "commit.gpgsign=false", *arguments],
+++                               "-c", "core.autocrlf=false", "-c", "commit.gpgsign=false",
+++                               "-c", "core.hooksPath=" + os.devnull, "-c", "core.fsmonitor=false", *arguments],
++                               env=environment, check=True, stdout=subprocess.PIPE,
++                               stderr=subprocess.PIPE, timeout=30).stdout
++ 
+diff --git a/tools/m154_workflow/preparation_history/qa001_isolated_import/test_git_transport.before.txt b/tools/m154_workflow/preparation_history/qa001_isolated_import/test_git_transport.before.txt
+new file mode 100644
+index 0000000..67a938a
+--- /dev/null
++++ b/tools/m154_workflow/preparation_history/qa001_isolated_import/test_git_transport.before.txt
+@@ -0,0 +1,169 @@
++"""Real-Git transport checks; no network, no project repository writes."""
++from __future__ import annotations
++
++import json
++import os
++from pathlib import Path
++import subprocess
++import tempfile
++import unittest
++
++from git_transport import Transport, TransportError
++
++
++class TransportTests(unittest.TestCase):
++    def setUp(self) -> None:
++        self.temporary = tempfile.TemporaryDirectory(prefix="m154_git_test_")
++        self.root = Path(self.temporary.name)
++        self.remote = self.root / "remote.git"
++        self.code = self.root / "code"
++        self.git(self.root, "init", "--bare", "--quiet", str(self.remote))
++        self.git(self.root, "init", "--quiet", str(self.code))
++        (self.code / "example.py").write_bytes(b"value = 1\n")
++        self.git(self.code, "add", "--", "example.py")
++        self.git(self.code, "commit", "--quiet", "-m", "fixture base")
++        self.base = self.git(self.code, "rev-parse", "HEAD").strip().decode()
++        self.git(self.code, "push", "--quiet", str(self.remote), "HEAD:refs/heads/main", "HEAD:refs/heads/sandbox/m154")
++        self.base_refs = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/main", "refs/heads/sandbox/m154")
++
++    def tearDown(self) -> None:
++        self.temporary.cleanup()
++
++    def git(self, directory: Path, *arguments: str) -> bytes:
++        environment = {k: v for k, v in os.environ.items() if not k.upper().startswith("GIT_")}
++        environment.update(GIT_AUTHOR_NAME="M154 test", GIT_AUTHOR_EMAIL="test@example.invalid",
++                           GIT_COMMITTER_NAME="M154 test", GIT_COMMITTER_EMAIL="test@example.invalid")
++        return subprocess.run(["git", "--no-optional-locks", "-C", str(directory),
++                               "-c", "core.autocrlf=false", "-c", "commit.gpgsign=false", *arguments],
++                              env=environment, check=True, stdout=subprocess.PIPE,
++                              stderr=subprocess.PIPE, timeout=30).stdout
++
++    def files(self, run: str, data: bytes = b'{"result":"FAIL","exit_code":2}\n') -> dict[str, bytes]:
++        return {"reports/M154/" + run + "/summary.json": data,
++                "reports/M154/" + run + "/diagnostics.json": b'{"issues":["TEST_FAILURE"]}\n'}
++
++    def make(self, run: str, remote: Path | None = None, data: bytes | None = None) -> Transport:
++        transport = Transport(self.root / ("queue_" + run), str(remote or self.remote))
++        transport.prepare_report(self.files(run) if data is None else self.files(run, data), run)
++        return transport
++
++    def test_failed_run_is_published_and_retry_creates_no_commit(self) -> None:
++        run = "a" * 32
++        transport = self.make(run)
++        result = transport.publish(self.code, self.base, "experiments/m154/" + run)
++        self.assertEqual("PUBLISHED", result["queue_state"])
++        first = result["report"]["commit"]
++        for path, data in self.files(run).items():
++            self.assertEqual(data, self.git(self.remote, "show", first + ":" + path))
++        retry = Transport(transport.state_dir, str(self.remote)).publish()
++        self.assertEqual(first, retry["report"]["commit"])
++        self.assertEqual(self.base_refs, self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/main", "refs/heads/sandbox/m154"))
++
++    def test_offline_first_commit_and_later_publication(self) -> None:
++        run = "b" * 32
++        late_remote = self.root / "later.git"
++        transport = self.make(run, late_remote)
++        local_commit = transport.state["local_commit"]
++        self.assertEqual(b"commit\n", self.git(transport.repo, "cat-file", "-t", local_commit))
++        result = transport.publish(self.code, self.base, "experiments/m154/" + run)
++        self.assertEqual("PENDING", result["queue_state"])
++        self.git(self.root, "init", "--bare", "--quiet", str(late_remote))
++        retried = Transport(transport.state_dir, str(late_remote)).publish()
++        self.assertEqual("PUBLISHED", retried["queue_state"])
++        self.assertEqual(local_commit, retried["local_report_commit"])
++
++    def test_report_append_preserves_other_runs(self) -> None:
++        left, right = self.make("c" * 32), self.make("d" * 32)
++        first = left.publish()["report"]["commit"]
++        second = right.publish()["report"]["commit"]
++        self.assertEqual(first, self.git(self.remote, "rev-parse", second + "^").strip().decode())
++        for run in ("c" * 32, "d" * 32):
++            for path, data in self.files(run).items():
++                self.assertEqual(data, self.git(self.remote, "show", second + ":" + path))
++
++    def test_refused_report_push_is_retried_against_new_parent(self) -> None:
++        first, rival = self.make("e" * 32), self.make("f" * 32)
++        original = first._git
++        interrupted = False
++
++        def raced(repo, args, **kwargs):
++            nonlocal interrupted
++            if args and args[0] == "push" and not interrupted:
++                interrupted = True
++                self.assertEqual("PUBLISHED", rival.publish()["queue_state"])
++            return original(repo, args, **kwargs)
++
++        first._git = raced
++        result = first.publish()
++        self.assertEqual("PUBLISHED", result["queue_state"])
++        for run in ("e" * 32, "f" * 32):
++            self.git(self.remote, "show", result["report"]["commit"] + ":" + next(iter(self.files(run))))
++
++    def test_remote_immutable_conflict_preserves_existing_report(self) -> None:
++        run = "1" * 32
++        first = self.make(run)
++        initial_commit = first.publish()["report"]["commit"]
++        other = Transport(self.root / "conflicting_queue", str(self.remote))
++        other.prepare_report(self.files(run, b'{"different":true}\n'), run)
++        result = other.publish()
++        self.assertEqual("CONFLICT", result["report"]["status"])
++        current = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/reports/m154").decode().split()[0]
++        self.assertEqual(initial_commit, current)
++
++    def test_candidate_failure_does_not_suppress_report(self) -> None:
++        run = "2" * 32
++        transport = self.make(run)
++        result = transport.publish(self.root / "missing_candidate", self.base, "experiments/m154/" + run)
++        self.assertEqual("PENDING", result["candidate"]["status"])
++        self.assertEqual("PUBLISHED", result["report"]["status"])
++        self.assertEqual("PENDING", result["queue_state"])
++
++    def test_existing_run_file_set_cannot_be_extended(self) -> None:
++        run = "6" * 32
++        first = self.make(run)
++        initial_commit = first.publish()["report"]["commit"]
++        extended = dict(self.files(run))
++        extended["reports/M154/" + run + "/extra.json"] = b'{"extra":true}\n'
++        other = Transport(self.root / "extended_queue", str(self.remote))
++        other.prepare_report(extended, run)
++        result = other.publish()
++        self.assertEqual("CONFLICT", result["report"]["status"])
++        current = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/reports/m154").decode().split()[0]
++        self.assertEqual(initial_commit, current)
++
++    def test_existing_candidate_ref_is_never_overwritten(self) -> None:
++        run = "3" * 32
++        self.git(self.code, "push", "--quiet", str(self.remote), self.base + ":refs/heads/experiments/m154/" + run)
++        (self.code / "example.py").write_bytes(b"value = 2\n")
++        self.git(self.code, "add", "--", "example.py")
++        self.git(self.code, "commit", "--quiet", "-m", "different candidate")
++        other = self.git(self.code, "rev-parse", "HEAD").strip().decode()
++        result = self.make(run).publish(self.code, other, "experiments/m154/" + run)
++        self.assertEqual("CONFLICT", result["candidate"]["status"])
++        self.assertEqual("PUBLISHED", result["report"]["status"])
++        existing = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/experiments/m154/" + run).decode().split()[0]
++        self.assertEqual(self.base, existing)
++
++    def test_local_bytes_and_candidate_binding_are_immutable(self) -> None:
++        run = "4" * 32
++        transport = self.make(run)
++        again = transport.prepare_report(self.files(run), run)
++        self.assertEqual(transport.state["local_commit"], again["local_commit"])
++        with self.assertRaisesRegex(TransportError, "LOCAL_RUN_IMMUTABLE_CONFLICT"):
++            transport.prepare_report(self.files(run, b"changed"), run)
++        with self.assertRaisesRegex(TransportError, "INVALID_CANDIDATE_BINDING"):
++            transport.publish(self.code, self.base, "main")
++
++    def test_recover_local_commit_if_state_write_was_interrupted(self) -> None:
++        run = "5" * 32
++        transport = self.make(run)
++        saved = transport.state["local_commit"]
++        transport.state_file.unlink()
++        recovered = Transport(transport.state_dir, str(self.remote))
++        result = recovered.prepare_report(self.files(run), run)
++        self.assertEqual(saved, result["local_commit"])
++        self.assertEqual("PUBLISHED", recovered.publish()["queue_state"])
++
++
++if __name__ == "__main__":
++    unittest.main(verbosity=2)
+diff --git a/tools/m154_workflow/preparation_history/qa001_isolated_import/verification.json b/tools/m154_workflow/preparation_history/qa001_isolated_import/verification.json
+new file mode 100644
+index 0000000..f00414f
+--- /dev/null
++++ b/tools/m154_workflow/preparation_history/qa001_isolated_import/verification.json
+@@ -0,0 +1,19 @@
++{
++  "schema": "SKYNETVS_PREPARATION_FIX_VERIFICATION_V1",
++  "attempt": "qa001_isolated_import",
++  "status": "PASS",
++  "exit_code": 0,
++  "command": [
++    "python",
++    "-I",
++    "-S",
++    "-B",
++    "tools/m154_workflow/test_git_transport.py"
++  ],
++  "tests_passed": 10,
++  "cause_status": "VERIFIED",
++  "cause": "The isolated Python launch did not add the script directory to the module search path; the test harness imported a sibling module before adding its explicitly trusted directory.",
++  "fix": "Add Path(__file__).resolve().parent to sys.path before importing git_transport; disable unrelated global Git hooks in disposable fixture commands.",
++  "source_after_sha256": "331c4ddc00ce9f420d2fb5409738aaf652bb12eb45ce2e50899fc386635fb56e",
++  "repair_patch_sha256": "15068e8cf2a56c40e684e58a9f4538e8ed8cd00cfca3724b28f1ec48da904817"
++}
+diff --git a/tools/m154_workflow/run.py b/tools/m154_workflow/run.py
+new file mode 100644
+index 0000000..9f3496a
+--- /dev/null
++++ b/tools/m154_workflow/run.py
+@@ -0,0 +1,637 @@
++"""M154: retain an experiment, its checks and its report before attempting push.
++
++The supplied plan is the explicit scope. The user's checkout is only read.
++This is an ordinary user-invoked experiment tool, not a DTR authority grant.
++"""
++from __future__ import annotations
++
++import argparse
++from contextlib import contextmanager
++import hashlib
++import json
++import os
++from pathlib import Path, PurePosixPath
++import re
++import shutil
++import signal
++import subprocess
++import sys
++import time
++import traceback
++import uuid
++from datetime import datetime, timezone
++from typing import Any
++
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++from development_lessons import load_lessons, make_observation, prepare_context, select_lessons
++from git_transport import Transport
++
++SCHEMA = "SKYNETVS_EXPERIMENT_PLAN_V1"
++REMOTE = "https://github.com/Daystat-debug/SkynetVS.git"
++REPORT_BRANCH = "reports/m154"
++FALLBACK_IDENTITY = {"user.name": "SkynetVS experiment", "user.email": "skynetvs-experiment@users.noreply.github.com"}
++
++
++def json_bytes(value: Any) -> bytes:
++    return (json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
++
++
++def sha256(data: bytes) -> str:
++    return hashlib.sha256(data).hexdigest()
++
++
++def atomic_json(path: Path, value: Any) -> None:
++    path.parent.mkdir(parents=True, exist_ok=True)
++    temporary = path.with_name(path.name + ".new")
++    temporary.write_bytes(json_bytes(value))
++    temporary.replace(path)
++
++
++@contextmanager
++def run_lock(run_dir: Path):
++    """OS lock: released on process exit, including an unexpected crash."""
++    with (run_dir / "run.lock").open("a+b") as stream:
++        stream.seek(0, 2)
++        if stream.tell() == 0:
++            stream.write(b"0")
++            stream.flush()
++        stream.seek(0)
++        try:
++            if os.name == "nt":
++                import msvcrt
++                msvcrt.locking(stream.fileno(), msvcrt.LK_NBLCK, 1)
++            else:
++                import fcntl
++                fcntl.flock(stream.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
++        except OSError as exc:
++            raise WorkflowError("RUN_ALREADY_ACTIVE", "This run is already active in another process.") from exc
++        try:
++            yield
++        finally:
++            stream.seek(0)
++            if os.name == "nt":
++                import msvcrt
++                msvcrt.locking(stream.fileno(), msvcrt.LK_UNLCK, 1)
++            else:
++                import fcntl
++                fcntl.flock(stream.fileno(), fcntl.LOCK_UN)
++
++
++def utc_now() -> str:
++    return datetime.now(timezone.utc).isoformat(timespec="seconds")
++
++
++class WorkflowError(RuntimeError):
++    def __init__(self, code: str, message: str):
++        super().__init__(message)
++        self.code = code
++
++
++def child_environment() -> dict[str, str]:
++    env = {k: v for k, v in os.environ.items() if not k.upper().startswith("GIT_")}
++    env["GIT_TERMINAL_PROMPT"] = "0"
++    env["GCM_INTERACTIVE"] = "Never"
++    return env
++
++
++def git(repo: Path, *args: str, check: bool = True, identity: dict[str, str] | None = None) -> subprocess.CompletedProcess:
++    # /dev/null and NUL disable hooks without touching the source configuration.
++    command = ["git", "--no-optional-locks", "-c", "core.autocrlf=false", "-c", "core.eol=lf",
++               "-c", "core.longpaths=true", "-c", "core.fsmonitor=false", "-c", "commit.gpgsign=false",
++               "-c", "core.hooksPath=" + os.devnull, "-C", str(repo)]
++    for key, value in (identity or {}).items():
++        command += ["-c", key + "=" + value]
++    result = subprocess.run(command + list(args), env=child_environment(), stdout=subprocess.PIPE,
++                            stderr=subprocess.PIPE, timeout=60, shell=False)
++    if check and result.returncode:
++        raise WorkflowError("GIT_COMMAND_FAILED", result.stderr.decode("utf-8", "replace").strip())
++    return result
++
++
++def git_text(repo: Path, *args: str) -> str:
++    return git(repo, *args).stdout.decode("utf-8", "strict").strip()
++
++
++def source_snapshot(repo: Path) -> dict[str, Any]:
++    git_directory = Path(git_text(repo, "rev-parse", "--absolute-git-dir"))
++    status = git(repo, "status", "--porcelain=v1", "-z", "--untracked-files=all").stdout
++    refs = git(repo, "for-each-ref", "--format=%(refname) %(objectname)").stdout
++    result = {"head": git_text(repo, "rev-parse", "HEAD"), "status_sha256": sha256(status),
++              "refs_sha256": sha256(refs), "dirty": bool(status),
++              "tracked_diff_sha256": sha256(git(repo, "diff", "HEAD", "--binary", "--no-ext-diff", "--no-textconv").stdout)}
++    for name in ("index", "config"):
++        path = git_directory / name
++        result[name + "_sha256"] = sha256(path.read_bytes()) if path.is_file() else None
++    return result
++
++
++def git_identity(source: Path) -> dict[str, str]:
++    identity = dict(FALLBACK_IDENTITY)
++    if source.is_dir():
++        for key in identity:
++            try:
++                result = git(source, "config", "--get", key, check=False)
++                value = result.stdout.decode("utf-8", "replace").strip()
++                if result.returncode == 0 and value and "\n" not in value:
++                    identity[key] = value
++            except (OSError, subprocess.SubprocessError, WorkflowError):
++                pass
++    return identity
++
++
++def relative_path(value: Any) -> str:
++    if not isinstance(value, str) or not value or "\\" in value or "\x00" in value:
++        raise WorkflowError("INVALID_PLAN_PATH", "A payload path must be a relative POSIX path.")
++    path = PurePosixPath(value)
++    if path.is_absolute() or str(path) != value or any(p in ("..", ".git") or ":" in p for p in path.parts):
++        raise WorkflowError("INVALID_PLAN_PATH", "A payload path escapes its declared repository scope.")
++    return value
++
++
++def validate_plan(plan: Any) -> None:
++    if not isinstance(plan, dict) or plan.get("schema") != SCHEMA or plan.get("stage") != "M154":
++        raise WorkflowError("INVALID_PLAN_SCHEMA", "Unsupported experiment plan.")
++    if not re.fullmatch(r"[0-9a-f]{40}", str(plan.get("base_commit", ""))):
++        raise WorkflowError("INVALID_BASE_COMMIT", "The plan must pin one full base commit.")
++    payloads, checks = plan.get("payloads"), plan.get("checks")
++    if not isinstance(payloads, list) or not 1 <= len(payloads) <= 100:
++        raise WorkflowError("INVALID_PAYLOADS", "The plan must list 1 to 100 exact payload files.")
++    paths = []
++    for entry in payloads:
++        if not isinstance(entry, dict):
++            raise WorkflowError("INVALID_PAYLOAD", "Invalid payload entry.")
++        paths.append(relative_path(entry.get("path")))
++        for key in ("sha256", "before_sha256"):
++            value = entry.get(key)
++            if key == "before_sha256" and value is None:
++                continue
++            if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value):
++                raise WorkflowError("INVALID_PAYLOAD_HASH", "Invalid exact payload hash.")
++    if len(set(paths)) != len(paths):
++        raise WorkflowError("DUPLICATE_PAYLOAD", "Payload paths must be unique.")
++    if not isinstance(checks, list) or not 1 <= len(checks) <= 30:
++        raise WorkflowError("INVALID_CHECKS", "The plan must list 1 to 30 checks.")
++    ids = []
++    for item in checks:
++        if not isinstance(item, dict) or not re.fullmatch(r"[a-z][a-z0-9_]{0,63}", str(item.get("id", ""))):
++            raise WorkflowError("INVALID_CHECK_ID", "Invalid check ID.")
++        ids.append(item["id"])
++        args = item.get("argv")
++        if not isinstance(args, list) or not args or any(not isinstance(a, str) or "\x00" in a for a in args):
++            raise WorkflowError("INVALID_CHECK_ARGUMENTS", "Check arguments must be an explicit string array.")
++        if args[0] != "{python}":
++            raise WorkflowError("INVALID_CHECK_EXECUTABLE", "This runner starts checks with the selected Python only.")
++        timeout = item.get("timeout_seconds")
++        if type(timeout) is not int or not 1 <= timeout <= 1800:
++            raise WorkflowError("INVALID_CHECK_TIMEOUT", "Check timeout must be between 1 and 1800 seconds.")
++    if len(set(ids)) != len(ids):
++        raise WorkflowError("DUPLICATE_CHECK", "Check IDs must be unique.")
++
++
++def redact_log(data: bytes, roots: dict[str, Path], limit: int = 65536) -> str:
++    if len(data) > limit:
++        data = data[:limit // 4] + b"\n[... output truncated; complete log retained locally ...]\n" + data[-limit * 3 // 4:]
++    text = data.decode("utf-8", "replace")
++    for label, path in sorted(roots.items(), key=lambda item: len(str(item[1])), reverse=True):
++        for form in (str(path), str(path).replace("\\", "/"), str(path).replace("/", "\\")):
++            text = text.replace(form, "<" + label + ">")
++    text = re.sub(r"(?i)(authorization\s*[:=]\s*)(?:bearer\s+)?[^\s]+", r"\1<REDACTED>", text)
++    text = re.sub(r"(?i)(\b(?:api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret)\b[\"']?\s*[:=]\s*)[\"']?[^\s,;\"']+", r"\1<REDACTED>", text)
++    text = re.sub(r"https?://[^\s/@:]+:[^\s/@]+@", "https://<REDACTED>@", text)
++    text = re.sub(r"\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9_-]{20,})\b", "<REDACTED>", text)
++    return text
++
++
++def terminate_process_tree(process: subprocess.Popen) -> bool:
++    if process.poll() is not None:
++        return True
++    try:
++        tree_confirmed = True
++        if os.name == "nt":
++            killed = subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
++                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=15, shell=False)
++            if killed.returncode:
++                tree_confirmed = False
++                if process.poll() is None:
++                    process.kill()
++        else:
++            os.killpg(process.pid, signal.SIGKILL)
++        process.wait(timeout=10)
++        return tree_confirmed
++    except (OSError, subprocess.SubprocessError):
++        return False
++
++
++def execute_check(item: dict, code: Path, run_dir: Path, python: str, checkpoint=None) -> dict:
++    values = {"{python}": python, "{code}": str(code), "{run}": str(run_dir)}
++    argv = []
++    for arg in item["argv"]:
++        for token, replacement in values.items():
++            arg = arg.replace(token, replacement)
++        if re.search(r"\{(?:python|code|run)[^}]*\}", arg):
++            raise WorkflowError("UNRESOLVED_ARGUMENT", "An argument placeholder was not expanded.")
++        argv.append(arg)
++    log_path = run_dir / "private_logs" / (item["id"] + ".log")
++    log_path.parent.mkdir(exist_ok=True)
++    env = child_environment()
++    env.pop("PYTHONHOME", None)
++    env.update({"PYTHONPATH": str(code), "PYTHONDONTWRITEBYTECODE": "1", "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"})
++    temporary = run_dir / "t"
++    temporary.mkdir(exist_ok=True)
++    env.update({"TMP": str(temporary), "TEMP": str(temporary), "TMPDIR": str(temporary)})
++    result = {"name": item["id"], "status": "RUNNING", "exit_code": None, "started_at": utc_now()}
++    if checkpoint:
++        checkpoint(result)
++    print("CHECK_STARTED=" + item["id"], flush=True)
++    start = time.monotonic()
++    with log_path.open("wb") as output:
++        options = {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == "nt" else {"start_new_session": True}
++        try:
++            process = subprocess.Popen(argv, cwd=code, env=env, stdout=output, stderr=subprocess.STDOUT, shell=False, **options)
++        except OSError as exc:
++            detail = (type(exc).__name__ + ": " + str(exc) + "\n").encode("utf-8", "replace")
++            output.write(detail)
++            result.update(status="START_FAILED", exit_code=2, process_exit_code=None, error_type=type(exc).__name__,
++                          elapsed_seconds=round(time.monotonic() - start, 3), finished_at=utc_now(), log_sha256=sha256(detail))
++            print("CHECK_RESULT=" + item["id"] + ":START_FAILED:2", flush=True)
++            return result
++        try:
++            while True:
++                remaining = item["timeout_seconds"] - (time.monotonic() - start)
++                if remaining <= 0:
++                    result.update(status="TIMEOUT", exit_code=124, process_tree_terminated=terminate_process_tree(process))
++                    break
++                try:
++                    status = process.wait(timeout=min(10, remaining))
++                    result.update(status="PASS" if status == 0 else "FAIL", exit_code=status)
++                    break
++                except subprocess.TimeoutExpired:
++                    print("CHECK_RUNNING=" + item["id"], flush=True)
++        except KeyboardInterrupt:
++            result.update(status="INTERRUPTED", exit_code=130, process_tree_terminated=terminate_process_tree(process))
++        finally:
++            if process.poll() is None:
++                result["process_tree_terminated"] = terminate_process_tree(process)
++            result["process_exit_code"] = process.poll()
++    result["elapsed_seconds"] = round(time.monotonic() - start, 3)
++    result["finished_at"] = utc_now()
++    result["log_sha256"] = sha256(log_path.read_bytes())
++    print("CHECK_RESULT=" + item["id"] + ":" + result["status"] + ":" + str(result["exit_code"]), flush=True)
++    return result
++
++
++def _write_public(run_dir: Path, files: dict[str, bytes]) -> None:
++    public = run_dir / "public"
++    public.mkdir(exist_ok=True)
++    for path, content in files.items():
++        destination = public / relative_path(path)
++        destination.parent.mkdir(parents=True, exist_ok=True)
++        if destination.exists() and destination.read_bytes() != content:
++            raise WorkflowError("IMMUTABLE_PUBLIC_FILE_CONFLICT", "A completed run's public files cannot be changed.")
++        destination.write_bytes(content)
++
++
++def recover_interrupted(run_dir: Path, state: dict) -> None:
++    """Archive an abandoned attempt without executing its checks again.
++
++    Called only while holding the OS run lock. It does not infer the exit code
++    of a child that might have survived an abrupt parent-process termination.
++    """
++    plan = state.get("plan", {})
++    if not plan:
++        try:
++            loaded = json.loads((run_dir / "input_plan.json").read_bytes())
++            if isinstance(loaded, dict):
++                plan = loaded
++        except (OSError, ValueError):
++            pass
++    checks = []
++    for entry in state.get("checks", []):
++        item = dict(entry)
++        if item.get("status") == "RUNNING":
++            item.update(status="INTERRUPTED_UNKNOWN_EXIT", exit_code=None)
++        checks.append(item)
++    candidate = state.get("candidate_commit")
++    code = run_dir / "c"
++    if not candidate and (code / ".git").is_dir():
++        try:
++            head = git_text(code, "rev-parse", "HEAD")
++            parent = git_text(code, "rev-parse", "HEAD^")
++            branch = git_text(code, "symbolic-ref", "--short", "HEAD")
++            if parent == plan.get("base_commit") and branch == state["candidate_branch"]:
++                candidate = head
++        except (OSError, subprocess.SubprocessError, WorkflowError):
++            pass
++    patch = b""
++    if candidate and re.fullmatch(r"[0-9a-f]{40}", str(plan.get("base_commit", ""))):
++        try:
++            patch = git(code, "diff", "--binary", "--no-ext-diff", "--no-textconv", plan["base_commit"], candidate).stdout
++        except (OSError, subprocess.SubprocessError, WorkflowError):
++            pass
++    summary = {"schema": "SKYNETVS_M154_AUTOMATIC_EXPERIMENT_V1", "run_id": state["run_id"],
++               "status": "INTERRUPTED", "exit_code": 130, "purpose": plan.get("purpose", "UNKNOWN"),
++               "base_commit": plan.get("base_commit"), "candidate_commit": candidate,
++               "candidate_branch": state.get("candidate_branch") if candidate else None,
++               "patch_sha256": sha256(patch), "checks": checks, "recovered_without_retesting": True,
++               "child_completion_after_parent_interruption": "UNKNOWN",
++               "user_project_written_by_runner": False, "user_project_applied": False,
++               "pipeline_gate_closed": False, "runner_requested_model_training": False,
++               "remaining_checks": plan.get("remaining_checks", []), "started_at": state["started_at"], "finished_at": utc_now()}
++    files = {"summary.json": json_bytes(summary), "plan.json": json_bytes(plan), "change.patch": patch,
++             "Development_Context.md": state.get("development_context", "").encode("utf-8"),
++             "observation.json": json_bytes(make_observation(summary)),
++             "diagnostics.json": json_bytes({"schema": "SKYNETVS_M154_EXPERIMENT_DIAGNOSTICS_V1", "errors": [{
++                 "stage": state.get("phase"), "code": "RECOVERED_INTERRUPTED_RUN", "detail": "The previous process ended without a final checkpoint. Child exit codes are not inferred; checks were not rerun."}]})}
++    roots = {"SOURCE": Path(state["source"]), "RUN": run_dir, "HOME": Path.home()}
++    for entry in checks:
++        name = entry.get("name", "")
++        if re.fullmatch(r"[a-z][a-z0-9_]{0,63}", name):
++            log = run_dir / "private_logs" / (name + ".log")
++            if log.is_file():
++                files["logs/" + name + ".txt"] = redact_log(log.read_bytes(), roots).encode("utf-8")
++    files["receipt.json"] = json_bytes({"schema": "SKYNETVS_PUBLIC_EXPERIMENT_RECEIPT_V1", "project": "SkynetVS", "stage": "M154",
++        "run_id": state["run_id"], "base_commit": plan.get("base_commit"), "candidate_commit": candidate,
++        "files": {path: {"sha256": sha256(data), "size_bytes": len(data)} for path, data in files.items()},
++        "review_scope": "Recovered interrupted run. No rerun, guessed child exit, or DTR promotion."})
++    public = run_dir / "public"
++    if public.exists():
++        public.rename(run_dir / ("incomplete_public_" + uuid.uuid4().hex[:8]))
++    _write_public(run_dir, files)
++    state.update(phase="FINISHED", candidate_commit=candidate, exit_code=130, finished_at=summary["finished_at"])
++    atomic_json(run_dir / "state.json", state)
++
++
++def publish_saved(run_dir: Path) -> dict:
++    run_dir = run_dir.resolve()
++    state = json.loads((run_dir / "state.json").read_bytes())
++    if state.get("schema") != "SKYNETVS_M154_LOCAL_RUN_V1":
++        raise WorkflowError("UNOWNED_RUN_DIRECTORY", "This directory does not contain an owned experiment state.")
++    source = Path(state["source"]).resolve()
++    if run_dir.is_relative_to(source) or source.is_relative_to(run_dir):
++        raise WorkflowError("RUN_SOURCE_OVERLAP", "The experiment directory must be outside the source repository.")
++    with run_lock(run_dir):
++        state = json.loads((run_dir / "state.json").read_bytes())
++        if state.get("phase") != "FINISHED":
++            recover_interrupted(run_dir, state)
++        return _publish_saved_unlocked(run_dir)
++
++
++def _publish_saved_unlocked(run_dir: Path) -> dict:
++    state = json.loads((run_dir / "state.json").read_bytes())
++    if state.get("phase") != "FINISHED":
++        raise WorkflowError("INCOMPLETE_RUN", "An unfinished run must be recovered before publication.")
++    prefix = "reports/M154/" + state["run_id"] + "/"
++    public = run_dir / "public"
++    receipt_path = public / "receipt.json"
++    if receipt_path.is_symlink():
++        raise WorkflowError("PUBLIC_REPORT_SYMLINK", "The report receipt must be a plain file.")
++    receipt_bytes = receipt_path.read_bytes()
++    receipt = json.loads(receipt_bytes)
++    if receipt.get("schema") != "SKYNETVS_PUBLIC_EXPERIMENT_RECEIPT_V1" or receipt.get("run_id") != state["run_id"]:
++        raise WorkflowError("PUBLIC_RECEIPT_MISMATCH", "The report receipt is not bound to this run.")
++    files = {prefix + "receipt.json": receipt_bytes}
++    for name, entry in receipt["files"].items():
++        path = public / relative_path(name)
++        if path.is_symlink() or not path.resolve().is_relative_to(public.resolve()):
++            raise WorkflowError("PUBLIC_REPORT_SYMLINK", "A public report path leaves its explicit directory.")
++        data = path.read_bytes()
++        if len(data) != entry["size_bytes"] or sha256(data) != entry["sha256"]:
++            raise WorkflowError("PUBLIC_REPORT_HASH_MISMATCH", "Public report bytes differ from their recorded receipt.")
++        files[prefix + name] = data
++    identity = git_identity(Path(state["source"]))
++    transport = Transport(run_dir / "report_git", state["remote_url"], report_branch=REPORT_BRANCH, identity=identity)
++    transport.prepare_report(files, state["run_id"])
++    candidate = state.get("candidate_commit")
++    result = transport.publish(candidate_repo=(run_dir / "c") if candidate else None,
++                               candidate_commit=candidate, candidate_branch=state.get("candidate_branch") if candidate else None)
++    atomic_json(run_dir / "publication.json", result)
++    return result
++
++
++def run_experiment(source: Path, bundle: Path, run_dir: Path, *, python: str = sys.executable,
++                   remote_url: str = REMOTE, run_id: str | None = None) -> dict:
++    source, bundle, run_dir = source.resolve(), bundle.resolve(), run_dir.resolve()
++    if run_dir.is_relative_to(source) or source.is_relative_to(run_dir):
++        raise WorkflowError("RUN_SOURCE_OVERLAP", "The experiment directory must be outside the source repository.")
++    if run_dir.exists() and not (run_dir / "state.json").exists():
++        if any(path.name != "run.lock" for path in run_dir.iterdir()):
++            raise WorkflowError("UNOWNED_RUN_DIRECTORY", "The experiment directory is not empty or owned by this runner.")
++    run_dir.mkdir(parents=True, exist_ok=True)
++    with run_lock(run_dir):
++        return _run_experiment_locked(source, bundle, run_dir, python=python, remote_url=remote_url, run_id=run_id)
++
++
++def _run_experiment_locked(source: Path, bundle: Path, run_dir: Path, *, python: str,
++                           remote_url: str, run_id: str | None) -> dict:
++    if (run_dir / "state.json").exists():
++        state = json.loads((run_dir / "state.json").read_bytes())
++        if (state.get("schema") != "SKYNETVS_M154_LOCAL_RUN_V1" or Path(state.get("source", "")).resolve() != source
++                or state.get("remote_url") != remote_url):
++            raise WorkflowError("RUN_BINDING_MISMATCH", "This run belongs to a different source or remote.")
++        if state.get("plan_input_sha256") is not None:
++            if sha256((bundle / "plan.json").read_bytes()) != state["plan_input_sha256"]:
++                raise WorkflowError("RUN_PLAN_MISMATCH", "This run belongs to a different prepared plan.")
++        if state.get("phase") == "FINISHED":
++            return {"summary": json.loads((run_dir / "public" / "summary.json").read_bytes()),
++                    "publication": _publish_saved_unlocked(run_dir), "retried_without_tests": True}
++        recover_interrupted(run_dir, state)
++        return {"summary": json.loads((run_dir / "public" / "summary.json").read_bytes()),
++                "publication": _publish_saved_unlocked(run_dir), "retried_without_tests": True}
++    identifier = run_id or uuid.uuid4().hex
++    if not re.fullmatch(r"[0-9a-f]{32}", identifier):
++        raise WorkflowError("INVALID_RUN_ID", "Expected a 32-character hexadecimal run ID.")
++    state = {"schema": "SKYNETVS_M154_LOCAL_RUN_V1", "run_id": identifier, "phase": "PREPARING",
++             "source": str(source), "bundle": str(bundle), "remote_url": remote_url, "started_at": utc_now(),
++             "candidate_commit": None, "candidate_branch": "experiments/m154/" + identifier}
++    atomic_json(run_dir / "state.json", state)
++    plan, before, after, patch = {}, None, None, b""
++    selected, context, errors = [], "", []
++    checks: list[dict] = []
++    task_exit, status, candidate, stage = 2, "SETUP_FAILED", None, "READ_PLAN"
++    code = run_dir / "c"
++    roots = {"SOURCE": source, "RUN": run_dir, "HOME": Path.home()}
++    try:
++        plan_bytes = (bundle / "plan.json").read_bytes()
++        (run_dir / "input_plan.json").write_bytes(plan_bytes)
++        state["plan_input_sha256"] = sha256(plan_bytes)
++        atomic_json(run_dir / "state.json", state)
++        loaded_plan = json.loads(plan_bytes)
++        validate_plan(loaded_plan)
++        plan = loaded_plan
++        checks = [{"name": item["id"], "status": "NOT_RUN", "exit_code": None} for item in plan["checks"]]
++        stage = "READ_SOURCE"
++        before = source_snapshot(source)
++        state["source_snapshot_before"] = before
++        if before["head"] != plan["base_commit"]:
++            raise WorkflowError("BASE_COMMIT_MISMATCH", "Source HEAD differs from the pinned experiment base.")
++        stage = "CREATE_INDEPENDENT_COPY"
++        git(source, "clone", "--quiet", "--no-hardlinks", "--no-checkout", str(source), str(code))
++        git(code, "checkout", "--quiet", "-b", state["candidate_branch"], plan["base_commit"])
++        stage = "PREPARE_CANDIDATE"
++        total = 0
++        paths = []
++        for item in plan["payloads"]:
++            path = item["path"]
++            data = (bundle / "payload" / path).read_bytes()
++            total += len(data)
++            if total > 8 * 1024 * 1024 or sha256(data) != item["sha256"]:
++                raise WorkflowError("PAYLOAD_HASH_MISMATCH", "A payload file does not match the prepared plan.")
++            target = code / path
++            if any(p.is_symlink() for p in [target, *target.parents] if p != code.parent):
++                raise WorkflowError("SYMLINK_PAYLOAD_PATH", "A payload target must be a plain file in the experiment.")
++            original = sha256(target.read_bytes()) if target.is_file() else None
++            if original != item.get("before_sha256"):
++                raise WorkflowError("TARGET_BASE_HASH_MISMATCH", "The original target bytes differ from the plan.")
++            target.parent.mkdir(parents=True, exist_ok=True)
++            target.write_bytes(data)
++            paths.append(path)
++        git(code, "add", "--", *paths)
++        patch = git(code, "diff", "--cached", "--binary", "--no-ext-diff", "--no-textconv", plan["base_commit"], "--", *paths).stdout
++        identity = git_identity(source)
++        git(code, "commit", "--quiet", "--only", "-m", "M154: experiment " + identifier + " (checks recorded separately)", "--", *paths, identity=identity)
++        candidate = git_text(code, "rev-parse", "HEAD")
++        state.update(candidate_commit=candidate, phase="CHECKING")
++        state["checks"] = checks
++        state["plan"] = plan
++        atomic_json(run_dir / "state.json", state)
++        for item in plan["payloads"]:
++            blob = git(code, "show", candidate + ":" + item["path"]).stdout
++            if sha256(blob) != item["sha256"]:
++                raise WorkflowError("COMMITTED_PAYLOAD_MISMATCH", "Committed candidate bytes differ from the plan.")
++        stage = "PREPARE_LESSONS"
++        lessons_path = bundle / "lessons.json"
++        if lessons_path.is_file():
++            selected = select_lessons(load_lessons(lessons_path), task=str(plan.get("goal", "")),
++                                      paths=paths, tags=plan.get("lesson_tags", []))
++            prepared_context = prepare_context(selected)
++            context = prepared_context["text"]
++            state["context_lesson_ids"] = prepared_context["lesson_ids"]
++        state["development_context"] = context
++        atomic_json(run_dir / "state.json", state)
++        stage = "CHECKS"
++        status, task_exit = "PASS", 0
++        for index, item in enumerate(plan["checks"]):
++            def checkpoint(value):
++                checks[index] = value
++                state["checks"] = checks
++                atomic_json(run_dir / "state.json", state)
++            checks[index] = execute_check(item, code, run_dir, python, checkpoint=checkpoint)
++            checkpoint(checks[index])
++            if checks[index]["status"] != "PASS":
++                status, task_exit = checks[index]["status"], checks[index]["exit_code"]
++                break
++        stage = "VERIFY_TESTED_SNAPSHOT"
++        if git_text(code, "rev-parse", "HEAD") != candidate:
++            raise WorkflowError("TEST_CHANGED_HEAD", "A check changed the candidate HEAD.")
++        for item in plan["payloads"]:
++            if sha256((code / item["path"]).read_bytes()) != item["sha256"]:
++                raise WorkflowError("TEST_CHANGED_CANDIDATE_FILE", "A check changed a committed candidate file.")
++    except KeyboardInterrupt:
++        status, task_exit = "INTERRUPTED", 130
++        errors.append({"stage": stage, "code": "USER_INTERRUPTED", "detail": "Experiment interrupted."})
++    except Exception as exc:
++        status, task_exit = ("SETUP_FAILED", 2) if stage != "VERIFY_TESTED_SNAPSHOT" else ("SNAPSHOT_CHANGED", 2)
++        errors.append({"stage": stage, "code": getattr(exc, "code", type(exc).__name__),
++                       "detail": redact_log(str(exc).encode("utf-8", "replace"), roots, 4096)})
++        (run_dir / "private_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
++    finally:
++        try:
++            after = source_snapshot(source)
++        except Exception:
++            after = None
++        source_equal = before == after if before is not None and after is not None else None
++        if source_equal is False:
++            errors.append({"stage": "SOURCE_AFTER", "code": "SOURCE_CHANGED_DURING_RUN", "detail": "The source snapshot changed during the experiment."})
++            if task_exit == 0:
++                status, task_exit = "SOURCE_CHANGED", 2
++        post_status = None
++        if candidate:
++            try:
++                post_status = git(code, "status", "--porcelain=v1", "--untracked-files=all").stdout
++            except Exception:
++                pass
++        summary = {"schema": "SKYNETVS_M154_AUTOMATIC_EXPERIMENT_V1", "run_id": identifier,
++                   "status": status, "exit_code": task_exit, "purpose": plan.get("purpose", "UNKNOWN"),
++                   "base_commit": plan.get("base_commit"), "candidate_commit": candidate,
++                   "candidate_branch": state["candidate_branch"] if candidate else None,
++                   "code_commit_before_tests": candidate is not None, "patch_sha256": sha256(patch),
++                   "plan_sha256": sha256(json_bytes(plan)), "checks": checks,
++                   "source_git_state_unchanged": source_equal,
++                   "source_snapshot_scope": "HEAD, refs, index, config, porcelain and tracked diff; ignored files are not observed",
++                   "user_project_written_by_runner": False,
++                   "source_dirty_files_copied": False, "source_snapshot_before": before, "source_snapshot_after": after,
++                   "post_check_worktree_dirty": bool(post_status) if post_status is not None else None,
++                   "post_check_status_sha256": sha256(post_status) if post_status is not None else None,
++                   "generated_files_auto_committed": False, "user_project_applied": False,
++                   "pipeline_gate_closed": False, "remaining_checks": plan.get("remaining_checks", []),
++                   "runner_requested_model_training": False, "model_calls_by_runner": 0,
++                   "model_activity_in_checks": "NOT_INSTRUMENTED",
++                   "agent_context_prepared": bool(context), "agent_context_consumed_by_gui": False,
++                   "selected_lesson_ids": state.get("context_lesson_ids", []),
++                   "started_at": state["started_at"], "finished_at": utc_now()}
++        files = {"summary.json": json_bytes(summary), "diagnostics.json": json_bytes({"schema": "SKYNETVS_M154_EXPERIMENT_DIAGNOSTICS_V1", "errors": errors}),
++                 "plan.json": json_bytes(plan), "change.patch": patch, "Development_Context.md": context.encode("utf-8"),
++                 "observation.json": json_bytes(make_observation(summary))}
++        for item in checks:
++            log = run_dir / "private_logs" / (item["name"] + ".log")
++            if log.is_file():
++                files["logs/" + item["name"] + ".txt"] = redact_log(log.read_bytes(), roots).encode("utf-8")
++        receipt = {"schema": "SKYNETVS_PUBLIC_EXPERIMENT_RECEIPT_V1", "project": "SkynetVS", "stage": "M154", "run_id": identifier,
++                   "base_commit": plan.get("base_commit"), "candidate_commit": candidate,
++                   "files": {path: {"sha256": sha256(data), "size_bytes": len(data)} for path, data in files.items()},
++                   "review_scope": "User-invoked experiment and automated check records; no DTR promotion or model-weight training."}
++        files["receipt.json"] = json_bytes(receipt)
++        _write_public(run_dir, files)
++        state.update(phase="FINISHED", candidate_commit=candidate, finished_at=summary["finished_at"], exit_code=task_exit)
++        atomic_json(run_dir / "state.json", state)
++    try:
++        publication = _publish_saved_unlocked(run_dir)
++    except Exception as exc:
++        publication = {"queue_state": "LOCAL_FILES_PENDING_COMMIT", "candidate": {"status": "PENDING"},
++                       "report": {"status": "PENDING"}, "error_code": getattr(exc, "code", type(exc).__name__)}
++        atomic_json(run_dir / "publication.json", publication)
++    return {"summary": summary, "publication": publication, "retried_without_tests": False}
++
++
++def _published(publication: dict) -> bool:
++    accepted = {"PUBLISHED", "NOT_CREATED"}
++    return publication.get("report", {}).get("status") in accepted and publication.get("candidate", {}).get("status") in accepted
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--source", type=Path, default=Path(r"C:\Project\SkynetVS"))
++    parser.add_argument("--bundle", type=Path, default=Path(__file__).resolve().parent)
++    parser.add_argument("--run-dir", type=Path, required=True)
++    parser.add_argument("--retry", action="store_true", help="Publish a completed run without rerunning checks.")
++    args = parser.parse_args(argv)
++    try:
++        if args.retry:
++            publication = publish_saved(args.run_dir)
++            summary = json.loads((args.run_dir / "public" / "summary.json").read_bytes())
++            result = {"summary": summary, "publication": publication, "retried_without_tests": True}
++        else:
++            result = run_experiment(args.source, args.bundle, args.run_dir)
++        summary, publication = result["summary"], result["publication"]
++        print("RUN_ID=" + summary["run_id"])
++        print("TEST_STATUS=" + summary["status"])
++        print("TEST_EXIT_CODE=" + str(summary["exit_code"]))
++        print("CODE_COMMIT=" + str(summary.get("candidate_commit")))
++        print("CODE_PUBLISH_STATUS=" + str(publication.get("candidate", {}).get("status")))
++        print("REPORT_PUBLISH_STATUS=" + str(publication.get("report", {}).get("status")))
++        print("REPORT_URL=https://github.com/Daystat-debug/SkynetVS/tree/reports/m154/reports/M154/" + summary["run_id"])
++        print("RETRIED_WITHOUT_TESTS=" + str(result["retried_without_tests"]).upper())
++        print("PRESERVED_RUN_DIRECTORY=" + str(args.run_dir))
++        if _published(publication):
++            print("PUBLICATION=COMPLETE")
++        else:
++            print("PUBLICATION=PENDING; repeat the same launcher to retry without rerunning checks")
++        return summary["exit_code"] if summary["exit_code"] != 0 else (0 if _published(publication) else 75)
++    except Exception as exc:
++        print("M154_AUTORUN_STOP=" + getattr(exc, "code", type(exc).__name__))
++        print("PRESERVED_RUN_DIRECTORY=" + str(args.run_dir))
++        return 2
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/tools/m154_workflow/test_development_lessons.py b/tools/m154_workflow/test_development_lessons.py
+new file mode 100644
+index 0000000..e079af2
+--- /dev/null
++++ b/tools/m154_workflow/test_development_lessons.py
+@@ -0,0 +1,129 @@
++from __future__ import annotations
++
++import copy
++import hashlib
++import json
++from pathlib import Path
++import sys
++import tempfile
++import unittest
++
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++import development_lessons as lessons
++
++
++class FakeModel:
++    model = "test-only-no-network"
++
++    def __init__(self):
++        self.calls = []
++        self.ensure_calls = 0
++        self.response = {"findings": []}
++
++    def ensure_installed(self):
++        self.ensure_calls += 1
++
++    def generate(self, **kwargs):
++        self.calls.append(kwargs)
++        return self.response
++
++
++class DevelopmentLessonsTests(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        cls.rows = lessons.load_lessons(Path(__file__).with_name("lessons.json"))
++
++    def test_task_and_path_select_relevant_lesson(self):
++        selected = lessons.select_lessons(self.rows, task="Убрать повтор title после strip",
++                                           paths=["modules\\developer_task_ui\\app\\core.py"], tags=[])
++        self.assertEqual([x["id"] for x in selected], ["M154.deduplicate-stripped-task-text"])
++
++    def test_unrelated_task_has_no_fallback_memory(self):
++        selected = lessons.select_lessons(self.rows, task="Изменить палитру календаря",
++                                           paths=["modules/calendar_colors.py"], tags=["palette"])
++        self.assertEqual(selected, [])
++        self.assertEqual(lessons.render_context(selected), "")
++
++    def test_explicit_tags_select_and_observations_do_not_become_lessons(self):
++        observed = copy.deepcopy(self.rows[0])
++        observed["status"] = "observed_only"
++        observed["id"] = "unreviewed-failure"
++        selected = lessons.select_lessons([observed] + self.rows, task="", paths=[], tags=["pipeline"])
++        self.assertEqual([x["id"] for x in selected], ["M154.static-is-not-full-check"])
++
++    def test_failed_run_keeps_unknown_cause_and_omits_raw_log(self):
++        summary = {"run_id": "a" * 32, "status": "FAIL", "code_commit": "b" * 40,
++                   "exit_code": 2, "failed_check": "pipeline", "stderr": "private raw output",
++                   "checks": [{"name": "pipeline", "status": "FAIL", "exit_code": 2,
++                               "stdout": "private test output"}]}
++        incident = lessons.make_observation(summary)
++        self.assertEqual(incident["status"], "observed_only")
++        self.assertEqual(incident["outcome"], "FAIL")
++        self.assertIsNone(incident["root_cause"])
++        self.assertIsNone(incident["resolution"])
++        self.assertIsNone(incident["training_label"])
++        self.assertFalse(incident["is_analyzer_feedback"])
++        self.assertNotIn("private", json.dumps(incident))
++        self.assertEqual(incident["checks"], [{"name": "pipeline", "status": "FAIL", "exit_code": 2}])
++
++    def test_pass_is_observation_not_an_automatic_verified_lesson(self):
++        incident = lessons.make_observation({"status": "PASS", "exit_code": 0})
++        self.assertEqual(incident["outcome"], "PASS")
++        self.assertEqual(incident["status"], "observed_only")
++        self.assertIsNone(incident["training_label"])
++
++    def test_adapter_keeps_system_and_original_prompt_and_records_used_ids(self):
++        model = FakeModel()
++        selected = lessons.select_lessons(self.rows, task="", paths=[], tags=["pipeline"])
++        adapter = lessons.LessonsModelAdapter(model, selected)
++        self.assertEqual(model.calls, [])
++        self.assertEqual(model.ensure_calls, 0)
++        adapter.ensure_installed()
++        prompt = 'Original task\n{"request_id":"fixed","request_fingerprint":"unchanged"}'
++        response = adapter.generate(system="SYSTEM EXACT", prompt=prompt, max_tokens=350)
++        self.assertIs(response, model.response)
++        self.assertEqual(model.calls[0]["system"], "SYSTEM EXACT")
++        self.assertTrue(model.calls[0]["prompt"].startswith(prompt + "\n\n"))
++        self.assertEqual(model.calls[0]["max_tokens"], 350)
++        self.assertEqual(adapter.receipts[0]["lesson_ids"], ["M154.static-is-not-full-check"])
++        self.assertEqual(adapter.receipts[0]["base_prompt_sha256"], hashlib.sha256(prompt.encode()).hexdigest())
++        self.assertEqual(adapter.receipts[0]["status"], "RESPONSE_RECEIVED")
++
++    def test_adapter_with_no_matching_lessons_is_exact_passthrough(self):
++        model = FakeModel()
++        adapter = lessons.LessonsModelAdapter(model, [])
++        adapter.generate(system="S", prompt="P")
++        self.assertEqual(model.calls[0], {"system": "S", "prompt": "P", "max_tokens": 1500})
++        self.assertEqual(adapter.receipts[0]["lesson_ids"], [])
++
++    def test_context_utf8_bound_and_receipt_ids_match_actual_json(self):
++        selected = []
++        for i in range(20):
++            row = copy.deepcopy(self.rows[0])
++            row["id"] = "large-lesson-" + str(i)
++            for key in ("symptom", "cause", "prevention", "regression_check"):
++                row[key] = "Ж" * 20000
++            selected.append(row)
++        adapter = lessons.LessonsModelAdapter(FakeModel(), selected)
++        prepared = lessons.prepare_context(selected)
++        rendered = prepared["text"]
++        self.assertEqual(adapter.context, rendered)
++        self.assertLessEqual(len(rendered.encode("utf-8")), lessons.MAX_CONTEXT_BYTES)
++        payload = json.loads(rendered.split("```json\n", 1)[1].rsplit("\n```", 1)[0])
++        self.assertGreater(len(payload["lessons"]), 0)
++        self.assertLess(len(payload["lessons"]), len(selected))
++        self.assertEqual(adapter.selected_ids, [x["id"] for x in payload["lessons"]])
++        self.assertEqual(prepared["lesson_ids"], adapter.selected_ids)
++
++    def test_curated_file_rejects_unreviewed_records(self):
++        row = copy.deepcopy(self.rows[0])
++        row["status"] = "observed_only"
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "lessons.json"
++            path.write_text(json.dumps({"schema": lessons.LESSONS_SCHEMA, "lessons": [row]}))
++            with self.assertRaisesRegex(ValueError, "only verified"):
++                lessons.load_lessons(path)
++
++
++if __name__ == "__main__":
++    unittest.main(verbosity=2)
+diff --git a/tools/m154_workflow/test_git_transport.py b/tools/m154_workflow/test_git_transport.py
+new file mode 100644
+index 0000000..7297ec6
+--- /dev/null
++++ b/tools/m154_workflow/test_git_transport.py
+@@ -0,0 +1,172 @@
++"""Real-Git transport checks; no network, no project repository writes."""
++from __future__ import annotations
++
++import json
++import os
++from pathlib import Path
++import subprocess
++import sys
++import tempfile
++import unittest
++
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++from git_transport import Transport, TransportError
++
++
++class TransportTests(unittest.TestCase):
++    def setUp(self) -> None:
++        self.temporary = tempfile.TemporaryDirectory(prefix="m154_git_test_")
++        self.root = Path(self.temporary.name)
++        self.remote = self.root / "remote.git"
++        self.code = self.root / "code"
++        self.git(self.root, "init", "--bare", "--quiet", str(self.remote))
++        self.git(self.root, "init", "--quiet", str(self.code))
++        (self.code / "example.py").write_bytes(b"value = 1\n")
++        self.git(self.code, "add", "--", "example.py")
++        self.git(self.code, "commit", "--quiet", "-m", "fixture base")
++        self.base = self.git(self.code, "rev-parse", "HEAD").strip().decode()
++        self.git(self.code, "push", "--quiet", str(self.remote), "HEAD:refs/heads/main", "HEAD:refs/heads/sandbox/m154")
++        self.base_refs = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/main", "refs/heads/sandbox/m154")
++
++    def tearDown(self) -> None:
++        self.temporary.cleanup()
++
++    def git(self, directory: Path, *arguments: str) -> bytes:
++        environment = {k: v for k, v in os.environ.items() if not k.upper().startswith("GIT_")}
++        environment.update(GIT_AUTHOR_NAME="M154 test", GIT_AUTHOR_EMAIL="test@example.invalid",
++                           GIT_COMMITTER_NAME="M154 test", GIT_COMMITTER_EMAIL="test@example.invalid")
++        return subprocess.run(["git", "--no-optional-locks", "-C", str(directory),
++                               "-c", "core.autocrlf=false", "-c", "commit.gpgsign=false",
++                               "-c", "core.hooksPath=" + os.devnull, "-c", "core.fsmonitor=false", *arguments],
++                              env=environment, check=True, stdout=subprocess.PIPE,
++                              stderr=subprocess.PIPE, timeout=30).stdout
++
++    def files(self, run: str, data: bytes = b'{"result":"FAIL","exit_code":2}\n') -> dict[str, bytes]:
++        return {"reports/M154/" + run + "/summary.json": data,
++                "reports/M154/" + run + "/diagnostics.json": b'{"issues":["TEST_FAILURE"]}\n'}
++
++    def make(self, run: str, remote: Path | None = None, data: bytes | None = None) -> Transport:
++        transport = Transport(self.root / ("queue_" + run), str(remote or self.remote))
++        transport.prepare_report(self.files(run) if data is None else self.files(run, data), run)
++        return transport
++
++    def test_failed_run_is_published_and_retry_creates_no_commit(self) -> None:
++        run = "a" * 32
++        transport = self.make(run)
++        result = transport.publish(self.code, self.base, "experiments/m154/" + run)
++        self.assertEqual("PUBLISHED", result["queue_state"])
++        first = result["report"]["commit"]
++        for path, data in self.files(run).items():
++            self.assertEqual(data, self.git(self.remote, "show", first + ":" + path))
++        retry = Transport(transport.state_dir, str(self.remote)).publish()
++        self.assertEqual(first, retry["report"]["commit"])
++        self.assertEqual(self.base_refs, self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/main", "refs/heads/sandbox/m154"))
++
++    def test_offline_first_commit_and_later_publication(self) -> None:
++        run = "b" * 32
++        late_remote = self.root / "later.git"
++        transport = self.make(run, late_remote)
++        local_commit = transport.state["local_commit"]
++        self.assertEqual(b"commit\n", self.git(transport.repo, "cat-file", "-t", local_commit))
++        result = transport.publish(self.code, self.base, "experiments/m154/" + run)
++        self.assertEqual("PENDING", result["queue_state"])
++        self.git(self.root, "init", "--bare", "--quiet", str(late_remote))
++        retried = Transport(transport.state_dir, str(late_remote)).publish()
++        self.assertEqual("PUBLISHED", retried["queue_state"])
++        self.assertEqual(local_commit, retried["local_report_commit"])
++
++    def test_report_append_preserves_other_runs(self) -> None:
++        left, right = self.make("c" * 32), self.make("d" * 32)
++        first = left.publish()["report"]["commit"]
++        second = right.publish()["report"]["commit"]
++        self.assertEqual(first, self.git(self.remote, "rev-parse", second + "^").strip().decode())
++        for run in ("c" * 32, "d" * 32):
++            for path, data in self.files(run).items():
++                self.assertEqual(data, self.git(self.remote, "show", second + ":" + path))
++
++    def test_refused_report_push_is_retried_against_new_parent(self) -> None:
++        first, rival = self.make("e" * 32), self.make("f" * 32)
++        original = first._git
++        interrupted = False
++
++        def raced(repo, args, **kwargs):
++            nonlocal interrupted
++            if args and args[0] == "push" and not interrupted:
++                interrupted = True
++                self.assertEqual("PUBLISHED", rival.publish()["queue_state"])
++            return original(repo, args, **kwargs)
++
++        first._git = raced
++        result = first.publish()
++        self.assertEqual("PUBLISHED", result["queue_state"])
++        for run in ("e" * 32, "f" * 32):
++            self.git(self.remote, "show", result["report"]["commit"] + ":" + next(iter(self.files(run))))
++
++    def test_remote_immutable_conflict_preserves_existing_report(self) -> None:
++        run = "1" * 32
++        first = self.make(run)
++        initial_commit = first.publish()["report"]["commit"]
++        other = Transport(self.root / "conflicting_queue", str(self.remote))
++        other.prepare_report(self.files(run, b'{"different":true}\n'), run)
++        result = other.publish()
++        self.assertEqual("CONFLICT", result["report"]["status"])
++        current = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/reports/m154").decode().split()[0]
++        self.assertEqual(initial_commit, current)
++
++    def test_candidate_failure_does_not_suppress_report(self) -> None:
++        run = "2" * 32
++        transport = self.make(run)
++        result = transport.publish(self.root / "missing_candidate", self.base, "experiments/m154/" + run)
++        self.assertEqual("PENDING", result["candidate"]["status"])
++        self.assertEqual("PUBLISHED", result["report"]["status"])
++        self.assertEqual("PENDING", result["queue_state"])
++
++    def test_existing_run_file_set_cannot_be_extended(self) -> None:
++        run = "6" * 32
++        first = self.make(run)
++        initial_commit = first.publish()["report"]["commit"]
++        extended = dict(self.files(run))
++        extended["reports/M154/" + run + "/extra.json"] = b'{"extra":true}\n'
++        other = Transport(self.root / "extended_queue", str(self.remote))
++        other.prepare_report(extended, run)
++        result = other.publish()
++        self.assertEqual("CONFLICT", result["report"]["status"])
++        current = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/reports/m154").decode().split()[0]
++        self.assertEqual(initial_commit, current)
++
++    def test_existing_candidate_ref_is_never_overwritten(self) -> None:
++        run = "3" * 32
++        self.git(self.code, "push", "--quiet", str(self.remote), self.base + ":refs/heads/experiments/m154/" + run)
++        (self.code / "example.py").write_bytes(b"value = 2\n")
++        self.git(self.code, "add", "--", "example.py")
++        self.git(self.code, "commit", "--quiet", "-m", "different candidate")
++        other = self.git(self.code, "rev-parse", "HEAD").strip().decode()
++        result = self.make(run).publish(self.code, other, "experiments/m154/" + run)
++        self.assertEqual("CONFLICT", result["candidate"]["status"])
++        self.assertEqual("PUBLISHED", result["report"]["status"])
++        existing = self.git(self.root, "ls-remote", "--heads", str(self.remote), "refs/heads/experiments/m154/" + run).decode().split()[0]
++        self.assertEqual(self.base, existing)
++
++    def test_local_bytes_and_candidate_binding_are_immutable(self) -> None:
++        run = "4" * 32
++        transport = self.make(run)
++        again = transport.prepare_report(self.files(run), run)
++        self.assertEqual(transport.state["local_commit"], again["local_commit"])
++        with self.assertRaisesRegex(TransportError, "LOCAL_RUN_IMMUTABLE_CONFLICT"):
++            transport.prepare_report(self.files(run, b"changed"), run)
++        with self.assertRaisesRegex(TransportError, "INVALID_CANDIDATE_BINDING"):
++            transport.publish(self.code, self.base, "main")
++
++    def test_recover_local_commit_if_state_write_was_interrupted(self) -> None:
++        run = "5" * 32
++        transport = self.make(run)
++        saved = transport.state["local_commit"]
++        transport.state_file.unlink()
++        recovered = Transport(transport.state_dir, str(self.remote))
++        result = recovered.prepare_report(self.files(run), run)
++        self.assertEqual(saved, result["local_commit"])
++        self.assertEqual("PUBLISHED", recovered.publish()["queue_state"])
++
++
++if __name__ == "__main__":
++    unittest.main(verbosity=2)
+diff --git a/tools/m154_workflow/test_workflow.py b/tools/m154_workflow/test_workflow.py
+new file mode 100644
+index 0000000..aa4a738
+--- /dev/null
++++ b/tools/m154_workflow/test_workflow.py
+@@ -0,0 +1,236 @@
++"""Behavioral integration checks: real Git, disposable repositories, no network."""
++from __future__ import annotations
++
++import hashlib
++import json
++import os
++from pathlib import Path
++import subprocess
++import sys
++import tempfile
++import unittest
++
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++from run import SCHEMA, WorkflowError, git, git_text, json_bytes, publish_saved, run_experiment, run_lock, sha256, source_snapshot
++
++
++class WorkflowTests(unittest.TestCase):
++    def setUp(self):
++        self.temp = tempfile.TemporaryDirectory(prefix="m154qa_")
++        self.root = Path(self.temp.name)
++        self.source = self.root / "source"
++        self.source.mkdir()
++        self.remote = self.root / "remote.git"
++        self.bundle = self.root / "bundle"
++        (self.bundle / "payload").mkdir(parents=True)
++        self.run_dir = self.root / "run"
++        git(self.source, "init", "--quiet", "-b", "main")
++        git(self.source, "config", "user.name", "M154 temporary test")
++        git(self.source, "config", "user.email", "m154-test@example.invalid")
++        self.old = b"VALUE = 0\n"
++        (self.source / "demo.py").write_bytes(self.old)
++        git(self.source, "add", "--", "demo.py")
++        git(self.source, "commit", "--quiet", "-m", "fixture")
++        self.base = git_text(self.source, "rev-parse", "HEAD")
++        git(self.root, "init", "--bare", "--quiet", str(self.remote))
++        git(self.source, "push", str(self.remote), "HEAD:refs/heads/main", "HEAD:refs/heads/sandbox/m154")
++        self.remote_initial = git(self.remote, "for-each-ref", "--format=%(refname) %(objectname)", "refs/heads/main", "refs/heads/sandbox/m154").stdout
++        self.plan("from pathlib import Path; assert Path('demo.py').read_text() == 'VALUE = 1\\n'")
++
++    def tearDown(self):
++        # Own disposable repositories only; Git on Windows may make loose objects read-only.
++        def make_writable(function, path, error):
++            os.chmod(path, 0o700)
++            function(path)
++        import shutil
++        shutil.rmtree(self.root, onerror=make_writable)
++        self.temp.cleanup()
++
++    def plan(self, command: str, timeout: int = 10):
++        data = b"VALUE = 1\n"
++        (self.bundle / "payload" / "demo.py").write_bytes(data)
++        self.manifest = {"schema": SCHEMA, "stage": "M154", "purpose": "AUTOMATION_SELFTEST",
++                         "goal": "Test experiment publication", "base_commit": self.base,
++                         "payloads": [{"path": "demo.py", "before_sha256": sha256(self.old), "sha256": sha256(data)}],
++                         "checks": [{"id": "behavior", "argv": ["{python}", "-B", "-c", command], "timeout_seconds": timeout}],
++                         "remaining_checks": ["pipeline(flow=check)"]}
++        self.write_plan()
++
++    def write_plan(self):
++        (self.bundle / "plan.json").write_bytes(json_bytes(self.manifest))
++
++    def run_it(self, remote: Path | None = None):
++        return run_experiment(self.source, self.bundle, self.run_dir, remote_url=str(remote or self.remote))
++
++    def public_from_remote(self, result, name="summary.json"):
++        path = "reports/M154/" + result["summary"]["run_id"] + "/" + name
++        raw = git(self.remote, "show", "refs/heads/reports/m154:" + path).stdout
++        return json.loads(raw)
++
++    def assert_source_refs_preserved(self):
++        self.assertEqual(self.remote_initial, git(self.remote, "for-each-ref", "--format=%(refname) %(objectname)", "refs/heads/main", "refs/heads/sandbox/m154").stdout)
++        self.assertEqual(self.base, git_text(self.source, "rev-parse", "HEAD"))
++        self.assertEqual(self.old, (self.source / "demo.py").read_bytes())
++
++    def test_pass_code_and_report_are_published(self):
++        before = source_snapshot(self.source)
++        result = self.run_it()
++        self.assertEqual("PASS", result["summary"]["status"])
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++        summary = self.public_from_remote(result)
++        self.assertEqual(result["summary"], summary)
++        commit = summary["candidate_commit"]
++        self.assertEqual(b"VALUE = 1\n", git(self.remote, "show", commit + ":demo.py").stdout)
++        self.assertEqual(before, source_snapshot(self.source))
++        self.assertFalse(summary["pipeline_gate_closed"])
++        self.assert_source_refs_preserved()
++
++    def test_failure_exit_is_preserved_and_published(self):
++        self.plan("print('expected intentional failure'); raise SystemExit(7)")
++        result = self.run_it()
++        self.assertEqual(("FAIL", 7), (result["summary"]["status"], result["summary"]["exit_code"]))
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++        self.assertEqual(7, self.public_from_remote(result)["checks"][0]["exit_code"])
++        observation = self.public_from_remote(result, "observation.json")
++        self.assertEqual("observed_only", observation["status"])
++        self.assertIsNone(observation["root_cause"])
++        self.assertIsNone(observation["training_label"])
++        self.assert_source_refs_preserved()
++
++    def test_preparation_failure_is_reported_without_false_candidate(self):
++        self.manifest["base_commit"] = "0" * 40
++        self.write_plan()
++        result = self.run_it()
++        self.assertEqual("SETUP_FAILED", result["summary"]["status"])
++        self.assertIsNone(result["summary"]["candidate_commit"])
++        self.assertEqual("NOT_RUN", result["summary"]["checks"][0]["status"])
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++        self.assertEqual("BASE_COMMIT_MISMATCH", self.public_from_remote(result, "diagnostics.json")["errors"][0]["code"])
++        self.assert_source_refs_preserved()
++
++    def test_invalid_root_plan_still_has_report(self):
++        (self.bundle / "plan.json").write_bytes(b"[]\n")
++        result = self.run_it()
++        self.assertEqual("SETUP_FAILED", result["summary"]["status"])
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++        self.assertEqual("INVALID_PLAN_SCHEMA", self.public_from_remote(result, "diagnostics.json")["errors"][0]["code"])
++
++    def test_offline_retry_does_not_execute_tests_again(self):
++        self.plan("from pathlib import Path; p=Path('test_invocations.txt'); p.write_text(p.read_text()+'x' if p.exists() else 'x')")
++        offline_remote = self.root / "not_yet_available.git"
++        first = self.run_it(offline_remote)
++        self.assertEqual("PASS", first["summary"]["status"])
++        self.assertEqual("PENDING", first["publication"]["queue_state"])
++        self.assertTrue((self.run_dir / "report_git" / "state.json").is_file())
++        git(self.root, "init", "--bare", "--quiet", str(offline_remote))
++        second = self.run_it(offline_remote)
++        self.assertTrue(second["retried_without_tests"])
++        self.assertEqual("PUBLISHED", second["publication"]["queue_state"])
++        self.assertEqual(first["summary"], second["summary"])
++        self.assertEqual("x", (self.run_dir / "c" / "test_invocations.txt").read_text())
++        self.assert_source_refs_preserved()
++
++    def test_dirty_staged_untracked_work_is_preserved(self):
++        (self.source / "demo.py").write_bytes(b"LOCAL UNSTAGED CONTENT\n")
++        (self.source / "staged.txt").write_bytes(b"STAGED\n")
++        git(self.source, "add", "--", "staged.txt")
++        (self.source / "private_note.txt").write_bytes(b"PRIVATE UNTRACKED\n")
++        before = source_snapshot(self.source)
++        result = self.run_it()
++        self.assertEqual("PASS", result["summary"]["status"])
++        self.assertEqual(before, source_snapshot(self.source))
++        self.assertEqual(b"LOCAL UNSTAGED CONTENT\n", (self.source / "demo.py").read_bytes())
++        self.assertEqual(b"PRIVATE UNTRACKED\n", (self.source / "private_note.txt").read_bytes())
++        tree = git(self.remote, "ls-tree", "-r", "--name-only", result["summary"]["candidate_commit"]).stdout.decode()
++        self.assertNotIn("private_note", tree)
++        self.assertNotIn("staged.txt", tree)
++
++    def test_test_outputs_are_not_added_to_candidate_commit(self):
++        self.plan("from pathlib import Path; Path('generated.txt').write_text('test-only output')")
++        result = self.run_it()
++        self.assertTrue(result["summary"]["post_check_worktree_dirty"])
++        tree = git(self.remote, "ls-tree", "-r", "--name-only", result["summary"]["candidate_commit"]).stdout.decode()
++        self.assertNotIn("generated.txt", tree)
++        self.assertEqual("PASS", result["summary"]["status"])
++
++    def test_changed_candidate_is_recorded_as_snapshot_failure(self):
++        self.plan("from pathlib import Path; Path('demo.py').write_text('changed by test')")
++        result = self.run_it()
++        self.assertEqual("SNAPSHOT_CHANGED", result["summary"]["status"])
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++        self.assertEqual(b"VALUE = 1\n", git(self.remote, "show", result["summary"]["candidate_commit"] + ":demo.py").stdout)
++
++    def test_timeout_is_published(self):
++        self.plan("import time; time.sleep(30)", timeout=1)
++        result = self.run_it()
++        self.assertEqual("TIMEOUT", result["summary"]["status"])
++        self.assertEqual(124, result["summary"]["exit_code"])
++        self.assertTrue(result["summary"]["checks"][0]["process_tree_terminated"])
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++
++    def test_missing_check_interpreter_is_not_left_running(self):
++        result = run_experiment(self.source, self.bundle, self.run_dir,
++                                python=str(self.root / "missing-python"), remote_url=str(self.remote))
++        self.assertEqual("START_FAILED", result["summary"]["status"])
++        self.assertEqual("START_FAILED", result["summary"]["checks"][0]["status"])
++        self.assertEqual(2, result["summary"]["exit_code"])
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++
++    def test_run_inside_source_is_rejected_before_any_write(self):
++        bad = self.source / "run"
++        with self.assertRaisesRegex(WorkflowError, "outside"):
++            run_experiment(self.source, self.bundle, bad, remote_url=str(self.remote))
++        self.assertFalse(bad.exists())
++
++    def test_extra_file_in_public_directory_is_not_published(self):
++        self.plan("from pathlib import Path; p=Path(r'{run}')/'public'; p.mkdir(); (p/'private.txt').write_text('not an allowed report file')")
++        result = self.run_it()
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++        paths = git(self.remote, "ls-tree", "-r", "--name-only", "refs/heads/reports/m154").stdout.decode()
++        self.assertNotIn("private.txt", paths)
++        self.assertEqual("not an allowed report file", (self.run_dir / "public" / "private.txt").read_text())
++
++    def test_edited_receipt_file_is_rejected_before_retry(self):
++        result = self.run_it()
++        before = git_text(self.remote, "rev-parse", "refs/heads/reports/m154")
++        (self.run_dir / "public" / "summary.json").write_text('{}', encoding='utf-8')
++        with self.assertRaisesRegex(WorkflowError, "receipt"):
++            publish_saved(self.run_dir)
++        self.assertEqual(before, git_text(self.remote, "rev-parse", "refs/heads/reports/m154"))
++
++    def test_same_run_cannot_silently_switch_to_another_plan(self):
++        first = self.run_it()
++        self.manifest["goal"] = "A different experiment"
++        self.write_plan()
++        with self.assertRaisesRegex(WorkflowError, "different prepared plan"):
++            self.run_it()
++        self.assertEqual(first["summary"], self.public_from_remote(first))
++
++    def test_active_run_is_not_recovered_or_reexecuted(self):
++        self.run_dir.mkdir()
++        with run_lock(self.run_dir):
++            with self.assertRaisesRegex(WorkflowError, "already active"):
++                self.run_it()
++        self.assertFalse((self.run_dir / "state.json").exists())
++
++    def test_interrupted_run_is_published_without_a_second_test(self):
++        self.plan("from pathlib import Path; Path('should_not_run.txt').write_text('unexpected')")
++        self.run_dir.mkdir()
++        identifier = "8" * 32
++        state = {"schema": "SKYNETVS_M154_LOCAL_RUN_V1", "run_id": identifier, "phase": "CHECKING",
++                 "source": str(self.source.resolve()), "bundle": str(self.bundle.resolve()), "remote_url": str(self.remote),
++                 "started_at": "2026-10-25T00:00:00+00:00", "candidate_commit": None,
++                 "candidate_branch": "experiments/m154/" + identifier,
++                 "plan_input_sha256": sha256((self.bundle / "plan.json").read_bytes()), "plan": self.manifest,
++                 "checks": [{"name": "behavior", "status": "RUNNING", "exit_code": None}]}
++        (self.run_dir / "state.json").write_bytes(json_bytes(state))
++        result = self.run_it()
++        self.assertTrue(result["retried_without_tests"])
++        self.assertEqual("INTERRUPTED", result["summary"]["status"])
++        self.assertEqual("INTERRUPTED_UNKNOWN_EXIT", result["summary"]["checks"][0]["status"])
++        self.assertEqual("PUBLISHED", result["publication"]["queue_state"])
++        self.assertFalse((self.run_dir / "c").exists())
++
++
++if __name__ == "__main__":
++    unittest.main(verbosity=2)

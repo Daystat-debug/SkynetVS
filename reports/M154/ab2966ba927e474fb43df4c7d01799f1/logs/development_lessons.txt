@@ -1,0 +1,14 @@
+test_adapter_keeps_system_and_original_prompt_and_records_used_ids (__main__.DevelopmentLessonsTests.test_adapter_keeps_system_and_original_prompt_and_records_used_ids) ... ok
+test_adapter_with_no_matching_lessons_is_exact_passthrough (__main__.DevelopmentLessonsTests.test_adapter_with_no_matching_lessons_is_exact_passthrough) ... ok
+test_context_utf8_bound_and_receipt_ids_match_actual_json (__main__.DevelopmentLessonsTests.test_context_utf8_bound_and_receipt_ids_match_actual_json) ... ok
+test_curated_file_rejects_unreviewed_records (__main__.DevelopmentLessonsTests.test_curated_file_rejects_unreviewed_records) ... ok
+test_explicit_tags_select_and_observations_do_not_become_lessons (__main__.DevelopmentLessonsTests.test_explicit_tags_select_and_observations_do_not_become_lessons) ... ok
+test_failed_run_keeps_unknown_cause_and_omits_raw_log (__main__.DevelopmentLessonsTests.test_failed_run_keeps_unknown_cause_and_omits_raw_log) ... ok
+test_pass_is_observation_not_an_automatic_verified_lesson (__main__.DevelopmentLessonsTests.test_pass_is_observation_not_an_automatic_verified_lesson) ... ok
+test_task_and_path_select_relevant_lesson (__main__.DevelopmentLessonsTests.test_task_and_path_select_relevant_lesson) ... ok
+test_unrelated_task_has_no_fallback_memory (__main__.DevelopmentLessonsTests.test_unrelated_task_has_no_fallback_memory) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.016s
+
+OK

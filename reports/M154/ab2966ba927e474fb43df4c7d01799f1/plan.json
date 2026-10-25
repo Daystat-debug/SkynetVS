@@ -1,0 +1,140 @@
+{
+  "base_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "checks": [
+    {
+      "argv": [
+        "{python}",
+        "-I",
+        "-S",
+        "-B",
+        "{code}/tools/m154_workflow/test_workflow.py"
+      ],
+      "id": "workflow_integration",
+      "timeout_seconds": 180
+    },
+    {
+      "argv": [
+        "{python}",
+        "-I",
+        "-S",
+        "-B",
+        "{code}/tools/m154_workflow/test_git_transport.py"
+      ],
+      "id": "git_transport",
+      "timeout_seconds": 180
+    },
+    {
+      "argv": [
+        "{python}",
+        "-I",
+        "-S",
+        "-B",
+        "{code}/tools/m154_workflow/test_development_lessons.py"
+      ],
+      "id": "development_lessons",
+      "timeout_seconds": 60
+    }
+  ],
+  "coverage": [
+    "automatic candidate commit",
+    "PASS/FAIL report publication",
+    "offline retry",
+    "append races",
+    "source checkout preservation",
+    "verified development context"
+  ],
+  "expected_model_activity": "none: standard-library automation tests and fake model adapter only",
+  "goal": "Автоматически сохранять и публиковать изменения, тесты и ошибки эксперимента; учитывать подтверждённые уроки разработки.",
+  "lesson_tags": [
+    "git",
+    "reports",
+    "failure",
+    "pipeline",
+    "isolated",
+    "python"
+  ],
+  "payloads": [
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/README_RU.md",
+      "sha256": "422d1aedc17d835f8ce633ece4f0833461f054c562b47f2a208617be4a4111b1"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/development_lessons.py",
+      "sha256": "d82faf64a6df755808de5ad72c5c227ecd9c26fdd9aa8a53bb7c28dbc422590c"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/git_transport.py",
+      "sha256": "40edd083316797a2ca699c49679b35f2dbf471df8d29dbd47d2205eeb8d1e978"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/launch_template.ps1",
+      "sha256": "301cb6af53609e13853a6c0250603db776d41aaf1fd94d722f21eae1d689a720"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/lessons.json",
+      "sha256": "920d23e9bdc34594ebbe13aef2a8fa54439cb531efd1fd78f5232cc13076f5e9"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/failure.log.txt",
+      "sha256": "f47f52fd36d0c3c9de792e4b30fe283a56c5b84a0f87bf3b4d969b5fbce989de"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/observation.json",
+      "sha256": "7f294766c753635507bb3aee42f40e245489df1d217524eb00c7dd675e6664c4"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/repair.patch",
+      "sha256": "15068e8cf2a56c40e684e58a9f4538e8ed8cd00cfca3724b28f1ec48da904817"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/test_git_transport.before.txt",
+      "sha256": "f7680fbc36f30bfb991a353d49542284fcc311c301281541fb5a4c92c8d6e2bb"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/verification.json",
+      "sha256": "8cd1794d7a800b3fec94d70a860926041bfbc7a5555c7bfcd338a595f1fe822f"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/run.py",
+      "sha256": "4dc30cfd244bdee5228b9e1f1eea53d68f84621d8f3ebda1bd512d60dfc981be"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/test_development_lessons.py",
+      "sha256": "e5515280278c08796433fd5e2abfe319d999e07a56360aa597b6a97a884e39d2"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/test_git_transport.py",
+      "sha256": "331c4ddc00ce9f420d2fb5409738aaf652bb12eb45ce2e50899fc386635fb56e"
+    },
+    {
+      "before_sha256": null,
+      "path": "tools/m154_workflow/test_workflow.py",
+      "sha256": "c697cc8f80a514a4043304186d62c7fc295a18b8c4f35dc2b9969d23259d279a"
+    }
+  ],
+  "publication": {
+    "candidate_branch": "experiments/m154/<run_id>",
+    "on_test_failure": true,
+    "report_branch": "reports/m154"
+  },
+  "purpose": "AUTOMATION_SELFTEST",
+  "remaining_checks": [
+    "pipeline(flow=check) for the previously prepared reminder parser proposal"
+  ],
+  "schema": "SKYNETVS_EXPERIMENT_PLAN_V1",
+  "stage": "M154",
+  "user_project_apply": false
+}

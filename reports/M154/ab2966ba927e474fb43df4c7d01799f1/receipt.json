@@ -1,0 +1,47 @@
+{
+  "base_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "candidate_commit": "75061168ac5147c90fa725cf41b26e4248571730",
+  "files": {
+    "Development_Context.md": {
+      "sha256": "ee8bcb6242b6252f427c569eeec9c8e40e973d530c3b250603e4d52bb9e542ed",
+      "size_bytes": 6901
+    },
+    "change.patch": {
+      "sha256": "300b759b935a6bc99c1284f977621bb5a7583a7850e42421e5113934445724d5",
+      "size_bytes": 137174
+    },
+    "diagnostics.json": {
+      "sha256": "6db22ffe9a5cc199042f138cc8459028ada391005e5e6af74f196047d4dc77c4",
+      "size_bytes": 74
+    },
+    "logs/development_lessons.txt": {
+      "sha256": "f9d9a0e836f934a224495b2948c39b45d9eb34dc822da46c21b98857d3fd8bca",
+      "size_bytes": 1472
+    },
+    "logs/git_transport.txt": {
+      "sha256": "ca7ed134aac71848b40c38652c0022f333c9e5345856f146d91895d6c587d39a",
+      "size_bytes": 1465
+    },
+    "logs/workflow_integration.txt": {
+      "sha256": "0d18ee138a7afb29207aa63bd33950114b1113fbfd09a34217f7d48baf0ca599",
+      "size_bytes": 2814
+    },
+    "observation.json": {
+      "sha256": "9c5ffd54d024fd724856109bae4b56c3b091ee5e638278591fec8d8a5dd51954",
+      "size_bytes": 872
+    },
+    "plan.json": {
+      "sha256": "7fa514cef92049fa199b6e627ece30c3f375dd1e0d96bc2be6219a69f9d17511",
+      "size_bytes": 4530
+    },
+    "summary.json": {
+      "sha256": "c374ac0bec5a2164c3e880fd4a1d2c7639b581b8419fd7c4a5ed813aab935af1",
+      "size_bytes": 3866
+    }
+  },
+  "project": "SkynetVS",
+  "review_scope": "User-invoked experiment and automated check records; no DTR promotion or model-weight training.",
+  "run_id": "ab2966ba927e474fb43df4c7d01799f1",
+  "schema": "SKYNETVS_PUBLIC_EXPERIMENT_RECEIPT_V1",
+  "stage": "M154"
+}

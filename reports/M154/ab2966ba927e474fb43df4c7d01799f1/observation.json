@@ -1,0 +1,32 @@
+{
+  "base_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+  "candidate_commit": "75061168ac5147c90fa725cf41b26e4248571730",
+  "checks": [
+    {
+      "exit_code": 0,
+      "name": "workflow_integration",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "git_transport",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "development_lessons",
+      "status": "PASS"
+    }
+  ],
+  "exit_code": 0,
+  "is_analyzer_feedback": false,
+  "outcome": "PASS",
+  "patch_sha256": "300b759b935a6bc99c1284f977621bb5a7583a7850e42421e5113934445724d5",
+  "resolution": null,
+  "root_cause": null,
+  "run_id": "ab2966ba927e474fb43df4c7d01799f1",
+  "schema": "SKYNETVS_DEVELOPMENT_OBSERVATION_V1",
+  "status": "observed_only",
+  "summary_sha256": "550a25a08c552ffb9eb9787bbad212ea41ba66be15f864c65974b01dd5bf64b0",
+  "training_label": null
+}

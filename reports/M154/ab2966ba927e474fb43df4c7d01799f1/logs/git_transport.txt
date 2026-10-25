@@ -1,0 +1,15 @@
+test_candidate_failure_does_not_suppress_report (__main__.TransportTests.test_candidate_failure_does_not_suppress_report) ... ok
+test_existing_candidate_ref_is_never_overwritten (__main__.TransportTests.test_existing_candidate_ref_is_never_overwritten) ... ok
+test_existing_run_file_set_cannot_be_extended (__main__.TransportTests.test_existing_run_file_set_cannot_be_extended) ... ok
+test_failed_run_is_published_and_retry_creates_no_commit (__main__.TransportTests.test_failed_run_is_published_and_retry_creates_no_commit) ... ok
+test_local_bytes_and_candidate_binding_are_immutable (__main__.TransportTests.test_local_bytes_and_candidate_binding_are_immutable) ... ok
+test_offline_first_commit_and_later_publication (__main__.TransportTests.test_offline_first_commit_and_later_publication) ... ok
+test_recover_local_commit_if_state_write_was_interrupted (__main__.TransportTests.test_recover_local_commit_if_state_write_was_interrupted) ... ok
+test_refused_report_push_is_retried_against_new_parent (__main__.TransportTests.test_refused_report_push_is_retried_against_new_parent) ... ok
+test_remote_immutable_conflict_preserves_existing_report (__main__.TransportTests.test_remote_immutable_conflict_preserves_existing_report) ... ok
+test_report_append_preserves_other_runs (__main__.TransportTests.test_report_append_preserves_other_runs) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 12.880s
+
+OK
