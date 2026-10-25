@@ -1,0 +1,72 @@
+{
+  "kind": "M154_LEARNING_BOUNDARY_MAIN_REVIEW_V1",
+  "main_base": "b7f78db7703bb58aa2e1819b5a2310171be07260",
+  "source_fix": "36f405f7f715d99349683b8af0242edf251c23e2",
+  "source_base": "75061168ac5147c90fa725cf41b26e4248571730",
+  "selected_fix_commit": "58fe254ff880de8e6c18a3174049924ad0089257",
+  "selected_fix_tree": "701c12037f714cd3ed6c5d258c0761cf9c9098f2",
+  "selection": "four_code_files_and_original_windows_report",
+  "old_experiment_files_included": false,
+  "source_windows_checks": {
+    "python": "3.12.10",
+    "package_boundaries": {
+      "cases": 32,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "intent_examples": {
+      "cases": 9,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "report_sha256": "14389329412d761ad3964ab4919ad099816cdf5d2e57c499992511df69ab0239"
+  },
+  "main_candidate_checks": {
+    "platform": "Linux",
+    "python": "3.12.14",
+    "package_boundaries": {
+      "cases": 32,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "intent_examples": {
+      "cases": 9,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "git_diff_check": "PASS"
+  },
+  "verification_scope": "selected_fix_tree; this review is a documentation-only addition",
+  "main_candidate_windows_run": "NOT_RUN",
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "source_and_main_input_files_identical": true,
+  "files": [
+    {
+      "path": "modules/learning/confirmed_voice_learning.py",
+      "bytes": 7701,
+      "sha256": "0b7d9f3da4edd91fdc890a861cf3b9d13713fbb0d95b0e523779938e4fc47ea3"
+    },
+    {
+      "path": "tools/label_inbox.py",
+      "bytes": 4992,
+      "sha256": "3ce517c75b53725cc480d37e7cc35a4bc42a40af9ad66e5f9742c6ade0a4202b"
+    },
+    {
+      "path": "modules/learning/intent_examples.py",
+      "bytes": 1215,
+      "sha256": "6ba2185e59f268f3aeeb490163a0313990ec826d6b101f2be9982557c37362d2"
+    },
+    {
+      "path": "tools/eval_intent_examples.py",
+      "bytes": 6146,
+      "sha256": "6c59e905fe5903b8563818df41a6b9b4a48784ac6bcf803bac0d0ff9190ea052"
+    },
+    {
+      "path": "docs/maintenance/M154_LearningBoundary_Result.json",
+      "bytes": 1813,
+      "sha256": "14389329412d761ad3964ab4919ad099816cdf5d2e57c499992511df69ab0239"
+    }
+  ]
+}
