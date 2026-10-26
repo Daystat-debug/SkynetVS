@@ -1,0 +1,74 @@
+{
+  "kind": "M154_LEARNING_DATA_AUDIT_RESULT_V1",
+  "package_id": "50e15c5657d02fea8759b27cf07c3a5996afd3b75440ada62220681156182821",
+  "base_commit": "5838a38f91cebf376c9f1ffb66b944e506f91bdd",
+  "status": "FAIL",
+  "checks_status": "FAIL",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.469,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 0.984,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "30d71491b5d65617f0af558b1e9c6439cedabcf9960e5757f8b1ede114da6b41"
+    },
+    {
+      "name": "learning_data_audit",
+      "status": "FAIL",
+      "exit_code": 1,
+      "cases": 38,
+      "seconds": 0.844,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "82c551f8c3626c38d037b605f4156c62450587f445e4f506283b054ef63d9724"
+    }
+  ],
+  "live_diagnostic": {
+    "execution": "NOT_RUN",
+    "data_status": "NOT_RUN",
+    "failure_code": "TESTS_FAILED",
+    "exit_code": null,
+    "summary": null
+  },
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "tools/audit_learning_data.py": "2d362c8fbfddff9583d97ea7ca34b9d5d1467658694b41d4869e92026101ff19",
+    "tools/eval_learning_data_audit.py": "e272244852dee75af78c56e985a896ff17360a9f9c036faa76293b18490b68a1",
+    "docs/maintenance/M154_Workflow.md": "80280b2bae46afff1e42ce8b28006a21796ddc10d66de2b9940dba6ffaf2bafb"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "training_readiness": "NOT_ASSESSED",
+  "data_writes": "NONE",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_data_quality",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "synthetic_check_data": "temporary fixtures only",
+  "live_scope": [
+    "command_history",
+    "correction_memory"
+  ],
+  "published_live_content": "whitelisted aggregate counts and static codes only",
+  "lesson": {
+    "rule": "Check local learning data without modifying it and publish only validated aggregate facts.",
+    "regression": "Synthetic checks must pass before the read-only diagnostic; invalid diagnostic output is never copied into the report.",
+    "limitation": "Structural findings do not prove correction labels, historical counts, event identity or training readiness."
+  }
+}
