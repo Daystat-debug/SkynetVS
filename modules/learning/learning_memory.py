@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
+from uuid import uuid4
 
 
 class LearningMemory:
@@ -44,9 +45,12 @@ class LearningMemory:
         immediate_label: str,
         missing_slots: List[str] | None = None,
     ) -> None:
+        # Identity of this persisted observation, not a retry or action-success key.
+        event_id = uuid4().hex
         self._append_jsonl(
             self._command_history_path,
             {
+                "event_id": event_id,
                 "raw_text": raw_text,
                 "final_text": final_text,
                 "mode": mode,

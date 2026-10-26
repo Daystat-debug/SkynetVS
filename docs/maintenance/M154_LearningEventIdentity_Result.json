@@ -1,0 +1,124 @@
+{
+  "kind": "M154_LEARNING_EVENT_IDENTITY_RESULT_V1",
+  "package_id": "1518409f77574dad7f6f81aa619b8d241f40dd401519167ddc7c891ca5bc32d9",
+  "base_commit": "b3d8e15df7a7120513bfbba7fcadc2d783f64837",
+  "status": "PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.547,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 1.047,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d6468710e5c16c86a14133fa3eb9efcaad09137f713f2025ede5728e1264ecc9",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_data_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 43,
+      "seconds": 0.922,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a94d4f2c68bbfb6bbb3fd94a85a1c37734c04d74ffbf0a26f5f2d88d88cef3bf",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 43,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_identity",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 10,
+      "seconds": 0.265,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "1c4da2654a1b339e4b3d1498eed8e986b2ca7881e3200e043b3cf955a4725f69",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "modules/learning/learning_memory.py": "edf45b95410d796db6bb88584c72a04f80b73d9b0dae4a6b8d8eb158ab4d3fec",
+    "tools/eval_learning_event_identity.py": "96208ffad92d82fa583eba39f9767e9b45c12001d2447d13824f893ca6261373",
+    "docs/architecture/SKYNETVS_LEARNING_EVENT_IDENTITY_V1.md": "ab3bb00676aa521dcfd75a3f2e429d68c585bf4556211f6fa22e2e0c9745f243",
+    "docs/maintenance/M154_Workflow.md": "105e3a2dbc0c3489f7e7915e8c49f533ab8d751f9b271877f908dcb0e74c23b8"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_event_provenance",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "real_history": "NOT_READ",
+  "correction_memory_data": "NOT_READ_OR_MIGRATED",
+  "check_data": "synthetic temporary fixtures only",
+  "data_writes": "NONE",
+  "data_write_scope": "actual user runtime data; synthetic fixtures excluded",
+  "legacy_migration": "NOT_RUN",
+  "event_identity_scope": "NEW_COMMAND_HISTORY_ROWS",
+  "independent_observations": "NOT_ASSESSED",
+  "retry_idempotence": "NOT_IMPLEMENTED",
+  "cross_log_correlation": "NOT_IMPLEMENTED",
+  "training_readiness": "NOT_ASSESSED",
+  "published_test_content": "allowlisted source test identifiers and bounded outcome counts only",
+  "lesson": {
+    "rule": "A new log-row identifier must preserve old bytes and existing learning semantics.",
+    "regression": "Repeated logging of identical text creates distinct row identifiers; old rows and cumulative counting remain unchanged.",
+    "limitation": "A row UUID does not prove independent observations, successful actions, retry idempotence or trustworthy historical labels."
+  }
+}
