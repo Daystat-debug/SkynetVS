@@ -1,0 +1,322 @@
+{
+  "kind": "M154_PIPELINE_RESULTS_MAIN_REVIEW_V1",
+  "maintenance_block": "pipeline_results",
+  "readiness": "READY_FOR_MAIN",
+  "publication_state_at_preparation": "NOT_PUBLISHED",
+  "closure_condition": "prepared two-commit candidate is contained in remote refs/heads/main",
+  "main_base": "f5d2a094e88940f6576097fcdc368ac0e0cbc746",
+  "source_base": "df25fd355178e2c8a84f1e025a74bccd5ec4c0c7",
+  "source_fix": "d541df44cc40c70c862e37235a6391e1a3b95d00",
+  "source_branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "selected_fix_commit": "63f3a3ee9a0aa6ae7c7c29ca885b17cc258ae526",
+  "selected_fix_tree": "9c2385f565757079350ae227db5d7a2c63c1fe0d",
+  "selection": "three related pipeline packages; four code files, workflow, three original reports",
+  "old_experiment_files_included": false,
+  "source_windows_checks": [
+    {
+      "stage": "status",
+      "commit": "8fa6e31594fadfc7623c7e2ae8054c25b0fc7f76",
+      "parent": "df25fd355178e2c8a84f1e025a74bccd5ec4c0c7",
+      "tree": "7051e15755e65b59df026e3582d119f7b79a89ed",
+      "subject": "M154: report pipeline step outcomes honestly [PASS]",
+      "changed_paths": [
+        "docs/maintenance/M154_PipelineStatus_Result.json",
+        "docs/maintenance/M154_Workflow.md",
+        "tools/eval_pipeline_status.py",
+        "tools/pipeline.py"
+      ],
+      "package_id": "0ea55c3180deed5c1d007570223b2da381b12b1f748ae359b1db7eeb6ab8e420",
+      "report_path": "docs/maintenance/M154_PipelineStatus_Result.json",
+      "report_sha256": "3de96f2a42b9d1e65fd1d2662f4e72ddf98c5e8d818acf8f98ee4139ec89a139",
+      "python": [
+        3,
+        12,
+        10
+      ],
+      "platform": "Windows",
+      "checks": [
+        {
+          "name": "package_boundaries",
+          "cases": 32,
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "name": "pipeline_status",
+          "cases": 14,
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "files": {
+        "tools/pipeline.py": "ce0c7c4e0d0bd93b5327c98271a701d4f30e5ebf0c6ef8022c416dd2974b4f7f",
+        "tools/eval_pipeline_status.py": "992b327dff2f3232a96e5b299958a2f467edff1f607af1aea30d7feb787b084a",
+        "docs/maintenance/M154_Workflow.md": "16ab52367e668b1cf0d0ceef5c7c3dd32a6002716a620084312775fc90b9aa84"
+      },
+      "read_pins": {
+        "tools/eval_package_boundaries.py": "9f2b0787b5aa273a8df90e2e0eec3579fd6cb4a285c772280cbab1d5107927b0"
+      },
+      "full_pipeline": "NOT_RUN",
+      "model_loading": "NOT_RUN",
+      "training": "NOT_RUN"
+    },
+    {
+      "stage": "summary",
+      "commit": "78e4429c85fcc4cf06d812c12720f52981a6729d",
+      "parent": "8fa6e31594fadfc7623c7e2ae8054c25b0fc7f76",
+      "tree": "2cfce60f8a11d69b0031a59d66a503328c3a8d63",
+      "subject": "M154: add machine-readable pipeline results [PASS]",
+      "changed_paths": [
+        "docs/maintenance/M154_PipelineSummary_Result.json",
+        "docs/maintenance/M154_Workflow.md",
+        "tools/eval_pipeline_summary.py",
+        "tools/pipeline.py"
+      ],
+      "package_id": "52bc021ad260ecb6539ce69e95d03582c616e542007b9e03f5fae1b26b5ce6d8",
+      "report_path": "docs/maintenance/M154_PipelineSummary_Result.json",
+      "report_sha256": "4e1710a925262ae97a663c6621240e51b6cc2aa52a7bfc9405f8548908d5a261",
+      "python": [
+        3,
+        12,
+        10
+      ],
+      "platform": "Windows",
+      "checks": [
+        {
+          "name": "package_boundaries",
+          "cases": 32,
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "name": "pipeline_status",
+          "cases": 14,
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "name": "pipeline_summary",
+          "cases": 18,
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "files": {
+        "tools/pipeline.py": "86fdf9f2a9493eb01a8d50972fa0f75127db8ee9f5df90a667ed18115252ec53",
+        "tools/eval_pipeline_summary.py": "35b9b8e42de8f0242f4d7d988ce84dc5085bf3db40e70421a5658ba5ff25c2f6",
+        "docs/maintenance/M154_Workflow.md": "9ade98e5ec1fdc0734407efe0755855a6a88742a405f7f90ceb3dca7fff636a5"
+      },
+      "read_pins": {
+        "tools/eval_package_boundaries.py": "9f2b0787b5aa273a8df90e2e0eec3579fd6cb4a285c772280cbab1d5107927b0",
+        "tools/eval_pipeline_status.py": "992b327dff2f3232a96e5b299958a2f467edff1f607af1aea30d7feb787b084a"
+      },
+      "full_pipeline": "NOT_RUN",
+      "model_loading": "NOT_RUN",
+      "training": "NOT_RUN"
+    },
+    {
+      "stage": "effects",
+      "commit": "d541df44cc40c70c862e37235a6391e1a3b95d00",
+      "parent": "78e4429c85fcc4cf06d812c12720f52981a6729d",
+      "tree": "733de258ecefce411608c5b13b2b592da0e2903a",
+      "subject": "M154: describe pipeline data effects [PASS]",
+      "changed_paths": [
+        "docs/maintenance/M154_PipelineEffects_Result.json",
+        "docs/maintenance/M154_Workflow.md",
+        "tools/eval_pipeline_effects.py",
+        "tools/pipeline.py"
+      ],
+      "package_id": "165af918ab67c058bc194716b1ba7bb0f194d035e08df1f0fc2210f0d1bd6db9",
+      "report_path": "docs/maintenance/M154_PipelineEffects_Result.json",
+      "report_sha256": "2e86a80837175198b2d9a533ac0a9da77e1cc3d213b2b3e77f27ba87b6fa38d1",
+      "python": [
+        3,
+        12,
+        10
+      ],
+      "platform": "Windows",
+      "checks": [
+        {
+          "name": "package_boundaries",
+          "cases": 32,
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "name": "pipeline_status",
+          "cases": 14,
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "name": "pipeline_summary",
+          "cases": 18,
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "name": "pipeline_effects",
+          "cases": 18,
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "files": {
+        "tools/pipeline.py": "8e4e1bc2fb3d571a3ec8b0ae94da797679bf49bcca2785aed9f620ee5bb34c2d",
+        "tools/eval_pipeline_effects.py": "ca50185bdbd55260d5b67b7da9ae96601c05186d0c3285541b852d91cf8d493c",
+        "docs/maintenance/M154_Workflow.md": "c48e82dbebbd4e37003064e60ebab4d4cd457bfe4b72f1331e49722a59a85f7b"
+      },
+      "read_pins": {
+        "tools/eval_package_boundaries.py": "9f2b0787b5aa273a8df90e2e0eec3579fd6cb4a285c772280cbab1d5107927b0",
+        "tools/eval_pipeline_status.py": "992b327dff2f3232a96e5b299958a2f467edff1f607af1aea30d7feb787b084a",
+        "tools/eval_pipeline_summary.py": "35b9b8e42de8f0242f4d7d988ce84dc5085bf3db40e70421a5658ba5ff25c2f6"
+      },
+      "full_pipeline": "NOT_RUN",
+      "model_loading": "NOT_RUN",
+      "training": "NOT_RUN"
+    }
+  ],
+  "main_candidate_checks": {
+    "platform": "Linux",
+    "python": "3.12.14",
+    "checks": [
+      {
+        "name": "package_boundaries",
+        "status": "PASS",
+        "cases": 32,
+        "failures": 0,
+        "exit_code": 0,
+        "seconds": 2.695,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_package_boundaries.py"
+        ],
+        "stdout_sha256": "8fcd441f7589fe6861b2e1f2a945bbbd49a35d16f2479263dc694a0994f9cfa7",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "pipeline_status",
+        "status": "PASS",
+        "cases": 14,
+        "failures": 0,
+        "exit_code": 0,
+        "seconds": 0.417,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_pipeline_status.py"
+        ],
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "6b2cc3bee6ada3f93b03d890804bf9562bf17c0b993194eed7108bd642235a60"
+      },
+      {
+        "name": "pipeline_summary",
+        "status": "PASS",
+        "cases": 18,
+        "failures": 0,
+        "exit_code": 0,
+        "seconds": 0.479,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_pipeline_summary.py"
+        ],
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "429a399b260f8918cbfcdc97f00e0f56cc9ad2cbd29a4f23fd10d45660f946e8"
+      },
+      {
+        "name": "pipeline_effects",
+        "status": "PASS",
+        "cases": 18,
+        "failures": 0,
+        "exit_code": 0,
+        "seconds": 0.511,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_pipeline_effects.py"
+        ],
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "7cceaf2b37b3a708eeacebfb557a688613b69908d09284090b080279a09c865d"
+      }
+    ],
+    "git_diff_check": "PASS",
+    "total_cases": 82
+  },
+  "verification_scope": "selected_fix_tree; final commit changes only workflow documentation and this review",
+  "main_candidate_windows_run": "NOT_RUN",
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "source_files": [
+    {
+      "path": "tools/pipeline.py",
+      "bytes": 109540,
+      "sha256": "8e4e1bc2fb3d571a3ec8b0ae94da797679bf49bcca2785aed9f620ee5bb34c2d",
+      "blob_oid": "70056cfd1485c3379ba2e07b4d3889b591572289"
+    },
+    {
+      "path": "tools/eval_pipeline_status.py",
+      "bytes": 13016,
+      "sha256": "992b327dff2f3232a96e5b299958a2f467edff1f607af1aea30d7feb787b084a",
+      "blob_oid": "c07a8ddff5d13602b12850b4e76c3f97708c100c"
+    },
+    {
+      "path": "tools/eval_pipeline_summary.py",
+      "bytes": 15381,
+      "sha256": "35b9b8e42de8f0242f4d7d988ce84dc5085bf3db40e70421a5658ba5ff25c2f6",
+      "blob_oid": "119308e98e268f9c2e0ac3e1cad83841f7fece1e"
+    },
+    {
+      "path": "tools/eval_pipeline_effects.py",
+      "bytes": 16635,
+      "sha256": "ca50185bdbd55260d5b67b7da9ae96601c05186d0c3285541b852d91cf8d493c",
+      "blob_oid": "0de26ee7f271139f446e7ac3bb90103e9bc9b6b7"
+    },
+    {
+      "path": "docs/maintenance/M154_Workflow.md",
+      "bytes": 22237,
+      "sha256": "c48e82dbebbd4e37003064e60ebab4d4cd457bfe4b72f1331e49722a59a85f7b",
+      "blob_oid": "ca2def10c7dd51465df69f714117ca1a0885585f"
+    },
+    {
+      "path": "docs/maintenance/M154_PipelineStatus_Result.json",
+      "bytes": 1794,
+      "sha256": "3de96f2a42b9d1e65fd1d2662f4e72ddf98c5e8d818acf8f98ee4139ec89a139",
+      "blob_oid": "d2f000039f965b3391cc4613b34008a80af33415"
+    },
+    {
+      "path": "docs/maintenance/M154_PipelineSummary_Result.json",
+      "bytes": 2188,
+      "sha256": "4e1710a925262ae97a663c6621240e51b6cc2aa52a7bfc9405f8548908d5a261",
+      "blob_oid": "b759b620a6f6a2faca27ba44f724bbfd8e058467"
+    },
+    {
+      "path": "docs/maintenance/M154_PipelineEffects_Result.json",
+      "bytes": 2515,
+      "sha256": "2e86a80837175198b2d9a533ac0a9da77e1cc3d213b2b3e77f27ba87b6fa38d1",
+      "blob_oid": "60a10a658ce7b61b6616bc425aa61e5d71e7a2d8"
+    }
+  ],
+  "final_workflow_sha256": "75c1fca1ffc69867b49c95f26620b95240348564c1f2d3634930a856f79eb942",
+  "original_windows_reports_preserved": true,
+  "code_files_identical_to_source_fix": true,
+  "available_flows_definition_unchanged": true
+}
