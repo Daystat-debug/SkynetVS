@@ -1,0 +1,485 @@
+{
+  "kind": "M154_LEARNING_DATA_QUALITY_MAIN_REVIEW_V1",
+  "maintenance_block": "learning_data_quality",
+  "readiness": "READY_FOR_MAIN",
+  "publication_state_at_preparation": "NOT_PUBLISHED",
+  "closure_condition": "prepared two-commit candidate is contained in remote refs/heads/main",
+  "main_base": "e867cf748b3af4514609d850a32005c89a67f4ba",
+  "source_base": "d541df44cc40c70c862e37235a6391e1a3b95d00",
+  "source_fix": "b3d8e15df7a7120513bfbba7fcadc2d783f64837",
+  "source_branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "selected_fix_commit": "c3b365a13422c58409ca6ababf81f9fdea26370f",
+  "selected_fix_tree": "55e6ee16f59eac01a44d37360bb4d8c873200cb0",
+  "scope": [
+    "replay-safe cumulative correction memory merge",
+    "read-only structural learning data audit",
+    "Windows metadata comparison compatibility"
+  ],
+  "code_files": {
+    "modules/learning/correction_memory.py": "c1886555d0f7d1166aaeeabfd8dafbb9dbbeb723e5951b1385194e3421f99c1a",
+    "modules/learning/feedback_analyzer.py": "c5b5b4e6b4da9ed791bada6d2f9e99d907e8cb83cf63affaa493656167d798d6",
+    "tools/build_correction_memory.py": "3bf27b50d55aa15465c0d8609aa1219ba6f42bf6bef5000209bd39a8625465ee",
+    "tools/eval_correction_memory_idempotence.py": "a359986c25344a30d636b48c1a8ec487ac64c3cf01927fc72c233aa8f41c705b",
+    "tools/audit_learning_data.py": "21a2aeb8da6b8c8885221fbfda5e728ca4398fc34961adebbfc83aa0d2b40a2b",
+    "tools/eval_learning_data_audit.py": "68da9c4257ed4caf6ef23ca2f2fe36e3833eccc9ca63d91fc7cbdca5114e89ab",
+    "tools/pipeline.py": "45cedba3411bcbd6bbabd8210e319cad9d348e45e7470e0c2da57dfbc46e139c"
+  },
+  "unchanged_dependencies": {
+    "tools/eval_package_boundaries.py": "9f2b0787b5aa273a8df90e2e0eec3579fd6cb4a285c772280cbab1d5107927b0",
+    "tools/eval_pipeline_status.py": "992b327dff2f3232a96e5b299958a2f467edff1f607af1aea30d7feb787b084a",
+    "tools/eval_pipeline_summary.py": "35b9b8e42de8f0242f4d7d988ce84dc5085bf3db40e70421a5658ba5ff25c2f6",
+    "tools/eval_pipeline_effects.py": "ca50185bdbd55260d5b67b7da9ae96601c05186d0c3285541b852d91cf8d493c",
+    "modules/learning/promotion_engine.py": "8d1b6b1524a781128135c9872b04fdb698d6a599ff540e12684a5b76f0d42e7f",
+    "modules/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "modules/learning/__init__.py": "dbe81795823d18ff2bff7240592bb877cb1c80f8409add8fa502b2033fa4b6fa"
+  },
+  "original_windows_reports": [
+    {
+      "path": "docs/maintenance/M154_CorrectionMemoryReplay_Result.json",
+      "commit": "5838a38f91cebf376c9f1ffb66b944e506f91bdd",
+      "sha256": "e0b28229c181ff7efd1c2352eff13d11a947c86768f9f0c6b33360e44304eb57",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "package_boundaries",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 32,
+          "seconds": 1.438,
+          "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "pipeline_status",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 14,
+          "seconds": 0.64,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "48d3721f32fa9a421b56714457d4bf46c4f820ccb2ce0235cf2fe9dd20e238cb"
+        },
+        {
+          "name": "pipeline_summary",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 18,
+          "seconds": 0.594,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "8eaac0ac4d0c15a84305a87bca09da6b60df4e1fe68268da00502bc96dfe43e2"
+        },
+        {
+          "name": "pipeline_effects",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 18,
+          "seconds": 0.547,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "cb9cec0b7002e0ab99d86f951aeb4f8fe92154f70d3add38d240331455ebebcd"
+        },
+        {
+          "name": "correction_memory_idempotence",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 23,
+          "seconds": 1.031,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "87251c2b6117f5ca924c1004a5a1e783e708dd49b0a403761553efcdaf8412c9"
+        }
+      ],
+      "total_cases": 105
+    },
+    {
+      "path": "docs/maintenance/M154_LearningDataAudit_Result.json",
+      "commit": "3b955874e826fa1561ab1657d824d3f1d86ec4a9",
+      "sha256": "e041427ebe0ba0c22c12f27f45fd7373fddc90f1e0aa707d92901eaed80db511",
+      "status": "FAIL",
+      "checks": [
+        {
+          "name": "package_boundaries",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 32,
+          "seconds": 1.469,
+          "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "correction_memory_idempotence",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 23,
+          "seconds": 0.984,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "30d71491b5d65617f0af558b1e9c6439cedabcf9960e5757f8b1ede114da6b41"
+        },
+        {
+          "name": "learning_data_audit",
+          "status": "FAIL",
+          "exit_code": 1,
+          "cases": 38,
+          "seconds": 0.844,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "82c551f8c3626c38d037b605f4156c62450587f445e4f506283b054ef63d9724"
+        }
+      ],
+      "total_cases": 93
+    },
+    {
+      "path": "docs/maintenance/M154_LearningDataAuditWindows_Result.json",
+      "commit": "b3d8e15df7a7120513bfbba7fcadc2d783f64837",
+      "sha256": "d8d0bb78c8de9a564134a9fe09d3343c79cabfeebb930d6374fb8e4d57ff775d",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "package_boundaries",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 32,
+          "seconds": 1.437,
+          "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_diagnostics": {
+            "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+            "status": "NOT_APPLICABLE",
+            "reason": "NON_UNITTEST_SUITE",
+            "counts": null,
+            "failed_cases": []
+          }
+        },
+        {
+          "name": "correction_memory_idempotence",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 23,
+          "seconds": 0.985,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "463edc71f4794adbc89795c089db6c12905c975e081e2571df8902a297b571b0",
+          "test_diagnostics": {
+            "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+            "status": "AVAILABLE",
+            "reason": null,
+            "counts": {
+              "tests": 23,
+              "failures": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "failed_cases": []
+          }
+        },
+        {
+          "name": "learning_data_audit",
+          "status": "PASS",
+          "exit_code": 0,
+          "cases": 43,
+          "seconds": 0.828,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "33977d0a7f352e114da77159513795c922a8b4dd33159da7bce0ebaabd996ea7",
+          "test_diagnostics": {
+            "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+            "status": "AVAILABLE",
+            "reason": null,
+            "counts": {
+              "tests": 43,
+              "failures": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "failed_cases": []
+          }
+        }
+      ],
+      "total_cases": 98
+    }
+  ],
+  "latest_source_windows_checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.437,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 0.985,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "463edc71f4794adbc89795c089db6c12905c975e081e2571df8902a297b571b0",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_data_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 43,
+      "seconds": 0.828,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "33977d0a7f352e114da77159513795c922a8b4dd33159da7bce0ebaabd996ea7",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 43,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "source_windows_total_cases": 98,
+  "main_candidate_checks": {
+    "platform": "Linux",
+    "python": [
+      3,
+      12,
+      14
+    ],
+    "checks": [
+      {
+        "name": "package_boundaries",
+        "status": "PASS",
+        "cases": 32,
+        "failures": 0,
+        "exit_code": 0,
+        "seconds": 2.54,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_package_boundaries.py"
+        ],
+        "stdout_sha256": "8fcd441f7589fe6861b2e1f2a945bbbd49a35d16f2479263dc694a0994f9cfa7",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "correction_memory_idempotence",
+        "status": "PASS",
+        "cases": 23,
+        "failures": 0,
+        "exit_code": 0,
+        "seconds": 0.649,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_correction_memory_idempotence.py"
+        ],
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "b961c2221747ffa59bf04b2710c93e7ca26b69c4419b3c66594e28226023940b"
+      },
+      {
+        "name": "learning_data_audit",
+        "status": "PASS",
+        "cases": 43,
+        "failures": 0,
+        "exit_code": 0,
+        "seconds": 0.637,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_learning_data_audit.py"
+        ],
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "5c3d80582740a4dce80b18f112f94d46dab84f31b9401fecf96032c93994fc2d"
+      },
+      {
+        "name": "pipeline_effects",
+        "status": "PASS",
+        "cases": 18,
+        "failures": 0,
+        "exit_code": 0,
+        "seconds": 0.512,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_pipeline_effects.py"
+        ],
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "ebf09f453a46c96210d269cc8170678ffb708fbb0a8448096d1dd216868cb3fc"
+      }
+    ],
+    "git_diff_check": "PASS",
+    "total_cases": 116
+  },
+  "verification_scope": "selected_fix_tree; final commit changes only workflow documentation and this review",
+  "main_candidate_windows_run": "NOT_RUN",
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "training_readiness": "NOT_ASSESSED",
+  "historical_counts_verified": false,
+  "stable_event_identity_verified": false,
+  "data_migration": "NOT_RUN",
+  "live_diagnostic_source_commit": "b3d8e15df7a7120513bfbba7fcadc2d783f64837",
+  "live_diagnostic": {
+    "execution": "COMPLETED",
+    "data_status": "NO_ISSUES_IN_CHECKED_STRUCTURE",
+    "failure_code": null,
+    "exit_code": 0,
+    "summary": {
+      "exit_code": 0,
+      "inputs": {
+        "command_history": {
+          "blank_lines": 0,
+          "bytes_read": 204736,
+          "complete": true,
+          "findings": {
+            "accepted_without_intent_rows": 0,
+            "confidence_out_of_range_rows": 0,
+            "duplicate_event_id_rows": 0,
+            "duplicate_field_lines": 0,
+            "invalid_accepted_rows": 0,
+            "invalid_auxiliary_text_rows": 0,
+            "invalid_confidence_rows": 0,
+            "invalid_event_id_rows": 0,
+            "invalid_intent_rows": 0,
+            "invalid_json_lines": 0,
+            "invalid_meta_rows": 0,
+            "invalid_missing_slots_rows": 0,
+            "invalid_slots_rows": 0,
+            "invalid_text_rows": 0,
+            "invalid_timestamp_rows": 0,
+            "invalid_unicode_lines": 0,
+            "invalid_utf8_lines": 0,
+            "mixed_timezone_files": 0,
+            "non_finite_number_lines": 0,
+            "non_object_rows": 0,
+            "out_of_order_timestamp_rows": 0
+          },
+          "lines_read": 502,
+          "object_rows": 502,
+          "observations": {
+            "accepted_rows": 455,
+            "aware_timestamp_values": 0,
+            "naive_timestamp_values": 502,
+            "rejected_rows": 47,
+            "rows_with_event_id": 0,
+            "rows_without_event_id": 502
+          },
+          "state": "READ",
+          "unchanged_during_read": true
+        },
+        "correction_memory": {
+          "blank_lines": 0,
+          "bytes_read": 438,
+          "complete": true,
+          "findings": {
+            "confidence_out_of_range_rows": 0,
+            "duplicate_field_lines": 0,
+            "duplicate_key_rows": 0,
+            "duplicate_normalized_key_rows": 0,
+            "duplicate_sources_rows": 0,
+            "invalid_checkpoint_rows": 0,
+            "invalid_confidence_rows": 0,
+            "invalid_intent_rows": 0,
+            "invalid_json_lines": 0,
+            "invalid_key_rows": 0,
+            "invalid_seen_count_rows": 0,
+            "invalid_slots_rows": 0,
+            "invalid_sources_rows": 0,
+            "invalid_status_rows": 0,
+            "invalid_text_rows": 0,
+            "invalid_timestamp_rows": 0,
+            "invalid_unicode_lines": 0,
+            "invalid_utf8_lines": 0,
+            "key_mismatch_rows": 0,
+            "last_seen_before_created_rows": 0,
+            "mixed_timezone_files": 0,
+            "non_finite_number_lines": 0,
+            "non_object_rows": 0
+          },
+          "lines_read": 1,
+          "object_rows": 1,
+          "observations": {
+            "aware_timestamp_values": 0,
+            "naive_timestamp_values": 2,
+            "rows_with_checkpoint": 0,
+            "rows_with_legacy_baseline": 0,
+            "rows_without_checkpoint": 1
+          },
+          "state": "READ",
+          "unchanged_during_read": true
+        }
+      },
+      "invocation": "OK",
+      "kind": "SKYNETVS_LEARNING_DATA_AUDIT_V1",
+      "limits": {
+        "bytes_per_file": 33554432,
+        "bytes_per_line": 262144,
+        "json_nesting": 64,
+        "lines_per_file": 100000
+      },
+      "schema_version": 1,
+      "scope": {
+        "checks": "STRUCTURE_ONLY",
+        "counts_recomputed": false,
+        "cross_file_atomic_snapshot": false,
+        "files_written": false,
+        "historical_counts_verified": false,
+        "models_loaded": false,
+        "runtime_modules_imported": false,
+        "stable_event_identity_verified": false
+      },
+      "status": "NO_ISSUES_IN_CHECKED_STRUCTURE"
+    }
+  },
+  "diagnostic_interpretation": {
+    "application_acceptance_flags_are_nlu_accuracy": false,
+    "history_events_without_id": 502,
+    "memory_rows_without_checkpoint": 1,
+    "memory_seen_count_value_disclosed": false,
+    "historical_count_inflation_proved": false,
+    "automatic_deletion_or_recalculation_justified": false
+  },
+  "previous_failure_occurrences": 32,
+  "previous_distinct_failed_methods": 22,
+  "previous_failure_summary_limitation": "Occurrences include subtests; source assertion messages were not published.",
+  "original_windows_reports_preserved": true,
+  "code_files_identical_to_source_fix": true,
+  "pipeline_executable_logic_unchanged": true,
+  "final_workflow_sha256": "2ee46b5f29225c93d16c8a17c055eab00c41ff9a6c2b3612bd4521bcd165a324",
+  "next_separate_blocks": [
+    "event provenance and historical evidence contract",
+    "candidate model training and independent promotion evaluation"
+  ]
+}
