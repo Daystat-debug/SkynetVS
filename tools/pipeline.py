@@ -106,6 +106,167 @@ class FlowResult:
         }
 
 
+@dataclass(frozen=True)
+class CommandEffects:
+    effects: tuple[str, ...]
+    description: str
+    default_inputs: tuple[str, ...] = ()
+    default_outputs: tuple[str, ...] = ()
+    notes: tuple[str, ...] = ()
+
+
+# Descriptions of known application effects for these exact default commands.
+# This is an explanation, not an execution policy or a read-only guarantee.
+# Keep it outside available_flows: static inventory consumes that literal AST.
+COMMAND_EFFECTS: dict[str, CommandEffects] = {
+    "tools/command_audit.py": CommandEffects(
+        ("READ_DATA", "READ_SOURCE", "REPORT_STDOUT"),
+        "Read the command registry, templates and Actions source text; print findings.",
+        ("data/intents.json", "data/say_templates.json", "modules/actions.py"),
+        notes=("Actions source is read as text, not imported or executed.",)),
+    "tools/learning_report.py": CommandEffects(
+        ("READ_DATA", "REPORT_STDOUT"),
+        "Read learning records and print analysis reports.",
+        ("data/learning/command_history.jsonl", "data/learning/nlu_hard_cases.jsonl",
+         "data/learning/action_failures.jsonl", "data/learning/resolver_candidates.jsonl")),
+    "tools/build_correction_memory.py": CommandEffects(
+        ("READ_DATA", "WRITE_DATA", "REPORT_STDOUT"),
+        "Build or update correction memory from learning records.",
+        ("data/learning/command_history.jsonl", "data/learning/nlu_hard_cases.jsonl",
+         "data/learning/action_failures.jsonl", "data/learning/resolver_candidates.jsonl",
+         "data/learning/correction_memory.jsonl"),
+        ("data/learning/correction_memory.jsonl",),
+        ("Repeated upserts can increase seen_count for existing evidence.",)),
+    "tools/correction_memory_report.py": CommandEffects(
+        ("READ_DATA", "REPORT_STDOUT"),
+        "Read correction memory and print candidate summaries.",
+        ("data/learning/correction_memory.jsonl",)),
+    "tools/promotion_report.py": CommandEffects(
+        ("READ_DATA", "REPORT_STDOUT"),
+        "Read correction memory and print promotion suggestions.",
+        ("data/learning/correction_memory.jsonl",)),
+    "tools/export_promotions.py": CommandEffects(
+        ("READ_DATA", "WRITE_DATA", "REPORT_STDOUT"),
+        "Export promotion suggestions; rewrite the inbox and suggestion files.",
+        ("data/learning/correction_memory.jsonl", "data/intents.json", "data/inbox_unlabeled.jsonl",
+         "data/learning/alias_suggestions.jsonl", "data/learning/phrase_correction_suggestions.jsonl"),
+        ("data/inbox_unlabeled.jsonl", "data/learning/alias_suggestions.jsonl",
+         "data/learning/phrase_correction_suggestions.jsonl"),
+        ("Output files are rewritten even when no new suggestions are added.",)),
+    "tools/export_learning_to_inbox.py": CommandEffects(
+        ("READ_DATA", "WRITE_DATA", "REPORT_STDOUT"),
+        "Export raw learning cases and rewrite the unlabeled inbox.",
+        ("data/learning/nlu_hard_cases.jsonl", "data/learning/resolver_candidates.jsonl",
+         "data/inbox_unlabeled.jsonl"),
+        ("data/inbox_unlabeled.jsonl",),
+        ("The inbox is rewritten even when no new cases are added.",)),
+    "tools/label_inbox.py": CommandEffects(
+        ("READ_DATA", "WRITE_DATA", "INTERACTIVE", "REPORT_STDOUT"),
+        "Interactively label pending cases and update training examples and labeled records.",
+        ("data/intents.json", "data/inbox_unlabeled.jsonl", "data/inbox_labeled.jsonl"),
+        ("data/intents.json", "data/inbox_labeled.jsonl"),
+        ("With pending cases, quit or skip can still reach the final file rewrites.",)),
+    "train/train_nlu.py": CommandEffects(
+        ("READ_DATA", "TRAIN_MODEL", "WRITE_MODEL", "REPORT_STDOUT"),
+        "Fit the NLU model and overwrite the active model before the printed quick test.",
+        ("data/intents.json", "data/nlu_training_recipe.json"),
+        ("models/nlu_intent.joblib",),
+        ("Training has no interactive confirmation in this command.",)),
+    "tools/eval_nlu.py": CommandEffects(
+        ("READ_CONFIG", "READ_DATA", "LOAD_MODEL", "REPORT_STDOUT"),
+        "Evaluate NLU predictions using configuration, examples and the current model.",
+        (".env", "data/intents.json", "data/say_templates.json",
+         "data/inbox_labeled.jsonl", "models/nlu_intent.joblib"),
+        notes=("Predicts intents; it does not dispatch the predicted desktop actions.",)),
+    "tools/eval_nlu_diagnostics.py": CommandEffects(
+        ("READ_CONFIG", "READ_DATA", "LOAD_MODEL", "REPORT_STDOUT"),
+        "Print NLU candidate diagnostics using the current configuration and model.",
+        (".env", "data/intents.json", "data/say_templates.json",
+         "data/inbox_labeled.jsonl", "models/nlu_intent.joblib")),
+    "tools/eval_nlu_risk_report.py": CommandEffects(
+        ("READ_CONFIG", "READ_DATA", "LOAD_MODEL", "REPORT_STDOUT"),
+        "Print NLU risk results using the current configuration and model.",
+        (".env", "data/intents.json", "data/say_templates.json",
+         "data/inbox_labeled.jsonl", "models/nlu_intent.joblib")),
+    "tools/eval_nlu_risk_guard.py": CommandEffects(
+        ("READ_CONFIG", "READ_DATA", "LOAD_MODEL", "REPORT_STDOUT"),
+        "Evaluate the NLU risk guard using the current configuration and model.",
+        (".env", "data/intents.json", "data/say_templates.json",
+         "data/inbox_labeled.jsonl", "models/nlu_intent.joblib")),
+    "tools/eval_reply_builder.py": CommandEffects(
+        ("READ_CONFIG", "REPORT_STDOUT"),
+        "Read configuration and run reply-builder cases with fake routers.",
+        (".env",),
+        notes=("Current fake-router cases do not call model prediction.",)),
+}
+
+
+def describe_flow(flow_name: str) -> dict[str, object]:
+    """Describe known effects without importing or executing a child command."""
+    steps = available_flows().get(flow_name)
+    descriptions = []
+    for index, step in enumerate(steps or (), 1):
+        canonical = len(step.cmd) == 2 and step.cmd[0] == sys.executable
+        effects = COMMAND_EFFECTS.get(step.cmd[1]) if canonical else None
+        descriptions.append({
+            "index": index,
+            "name": step.name,
+            "review": "REVIEWED" if effects is not None else "UNREVIEWED",
+            "effects": list(effects.effects) if effects is not None else ["UNREVIEWED"],
+            "description": effects.description if effects is not None else
+                "Effects of this exact command have not been reviewed; inspect its source before use.",
+            "default_inputs": list(effects.default_inputs) if effects is not None else [],
+            "default_outputs": list(effects.default_outputs) if effects is not None else [],
+            "notes": list(effects.notes) if effects is not None else [],
+            "interactive": step.interactive,
+        })
+    reviewed = sum(item["review"] == "REVIEWED" for item in descriptions)
+    return {
+        "kind": "SKYNETVS_PIPELINE_DESCRIPTION_V1",
+        "schema_version": 1,
+        "flow": flow_name,
+        "known_flow": bool(steps),
+        "execution": "NOT_RUN",
+        "reason_code": "" if steps else "unknown_flow",
+        "counts": {"REVIEWED": reviewed, "UNREVIEWED": len(descriptions) - reviewed,
+                   "TOTAL": len(descriptions)},
+        "effects": sorted({effect for item in descriptions for effect in item["effects"]}),
+        "steps": descriptions,
+        "notes": [
+            "These are known effects of exact default commands, not an exhaustive filesystem guarantee.",
+            "Paths show defaults from the project root; configuration can affect runtime behavior.",
+            "Inputs may be conditional; .env is discovered by python-dotenv and LOAD_MODEL means potential loading.",
+            "Ordinary Python commands may also create bytecode caches or diagnostic logs.",
+            "--no-log controls only the runner text log, not the actions of child commands.",
+        ],
+    }
+
+
+def print_flow_description(flow_name: str) -> int:
+    description = describe_flow(flow_name)
+    if not description["known_flow"]:
+        _emit(f"[FAIL] Unknown flow: {flow_name}; no steps executed.")
+        return 2
+    _emit(f"[DESCRIBE] Flow '{flow_name}'; execution=NOT_RUN")
+    counts = description["counts"]
+    _emit("Coverage: " + "; ".join(f"{name}={value}" for name, value in counts.items()))
+    _emit("Known potential effects: " + ", ".join(description["effects"]))
+    for item in description["steps"]:
+        _emit(f"{item['index']}. {item['name']} [{item['review']}]")
+        _emit("   " + item["description"])
+        _emit("   Effects: " + ", ".join(item["effects"]))
+        if item["default_inputs"]:
+            _emit("   Default inputs: " + ", ".join(item["default_inputs"]))
+        if item["default_outputs"]:
+            _emit("   Default outputs: " + ", ".join(item["default_outputs"]))
+        for note in item["notes"]:
+            _emit("   " + note)
+    for note in description["notes"]:
+        _emit("Note: " + note)
+    _emit("No steps executed. No pipeline log or JSON result file created.")
+    return 0
+
+
 def _is_windows() -> bool:
     return os.name == "nt" and sys.platform == "win32"
 
@@ -980,19 +1141,19 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("", log_file)
     _emit("Flows:", log_file)
     _emit("  decision   Run command decision eval only", log_file)
-    _emit("  audit      Check command registry consistency", log_file)
-    _emit("  check      Run command audit + NLU eval", log_file)
+    _emit("  audit      Read registry data and source text; print consistency findings", log_file)
+    _emit("  check      Run broad evaluations, including model and platform checks", log_file)
     _emit("  confirmation Run confirmation phrase eval only", log_file)
-    _emit("  analyze    Run analysis reports only", log_file)
-    _emit("  promote    Export promotion results only", log_file)
-    _emit("  raw_inbox  Export raw learning cases to inbox (rescue/manual path)", log_file)
-    _emit("  label      Run label_inbox.py only", log_file)
-    _emit("  train      Run train/train_nlu.py only", log_file)
-    _emit("  eval       Run tools/eval_nlu.py only", log_file)
+    _emit("  analyze    Print reports, update correction memory, evaluate reply composition", log_file)
+    _emit("  promote    Rewrite inbox and promotion suggestion files", log_file)
+    _emit("  raw_inbox  Rewrite inbox with raw learning cases (rescue/manual path)", log_file)
+    _emit("  label      Interactively label cases; update training examples and labeled history", log_file)
+    _emit("  train      Fit NLU and replace models/nlu_intent.joblib", log_file)
+    _emit("  eval       Evaluate NLU predictions with the current model/configuration", log_file)
     _emit("  nlu_diag   Run NLU diagnostics with top-k candidates", log_file)
     _emit("  nlu_risk   Run NLU risk report", log_file)
     _emit("  nlu_risk_guard Run NLU risk guard", log_file)
-    _emit("  full       Analyze + promote", log_file)
+    _emit("  full       Print reports, update correction memory, export promotions", log_file)
     _emit("  dictation   Run dictation command eval only", log_file)
     _emit("  dictation_intent Run dictation ON/OFF model separation eval only", log_file)
     _emit("  backspace_intent Run backspace model separation eval only", log_file)
@@ -1065,8 +1226,9 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
     _emit("  --no-log           Do not create pipeline log file", log_file)
     _emit("  --summary-json <new-path>  Write a JSON result to a new file", log_file)
+    _emit("  --describe         Show commands' known effects without executing the flow", log_file)
     _emit("", log_file)
-    _emit("Recommended order:", log_file)
+    _emit("Example maintenance sequence (later steps write data/model):", log_file)
     _emit("  1) python tools/pipeline.py check", log_file)
     _emit("  2) python tools/pipeline.py analyze", log_file)
     _emit("  3) python tools/pipeline.py promote", log_file)
@@ -1078,10 +1240,13 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  - Logs are saved by default to data/logs/pipeline/.", log_file)
     _emit("  - Step results are PASS, FAIL, SKIP, or NOT_RUN; SKIP does not count as PASS.", log_file)
     _emit("  - Exit 0 means no step failed; skipped checks produce an INCOMPLETE summary.", log_file)
-    _emit("  - JSON success requires status PASS and all_steps_passed true, not only exit 0.", log_file)
+    _emit("  - When consuming JSON, require actual exit 0 plus valid current PASS and all_steps_passed true.", log_file)
     _emit("  - The JSON parent directory must exist; an existing file is never overwritten.", log_file)
     _emit("  - Missing, empty or invalid JSON is not a successful result.", log_file)
     _emit("  - --no-log disables only the text log; an explicitly requested JSON is still written.", log_file)
+    _emit("  - --no-log does not disable data/model writes made by child commands.", log_file)
+    _emit("  - --describe creates no runner log/result; it cannot be combined with output file options.", log_file)
+    _emit("  - Descriptions show known default-command effects; UNREVIEWED never means read-only.", log_file)
     _emit("  - 'raw_inbox' is NOT part of normal promote flow.", log_file)
     _emit("  - Use 'raw_inbox' only when you intentionally want to inspect noisy raw cases.", log_file)
     _emit("  - 'label' is interactive; its inner prompt output may not be fully captured in log.", log_file)
@@ -1227,6 +1392,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--log-file", default=None)
     parser.add_argument("--no-log", action="store_true")
     parser.add_argument("--summary-json", default=None)
+    parser.add_argument("--describe", action="store_true")
     parser.add_argument("-h", "--help", action="store_true")
     return parser
 
@@ -1240,6 +1406,12 @@ def main() -> int:
     if args.help or flow_name in {"help", "--help", "-h"}:
         print_help()
         return 0
+
+    if args.describe:
+        if args.summary_json is not None or args.log_file is not None:
+            _emit("[FAIL] --describe cannot be combined with --summary-json or --log-file; no steps executed.")
+            return 2
+        return print_flow_description(flow_name)
 
     summary_path = Path(args.summary_json) if args.summary_json is not None else None
     if summary_path is not None and not summary_path.is_absolute():
