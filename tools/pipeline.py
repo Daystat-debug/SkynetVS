@@ -136,7 +136,8 @@ COMMAND_EFFECTS: dict[str, CommandEffects] = {
          "data/learning/action_failures.jsonl", "data/learning/resolver_candidates.jsonl",
          "data/learning/correction_memory.jsonl"),
         ("data/learning/correction_memory.jsonl",),
-        ("Repeated upserts can increase seen_count for existing evidence.",)),
+        ("Unchanged cumulative evidence is not counted again; legacy counts are preserved on first adoption.",
+         "Lower totals retain the previous high-water mark; rotated or replaced history needs a separate review.")),
     "tools/correction_memory_report.py": CommandEffects(
         ("READ_DATA", "REPORT_STDOUT"),
         "Read correction memory and print candidate summaries.",

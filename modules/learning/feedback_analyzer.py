@@ -72,13 +72,13 @@ class FeedbackAnalyzer:
 
         return True
 
-    def analyze(self) -> Dict[str, Any]:
+    def analyze(self, *, correction_limit: int | None = 10) -> Dict[str, Any]:
         command_history = self._read_jsonl(self._command_history_path)
         hard_cases = self._read_jsonl(self._nlu_hard_cases_path)
         action_failures = self._read_jsonl(self._action_failures_path)
         resolver_candidates = self._read_jsonl(self._resolver_candidates_path)
 
-        correction_pairs = self._find_correction_pairs(command_history)
+        correction_pairs = self._find_correction_pairs(command_history, limit=correction_limit)
         alias_candidates = self._build_alias_candidates(correction_pairs)
 
         summary: Dict[str, Any] = {
@@ -280,7 +280,7 @@ class FeedbackAnalyzer:
             result.append(item)
         return result
 
-    def _find_correction_pairs(self, command_history: List[Dict[str, Any]], limit: int = 10) -> List[Dict[str, Any]]:
+    def _find_correction_pairs(self, command_history: List[Dict[str, Any]], limit: int | None = 10) -> List[Dict[str, Any]]:
         rows = sorted(
             command_history,
             key=lambda row: (self._parse_ts(row.get("ts")) or datetime.min),
