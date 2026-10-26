@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import ExitStack
+import json
 import os
 import re
 import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import TextIO
+from typing import Literal, TextIO
+from uuid import uuid4
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -20,6 +23,269 @@ class Step:
     name: str
     cmd: list[str]
     interactive: bool = False
+
+
+# These evaluators explicitly skip with exit 0 on non-Windows hosts.
+# Keep this registry separate from available_flows: inventory consumers parse
+# its literal Step calls. Hard-failing platform gates and portable checks are
+# deliberately not listed, even if their filenames end in "_windows.py".
+WINDOWS_SKIP_SCRIPTS = frozenset({
+    "tools/eval_audio_control_windows.py",
+    "tools/eval_developer_task_execution_boundary_crypto_windows.py",
+    "tools/eval_developer_task_execution_boundary_worker_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_claim_transaction_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_composition_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_plan_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_verifier_windows.py",
+    "tools/eval_developer_task_execution_environment_inventory_windows.py",
+    "tools/eval_developer_task_execution_runtime_attestation_crypto_windows.py",
+    "tools/eval_developer_task_execution_runtime_attestation_windows.py",
+    "tools/eval_developer_task_execution_runtime_bundle_windows.py",
+    "tools/eval_developer_task_execution_runtime_lease_windows.py",
+    "tools/eval_developer_task_execution_toolchain_observation_windows.py",
+    "tools/eval_developer_task_execution_workspace_snapshot_windows.py",
+})
+
+StepStatus = Literal["PASS", "FAIL", "SKIP", "NOT_RUN"]
+
+
+@dataclass(frozen=True)
+class StepResult:
+    name: str
+    status: StepStatus
+    returncode: int | None
+    reason: str = ""
+    reason_code: str = ""
+
+
+FlowStatus = Literal["PASS", "FAIL", "INCOMPLETE"]
+
+
+@dataclass(frozen=True)
+class FlowResult:
+    flow: str
+    steps: tuple[StepResult, ...]
+    returncode: int
+    reason_code: str = ""
+    run_id: str = field(default_factory=lambda: uuid4().hex)
+
+    @property
+    def status(self) -> FlowStatus:
+        if self.returncode != 0 or not self.steps or any(
+                step.status == "FAIL" for step in self.steps):
+            return "FAIL"
+        if any(step.status != "PASS" for step in self.steps):
+            return "INCOMPLETE"
+        return "PASS"
+
+    @property
+    def counts(self) -> dict[str, int]:
+        counts = {status: sum(step.status == status for step in self.steps)
+                  for status in ("PASS", "FAIL", "SKIP", "NOT_RUN")}
+        counts["TOTAL"] = len(self.steps)
+        return counts
+
+    def to_dict(self) -> dict[str, object]:
+        """Versioned result metadata; raw output, commands and paths stay in logs."""
+        return {
+            "kind": "SKYNETVS_PIPELINE_RESULT_V1",
+            "schema_version": 1,
+            "run_id": self.run_id,
+            "flow": self.flow,
+            "status": self.status,
+            "all_steps_passed": self.status == "PASS",
+            "returncode": self.returncode,
+            "reason_code": self.reason_code,
+            "counts": self.counts,
+            "steps": [
+                {"index": index, "name": step.name, "status": step.status,
+                 "returncode": step.returncode, "reason_code": step.reason_code}
+                for index, step in enumerate(self.steps, 1)
+            ],
+        }
+
+
+@dataclass(frozen=True)
+class CommandEffects:
+    effects: tuple[str, ...]
+    description: str
+    default_inputs: tuple[str, ...] = ()
+    default_outputs: tuple[str, ...] = ()
+    notes: tuple[str, ...] = ()
+
+
+# Descriptions of known application effects for these exact default commands.
+# This is an explanation, not an execution policy or a read-only guarantee.
+# Keep it outside available_flows: static inventory consumes that literal AST.
+COMMAND_EFFECTS: dict[str, CommandEffects] = {
+    "tools/command_audit.py": CommandEffects(
+        ("READ_DATA", "READ_SOURCE", "REPORT_STDOUT"),
+        "Read the command registry, templates and Actions source text; print findings.",
+        ("data/intents.json", "data/say_templates.json", "modules/actions.py"),
+        notes=("Actions source is read as text, not imported or executed.",)),
+    "tools/learning_report.py": CommandEffects(
+        ("READ_DATA", "REPORT_STDOUT"),
+        "Read learning records and print analysis reports.",
+        ("data/learning/command_history.jsonl", "data/learning/nlu_hard_cases.jsonl",
+         "data/learning/action_failures.jsonl", "data/learning/resolver_candidates.jsonl")),
+    "tools/build_correction_memory.py": CommandEffects(
+        ("READ_DATA", "WRITE_DATA", "REPORT_STDOUT"),
+        "Build or update correction memory from learning records.",
+        ("data/learning/command_history.jsonl", "data/learning/nlu_hard_cases.jsonl",
+         "data/learning/action_failures.jsonl", "data/learning/resolver_candidates.jsonl",
+         "data/learning/correction_memory.jsonl"),
+        ("data/learning/correction_memory.jsonl",),
+        ("Repeated upserts can increase seen_count for existing evidence.",)),
+    "tools/correction_memory_report.py": CommandEffects(
+        ("READ_DATA", "REPORT_STDOUT"),
+        "Read correction memory and print candidate summaries.",
+        ("data/learning/correction_memory.jsonl",)),
+    "tools/promotion_report.py": CommandEffects(
+        ("READ_DATA", "REPORT_STDOUT"),
+        "Read correction memory and print promotion suggestions.",
+        ("data/learning/correction_memory.jsonl",)),
+    "tools/export_promotions.py": CommandEffects(
+        ("READ_DATA", "WRITE_DATA", "REPORT_STDOUT"),
+        "Export promotion suggestions; rewrite the inbox and suggestion files.",
+        ("data/learning/correction_memory.jsonl", "data/intents.json", "data/inbox_unlabeled.jsonl",
+         "data/learning/alias_suggestions.jsonl", "data/learning/phrase_correction_suggestions.jsonl"),
+        ("data/inbox_unlabeled.jsonl", "data/learning/alias_suggestions.jsonl",
+         "data/learning/phrase_correction_suggestions.jsonl"),
+        ("Output files are rewritten even when no new suggestions are added.",)),
+    "tools/export_learning_to_inbox.py": CommandEffects(
+        ("READ_DATA", "WRITE_DATA", "REPORT_STDOUT"),
+        "Export raw learning cases and rewrite the unlabeled inbox.",
+        ("data/learning/nlu_hard_cases.jsonl", "data/learning/resolver_candidates.jsonl",
+         "data/inbox_unlabeled.jsonl"),
+        ("data/inbox_unlabeled.jsonl",),
+        ("The inbox is rewritten even when no new cases are added.",)),
+    "tools/label_inbox.py": CommandEffects(
+        ("READ_DATA", "WRITE_DATA", "INTERACTIVE", "REPORT_STDOUT"),
+        "Interactively label pending cases and update training examples and labeled records.",
+        ("data/intents.json", "data/inbox_unlabeled.jsonl", "data/inbox_labeled.jsonl"),
+        ("data/intents.json", "data/inbox_labeled.jsonl"),
+        ("With pending cases, quit or skip can still reach the final file rewrites.",)),
+    "train/train_nlu.py": CommandEffects(
+        ("READ_DATA", "TRAIN_MODEL", "WRITE_MODEL", "REPORT_STDOUT"),
+        "Fit the NLU model and overwrite the active model before the printed quick test.",
+        ("data/intents.json", "data/nlu_training_recipe.json"),
+        ("models/nlu_intent.joblib",),
+        ("Training has no interactive confirmation in this command.",)),
+    "tools/eval_nlu.py": CommandEffects(
+        ("READ_CONFIG", "READ_DATA", "LOAD_MODEL", "REPORT_STDOUT"),
+        "Evaluate NLU predictions using configuration, examples and the current model.",
+        (".env", "data/intents.json", "data/say_templates.json",
+         "data/inbox_labeled.jsonl", "models/nlu_intent.joblib"),
+        notes=("Predicts intents; it does not dispatch the predicted desktop actions.",)),
+    "tools/eval_nlu_diagnostics.py": CommandEffects(
+        ("READ_CONFIG", "READ_DATA", "LOAD_MODEL", "REPORT_STDOUT"),
+        "Print NLU candidate diagnostics using the current configuration and model.",
+        (".env", "data/intents.json", "data/say_templates.json",
+         "data/inbox_labeled.jsonl", "models/nlu_intent.joblib")),
+    "tools/eval_nlu_risk_report.py": CommandEffects(
+        ("READ_CONFIG", "READ_DATA", "LOAD_MODEL", "REPORT_STDOUT"),
+        "Print NLU risk results using the current configuration and model.",
+        (".env", "data/intents.json", "data/say_templates.json",
+         "data/inbox_labeled.jsonl", "models/nlu_intent.joblib")),
+    "tools/eval_nlu_risk_guard.py": CommandEffects(
+        ("READ_CONFIG", "READ_DATA", "LOAD_MODEL", "REPORT_STDOUT"),
+        "Evaluate the NLU risk guard using the current configuration and model.",
+        (".env", "data/intents.json", "data/say_templates.json",
+         "data/inbox_labeled.jsonl", "models/nlu_intent.joblib")),
+    "tools/eval_reply_builder.py": CommandEffects(
+        ("READ_CONFIG", "REPORT_STDOUT"),
+        "Read configuration and run reply-builder cases with fake routers.",
+        (".env",),
+        notes=("Current fake-router cases do not call model prediction.",)),
+}
+
+
+def describe_flow(flow_name: str) -> dict[str, object]:
+    """Describe known effects without importing or executing a child command."""
+    steps = available_flows().get(flow_name)
+    descriptions = []
+    for index, step in enumerate(steps or (), 1):
+        canonical = len(step.cmd) == 2 and step.cmd[0] == sys.executable
+        effects = COMMAND_EFFECTS.get(step.cmd[1]) if canonical else None
+        descriptions.append({
+            "index": index,
+            "name": step.name,
+            "review": "REVIEWED" if effects is not None else "UNREVIEWED",
+            "effects": list(effects.effects) if effects is not None else ["UNREVIEWED"],
+            "description": effects.description if effects is not None else
+                "Effects of this exact command have not been reviewed; inspect its source before use.",
+            "default_inputs": list(effects.default_inputs) if effects is not None else [],
+            "default_outputs": list(effects.default_outputs) if effects is not None else [],
+            "notes": list(effects.notes) if effects is not None else [],
+            "interactive": step.interactive,
+        })
+    reviewed = sum(item["review"] == "REVIEWED" for item in descriptions)
+    return {
+        "kind": "SKYNETVS_PIPELINE_DESCRIPTION_V1",
+        "schema_version": 1,
+        "flow": flow_name,
+        "known_flow": bool(steps),
+        "execution": "NOT_RUN",
+        "reason_code": "" if steps else "unknown_flow",
+        "counts": {"REVIEWED": reviewed, "UNREVIEWED": len(descriptions) - reviewed,
+                   "TOTAL": len(descriptions)},
+        "effects": sorted({effect for item in descriptions for effect in item["effects"]}),
+        "steps": descriptions,
+        "notes": [
+            "These are known effects of exact default commands, not an exhaustive filesystem guarantee.",
+            "Paths show defaults from the project root; configuration can affect runtime behavior.",
+            "Inputs may be conditional; .env is discovered by python-dotenv and LOAD_MODEL means potential loading.",
+            "Ordinary Python commands may also create bytecode caches or diagnostic logs.",
+            "--no-log controls only the runner text log, not the actions of child commands.",
+        ],
+    }
+
+
+def print_flow_description(flow_name: str) -> int:
+    description = describe_flow(flow_name)
+    if not description["known_flow"]:
+        _emit(f"[FAIL] Unknown flow: {flow_name}; no steps executed.")
+        return 2
+    _emit(f"[DESCRIBE] Flow '{flow_name}'; execution=NOT_RUN")
+    counts = description["counts"]
+    _emit("Coverage: " + "; ".join(f"{name}={value}" for name, value in counts.items()))
+    _emit("Known potential effects: " + ", ".join(description["effects"]))
+    for item in description["steps"]:
+        _emit(f"{item['index']}. {item['name']} [{item['review']}]")
+        _emit("   " + item["description"])
+        _emit("   Effects: " + ", ".join(item["effects"]))
+        if item["default_inputs"]:
+            _emit("   Default inputs: " + ", ".join(item["default_inputs"]))
+        if item["default_outputs"]:
+            _emit("   Default outputs: " + ", ".join(item["default_outputs"]))
+        for note in item["notes"]:
+            _emit("   " + note)
+    for note in description["notes"]:
+        _emit("Note: " + note)
+    _emit("No steps executed. No pipeline log or JSON result file created.")
+    return 0
+
+
+def _is_windows() -> bool:
+    return os.name == "nt" and sys.platform == "win32"
+
+
+def _skip_reason(step: Step) -> str:
+    # Match the exact registered command shape, not arbitrary child output or
+    # a path that happens to appear among another command's arguments.
+    if (len(step.cmd) == 2 and step.cmd[0] == sys.executable
+            and step.cmd[1] in WINDOWS_SKIP_SCRIPTS and not _is_windows()):
+        return "requires Windows; not run on this platform"
+    return ""
+
+
+def _step_result(step: Step, status: StepStatus, returncode: int | None,
+                 reason: str, log_file: TextIO | None, *,
+                 reason_code: str = "") -> StepResult:
+    suffix = f": {reason}" if reason else ""
+    _emit(f"[{status}] {step.name}{suffix}", log_file)
+    return StepResult(step.name, status, returncode, reason, reason_code)
 
 
 def _python_cmd(*args: str) -> list[str]:
@@ -832,7 +1098,7 @@ def _safe_log_name_part(value: str) -> str:
     return value or "pipeline"
 
 
-def _make_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
+def _select_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
     if explicit_path:
         path = Path(explicit_path)
         if not path.is_absolute():
@@ -842,6 +1108,11 @@ def _make_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
         safe_flow = _safe_log_name_part(flow_name)
         path = PIPELINE_LOG_DIR / f"{ts}_{safe_flow}.log"
 
+    return path
+
+
+def _make_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
+    path = _select_log_path(flow_name, explicit_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     return path
 
@@ -870,19 +1141,19 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("", log_file)
     _emit("Flows:", log_file)
     _emit("  decision   Run command decision eval only", log_file)
-    _emit("  audit      Check command registry consistency", log_file)
-    _emit("  check      Run command audit + NLU eval", log_file)
+    _emit("  audit      Read registry data and source text; print consistency findings", log_file)
+    _emit("  check      Run broad evaluations, including model and platform checks", log_file)
     _emit("  confirmation Run confirmation phrase eval only", log_file)
-    _emit("  analyze    Run analysis reports only", log_file)
-    _emit("  promote    Export promotion results only", log_file)
-    _emit("  raw_inbox  Export raw learning cases to inbox (rescue/manual path)", log_file)
-    _emit("  label      Run label_inbox.py only", log_file)
-    _emit("  train      Run train/train_nlu.py only", log_file)
-    _emit("  eval       Run tools/eval_nlu.py only", log_file)
+    _emit("  analyze    Print reports, update correction memory, evaluate reply composition", log_file)
+    _emit("  promote    Rewrite inbox and promotion suggestion files", log_file)
+    _emit("  raw_inbox  Rewrite inbox with raw learning cases (rescue/manual path)", log_file)
+    _emit("  label      Interactively label cases; update training examples and labeled history", log_file)
+    _emit("  train      Fit NLU and replace models/nlu_intent.joblib", log_file)
+    _emit("  eval       Evaluate NLU predictions with the current model/configuration", log_file)
     _emit("  nlu_diag   Run NLU diagnostics with top-k candidates", log_file)
     _emit("  nlu_risk   Run NLU risk report", log_file)
     _emit("  nlu_risk_guard Run NLU risk guard", log_file)
-    _emit("  full       Analyze + promote", log_file)
+    _emit("  full       Print reports, update correction memory, export promotions", log_file)
     _emit("  dictation   Run dictation command eval only", log_file)
     _emit("  dictation_intent Run dictation ON/OFF model separation eval only", log_file)
     _emit("  backspace_intent Run backspace model separation eval only", log_file)
@@ -954,8 +1225,10 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
     _emit("  --no-log           Do not create pipeline log file", log_file)
+    _emit("  --summary-json <new-path>  Write a JSON result to a new file", log_file)
+    _emit("  --describe         Show commands' known effects without executing the flow", log_file)
     _emit("", log_file)
-    _emit("Recommended order:", log_file)
+    _emit("Example maintenance sequence (later steps write data/model):", log_file)
     _emit("  1) python tools/pipeline.py check", log_file)
     _emit("  2) python tools/pipeline.py analyze", log_file)
     _emit("  3) python tools/pipeline.py promote", log_file)
@@ -965,13 +1238,27 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("", log_file)
     _emit("Notes:", log_file)
     _emit("  - Logs are saved by default to data/logs/pipeline/.", log_file)
+    _emit("  - Step results are PASS, FAIL, SKIP, or NOT_RUN; SKIP does not count as PASS.", log_file)
+    _emit("  - Exit 0 means no step failed; skipped checks produce an INCOMPLETE summary.", log_file)
+    _emit("  - When consuming JSON, require actual exit 0 plus valid current PASS and all_steps_passed true.", log_file)
+    _emit("  - The JSON parent directory must exist; an existing file is never overwritten.", log_file)
+    _emit("  - Missing, empty or invalid JSON is not a successful result.", log_file)
+    _emit("  - --no-log disables only the text log; an explicitly requested JSON is still written.", log_file)
+    _emit("  - --no-log does not disable data/model writes made by child commands.", log_file)
+    _emit("  - --describe creates no runner log/result; it cannot be combined with output file options.", log_file)
+    _emit("  - Descriptions show known default-command effects; UNREVIEWED never means read-only.", log_file)
     _emit("  - 'raw_inbox' is NOT part of normal promote flow.", log_file)
     _emit("  - Use 'raw_inbox' only when you intentionally want to inspect noisy raw cases.", log_file)
     _emit("  - 'label' is interactive; its inner prompt output may not be fully captured in log.", log_file)
     _emit("  - 'full' does NOT run label/train/eval on purpose.", log_file)
 
 
-def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
+def run_step_result(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> StepResult:
+    reason = _skip_reason(step)
+    if reason:
+        return _step_result(step, "SKIP", None, reason, log_file,
+                            reason_code="requires_windows")
+
     _emit("", log_file)
     _emit("=" * 72, log_file)
     _emit(f"[RUN] {step.name}", log_file)
@@ -989,11 +1276,11 @@ def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
         try:
             completed = subprocess.run(step.cmd, cwd=str(cwd), env=env, check=False)
         except KeyboardInterrupt:
-            _emit("\n[STOP] Interrupted by user.", log_file)
-            return 130
-        except Exception as e:
-            _emit(f"[FAIL] {step.name}: {type(e).__name__}: {e}", log_file)
-            return 1
+            return _step_result(step, "FAIL", 130, "interrupted by user", log_file,
+                                reason_code="interrupted")
+        except Exception as exc:
+            return _step_result(step, "FAIL", 1, f"{type(exc).__name__}: {exc}", log_file,
+                                reason_code="execution_error")
 
         rc = int(completed.returncode)
     else:
@@ -1020,22 +1307,40 @@ def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
 
         except KeyboardInterrupt:
             if process is not None:
-                process.kill()
-            _emit("\n[STOP] Interrupted by user.", log_file)
-            return 130
-        except Exception as e:
-            _emit(f"[FAIL] {step.name}: {type(e).__name__}: {e}", log_file)
-            return 1
+                try:
+                    process.kill()
+                    process.wait(timeout=5)
+                except (OSError, subprocess.TimeoutExpired):
+                    pass
+            return _step_result(step, "FAIL", 130, "interrupted by user", log_file,
+                                reason_code="interrupted")
+        except Exception as exc:
+            return _step_result(step, "FAIL", 1, f"{type(exc).__name__}: {exc}", log_file,
+                                reason_code="execution_error")
+        finally:
+            if process is not None and process.stdout is not None:
+                process.stdout.close()
 
     if rc != 0:
-        _emit(f"[FAIL] {step.name}: exit code {rc}", log_file)
-    else:
-        _emit(f"[OK] {step.name}", log_file)
-
-    return rc
+        return _step_result(step, "FAIL", rc, f"exit code {rc}", log_file,
+                            reason_code="nonzero_exit")
+    return _step_result(step, "PASS", 0, "", log_file)
 
 
-def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
+def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
+    """Legacy integer API; inspect run_step_result for PASS versus SKIP."""
+    result = run_step_result(step, cwd=cwd, log_file=log_file)
+    return result.returncode if result.returncode is not None else 0
+
+
+def _flow_summary(result: FlowResult, log_file: TextIO | None) -> None:
+    _emit("", log_file)
+    _emit(f"[SUMMARY] Flow '{result.flow}': " + "; ".join(
+        f"{status}={count}" for status, count in result.counts.items()
+        if status != "TOTAL"), log_file)
+
+
+def run_flow_result(flow_name: str, *, log_file: TextIO | None = None) -> FlowResult:
     flows = available_flows()
     steps = flows.get(flow_name)
 
@@ -1043,21 +1348,42 @@ def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
         _emit(f"[FAIL] Unknown flow: {flow_name}", log_file)
         _emit("", log_file)
         print_help(log_file)
-        return 2
+        return FlowResult(flow_name, (), 2, reason_code="unknown_flow")
 
     _emit(f"[INFO] Project root: {PROJECT_ROOT}", log_file)
     _emit(f"[INFO] Selected flow: {flow_name}", log_file)
 
-    for step in steps:
-        rc = run_step(step, cwd=PROJECT_ROOT, log_file=log_file)
-        if rc != 0:
+    results: list[StepResult] = []
+    for index, step in enumerate(steps):
+        result = run_step_result(step, cwd=PROJECT_ROOT, log_file=log_file)
+        results.append(result)
+        if result.status == "FAIL":
             _emit("", log_file)
             _emit(f"[STOP] Flow '{flow_name}' stopped on step: {step.name}", log_file)
-            return rc
+            for pending in steps[index + 1:]:
+                results.append(_step_result(pending, "NOT_RUN", None,
+                                            f"flow stopped after: {step.name}", log_file,
+                                            reason_code="flow_stopped"))
+            outcome = FlowResult(flow_name, tuple(results),
+                                 result.returncode if result.returncode is not None else 1)
+            _flow_summary(outcome, log_file)
+            return outcome
 
-    _emit("", log_file)
-    _emit(f"[DONE] Flow '{flow_name}' completed successfully.", log_file)
-    return 0
+    outcome = FlowResult(flow_name, tuple(results), 0)
+    _flow_summary(outcome, log_file)
+    if outcome.status == "INCOMPLETE":
+        _emit(f"[INCOMPLETE] Flow '{flow_name}' completed with skipped checks; "
+              "not all checks were run.", log_file)
+    else:
+        _emit(f"[DONE] Flow '{flow_name}' completed successfully.", log_file)
+    # Compatibility: platform skips were non-failing before this change.
+    # Exit 0 means no step failed, not that every check ran. See the summary.
+    return outcome
+
+
+def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
+    """Legacy integer API; inspect run_flow_result for completeness."""
+    return run_flow_result(flow_name, log_file=log_file).returncode
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1065,6 +1391,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("flow", nargs="?", default="help")
     parser.add_argument("--log-file", default=None)
     parser.add_argument("--no-log", action="store_true")
+    parser.add_argument("--summary-json", default=None)
+    parser.add_argument("--describe", action="store_true")
     parser.add_argument("-h", "--help", action="store_true")
     return parser
 
@@ -1079,17 +1407,50 @@ def main() -> int:
         print_help()
         return 0
 
-    if args.no_log:
-        return run_flow(flow_name, log_file=None)
+    if args.describe:
+        if args.summary_json is not None or args.log_file is not None:
+            _emit("[FAIL] --describe cannot be combined with --summary-json or --log-file; no steps executed.")
+            return 2
+        return print_flow_description(flow_name)
 
-    log_path = _make_log_path(flow_name, args.log_file)
+    summary_path = Path(args.summary_json) if args.summary_json is not None else None
+    if summary_path is not None and not summary_path.is_absolute():
+        summary_path = PROJECT_ROOT / summary_path
+    log_path = None if args.no_log else _select_log_path(flow_name, args.log_file)
 
-    with log_path.open("w", encoding="utf-8", newline="") as log_file:
-        _emit(f"[INFO] Pipeline log: {log_path}", log_file)
-        rc = run_flow(flow_name, log_file=log_file)
-        _emit(f"[INFO] Pipeline log saved: {log_path}", log_file)
+    try:
+        if summary_path is not None and log_path is not None and (
+                summary_path.resolve() == log_path.resolve()):
+            _emit("[FAIL] Pipeline JSON summary and text log must use different files.")
+            return 2
 
-    return rc
+        with ExitStack() as outputs:
+            # Reserve the requested new file before any child can run. A crash
+            # can leave an empty/partial file, never a stale successful report.
+            # Do not resolve this path before opening: x mode also refuses an
+            # existing symlink, including a dangling one.
+            summary_file = (outputs.enter_context(summary_path.open(
+                "x", encoding="utf-8", newline="\n")) if summary_path is not None else None)
+            log_file = None
+            if log_path is not None:
+                log_path.parent.mkdir(parents=True, exist_ok=True)
+                log_file = outputs.enter_context(log_path.open("w", encoding="utf-8", newline=""))
+                _emit(f"[INFO] Pipeline log: {log_path}", log_file)
+
+            result = run_flow_result(flow_name, log_file=log_file)
+            if log_file is not None:
+                _emit(f"[INFO] Pipeline log saved: {log_path}", log_file)
+            if summary_file is not None:
+                json.dump(result.to_dict(), summary_file, ensure_ascii=False, indent=2)
+                summary_file.write("\n")
+                summary_file.flush()
+    except (OSError, ValueError) as exc:
+        _emit(f"[FAIL] Pipeline output could not be prepared or saved: {type(exc).__name__}: {exc}")
+        return 2
+
+    if summary_path is not None:
+        _emit(f"[INFO] Pipeline JSON summary saved: {summary_path}")
+    return result.returncode
 
 
 if __name__ == "__main__":

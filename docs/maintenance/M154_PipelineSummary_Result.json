@@ -1,0 +1,58 @@
+{
+  "kind": "M154_PIPELINE_SUMMARY_RESULT_V1",
+  "package_id": "52bc021ad260ecb6539ce69e95d03582c616e542007b9e03f5fae1b26b5ce6d8",
+  "base_commit": "8fa6e31594fadfc7623c7e2ae8054c25b0fc7f76",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.406,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pipeline_status",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 14,
+      "seconds": 0.625,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "29d507ac01711869a36c98d53b000e4140ef59885b82f195b11e8775682f8a6a"
+    },
+    {
+      "name": "pipeline_summary",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.578,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "5289b1f06ddc5f1f1012a1d1d390e80f77964b373e4b46ca583791c1b5635dbc"
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "tools/pipeline.py": "86fdf9f2a9493eb01a8d50972fa0f75127db8ee9f5df90a667ed18115252ec53",
+    "tools/eval_pipeline_summary.py": "35b9b8e42de8f0242f4d7d988ce84dc5085bf3db40e70421a5658ba5ff25c2f6",
+    "docs/maintenance/M154_Workflow.md": "9ade98e5ec1fdc0734407efe0755855a6a88742a405f7f90ceb3dca7fff636a5"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "pipeline_results",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "lesson": {
+    "rule": "Process exit zero alone does not prove every pipeline step passed.",
+    "regression": "Machine-readable results preserve skip and unstarted outcomes and never overwrite an existing report.",
+    "root_cause": "Pipeline consumers lacked a structured flow result distinguishing complete success from skipped checks"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "kind": "M154_PIPELINE_EFFECTS_RESULT_V1",
+  "package_id": "165af918ab67c058bc194716b1ba7bb0f194d035e08df1f0fc2210f0d1bd6db9",
+  "base_commit": "78e4429c85fcc4cf06d812c12720f52981a6729d",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.437,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pipeline_status",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 14,
+      "seconds": 0.547,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "eac14267164ff2bef3af19da2e9eacdc646cd0789f6e54f1d987efefe1aa11b7"
+    },
+    {
+      "name": "pipeline_summary",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.594,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "8eaac0ac4d0c15a84305a87bca09da6b60df4e1fe68268da00502bc96dfe43e2"
+    },
+    {
+      "name": "pipeline_effects",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.594,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a84acb9cbceaddc556d52690d2be30c8fb8d0ddc3cf866928a87b31bbeab6c06"
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "tools/pipeline.py": "8e4e1bc2fb3d571a3ec8b0ae94da797679bf49bcca2785aed9f620ee5bb34c2d",
+    "tools/eval_pipeline_effects.py": "ca50185bdbd55260d5b67b7da9ae96601c05186d0c3285541b852d91cf8d493c",
+    "docs/maintenance/M154_Workflow.md": "c48e82dbebbd4e37003064e60ebab4d4cd457bfe4b72f1331e49722a59a85f7b"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "pipeline_results",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "lesson": {
+    "rule": "Disabling the runner log does not make a pipeline flow read-only.",
+    "regression": "Descriptions expose reviewed data effects, retain unreviewed commands explicitly, and run no child steps.",
+    "root_cause": "Flow names and the no-log option did not explain data writes and model operations performed by child commands"
+  }
+}
