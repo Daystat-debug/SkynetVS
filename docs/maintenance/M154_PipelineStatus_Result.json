@@ -1,0 +1,49 @@
+{
+  "kind": "M154_PIPELINE_STATUS_RESULT_V1",
+  "package_id": "0ea55c3180deed5c1d007570223b2da381b12b1f748ae359b1db7eeb6ab8e420",
+  "base_commit": "df25fd355178e2c8a84f1e025a74bccd5ec4c0c7",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 4.125,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pipeline_status",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 14,
+      "seconds": 0.563,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "27982ab31b1deb74566fa1a078c2b7b887e50d42a83414882255e2b9c28c716f"
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "tools/pipeline.py": "ce0c7c4e0d0bd93b5327c98271a701d4f30e5ebf0c6ef8022c416dd2974b4f7f",
+    "tools/eval_pipeline_status.py": "992b327dff2f3232a96e5b299958a2f467edff1f607af1aea30d7feb787b084a",
+    "docs/maintenance/M154_Workflow.md": "16ab52367e668b1cf0d0ceef5c7c3dd32a6002716a620084312775fc90b9aa84"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "pipeline_results",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "lesson": {
+    "rule": "A skipped or unstarted pipeline step must not be reported as PASS.",
+    "regression": "Platform skips and steps after a failure retain distinct outcomes.",
+    "root_cause": "Pipeline treated a skipped evaluator exit code zero as success"
+  }
+}

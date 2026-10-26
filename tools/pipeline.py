@@ -8,7 +8,7 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import TextIO
+from typing import Literal, TextIO
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -20,6 +20,59 @@ class Step:
     name: str
     cmd: list[str]
     interactive: bool = False
+
+
+# These evaluators explicitly skip with exit 0 on non-Windows hosts.
+# Keep this registry separate from available_flows: inventory consumers parse
+# its literal Step calls. Hard-failing platform gates and portable checks are
+# deliberately not listed, even if their filenames end in "_windows.py".
+WINDOWS_SKIP_SCRIPTS = frozenset({
+    "tools/eval_audio_control_windows.py",
+    "tools/eval_developer_task_execution_boundary_crypto_windows.py",
+    "tools/eval_developer_task_execution_boundary_worker_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_claim_transaction_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_composition_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_controller_worker_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_plan_windows.py",
+    "tools/eval_developer_task_execution_compile_ast_verifier_windows.py",
+    "tools/eval_developer_task_execution_environment_inventory_windows.py",
+    "tools/eval_developer_task_execution_runtime_attestation_crypto_windows.py",
+    "tools/eval_developer_task_execution_runtime_attestation_windows.py",
+    "tools/eval_developer_task_execution_runtime_bundle_windows.py",
+    "tools/eval_developer_task_execution_runtime_lease_windows.py",
+    "tools/eval_developer_task_execution_toolchain_observation_windows.py",
+    "tools/eval_developer_task_execution_workspace_snapshot_windows.py",
+})
+
+StepStatus = Literal["PASS", "FAIL", "SKIP", "NOT_RUN"]
+
+
+@dataclass(frozen=True)
+class StepResult:
+    name: str
+    status: StepStatus
+    returncode: int | None
+    reason: str = ""
+
+
+def _is_windows() -> bool:
+    return os.name == "nt" and sys.platform == "win32"
+
+
+def _skip_reason(step: Step) -> str:
+    # Match the exact registered command shape, not arbitrary child output or
+    # a path that happens to appear among another command's arguments.
+    if (len(step.cmd) == 2 and step.cmd[0] == sys.executable
+            and step.cmd[1] in WINDOWS_SKIP_SCRIPTS and not _is_windows()):
+        return "requires Windows; not run on this platform"
+    return ""
+
+
+def _step_result(step: Step, status: StepStatus, returncode: int | None,
+                 reason: str, log_file: TextIO | None) -> StepResult:
+    suffix = f": {reason}" if reason else ""
+    _emit(f"[{status}] {step.name}{suffix}", log_file)
+    return StepResult(step.name, status, returncode, reason)
 
 
 def _python_cmd(*args: str) -> list[str]:
@@ -965,13 +1018,19 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("", log_file)
     _emit("Notes:", log_file)
     _emit("  - Logs are saved by default to data/logs/pipeline/.", log_file)
+    _emit("  - Step results are PASS, FAIL, SKIP, or NOT_RUN; SKIP does not count as PASS.", log_file)
+    _emit("  - Exit 0 means no step failed; skipped checks produce an INCOMPLETE summary.", log_file)
     _emit("  - 'raw_inbox' is NOT part of normal promote flow.", log_file)
     _emit("  - Use 'raw_inbox' only when you intentionally want to inspect noisy raw cases.", log_file)
     _emit("  - 'label' is interactive; its inner prompt output may not be fully captured in log.", log_file)
     _emit("  - 'full' does NOT run label/train/eval on purpose.", log_file)
 
 
-def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
+def run_step_result(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> StepResult:
+    reason = _skip_reason(step)
+    if reason:
+        return _step_result(step, "SKIP", None, reason, log_file)
+
     _emit("", log_file)
     _emit("=" * 72, log_file)
     _emit(f"[RUN] {step.name}", log_file)
@@ -989,11 +1048,9 @@ def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
         try:
             completed = subprocess.run(step.cmd, cwd=str(cwd), env=env, check=False)
         except KeyboardInterrupt:
-            _emit("\n[STOP] Interrupted by user.", log_file)
-            return 130
-        except Exception as e:
-            _emit(f"[FAIL] {step.name}: {type(e).__name__}: {e}", log_file)
-            return 1
+            return _step_result(step, "FAIL", 130, "interrupted by user", log_file)
+        except Exception as exc:
+            return _step_result(step, "FAIL", 1, f"{type(exc).__name__}: {exc}", log_file)
 
         rc = int(completed.returncode)
     else:
@@ -1020,19 +1077,35 @@ def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
 
         except KeyboardInterrupt:
             if process is not None:
-                process.kill()
-            _emit("\n[STOP] Interrupted by user.", log_file)
-            return 130
-        except Exception as e:
-            _emit(f"[FAIL] {step.name}: {type(e).__name__}: {e}", log_file)
-            return 1
+                try:
+                    process.kill()
+                    process.wait(timeout=5)
+                except (OSError, subprocess.TimeoutExpired):
+                    pass
+            return _step_result(step, "FAIL", 130, "interrupted by user", log_file)
+        except Exception as exc:
+            return _step_result(step, "FAIL", 1, f"{type(exc).__name__}: {exc}", log_file)
+        finally:
+            if process is not None and process.stdout is not None:
+                process.stdout.close()
 
     if rc != 0:
-        _emit(f"[FAIL] {step.name}: exit code {rc}", log_file)
-    else:
-        _emit(f"[OK] {step.name}", log_file)
+        return _step_result(step, "FAIL", rc, f"exit code {rc}", log_file)
+    return _step_result(step, "PASS", 0, "", log_file)
 
-    return rc
+
+def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
+    """Legacy integer API; inspect run_step_result for PASS versus SKIP."""
+    result = run_step_result(step, cwd=cwd, log_file=log_file)
+    return result.returncode if result.returncode is not None else 0
+
+
+def _flow_summary(flow_name: str, results: list[StepResult], log_file: TextIO | None) -> None:
+    counts = {status: sum(result.status == status for result in results)
+              for status in ("PASS", "FAIL", "SKIP", "NOT_RUN")}
+    _emit("", log_file)
+    _emit(f"[SUMMARY] Flow '{flow_name}': " + "; ".join(
+        f"{status}={count}" for status, count in counts.items()), log_file)
 
 
 def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
@@ -1048,15 +1121,27 @@ def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
     _emit(f"[INFO] Project root: {PROJECT_ROOT}", log_file)
     _emit(f"[INFO] Selected flow: {flow_name}", log_file)
 
-    for step in steps:
-        rc = run_step(step, cwd=PROJECT_ROOT, log_file=log_file)
-        if rc != 0:
+    results: list[StepResult] = []
+    for index, step in enumerate(steps):
+        result = run_step_result(step, cwd=PROJECT_ROOT, log_file=log_file)
+        results.append(result)
+        if result.status == "FAIL":
             _emit("", log_file)
             _emit(f"[STOP] Flow '{flow_name}' stopped on step: {step.name}", log_file)
-            return rc
+            for pending in steps[index + 1:]:
+                results.append(_step_result(pending, "NOT_RUN", None,
+                                            f"flow stopped after: {step.name}", log_file))
+            _flow_summary(flow_name, results, log_file)
+            return result.returncode if result.returncode is not None else 1
 
-    _emit("", log_file)
-    _emit(f"[DONE] Flow '{flow_name}' completed successfully.", log_file)
+    _flow_summary(flow_name, results, log_file)
+    if any(result.status == "SKIP" for result in results):
+        _emit(f"[INCOMPLETE] Flow '{flow_name}' completed with skipped checks; "
+              "not all checks were run.", log_file)
+    else:
+        _emit(f"[DONE] Flow '{flow_name}' completed successfully.", log_file)
+    # Compatibility: platform skips were non-failing before this change.
+    # Exit 0 means no step failed, not that every check ran. See the summary.
     return 0
 
 
