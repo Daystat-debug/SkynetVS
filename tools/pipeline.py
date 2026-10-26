@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import ExitStack
+import json
 import os
 import re
 import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Literal, TextIO
+from uuid import uuid4
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -53,6 +56,54 @@ class StepResult:
     status: StepStatus
     returncode: int | None
     reason: str = ""
+    reason_code: str = ""
+
+
+FlowStatus = Literal["PASS", "FAIL", "INCOMPLETE"]
+
+
+@dataclass(frozen=True)
+class FlowResult:
+    flow: str
+    steps: tuple[StepResult, ...]
+    returncode: int
+    reason_code: str = ""
+    run_id: str = field(default_factory=lambda: uuid4().hex)
+
+    @property
+    def status(self) -> FlowStatus:
+        if self.returncode != 0 or not self.steps or any(
+                step.status == "FAIL" for step in self.steps):
+            return "FAIL"
+        if any(step.status != "PASS" for step in self.steps):
+            return "INCOMPLETE"
+        return "PASS"
+
+    @property
+    def counts(self) -> dict[str, int]:
+        counts = {status: sum(step.status == status for step in self.steps)
+                  for status in ("PASS", "FAIL", "SKIP", "NOT_RUN")}
+        counts["TOTAL"] = len(self.steps)
+        return counts
+
+    def to_dict(self) -> dict[str, object]:
+        """Versioned result metadata; raw output, commands and paths stay in logs."""
+        return {
+            "kind": "SKYNETVS_PIPELINE_RESULT_V1",
+            "schema_version": 1,
+            "run_id": self.run_id,
+            "flow": self.flow,
+            "status": self.status,
+            "all_steps_passed": self.status == "PASS",
+            "returncode": self.returncode,
+            "reason_code": self.reason_code,
+            "counts": self.counts,
+            "steps": [
+                {"index": index, "name": step.name, "status": step.status,
+                 "returncode": step.returncode, "reason_code": step.reason_code}
+                for index, step in enumerate(self.steps, 1)
+            ],
+        }
 
 
 def _is_windows() -> bool:
@@ -69,10 +120,11 @@ def _skip_reason(step: Step) -> str:
 
 
 def _step_result(step: Step, status: StepStatus, returncode: int | None,
-                 reason: str, log_file: TextIO | None) -> StepResult:
+                 reason: str, log_file: TextIO | None, *,
+                 reason_code: str = "") -> StepResult:
     suffix = f": {reason}" if reason else ""
     _emit(f"[{status}] {step.name}{suffix}", log_file)
-    return StepResult(step.name, status, returncode, reason)
+    return StepResult(step.name, status, returncode, reason, reason_code)
 
 
 def _python_cmd(*args: str) -> list[str]:
@@ -885,7 +937,7 @@ def _safe_log_name_part(value: str) -> str:
     return value or "pipeline"
 
 
-def _make_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
+def _select_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
     if explicit_path:
         path = Path(explicit_path)
         if not path.is_absolute():
@@ -895,6 +947,11 @@ def _make_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
         safe_flow = _safe_log_name_part(flow_name)
         path = PIPELINE_LOG_DIR / f"{ts}_{safe_flow}.log"
 
+    return path
+
+
+def _make_log_path(flow_name: str, explicit_path: str | None = None) -> Path:
+    path = _select_log_path(flow_name, explicit_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     return path
 
@@ -1007,6 +1064,7 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("Options:", log_file)
     _emit("  --log-file <path>  Save pipeline output to selected file", log_file)
     _emit("  --no-log           Do not create pipeline log file", log_file)
+    _emit("  --summary-json <new-path>  Write a JSON result to a new file", log_file)
     _emit("", log_file)
     _emit("Recommended order:", log_file)
     _emit("  1) python tools/pipeline.py check", log_file)
@@ -1020,6 +1078,10 @@ def print_help(log_file: TextIO | None = None) -> None:
     _emit("  - Logs are saved by default to data/logs/pipeline/.", log_file)
     _emit("  - Step results are PASS, FAIL, SKIP, or NOT_RUN; SKIP does not count as PASS.", log_file)
     _emit("  - Exit 0 means no step failed; skipped checks produce an INCOMPLETE summary.", log_file)
+    _emit("  - JSON success requires status PASS and all_steps_passed true, not only exit 0.", log_file)
+    _emit("  - The JSON parent directory must exist; an existing file is never overwritten.", log_file)
+    _emit("  - Missing, empty or invalid JSON is not a successful result.", log_file)
+    _emit("  - --no-log disables only the text log; an explicitly requested JSON is still written.", log_file)
     _emit("  - 'raw_inbox' is NOT part of normal promote flow.", log_file)
     _emit("  - Use 'raw_inbox' only when you intentionally want to inspect noisy raw cases.", log_file)
     _emit("  - 'label' is interactive; its inner prompt output may not be fully captured in log.", log_file)
@@ -1029,7 +1091,8 @@ def print_help(log_file: TextIO | None = None) -> None:
 def run_step_result(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> StepResult:
     reason = _skip_reason(step)
     if reason:
-        return _step_result(step, "SKIP", None, reason, log_file)
+        return _step_result(step, "SKIP", None, reason, log_file,
+                            reason_code="requires_windows")
 
     _emit("", log_file)
     _emit("=" * 72, log_file)
@@ -1048,9 +1111,11 @@ def run_step_result(step: Step, *, cwd: Path, log_file: TextIO | None = None) ->
         try:
             completed = subprocess.run(step.cmd, cwd=str(cwd), env=env, check=False)
         except KeyboardInterrupt:
-            return _step_result(step, "FAIL", 130, "interrupted by user", log_file)
+            return _step_result(step, "FAIL", 130, "interrupted by user", log_file,
+                                reason_code="interrupted")
         except Exception as exc:
-            return _step_result(step, "FAIL", 1, f"{type(exc).__name__}: {exc}", log_file)
+            return _step_result(step, "FAIL", 1, f"{type(exc).__name__}: {exc}", log_file,
+                                reason_code="execution_error")
 
         rc = int(completed.returncode)
     else:
@@ -1082,15 +1147,18 @@ def run_step_result(step: Step, *, cwd: Path, log_file: TextIO | None = None) ->
                     process.wait(timeout=5)
                 except (OSError, subprocess.TimeoutExpired):
                     pass
-            return _step_result(step, "FAIL", 130, "interrupted by user", log_file)
+            return _step_result(step, "FAIL", 130, "interrupted by user", log_file,
+                                reason_code="interrupted")
         except Exception as exc:
-            return _step_result(step, "FAIL", 1, f"{type(exc).__name__}: {exc}", log_file)
+            return _step_result(step, "FAIL", 1, f"{type(exc).__name__}: {exc}", log_file,
+                                reason_code="execution_error")
         finally:
             if process is not None and process.stdout is not None:
                 process.stdout.close()
 
     if rc != 0:
-        return _step_result(step, "FAIL", rc, f"exit code {rc}", log_file)
+        return _step_result(step, "FAIL", rc, f"exit code {rc}", log_file,
+                            reason_code="nonzero_exit")
     return _step_result(step, "PASS", 0, "", log_file)
 
 
@@ -1100,15 +1168,14 @@ def run_step(step: Step, *, cwd: Path, log_file: TextIO | None = None) -> int:
     return result.returncode if result.returncode is not None else 0
 
 
-def _flow_summary(flow_name: str, results: list[StepResult], log_file: TextIO | None) -> None:
-    counts = {status: sum(result.status == status for result in results)
-              for status in ("PASS", "FAIL", "SKIP", "NOT_RUN")}
+def _flow_summary(result: FlowResult, log_file: TextIO | None) -> None:
     _emit("", log_file)
-    _emit(f"[SUMMARY] Flow '{flow_name}': " + "; ".join(
-        f"{status}={count}" for status, count in counts.items()), log_file)
+    _emit(f"[SUMMARY] Flow '{result.flow}': " + "; ".join(
+        f"{status}={count}" for status, count in result.counts.items()
+        if status != "TOTAL"), log_file)
 
 
-def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
+def run_flow_result(flow_name: str, *, log_file: TextIO | None = None) -> FlowResult:
     flows = available_flows()
     steps = flows.get(flow_name)
 
@@ -1116,7 +1183,7 @@ def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
         _emit(f"[FAIL] Unknown flow: {flow_name}", log_file)
         _emit("", log_file)
         print_help(log_file)
-        return 2
+        return FlowResult(flow_name, (), 2, reason_code="unknown_flow")
 
     _emit(f"[INFO] Project root: {PROJECT_ROOT}", log_file)
     _emit(f"[INFO] Selected flow: {flow_name}", log_file)
@@ -1130,19 +1197,28 @@ def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
             _emit(f"[STOP] Flow '{flow_name}' stopped on step: {step.name}", log_file)
             for pending in steps[index + 1:]:
                 results.append(_step_result(pending, "NOT_RUN", None,
-                                            f"flow stopped after: {step.name}", log_file))
-            _flow_summary(flow_name, results, log_file)
-            return result.returncode if result.returncode is not None else 1
+                                            f"flow stopped after: {step.name}", log_file,
+                                            reason_code="flow_stopped"))
+            outcome = FlowResult(flow_name, tuple(results),
+                                 result.returncode if result.returncode is not None else 1)
+            _flow_summary(outcome, log_file)
+            return outcome
 
-    _flow_summary(flow_name, results, log_file)
-    if any(result.status == "SKIP" for result in results):
+    outcome = FlowResult(flow_name, tuple(results), 0)
+    _flow_summary(outcome, log_file)
+    if outcome.status == "INCOMPLETE":
         _emit(f"[INCOMPLETE] Flow '{flow_name}' completed with skipped checks; "
               "not all checks were run.", log_file)
     else:
         _emit(f"[DONE] Flow '{flow_name}' completed successfully.", log_file)
     # Compatibility: platform skips were non-failing before this change.
     # Exit 0 means no step failed, not that every check ran. See the summary.
-    return 0
+    return outcome
+
+
+def run_flow(flow_name: str, *, log_file: TextIO | None = None) -> int:
+    """Legacy integer API; inspect run_flow_result for completeness."""
+    return run_flow_result(flow_name, log_file=log_file).returncode
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1150,6 +1226,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("flow", nargs="?", default="help")
     parser.add_argument("--log-file", default=None)
     parser.add_argument("--no-log", action="store_true")
+    parser.add_argument("--summary-json", default=None)
     parser.add_argument("-h", "--help", action="store_true")
     return parser
 
@@ -1164,17 +1241,44 @@ def main() -> int:
         print_help()
         return 0
 
-    if args.no_log:
-        return run_flow(flow_name, log_file=None)
+    summary_path = Path(args.summary_json) if args.summary_json is not None else None
+    if summary_path is not None and not summary_path.is_absolute():
+        summary_path = PROJECT_ROOT / summary_path
+    log_path = None if args.no_log else _select_log_path(flow_name, args.log_file)
 
-    log_path = _make_log_path(flow_name, args.log_file)
+    try:
+        if summary_path is not None and log_path is not None and (
+                summary_path.resolve() == log_path.resolve()):
+            _emit("[FAIL] Pipeline JSON summary and text log must use different files.")
+            return 2
 
-    with log_path.open("w", encoding="utf-8", newline="") as log_file:
-        _emit(f"[INFO] Pipeline log: {log_path}", log_file)
-        rc = run_flow(flow_name, log_file=log_file)
-        _emit(f"[INFO] Pipeline log saved: {log_path}", log_file)
+        with ExitStack() as outputs:
+            # Reserve the requested new file before any child can run. A crash
+            # can leave an empty/partial file, never a stale successful report.
+            # Do not resolve this path before opening: x mode also refuses an
+            # existing symlink, including a dangling one.
+            summary_file = (outputs.enter_context(summary_path.open(
+                "x", encoding="utf-8", newline="\n")) if summary_path is not None else None)
+            log_file = None
+            if log_path is not None:
+                log_path.parent.mkdir(parents=True, exist_ok=True)
+                log_file = outputs.enter_context(log_path.open("w", encoding="utf-8", newline=""))
+                _emit(f"[INFO] Pipeline log: {log_path}", log_file)
 
-    return rc
+            result = run_flow_result(flow_name, log_file=log_file)
+            if log_file is not None:
+                _emit(f"[INFO] Pipeline log saved: {log_path}", log_file)
+            if summary_file is not None:
+                json.dump(result.to_dict(), summary_file, ensure_ascii=False, indent=2)
+                summary_file.write("\n")
+                summary_file.flush()
+    except (OSError, ValueError) as exc:
+        _emit(f"[FAIL] Pipeline output could not be prepared or saved: {type(exc).__name__}: {exc}")
+        return 2
+
+    if summary_path is not None:
+        _emit(f"[INFO] Pipeline JSON summary saved: {summary_path}")
+    return result.returncode
 
 
 if __name__ == "__main__":
