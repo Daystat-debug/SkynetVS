@@ -6,34 +6,24 @@ from modules.learning.feedback_analyzer import FeedbackAnalyzer
 
 def main() -> None:
     analyzer = FeedbackAnalyzer()
-    report = analyzer.analyze()
+    # A reporting top-ten limit is not a complete cumulative evidence snapshot.
+    report = analyzer.analyze(correction_limit=None)
 
     correction_pairs = report.get("correction_pairs") or []
     memory = CorrectionMemory()
 
-    added = 0
+    stats = memory.sync_cumulative_candidates(correction_pairs, source="feedback_analyzer_v2")
 
-    for row in correction_pairs:
-        failed_text = str(row.get("failed_text") or "").strip()
-        corrected_text = str(row.get("corrected_text") or "").strip()
-        corrected_intent = str(row.get("corrected_intent") or "").strip().upper()
-
-        if not failed_text or not corrected_text or not corrected_intent:
-            continue
-
-        memory.upsert_candidate(
-            failed_text=failed_text,
-            corrected_text=corrected_text,
-            corrected_intent=corrected_intent,
-            corrected_confidence=float(row.get("corrected_confidence") or 0.0),
-            corrected_slots=row.get("corrected_slots") or {},
-            evidence_count=int(row.get("count") or 1),
-            source="feedback_analyzer_v2",
-        )
-        added += 1
-
-    print("[OK] correction memory updated: data/learning/correction_memory.jsonl")
-    print(f"[OK] processed correction pairs: {added}")
+    print("[OK] correction memory checked: data/learning/correction_memory.jsonl")
+    print(f"[OK] normalized correction pairs: {stats['processed']}")
+    print(f"[OK] created={stats['created']}; increased={stats['increased']}; "
+          f"baselined={stats['baselined']}; unchanged={stats['unchanged']}; "
+          f"new_evidence={stats['new_evidence']}; written={stats['written']}")
+    if stats["baselined"]:
+        print("[INFO] Legacy counts preserved; current totals recorded as a baseline.")
+    if stats["lower_totals"]:
+        print(f"[INFO] Lower cumulative totals retained: {stats['lower_totals']}; "
+              "history truncation or replacement requires a separate review.")
 
 
 if __name__ == "__main__":

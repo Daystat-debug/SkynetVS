@@ -1,0 +1,82 @@
+{
+  "kind": "M154_CORRECTION_MEMORY_REPLAY_RESULT_V1",
+  "package_id": "1c27de68650ead8af0d6d741c8985aeeeefd091376593a3106deaaedbee93fb7",
+  "base_commit": "d541df44cc40c70c862e37235a6391e1a3b95d00",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.438,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pipeline_status",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 14,
+      "seconds": 0.64,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "48d3721f32fa9a421b56714457d4bf46c4f820ccb2ce0235cf2fe9dd20e238cb"
+    },
+    {
+      "name": "pipeline_summary",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.594,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "8eaac0ac4d0c15a84305a87bca09da6b60df4e1fe68268da00502bc96dfe43e2"
+    },
+    {
+      "name": "pipeline_effects",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.547,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "cb9cec0b7002e0ab99d86f951aeb4f8fe92154f70d3add38d240331455ebebcd"
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 1.031,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "87251c2b6117f5ca924c1004a5a1e783e708dd49b0a403761553efcdaf8412c9"
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "modules/learning/correction_memory.py": "c1886555d0f7d1166aaeeabfd8dafbb9dbbeb723e5951b1385194e3421f99c1a",
+    "modules/learning/feedback_analyzer.py": "c5b5b4e6b4da9ed791bada6d2f9e99d907e8cb83cf63affaa493656167d798d6",
+    "tools/build_correction_memory.py": "3bf27b50d55aa15465c0d8609aa1219ba6f42bf6bef5000209bd39a8625465ee",
+    "tools/eval_correction_memory_idempotence.py": "a359986c25344a30d636b48c1a8ec487ac64c3cf01927fc72c233aa8f41c705b",
+    "tools/pipeline.py": "45cedba3411bcbd6bbabd8210e319cad9d348e45e7470e0c2da57dfbc46e139c",
+    "docs/maintenance/M154_Workflow.md": "fbf85ec6b60ce496a174a159af54822a091edcd9edb0765443c7ff4e000f2a07"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_data_quality",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "real_history": "NOT_READ",
+  "correction_memory_data": "NOT_READ_OR_MIGRATED",
+  "check_data": "synthetic temporary fixtures only",
+  "lesson": {
+    "rule": "Replaying a cumulative history snapshot must not add the same evidence again.",
+    "regression": "Unchanged snapshots preserve counts, timestamps and file bytes; only growth adds evidence, and existing legacy counts are retained.",
+    "root_cause": "The memory builder passed cumulative analyzer totals to an additive upsert operation"
+  }
+}
