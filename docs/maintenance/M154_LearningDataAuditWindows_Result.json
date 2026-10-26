@@ -1,0 +1,342 @@
+{
+  "kind": "M154_LEARNING_DATA_AUDIT_WINDOWS_RESULT_V1",
+  "package_id": "1e1cfbdc1dceaa6120ced3096e12e27d624c61dd7a0fb30a1e0e0f24682b4f50",
+  "base_commit": "3b955874e826fa1561ab1657d824d3f1d86ec4a9",
+  "status": "PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.437,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 0.985,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "463edc71f4794adbc89795c089db6c12905c975e081e2571df8902a297b571b0",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_data_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 43,
+      "seconds": 0.828,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "33977d0a7f352e114da77159513795c922a8b4dd33159da7bce0ebaabd996ea7",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 43,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "predecessor_failure_evidence": {
+    "status": "AVAILABLE",
+    "reason": null,
+    "source_package_id": "50e15c5657d02fea8759b27cf07c3a5996afd3b75440ada62220681156182821",
+    "log_sha256_verified": true,
+    "test_diagnostics": {
+      "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+      "status": "AVAILABLE",
+      "reason": null,
+      "counts": {
+        "tests": 38,
+        "failures": 32,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [
+        {
+          "test": "test_aware_timestamps_and_invalid_fallback_are_findings",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_checkpoint_shape_versions_counts_flags_and_source_keys",
+          "outcome": "FAIL",
+          "occurrences": 9
+        },
+        {
+          "test": "test_cli_default_root_uses_script_not_cwd_and_is_deterministic",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_cli_json_exits_are_separate_from_test_success",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_closed_schema_rejects_private_fields_types_codes_and_false_clean",
+          "outcome": "FAIL",
+          "occurrences": 2
+        },
+        {
+          "test": "test_event_ids_are_counted_without_claiming_stability",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_excessive_json_nesting_is_incomplete_not_clean",
+          "outcome": "FAIL",
+          "occurrences": 2
+        },
+        {
+          "test": "test_history_schema_types_do_not_crash",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_history_timestamps_naive_aware_mixed_invalid_and_order",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_invalid_memory_types_are_findings",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_legacy_nullable_fields_unknown_status_and_counts_are_informational",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_line_length_and_line_count_bounds_keep_partial_results",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_lone_surrogate_is_not_later_treated_as_portable_unicode",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_malformed_utf8_json_partial_line_and_later_rows_are_counted",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_missing_optional_memory_fields_follow_strict_reader_defaults",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_nested_and_top_level_duplicate_fields_are_rejected",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_nonfinite_literals_and_overflow_are_reported_without_traceback",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_nonobject_json_rows_are_findings",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_permission_and_unexpected_errors_are_sanitized",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_private_strings_in_all_payload_fields_never_escape",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_rejected_null_intent_is_valid_accepted_without_intent_is_not",
+          "outcome": "FAIL",
+          "occurrences": 1
+        },
+        {
+          "test": "test_valid_current_writer_and_no_event_id_are_not_provenance_proof",
+          "outcome": "FAIL",
+          "occurrences": 1
+        }
+      ]
+    }
+  },
+  "live_diagnostic": {
+    "execution": "COMPLETED",
+    "data_status": "NO_ISSUES_IN_CHECKED_STRUCTURE",
+    "failure_code": null,
+    "exit_code": 0,
+    "summary": {
+      "exit_code": 0,
+      "inputs": {
+        "command_history": {
+          "blank_lines": 0,
+          "bytes_read": 204736,
+          "complete": true,
+          "findings": {
+            "accepted_without_intent_rows": 0,
+            "confidence_out_of_range_rows": 0,
+            "duplicate_event_id_rows": 0,
+            "duplicate_field_lines": 0,
+            "invalid_accepted_rows": 0,
+            "invalid_auxiliary_text_rows": 0,
+            "invalid_confidence_rows": 0,
+            "invalid_event_id_rows": 0,
+            "invalid_intent_rows": 0,
+            "invalid_json_lines": 0,
+            "invalid_meta_rows": 0,
+            "invalid_missing_slots_rows": 0,
+            "invalid_slots_rows": 0,
+            "invalid_text_rows": 0,
+            "invalid_timestamp_rows": 0,
+            "invalid_unicode_lines": 0,
+            "invalid_utf8_lines": 0,
+            "mixed_timezone_files": 0,
+            "non_finite_number_lines": 0,
+            "non_object_rows": 0,
+            "out_of_order_timestamp_rows": 0
+          },
+          "lines_read": 502,
+          "object_rows": 502,
+          "observations": {
+            "accepted_rows": 455,
+            "aware_timestamp_values": 0,
+            "naive_timestamp_values": 502,
+            "rejected_rows": 47,
+            "rows_with_event_id": 0,
+            "rows_without_event_id": 502
+          },
+          "state": "READ",
+          "unchanged_during_read": true
+        },
+        "correction_memory": {
+          "blank_lines": 0,
+          "bytes_read": 438,
+          "complete": true,
+          "findings": {
+            "confidence_out_of_range_rows": 0,
+            "duplicate_field_lines": 0,
+            "duplicate_key_rows": 0,
+            "duplicate_normalized_key_rows": 0,
+            "duplicate_sources_rows": 0,
+            "invalid_checkpoint_rows": 0,
+            "invalid_confidence_rows": 0,
+            "invalid_intent_rows": 0,
+            "invalid_json_lines": 0,
+            "invalid_key_rows": 0,
+            "invalid_seen_count_rows": 0,
+            "invalid_slots_rows": 0,
+            "invalid_sources_rows": 0,
+            "invalid_status_rows": 0,
+            "invalid_text_rows": 0,
+            "invalid_timestamp_rows": 0,
+            "invalid_unicode_lines": 0,
+            "invalid_utf8_lines": 0,
+            "key_mismatch_rows": 0,
+            "last_seen_before_created_rows": 0,
+            "mixed_timezone_files": 0,
+            "non_finite_number_lines": 0,
+            "non_object_rows": 0
+          },
+          "lines_read": 1,
+          "object_rows": 1,
+          "observations": {
+            "aware_timestamp_values": 0,
+            "naive_timestamp_values": 2,
+            "rows_with_checkpoint": 0,
+            "rows_with_legacy_baseline": 0,
+            "rows_without_checkpoint": 1
+          },
+          "state": "READ",
+          "unchanged_during_read": true
+        }
+      },
+      "invocation": "OK",
+      "kind": "SKYNETVS_LEARNING_DATA_AUDIT_V1",
+      "limits": {
+        "bytes_per_file": 33554432,
+        "bytes_per_line": 262144,
+        "json_nesting": 64,
+        "lines_per_file": 100000
+      },
+      "schema_version": 1,
+      "scope": {
+        "checks": "STRUCTURE_ONLY",
+        "counts_recomputed": false,
+        "cross_file_atomic_snapshot": false,
+        "files_written": false,
+        "historical_counts_verified": false,
+        "models_loaded": false,
+        "runtime_modules_imported": false,
+        "stable_event_identity_verified": false
+      },
+      "status": "NO_ISSUES_IN_CHECKED_STRUCTURE"
+    }
+  },
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "tools/audit_learning_data.py": "21a2aeb8da6b8c8885221fbfda5e728ca4398fc34961adebbfc83aa0d2b40a2b",
+    "tools/eval_learning_data_audit.py": "68da9c4257ed4caf6ef23ca2f2fe36e3833eccc9ca63d91fc7cbdca5114e89ab",
+    "docs/maintenance/M154_Workflow.md": "d42eb5c62b9a9e92685b9cc17cca9c76f7d37d05459b39434e88a326d0b0927b"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "training_readiness": "NOT_ASSESSED",
+  "data_writes": "NONE",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_data_quality",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "synthetic_check_data": "temporary fixtures only",
+  "live_scope": [
+    "command_history",
+    "correction_memory"
+  ],
+  "published_live_content": "whitelisted aggregate counts and static codes only",
+  "published_test_content": "allowlisted source test identifiers and bounded outcome counts only",
+  "lesson": {
+    "rule": "Compare file versions using fields with the same meaning; compare ctime only within the same metadata API.",
+    "source_defect": "Windows CPython path stat and fstat can expose creation and change time in the same ctime field.",
+    "predecessor_cause": "Exact failed test identifiers are recovered only when the prior private log is available and matches its published hash.",
+    "regression": "Synthetic checks must pass before the read-only diagnostic; invalid diagnostic output is never copied into the report.",
+    "limitation": "Structural findings do not prove correction labels, historical counts, event identity or training readiness."
+  }
+}

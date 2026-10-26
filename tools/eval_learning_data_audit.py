@@ -312,6 +312,107 @@ class LearningDataAuditTests(unittest.TestCase):
                 self.assertEqual(report["status"], "NOT_FULLY_CHECKED")
                 self.assertEqual(report["inputs"]["command_history"]["state"], "LIMIT_REACHED")
 
+    @staticmethod
+    def metadata_with(info, **changes):
+        values = {name: getattr(info, name) for name in
+                  ("st_dev", "st_ino", "st_mode", "st_size", "st_mtime_ns", "st_ctime_ns")}
+        values.update(changes)
+        return SimpleNamespace(**values)
+
+    def test_cross_api_creation_change_time_difference_is_not_a_write(self):
+        self.valid_inputs()
+        paths = (self.history_path, self.memory_path)
+        before = {path: (path.read_bytes(), path.stat().st_mtime_ns) for path in paths}
+        actual_fstat = os.fstat
+
+        def different_clock(fd):
+            info = actual_fstat(fd)
+            return self.metadata_with(info, st_ctime_ns=info.st_ctime_ns + 1_000_000_000)
+
+        # Windows CPython path stats can expose birth time here while fstat
+        # exposes change time. Each API remains stable across both observations.
+        with mock.patch.object(self.audit.os, "fstat", side_effect=different_clock):
+            report = self.run_audit()
+        self.assertEqual(report["status"], "NO_ISSUES_IN_CHECKED_STRUCTURE")
+        self.assertTrue(all(item["complete"] and item["object_rows"] == 1
+                            for item in report["inputs"].values()))
+        self.assertEqual(before, {path: (path.read_bytes(), path.stat().st_mtime_ns) for path in paths})
+
+    def test_cross_api_permission_bits_do_not_reject_regular_file(self):
+        self.valid_inputs()
+        actual_fstat = os.fstat
+
+        def different_permissions(fd):
+            info = actual_fstat(fd)
+            return self.metadata_with(info, st_mode=info.st_mode ^ stat.S_IWUSR)
+
+        with mock.patch.object(self.audit.os, "fstat", side_effect=different_permissions):
+            report = self.run_audit()
+        self.assertEqual(report["status"], "NO_ISSUES_IN_CHECKED_STRUCTURE")
+        self.assertTrue(all(item["object_rows"] == 1 for item in report["inputs"].values()))
+
+    def test_descriptor_change_time_change_is_detected_within_api(self):
+        self.valid_inputs()
+        actual_fstat = os.fstat
+        observations = 0
+
+        def changed_descriptor(fd):
+            nonlocal observations
+            observations += 1
+            info = actual_fstat(fd)
+            if observations == 2:
+                return self.metadata_with(info, st_ctime_ns=info.st_ctime_ns + 1_000_000_000)
+            return info
+
+        with mock.patch.object(self.audit.os, "fstat", side_effect=changed_descriptor):
+            report = self.run_audit()
+        self.assertEqual(report["status"], "NOT_FULLY_CHECKED")
+        item = report["inputs"]["command_history"]
+        self.assertEqual(item["state"], "CHANGED_DURING_READ")
+        self.assertGreater(item["bytes_read"], 0)
+        self.assertFalse(item["complete"])
+        self.assertEqual(report["inputs"]["correction_memory"]["state"], "READ")
+
+    def test_path_change_time_change_is_detected_within_api(self):
+        self.valid_inputs()
+        actual_lstat = Path.lstat
+        observations = 0
+
+        def changed_path(path, *args, **kwargs):
+            nonlocal observations
+            info = actual_lstat(path, *args, **kwargs)
+            if path == self.history_path:
+                observations += 1
+                if observations >= 3:
+                    return self.metadata_with(info, st_ctime_ns=info.st_ctime_ns + 1_000_000_000)
+            return info
+
+        with mock.patch.object(Path, "lstat", changed_path):
+            report = self.run_audit()
+        self.assertEqual(report["status"], "NOT_FULLY_CHECKED")
+        item = report["inputs"]["command_history"]
+        self.assertEqual(item["state"], "CHANGED_DURING_READ")
+        self.assertGreater(item["bytes_read"], 0)
+        self.assertFalse(item["complete"])
+        self.assertEqual(report["inputs"]["correction_memory"]["state"], "READ")
+
+    def test_cross_api_identity_and_version_mismatches_prevent_reading(self):
+        self.valid_inputs()
+        actual_fstat = os.fstat
+        for field in ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_mode"):
+            with self.subTest(field=field):
+                def mismatch(fd):
+                    info = actual_fstat(fd)
+                    value = stat.S_IFDIR if field == "st_mode" else getattr(info, field) + 1
+                    return self.metadata_with(info, **{field: value})
+
+                with mock.patch.object(self.audit.os, "fstat", side_effect=mismatch), mock.patch.object(
+                        self.audit.os, "fdopen", side_effect=AssertionError("mismatched descriptor must not be read")):
+                    report = self.run_audit()
+                self.assertEqual(report["status"], "NOT_FULLY_CHECKED")
+                self.assertTrue(all(item["state"] == "CHANGED_DURING_READ" and item["bytes_read"] == 0
+                                    for item in report["inputs"].values()))
+
     def test_detected_append_replace_and_truncate_never_claim_complete(self):
         for operation in ("append", "replace", "truncate"):
             with self.subTest(operation=operation):

@@ -361,6 +361,14 @@ def _signature(info, *, directory=False):
     return identity if directory else identity + (info.st_size, info.st_mtime_ns, info.st_ctime_ns)
 
 
+def _file_version(info):
+    # Windows CPython 3.12 path stats expose birth time as ctime, while fstat
+    # exposes change time. Permission bits can also differ between APIs.
+    # Only compare compatible identity/type/version fields across APIs;
+    # retain complete signatures for successive observations by the same API.
+    return (info.st_dev, info.st_ino, stat.S_IFMT(info.st_mode), info.st_size, info.st_mtime_ns)
+
+
 def _inspect(path):
     """Inspect each component without following symlinks/reparse points."""
     chain = []
@@ -391,7 +399,7 @@ def _read_input(root, name, item):
         flags = os.O_RDONLY | getattr(os, "O_BINARY", 0) | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
         descriptor = os.open(target, flags)
         opened = os.fstat(descriptor)
-        if not stat.S_ISREG(opened.st_mode) or _signature(opened) != _signature(initial) or _inspect(target)[0] != before:
+        if not stat.S_ISREG(opened.st_mode) or _file_version(opened) != _file_version(initial) or _inspect(target)[0] != before:
             item["state"] = "CHANGED_DURING_READ"
             return
         observed = before
@@ -444,7 +452,7 @@ def _read_input(root, name, item):
                     _history_row(row, item, seen, related)
                 else:
                     _memory_row(row, item, seen, related)
-            stable = _signature(os.fstat(stream.fileno())) == _signature(initial) and _inspect(target)[0] == before
+            stable = _signature(os.fstat(stream.fileno())) == _signature(opened) and _inspect(target)[0] == before
         item["unchanged_during_read"] = stable
         if not stable:
             state = "CHANGED_DURING_READ"
