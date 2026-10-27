@@ -5,7 +5,8 @@ decoded dictionaries retain every field, including schema-invalid values and
 surrogate escapes, so the downstream planner can still see their event IDs.
 COMPLETE means bounded EOF plus unchanged observed metadata, not a clean log,
 an atomic filesystem snapshot, authenticated events, or readiness for training.
-This module has no CLI and is not connected to the runtime or memory builder.
+This module has no CLI. The opt-in event ledger/runtime uses this reader; the
+reader itself never activates a mode or changes history or correction memory.
 """
 from __future__ import annotations
 

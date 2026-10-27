@@ -74,7 +74,8 @@ class CorrectionMemoryIdempotenceTests(unittest.TestCase):
     def prepare_cli(self):
         project = self.root / "isolated project"
         for relative in ("modules/learning/correction_memory.py",
-                         "modules/learning/feedback_analyzer.py", "tools/build_correction_memory.py"):
+                         "modules/learning/feedback_analyzer.py",
+                         "modules/learning/correction_evidence_runtime.py", "tools/build_correction_memory.py"):
             target = project / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(PROJECT_ROOT / relative, target)

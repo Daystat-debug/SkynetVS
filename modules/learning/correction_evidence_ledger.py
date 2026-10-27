@@ -1,6 +1,6 @@
 """Private SQLite accounting for complete, identified correction snapshots.
 
-This opt-in component is not connected to the runtime writer or memory builder.
+The opt-in runtime coordinator controls activation and memory projection.
 Initialization binds existing IDs without credit. Later credit requires the
 fresh ledger epoch on both endpoints; old/no-epoch events remain ineligible.
 An epoch is a local cutover marker, not authentication or independent evidence.
@@ -403,3 +403,137 @@ def sync_correction_evidence_ledger(repo):
     Never apply a returned delta directly to another file as an atomic operation.
     """
     return _run(repo, False)
+
+
+TOTALS_KIND = "SKYNETVS_CORRECTION_EVIDENCE_TOTALS_V1"
+
+
+def _totals_result(reason=None, *, epoch=None, candidates=None, pair_count=None):
+    return {"kind": TOTALS_KIND, "status": "REFUSED" if reason else "READY",
+            "reason": reason, "epoch": epoch, "candidates": [] if reason else candidates,
+            "pair_count": pair_count, "scope": {
+                "output": "PRIVATE_COMPLETE_ACCEPTED_TOTALS", "history_read": False,
+                "correction_memory_written": False, "historical_quarantine_retracts_credit": False,
+                "authenticated_state": False, "training_readiness": "NOT_ASSESSED",
+                "refusal_guarantees_unchanged_file_bytes": False}}
+
+
+def _decode_canonical(raw, maximum):
+    if type(raw) is not bytes or not 0 < len(raw) <= maximum:
+        raise _Refused("STATE_INVALID")
+    try:
+        value = json.loads(raw)
+        encoded = json.dumps(value, sort_keys=True, ensure_ascii=True,
+                             allow_nan=False, separators=(",", ":")).encode("ascii")
+        if encoded != raw:
+            raise ValueError()
+    except (ValueError, TypeError, OverflowError, RecursionError):
+        raise _Refused("STATE_INVALID") from None
+    return value
+
+
+def _validated_stored_pair(record, epoch):
+    failed_id, corrected_id, evidence, failed_raw, corrected_raw, failed_baseline, corrected_baseline = record
+    failed = _decode_canonical(failed_raw, _planner.MAX_CANONICAL_ROW_BYTES)
+    corrected = _decode_canonical(corrected_raw, _planner.MAX_CANONICAL_ROW_BYTES)
+    pair = _decode_canonical(evidence, 2 * _planner.MAX_CANONICAL_ROW_BYTES)
+    if (type(failed) is not dict or type(corrected) is not dict or type(pair) is not dict
+            or failed_baseline or corrected_baseline
+            or any(type(row.get(EPOCH_FIELD)) is not str or row[EPOCH_FIELD] != epoch
+                   for row in (failed, corrected))
+            or _key(failed.get("event_id")) != failed_id
+            or _key(corrected.get("event_id")) != corrected_id
+            or type(pair.get("failed_index")) is not int
+            or not 0 <= pair["failed_index"] < _planner.MAX_ROWS - 1
+            or type(pair.get("corrected_index")) is not int
+            or pair["corrected_index"] != pair["failed_index"] + 1):
+        raise _Refused("STATE_INVALID")
+    plan = _planner.plan_correction_pair_evidence([failed, corrected], snapshot_complete=True)
+    if plan["status"] != "READY" or len(plan["pairs"]) != 1:
+        raise _Refused("STATE_INVALID")
+    expected = dict(plan["pairs"][0], failed_index=pair["failed_index"], corrected_index=pair["corrected_index"])
+    if json.dumps(expected, sort_keys=True, ensure_ascii=True, allow_nan=False,
+                  separators=(",", ":")).encode("ascii") != evidence:
+        raise _Refused("STATE_INVALID")
+    return pair
+
+
+def read_correction_evidence_totals(repo):
+    """Read a complete replayable projection input from committed ledger pairs.
+
+    No command history is read. Each stored pair is rechecked against both bound
+    event payloads and the frozen planner. Already admitted pairs remain counted
+    after a later duplicate quarantine. This does not authenticate a database or
+    detect an arbitrary restore of an older database and memory together.
+
+    Existing-file mode and one SQLite transaction prevent a torn totals read.
+    SQLite may perform hot-journal recovery; this is not a byte-read-only API.
+    Callers serialize the subsequent memory replacement with the runtime lock.
+    """
+    if type(repo) not in (str, type(Path())):
+        return _totals_result("INVALID_REPO")
+    try:
+        root = Path(repo)
+        if (not root.is_absolute() or ".." in root.parts or "\x00" in str(root)
+                or str(root).startswith(("//", "\\\\"))):
+            return _totals_result("INVALID_REPO")
+    except (ValueError, TypeError, OSError):
+        return _totals_result("INVALID_REPO")
+    connection = None
+    rollback_attempted = False
+    try:
+        target = root.joinpath(*RELATIVE_PATH)
+        identity = _inspect_storage(target)
+        connection = _connect(target)
+        _configure(connection)
+        connection.execute("BEGIN IMMEDIATE")
+        state = _validate_state(connection)
+        grouped = {}
+        # Rowid preserves admission order without changing the closed V1 schema.
+        # The supported ledger API never deletes/reinserts accepted pairs.
+        records = connection.execute(
+            "SELECT p.failed_id, p.corrected_id, p.evidence, f.payload, c.payload, f.baseline, c.baseline "
+            "FROM pairs p JOIN events f ON f.event_id = p.failed_id "
+            "JOIN events c ON c.event_id = p.corrected_id ORDER BY p.rowid")
+        observed = 0
+        for record in records:
+            pair = _validated_stored_pair(record, state["epoch"])
+            failed, corrected = pair["failed_text"], pair["corrected_text"]
+            intent = pair["corrected_intent"].strip().upper()
+            key = " | ".join((" ".join(failed.lower().split()).strip(),
+                              " ".join(corrected.lower().split()).strip(), intent))
+            if key not in grouped:
+                grouped[key] = {"key": key, "failed_text": failed, "corrected_text": corrected,
+                                "corrected_intent": intent, "corrected_confidence": pair["corrected_confidence"],
+                                "corrected_slots": dict(pair["corrected_slots"]), "count": 1}
+            else:
+                candidate = grouped[key]
+                candidate["count"] += 1
+                candidate["corrected_confidence"] = max(candidate["corrected_confidence"], pair["corrected_confidence"])
+                candidate["corrected_slots"].update(pair["corrected_slots"])
+            observed += 1
+        if observed != state["pairs"]:
+            raise _Refused("STATE_INVALID")
+        if _inspect_storage(target) != identity:
+            raise _Refused("PATH_CHANGED")
+        rollback_attempted = True
+        connection.rollback()
+        return _totals_result(epoch=state["epoch"], candidates=list(grouped.values()), pair_count=observed)
+    except Exception as error:
+        reason = (error.reason if isinstance(error, _Refused) else
+                  _storage_reason(error) if isinstance(error, sqlite3.Error) else
+                  "STORAGE_ERROR" if isinstance(error, OSError) else "INTERNAL_ERROR")
+        unknown = rollback_attempted
+        if connection is not None:
+            try:
+                if connection.in_transaction:
+                    connection.rollback()
+            except Exception:
+                unknown = True
+        return _totals_result("ROLLBACK_OUTCOME_UNKNOWN" if unknown else reason)
+    finally:
+        if connection is not None:
+            try:
+                connection.close()
+            except Exception:
+                pass

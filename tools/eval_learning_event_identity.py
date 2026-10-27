@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+from types import ModuleType
 import unittest
 from unittest import mock
 from uuid import UUID, RFC_4122
@@ -25,6 +26,28 @@ class LearningEventIdentityTests(unittest.TestCase):
         self.root = Path(temporary.name)
         self.learning = self.root / "data/learning"
         self.history = self.learning / "command_history.jsonl"
+        # Canonical isolated packages provide the writer's runtime dependency
+        # without importing either real package initializer or the application.
+        names = ("modules", "modules.learning", "modules.learning.correction_evidence_runtime")
+        absent = object()
+        previous = {name: sys.modules.get(name, absent) for name in names}
+        def restore():
+            for name, value in previous.items():
+                if value is absent:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = value
+        self.addCleanup(restore)
+        parent = ModuleType("modules")
+        parent.__path__ = []
+        package = ModuleType("modules.learning")
+        package.__path__ = []
+        parent.learning = package
+        sys.modules["modules"] = parent
+        sys.modules["modules.learning"] = package
+        runtime = self.load("runtime", "modules/learning/correction_evidence_runtime.py")
+        sys.modules[names[-1]] = runtime
+        package.correction_evidence_runtime = runtime
         self.writer = self.load("writer", "modules/learning/learning_memory.py")
         self.memory = self.writer.LearningMemory(str(self.learning))
 

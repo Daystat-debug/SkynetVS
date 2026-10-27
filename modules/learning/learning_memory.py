@@ -6,6 +6,9 @@ from pathlib import Path
 from typing import Any, Dict, List
 from uuid import uuid4
 
+from modules.learning.correction_evidence_runtime import (
+    learning_evidence_lock, read_learning_evidence_control)
+
 
 class LearningMemory:
     def __init__(self, base_dir: str = "data/learning") -> None:
@@ -47,19 +50,23 @@ class LearningMemory:
     ) -> None:
         # Identity of this persisted observation, not a retry or action-success key.
         event_id = uuid4().hex
-        self._append_jsonl(
-            self._command_history_path,
-            {
-                "event_id": event_id,
-                "raw_text": raw_text,
-                "final_text": final_text,
-                "mode": mode,
-                "accepted": bool(accepted),
-                "immediate_label": immediate_label,
-                "missing_slots": list(missing_slots or []),
-                "meta": self._meta_snapshot(meta),
-            },
-        )
+        payload = {
+            "event_id": event_id,
+            "raw_text": raw_text,
+            "final_text": final_text,
+            "mode": mode,
+            "accepted": bool(accepted),
+            "immediate_label": immediate_label,
+            "missing_slots": list(missing_slots or []),
+            "meta": self._meta_snapshot(meta),
+        }
+        # Read the durable switch for every new observation, including when this
+        # LearningMemory instance predates activation. Never stamp old history.
+        with learning_evidence_lock(self._base_dir):
+            control = read_learning_evidence_control(self._base_dir)
+            if control["state"] == "ACTIVE":
+                payload["evidence_epoch"] = control["epoch"]
+            self._append_jsonl(self._command_history_path, payload)
 
     def log_nlu_hard_case(
         self,

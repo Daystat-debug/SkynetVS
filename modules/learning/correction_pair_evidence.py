@@ -1,6 +1,7 @@
 """Pure, conservative candidate planning for identified observation pairs.
 
-This callable does no I/O and is not integrated into the cumulative builder.
+This callable does no I/O. The opt-in event ledger/runtime supplies its input;
+the legacy cumulative analyzer keeps its separate compatibility path.
 The caller must preserve original positions, including malformed-row barriers,
 and assert snapshot completeness. That assertion is not independently verified.
 Returned pairs contain private IDs/text/slots and are not a public audit report.
