@@ -1,0 +1,288 @@
+{
+  "kind": "M154_CORRECTION_EVIDENCE_LEDGER_RESULT_V1",
+  "package_id": "a1593b10abbdd66b5ee6f736ab7f47aebae228548525422a24fb2c1bed47f7f2",
+  "base_commit": "1844fd2109f845dc545880eef770bbbf69817756",
+  "status": "PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.531,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 1.016,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "5e0498c24b21ce9d70ea00ec5eb60f620b658ec3d2b4189592479b8d76bf5190",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_data_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 43,
+      "seconds": 0.891,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "b9ec8970138693bc2e1c1fde90b5cdebeb0c6ade0c5d5af653d97c4019562faf",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 43,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_identity",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 10,
+      "seconds": 0.218,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c98b5026e6684798c6ad8ff560d816f0c49ec66708173d3e89af34543b4eb01b",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_payload_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.469,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "19dbd9eacb15f091c61727a3816474509fd1ff8ad2140a67ec18cffc322817b7",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_pair_evidence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 24,
+      "seconds": 0.203,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e316c54f65acf854676d22ba00e30f344d94b5069f008b3927baabc679d140fa",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_history_snapshot",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 30,
+      "seconds": 0.375,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0164c113c7fe637eadcc8f00e2acfff9bb863b5f78f83a61023115df92a9f42c",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 30,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_evidence_ledger",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 44,
+      "seconds": 2.344,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "3f9038c3513c92d4e1432b2745876e11fe9f3d5b6722fdf0ea16fbcc0f628eb7",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 44,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "modules/learning/correction_evidence_ledger.py": "2dd3a2b8a6850c01d569241ce973e8f4f0530a51f5437b8d38816492f780a93f",
+    "tools/eval_correction_evidence_ledger.py": "aff76afa1aa646ce78bfa972ede489f81334eae8cc8f8818fb748057f0c962f8",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_LEDGER_V1.md": "ce5c7218205a8632a5aa9a6d748ba35e1a0f5834c2875b220572f9e4427887d4",
+    "docs/maintenance/M154_Workflow.md": "ddb7cde16e3b41022c7068a95de1f4850302b28a84b2aabb08c84592be446611",
+    ".gitignore": "632ba84e1b0afa84d6e88aed5ecdd6c4b68c9e11ed9d907c8239fede6d05e244"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_event_provenance",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "real_history": "NOT_READ",
+  "correction_memory_data": "NOT_READ_OR_MIGRATED",
+  "check_data": "synthetic temporary fixtures only",
+  "data_writes": "NONE",
+  "data_write_scope": "actual user runtime data; synthetic fixtures excluded",
+  "legacy_migration": "NOT_RUN",
+  "actual_data_audit": "NOT_RUN",
+  "pair_plan_kind": "SKYNETVS_CORRECTION_PAIR_EVIDENCE_PLAN_V1",
+  "pair_rule_version": "adjacent_unique_observation_v1",
+  "snapshot_reader_kind": "SKYNETVS_LEARNING_HISTORY_SNAPSHOT_V1",
+  "snapshot_completeness": "BOUNDED_LF_EOF_AND_OBSERVED_METADATA",
+  "atomic_snapshot": false,
+  "actual_history_snapshot": "NOT_RUN",
+  "actual_pair_planning": "NOT_RUN",
+  "runtime_integration": "NOT_ENABLED",
+  "legacy_counting": "UNCHANGED",
+  "pairing_rules": "EXISTING_RUNTIME_UNCHANGED",
+  "cumulative_counting": "UNCHANGED",
+  "durable_replay_protection": "COMPONENT_ONLY_NOT_RUNTIME",
+  "aggregate_to_event_cutover": "NOT_RUN",
+  "independent_observations": "NOT_ASSESSED",
+  "retry_idempotence": "COMPONENT_ONLY_NOT_RUNTIME",
+  "cross_log_correlation": "NOT_IMPLEMENTED",
+  "training_readiness": "NOT_ASSESSED",
+  "published_test_content": "allowlisted source test identifiers and bounded outcome counts only",
+  "lesson": {
+    "discovery": "DESIGN_REVIEW",
+    "rule": "An unknown ID is not proof of a new observation; restored old history requires an explicit post-baseline epoch.",
+    "regression": "Synthetic ledger tests cover baseline zero counts, epoch gating, full-payload binding and endpoint replay protection across snapshots.",
+    "limitation": "Ledger components are not connected to runtime logging or correction-memory counts; no actual baseline, migration or aggregate-to-event cutover is performed."
+  },
+  "ledger_kind": "SKYNETVS_CORRECTION_EVIDENCE_LEDGER_V1",
+  "ledger_persistence": "SQLITE_TRANSACTION",
+  "ledger_path": "data/learning/correction_evidence.sqlite3",
+  "event_counting_scope": "MATCHING_EPOCH_UNUSED_ENDPOINTS",
+  "event_identity_binding": "FULL_CANONICAL_ROW_BYTES",
+  "baseline_policy": "EXPLICIT_EXISTING_IDENTIFIED_ROWS_ZERO_NEW_COUNTS",
+  "actual_ledger_initialize": "NOT_RUN",
+  "actual_ledger_sync": "NOT_RUN",
+  "actual_evidence_epoch": "NOT_CREATED",
+  "correction_memory_projection": "NOT_IMPLEMENTED",
+  "ledger_result_kind": "SKYNETVS_CORRECTION_EVIDENCE_LEDGER_RESULT_V1",
+  "actual_ledger_read": "NOT_RUN",
+  "actual_ledger_write": "NOT_RUN",
+  "preparation_finding": {
+    "discovery": "STATIC_REVIEW_AND_EXECUTED_SOURCE_GATE",
+    "initial_source_gate": {
+      "suite": "package_boundaries",
+      "case": "LEARNING PACKAGE DEPENDS ONLY ON CORE AND ITSELF",
+      "case_count": 32,
+      "failed_cases": 1,
+      "other_suites_run": false,
+      "cause": "The new module used relative imports while the frozen project boundary policy requires canonical absolute modules.learning imports.",
+      "repair": "Use canonical absolute imports and isolated evaluator namespaces; keep the original dependency guard unchanged.",
+      "boundary_guard_changed": false,
+      "final_named_source_gate": "PASS",
+      "final_named_source_cases": 224
+    },
+    "pretest_repairs": [
+      {
+        "scope": "SQLITE_SCHEMA_FILTER",
+        "issue": "LIKE underscore wildcard could hide sqliteX-prefixed user objects.",
+        "repair": "GLOB retains literal underscore matching for reserved sqlite_ objects.",
+        "failed_test_run": false
+      },
+      {
+        "scope": "BOUNDED_STATE_METADATA",
+        "issue": "Unsupported schema and meta queries used unbounded fetchall.",
+        "repair": "Limit schema rows to expected tables plus one and singleton metadata to two.",
+        "failed_test_run": false
+      },
+      {
+        "scope": "NOOP_ROLLBACK_OUTCOME",
+        "issue": "An exception from the UNCHANGED rollback path could lose its unknown-outcome classification.",
+        "repair": "Track that rollback attempt and preserve ROLLBACK_OUTCOME_UNKNOWN.",
+        "failed_test_run": false
+      },
+      {
+        "scope": "SYNTHETIC_ENDPOINT_CORRUPTION_FIXTURE",
+        "issue": "The draft fixture lacked a completed controlled corruption and refusal assertion.",
+        "repair": "Complete owned-fixture role corruption and require STATE_INVALID without state changes.",
+        "failed_test_run": false
+      }
+    ],
+    "artifact_metadata_builder": {
+      "status": "FAILED_THEN_REPAIRED",
+      "error_type": "KeyError",
+      "missing_key": "LIMITS",
+      "cause": "Literal-only AST extraction omitted arithmetic expressions.",
+      "repair": "Evaluate only bounded exact integer constants and multiplication in the known LIMITS mapping.",
+      "source_changed": false,
+      "evaluator_changed": false,
+      "author_tests_rerun_for_this_error": false
+    },
+    "raw_private_diagnostics_published": false
+  }
+}
