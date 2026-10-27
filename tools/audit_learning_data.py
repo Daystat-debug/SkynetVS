@@ -7,7 +7,9 @@ findings, 1 means findings, and 2 means incomplete/missing/empty inputs. Neither
 0 nor valid checkpoints establish event identity, count accuracy or readiness
 for training/promotion. The audit never calls application code or changes data.
 File metadata checks detect ordinary concurrent changes; they are not a lock or
-an atomic snapshot. Reading may update filesystem access times.
+an atomic snapshot. Reading may update filesystem access times. V2 also compares
+whole decoded rows sharing an exact event ID, distinguishing replay-only groups
+from conflicting groups. It does not authenticate observations or change counts.
 """
 from __future__ import annotations
 
@@ -20,9 +22,10 @@ import stat
 import sys
 
 
-KIND = "SKYNETVS_LEARNING_DATA_AUDIT_V1"
+KIND = "SKYNETVS_LEARNING_DATA_AUDIT_V2"
 LIMITS = {"bytes_per_file": 32 * 1024 * 1024, "bytes_per_line": 256 * 1024,
-          "lines_per_file": 100_000, "json_nesting": 64}
+          "lines_per_file": 100_000, "json_nesting": 64,
+          "event_payload_bytes": 64 * 1024 * 1024}
 INPUTS = {"command_history": ("data", "learning", "command_history.jsonl"),
           "correction_memory": ("data", "learning", "correction_memory.jsonl")}
 SCOPE = {"checks": "STRUCTURE_ONLY", "files_written": False,
@@ -43,7 +46,8 @@ FINDINGS = {
     "command_history": COMMON_FINDINGS + (
         "invalid_accepted_rows", "invalid_meta_rows", "invalid_missing_slots_rows",
         "invalid_auxiliary_text_rows", "accepted_without_intent_rows",
-        "out_of_order_timestamp_rows", "invalid_event_id_rows", "duplicate_event_id_rows"),
+        "out_of_order_timestamp_rows", "invalid_event_id_rows", "duplicate_event_id_rows",
+        "conflicting_event_id_groups", "conflicting_event_id_rows"),
     "correction_memory": COMMON_FINDINGS + (
         "invalid_key_rows", "key_mismatch_rows", "duplicate_key_rows",
         "duplicate_normalized_key_rows", "invalid_seen_count_rows", "invalid_sources_rows",
@@ -52,7 +56,8 @@ FINDINGS = {
 }
 OBSERVATIONS = {
     "command_history": ("naive_timestamp_values", "aware_timestamp_values", "accepted_rows",
-                        "rejected_rows", "rows_without_event_id", "rows_with_event_id"),
+                        "rejected_rows", "rows_without_event_id", "rows_with_event_id",
+                        "replayed_event_id_rows"),
     "correction_memory": ("naive_timestamp_values", "aware_timestamp_values",
                           "rows_without_checkpoint", "rows_with_checkpoint",
                           "rows_with_legacy_baseline"),
@@ -76,6 +81,53 @@ class _UnsafePath(ValueError):
         self.state = state
 
 
+class _EventPayloads:
+    """Compare whole decoded rows without publishing their IDs or payloads.
+
+    Key order, JSON whitespace and decoded escapes are normalized by parsing
+    and serialization. String contents, array order and int/float/bool types
+    remain significant. This is neither original-byte equality nor authenticity.
+    """
+
+    def __init__(self):
+        self.groups = {}
+        self.retained_bytes = 0
+
+    def record(self, row, item):
+        findings, observations = item["findings"], item["observations"]
+        event_id = row.get("event_id")
+        if not isinstance(event_id, str) or not event_id.strip():
+            observations["rows_without_event_id"] += 1
+            findings["invalid_event_id_rows"] += int("event_id" in row)
+            return
+
+        group = self.groups.get(event_id)
+        # Once conflicting, every further occurrence belongs to that group.
+        payload = None if group is not None and group[2] else json.dumps(
+            row, sort_keys=True, ensure_ascii=True, allow_nan=False,
+            separators=(",", ":")).encode("ascii")
+        if group is None:
+            if self.retained_bytes + len(payload) > LIMITS["event_payload_bytes"]:
+                # Refuse before changing any counters for this object.
+                raise _LimitReached()
+            self.groups[event_id] = [payload, 1, False]
+            self.retained_bytes += len(payload)
+        else:
+            findings["duplicate_event_id_rows"] += 1
+            if group[2]:
+                findings["conflicting_event_id_rows"] += 1
+            elif payload == group[0]:
+                observations["replayed_event_id_rows"] += 1
+            else:
+                # A later conflict reclassifies all earlier occurrences too.
+                observations["replayed_event_id_rows"] -= group[1] - 1
+                findings["conflicting_event_id_groups"] += 1
+                findings["conflicting_event_id_rows"] += group[1] + 1
+                group[2] = True
+            group[1] += 1
+        observations["rows_with_event_id"] += 1
+
+
 def _new_input(name):
     return {"state": "NOT_CHECKED", "complete": False, "unchanged_during_read": False,
             "bytes_read": 0, "lines_read": 0, "blank_lines": 0, "object_rows": 0,
@@ -84,7 +136,7 @@ def _new_input(name):
 
 
 def _new_report(invocation="OK"):
-    return {"kind": KIND, "schema_version": 1, "invocation": invocation,
+    return {"kind": KIND, "schema_version": 2, "invocation": invocation,
             "status": "NOT_FULLY_CHECKED", "exit_code": 2, "scope": dict(SCOPE),
             "limits": dict(LIMITS), "inputs": {name: _new_input(name) for name in INPUTS}}
 
@@ -120,7 +172,7 @@ def validate_public_report(report):
     if type(report) is not dict or set(report) != set(_new_report()):
         return False
     if (report["kind"] != KIND or type(report["schema_version"]) is not int
-            or report["schema_version"] != 1 or type(report["invocation"]) is not str
+            or report["schema_version"] != 2 or type(report["invocation"]) is not str
             or report["invocation"] not in INVOCATIONS or type(report["status"]) is not str
             or report["status"] not in EXIT_CODES or type(report["exit_code"]) is not int):
         return False
@@ -174,9 +226,21 @@ def validate_public_report(report):
                 > (1 if name == "command_history" else 2) * item["object_rows"]):
             return False
         if name == "command_history":
+            duplicate = findings["duplicate_event_id_rows"]
+            groups = findings["conflicting_event_id_groups"]
+            conflicting = findings["conflicting_event_id_rows"]
+            replayed = observations["replayed_event_id_rows"]
+            identified = observations["rows_with_event_id"]
             if (observations["accepted_rows"] + observations["rejected_rows"]
                     + findings["invalid_accepted_rows"] != item["object_rows"]
-                    or observations["rows_with_event_id"] + observations["rows_without_event_id"] != item["object_rows"]):
+                    or identified + observations["rows_without_event_id"] != item["object_rows"]
+                    or duplicate != replayed + conflicting - groups
+                    or not 2 * groups <= conflicting <= identified
+                    or groups > identified - duplicate
+                    or replayed > duplicate
+                    or (replayed > 0 and groups >= identified - duplicate)
+                    or (identified > 0 and duplicate >= identified)
+                    or (groups == 0 and conflicting != 0)):
                 return False
         elif (observations["rows_without_checkpoint"] + observations["rows_with_checkpoint"]
               + findings["invalid_checkpoint_rows"] != item["object_rows"]):
@@ -252,6 +316,8 @@ def _timestamp(value, observations):
 
 
 def _history_row(row, item, seen, previous):
+    # Retention exhaustion must not leave a half-accounted object in the report.
+    seen.record(row, item)
     findings, observations = item["findings"], item["observations"]
     if any(not isinstance(row.get(key), str) for key in ("raw_text", "final_text")):
         findings["invalid_text_rows"] += 1
@@ -288,14 +354,6 @@ def _history_row(row, item, seen, previous):
         if group in previous and timestamp < previous[group]:
             findings["out_of_order_timestamp_rows"] += 1
         previous[group] = timestamp
-    event_id = row.get("event_id")
-    if isinstance(event_id, str) and event_id.strip():
-        observations["rows_with_event_id"] += 1
-        findings["duplicate_event_id_rows"] += int(event_id in seen)
-        seen.add(event_id)
-    else:
-        observations["rows_without_event_id"] += 1
-        findings["invalid_event_id_rows"] += int("event_id" in row)
 
 
 def _memory_row(row, item, seen, normalized):
@@ -403,7 +461,8 @@ def _read_input(root, name, item):
             item["state"] = "CHANGED_DURING_READ"
             return
         observed = before
-        seen, related = set(), {} if name == "command_history" else set()
+        seen = _EventPayloads() if name == "command_history" else set()
+        related = {} if name == "command_history" else set()
         state = "READ"
         with os.fdopen(descriptor, "rb") as stream:
             descriptor = None
@@ -447,11 +506,15 @@ def _read_input(root, name, item):
                 if not isinstance(row, dict):
                     findings["non_object_rows"] += 1
                     continue
-                item["object_rows"] += 1
                 if name == "command_history":
-                    _history_row(row, item, seen, related)
+                    try:
+                        _history_row(row, item, seen, related)
+                    except _LimitReached:
+                        state = "LIMIT_REACHED"
+                        break
                 else:
                     _memory_row(row, item, seen, related)
+                item["object_rows"] += 1
             stable = _signature(os.fstat(stream.fileno())) == _signature(opened) and _inspect(target)[0] == before
         item["unchanged_during_read"] = stable
         if not stable:
