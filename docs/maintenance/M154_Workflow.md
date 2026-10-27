@@ -760,3 +760,52 @@ evaluator обнаружено, что исключение ресурсного
 бюджет обработки непригодных строк; учитывать только успешно сериализованные
 байты недостаточно. Регрессионные сценарии закрепляют оба правила. Это дефект
 подготовительной версии, а не свидетельство падения пользовательского запуска.
+
+
+## M154 — learning_history_snapshot, сообщение №94
+
+База: `4f7735e0e50fb8b5d6ce64b992b47dfe3b3a6e1c`.
+Фактический предыдущий пакет подтверждён в Git: Windows/Python3.12.10,
+150 PASS (32+23+43+10+18+24), ровно четыре payload и Result;13readpins
+и633остальные записи дерева сохранены. Main остаётся61c372223b0abaea97fe973de50d02f51efa2520.
+
+Добавляется отдельный bounded reader `read_learning_history_snapshot(repo)`
+для фиксированного `data/learning/command_history.jsonl`. На каждую завершённую
+LF-строку сохраняется одна позиция: полный strict-decoded dict либо Nonebarrier.
+Blank/malformed/ambiguous/nonobject строки не удаляются и не сортируются.
+Schema-invalid/surrogate dict сохраняются для глобального visible-ID учёта
+ранее добавленного planner. Из неразобранных строк ID не восстанавливаются.
+
+`COMPLETE` означает boundedEOF, LF framing и неизменные наблюдаемые metadata,
+а не чистоту данных, достоверные события или atomic snapshot. Незавершённый
+хвост, resource/I/O/path/change refusal дают rows=[] и observations=None.
+Empty stable file может дать COMPLETE[]. Cross-API stat/fstat использует
+совместимые identity/type/size/mtime поля; ctime/fullmode сравниваются только
+внутри одного API, сохраняя исправленный Windows3.12контракт.
+
+Объём ограничен32MiB на файл,256KiB на строку,100000физическихпозиций,
+64уровнямиконтейнеров,100000lexicalunits на строку,2000000за чтение
+и4096decimaldigits integer. Preparse scan учитывает и неверные JSON попытки;
+сырые byte/line лимиты действуют для всех строк. Это не точная граница RAM.
+
+Новый module/evaluator и документ
+`docs/architecture/SKYNETVS_LEARNING_HISTORY_SNAPSHOT_V1.md` дополняют
+существующий Workflow. Прежние reader/analyzer/writer/auditor/planner/memory/
+builder остаются без изменений. Подключение к runtime, постоянный учёт ID,
+aggregate-to-event cutover, реальные history scan, модели/обучение не выполняются.
+
+Проверки: шесть прежних named suites150cases плюс новый synthetic evaluator;
+никаких root test.py/discovery и реальных пользовательских данных.
+Delivery сохраняет25сценариев, Downloads/scoped child TEMP и точныйcommit
+четырёхpayload+обезличенныйResult. Используются15readpins прежних компонентов.
+PASS/FAIL автоматически фиксируются и отправляются в experiment; main promotion
+по-прежнему DEFERRED_UNTIL_BLOCK_COMPLETE для learning_event_provenance.
+
+Урок exact-source contract review: пропуск плохой строки создаёт ложное
+соседство; полноту чтения нельзя подменять валидностью JSON. Это design finding,
+а не заявление о случившемся падении теста. Реальные ошибки подготовки, если
+возникнут, сохраняются отдельно с исходным свидетельством и исправлением.
+
+Следующий содержательный этап: постоянная связь наблюдения с ID/payload и
+учёт принятых endpoints между снимками с явным baseline/cutover прежнего
+агрегата. Повтор одного источника не должен повторно увеличивать learnedcounts.
