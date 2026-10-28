@@ -74,7 +74,9 @@ class PipelineEffectsTests(unittest.TestCase):
         self.assertEqual(data["counts"], {"REVIEWED": 5, "UNREVIEWED": 0, "TOTAL": 5})
         self.assertIn("WRITE_DATA", data["effects"])
         self.assertIn("READ_CONFIG", data["effects"])
-        self.assertEqual(self.outputs(data), {"data/learning/correction_memory.jsonl"})
+        self.assertEqual(self.outputs(data), {
+            "data/learning/correction_memory.jsonl", "data/learning/correction_evidence_runtime.lock",
+            "data/learning/correction_evidence.sqlite3", "data/learning/correction_evidence.sqlite3-journal"})
         self.assertNotIn("TRAIN_MODEL", data["effects"])
         self.assertNotIn("WRITE_MODEL", data["effects"])
         self.assertNotIn("status", data)
@@ -87,6 +89,8 @@ class PipelineEffectsTests(unittest.TestCase):
         self.assertEqual(self.outputs(full), {
             "data/learning/correction_memory.jsonl", "data/inbox_unlabeled.jsonl",
             "data/learning/alias_suggestions.jsonl", "data/learning/phrase_correction_suggestions.jsonl",
+            "data/learning/correction_evidence_runtime.lock", "data/learning/correction_evidence.sqlite3",
+            "data/learning/correction_evidence.sqlite3-journal",
         })
         self.assertNotEqual([x["name"] for x in full["steps"]], [x["name"] for x in analyze["steps"]])
         self.assertNotIn("READ_CONFIG", full["effects"])

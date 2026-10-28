@@ -29,6 +29,7 @@ from modules.text_normalizer import normalize_command_text
 from modules.runtime.mode_manager import ModeManager
 from modules.desktop.window_context_service import WindowContextService
 from modules.learning.learning_memory import LearningMemory
+from modules.runtime_observation_trace import RuntimeObservationTrace
 from modules.command_decision import build_command_decision
 from modules.dictation_commands import is_dictation_stop_phrase
 from modules.reply_builder import build_reply_text
@@ -191,7 +192,12 @@ def main():
             inbox_path = Path(SETTINGS.inbox_path),
         )
     )
-    learning_memory = LearningMemory()
+    learning_base = "data/learning"
+    observation_trace = RuntimeObservationTrace(
+        logger, project_root=Path(__file__).resolve().parent, history_base=learning_base,
+    )
+    learning_memory = LearningMemory(learning_base, observation_reporter=observation_trace.observation)
+    observation_trace.session_started()
 
     event_q: queue.Queue[dict] = (
         queue.Queue()
@@ -484,10 +490,11 @@ def main():
     def handle_command_text(command_text: str, *, immediate_label: str) -> dict[str, Any]:
         nonlocal last_tts_end
 
-        result = command_processor.process(
-            command_text,
-            immediate_label=immediate_label,
-        )
+        with observation_trace.command():
+            result = command_processor.process(
+                command_text,
+                immediate_label=immediate_label,
+            )
 
         if result.last_tts_end is not None:
             last_tts_end = result.last_tts_end
@@ -579,11 +586,13 @@ def main():
     def handle_phrase_event(evt: dict) -> None:
         nonlocal last_tts_end, ack_ignore_until
 
-        result = phrase_event_processor.process_phrase(
-            evt.get("text") or "",
-            last_tts_end=last_tts_end,
-            ack_ignore_until=ack_ignore_until,
-        )
+        with observation_trace.phrase():
+            result = phrase_event_processor.process_phrase(
+                evt.get("text") or "",
+                last_tts_end=last_tts_end,
+                ack_ignore_until=ack_ignore_until,
+            )
+            observation_trace.phrase_returned(result.reason)
 
         if result.last_tts_end is not None:
             last_tts_end = result.last_tts_end
@@ -693,6 +702,7 @@ def main():
                 print_func=print,
             )
 
+    observation_trace.loop_ready()
     try:
         while True:
             handle_runtime_health_monitor_poll()
@@ -732,6 +742,7 @@ def main():
     except KeyboardInterrupt:
         print("\n[STOP] SkynetVS")
     finally:
+        observation_trace.loop_exited()
         try:
             volume_action_owner.close()
         except Exception as e:

@@ -8,6 +8,7 @@ from modules.command_outcome import classify_command_outcome
 from modules.command_runtime import handle_command_runtime
 from modules.command_understanding import understand_command_text
 from modules.hotword_utils import norm_text
+from modules.learning.correction_evidence_runtime import RuntimeRefused
 
 
 SayFunc = Callable[..., float]
@@ -133,16 +134,33 @@ class CommandProcessor:
         decision = understanding.decision
         outcome = classify_command_outcome(meta, decision)
 
-        log_command_observation(
-            learning_memory=self._learning_memory,
-            raw_text=raw_text_in,
-            final_text=text_in,
-            meta=meta,
-            mode=self._current_mode_name_func(),
-            accepted=decision.accepted,
-            immediate_label=immediate_label,
-            missing_slots=decision.missing_slots,
-        )
+        try:
+            log_command_observation(
+                learning_memory=self._learning_memory,
+                raw_text=raw_text_in,
+                final_text=text_in,
+                meta=meta,
+                mode=self._current_mode_name_func(),
+                accepted=decision.accepted,
+                immediate_label=immediate_label,
+                missing_slots=decision.missing_slots,
+            )
+        except RuntimeRefused as error:
+            # Maintenance contention must not stop the primary command. There
+            # is no unlocked history fallback or automatic retry: partial I/O
+            # can be uncertain, so report an unconfirmed observation explicitly.
+            reason = error.reason if error.reason in {
+                "BUSY", "INVALID_PATH", "UNSAFE_PATH", "DIRECTORY_MISSING",
+                "LOCK_INVALID", "LOCK_CHANGED", "STORAGE_ERROR", "CONTROL_INVALID",
+                "CONTROL_CHANGED", "ORPHAN_LEDGER",
+            } else "RUNTIME_REFUSED"
+            try:
+                self._logger.event("learning_observation_unconfirmed", {
+                    "reason": reason, "observation_status": "NOT_CONFIRMED", "retry_queued": False,
+                })
+            except Exception:
+                # Diagnostic I/O is secondary to the requested command too.
+                pass
 
         runtime_result = handle_command_runtime(
             raw_text=raw_text_in,

@@ -1,0 +1,398 @@
+{
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "training_readiness": "NOT_ASSESSED",
+  "check_scope": "current_worktree",
+  "check_data": "synthetic temporary fixtures only",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_event_provenance",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "actual_data_audit": "NOT_RUN",
+  "activation_data_validation": "STRICT_ADMISSIBILITY_REPORTED_IN_ACTIVATION_ENVELOPE",
+  "real_history": "READ_ONLY_WHEN_ACTIVATION_REACHES_BACKUP",
+  "correction_memory_data": "READ_ONLY_WHEN_ACTIVATION_REACHES_BACKUP",
+  "history_rewrite": false,
+  "correction_memory_rewrite": false,
+  "data_write_scope": "CONDITIONAL_CONTROL_LEDGER_PERSISTENT_LOCK_AND_PRIVATE_BACKUPS",
+  "private_contents_published": false,
+  "private_hashes_published": false,
+  "automatic_restore": false,
+  "legacy_counts_repaired": false,
+  "legacy_checkpoint_policy": "PRESERVE_RAW_MEMORY_BYTES",
+  "runtime_integration": "EXPLICIT_CONTROLLED_ACTIVATION",
+  "actual_runtime_activation": "SEE_ACTIVATION_ENVELOPE",
+  "actual_correction_memory_projection": "NOT_RUN",
+  "actual_ledger_sync": "NOT_RUN",
+  "actual_pair_accrual": "NOT_RUN",
+  "pair_plan_kind": "SKYNETVS_CORRECTION_PAIR_EVIDENCE_PLAN_V1",
+  "pair_rule_version": "adjacent_unique_observation_v1",
+  "baseline_policy": "FIRST_INITIALIZATION_ZERO_ACCEPTED_PAIRS",
+  "runtime_control_path": "data/learning/correction_evidence_runtime.json",
+  "ledger_path": "data/learning/correction_evidence.sqlite3",
+  "runtime_lock_path": "data/learning/correction_evidence_runtime.lock",
+  "runtime_lock": "OS_ADVISORY_NONBLOCKING_COOPERATING_WRITERS",
+  "old_process_policy": "CLOSE_ALL_OTHER_LOCAL_PYTHON_PY_PYPY_PROCESSES",
+  "process_gate_limit": "POINT_IN_TIME_NAMED_LOCAL_PYTHON_INSPECTION_NOT_A_GLOBAL_PROCESS_LOCK",
+  "lock_file_backup": "EXCLUDED_WHILE_WINDOWS_BYTE_LOCK_IS_HELD",
+  "backup_order": "RAW_FIXED_FILES_BEFORE_FIRST_SQLITE_CALL",
+  "sqlite_read_may_recover_journal": true,
+  "atomic_snapshot": false,
+  "ledger_and_memory_single_transaction": false,
+  "event_identity_authenticated": false,
+  "independent_observations": "NOT_ASSESSED",
+  "legacy_fallback_after_activation": false,
+  "published_test_content": "allowlisted source test identifiers and bounded outcome counts only",
+  "kind": "M154_CORRECTION_EVIDENCE_ACTIVATION_RESULT_V1",
+  "lesson": {
+    "discovery": "USER_REPORTED_GENERIC_PROCESS_GATE_STOP_AND_STATIC_TRANSPORT_REVIEW",
+    "rule": "Suppress child progress, request text formats and write strict UTF8 inventory bytes directly; reject uncertain output and publish only fixed reasons. Do not infer the exact Windows cause from a generic stop.",
+    "regression": "Message98 targeted transport/decoder and exact-message97-state resume fixtures; unchanged source348 and prior delivery41 evidence are reused explicitly.",
+    "limitation": "The user-reported Windows cause remains unconfirmed. Real Windows PowerShell5.1/CIM execution is not reproduced in Linux preparation; process uncertainty remains a refusal."
+  },
+  "preparation_finding": {
+    "source_pretest_repairs": [
+      "FINAL_PUBLIC_SCHEMA_FALLBACK_PRESERVES_UNKNOWN_AFTER_ATTEMPT",
+      "POSTCHECK_READ_FAILURE_IS_NOT_CONFIRMED_FILE_CHANGE"
+    ],
+    "delivery_pretest_repairs": [
+      "PRIVATE_CHILD_EXACT_PINNED_IMPORTS_AVOID_UNRELATED_STDLIB_SHADOWS"
+    ],
+    "named_source_gate": {
+      "runs": 1,
+      "status": "PASS",
+      "cases": 348
+    },
+    "raw_private_diagnostics_published": false,
+    "metadata_review_notes": "Reviewer-only constant-expression parsing error is preserved in preparation history; this was not a product/test failure.",
+    "delivery_static_repairs_after_prior_gate_started": [
+      "ALL_OTHER_LOCAL_PYTHON_BLOCK_AVOIDS_SCRIPT_PATH_ALIAS_INFERENCE"
+    ],
+    "prior_delivery_gate": {
+      "cases": 40,
+      "status": "PASS",
+      "superseded_after_independent_static_finding": true
+    },
+    "message97_delivery_gate": {
+      "cases": 41,
+      "status": "PASS",
+      "reused_in_message98": true
+    },
+    "delivery_revision": 2,
+    "message98_repair": {
+      "reported_previous_stop": "PROCESS_INVENTORY_UNAVAILABLE",
+      "actual_windows_cause": "UNCONFIRMED_FROM_GENERIC_OUTPUT",
+      "scope": "PROCESS_QUERY_TRANSPORT_AND_FIXED_DIAGNOSTICS_ONLY",
+      "source_payload_and_plan": "BYTE_IDENTICAL_TO_MESSAGE97",
+      "source348_and_delivery41": "REUSED_EVIDENCE_NOT_MESSAGE98_TEST_EXECUTIONS",
+      "prior_gate_transport_version": "NOT_RECONSTRUCTED_FOR_RESUMED_STATE"
+    }
+  },
+  "package_id": "9a29058d17e2e7720256e1caa2fab364aac47207bb57d0781a87bbb095655d9f",
+  "base_commit": "47a824867b0c1d6b3297a971d1828c67a718e238",
+  "status": "PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 13.25,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 1.265,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c129d459da1f1b97a6a84bd099af6c9c7de33cb55e41c92f8c40bc5563453734",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_data_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 43,
+      "seconds": 0.906,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "09607157b32bb6f9c743e905d65986302d1cdd8dabe586bf2ae8f486b290e61c",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 43,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_identity",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 10,
+      "seconds": 0.235,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "b8ad8005a8ae2a2fe60a4b82ed0ac538cb4e882317b917ae20942ca94fa6f465",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_payload_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.547,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a78fa03ef31867ce0e6c330b18f136dd0b188359ca29a2a86923360e7eca267e",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_pair_evidence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 24,
+      "seconds": 0.187,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "1caf0a05855d26d3fdbeca93b1711c58cbd2410155ac655bd5faab596039ac15",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_history_snapshot",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 30,
+      "seconds": 0.406,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "b01572dcafed69f71880181c1cbf31c18a61367f2ae3e50722f9d1e2ec91924c",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 30,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_evidence_ledger",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 44,
+      "seconds": 2.125,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "238478f15119c1b7303b8dba69c0f85664b1211af25b7c3379207d9260b54ad0",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 44,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_evidence_projection",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 38,
+      "seconds": 2.079,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "70e86613552d7e10734f72fb1836af8dd85d47f4c41a336e92fa0977da52f1f6",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 38,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_evidence_runtime",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 36,
+      "seconds": 2.093,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "1a44a2fee7ebf3bc11c7d845542a0b83f5d125a69f207c06067254be4fe7c1dd",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 36,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "pipeline_effects",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.547,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "71290e4d56b2bad12a8e8c72b38d07f5a522a65cea94f82ad972c1e5063e63fd",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_evidence_activation",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 2.875,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "11caba5cc61d9fc03cdf482414ee6948aa6d4db5aaae3394cb1b27fbf38ad005",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 32,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "modules/learning/correction_evidence_activation.py": "9d8bb13cba658d6104516b21637721a0f1bbe3ee7a2027a078e62108a9907e0a",
+    "modules/learning/correction_evidence_runtime.py": "6fe1775f82a8a08e3a537c8ab0cd42c4826a9280b9c4d45a549b310c40142270",
+    "tools/eval_correction_evidence_activation.py": "0384cebdb8edad6c8b35eaef841605de10110fdca8c3ada6a0e815d57d455a70",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_ACTIVATION_V1.md": "266d66802eb55ad46fb9306e5e24f59865cc6d9c0defedc1622fc2a8e09d5a2b",
+    "docs/maintenance/M154_Workflow.md": "30f8bef9f39af4876e84ab54b35ff0179451fb063dc39a4a10bfa7a56909afbb"
+  },
+  "activation": {
+    "execution": "RUN",
+    "reason": null,
+    "result": {
+      "kind": "SKYNETVS_CORRECTION_EVIDENCE_ACTIVATION_V1",
+      "status": "ACTIVATED",
+      "reason": null,
+      "stage": "COMPLETE",
+      "initial_state": "LEGACY",
+      "final_state": "ACTIVE",
+      "backup_status": "VERIFIED",
+      "activation_status": "ACTIVATED",
+      "history_rows": 502,
+      "memory_rows": 1,
+      "pairs_before": 0,
+      "pairs_after": 0,
+      "history_preserved": true,
+      "memory_preserved": true,
+      "scope": {
+        "private_backup": "FIXED_FILES_BYTE_VERIFIED_BEFORE_SQLITE",
+        "runtime_lock": "COOPERATING_WRITERS_ONLY",
+        "old_process_gate": "CALLER_REQUIRED",
+        "lock_file": "PERSISTENT_ONE_BYTE_NOT_BACKED_UP",
+        "sqlite_read_may_recover_journal": true,
+        "atomic_filesystem_snapshot": false,
+        "history_written": false,
+        "correction_memory_written": false,
+        "ledger_sync_run": false,
+        "projection_run": false,
+        "training_run": false,
+        "promotion_run": false,
+        "legacy_counts_repaired": false,
+        "automatic_restore": false,
+        "training_readiness": "NOT_ASSESSED"
+      }
+    }
+  },
+  "process_gate": {
+    "before_source": "CLEAR",
+    "before_activation": "CLEAR"
+  }
+}

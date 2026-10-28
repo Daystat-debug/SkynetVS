@@ -92,3 +92,14 @@ dist/
 data/reminders.json
 data/reminders.json.tmp
 /data/reminders.json
+
+# M154: private correction evidence ledger and SQLite sidecars
+/data/learning/correction_evidence.sqlite3
+/data/learning/correction_evidence.sqlite3-journal
+/data/learning/correction_evidence.sqlite3-wal
+/data/learning/correction_evidence.sqlite3-shm
+
+# M154: private correction-evidence runtime switch and OS lock.
+/data/learning/correction_evidence_runtime.json
+/data/learning/correction_evidence_runtime.lock
+/data/learning/.correction_evidence_runtime.json.*.tmp

@@ -1,0 +1,150 @@
+{
+  "kind": "M154_LEARNING_EVENT_PAYLOAD_AUDIT_RESULT_V1",
+  "package_id": "cc936c861f01cb35d824c202071693dad59fd7469fcc5af3bab518a362149a14",
+  "base_commit": "2b9e99e546720744dad5dd7ef8101d175bb62a8a",
+  "status": "PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 3.172,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 1.0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "f2bca8075315dd72a384868e8336b0749694eb05c7c2016dadb50bc46307491f",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_data_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 43,
+      "seconds": 0.937,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "09607157b32bb6f9c743e905d65986302d1cdd8dabe586bf2ae8f486b290e61c",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 43,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_identity",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 10,
+      "seconds": 0.203,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "bff5671e93009803e26213ad655ff80ec6e998729f7af54bfb44a0f5ecd52729",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_payload_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.563,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "dacd6e3691a7826d32f1dba5db992ea0dc4b63696c8dd8d25e6a8dd25deb3c52",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "tools/audit_learning_data.py": "cda3ec37cbe097967ec3aa752321da689ff831c77fcbc91de73bb70d0fb116a5",
+    "tools/eval_learning_event_payload_audit.py": "279b6d8681a16655e4112613ebdddb116d54f16acabe86419069b7c3356ad291",
+    "docs/architecture/SKYNETVS_LEARNING_EVENT_PAYLOAD_AUDIT_V2.md": "9434b1bedf816c9181383ad9405d2ab9d2b064ec7bbd004967251e50418a3ad8",
+    "docs/maintenance/M154_Workflow.md": "5cc96bdc00066ab8001e51d9fd9bdf044c38a4e109b00a2a3c463043aef72627"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_event_provenance",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "real_history": "NOT_READ",
+  "correction_memory_data": "NOT_READ_OR_MIGRATED",
+  "check_data": "synthetic temporary fixtures only",
+  "data_writes": "NONE",
+  "data_write_scope": "actual user runtime data; synthetic fixtures excluded",
+  "legacy_migration": "NOT_RUN",
+  "audit_report_kind": "SKYNETVS_LEARNING_DATA_AUDIT_V2",
+  "audit_report_schema_version": 2,
+  "actual_data_audit": "NOT_RUN",
+  "event_payload_comparison_scope": "OBSERVED_ROWS_IN_SINGLE_HISTORY_SCAN",
+  "pairing_rules": "UNCHANGED",
+  "cumulative_counting": "UNCHANGED",
+  "independent_observations": "NOT_ASSESSED",
+  "retry_idempotence": "NOT_IMPLEMENTED",
+  "cross_log_correlation": "NOT_IMPLEMENTED",
+  "training_readiness": "NOT_ASSESSED",
+  "published_test_content": "allowlisted source test identifiers and bounded outcome counts only",
+  "lesson": {
+    "rule": "Repeated event identifiers require payload consistency checks before future evidence consumption.",
+    "regression": "Same-ID equal payloads and conflicting groups are distinguished in aggregate; history rows and existing counting remain unchanged.",
+    "limitation": "A read-only consistency audit does not authenticate events, deduplicate learner counts or establish training readiness."
+  }
+}

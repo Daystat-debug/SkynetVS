@@ -1,0 +1,178 @@
+{
+  "kind": "M154_CORRECTION_PAIR_EVIDENCE_RESULT_V1",
+  "package_id": "dcd1b9aa4ecb8edea6b15f2d0d0380660ab9551fd7718037bf6ccca7deb61977",
+  "base_commit": "3ac547c6e2a98a600d3cf3f9d04f626d8bf46d9d",
+  "status": "PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 2.735,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_memory_idempotence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 23,
+      "seconds": 1.078,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "bca22f4ba5e657015cb81d234b49346d870b5d0db59973ef4ff143f9d076ea5c",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_data_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 43,
+      "seconds": 0.89,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "b9ec8970138693bc2e1c1fde90b5cdebeb0c6ade0c5d5af653d97c4019562faf",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 43,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_identity",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 10,
+      "seconds": 0.219,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "bff5671e93009803e26213ad655ff80ec6e998729f7af54bfb44a0f5ecd52729",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "learning_event_payload_audit",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.484,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a4dd86ac889a478ea4f46f4c60bc406c43be0c68a02beed7496f3ca94c866fe8",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_pair_evidence",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 24,
+      "seconds": 0.204,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "4b981992960805dc3f5c6f2bef2b773cbd980258686be189c3e1f446e690f5ff",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "modules/learning/correction_pair_evidence.py": "18376dfd8a30b4c5dcf8305c7a36194a5669f0854416f6c9bee59141ad51871e",
+    "tools/eval_correction_pair_evidence.py": "c0feaab9bffe88ee6b2e5766268635e0f24ec04aca913cad5373127d2386b339",
+    "docs/architecture/SKYNETVS_CORRECTION_PAIR_EVIDENCE_V1.md": "23042675bca0b8498dddd00d352387637beb51c7ae330d6a1f92f0abe4a5ee44",
+    "docs/maintenance/M154_Workflow.md": "36fe9909af48b91fa6d29b640b386ea55593b280f585a8e565f980c31468ea27"
+  },
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "check_scope": "current_worktree",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_event_provenance",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "real_history": "NOT_READ",
+  "correction_memory_data": "NOT_READ_OR_MIGRATED",
+  "check_data": "synthetic temporary fixtures only",
+  "data_writes": "NONE",
+  "data_write_scope": "actual user runtime data; synthetic fixtures excluded",
+  "legacy_migration": "NOT_RUN",
+  "actual_data_audit": "NOT_RUN",
+  "pair_plan_kind": "SKYNETVS_CORRECTION_PAIR_EVIDENCE_PLAN_V1",
+  "pair_rule_version": "adjacent_unique_observation_v1",
+  "pair_preview": "PURE_IN_MEMORY_ONLY",
+  "runtime_integration": "NOT_ENABLED",
+  "actual_pair_planning": "NOT_RUN",
+  "pair_identity_scope": "SUPPLIED_SEQUENCE_PREVIEW_ONLY",
+  "snapshot_completeness": "CALLER_ASSERTION_ONLY",
+  "pairing_rules": "EXISTING_RUNTIME_UNCHANGED",
+  "cumulative_counting": "UNCHANGED",
+  "durable_replay_protection": "NOT_IMPLEMENTED",
+  "aggregate_to_event_cutover": "NOT_RUN",
+  "independent_observations": "NOT_ASSESSED",
+  "retry_idempotence": "NOT_IMPLEMENTED",
+  "cross_log_correlation": "NOT_IMPLEMENTED",
+  "training_readiness": "NOT_ASSESSED",
+  "published_test_content": "allowlisted source test identifiers and bounded outcome counts only",
+  "lesson": {
+    "discovery": "STATIC_REVIEW_BEFORE_TEST_RUN",
+    "rule": "Resource refusal must not become a recoverable row barrier; invalid input must consume processing budgets.",
+    "regression": "Every resource limit refuses the entire pair preview without partial pairs, including repeated invalid rows.",
+    "limitation": "The repaired in-memory preview is not connected to runtime counting and has no durable replay ledger or aggregate-to-event cutover."
+  }
+}
