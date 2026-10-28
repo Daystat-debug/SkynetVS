@@ -1,0 +1,641 @@
+{
+  "accepted_scope": [
+    "bounded Python function and async-function definition selection on one observed Git HEAD",
+    "source-bound direct outgoing and incoming static references with honest unknowns and coverage",
+    "existing developer UI display and saved report; user supplied one read-only native UI result",
+    "existing one-target DTR-A bridge with explicit-change goal gate and capture revalidation"
+  ],
+  "additional_user_ui_or_learning_cycle_required_for_this_scope": false,
+  "candidate_dependency_and_bundle_checks": {
+    "application_launched": false,
+    "behavior_checks_passed": 4,
+    "bundle_verification": {
+      "actual_launcher_verifier_calls": 1,
+      "manifest_sha256": "d7975865ad175ccbd0bf8a6ec05298290949713070f8e4e1da7bed0d9dad25a5",
+      "source": "exact candidate launcher with existing LF/CRLF and entry-set guards",
+      "status": "PASS"
+    },
+    "candidate_commit": "acb393767202aa3616695775d67f30b4b8e24a79",
+    "candidate_tree": "3f5cdde2512b66064a1131d99ba607d576374deb",
+    "checks": [
+      {
+        "name": "ordinary_target_allowed",
+        "path": "modules/text_normalizer.py",
+        "status": "PASS"
+      },
+      {
+        "name": "bundled_ui_source_prefix_refused",
+        "path": "modules/developer_task_ui/app/symbol_investigation.py",
+        "refusal_stage": "existing final manifest validator before request creation",
+        "status": "PASS"
+      },
+      {
+        "name": "launcher_prefix_refused",
+        "path": "modules/developer_task_ui_launcher.py",
+        "refusal_stage": "existing final manifest validator before request creation",
+        "status": "PASS"
+      },
+      {
+        "name": "prompt_deduplicates_equal_text_preserves_distinct_instruction",
+        "status": "PASS",
+        "synthetic_request_variants": 2
+      }
+    ],
+    "finished_at_utc": "2026-10-28T20:30:02.845862+00:00",
+    "kind": "M154_MSG119_EXACT_MAIN_DEPENDENCY_AND_BUNDLE_GATE_V1",
+    "launch_faithful_vendor_imports_verified": true,
+    "model_or_training_run": false,
+    "native_gui_launched": false,
+    "seconds": 1.371647,
+    "snapshot_bytes_unchanged_after": 668,
+    "snapshot_git_blob_matches_before": 668,
+    "source_suites_repeated": false,
+    "started_at_utc": "2026-10-28T20:30:01.474193+00:00",
+    "status": "PASS",
+    "synthetic_fixture_only": true
+  },
+  "closure_condition": "the fixed prepared two-commit candidate is contained in remote refs/heads/main",
+  "core_doc_final_sha256": "b68ddf4b24f1e37f6053a4b944abfd3189157d1398f93416d0a2ce9b41729766",
+  "core_doc_source_prefix_preserved": true,
+  "evidence_transfer_to_main_candidate": {
+    "all_36_ui_bundle_manifest_entries_identical": true,
+    "all_37_read_pin_original_entries_identical": true,
+    "all_four_named_evaluator_sources_identical": true,
+    "all_main_py_and_modules_entries_identical_to_installed_source": true,
+    "fresh_93_suite_repeat": false,
+    "main_candidate_windows_suite_execution": "NOT_RERUN_UNCHANGED_SOURCE_EVIDENCE_REUSED",
+    "runtime_entry_count": 211,
+    "runtime_python_entry_count": 207,
+    "windows_source_tests_plus_native_receipt_not_summed_as_test_count": true
+  },
+  "excluded_experiment_tools": [
+    "tools/m154_workflow/README_RU.md",
+    "tools/m154_workflow/development_lessons.py",
+    "tools/m154_workflow/git_transport.py",
+    "tools/m154_workflow/launch_template.ps1",
+    "tools/m154_workflow/lessons.json",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/failure.log.txt",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/observation.json",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/repair.patch",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/test_git_transport.before.txt",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/verification.json",
+    "tools/m154_workflow/run.py",
+    "tools/m154_workflow/test_development_lessons.py",
+    "tools/m154_workflow/test_git_transport.py",
+    "tools/m154_workflow/test_workflow.py"
+  ],
+  "excluded_main_only_review_deletions": [
+    "docs/maintenance/M154_ErrorLogPath_MainReview.json",
+    "docs/maintenance/M154_LearningBoundary_MainReview.json",
+    "docs/maintenance/M154_LearningDataQuality_MainReview.json",
+    "docs/maintenance/M154_LearningEventProvenance_MainReview.json",
+    "docs/maintenance/M154_PipelineResults_MainReview.json"
+  ],
+  "expected_final_tracked_entries": 669,
+  "final_review_commit_changes": [
+    "docs/maintenance/M154_CoreSymbolInvestigation.md",
+    "docs/maintenance/M154_CoreSymbolInvestigation_MainReview.json",
+    "docs/maintenance/M154_Workflow.md"
+  ],
+  "final_review_commit_source_code_changes": false,
+  "final_scope_count": 13,
+  "final_scope_paths": [
+    "docs/maintenance/M154_CoreSymbolInvestigation.md",
+    "docs/maintenance/M154_CoreSymbolInvestigation_MainReview.json",
+    "docs/maintenance/M154_CoreSymbolInvestigation_Result.json",
+    "docs/maintenance/M154_Workflow.md",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui/app/core.py",
+    "modules/developer_task_ui/app/symbol_investigation.py",
+    "modules/developer_task_ui/app/symbol_task_bridge.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_core_symbol_investigation.py",
+    "tools/eval_core_symbol_task_bridge.py",
+    "tools/eval_core_symbol_ui.py"
+  ],
+  "kind": "M154_CORE_SYMBOL_INVESTIGATION_MAIN_REVIEW_V1",
+  "limits": {
+    "absence_of_dynamic_callers_proven": false,
+    "arbitrary_external_writers_or_hooks_proven_harmless": false,
+    "behavior_or_bug_cause_proven_by_static_references": false,
+    "dynamic_runtime_call_graph_complete": false,
+    "entire_core_or_project_complete": false,
+    "full_pipeline": "NOT_RUN",
+    "global_resolution_reason_histogram_semantically_recomputed": false,
+    "model_download_loading_inference_training_by_this_review": "NOT_RUN",
+    "new_native_dtr_change_apply_example": "NOT_RUN",
+    "new_native_windows_main_candidate_execution": "NOT_RUN",
+    "runtime_calls_proven": false,
+    "source_93_suites_in_msg119": "NOT_RERUN",
+    "user_private_live_sqlite_access": false
+  },
+  "main_base": "5ace7d645fc85ec9626ce7befb59ce68b90de505",
+  "main_entries_outside_scope_preserved_exactly": 656,
+  "maintenance_block": "core_symbol_investigation",
+  "prepared_at_minsk": "2026-10-28T23:31:36+03:00",
+  "previous_learning_event_provenance_block": "CLOSED_AT_5ace7d645fc85ec9626ce7befb59ce68b90de505_IN_PREVIOUS_ENGINEERING_SCOPE",
+  "publication_operation": {
+    "cross_ref_checks_atomic": false,
+    "fixed_prepared_two_commits": true,
+    "local_branch_switch": false,
+    "local_main_sync": false,
+    "normal_explicit_non_forced_push": true,
+    "ordinary_git_hooks_preserved": true,
+    "possible_local_git_side_effects": "OBJECT_IMPORT_AND_REMOTE_TRACKING_REF_BOOKKEEPING",
+    "private_state_location": "Downloads/SkynetVS_Runs/M154/main_core_symbol_investigation_publications",
+    "source_ref_index_worktree_stash_local_main_preserved": true,
+    "user_worktree_or_index_write": false
+  },
+  "publication_state_at_preparation": "NOT_PUBLISHED",
+  "readiness": "READY_FOR_MAIN",
+  "required_prior_dtr_dependency": {
+    "changed_functions": [
+      "prompt_text",
+      "validate_target"
+    ],
+    "current_sha256": "28f7a7b928919bc61efc73ef2f7bd92d81c00b9763113585af479c3a76a74f36",
+    "introducing_commit": "3cd5a06b3b17ce2e6b9b25351a1b455289974dfb",
+    "main_sha256": "fe1f11e0e26b34f7321a089195ed1f74afc4690992dc724a5352799edf7f5014",
+    "reason": "Exact tested UI bundle integrity and existing final DTR target path policy",
+    "source_precore_and_introducing_blobs_equal": true
+  },
+  "selected_fix_commit": "acb393767202aa3616695775d67f30b4b8e24a79",
+  "selected_fix_tree": "3f5cdde2512b66064a1131d99ba607d576374deb",
+  "selected_source_paths": [
+    "docs/maintenance/M154_CoreSymbolInvestigation.md",
+    "docs/maintenance/M154_CoreSymbolInvestigation_Result.json",
+    "docs/maintenance/M154_Workflow.md",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui/app/core.py",
+    "modules/developer_task_ui/app/symbol_investigation.py",
+    "modules/developer_task_ui/app/symbol_task_bridge.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_core_symbol_investigation.py",
+    "tools/eval_core_symbol_task_bridge.py",
+    "tools/eval_core_symbol_ui.py"
+  ],
+  "selected_source_raw_sha256": {
+    "docs/maintenance/M154_CoreSymbolInvestigation.md": "22323850325a22e409d4135933a06c38f6da27ada95c9d20fc3e159cceba54d8",
+    "docs/maintenance/M154_CoreSymbolInvestigation_Result.json": "c9cd2579b69dcc15087adb990a2006b1f30833c4f66ae735aa7f47bb324e2c39",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json": "d7975865ad175ccbd0bf8a6ec05298290949713070f8e4e1da7bed0d9dad25a5",
+    "modules/developer_task_ui/app/core.py": "28f7a7b928919bc61efc73ef2f7bd92d81c00b9763113585af479c3a76a74f36",
+    "modules/developer_task_ui/app/symbol_investigation.py": "65182d0ad033b6b47a85c7703fb12d614276ea34e6712996a98a400fa0d2ba4c",
+    "modules/developer_task_ui/app/symbol_task_bridge.py": "5b7020519b45e0d788feb5975f51992343510e949256e71f0b2bdfece231fca2",
+    "modules/developer_task_ui/app/ui.py": "3b6f441ff4c4a2acdd8777760d624e00991bf95a61ade36237fc0ac3413006ae",
+    "modules/developer_task_ui_launcher.py": "ab4262dd6c2ef288306d974961a8500de27ff7e80305ec663a97774492e313d2",
+    "tools/eval_core_symbol_investigation.py": "7d14b6523cf6845587ebe961ceb5f919f28cbcd3761d8891f6c4ae4c83c5ec8b",
+    "tools/eval_core_symbol_task_bridge.py": "deb55f22f04e6541144f0313923c1a81c6aff0cdcdebfee6f0976f53b88d7139",
+    "tools/eval_core_symbol_ui.py": "52ad59b7236bbd494481f20959ca154ee0c3f80dcaed183ac327885c517d4c96"
+  },
+  "source_branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "source_fix": "67e999a092ffc1618f1a8b275dc957e82346a289",
+  "user_native_ui_acceptance": {
+    "dtr_change_request_or_patch_apply_in_this_example": "NOT_RUN_READ_ONLY_EXAMPLE",
+    "independent_validation": {
+      "analyzer_or_app_rerun": false,
+      "coverage": {
+        "count_partitions_verified": true,
+        "global_resolution_and_reason_histogram": "SCHEMA_AND_SUM_INVARIANTS_CHECKED_NOT_FULL_SEMANTIC_RECOMPUTATION",
+        "no_ast_parse_errors_or_warnings": true,
+        "no_budget_omissions": true,
+        "no_scan_skips": true,
+        "scope_verified": true
+      },
+      "independent_git_ast_counts": {
+        "ast_calls": 23203,
+        "ast_nodes": 392150,
+        "functions": 2759,
+        "parsed_files": 201,
+        "source_bytes": 3478539,
+        "source_files": 201
+      },
+      "receipt_sha256": "4c09f9b901e4f5152b1deb758ca806f2d27378860326bc7df74db82dda44fc4c",
+      "source_manifest_sha256": "b3ed772de74d312fa0d836ef8a44ea60c7479f9f782ed753f9bdd8f9c496f1bd",
+      "source_reference_checks": {
+        "all_selected_ast_calls_represented": true,
+        "call_sites": 5,
+        "only_exact_name_incoming_syntax_occurrence": [
+          {
+            "column": 42,
+            "line": 444,
+            "path": "modules/command_understanding.py"
+          }
+        ],
+        "reference_occurrences": 11,
+        "unique_symbol_ids": 5
+      },
+      "status": "PASS",
+      "strict_json": {
+        "closed_schema_and_types_checked": true,
+        "duplicate_keys_rejected": true,
+        "nonfinite_rejected": true
+      },
+      "validator_sha256": "b72fcc197b7fc0e6e84bc5ce9a97fcb70e32da3c40bc256994f2b525c1e4bb7f"
+    },
+    "input_filename": "Core_SymbolInvestigation.json",
+    "input_raw_bytes": 10005,
+    "input_raw_sha256": "248b14ed9acde39970249f365db81d21b77ad1125af271605b3fb6e765de8335",
+    "saved_json_authenticates_ui_execution_cryptographically": false,
+    "screen_directly_observed_by_assistant": false,
+    "status": "ACCEPTED_USER_PROVIDED_SAVED_RESULT_WITH_EXACT_GIT_BINDING",
+    "user_saved_report": {
+      "candidates": [
+        {
+          "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+          "end": 79,
+          "id": "cdf60342c301e7f31dcd55ec1bf1a9b50d217e9ca9ea9b50bcce366dc1bc677a",
+          "kind": "FunctionDef",
+          "path": "modules/text_normalizer.py",
+          "qualname": "normalize_command_text",
+          "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+          "start": 63
+        }
+      ],
+      "coverage": {
+        "ast_nodes": 392150,
+        "candidate_matches": 1,
+        "counts": {
+          "call_sites": 23203,
+          "call_sites_omitted": 0,
+          "incoming": 1,
+          "outgoing": 3,
+          "resolved_references": 4446,
+          "selected_unknowns": 1,
+          "unresolved_calls": 18757
+        },
+        "functions_indexed": 2759,
+        "limitations": [
+          "STATIC_REFERENCES_DO_NOT_PROVE_RUNTIME_CALLS",
+          "NO_FOUND_CALLERS_IS_NOT_PROOF_OF_NO_CALLERS",
+          "DYNAMIC_DISPATCH_AND_EXTERNAL_BINDINGS_UNRESOLVED",
+          "RUNTIME_AND_CROSS_MODULE_MONKEY_PATCHING_NOT_PROVEN_ABSENT",
+          "DECORATOR_DEFAULT_CLASS_LAMBDA_COMPREHENSION_CONTEXTS_NOT_RESOLVED",
+          "GENERIC_ANNOTATION_SCOPES_NOT_RESOLVED",
+          "FUNCTION_AND_ASYNC_FUNCTION_SELECTION_ONLY"
+        ],
+        "limits": {
+          "ast_nodes": 600000,
+          "ast_nodes_per_file": 60000,
+          "call_sites": 40000,
+          "candidates": 64,
+          "file_bytes": 262144,
+          "files": 800,
+          "functions": 20000,
+          "result_rows": 256,
+          "source_bytes": 8388608
+        },
+        "parse_diagnostics": [],
+        "parsed_files": 201,
+        "partial": false,
+        "resolution_model": "STABLE_MODULE_FUNCTIONS_AND_EXPLICIT_IMPORTS_ONLY",
+        "scan": {
+          "partial": false,
+          "scope": "GIT_HEAD_MAIN_PY_AND_MODULES_PY_ONLY",
+          "skipped": {
+            "binary": 0,
+            "not_utf8": 0,
+            "too_large": 0,
+            "total_budget": 0
+          },
+          "source_bytes": 3478539,
+          "sources_read": 201,
+          "tracked_python_paths": 201
+        },
+        "source_bytes_supplied": 3478539,
+        "source_files_supplied": 201,
+        "truncated": {
+          "call_sites": 0,
+          "candidates": 0,
+          "incoming": 0,
+          "outgoing": 0,
+          "unknowns": 0
+        },
+        "unknown_reason_counts": {
+          "AMBIGUOUS_IMPORTED_ATTRIBUTE": 157,
+          "ATTRIBUTE_REBINDING": 8,
+          "CLASS_BODY_CONTEXT": 100,
+          "CLASS_DEFINITION_CONTEXT": 266,
+          "CLOSURE_BINDING_NOT_RESOLVED": 5,
+          "COMPREHENSION_SCOPE_NOT_RESOLVED": 701,
+          "CONDITIONAL_BINDING": 38,
+          "DECORATED_TARGET": 5,
+          "DEFINITION_TIME_CONTEXT": 1,
+          "DYNAMIC_ATTRIBUTE": 173,
+          "DYNAMIC_CALL_EXPRESSION": 1297,
+          "DYNAMIC_NAMESPACE": 239,
+          "DYNAMIC_OR_UNSUPPORTED_ATTRIBUTE": 139,
+          "DYNAMIC_SELF_OR_CLS_ATTRIBUTE": 1304,
+          "EXTERNAL_OR_AMBIGUOUS_MODULE": 1557,
+          "EXTERNAL_OR_UNBOUND_NAME": 6275,
+          "GLOBAL_OR_NONLOCAL_BINDING": 3,
+          "LAMBDA_SCOPE_NOT_RESOLVED": 58,
+          "MISSING_OR_REBOUND_TARGET": 1,
+          "PARAMETER_OR_LOCAL_BINDING": 3988,
+          "REBOUND_OR_DUPLICATE_NAME": 347,
+          "TARGET_NOT_MODULE_FUNCTION": 2095
+        }
+      },
+      "git_commit": "67e999a092ffc1618f1a8b275dc957e82346a289",
+      "git_head_observed": true,
+      "goal_sha256": "d797ae136451911d156e520e290e91abd964d6adf93d3818881c3fa5a6021d69",
+      "incoming": [
+        {
+          "call_site": {
+            "blob_oid": "fefe09f0a03c8f9e9951a4de8a80217ff84d5938",
+            "column": 42,
+            "end_line": 444,
+            "line": 444,
+            "path": "modules/command_understanding.py",
+            "source_sha256": "65fc911550f8263fa127c2e0d9aa312e35dae8d79e0896c0b5d6fab5a315b4df"
+          },
+          "callee": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "end": 79,
+            "id": "cdf60342c301e7f31dcd55ec1bf1a9b50d217e9ca9ea9b50bcce366dc1bc677a",
+            "kind": "FunctionDef",
+            "path": "modules/text_normalizer.py",
+            "qualname": "normalize_command_text",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+            "start": 63
+          },
+          "callee_name": "normalize_command_text",
+          "caller": {
+            "blob_oid": "fefe09f0a03c8f9e9951a4de8a80217ff84d5938",
+            "end": 696,
+            "id": "c716b5f577f355fee417e356e04306d74d303ad6c4d50933406272c184fded3b",
+            "kind": "FunctionDef",
+            "path": "modules/command_understanding.py",
+            "qualname": "understand_command_text",
+            "source_sha256": "65fc911550f8263fa127c2e0d9aa312e35dae8d79e0896c0b5d6fab5a315b4df",
+            "start": 386
+          },
+          "resolution": "EXPLICIT_IMPORT",
+          "runtime_execution": "NOT_PROVEN"
+        }
+      ],
+      "no_patch_or_apply": true,
+      "outgoing": [
+        {
+          "call_site": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "column": 8,
+            "end_line": 68,
+            "line": 68,
+            "path": "modules/text_normalizer.py",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c"
+          },
+          "callee": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "end": 50,
+            "id": "9ea7c6243ee2e7974aa2c659819ffa8f43f683076e3a7b48b2c275c4fd788192",
+            "kind": "FunctionDef",
+            "path": "modules/text_normalizer.py",
+            "qualname": "_norm_spaces",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+            "start": 49
+          },
+          "callee_name": "_norm_spaces",
+          "caller": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "end": 79,
+            "id": "cdf60342c301e7f31dcd55ec1bf1a9b50d217e9ca9ea9b50bcce366dc1bc677a",
+            "kind": "FunctionDef",
+            "path": "modules/text_normalizer.py",
+            "qualname": "normalize_command_text",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+            "start": 63
+          },
+          "resolution": "SAME_MODULE_NAME",
+          "runtime_execution": "NOT_PROVEN"
+        },
+        {
+          "call_site": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "column": 11,
+            "end_line": 72,
+            "line": 72,
+            "path": "modules/text_normalizer.py",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c"
+          },
+          "callee": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "end": 60,
+            "id": "e42a69b06618c3e6d62edc96006a186c825d5f411c0c8366815e489cf5b5a5f0",
+            "kind": "FunctionDef",
+            "path": "modules/text_normalizer.py",
+            "qualname": "looks_like_command",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+            "start": 58
+          },
+          "callee_name": "looks_like_command",
+          "caller": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "end": 79,
+            "id": "cdf60342c301e7f31dcd55ec1bf1a9b50d217e9ca9ea9b50bcce366dc1bc677a",
+            "kind": "FunctionDef",
+            "path": "modules/text_normalizer.py",
+            "qualname": "normalize_command_text",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+            "start": 63
+          },
+          "resolution": "SAME_MODULE_NAME",
+          "runtime_execution": "NOT_PROVEN"
+        },
+        {
+          "call_site": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "column": 12,
+            "end_line": 77,
+            "line": 77,
+            "path": "modules/text_normalizer.py",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c"
+          },
+          "callee": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "end": 55,
+            "id": "762273836f0b4fc2cd442e7ee00aa53fb1d1fd44bc06ef86be3452d3f3ca687c",
+            "kind": "FunctionDef",
+            "path": "modules/text_normalizer.py",
+            "qualname": "_replace_whole_phrase",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+            "start": 53
+          },
+          "callee_name": "_replace_whole_phrase",
+          "caller": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "end": 79,
+            "id": "cdf60342c301e7f31dcd55ec1bf1a9b50d217e9ca9ea9b50bcce366dc1bc677a",
+            "kind": "FunctionDef",
+            "path": "modules/text_normalizer.py",
+            "qualname": "normalize_command_text",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+            "start": 63
+          },
+          "resolution": "SAME_MODULE_NAME",
+          "runtime_execution": "NOT_PROVEN"
+        }
+      ],
+      "repo_worktree_not_read": true,
+      "runtime_calls_proven": false,
+      "schema": "SKYNETVS_CORE_SYMBOL_INVESTIGATION_V1",
+      "selected": {
+        "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+        "end": 79,
+        "id": "cdf60342c301e7f31dcd55ec1bf1a9b50d217e9ca9ea9b50bcce366dc1bc677a",
+        "kind": "FunctionDef",
+        "path": "modules/text_normalizer.py",
+        "qualname": "normalize_command_text",
+        "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+        "start": 63
+      },
+      "selector": "modules/text_normalizer.py::normalize_command_text",
+      "source_binding": "OBSERVED_GIT_HEAD_BLOBS",
+      "source_code_executed": false,
+      "source_text_included": false,
+      "status": "COMPLETE",
+      "structural_only": true,
+      "unknown_outgoing": [
+        {
+          "call_site": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "column": 26,
+            "end_line": 76,
+            "line": 76,
+            "path": "modules/text_normalizer.py",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c"
+          },
+          "callee_name": "_SAFE_ALIASES.items",
+          "caller": {
+            "blob_oid": "5ff6343e0ac7f097619d8695c99cebac2bfca218",
+            "end": 79,
+            "id": "cdf60342c301e7f31dcd55ec1bf1a9b50d217e9ca9ea9b50bcce366dc1bc677a",
+            "kind": "FunctionDef",
+            "path": "modules/text_normalizer.py",
+            "qualname": "normalize_command_text",
+            "source_sha256": "469f25fe45a8de4456e8b04f98e612cf11fc845b8c44b3dc43bda3026616612c",
+            "start": 63
+          },
+          "reason": "DYNAMIC_ATTRIBUTE"
+        }
+      ]
+    }
+  },
+  "windows_installation_evidence": {
+    "checks": [
+      {
+        "cases": 32,
+        "exit_code": 0,
+        "name": "package_boundaries",
+        "seconds": 1.641,
+        "status": "PASS",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+        "test_diagnostics": {
+          "counts": null,
+          "failed_cases": [],
+          "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+          "reason": "NON_UNITTEST_SUITE",
+          "status": "NOT_APPLICABLE"
+        }
+      },
+      {
+        "cases": 29,
+        "exit_code": 0,
+        "name": "core_symbol_investigation",
+        "seconds": 0.546,
+        "status": "PASS",
+        "stderr_sha256": "31eb378db6100dfe795fd28d7e36de2113a20e03c904389cd214f8fe040f7869",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "test_diagnostics": {
+          "counts": {
+            "errors": 0,
+            "failures": 0,
+            "skipped": 0,
+            "tests": 29
+          },
+          "failed_cases": [],
+          "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+          "reason": null,
+          "status": "AVAILABLE"
+        }
+      },
+      {
+        "cases": 18,
+        "exit_code": 0,
+        "name": "core_symbol_task_bridge",
+        "seconds": 0.125,
+        "status": "PASS",
+        "stderr_sha256": "2fd354e28ea6ed15fde267ff82c62433c3cd20f51e281f2f4da435a1f9fe2b54",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "test_diagnostics": {
+          "counts": {
+            "errors": 0,
+            "failures": 0,
+            "skipped": 0,
+            "tests": 18
+          },
+          "failed_cases": [],
+          "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+          "reason": null,
+          "status": "AVAILABLE"
+        }
+      },
+      {
+        "cases": 14,
+        "exit_code": 0,
+        "name": "core_symbol_ui",
+        "seconds": 0.485,
+        "status": "PASS",
+        "stderr_sha256": "c9f7fe2c5d412144b8d7da37ace1c408a6af6448b39569192f89f9676339be16",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "test_diagnostics": {
+          "counts": {
+            "errors": 0,
+            "failures": 0,
+            "skipped": 0,
+            "tests": 14
+          },
+          "failed_cases": [],
+          "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+          "reason": null,
+          "status": "AVAILABLE"
+        }
+      }
+    ],
+    "historical_runtime_ui_acceptance_field": "NOT_RUN",
+    "original_result_preserved_byte_for_byte": true,
+    "package_id": "c882096cdb0df467f9a7dfb74d33210515b32a482b8c9d143ab28f50c7a46c36",
+    "passed_cases": 93,
+    "path": "docs/maintenance/M154_CoreSymbolInvestigation_Result.json",
+    "platform": "Windows",
+    "python": [
+      3,
+      12,
+      10
+    ],
+    "raw_bytes": 5977,
+    "raw_sha256": "c9cd2579b69dcc15087adb990a2006b1f30833c4f66ae735aa7f47bb324e2c39",
+    "shipped_report_validator": "PASS_IN_MSG118_WITH_EXACT_MSG117_ENGINE",
+    "source_commit": "67e999a092ffc1618f1a8b275dc957e82346a289",
+    "source_suites_repeated_in_msg119": false,
+    "status": "PASS",
+    "validator_engine_sha256": "1e2d81ef94c907fce20e16a7c627bc0cef0bddb0a778adace0d81faee13bcb02"
+  },
+  "workflow_preservation": {
+    "entire_main_prefix_preserved": true,
+    "experiment_full_workflow_replacement": false,
+    "final_sha256": "f0744902c06c09b1f836816410aa8ab21158607e970545cd22e5a36c70f59dbd",
+    "main_only_msg116_preserved": true,
+    "main_plus117_bytes": 112211,
+    "main_plus117_sha256": "3a8dad43c0d56535d199cfdb45e8cb4f7572575a08ae7009771631f8ab2d40df",
+    "main_prefix_bytes": 107431,
+    "main_prefix_sha256": "5d1a475881fbdcbff3c1207397e6e91d7187d344e9ccab43dd1950cedabd1815",
+    "msg117_append_bytes": 4780,
+    "msg117_append_sha256": "aaf188b7c0574040dbbf154fa85449cf0b45e2ce494778093c7fdea13e42f8fa",
+    "new_msg119_append_still_required": false,
+    "shared_historical_prefix_bytes": 97948,
+    "shared_historical_prefix_sha256": "2f1ec141c08ef1cb5df30c6f1b0f6539b46d26b910365b1d9adeb23cda13320e"
+  }
+}
