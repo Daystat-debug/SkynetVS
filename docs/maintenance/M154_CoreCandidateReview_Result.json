@@ -1,0 +1,151 @@
+{
+  "kind": "M154_CORE_CANDIDATE_REVIEW_RESULT_V1",
+  "maintenance_block": "core_candidate_review",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "code_change_scope": "BOUND_CORE_SELECTED_FUNCTION_BEFORE_AFTER_DTR_CANDIDATE_STRUCTURAL_REVIEW_UI",
+  "capability_validation": "TARGETED_SYNTHETIC_CHECKS_ONLY",
+  "runtime_ui_acceptance": "PENDING_USER_VALIDATION",
+  "application_launch": "NOT_RUN",
+  "full_pipeline": "NOT_RUN",
+  "model_download": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "model_inference": "NOT_RUN",
+  "training": "NOT_RUN",
+  "private_input_read": false,
+  "live_private_files_written": false,
+  "live_sqlite_open": false,
+  "automatic_restore": false,
+  "unrelated_changes_included_in_commit": false,
+  "private_contents_published": false,
+  "private_hashes_published": false,
+  "private_paths_published": false,
+  "existing_app_core_py": "UNCHANGED_BY_THIS_PACKAGE",
+  "process_policy": "CLOSE_ALL_OTHER_LOCAL_PYTHON_PY_PYPY_PROCESSES",
+  "process_gate_limit": "POINT_IN_TIME_NAMED_LOCAL_PYTHON_INSPECTION_NOT_A_GLOBAL_PROCESS_LOCK",
+  "process_transport": "DIRECT_STRICT_UTF8_TEXT_V2_UNCHANGED",
+  "process_gate": {
+    "before_source": "CLEAR"
+  },
+  "result_reuse_policy": "COMPLETED_INVOCATIONS_REUSE_SAVED_REPORT_WITHOUT_REAPPLY_OR_RETEST",
+  "public_test_content": "ALLOWLISTED_SOURCE_TEST_IDENTIFIERS_AND_BOUNDED_OUTCOME_COUNTS_ONLY",
+  "user_dtr_response_read": false,
+  "user_candidate_apply": "NOT_RUN",
+  "candidate_behavioral_execution": "NOT_RUN",
+  "semantic_correctness_proven": false,
+  "package_id": "13638f0ce69d5b637a883a27c5ff0f9eb3de2571b07c41f85844a95d47b4062d",
+  "base_commit": "67e999a092ffc1618f1a8b275dc957e82346a289",
+  "main_reference_at_preparation": "14ae23777837c8a92fd39958a8dab536e18c16c9",
+  "status": "PASS",
+  "installation_outcome": "INSTALLED_AND_TARGETED_CHECKS_PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.688,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "core_candidate_review",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 36,
+      "seconds": 0.453,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "70b79498962378521062f4b7f153b4888addc5780ea2afbea0e068630724b2ff",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 36,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "core_candidate_ui",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 22,
+      "seconds": 0.797,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "48cc0623b9719c5e3d100d2dac593e8823dba975203985e530504990047e75b8",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 22,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "core_symbol_ui",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 14,
+      "seconds": 0.266,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "f179d2341a9d12e18efbbd59a539a73c17f92c1c91420b67595250140744eb0a",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 14,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "source_payload_files": 8,
+  "source_read_pin_count": 40,
+  "commit_scope": [
+    "modules/developer_task_ui/app/symbol_candidate_review.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_core_candidate_review.py",
+    "tools/eval_core_candidate_ui.py",
+    "docs/maintenance/M154_CoreCandidateReview.md",
+    "docs/maintenance/M154_Workflow.md",
+    "docs/maintenance/M154_CoreCandidateReview_Result.json"
+  ],
+  "files": {
+    "modules/developer_task_ui/app/symbol_candidate_review.py": "1b3882cf0db1165f81582312d5cf886396d7c419f9c9aa31240a626b0e888e6d",
+    "modules/developer_task_ui/app/ui.py": "cfdbf2a3d23a3f00edb75bbaa6ccb5099f46112e2ec582834674e734b1d6ae16",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json": "fc26c09a645543f8aa5361fd7ba99c42fa19ed622b2b02c9f4a5d2d050438d3b",
+    "modules/developer_task_ui_launcher.py": "b0bdfb2de09aa154c907fcef15e85f422c3f9a425ba4b86981a9af635c2eebbf",
+    "tools/eval_core_candidate_review.py": "f7d39ee40702d140a8fa9ecbbc9e0cb9ecb98af76cbe06761ae563cd2b2a512c",
+    "tools/eval_core_candidate_ui.py": "4278902b024f514c893deaff15e3c07c379c5c1a96369ef681032d29983c6169",
+    "docs/maintenance/M154_CoreCandidateReview.md": "7c4a365212ae7b55e4fa56625fb02ac7ac70aeb7f419738b680338d97b2e1702",
+    "docs/maintenance/M154_Workflow.md": "24631acc73fa43768cafa41677d084a8dd2bdfe4b14c2193a461ab5c345b91c0"
+  }
+}

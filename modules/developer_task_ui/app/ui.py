@@ -31,6 +31,8 @@ from .symbol_investigation import (SCHEMA as SYMBOL_SCHEMA, investigate_reposito
                                    format_investigation)
 from .symbol_task_bridge import (report_fingerprint, selected_target,
                                  verify_symbol_capture, task_instruction)
+from .symbol_candidate_review import (bind_request_context, review_candidate,
+                                      format_candidate_review, CandidateReviewError)
 
 
 class QuietTk(tk.Tk):
@@ -50,6 +52,13 @@ class DeveloperWindow:
         self.request_folder = None
         self.static_preview = None
         self.static_folder = None
+        self.core_request_context = None  # immutable bytes tied to one saved DTR request
+        self.core_request_context_sha256 = None
+        self.accepted_response_bytes = None
+        self.static_input_sha256 = None
+        self.core_candidate_review = None
+        self.core_candidate_text = ""
+        self.core_candidate_state = "NOT_CHECKED"
         self.events: list[dict] = []
         self.muting = False
         self.ai_busy = False
@@ -693,9 +702,176 @@ class DeveloperWindow:
         self.event("ERROR", type=type(exc).__name__, message=str(exc))
         messagebox.showerror("Действие не выполнено", str(exc), parent=self.root)
 
+    def _clear_core_candidate_review(self):
+        self.static_input_sha256 = None
+        self.core_candidate_review = None
+        self.core_candidate_text = ""
+        self.core_candidate_state = "NOT_CHECKED"
+
+    def _clear_core_request_binding(self):
+        self.core_request_context = None
+        self.core_request_context_sha256 = None
+        self.accepted_response_bytes = None
+        self._clear_core_candidate_review()
+
+    def _clear_response_review(self):
+        self.review = None
+        self.accepted_response_bytes = None
+        self.static_preview = self.static_folder = None
+        self._clear_core_candidate_review()
+        self.reset_dtrb()
+        self.static_button.state(["disabled"])
+        self.static_summary.set("Проверка нового ответа ещё не выполнена.")
+        self.review_summary.set("Новый ответ ещё не принят; предыдущий результат сброшен.")
+        self.details.set("")
+        self.review_path.set("")
+        self.set_text(self.patch, "Новый ответ ещё не принят.")
+
+    def _bind_symbol_request(self, goal, report, fingerprint):
+        """Only a successful current-session save enables the optional Core view."""
+        self._clear_core_request_binding()
+        try:
+            if (getattr(self, "request", None) is None or
+                    getattr(self, "request_folder", None) is None or self.imported_session):
+                raise CandidateReviewError("CORE_CANDIDATE_SAVED_REQUEST_REQUIRED")
+            context = bind_request_context(goal=goal, report=report,
+                expected_report_sha256=fingerprint, request=self.request, source=self.source)
+            self.store.write(self.request_folder, "Core_SymbolTaskContext.json", context)
+        except Exception as exc:
+            code = exc.code if isinstance(exc, CandidateReviewError) else type(exc).__name__
+            message = ("DTR-A запрос подготовлен, но привязка Core не сохранена (" + code +
+                       "). Доступен обычный просмотр DTR; исследование кандидата недоступно.")
+            self.ai_info.set(message)
+            if getattr(self, "status", None) is not None:
+                self.status.set(message)
+            self.event("CORE_SYMBOL_CONTEXT_NOT_SAVED", issue=code)
+            return False
+        self.core_request_context = context
+        self.core_request_context_sha256 = hashlib.sha256(context).hexdigest()
+        self.ai_info.set("DTR-A запрос и привязка Core сохранены. Проверка принятого patch в памяти покажет изменения функции.")
+        self.event("CORE_SYMBOL_CONTEXT_SAVED", context_sha256=self.core_request_context_sha256,
+                   request_id=self.request.request_id)
+        return True
+
+    def _preview_input_fingerprint(self):
+        """Cache only these captured inputs; changing a separate AI search is irrelevant."""
+        context = self.core_request_context
+        raw = self.accepted_response_bytes
+        inputs = {
+            "request": self.request.binding_dict(),
+            "source": {"path": self.source.path, "base_commit": self.source.base_commit,
+                       "base_tree": self.source.base_tree,
+                       "content_sha256": hashlib.sha256(self.source.content).hexdigest(),
+                       "provenance": self.source.provenance},
+            "review": self.review,
+            "response_sha256": hashlib.sha256(raw).hexdigest() if type(raw) is bytes else None,
+            "context_sha256": hashlib.sha256(context).hexdigest() if type(context) is bytes else None,
+            "context_type": type(context).__name__,
+            "expected_context_sha256": self.core_request_context_sha256,
+            "imported_session": self.imported_session,
+        }
+        return hashlib.sha256(json_bytes(inputs)).hexdigest()
+
+    def _review_core_candidate(self, preview, folder):
+        """An optional result never changes the already saved generic static receipt."""
+        if self.core_request_context is None and self.core_request_context_sha256 is None:
+            self.core_candidate_state = "UNBOUND"
+            self.core_candidate_text = (
+                "Core: привязки исследования функции в этой сессии нет. Обычный DTR-предпросмотр сохранён.\n"
+                "Для Core нужен новый запрос из исследования выбранной функции; внешний sidecar не используется.\n")
+            return
+        if (preview["preview_status"] != "TEXT_APPLICABLE_AST_PASS_NOT_EXECUTABLE_CHECKS" or
+                preview["text_applicability"] != "EXACT_BYTE_IN_MEMORY_PASS" or
+                preview["python_ast_parse"] != "PASS"):
+            self.core_candidate_state = "PREVIEW_REJECTED"
+            self.core_candidate_text = "Core: сравнение не выполнено — текстовая или AST-проверка patch отклонена.\n"
+            return
+        try:
+            if self.imported_session:
+                raise CandidateReviewError("CORE_CANDIDATE_CURRENT_SESSION_REQUIRED")
+            report = review_candidate(context_bytes=self.core_request_context,
+                expected_context_sha256=self.core_request_context_sha256,
+                request=self.request, source=self.source,
+                response_bytes=self.accepted_response_bytes, preview=preview)
+            if report.get("status") != "STRUCTURAL_REVIEW_COMPLETE":
+                raise CandidateReviewError("CORE_CANDIDATE_REVIEW_INCOMPLETE")
+            readable = format_candidate_review(report)
+        except Exception as exc:
+            code = exc.code if isinstance(exc, CandidateReviewError) else type(exc).__name__
+            self.core_candidate_state = "REFUSED" if isinstance(exc, CandidateReviewError) else "FAILED"
+            self.core_candidate_text = ("Core: структурный разбор не получен (" + code +
+                "). Отдельный DTR-предпросмотр сохранён; результата Core нет.\n")
+            self.event("CORE_CANDIDATE_REVIEW_REFUSED", issue=code)
+            return
+        try:
+            self.store.write(folder, "Core_CandidateReview.json", json_bytes(report))
+            self.store.write(folder, "Core_CandidateReview.txt", readable.encode("utf-8"))
+        except Exception as exc:
+            self.core_candidate_state = "SAVE_FAILED"
+            self.core_candidate_text = ("Core: комплект отчёта не сохранён полностью (" + type(exc).__name__ +
+                "). DTR-предпросмотр остаётся сохранённым. Возможные частичные файлы оставлены в папке; "
+                "завершённого сохранённого результата Core нет.\n"
+                "Для новой попытки импортируй ответ повторно; повторный клик не перезаписывает файлы.\n")
+            self.event("CORE_CANDIDATE_SAVE_FAILED", issue=type(exc).__name__)
+            return
+        self.core_candidate_review = report
+        self.core_candidate_text = readable
+        self.core_candidate_state = "SAVED"
+        self.event("CORE_CANDIDATE_REVIEW_SAVED", request_id=self.request.request_id,
+                   context_sha256=self.core_request_context_sha256,
+                   response_sha256=report["response_sha256"],
+                   artifact=str(folder.relative_to(self.store.root)))
+
+    def _show_static_preview(self, *, cached=False):
+        report = self.static_preview
+        labels = {"SAVED": "структурный отчёт сохранён", "UNBOUND": "нет привязки функции",
+                  "PREVIEW_REJECTED": "не выполнен", "REFUSED": "отказ в разборе",
+                  "FAILED": "ошибка разбора", "SAVE_FAILED": "ошибка сохранения"}
+        state = labels.get(self.core_candidate_state, "не выполнен")
+        self.static_summary.set(
+            "Текст: " + report["text_applicability"] + " · AST: " + report["python_ast_parse"] +
+            " · Core: " + state + "\nПапка отчётов: " + str(self.static_folder) +
+            "\nПодробности и исходный diff — выше. Поведение и DTR-B не проверены.")
+        prefix = ("DTR: проверка patch в памяти\n" + report["message"] + "\n\n" +
+                  self.core_candidate_text + "\nПринятый diff DTR-A (исходный текст ответа)\n")
+        self.set_text(self.patch, prefix + self.review["patch_text"])
+        offset = len(prefix.splitlines())
+        for number, line in enumerate(self.review["patch_text"].splitlines(), offset + 1):
+            if line.startswith("+"):
+                self.patch.tag_add("plus", f"{number}.0", f"{number}.end")
+            elif line.startswith("-"):
+                self.patch.tag_add("minus", f"{number}.0", f"{number}.end")
+        self.status.set(("Показан сохранённый результат. " if cached else "Проверка текста в памяти завершена. ") +
+                        "Core: " + state + "; поведение и обязательная DTR-B репетиция не проверены.")
+
+    def _check_cached_receipts(self):
+        try:
+            saved = read_plain(self.static_folder / "DTR_PatchStaticPreview.json", 64 * 1024)
+            if saved != json_bytes(self.static_preview):
+                raise ValueError("STATIC_PREVIEW_RECEIPT_CHANGED")
+        except Exception:
+            self._clear_response_review()
+            raise ValueError("Сохранённый DTR-предпросмотр отсутствует или изменился. Импортируй ответ повторно.")
+        if self.core_candidate_state != "SAVED":
+            return
+        try:
+            if (read_plain(self.static_folder / "Core_CandidateReview.json", 1024 * 1024) !=
+                    json_bytes(self.core_candidate_review) or
+                    read_plain(self.static_folder / "Core_CandidateReview.txt", 1024 * 1024) !=
+                    self.core_candidate_text.encode("utf-8")):
+                raise ValueError("CORE_CANDIDATE_RECEIPT_CHANGED")
+        except Exception as exc:
+            self.core_candidate_review = None
+            self.core_candidate_state = "SAVE_FAILED"
+            self.core_candidate_text = ("Core: сохранённые JSON/TXT отсутствуют или изменились. "
+                "Завершённый комплект не подтверждён; отдельный DTR-предпросмотр сохранён.\n"
+                "Для новой попытки импортируй ответ повторно.\n")
+            self.event("CORE_CANDIDATE_SAVED_RECEIPT_UNAVAILABLE", issue=type(exc).__name__)
+
     def invalidate(self):
         if self.muting:
             return
+        self._clear_core_request_binding()
         if self.request is not None:
             self.request = self.review = None
             self.request_folder = None
@@ -769,6 +945,13 @@ class DeveloperWindow:
             self.fail(exc)
 
     def prepare(self):
+        # Generic preparation must never reuse another request's Core sidecar.
+        self._clear_core_request_binding()
+        self.request = self.request_folder = None
+        self.review = None
+        self.static_preview = self.static_folder = None
+        self.static_button.state(["disabled"])
+        self.reset_dtrb()
         try:
             if self.source is None:
                 raise ValueError("Сначала выбери исходник или нажми «Учебный пример».")
@@ -819,6 +1002,8 @@ class DeveloperWindow:
 
     def _load_request(self, request, source, filename: str):
         self.invalidate()
+        # Imported files remain generic DTR; do not load/trust a Core sidecar.
+        self._clear_core_request_binding()
         self.set_task(request.title, request.instruction)
         self.request, self.source, self.review = request, source, None
         self.reset_dtrb()
@@ -850,8 +1035,13 @@ class DeveloperWindow:
             self.fail(exc)
 
     def accept_bytes(self, raw: bytes):
+        # Clear old accepted bytes and all derived results before a replacement,
+        # including malformed responses or a failure while saving the new one.
+        self._clear_response_review()
         if self.request is None:
             raise ValueError("Сначала подготовь или открой запрос. Чужую привязку из ответа нельзя использовать вместо него.")
+        if type(raw) is not bytes:
+            raise ValueError("Нужны неизменяемые исходные UTF-8 bytes ответа DTR-A.")
         report = review_response(self.request, raw)
         demo = self.source.provenance.get("kind") == "DEMO_SYNTHETIC_NOT_REPOSITORY"
         report["source_kind"] = self.source.provenance.get("kind", "UNKNOWN")
@@ -859,6 +1049,7 @@ class DeveloperWindow:
         report["request_loaded_from_file"] = self.imported_session
         folder = self.store.save_review(self.request, self.source, raw, report)
         self.review = report
+        self.accepted_response_bytes = raw if report["intake"]["ok"] else None
         self.reset_dtrb()
         self.static_preview = self.static_folder = None
         self.static_summary.set("Проверка текста patch: ещё не запускалась; нажми кнопку после принятой привязки.")
@@ -892,9 +1083,23 @@ class DeveloperWindow:
         try:
             if self.request is None or self.source is None or self.review is None or not self.review["intake"]["ok"]:
                 raise ValueError("Сначала импортируй ответ с корректной DTR-A привязкой.")
+            inputs_sha256 = self._preview_input_fingerprint()
             if self.static_preview is not None:
-                self.static_summary.set("Проверка этого ответа уже сохранена: " + str(self.static_folder))
+                if self.static_input_sha256 != inputs_sha256:
+                    self.invalidate()
+                    raise ValueError("Привязка сохранённой проверки изменилась. Создай новый запрос и импортируй ответ повторно.")
+                self._check_cached_receipts()
+                self._show_static_preview(cached=True)
                 return self.static_preview
+            raw = self.accepted_response_bytes
+            if type(raw) is not bytes or hashlib.sha256(raw).hexdigest() != self.review["response_sha256"]:
+                self._clear_response_review()
+                raise ValueError("Исходные bytes принятого ответа изменились или отсутствуют. Импортируй ответ повторно.")
+            accepted = review_response(self.request, raw)
+            if (not accepted["intake"]["ok"] or accepted["patch_text"] != self.review["patch_text"] or
+                    accepted["explanation"] != self.review["explanation"]):
+                self._clear_response_review()
+                raise ValueError("Принятый ответ больше не совпадает с сохранёнными bytes. Импортируй ответ повторно.")
             report = preview_patch_in_memory(
                 original=self.source.content, patch_text=self.review["patch_text"],
                 target_path=self.request.target_path,
@@ -904,16 +1109,12 @@ class DeveloperWindow:
             folder = self.store.save_static_preview(report)
             self.static_preview = report
             self.static_folder = folder
+            self.static_input_sha256 = inputs_sha256
             self.static_button.state(["disabled"])
-            self.static_summary.set(
-                "Текст patch: " + report["text_applicability"] + " · Python AST: " +
-                report["python_ast_parse"] + "\n" + report["message"] +
-                "\nОтчёт: " + str(folder / "DTR_PatchStaticPreview.json") +
-                "\nНЕ выполнялись: git_diff_check, py_compile, pipeline. Нет применения в репозиторий."
-            )
-            self.status.set("Проверка текста в памяти завершена; обязательная DTR-B репетиция НЕ выполнялась.")
             self.event("STATIC_PREVIEW_RECORDED", request_id=self.request.request_id,
                        status=report["preview_status"], artifact=str(folder.relative_to(self.store.root)))
+            self._review_core_candidate(report, folder)
+            self._show_static_preview()
             return report
         except Exception as exc:
             self.fail(exc)
@@ -927,6 +1128,7 @@ class DeveloperWindow:
                                              initialdir=str(Path.home() / "Downloads"), filetypes=[("JSON", "*.json")])
         if not filename:
             return
+        self._clear_response_review()
         try:
             self.accept_bytes(read_plain(Path(filename), 256 * 1024))
         except Exception as exc:
@@ -944,6 +1146,7 @@ class DeveloperWindow:
         text.pack(fill="both", expand=True, padx=10)
         self.clipboard_bindings.attach(text, editable=True)
         def submit():
+            self._clear_response_review()
             try:
                 self.accept_bytes(text.get("1.0", "end-1c").encode("utf-8", "strict"))
                 dialog.destroy()
@@ -1217,10 +1420,11 @@ class DeveloperWindow:
                 self.toggle_legacy_tools()
             if not self.prepare():
                 raise ValueError("DTR-A не принял исследованную задачу. Код не изменён.")
-            self.ai_info.set("DTR-A запрос создан с фактами исследования функции; diff не создан.")
+            bound = self._bind_symbol_request(goal, report, fingerprint)
             self.event("CORE_SYMBOL_TO_DTRA_REQUEST", base_commit=source.base_commit,
                        path=path, goal_sha256=report["goal_sha256"],
-                       symbol_id=report["selected"]["id"], report_sha256=fingerprint)
+                       symbol_id=report["selected"]["id"], report_sha256=fingerprint,
+                       candidate_review_bound=bound)
         except Exception as exc:
             self.ai_task_request_button.state(["disabled"])
             self.fail(exc)
