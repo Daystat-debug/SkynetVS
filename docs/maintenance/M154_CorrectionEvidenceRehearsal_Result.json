@@ -1,0 +1,181 @@
+{
+  "kind": "M154_CORRECTION_EVIDENCE_REHEARSAL_RESULT_V1",
+  "full_pipeline": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "training_readiness": "NOT_ASSESSED",
+  "check_scope": "current_worktree",
+  "check_data": "synthetic temporary fixtures only",
+  "unrelated_changes_included_in_commit": false,
+  "maintenance_block": "learning_event_provenance",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "actual_data_operation": "FROZEN_PRIVATE_CAPTURE_THEN_TWO_BUILDS_IN_SEPARATE_WORKING_COPY",
+  "actual_runtime_activation": "NOT_RUN_PREVIOUS_ACTIVATION_REQUIRED",
+  "live_ledger_open": false,
+  "live_ledger_sync": false,
+  "live_correction_memory_projection": false,
+  "live_history_rewrite": false,
+  "live_correction_memory_rewrite": false,
+  "live_runtime_control_rewrite": false,
+  "live_private_write_scope": "PERSISTENT_RUNTIME_LOCK_ONLY",
+  "retained_private_copy_scope": "FIXED_SEVEN_FILES_NO_ENV_MODELS_OR_VENV",
+  "private_contents_published": false,
+  "private_hashes_published": false,
+  "automatic_restore": false,
+  "legacy_counts_repaired": false,
+  "working_copy_only": true,
+  "working_copy_promoted": false,
+  "new_real_events_manufactured": false,
+  "pair_plan_kind": "SKYNETVS_CORRECTION_PAIR_EVIDENCE_PLAN_V1",
+  "pair_rule_version": "adjacent_unique_observation_v1",
+  "runtime_lock": "OS_ADVISORY_NONBLOCKING_COOPERATING_WRITERS_DURING_CAPTURE",
+  "old_process_policy": "CLOSE_ALL_OTHER_LOCAL_PYTHON_PY_PYPY_PROCESSES",
+  "process_gate_limit": "POINT_IN_TIME_NAMED_LOCAL_PYTHON_INSPECTION_NOT_A_GLOBAL_PROCESS_LOCK",
+  "snapshot_limit": "FROZEN_CAPTURE_NOT_A_GLOBAL_FILESYSTEM_SNAPSHOT",
+  "sqlite_recovery_scope": "SEPARATE_WORKING_COPY_ONLY",
+  "backup_sqlite_open": false,
+  "ledger_and_memory_single_transaction": false,
+  "event_identity_authenticated": false,
+  "independent_observations": "NOT_ASSESSED",
+  "legacy_fallback_permitted": false,
+  "published_test_content": "allowlisted source test identifiers and bounded outcome counts only",
+  "lesson": {
+    "discovery": "ACTIVATION_VERIFIED_BEFORE_REPLAY_VALIDATION",
+    "rule": "Keep the captured before-image immutable; run the builder twice only in a separate retained working copy, and distinguish no-new-pair coverage from observed new-pair replay.",
+    "limitation": "A frozen private-copy result does not apply counts to the live project, prove independent user intent, or train a model."
+  },
+  "preparation_evidence": {
+    "previous_source_gate": {
+      "cases": 348,
+      "suites": 12,
+      "status": "PASS",
+      "platform": "Windows",
+      "python": [
+        3,
+        12,
+        10
+      ],
+      "published_commit": "eb73f87073e3f3e5234f2dab819b9b8fd7cf451f",
+      "executed_by_current_package": false
+    },
+    "process_transport": "DIRECT_STRICT_UTF8_TEXT_V2",
+    "process_transport_source": "UNCHANGED_FROM_MESSAGE98",
+    "current_source_gate": "ONLY_PACKAGE_BOUNDARIES_AND_REHEARSAL_EVALUATOR",
+    "raw_private_diagnostics_published": false
+  },
+  "package_id": "226d562df27d6d0c6cc54782f32431ceb315b03411a3b6327ca384a5729e94e0",
+  "base_commit": "eb73f87073e3f3e5234f2dab819b9b8fd7cf451f",
+  "status": "PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 4.078,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "correction_evidence_rehearsal",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 5.328,
+      "stdout_sha256": "caf3f8188a60807de66a79784c7cf2f816e1c0e42de74a16b927ffa97e2bd6cd",
+      "stderr_sha256": "75e13b3fceb7ed3ac9a786f2c6ddfb4f3625febb9a514f5e62ee55ca0f7ab5c4",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 32,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "files": {
+    "modules/learning/correction_evidence_rehearsal.py": "f6df9535a66eecadc255fbafddc489b69ddbc4c4f2bdbcb15d9dfbfc80d0c927",
+    "tools/eval_correction_evidence_rehearsal.py": "8a1fe5b32f05ec095f02a30ce18bee34de55ef3c16c1d20138f43540d0ee54f5",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_REHEARSAL_V1.md": "75f7755bc6cc6d51d9b2f60d7db7fbdecde2737a5eeb607f3c30b9b91e213946",
+    "docs/maintenance/M154_Workflow.md": "2f1ec141c08ef1cb5df30c6f1b0f6539b46d26b910365b1d9adeb23cda13320e"
+  },
+  "rehearsal": {
+    "execution": "RUN",
+    "reason": null,
+    "result": {
+      "kind": "SKYNETVS_CORRECTION_EVIDENCE_REHEARSAL_V1",
+      "status": "VERIFIED",
+      "reason": null,
+      "stage": "COMPLETE",
+      "coverage": "NO_NEW_PAIRS",
+      "captured_state": "ACTIVE",
+      "backup_status": "VERIFIED",
+      "working_copy_status": "VERIFIED",
+      "first_build_status": "UNCHANGED",
+      "second_build_status": "UNCHANGED",
+      "history_rows": 502,
+      "current_epoch_rows": 0,
+      "memory_rows_before": 1,
+      "memory_rows_after": 1,
+      "pairs_before": 0,
+      "pairs_after_first": 0,
+      "pairs_after_second": 0,
+      "new_pairs_first": 0,
+      "new_evidence_first": 0,
+      "new_evidence_second": 0,
+      "source_preserved_at_capture": true,
+      "backup_preserved": true,
+      "working_history_preserved": true,
+      "working_control_preserved": true,
+      "legacy_metadata_preserved": true,
+      "replay_memory_preserved": true,
+      "replay_ledger_preserved": true,
+      "replay_totals_preserved": true,
+      "scope": {
+        "input": "FROZEN_PRIVATE_SEVEN_FILE_CAPTURE",
+        "source_preservation": "VERIFIED_AT_CAPTURE_BEFORE_UNLOCK_ONLY",
+        "runtime_lock": "COOPERATING_WRITERS_CAPTURE_ONLY",
+        "old_process_gate": "CALLER_REQUIRED",
+        "lock_file": "PERSISTENT_ONE_BYTE_NOT_BACKED_UP",
+        "retained_before": "NEVER_OPENED_BY_SQLITE_OR_BUILDER",
+        "sqlite_and_builder_target": "SEPARATE_PRIVATE_WORKING_COPY_ONLY",
+        "sqlite_read_may_recover_working_journal": true,
+        "live_sqlite_opened": false,
+        "live_history_written": false,
+        "live_memory_written": false,
+        "live_ledger_sync_run": false,
+        "live_projection_run": false,
+        "activation_run": false,
+        "synthetic_live_rows_added": false,
+        "training_run": false,
+        "promotion_run": false,
+        "automatic_restore": false,
+        "atomic_filesystem_snapshot": false,
+        "training_readiness": "NOT_ASSESSED"
+      }
+    }
+  },
+  "process_gate": {
+    "before_source": "CLEAR",
+    "before_rehearsal": "CLEAR"
+  }
+}
