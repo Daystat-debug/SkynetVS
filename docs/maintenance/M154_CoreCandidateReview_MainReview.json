@@ -1,0 +1,316 @@
+{
+  "accepted_scope": [
+    "current-session Core context bound to one captured DTR request and exact proposed response",
+    "pure before/after AST comparison of selected function, other definitions and outside-selected scope",
+    "historical references, explicit unresolved calls and coverage limitations retained",
+    "additional Core JSON/TXT through existing in-memory preview UI with original diff retained",
+    "one completed user-provided Windows UI control case and exact saved-artifact consistency"
+  ],
+  "additional_user_ui_or_learning_cycle_required_for_this_scope": false,
+  "closure_condition": "the fixed prepared two-commit candidate is confirmed in remote refs/heads/main",
+  "core_doc_final_sha256": "3818e40c4f181f95cc3c351e2eabfe89c14305e545c215deabac9730b9f2e42d",
+  "core_doc_source_prefix_preserved": true,
+  "evidence_transfer_to_main_candidate": {
+    "actual_candidate_bundle_verifier_calls": 1,
+    "all_37_ui_bundle_manifest_entries_identical": true,
+    "all_40_read_pins_identical": true,
+    "all_four_named_evaluator_sources_identical": true,
+    "all_main_py_and_modules_entries_identical_to_installed_source": true,
+    "candidate_bundle_verification": "PASS",
+    "main_candidate_windows_suite_execution": "NOT_RERUN_UNCHANGED_SOURCE_EVIDENCE_REUSED",
+    "new_dependency_transfer_needed": false,
+    "runtime_entry_count": 212,
+    "runtime_python_entry_count": 208,
+    "windows_source_tests_and_native_case_not_summed": true
+  },
+  "excluded_experiment_tools": [
+    "tools/m154_workflow/README_RU.md",
+    "tools/m154_workflow/development_lessons.py",
+    "tools/m154_workflow/git_transport.py",
+    "tools/m154_workflow/launch_template.ps1",
+    "tools/m154_workflow/lessons.json",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/failure.log.txt",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/observation.json",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/repair.patch",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/test_git_transport.before.txt",
+    "tools/m154_workflow/preparation_history/qa001_isolated_import/verification.json",
+    "tools/m154_workflow/run.py",
+    "tools/m154_workflow/test_development_lessons.py",
+    "tools/m154_workflow/test_git_transport.py",
+    "tools/m154_workflow/test_workflow.py"
+  ],
+  "excluded_main_only_review_deletions": [
+    "docs/maintenance/M154_CoreSymbolInvestigation_MainReview.json",
+    "docs/maintenance/M154_ErrorLogPath_MainReview.json",
+    "docs/maintenance/M154_LearningBoundary_MainReview.json",
+    "docs/maintenance/M154_LearningDataQuality_MainReview.json",
+    "docs/maintenance/M154_LearningEventProvenance_MainReview.json",
+    "docs/maintenance/M154_PipelineResults_MainReview.json"
+  ],
+  "expected_final_tracked_entries": 675,
+  "final_review_commit_changes": [
+    "docs/maintenance/M154_CoreCandidateReview.md",
+    "docs/maintenance/M154_CoreCandidateReview_MainReview.json",
+    "docs/maintenance/M154_Workflow.md"
+  ],
+  "final_review_commit_source_code_changes": false,
+  "final_scope_count": 10,
+  "final_scope_paths": [
+    "docs/maintenance/M154_CoreCandidateReview.md",
+    "docs/maintenance/M154_CoreCandidateReview_MainReview.json",
+    "docs/maintenance/M154_CoreCandidateReview_Result.json",
+    "docs/maintenance/M154_Workflow.md",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui/app/symbol_candidate_review.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_core_candidate_review.py",
+    "tools/eval_core_candidate_ui.py"
+  ],
+  "historical_main_review_count_preserved": 6,
+  "historical_result_count_preserved": 24,
+  "kind": "M154_CORE_CANDIDATE_REVIEW_MAIN_REVIEW_V1",
+  "limits": {
+    "arbitrary_external_writers_or_hooks_proven_harmless": false,
+    "behavior_bugfix_or_semantic_equivalence_proven": false,
+    "candidate_apply": "NOT_RUN",
+    "candidate_behavioral_execution": "NOT_RUN",
+    "entire_core_or_project_complete": false,
+    "full_pipeline": "NOT_RUN",
+    "model_download_loading_inference_training_by_this_review": "NOT_RUN",
+    "new_native_windows_main_candidate_execution": "NOT_RUN",
+    "runtime_call_graph_complete": false,
+    "runtime_calls_proven": false,
+    "source_104_suites_in_msg124": "NOT_RERUN",
+    "user_private_live_sqlite_access": false
+  },
+  "main_base": "14ae23777837c8a92fd39958a8dab536e18c16c9",
+  "main_entries_outside_scope_preserved_exactly": 665,
+  "maintenance_block": "core_candidate_review",
+  "prepared_at_minsk": "2026-10-29T02:02:48+03:00",
+  "preserved_newer_main_only_document": {
+    "blob": "4be75d580e2f7d144a1a09fc9ff8f35242993339",
+    "candidate_equals_main": true,
+    "path": "docs/maintenance/M154_CoreSymbolInvestigation.md",
+    "sha256": "b68ddf4b24f1e37f6053a4b944abfd3189157d1398f93416d0a2ce9b41729766"
+  },
+  "previous_core_symbol_investigation_block": "CLOSED_AT_14ae23777837c8a92fd39958a8dab536e18c16c9_IN_PREVIOUS_ENGINEERING_SCOPE",
+  "publication_operation": {
+    "cross_ref_checks_atomic": false,
+    "fixed_prepared_two_commits": true,
+    "local_branch_switch": false,
+    "local_main_sync": false,
+    "normal_explicit_non_forced_push": true,
+    "ordinary_git_hooks_preserved": true,
+    "possible_local_git_side_effects": "OBJECT_IMPORT_AND_REMOTE_TRACKING_REF_BOOKKEEPING",
+    "source_ref_index_worktree_stash_local_main_preserved": true,
+    "user_worktree_or_index_write": false
+  },
+  "publication_state_at_preparation": "NOT_PUBLISHED",
+  "readiness": "READY_FOR_MAIN",
+  "required_prior_dtr_dependency": {
+    "existing_app_core_py_equals_main_and_installed_source": true,
+    "new_dependency_transfer_needed": false,
+    "sha256": "28f7a7b928919bc61efc73ef2f7bd92d81c00b9763113585af479c3a76a74f36"
+  },
+  "selected_fix_commit": "8a35e476ff36f73c2ea77a4c89e35a3d7a9e39c0",
+  "selected_fix_tree": "d7b74dbacc5ba783f1fa716c7ad6c6e3d308e93a",
+  "selected_source_paths": [
+    "docs/maintenance/M154_CoreCandidateReview.md",
+    "docs/maintenance/M154_CoreCandidateReview_Result.json",
+    "docs/maintenance/M154_Workflow.md",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui/app/symbol_candidate_review.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_core_candidate_review.py",
+    "tools/eval_core_candidate_ui.py"
+  ],
+  "selected_source_raw_sha256": {
+    "docs/maintenance/M154_CoreCandidateReview.md": "7c4a365212ae7b55e4fa56625fb02ac7ac70aeb7f419738b680338d97b2e1702",
+    "docs/maintenance/M154_CoreCandidateReview_Result.json": "cb21577cfbd1fcc5a10b0cc09d880b8726ee3eeb83a43c526e1033903bb0e2b2",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json": "fc26c09a645543f8aa5361fd7ba99c42fa19ed622b2b02c9f4a5d2d050438d3b",
+    "modules/developer_task_ui/app/symbol_candidate_review.py": "1b3882cf0db1165f81582312d5cf886396d7c419f9c9aa31240a626b0e888e6d",
+    "modules/developer_task_ui/app/ui.py": "cfdbf2a3d23a3f00edb75bbaa6ccb5099f46112e2ec582834674e734b1d6ae16",
+    "modules/developer_task_ui_launcher.py": "b0bdfb2de09aa154c907fcef15e85f422c3f9a425ba4b86981a9af635c2eebbf",
+    "tools/eval_core_candidate_review.py": "f7d39ee40702d140a8fa9ecbbc9e0cb9ecb98af76cbe06761ae563cd2b2a512c",
+    "tools/eval_core_candidate_ui.py": "4278902b024f514c893deaff15e3c07c379c5c1a96369ef681032d29983c6169"
+  },
+  "source_branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "source_fix": "37b029b5b557b43cf0b9657af992599eeef6deac",
+  "user_native_ui_acceptance": {
+    "accepted_original_diff_preserved_exactly": true,
+    "all_native_actions_directly_observed_by_assistant": false,
+    "assistant_verifier_attempts": 2,
+    "completed_control_cases": 1,
+    "control_result": {
+      "historical_incoming_references": 3,
+      "module_level_ast_changed": false,
+      "omitted_definition_rows": 0,
+      "other_changed_definition_count": 1,
+      "output_partial": false,
+      "outside_selected_ast_changed": true,
+      "outside_selected_text_changed": true,
+      "selected_ast_changed": false,
+      "selected_mapping": "UNIQUE_QUALNAME",
+      "unresolved_outgoing_calls": 4
+    },
+    "core_candidate_json_and_txt_exact_pure_replay": true,
+    "corrected_verifier_selection": "SELECT_UNIQUE_REQUEST_ARTIFACT_BY_EXPLICIT_PREFIX",
+    "event_count": 7,
+    "event_sequence": [
+      "CORE_SYMBOL_INVESTIGATION_RECORDED",
+      "REQUEST_PREPARED",
+      "CORE_SYMBOL_CONTEXT_SAVED",
+      "CORE_SYMBOL_TO_DTRA_REQUEST",
+      "RESPONSE_REVIEWED",
+      "STATIC_PREVIEW_RECORDED",
+      "CORE_CANDIDATE_REVIEW_SAVED"
+    ],
+    "first_attempt_note": "ARCHIVE_FOLDER_SELECTION_ASSERTION_IN_ASSISTANT_HARNESS_AFTER_CORE_BYTE_REPLAY_PASS",
+    "full_core_header_and_saved_status_visible_in_screenshot": false,
+    "independent_standard_library_data_audit": {
+      "checks": 34,
+      "status": "PASS"
+    },
+    "private_request_identifiers_hashes_paths_or_logs_published": false,
+    "pure_verifier_final_status": "PASS",
+    "pure_verifier_python": [
+      3,
+      12,
+      14
+    ],
+    "raw_user_archive_or_context_published": false,
+    "request_and_response_exact_previous_delivery": true,
+    "request_fingerprint_and_context_metadata_digest_independently_recomputed": true,
+    "retained_context_and_full_investigation_consistent": true,
+    "saved_artifact_count": 13,
+    "saved_files_authenticate_native_execution_cryptographically": false,
+    "screenshot_viewed": true,
+    "screenshot_visible_scope": [
+      "accepted_original_diff",
+      "last_limitations_line"
+    ],
+    "session_error": null,
+    "session_reports_target_execution_apply_git_write_and_tests": false,
+    "session_status": "M092_UI_SESSION_CLOSED",
+    "static_preview_exact_pure_replay": true,
+    "status": "ACCEPTED_FINITE_USER_SUPPLIED_NATIVE_UI_CASE",
+    "target_or_candidate_code_executed_by_verifier": false,
+    "user_pasted_core_text_matches_saved_text": true
+  },
+  "windows_installation_evidence": {
+    "checks": [
+      {
+        "cases": 32,
+        "exit_code": 0,
+        "name": "package_boundaries",
+        "seconds": 1.688,
+        "status": "PASS",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+        "test_diagnostics": {
+          "counts": null,
+          "failed_cases": [],
+          "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+          "reason": "NON_UNITTEST_SUITE",
+          "status": "NOT_APPLICABLE"
+        }
+      },
+      {
+        "cases": 36,
+        "exit_code": 0,
+        "name": "core_candidate_review",
+        "seconds": 0.453,
+        "status": "PASS",
+        "stderr_sha256": "70b79498962378521062f4b7f153b4888addc5780ea2afbea0e068630724b2ff",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "test_diagnostics": {
+          "counts": {
+            "errors": 0,
+            "failures": 0,
+            "skipped": 0,
+            "tests": 36
+          },
+          "failed_cases": [],
+          "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+          "reason": null,
+          "status": "AVAILABLE"
+        }
+      },
+      {
+        "cases": 22,
+        "exit_code": 0,
+        "name": "core_candidate_ui",
+        "seconds": 0.797,
+        "status": "PASS",
+        "stderr_sha256": "48cc0623b9719c5e3d100d2dac593e8823dba975203985e530504990047e75b8",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "test_diagnostics": {
+          "counts": {
+            "errors": 0,
+            "failures": 0,
+            "skipped": 0,
+            "tests": 22
+          },
+          "failed_cases": [],
+          "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+          "reason": null,
+          "status": "AVAILABLE"
+        }
+      },
+      {
+        "cases": 14,
+        "exit_code": 0,
+        "name": "core_symbol_ui",
+        "seconds": 0.266,
+        "status": "PASS",
+        "stderr_sha256": "f179d2341a9d12e18efbbd59a539a73c17f92c1c91420b67595250140744eb0a",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "test_diagnostics": {
+          "counts": {
+            "errors": 0,
+            "failures": 0,
+            "skipped": 0,
+            "tests": 14
+          },
+          "failed_cases": [],
+          "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+          "reason": null,
+          "status": "AVAILABLE"
+        }
+      }
+    ],
+    "historical_runtime_ui_acceptance_field": "PENDING_USER_VALIDATION",
+    "original_result_preserved_byte_for_byte": true,
+    "package_id": "13638f0ce69d5b637a883a27c5ff0f9eb3de2571b07c41f85844a95d47b4062d",
+    "passed_cases": 104,
+    "path": "docs/maintenance/M154_CoreCandidateReview_Result.json",
+    "platform": "Windows",
+    "python": [
+      3,
+      12,
+      10
+    ],
+    "raw_bytes": 5783,
+    "raw_sha256": "cb21577cfbd1fcc5a10b0cc09d880b8726ee3eeb83a43c526e1033903bb0e2b2",
+    "shipped_report_validator": "PASS_IN_MSG122_WITH_EXACT_MSG121_ENGINE",
+    "source_commit": "37b029b5b557b43cf0b9657af992599eeef6deac",
+    "source_suites_repeated_in_msg124": false,
+    "status": "PASS"
+  },
+  "workflow_preservation": {
+    "entire_main_prefix_preserved": true,
+    "experiment_before121_bytes": 102728,
+    "experiment_before121_sha256": "feb43348da260267c47a8f9a6a8e6540402bfe6488ac27aabdb5ff970d259c71",
+    "experiment_full_workflow_replacement": false,
+    "final_sha256": "4fd322407019bb56038f2cd8bbefe8f7cec5659f0bc74933b18f9690ecd4a928",
+    "main_plus121_bytes": 124178,
+    "main_plus121_sha256": "fcf8eb6a3b67eceaf3c6b6a4147bbebc4b3f7481c4d73c8c3b08dcab961adfd4",
+    "main_prefix_bytes": 119404,
+    "main_prefix_sha256": "f0744902c06c09b1f836816410aa8ab21158607e970545cd22e5a36c70f59dbd",
+    "msg121_append_bytes": 4774,
+    "msg121_append_sha256": "d7e1350addd8c0758ecb132bd9d40aa0e5c2ca9317c73251478cc92ab921955b",
+    "new_msg124_acceptance_append_still_required": false
+  }
+}
