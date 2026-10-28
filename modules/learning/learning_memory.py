@@ -3,21 +3,31 @@ from __future__ import annotations
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Callable, Dict, List
 from uuid import uuid4
 
 from modules.learning.correction_evidence_runtime import (
-    learning_evidence_lock, read_learning_evidence_control)
+    RuntimeRefused, learning_evidence_lock, read_learning_evidence_control)
 
 
 class LearningMemory:
-    def __init__(self, base_dir: str = "data/learning") -> None:
+    def __init__(self, base_dir: str = "data/learning", *,
+                 observation_reporter: Callable[..., None] | None = None) -> None:
         self._base_dir = Path(base_dir)
+        self._observation_reporter = observation_reporter
 
         self._command_history_path = self._base_dir / "command_history.jsonl"
         self._nlu_hard_cases_path = self._base_dir / "nlu_hard_cases.jsonl"
         self._action_failures_path = self._base_dir / "action_failures.jsonl"
         self._resolver_candidates_path = self._base_dir / "resolver_candidates.jsonl"
+
+    def _report_observation(self, status: str, control_state: str = "UNKNOWN",
+                            reason: str = "NONE") -> None:
+        try:
+            if self._observation_reporter is not None:
+                self._observation_reporter(status=status, control_state=control_state, reason=reason)
+        except Exception:
+            pass
 
     def _append_jsonl(self, path: Path, payload: Dict[str, Any]) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -48,25 +58,43 @@ class LearningMemory:
         immediate_label: str,
         missing_slots: List[str] | None = None,
     ) -> None:
-        # Identity of this persisted observation, not a retry or action-success key.
-        event_id = uuid4().hex
-        payload = {
-            "event_id": event_id,
-            "raw_text": raw_text,
-            "final_text": final_text,
-            "mode": mode,
-            "accepted": bool(accepted),
-            "immediate_label": immediate_label,
-            "missing_slots": list(missing_slots or []),
-            "meta": self._meta_snapshot(meta),
-        }
-        # Read the durable switch for every new observation, including when this
-        # LearningMemory instance predates activation. Never stamp old history.
-        with learning_evidence_lock(self._base_dir):
-            control = read_learning_evidence_control(self._base_dir)
-            if control["state"] == "ACTIVE":
-                payload["evidence_epoch"] = control["epoch"]
-            self._append_jsonl(self._command_history_path, payload)
+        self._report_observation("ATTEMPTED")
+        control_state = "UNKNOWN"
+        try:
+            # Identity of this persisted observation, not a retry or action-success key.
+            event_id = uuid4().hex
+            payload = {
+                "event_id": event_id,
+                "raw_text": raw_text,
+                "final_text": final_text,
+                "mode": mode,
+                "accepted": bool(accepted),
+                "immediate_label": immediate_label,
+                "missing_slots": list(missing_slots or []),
+                "meta": self._meta_snapshot(meta),
+            }
+            # Read the durable switch for every new observation, including when this
+            # LearningMemory instance predates activation. Never stamp old history.
+            with learning_evidence_lock(self._base_dir):
+                control = read_learning_evidence_control(self._base_dir)
+                control_state = control["state"]
+                if control["state"] == "ACTIVE":
+                    payload["evidence_epoch"] = control["epoch"]
+                self._append_jsonl(self._command_history_path, payload)
+        except RuntimeRefused as error:
+            reason = error.reason if type(error.reason) is str and error.reason in {
+                "BUSY", "INVALID_PATH", "UNSAFE_PATH", "DIRECTORY_MISSING",
+                "LOCK_INVALID", "LOCK_CHANGED", "STORAGE_ERROR", "CONTROL_INVALID",
+                "CONTROL_CHANGED", "ORPHAN_LEDGER",
+            } else "RUNTIME_REFUSED"
+            self._report_observation("REFUSED", control_state, reason)
+            raise
+        except Exception:
+            self._report_observation("RAISED", control_state)
+            raise
+        # The append and the lock's __exit__ both returned. This is not a
+        # read-back, fsync durability, ledger inclusion or action-success claim.
+        self._report_observation("APPEND_RETURNED", control_state)
 
     def log_nlu_hard_case(
         self,

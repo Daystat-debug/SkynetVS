@@ -1,0 +1,129 @@
+{
+  "kind": "M154_RUNTIME_OBSERVATION_TRACE_RESULT_V1",
+  "maintenance_block": "learning_event_provenance",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "full_pipeline": "NOT_RUN",
+  "application_launch": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "training": "NOT_RUN",
+  "training_readiness": "NOT_ASSESSED",
+  "runtime_trace_collection": "NOT_RUN",
+  "private_input_read": false,
+  "live_private_files_written": false,
+  "live_history_rewrite": false,
+  "live_ledger_open": false,
+  "live_ledger_sync": false,
+  "live_correction_memory_projection": false,
+  "rehearsal_run": false,
+  "activation_run": false,
+  "synthetic_live_rows_added": false,
+  "automatic_restore": false,
+  "working_copy_promoted": false,
+  "unrelated_changes_included_in_commit": false,
+  "private_contents_published": false,
+  "private_hashes_published": false,
+  "private_paths_published": false,
+  "missing_observations_cause": "NOT_DETERMINED",
+  "runtime_writer_success": "NOT_ASSESSED",
+  "code_change_scope": "OBSERVATION_ONLY_MAIN_AND_LEARNING_MEMORY_WITH_SHARED_TRACE_HELPER",
+  "history_payload_and_return_contract": "UNCHANGED",
+  "cwd_path_fix": "NOT_APPLIED",
+  "diagnostic_success_meaning": "APPEND_RETURNED_IS_NOT_FSYNC_DURABILITY_OR_LATER_READBACK",
+  "new_diagnostic_privacy": "FIXED_STAGE_REASON_STATE_PATH_SCOPE_WITH_PRIVATE_SESSION_AND_PHRASE_ORDINAL",
+  "process_policy": "CLOSE_ALL_OTHER_LOCAL_PYTHON_PY_PYPY_PROCESSES",
+  "process_gate_limit": "POINT_IN_TIME_NAMED_LOCAL_PYTHON_INSPECTION_NOT_A_GLOBAL_PROCESS_LOCK",
+  "process_transport": "DIRECT_STRICT_UTF8_TEXT_V2_UNCHANGED",
+  "process_gate": {
+    "before_source": "CLEAR"
+  },
+  "result_reuse_policy": "COMPLETED_INVOCATIONS_REUSE_SAVED_REPORT_WITHOUT_REAPPLY_OR_RETEST",
+  "public_test_content": "ALLOWLISTED_SOURCE_TEST_IDENTIFIERS_AND_BOUNDED_OUTCOME_COUNTS_ONLY",
+  "prior_windows_collector": {
+    "published_commit": "ee40c46862670b366ec4c582d768fe8f879e5b39",
+    "report_path": "docs/maintenance/M154_RuntimeObservationDiagnosticsV2_Result.json",
+    "report_sha256": "409c19574aebed9c282971dbab38f7124f4a6448d953b51dadf0e3b30cf0eab7",
+    "status": "PASS",
+    "diagnostic_status": "COLLECTED",
+    "scan_scope": "FULL_FILE",
+    "valid_rows": 22581,
+    "malformed_rows": 0,
+    "nlu_rows": 963,
+    "unconfirmed_rows": 0,
+    "session_binding": "NOT_ESTABLISHED",
+    "writer_success": "NOT_ASSESSED",
+    "cause": "NOT_DETERMINED",
+    "reexecuted_by_current_package": false
+  },
+  "lesson": {
+    "discovery": "EXISTING_AGGREGATE_LOG_COUNTS_DO_NOT_ATTRIBUTE_A_COMMAND_TO_A_CURRENT_APP_RUN",
+    "rule": "Observe phrase, command and writer boundaries with one private per-run context and closed fields; keep diagnostic failures secondary and propagate original failures unchanged.",
+    "limitation": "Instrumentation installation and synthetic tests do not establish the real missing-history cause or a successfully observed user command."
+  },
+  "package_id": "77ba5884044c9ff4d075bbbfb0a757ca14284bc74b0f0617ea6fd3fa5732a0e7",
+  "base_commit": "ee40c46862670b366ec4c582d768fe8f879e5b39",
+  "status": "PASS",
+  "installation_outcome": "INSTALLED_AND_TARGETED_CHECKS_PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 2.891,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "runtime_observation_trace",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 6,
+      "seconds": 0.234,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "3617f8f4510b5e4f3a983efe92ca70a8636c836a13c35d405cf56c0dd8658a82",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "source_payload_files": 5,
+  "source_read_pin_count": 59,
+  "commit_scope": [
+    "main.py",
+    "modules/learning/learning_memory.py",
+    "modules/runtime_observation_trace.py",
+    "tools/eval_runtime_observation_trace.py",
+    "docs/maintenance/M154_RuntimeObservationTrace.md",
+    "docs/maintenance/M154_RuntimeObservationTrace_Result.json"
+  ],
+  "files": {
+    "main.py": "53244ed4555dd0bc456331984523b475e3f6215ff3b3eef0d793b63976474a61",
+    "modules/learning/learning_memory.py": "c14b7583c43e0cb0cebffb04101c64ac43bb505f38750d62cfc159d3cef0e4e0",
+    "modules/runtime_observation_trace.py": "1315d63ee7b1130ad9d851dffa67682059fd93a488dee4d79613bf57e74257f9",
+    "tools/eval_runtime_observation_trace.py": "551ccacbae331b13e059293b05e5666e45957be36561d3bf9156cb9cabf8c274",
+    "docs/maintenance/M154_RuntimeObservationTrace.md": "05d77c87db750203d542dfd541583522e30607e205ad95502c8dfacf0969e720"
+  }
+}
