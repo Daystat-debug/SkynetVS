@@ -1,6 +1,7 @@
 """Small offline Tk window for the existing DTR-A contracts, not an executor."""
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import queue
@@ -26,6 +27,10 @@ from .context_bridge import correlate
 from .context_scope_bridge import enrich_relationships, format_task_summary
 from .task_request_bridge import eligible_targets, verify_capture, bounded_title
 from .goal_intent_gate import classify_goal, CHANGE_EXPLICIT, READ_ONLY
+from .symbol_investigation import (SCHEMA as SYMBOL_SCHEMA, investigate_repository,
+                                   format_investigation)
+from .symbol_task_bridge import (report_fingerprint, selected_target,
+                                 verify_symbol_capture, task_instruction)
 
 
 class QuietTk(tk.Tk):
@@ -57,6 +62,9 @@ class DeveloperWindow:
         self.ai_context_text = None  # only memory; never save source excerpts in evidence
         self.ai_bridge_summary = None  # privacy-safe text; never authorizes proposal/apply
         self.ai_task_search_result = None  # private metadata; cleared when new analysis begins
+        self.ai_symbol_result = None  # one observed structural report, never an apply candidate
+        self.ai_symbol_report_sha256 = None
+        self.ai_symbol_selector = ""
         root.title("SkynetVS — AI-разработка")
         root.geometry(f"{min(1130, root.winfo_screenwidth() - 60)}x{min(780, root.winfo_screenheight() - 100)}")
         root.minsize(790, 560)
@@ -264,6 +272,8 @@ class DeveloperWindow:
                                     font=("Segoe UI", 10), undo=True)
         self.ai_goal.pack(fill="x", pady=(2, 0))
         self.ai_goal.insert("1.0", "Проверь архитектуру голосовых команд и NLU, найди потенциальные проблемы и предложи практичные улучшения с доказательствами из исходников.")
+        self.ai_goal.edit_modified(False)
+        self.ai_goal.bind("<<Modified>>", self.ai_goal_changed)
 
         # Keep every change-control button above the expanding report.
         toolbar = ttk.Frame(frame)
@@ -299,12 +309,15 @@ class DeveloperWindow:
         # Separate row: all original controls remain visible at 790x560.
         taskbridgebar = ttk.Frame(frame)
         taskbridgebar.pack(fill="x", pady=(0, 4))
+        self.ai_symbol_button = ttk.Button(
+            taskbridgebar, text="Исследовать функцию…", command=self.start_symbol_investigation)
+        self.ai_symbol_button.pack(side="left", padx=(0, 6))
         self.ai_task_request_button = ttk.Button(
-            taskbridgebar, text="Из найденного кода → запрос на изменение…",
+            taskbridgebar, text="Создать запрос на изменение…",
             command=self.prepare_task_request_from_context)
         self.ai_task_request_button.pack(side="left")
         self.ai_task_request_button.state(["disabled"])
-        ttk.Label(taskbridgebar, text="DTR-A · один файл · без генерации и применения",
+        ttk.Label(taskbridgebar, text="DTR-A · один файл",
                   foreground="#5a6474").pack(side="left", padx=8)
 
         feedbackbar = ttk.Frame(frame)
@@ -944,6 +957,8 @@ class DeveloperWindow:
             return
         self.ai_bridge_summary = None
         self.ai_task_search_result = None
+        self.ai_symbol_result = None
+        self.ai_symbol_report_sha256 = None
         self.ai_task_request_button.state(["disabled"])
         goal = self.ai_goal.get("1.0", "end-1c").strip()
         self.ai_busy = True
@@ -959,6 +974,7 @@ class DeveloperWindow:
         self.ai_context_copy_button.state(["disabled"])
         self.ai_button.state(["disabled"])
         self.ai_context_button.state(["disabled"])
+        self.ai_symbol_button.state(["disabled"])
         self.ai_info.set("Ищу подходящие участки Git HEAD (только чтение)…")
         self.set_text(self.ai_text, "Поиск идёт в фоновом потоке. Рабочая копия и код не изменяются.")
 
@@ -971,6 +987,14 @@ class DeveloperWindow:
                 self.ai_queue.put(("error", str(exc)))
         threading.Thread(target=worker, daemon=True).start()
         self.root.after(150, self.poll_ai_review)
+
+    def ai_goal_changed(self, _event=None):
+        """A displayed report never grants a shortcut for an edited goal."""
+        if self.ai_goal.edit_modified():
+            if self.ai_symbol_result is not None or self.ai_task_search_result is not None:
+                self.ai_task_request_button.state(["disabled"])
+                self.ai_info.set("Цель изменилась. Повтори поиск или исследование перед созданием запроса.")
+            self.ai_goal.edit_modified(False)
 
     def start_context_ast_bridge(self):
         """One explicit read-only click: search and AST report for the SAME goal and HEAD.
@@ -991,6 +1015,8 @@ class DeveloperWindow:
         self.ai_context_text = None
         self.ai_bridge_summary = None
         self.ai_task_search_result = None
+        self.ai_symbol_result = None
+        self.ai_symbol_report_sha256 = None
         self.ai_task_request_button.state(["disabled"])
         self._populate_own_findings({})
         self.ai_proposal_button.state(["disabled"])
@@ -1001,6 +1027,7 @@ class DeveloperWindow:
         self.ai_button.state(["disabled"])
         self.ai_context_button.state(["disabled"])
         self.ai_bridge_button.state(["disabled"])
+        self.ai_symbol_button.state(["disabled"])
         self.ai_info.set("Сопоставляю поиск и AST по одному запросу и Git HEAD…")
         self.set_text(self.ai_text, "Только чтение. Diff, проверка и применение отключены.")
 
@@ -1020,10 +1047,82 @@ class DeveloperWindow:
         threading.Thread(target=worker, daemon=True).start()
         self.root.after(150, self.poll_ai_review)
 
+    def start_symbol_investigation(self):
+        """One explicit selector, one HEAD scan, no automatic candidate choice."""
+        if self.ai_busy:
+            return
+        goal = self.ai_goal.get("1.0", "end-1c").strip()
+        selector = simpledialog.askstring(
+            "Исследовать Python-функцию",
+            "Укажи имя функции или modules/file.py::Class.method.\n"
+            "При совпадении нескольких определений будут показаны варианты; "
+            "выбери точный путь, имя и @строку из отчёта.\n\n"
+            "Исследование читает только Git HEAD, без запуска исходников.",
+            initialvalue=self.ai_symbol_selector, parent=self.root)
+        if selector is None:
+            return
+        selector = selector.strip()
+        if not selector:
+            self.ai_info.set("Укажи функцию для исследования.")
+            return
+        expected_commit = None
+        previous = self.ai_symbol_result
+        if (previous is not None and previous.get("status") == "CHOICE_REQUIRED" and
+                previous.get("goal_sha256") == hashlib.sha256(goal.encode("utf-8")).hexdigest()):
+            try:
+                if report_fingerprint(previous) != self.ai_symbol_report_sha256:
+                    raise ValueError("Список вариантов изменился. Повтори исследование.")
+                expected_commit = previous["git_commit"]
+            except Exception as exc:
+                self.ai_symbol_result = None
+                self.ai_symbol_report_sha256 = None
+                self.ai_task_request_button.state(["disabled"])
+                self.fail(exc)
+                return
+        self.ai_symbol_selector = selector
+        self.ai_busy = True
+        self.ai_report = None
+        self.ai_proposal = None
+        self.ai_proposal_finding_id = None
+        self.ai_apply_checked = None
+        self.ai_context_text = None
+        self.ai_bridge_summary = None
+        self.ai_task_search_result = None
+        self.ai_symbol_result = None
+        self.ai_symbol_report_sha256 = None
+        self._populate_own_findings({})
+        for button in (self.ai_button, self.ai_context_button, self.ai_bridge_button,
+                       self.ai_symbol_button, self.ai_task_request_button,
+                       self.ai_proposal_button, self.ai_verify_button,
+                       self.ai_apply_button, self.ai_proposal_copy_button,
+                       self.ai_context_copy_button):
+            button.state(["disabled"])
+        self.ai_info.set("Исследую определение и прямые связи функции на одном Git HEAD…")
+        self.set_text(self.ai_text, "Читаю Git blobs и разбираю AST. Динамические связи останутся неизвестными.")
+
+        def worker():
+            try:
+                report = investigate_repository(
+                    self.repository, goal, selector,
+                    notify=lambda msg: self.ai_queue.put(("progress", msg)),
+                    expected_commit=expected_commit)
+                self.ai_queue.put(("symbol", report))
+            except Exception as exc:
+                self.ai_queue.put(("error", str(exc)))
+        threading.Thread(target=worker, daemon=True).start()
+        self.root.after(150, self.poll_ai_review)
+
     def _set_task_intent_gate(self, goal: str) -> str:
         """Update UI only; no source reads or patch privileges are granted."""
         decision = classify_goal(goal)
         if decision.kind == CHANGE_EXPLICIT:
+            if self.ai_symbol_result is not None:
+                try:
+                    selected_target(goal, self.ai_symbol_result, self.ai_symbol_report_sha256)
+                except ValueError as exc:
+                    self.ai_task_request_button.state(["disabled"])
+                    return ("Для DTR-A нужен однозначно выбранный допустимый файл и та же цель. "
+                            "Уточни выбор или повтори исследование. " + str(exc))
             self.ai_task_request_button.state(["!disabled"])
             return "Явное изменение: возможен ручной запрос DTR-A, не применение патча."
         self.ai_task_request_button.state(["disabled"])
@@ -1034,6 +1133,9 @@ class DeveloperWindow:
     def prepare_task_request_from_context(self):
         """Explicit user selection -> existing DTR-A binding; never generate/apply patch."""
         try:
+            if self.ai_symbol_result is not None:
+                self.prepare_task_request_from_symbol()
+                return
             if self.ai_busy or self.ai_task_search_result is None:
                 raise ValueError("Сначала выполни поиск или «Поиск + AST».")
             goal = self.ai_goal.get("1.0", "end-1c").strip()
@@ -1081,6 +1183,48 @@ class DeveloperWindow:
         except Exception as exc:
             self.fail(exc)
 
+    def prepare_task_request_from_symbol(self):
+        """Bind retained structural evidence through the original DTR-A capture."""
+        try:
+            if self.ai_busy or self.ai_symbol_result is None:
+                raise ValueError("Сначала дождись исследования выбранной функции.")
+            goal = self.ai_goal.get("1.0", "end-1c").strip()
+            if classify_goal(goal).kind != CHANGE_EXPLICIT:
+                self.ai_info.set(self._set_task_intent_gate(goal))
+                return
+            report = self.ai_symbol_result
+            fingerprint = self.ai_symbol_report_sha256
+            path = selected_target(goal, report, fingerprint)
+            if not messagebox.askyesno(
+                    "Создать локальный запрос по выбранной функции?",
+                    "Будет проверен тот же Git HEAD и полный файл " + path +
+                    " (до 64 КиБ). Статические факты и неизвестные связи войдут "
+                    "в запрос DTR-A. Он сохранится только в LocalAppData. "
+                    "Генерация, отправка, исполнение и применение кода не выполняются.\n\nПродолжить?",
+                    parent=self.root):
+                return
+            if self.ai_goal.get("1.0", "end-1c").strip() != goal:
+                raise ValueError("CORE_SYMBOL_STALE_GOAL")
+            source = GitSourceReader(self.repository, find_git()).capture(self.repository / path)
+            verify_symbol_capture(goal, report, fingerprint, source)
+            instruction = task_instruction(goal, report, fingerprint)
+            self.invalidate()
+            self.source = source
+            self.imported_session = False
+            self.set_task(bounded_title(goal), instruction)
+            self.refresh_source()
+            if not self._legacy_visible:
+                self.toggle_legacy_tools()
+            if not self.prepare():
+                raise ValueError("DTR-A не принял исследованную задачу. Код не изменён.")
+            self.ai_info.set("DTR-A запрос создан с фактами исследования функции; diff не создан.")
+            self.event("CORE_SYMBOL_TO_DTRA_REQUEST", base_commit=source.base_commit,
+                       path=path, goal_sha256=report["goal_sha256"],
+                       symbol_id=report["selected"]["id"], report_sha256=fingerprint)
+        except Exception as exc:
+            self.ai_task_request_button.state(["disabled"])
+            self.fail(exc)
+
     def copy_context(self):
         if not self.ai_context_text or self.ai_busy:
             self.ai_info.set("Сначала выполни поиск кода и дождись завершения.")
@@ -1094,6 +1238,8 @@ class DeveloperWindow:
             return
         self.ai_bridge_summary = None
         self.ai_task_search_result = None
+        self.ai_symbol_result = None
+        self.ai_symbol_report_sha256 = None
         self.ai_task_request_button.state(["disabled"])
         goal = self.ai_goal.get("1.0", "end-1c").strip()
         model = self.ai_model.get().strip()
@@ -1103,6 +1249,7 @@ class DeveloperWindow:
         self.ai_context_text = None
         self.ai_context_copy_button.state(["disabled"])
         self.ai_context_button.state(["disabled"])
+        self.ai_symbol_button.state(["disabled"])
         self.ai_proposal = None
         self.ai_proposal_finding_id = None
         self.ai_apply_checked = None
@@ -1185,6 +1332,45 @@ class DeveloperWindow:
                     self.ai_task_request_button.state(["disabled"])
                     self.ai_context_copy_button.state(["disabled"])
                     self.ai_info.set("Не удалось сопоставить поиск с AST: " + str(exc))
+            elif kind == "symbol":
+                finished = True
+                try:
+                    if (value.get("schema") != SYMBOL_SCHEMA or
+                            value.get("status") not in ("COMPLETE", "CHOICE_REQUIRED", "NOT_FOUND") or
+                            value.get("git_head_observed") is not True or
+                            value.get("source_binding") != "OBSERVED_GIT_HEAD_BLOBS" or
+                            value.get("source_text_included") is not False):
+                        raise ValueError("CORE_SYMBOL_UI_REPORT_INVALID")
+                    fingerprint = report_fingerprint(value)
+                    shown = format_investigation(value)
+                    folder = self.store._folder("symbol_investigation_")
+                    self.store.write(folder, "Core_SymbolInvestigation.json", json_bytes(value))
+                    self.ai_symbol_result = value
+                    self.ai_symbol_report_sha256 = fingerprint
+                    self.ai_context_text = shown
+                    self.ai_bridge_summary = shown
+                    self.set_text(self.ai_text, shown)
+                    self.ai_context_copy_button.state(["!disabled"])
+                    goal = self.ai_goal.get("1.0", "end-1c").strip()
+                    if value["status"] == "COMPLETE":
+                        summary = self._set_task_intent_gate(goal)
+                    else:
+                        self.ai_task_request_button.state(["disabled"])
+                        summary = ("Выбери точное определение из отчёта и повтори «Исследовать функцию»."
+                                   if value["status"] == "CHOICE_REQUIRED" else
+                                   "Уточни имя функции или путь; определение не выбрано.")
+                    self.ai_info.set("Исследование сохранено. " + summary + " Квитанция: " + str(folder))
+                    self.event("CORE_SYMBOL_INVESTIGATION_RECORDED", commit=value["git_commit"],
+                               status=value["status"], goal_sha256=value["goal_sha256"],
+                               report_sha256=fingerprint)
+                except Exception as exc:
+                    self.ai_symbol_result = None
+                    self.ai_symbol_report_sha256 = None
+                    self.ai_context_text = None
+                    self.ai_bridge_summary = None
+                    self.ai_task_request_button.state(["disabled"])
+                    self.ai_context_copy_button.state(["disabled"])
+                    self.ai_info.set("Не удалось оформить исследование функции: " + str(exc))
             elif kind == "report":
                 finished = True
                 self.ai_report = value
@@ -1209,6 +1395,8 @@ class DeveloperWindow:
             elif kind == "error":
                 finished = True
                 self.ai_task_search_result = None
+                self.ai_symbol_result = None
+                self.ai_symbol_report_sha256 = None
                 self.ai_task_request_button.state(["disabled"])
                 self.ai_info.set("Анализ не выполнен: " + value)
                 self.set_text(self.ai_text, "Ошибка: " + value + "\nНичего не изменено.")
@@ -1218,6 +1406,7 @@ class DeveloperWindow:
             self.ai_button.state(["!disabled"])
             self.ai_context_button.state(["!disabled"])
             self.ai_bridge_button.state(["!disabled"])
+            self.ai_symbol_button.state(["!disabled"])
         elif self.ai_busy:
             self.root.after(150, self.poll_ai_review)
 
@@ -1225,7 +1414,7 @@ class DeveloperWindow:
         if self.ai_report is None and self.ai_bridge_summary is not None:
             self.root.clipboard_clear()
             self.root.clipboard_append(self.ai_bridge_summary)
-            self.ai_info.set("Сводка поиска + AST скопирована. Код не изменён.")
+            self.ai_info.set("Отчёт скопирован. Код не изменён.")
             return
         if self.ai_report is None:
             self.ai_info.set("Сначала выполни анализ.")
