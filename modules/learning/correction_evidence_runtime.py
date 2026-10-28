@@ -267,6 +267,40 @@ def _legacy_memory(base):
     return memory
 
 
+def _activate_learning_evidence_locked(root, base):
+    """Internal activation body; caller must own learning_evidence_lock(base).
+
+    Maintenance uses this to keep byte backups and cutover in one lock interval.
+    This function acquires no lock and performs no automatic backup or restore.
+    """
+    from modules.learning.correction_evidence_ledger import (
+        initialize_correction_evidence_ledger, read_correction_evidence_totals)
+    control = read_learning_evidence_control(base)
+    if control["state"] == "LEGACY":
+        _legacy_memory(base)
+        _create_preparing(base)
+    elif control["state"] == "PREPARING":
+        _legacy_memory(base)
+    if control["state"] == "ACTIVE":
+        totals = read_correction_evidence_totals(root)
+        if totals["status"] != "READY":
+            raise RuntimeRefused("LEDGER_READ_REFUSED", totals["reason"])
+        if totals["epoch"] != control["epoch"]:
+            raise RuntimeRefused("EPOCH_MISMATCH")
+        return _result("ACTIVATE", "UNCHANGED", mode="EVENT")
+    if not _present(base / LEDGER_NAME):
+        initialized = initialize_correction_evidence_ledger(root)
+        if initialized["status"] != "INITIALIZED":
+            raise RuntimeRefused("LEDGER_INITIALIZATION_REFUSED", initialized["reason"])
+    totals = read_correction_evidence_totals(root)
+    if totals["status"] != "READY":
+        raise RuntimeRefused("LEDGER_READ_REFUSED", totals["reason"])
+    if totals["pair_count"] != 0:
+        raise RuntimeRefused("AMBIGUOUS_PREPARING_LEDGER")
+    _activate_control(base, totals["epoch"])
+    return _result("ACTIVATE", "ACTIVATED", mode="EVENT")
+
+
 def activate_learning_evidence(repo):
     """Explicitly freeze legacy accrual, initialize a baseline, then activate.
 
@@ -276,34 +310,9 @@ def activate_learning_evidence(repo):
     Stop older application/builder processes before the first activation.
     """
     try:
-        from modules.learning.correction_evidence_ledger import (
-            initialize_correction_evidence_ledger, read_correction_evidence_totals)
         root, learning = _repo_learning(repo)
         with learning_evidence_lock(learning) as base:
-            control = read_learning_evidence_control(base)
-            if control["state"] == "LEGACY":
-                _legacy_memory(base)
-                _create_preparing(base)
-            elif control["state"] == "PREPARING":
-                _legacy_memory(base)
-            if control["state"] == "ACTIVE":
-                totals = read_correction_evidence_totals(root)
-                if totals["status"] != "READY":
-                    raise RuntimeRefused("LEDGER_READ_REFUSED", totals["reason"])
-                if totals["epoch"] != control["epoch"]:
-                    raise RuntimeRefused("EPOCH_MISMATCH")
-                return _result("ACTIVATE", "UNCHANGED", mode="EVENT")
-            if not _present(base / LEDGER_NAME):
-                initialized = initialize_correction_evidence_ledger(root)
-                if initialized["status"] != "INITIALIZED":
-                    raise RuntimeRefused("LEDGER_INITIALIZATION_REFUSED", initialized["reason"])
-            totals = read_correction_evidence_totals(root)
-            if totals["status"] != "READY":
-                raise RuntimeRefused("LEDGER_READ_REFUSED", totals["reason"])
-            if totals["pair_count"] != 0:
-                raise RuntimeRefused("AMBIGUOUS_PREPARING_LEDGER")
-            _activate_control(base, totals["epoch"])
-            return _result("ACTIVATE", "ACTIVATED", mode="EVENT")
+            return _activate_learning_evidence_locked(root, base)
     except RuntimeRefused as error:
         return _result("ACTIVATE", reason=error.reason, detail_reason=error.detail_reason)
     except OSError:
@@ -312,6 +321,7 @@ def activate_learning_evidence(repo):
         return _result("ACTIVATE", reason="INPUT_INVALID")
     except Exception:
         return _result("ACTIVATE", reason="INTERNAL_ERROR")
+
 
 
 def build_learning_corrections(repo):
