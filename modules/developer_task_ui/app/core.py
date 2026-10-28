@@ -23,6 +23,9 @@ from modules.developer.developer_task_proposal_intake import (
     prepare_developer_task_proposal_request, intake_developer_task_proposal,
     _normalize_repo_path, _target_protected,
 )
+from modules.developer.developer_task_validator import (
+    _ValidationContext, _validate_repository_path,
+)
 
 DEMO_SOURCE = b"def normalize(value):\n    return value.strip()\n"
 DEMO_TITLE = "Нормализация регистра текста"
@@ -100,6 +103,14 @@ def validate_target(path: str) -> None:
     for part in path.split("/"):
         if re.match(r"(?i)^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)", part):
             raise ValueError("Зарезервированное имя Windows не допускается.")
+    # Apply the unchanged final manifest path policy before creating a request.
+    manifest_context = _ValidationContext()
+    _validate_repository_path(path, "target_path", manifest_context)
+    if manifest_context.issues:
+        if any(issue.code == "protected_path" for issue in manifest_context.issues):
+            raise ValueError("Этот файл защищён политикой Developer Tasks. DTR-A не может подготовить запрос на его изменение.")
+        codes = ", ".join(issue.code for issue in manifest_context.issues)
+        raise ValueError("Путь не допускается итоговой проверкой Developer Tasks: " + codes + ".")
 
 
 @dataclass(frozen=True)
@@ -188,11 +199,16 @@ def prompt_text(request: DeveloperTaskProposalRequest, source: SourceSnapshot) -
     schema = response_template(request)
     schema["patch_text"] = "<полный unified diff только указанного файла>"
     schema["explanation"] = "<объяснение и ограничения; не заявляй о невыполненных тестах>"
+    task_title = request.title.strip()
+    task_instruction = request.instruction.strip()
+    task_text = task_title
+    if task_instruction != task_title:
+        task_text += "\n\n" + task_instruction
     return (
         "# SkynetVS — запрос предложения изменения\n\n"
         + ("**УЧЕБНЫЙ ПРИМЕР. Синтетические commit/tree, НЕ рабочий репозиторий.**\n\n" if demo else
            "Основа: один файл из наблюдённого Git commit. Не считать его текущим после этого снимка.\n\n")
-        + "## Задача\n\n" + request.title + "\n\n" + request.instruction + "\n\n"
+        + "## Задача\n\n" + task_text + "\n\n"
         + "## Как вернуть ответ\n\n"
         "Подготовь файл DTR_Response.json: ровно один UTF-8 JSON-объект по образцу ниже. "
         "Сохрани request_id и request_fingerprint без изменений. Не добавляй поля или Markdown-обёртку в JSON. "

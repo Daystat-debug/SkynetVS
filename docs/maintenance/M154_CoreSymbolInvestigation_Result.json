@@ -1,0 +1,151 @@
+{
+  "kind": "M154_CORE_SYMBOL_INVESTIGATION_RESULT_V1",
+  "maintenance_block": "core_symbol_investigation",
+  "main_promotion": "DEFERRED_UNTIL_BLOCK_COMPLETE",
+  "code_change_scope": "BOUNDED_GIT_SYMBOL_DIRECT_CALL_RESEARCH_AND_EXISTING_DTR_REQUEST_BRIDGE_UI",
+  "capability_validation": "TARGETED_SYNTHETIC_CHECKS_ONLY",
+  "runtime_ui_acceptance": "NOT_RUN",
+  "application_launch": "NOT_RUN",
+  "full_pipeline": "NOT_RUN",
+  "model_download": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "model_inference": "NOT_RUN",
+  "training": "NOT_RUN",
+  "private_input_read": false,
+  "live_private_files_written": false,
+  "live_sqlite_open": false,
+  "automatic_restore": false,
+  "unrelated_changes_included_in_commit": false,
+  "private_contents_published": false,
+  "private_hashes_published": false,
+  "private_paths_published": false,
+  "existing_app_core_py": "UNCHANGED_BY_THIS_PACKAGE",
+  "process_policy": "CLOSE_ALL_OTHER_LOCAL_PYTHON_PY_PYPY_PROCESSES",
+  "process_gate_limit": "POINT_IN_TIME_NAMED_LOCAL_PYTHON_INSPECTION_NOT_A_GLOBAL_PROCESS_LOCK",
+  "process_transport": "DIRECT_STRICT_UTF8_TEXT_V2_UNCHANGED",
+  "process_gate": {
+    "before_source": "CLEAR"
+  },
+  "result_reuse_policy": "COMPLETED_INVOCATIONS_REUSE_SAVED_REPORT_WITHOUT_REAPPLY_OR_RETEST",
+  "public_test_content": "ALLOWLISTED_SOURCE_TEST_IDENTIFIERS_AND_BOUNDED_OUTCOME_COUNTS_ONLY",
+  "package_id": "c882096cdb0df467f9a7dfb74d33210515b32a482b8c9d143ab28f50c7a46c36",
+  "base_commit": "f85bde0cc569f0a8291d2cb8c02ec2bd32ac7ca8",
+  "main_reference_at_preparation": "5ace7d645fc85ec9626ce7befb59ce68b90de505",
+  "status": "PASS",
+  "installation_outcome": "INSTALLED_AND_TARGETED_CHECKS_PASS",
+  "checks_status": "PASS",
+  "checks": [
+    {
+      "name": "package_boundaries",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 32,
+      "seconds": 1.641,
+      "stdout_sha256": "e1f816b2245a7a4e234bd43bb0e2e4c24f6da671a6a36f6cfb97cd1308f3512c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "NOT_APPLICABLE",
+        "reason": "NON_UNITTEST_SUITE",
+        "counts": null,
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "core_symbol_investigation",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 29,
+      "seconds": 0.546,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "31eb378db6100dfe795fd28d7e36de2113a20e03c904389cd214f8fe040f7869",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 29,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "core_symbol_task_bridge",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 18,
+      "seconds": 0.125,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "2fd354e28ea6ed15fde267ff82c62433c3cd20f51e281f2f4da435a1f9fe2b54",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    },
+    {
+      "name": "core_symbol_ui",
+      "status": "PASS",
+      "exit_code": 0,
+      "cases": 14,
+      "seconds": 0.485,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c9f7fe2c5d412144b8d7da37ace1c408a6af6448b39569192f89f9676339be16",
+      "test_diagnostics": {
+        "kind": "M154_UNITTEST_DIAGNOSTICS_V1",
+        "status": "AVAILABLE",
+        "reason": null,
+        "counts": {
+          "tests": 14,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "failed_cases": []
+      }
+    }
+  ],
+  "platform": "Windows",
+  "python": [
+    3,
+    12,
+    10
+  ],
+  "source_payload_files": 10,
+  "source_read_pin_count": 37,
+  "commit_scope": [
+    "modules/developer_task_ui/app/symbol_investigation.py",
+    "modules/developer_task_ui/app/symbol_task_bridge.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_core_symbol_investigation.py",
+    "tools/eval_core_symbol_task_bridge.py",
+    "tools/eval_core_symbol_ui.py",
+    "docs/maintenance/M154_CoreSymbolInvestigation.md",
+    "docs/maintenance/M154_Workflow.md",
+    "docs/maintenance/M154_CoreSymbolInvestigation_Result.json"
+  ],
+  "files": {
+    "modules/developer_task_ui/app/symbol_investigation.py": "65182d0ad033b6b47a85c7703fb12d614276ea34e6712996a98a400fa0d2ba4c",
+    "modules/developer_task_ui/app/symbol_task_bridge.py": "5b7020519b45e0d788feb5975f51992343510e949256e71f0b2bdfece231fca2",
+    "modules/developer_task_ui/app/ui.py": "3b6f441ff4c4a2acdd8777760d624e00991bf95a61ade36237fc0ac3413006ae",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json": "d7975865ad175ccbd0bf8a6ec05298290949713070f8e4e1da7bed0d9dad25a5",
+    "modules/developer_task_ui_launcher.py": "ab4262dd6c2ef288306d974961a8500de27ff7e80305ec663a97774492e313d2",
+    "tools/eval_core_symbol_investigation.py": "7d14b6523cf6845587ebe961ceb5f919f28cbcd3761d8891f6c4ae4c83c5ec8b",
+    "tools/eval_core_symbol_task_bridge.py": "deb55f22f04e6541144f0313923c1a81c6aff0cdcdebfee6f0976f53b88d7139",
+    "tools/eval_core_symbol_ui.py": "52ad59b7236bbd494481f20959ca154ee0c3f80dcaed183ac327885c517d4c96",
+    "docs/maintenance/M154_CoreSymbolInvestigation.md": "22323850325a22e409d4135933a06c38f6da27ada95c9d20fc3e159cceba54d8",
+    "docs/maintenance/M154_Workflow.md": "feb43348da260267c47a8f9a6a8e6540402bfe6488ac27aabdb5ff970d259c71"
+  }
+}
