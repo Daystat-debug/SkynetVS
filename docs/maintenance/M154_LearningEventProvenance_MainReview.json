@@ -1,0 +1,1268 @@
+{
+  "actual_live_report": {
+    "commit": "f85bde0cc569f0a8291d2cb8c02ec2bd32ac7ca8",
+    "execution": "CONFIRMED_RETURN",
+    "path": "docs/maintenance/M154_ControlledLiveEvidenceBuild_Result.json",
+    "positive_new_pair_accrual": "NOT_PROVEN_BY_THIS_OPERATION",
+    "result": {
+      "backup_preserved": true,
+      "backup_status": "VERIFIED",
+      "captured_state": "ACTIVE",
+      "coverage": "NO_NEW_PAIRS",
+      "current_epoch_rows": 4,
+      "history_rows": 506,
+      "kind": "SKYNETVS_M154_CONTROLLED_LIVE_EVIDENCE_OPERATION_V1",
+      "ledger_sync_status": "APPLIED",
+      "legacy_metadata_preserved": true,
+      "live_build_status": "UNCHANGED",
+      "live_control_preserved": true,
+      "live_history_preserved": true,
+      "live_sqlite_access_attempted": true,
+      "memory_rows_after": 1,
+      "memory_rows_before": 1,
+      "new_bindings": 4,
+      "new_evidence": 0,
+      "new_pairs": 0,
+      "new_quarantines": 0,
+      "pairs_after": 0,
+      "pairs_before": 0,
+      "projection_status": "UNCHANGED",
+      "projection_verified": true,
+      "reason": null,
+      "scope": {
+        "activation_run": false,
+        "application_run": false,
+        "atomic_filesystem_snapshot": false,
+        "authorized_live_writes": "LEDGER_SIDECARS_MEMORY_AND_PERSISTENT_RUNTIME_LOCK",
+        "automatic_rebuild": false,
+        "automatic_restore": false,
+        "backup_is_automatic_restore": false,
+        "control_written_by_operation": false,
+        "history_written_by_operation": false,
+        "input": "CURRENT_LIVE_STATE_WITH_FRESH_SEVEN_FILE_RAW_BACKUP",
+        "ledger_and_memory_single_transaction": false,
+        "live_idempotence": "NOT_ASSESSED_BY_THIS_ONE_PASS_OPERATION",
+        "lock_file": "PERSISTENT_ONE_BYTE_NOT_BACKED_UP",
+        "main_promotion_run": false,
+        "model_download_run": false,
+        "old_process_gate": "CALLER_REQUIRED_POINT_IN_TIME_CHECKS",
+        "operation": "ONE_ACTIVE_LEDGER_SYNC_THEN_ONE_PROJECTION_USING_EXISTING_APIS",
+        "prior_copy_is_same_live_capture": false,
+        "public_runtime_builder_called": false,
+        "retained_before": "NEVER_OPENED_BY_SQLITE_OR_BUILDER",
+        "runtime_lock": "CONTINUOUS_COOPERATING_WRITERS_CAPTURE_THROUGH_FINAL_READBACK",
+        "second_live_build_run": false,
+        "source_payload_applied": false,
+        "sqlite_read_may_recover_journal": true,
+        "sqlite_target": "LIVE_PROJECT_ONLY_AFTER_VERIFIED_BACKUP_AND_DURABLE_INTENT",
+        "synthetic_live_rows_added": false,
+        "training_readiness": "NOT_ASSESSED",
+        "training_run": false
+      },
+      "source_preserved_at_capture": true,
+      "stage": "COMPLETE",
+      "status": "VERIFIED"
+    },
+    "sha256": "6b38e448920f651c0c022554663b13335aa2abeb5a654f62f9ef64e8e3ae12cc",
+    "shipped_package_report_validation": "PASS"
+  },
+  "closure_condition": "prepared two-commit candidate is contained in remote refs/heads/main",
+  "excluded_experiment_differences": [
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "D",
+      "path": "docs/maintenance/M154_ErrorLogPath_MainReview.json",
+      "reason": "PRESERVE_PRIOR_COMPLETED_MAIN_REVIEW"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "D",
+      "path": "docs/maintenance/M154_LearningBoundary_MainReview.json",
+      "reason": "PRESERVE_PRIOR_COMPLETED_MAIN_REVIEW"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "D",
+      "path": "docs/maintenance/M154_LearningDataQuality_MainReview.json",
+      "reason": "PRESERVE_PRIOR_COMPLETED_MAIN_REVIEW"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "D",
+      "path": "docs/maintenance/M154_PipelineResults_MainReview.json",
+      "reason": "PRESERVE_PRIOR_COMPLETED_MAIN_REVIEW"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "M",
+      "path": "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+      "reason": "SEPARATE_DTR_UI_BLOCK_3cd5a06"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "M",
+      "path": "modules/developer_task_ui/app/core.py",
+      "reason": "SEPARATE_DTR_UI_BLOCK_3cd5a06"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "M",
+      "path": "modules/developer_task_ui_launcher.py",
+      "reason": "SEPARATE_DTR_UI_BLOCK_3cd5a06"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/README_RU.md",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/development_lessons.py",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/git_transport.py",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/launch_template.ps1",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/lessons.json",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/failure.log.txt",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/observation.json",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/repair.patch",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/test_git_transport.before.txt",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/preparation_history/qa001_isolated_import/verification.json",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/run.py",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/test_development_lessons.py",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/test_git_transport.py",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    },
+    {
+      "action": "KEEP_CURRENT_MAIN_ENTRY_OR_ABSENCE",
+      "diff_status": "A",
+      "path": "tools/m154_workflow/test_workflow.py",
+      "reason": "SEPARATE_AUTOMATION_SELFTEST_BLOCK_7506116"
+    }
+  ],
+  "final_workflow_sha256": "5d1a475881fbdcbff3c1207397e6e91d7187d344e9ccab43dd1950cedabd1815",
+  "fresh_observation_reference": {
+    "commit": "8eb056326e6768faddcdb17fa45e890abc3fe278",
+    "new_valid_current_epoch_rows": 2,
+    "path": "docs/maintenance/M154_FreshRuntimeObservation_Result.json",
+    "scope": "SESSION_WINDOW_CORROBORATION",
+    "sha256": "05fab7cce721c45da23ad3ee1014c8943af400885e698cc9e83c9df9e633ad5a"
+  },
+  "historical_payload_bindings": [
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": null,
+      "declared_file_count": 0,
+      "files": [],
+      "introducing_commit": "da5a0f59c4ccf74e5b722f0cc5443f03f2b6b15c",
+      "path": "docs/maintenance/M154_ActiveEvidenceObservation_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": null,
+      "declared_file_count": 0,
+      "files": [],
+      "introducing_commit": "f85bde0cc569f0a8291d2cb8c02ec2bd32ac7ca8",
+      "path": "docs/maintenance/M154_ControlledLiveEvidenceBuild_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 5,
+      "files": [
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_evidence_activation.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_evidence_runtime.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_correction_evidence_activation.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_ACTIVATION_V1.md"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_Workflow.md"
+        }
+      ],
+      "introducing_commit": "eb73f87073e3f3e5234f2dab819b9b8fd7cf451f",
+      "path": "docs/maintenance/M154_CorrectionEvidenceActivation_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 5,
+      "files": [
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_evidence_ledger.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_correction_evidence_ledger.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_LEDGER_V1.md"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_Workflow.md"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": ".gitignore"
+        }
+      ],
+      "introducing_commit": "7674fc616850e1071b8fd25cc5e849964527c94c",
+      "path": "docs/maintenance/M154_CorrectionEvidenceLedger_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 4,
+      "files": [
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_evidence_rehearsal.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_correction_evidence_rehearsal.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_REHEARSAL_V1.md"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_Workflow.md"
+        }
+      ],
+      "introducing_commit": "1b272382691bb8d265a1b098f6856aa0cb5e24ea",
+      "path": "docs/maintenance/M154_CorrectionEvidenceRehearsal_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 17,
+      "files": [
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_evidence_ledger.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_evidence_projection.py"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_evidence_runtime.py"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/learning_memory.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_pair_evidence.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/learning_history_snapshot.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/command_processor.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/build_correction_memory.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/pipeline.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_correction_memory_idempotence.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_learning_event_identity.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_pipeline_effects.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_correction_evidence_projection.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_correction_evidence_runtime.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_RUNTIME_V1.md"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_Workflow.md"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": ".gitignore"
+        }
+      ],
+      "introducing_commit": "47a824867b0c1d6b3297a971d1828c67a718e238",
+      "path": "docs/maintenance/M154_CorrectionEvidenceRuntime_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 4,
+      "files": [
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/correction_pair_evidence.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_correction_pair_evidence.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/architecture/SKYNETVS_CORRECTION_PAIR_EVIDENCE_V1.md"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_Workflow.md"
+        }
+      ],
+      "introducing_commit": "4f7735e0e50fb8b5d6ce64b992b47dfe3b3a6e1c",
+      "path": "docs/maintenance/M154_CorrectionPairEvidence_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": null,
+      "declared_file_count": 0,
+      "files": [],
+      "introducing_commit": "e3d568ef62c22cc30b617f5c8bd63d940514b3f0",
+      "path": "docs/maintenance/M154_FreshCorrectionEvidenceReplay_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": null,
+      "declared_file_count": 0,
+      "files": [],
+      "introducing_commit": "8eb056326e6768faddcdb17fa45e890abc3fe278",
+      "path": "docs/maintenance/M154_FreshRuntimeObservation_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 4,
+      "files": [
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/learning_memory.py"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_learning_event_identity.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/architecture/SKYNETVS_LEARNING_EVENT_IDENTITY_V1.md"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_Workflow.md"
+        }
+      ],
+      "introducing_commit": "2b9e99e546720744dad5dd7ef8101d175bb62a8a",
+      "path": "docs/maintenance/M154_LearningEventIdentity_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 4,
+      "files": [
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/audit_learning_data.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_learning_event_payload_audit.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/architecture/SKYNETVS_LEARNING_EVENT_PAYLOAD_AUDIT_V2.md"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_Workflow.md"
+        }
+      ],
+      "introducing_commit": "3ac547c6e2a98a600d3cf3f9d04f626d8bf46d9d",
+      "path": "docs/maintenance/M154_LearningEventPayloadAudit_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 4,
+      "files": [
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/learning_history_snapshot.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_learning_history_snapshot.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/architecture/SKYNETVS_LEARNING_HISTORY_SNAPSHOT_V1.md"
+        },
+        {
+          "matches_current_source": false,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_Workflow.md"
+        }
+      ],
+      "introducing_commit": "1844fd2109f845dc545880eef770bbbf69817756",
+      "path": "docs/maintenance/M154_LearningHistorySnapshot_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": null,
+      "declared_file_count": 0,
+      "files": [],
+      "introducing_commit": "ee40c46862670b366ec4c582d768fe8f879e5b39",
+      "path": "docs/maintenance/M154_RuntimeObservationDiagnosticsV2_Result.json",
+      "status": "PASS"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": null,
+      "declared_file_count": 0,
+      "files": [],
+      "introducing_commit": "78649bf98b29d33508256325395dcd6588d074c3",
+      "path": "docs/maintenance/M154_RuntimeObservationDiagnostics_Result.json",
+      "status": "FAIL"
+    },
+    {
+      "all_declared_files_match_introducing_commit": true,
+      "checks_status": "PASS",
+      "declared_file_count": 5,
+      "files": [
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "main.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/learning/learning_memory.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "modules/runtime_observation_trace.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "tools/eval_runtime_observation_trace.py"
+        },
+        {
+          "matches_current_source": true,
+          "matches_report_at_introducing_commit": true,
+          "path": "docs/maintenance/M154_RuntimeObservationTrace.md"
+        }
+      ],
+      "introducing_commit": "f2f8631f516166cecedc4ddc9b6b38d7033f3af1",
+      "path": "docs/maintenance/M154_RuntimeObservationTrace_Result.json",
+      "status": "PASS"
+    }
+  ],
+  "historical_result_reports_preserved": true,
+  "historical_source_evidence": {
+    "accepted_experiment_commit": "f85bde0cc569f0a8291d2cb8c02ec2bd32ac7ca8",
+    "all_reads_public_git_source": true,
+    "historical_case_counts_not_added_to_current_gate": true,
+    "historical_windows_348_not_entirely_unchanged_dependency_closure": "learning_memory.py changed for optional trace reporter; current identity/runtime/trace gate explicitly covers this boundary",
+    "historical_windows_348_not_newly_executed": true,
+    "kind": "M154_MSG116_HISTORICAL_EVIDENCE_BINDINGS_V1",
+    "records": [
+      {
+        "checks": [
+          {
+            "cases": 32,
+            "exit_code": 0,
+            "name": "package_boundaries",
+            "status": "PASS"
+          },
+          {
+            "cases": 23,
+            "exit_code": 0,
+            "name": "correction_memory_idempotence",
+            "status": "PASS"
+          },
+          {
+            "cases": 43,
+            "exit_code": 0,
+            "name": "learning_data_audit",
+            "status": "PASS"
+          },
+          {
+            "cases": 10,
+            "exit_code": 0,
+            "name": "learning_event_identity",
+            "status": "PASS"
+          },
+          {
+            "cases": 18,
+            "exit_code": 0,
+            "name": "learning_event_payload_audit",
+            "status": "PASS"
+          },
+          {
+            "cases": 24,
+            "exit_code": 0,
+            "name": "correction_pair_evidence",
+            "status": "PASS"
+          },
+          {
+            "cases": 30,
+            "exit_code": 0,
+            "name": "learning_history_snapshot",
+            "status": "PASS"
+          },
+          {
+            "cases": 44,
+            "exit_code": 0,
+            "name": "correction_evidence_ledger",
+            "status": "PASS"
+          },
+          {
+            "cases": 38,
+            "exit_code": 0,
+            "name": "correction_evidence_projection",
+            "status": "PASS"
+          },
+          {
+            "cases": 36,
+            "exit_code": 0,
+            "name": "correction_evidence_runtime",
+            "status": "PASS"
+          },
+          {
+            "cases": 18,
+            "exit_code": 0,
+            "name": "pipeline_effects",
+            "status": "PASS"
+          },
+          {
+            "cases": 32,
+            "exit_code": 0,
+            "name": "correction_evidence_activation",
+            "status": "PASS"
+          }
+        ],
+        "commit": "eb73f87073e3f3e5234f2dab819b9b8fd7cf451f",
+        "historical_report_bytes_preserved": true,
+        "payload_bindings": [
+          {
+            "current_sha256_lf": "9d8bb13cba658d6104516b21637721a0f1bbe3ee7a2027a078e62108a9907e0a",
+            "matches": true,
+            "path": "modules/learning/correction_evidence_activation.py",
+            "reported_sha256_lf": "9d8bb13cba658d6104516b21637721a0f1bbe3ee7a2027a078e62108a9907e0a",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "6fe1775f82a8a08e3a537c8ab0cd42c4826a9280b9c4d45a549b310c40142270",
+            "matches": true,
+            "path": "modules/learning/correction_evidence_runtime.py",
+            "reported_sha256_lf": "6fe1775f82a8a08e3a537c8ab0cd42c4826a9280b9c4d45a549b310c40142270",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "0384cebdb8edad6c8b35eaef841605de10110fdca8c3ada6a0e815d57d455a70",
+            "matches": true,
+            "path": "tools/eval_correction_evidence_activation.py",
+            "reported_sha256_lf": "0384cebdb8edad6c8b35eaef841605de10110fdca8c3ada6a0e815d57d455a70",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "266d66802eb55ad46fb9306e5e24f59865cc6d9c0defedc1622fc2a8e09d5a2b",
+            "matches": true,
+            "path": "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_ACTIVATION_V1.md",
+            "reported_sha256_lf": "266d66802eb55ad46fb9306e5e24f59865cc6d9c0defedc1622fc2a8e09d5a2b",
+            "scope": "DOCUMENTATION"
+          },
+          {
+            "current_sha256_lf": "2f1ec141c08ef1cb5df30c6f1b0f6539b46d26b910365b1d9adeb23cda13320e",
+            "matches": false,
+            "path": "docs/maintenance/M154_Workflow.md",
+            "reported_sha256_lf": "30f8bef9f39af4876e84ab54b35ff0179451fb063dc39a4a10bfa7a56909afbb",
+            "scope": "DOCUMENTATION"
+          }
+        ],
+        "platform": "Windows",
+        "report_path": "docs/maintenance/M154_CorrectionEvidenceActivation_Result.json",
+        "report_sha256": "0ceba567f18fc5a85e46a44f00ef82402d7658a7e358d96e2967557e396e6f8a",
+        "reported_status": "PASS"
+      },
+      {
+        "checks": [
+          {
+            "cases": 32,
+            "exit_code": 0,
+            "name": "package_boundaries",
+            "status": "PASS"
+          },
+          {
+            "cases": 32,
+            "exit_code": 0,
+            "name": "correction_evidence_rehearsal",
+            "status": "PASS"
+          }
+        ],
+        "commit": "1b272382691bb8d265a1b098f6856aa0cb5e24ea",
+        "historical_report_bytes_preserved": true,
+        "payload_bindings": [
+          {
+            "current_sha256_lf": "f6df9535a66eecadc255fbafddc489b69ddbc4c4f2bdbcb15d9dfbfc80d0c927",
+            "matches": true,
+            "path": "modules/learning/correction_evidence_rehearsal.py",
+            "reported_sha256_lf": "f6df9535a66eecadc255fbafddc489b69ddbc4c4f2bdbcb15d9dfbfc80d0c927",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "8a1fe5b32f05ec095f02a30ce18bee34de55ef3c16c1d20138f43540d0ee54f5",
+            "matches": true,
+            "path": "tools/eval_correction_evidence_rehearsal.py",
+            "reported_sha256_lf": "8a1fe5b32f05ec095f02a30ce18bee34de55ef3c16c1d20138f43540d0ee54f5",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "75f7755bc6cc6d51d9b2f60d7db7fbdecde2737a5eeb607f3c30b9b91e213946",
+            "matches": true,
+            "path": "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_REHEARSAL_V1.md",
+            "reported_sha256_lf": "75f7755bc6cc6d51d9b2f60d7db7fbdecde2737a5eeb607f3c30b9b91e213946",
+            "scope": "DOCUMENTATION"
+          },
+          {
+            "current_sha256_lf": "2f1ec141c08ef1cb5df30c6f1b0f6539b46d26b910365b1d9adeb23cda13320e",
+            "matches": true,
+            "path": "docs/maintenance/M154_Workflow.md",
+            "reported_sha256_lf": "2f1ec141c08ef1cb5df30c6f1b0f6539b46d26b910365b1d9adeb23cda13320e",
+            "scope": "DOCUMENTATION"
+          }
+        ],
+        "platform": "Windows",
+        "report_path": "docs/maintenance/M154_CorrectionEvidenceRehearsal_Result.json",
+        "report_sha256": "6fe3c5277f948a7142638ed408ee7ce9e12a24db92e1a9fee47c7644478d21e3",
+        "reported_status": "PASS"
+      },
+      {
+        "checks": [
+          {
+            "cases": 32,
+            "exit_code": 0,
+            "name": "package_boundaries",
+            "status": "PASS"
+          },
+          {
+            "cases": 6,
+            "exit_code": 0,
+            "name": "runtime_observation_trace",
+            "status": "PASS"
+          }
+        ],
+        "commit": "f2f8631f516166cecedc4ddc9b6b38d7033f3af1",
+        "historical_report_bytes_preserved": true,
+        "payload_bindings": [
+          {
+            "current_sha256_lf": "53244ed4555dd0bc456331984523b475e3f6215ff3b3eef0d793b63976474a61",
+            "matches": true,
+            "path": "main.py",
+            "reported_sha256_lf": "53244ed4555dd0bc456331984523b475e3f6215ff3b3eef0d793b63976474a61",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "c14b7583c43e0cb0cebffb04101c64ac43bb505f38750d62cfc159d3cef0e4e0",
+            "matches": true,
+            "path": "modules/learning/learning_memory.py",
+            "reported_sha256_lf": "c14b7583c43e0cb0cebffb04101c64ac43bb505f38750d62cfc159d3cef0e4e0",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "1315d63ee7b1130ad9d851dffa67682059fd93a488dee4d79613bf57e74257f9",
+            "matches": true,
+            "path": "modules/runtime_observation_trace.py",
+            "reported_sha256_lf": "1315d63ee7b1130ad9d851dffa67682059fd93a488dee4d79613bf57e74257f9",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "551ccacbae331b13e059293b05e5666e45957be36561d3bf9156cb9cabf8c274",
+            "matches": true,
+            "path": "tools/eval_runtime_observation_trace.py",
+            "reported_sha256_lf": "551ccacbae331b13e059293b05e5666e45957be36561d3bf9156cb9cabf8c274",
+            "scope": "SOURCE"
+          },
+          {
+            "current_sha256_lf": "05d77c87db750203d542dfd541583522e30607e205ad95502c8dfacf0969e720",
+            "matches": true,
+            "path": "docs/maintenance/M154_RuntimeObservationTrace.md",
+            "reported_sha256_lf": "05d77c87db750203d542dfd541583522e30607e205ad95502c8dfacf0969e720",
+            "scope": "DOCUMENTATION"
+          }
+        ],
+        "platform": "Windows",
+        "report_path": "docs/maintenance/M154_RuntimeObservationTrace_Result.json",
+        "report_sha256": "5b703ca429e6d84e3c6bf5c91ca5ac71a56815d595f104273c7796449e442c9c",
+        "reported_status": "PASS"
+      },
+      {
+        "checks": [],
+        "commit": "8eb056326e6768faddcdb17fa45e890abc3fe278",
+        "historical_report_bytes_preserved": true,
+        "payload_bindings": [],
+        "platform": null,
+        "report_path": "docs/maintenance/M154_FreshRuntimeObservation_Result.json",
+        "report_sha256": "05fab7cce721c45da23ad3ee1014c8943af400885e698cc9e83c9df9e633ad5a",
+        "reported_status": "PASS"
+      },
+      {
+        "checks": [],
+        "commit": "e3d568ef62c22cc30b617f5c8bd63d940514b3f0",
+        "historical_report_bytes_preserved": true,
+        "payload_bindings": [],
+        "platform": null,
+        "report_path": "docs/maintenance/M154_FreshCorrectionEvidenceReplay_Result.json",
+        "report_sha256": "4f33ce17b89c61c32c61bddfff3d85dc90445f299118bf88149147ce637a1d06",
+        "reported_status": "PASS"
+      },
+      {
+        "checks": [],
+        "commit": "f85bde0cc569f0a8291d2cb8c02ec2bd32ac7ca8",
+        "historical_report_bytes_preserved": true,
+        "payload_bindings": [],
+        "platform": null,
+        "report_path": "docs/maintenance/M154_ControlledLiveEvidenceBuild_Result.json",
+        "report_sha256": "6b38e448920f651c0c022554663b13335aa2abeb5a654f62f9ef64e8e3ae12cc",
+        "reported_status": "PASS"
+      }
+    ],
+    "rehearsal_evaluator_and_eight_explicit_dependencies_unchanged": [
+      {
+        "bytes_unchanged": true,
+        "path": "tools/eval_correction_evidence_rehearsal.py",
+        "sha256": "8a1fe5b32f05ec095f02a30ce18bee34de55ef3c16c1d20138f43540d0ee54f5"
+      },
+      {
+        "bytes_unchanged": true,
+        "path": "modules/learning/correction_pair_evidence.py",
+        "sha256": "fa3ab7283564864a3d3d039044cfe357ba635d645c2020e906ebb23c7731a539"
+      },
+      {
+        "bytes_unchanged": true,
+        "path": "modules/learning/learning_history_snapshot.py",
+        "sha256": "129008c0c951de3a675b585a6076487d0b8f2fd66e03d2203edd4037a1ae7081"
+      },
+      {
+        "bytes_unchanged": true,
+        "path": "modules/learning/correction_evidence_ledger.py",
+        "sha256": "33f3ee297f48ba127702f818bddc55bd5a09d88e737cb76442169985bbd4e689"
+      },
+      {
+        "bytes_unchanged": true,
+        "path": "modules/learning/correction_memory.py",
+        "sha256": "c1886555d0f7d1166aaeeabfd8dafbb9dbbeb723e5951b1385194e3421f99c1a"
+      },
+      {
+        "bytes_unchanged": true,
+        "path": "modules/learning/correction_evidence_runtime.py",
+        "sha256": "6fe1775f82a8a08e3a537c8ab0cd42c4826a9280b9c4d45a549b310c40142270"
+      },
+      {
+        "bytes_unchanged": true,
+        "path": "modules/learning/correction_evidence_projection.py",
+        "sha256": "392bc628045123ec6e300399aaa5207cca78982893f8839a576b7c1b9f8f4a2a"
+      },
+      {
+        "bytes_unchanged": true,
+        "path": "modules/learning/correction_evidence_activation.py",
+        "sha256": "9d8bb13cba658d6104516b21637721a0f1bbe3ee7a2027a078e62108a9907e0a"
+      },
+      {
+        "bytes_unchanged": true,
+        "path": "modules/learning/correction_evidence_rehearsal.py",
+        "sha256": "f6df9535a66eecadc255fbafddc489b69ddbc4c4f2bdbcb15d9dfbfc80d0c927"
+      }
+    ]
+  },
+  "kind": "M154_LEARNING_EVENT_PROVENANCE_MAIN_REVIEW_V1",
+  "limits": {
+    "arbitrary_noncooperating_writer_protection": false,
+    "authenticated_writer": "NOT_PROVEN",
+    "automatic_restore": false,
+    "captures_byte_identical_to_each_other": "NOT_ASSERTED",
+    "full_pipeline": "NOT_RUN",
+    "full_project_audit": "NOT_RUN",
+    "historical_aggregate_repair": "NOT_RUN",
+    "historical_counts_correctness": "NOT_PROVEN",
+    "independent_observations": "NOT_PROVEN",
+    "ledger_and_memory_single_transaction": false,
+    "live_idempotence_from_two_live_passes": "NOT_ASSESSED",
+    "model_improvement": "NOT_ASSESSED",
+    "model_replacement": "NOT_RUN",
+    "old_missing_observation_root_cause": "NOT_ESTABLISHED",
+    "positive_real_pair_accrual": "NOT_PROVEN",
+    "second_live_build": "NOT_RUN",
+    "successful_os_action_from_accepted_flag": "NOT_PROVEN",
+    "training": "NOT_RUN",
+    "training_readiness": "NOT_ASSESSED"
+  },
+  "main_base": "61c372223b0abaea97fe973de50d02f51efa2520",
+  "main_candidate_checks": {
+    "actual_live_activation_sync_projection": false,
+    "application_launched": false,
+    "candidate_code_commit": "918fd0b8000f48eca4f7892d4818b9ce62d998c0",
+    "candidate_code_tree": "e5bb858aa2dd197ba7b337846e0d7b0e3381e35d",
+    "candidate_source_bytes_unchanged": true,
+    "candidate_verified_blob_count": 660,
+    "check_scope": "FIVE_EXISTING_SYNTHETIC_SUITES_ON_ASSEMBLED_MAIN_CODE_CANDIDATE",
+    "checks": [
+      {
+        "cases": 32,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_package_boundaries.py"
+        ],
+        "errors": 0,
+        "exit_code": 0,
+        "expected_cases": 32,
+        "failures": 0,
+        "name": "package_boundaries",
+        "path": "tools/eval_package_boundaries.py",
+        "seconds": 2.303,
+        "skipped": 0,
+        "source_sha256_lf": "9f2b0787b5aa273a8df90e2e0eec3579fd6cb4a285c772280cbab1d5107927b0",
+        "status": "PASS",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "8fcd441f7589fe6861b2e1f2a945bbbd49a35d16f2479263dc694a0994f9cfa7",
+        "termination": "RETURNED"
+      },
+      {
+        "cases": 10,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_learning_event_identity.py"
+        ],
+        "errors": 0,
+        "exit_code": 0,
+        "expected_cases": 10,
+        "failures": 0,
+        "name": "learning_event_identity",
+        "path": "tools/eval_learning_event_identity.py",
+        "seconds": 0.18,
+        "skipped": 0,
+        "source_sha256_lf": "fc65574608536fb6576754a10b700d29a1b63a6fb634ffda9c0d2ebc2c351404",
+        "status": "PASS",
+        "stderr_sha256": "022341ad64ee386eb7e9626f356d03a9af760dda752bad15e6de6af2f736448b",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "termination": "RETURNED"
+      },
+      {
+        "cases": 36,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_correction_evidence_runtime.py"
+        ],
+        "errors": 0,
+        "exit_code": 0,
+        "expected_cases": 36,
+        "failures": 0,
+        "name": "correction_evidence_runtime",
+        "path": "tools/eval_correction_evidence_runtime.py",
+        "seconds": 2.017,
+        "skipped": 0,
+        "source_sha256_lf": "b3fccdcf63e77a9ccce3f301e796ad1a751e665264832f5782b97bd77fbb5c79",
+        "status": "PASS",
+        "stderr_sha256": "9855d96fd3b7b7168af5893b99759ddb390c16fc8d81f53f4586e4c3f50eb294",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "termination": "RETURNED"
+      },
+      {
+        "cases": 6,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_runtime_observation_trace.py"
+        ],
+        "errors": 0,
+        "exit_code": 0,
+        "expected_cases": 6,
+        "failures": 0,
+        "name": "runtime_observation_trace",
+        "path": "tools/eval_runtime_observation_trace.py",
+        "seconds": 0.197,
+        "skipped": 0,
+        "source_sha256_lf": "551ccacbae331b13e059293b05e5666e45957be36561d3bf9156cb9cabf8c274",
+        "status": "PASS",
+        "stderr_sha256": "1b2b6ecdfa7d4d843b31f89857f28be7251e730d08f636ab24e5d28248c4086d",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "termination": "RETURNED"
+      },
+      {
+        "cases": 18,
+        "command": [
+          "python",
+          "-I",
+          "-S",
+          "-B",
+          "-X",
+          "utf8",
+          "tools/eval_pipeline_effects.py"
+        ],
+        "errors": 0,
+        "exit_code": 0,
+        "expected_cases": 18,
+        "failures": 0,
+        "name": "pipeline_effects",
+        "path": "tools/eval_pipeline_effects.py",
+        "seconds": 0.518,
+        "skipped": 0,
+        "source_sha256_lf": "15c1fa0918ed091676e93422ae670bc33343695825da356694ad1ce6d6f3ec67",
+        "status": "PASS",
+        "stderr_sha256": "ebf09f453a46c96210d269cc8170678ffb708fbb0a8448096d1dd216868cb3fc",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "termination": "RETURNED"
+      }
+    ],
+    "fixture_data": "OWNED_TEMPORARY_SYNTHETIC_ONLY",
+    "full_pipeline_run": false,
+    "kind": "M154_MSG116_MAIN_CANDIDATE_TARGETED_GATE_V1",
+    "model_loading_or_training": false,
+    "native_windows_execution": false,
+    "passed_cases": 102,
+    "planned_cases": 102,
+    "platform": "linux",
+    "prior_windows_checks_rerun": false,
+    "python": [
+      3,
+      12,
+      14
+    ],
+    "source_private_data_read": false,
+    "status": "PASS"
+  },
+  "main_candidate_windows_run": "NOT_RUN",
+  "main_entries_outside_selected_paths_preserved": true,
+  "maintenance_block": "learning_event_provenance",
+  "next_work": "previously agreed bounded Core symbol/direct-call investigation and existing Developer Task bridge",
+  "no_new_pairs_is_allowed_bounded_acceptance": true,
+  "original_source_windows_receipts": "PRESERVED_AS_HISTORICAL_EVIDENCE_NOT_NEWLY_EXECUTED",
+  "previous_copy_replay": {
+    "commit": "e3d568ef62c22cc30b617f5c8bd63d940514b3f0",
+    "coverage": "NO_NEW_PAIRS",
+    "current_epoch_rows": 4,
+    "history_rows": 506,
+    "new_evidence_second": 0,
+    "relationship": "PUBLIC_REFERENCE_ONLY_NOT_SAME_PRIVATE_CAPTURE_OR_EPOCH_BINDING",
+    "report_path": "docs/maintenance/M154_FreshCorrectionEvidenceReplay_Result.json",
+    "report_sha256": "4f33ce17b89c61c32c61bddfff3d85dc90445f299118bf88149147ce637a1d06",
+    "second_build_status": "UNCHANGED",
+    "status": "VERIFIED"
+  },
+  "publication_operation": {
+    "application_or_data_operation": false,
+    "fixed_two_prepared_commits": true,
+    "local_branch_switch": false,
+    "local_main_sync": false,
+    "new_commits_created_on_user_machine": false,
+    "normal_explicit_non_forced_push": true,
+    "ordinary_git_hooks_preserved": true,
+    "possible_local_git_side_effects": "OBJECT_IMPORT_AND_REMOTE_TRACKING_REF",
+    "source_branch_index_worktree_stash_local_main_preserved": true
+  },
+  "publication_state_at_preparation": "NOT_PUBLISHED",
+  "readiness": "READY_FOR_MAIN",
+  "scope": [
+    "new observation IDs and explicit ACTIVE epoch markers",
+    "bounded complete history snapshots and payload conflict rules",
+    "durable event ledger, baseline and correction-pair accounting",
+    "projection of complete committed totals with preserved legacy metadata",
+    "cooperating-writer runtime lock and fail-closed ACTIVE routing",
+    "retained raw backup, two-pass private rehearsal and bounded runtime trace",
+    "actual fresh observations and one verified controlled live sync/projection"
+  ],
+  "scope_counts": {
+    "base_main_tracked_entries": 618,
+    "candidate_entries_before_new_main_review": 660,
+    "expected_new_main_review_adds_one": true,
+    "main_entries_to_preserve_exactly": 608,
+    "selected_added": 42,
+    "selected_deleted": 0,
+    "selected_modified_existing": 10
+  },
+  "selected_fix_commit": "918fd0b8000f48eca4f7892d4818b9ce62d998c0",
+  "selected_fix_tree": "e5bb858aa2dd197ba7b337846e0d7b0e3381e35d",
+  "selected_source_file_bytes_identical_to_experiment": true,
+  "selected_source_file_sha256_lf": {
+    ".gitignore": "e685ef0b45f9bb488897ca774335204c1a66b5bf15e9ff9feaa3ef43d3570179",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_ACTIVATION_V1.md": "266d66802eb55ad46fb9306e5e24f59865cc6d9c0defedc1622fc2a8e09d5a2b",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_LEDGER_V1.md": "ce5c7218205a8632a5aa9a6d748ba35e1a0f5834c2875b220572f9e4427887d4",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_REHEARSAL_V1.md": "75f7755bc6cc6d51d9b2f60d7db7fbdecde2737a5eeb607f3c30b9b91e213946",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_RUNTIME_V1.md": "13e5accf494e79a9d80a0d80f35a41611dcde9ac03ff45c33d888ed401ba6ac7",
+    "docs/architecture/SKYNETVS_CORRECTION_PAIR_EVIDENCE_V1.md": "23042675bca0b8498dddd00d352387637beb51c7ae330d6a1f92f0abe4a5ee44",
+    "docs/architecture/SKYNETVS_LEARNING_EVENT_IDENTITY_V1.md": "ab3bb00676aa521dcfd75a3f2e429d68c585bf4556211f6fa22e2e0c9745f243",
+    "docs/architecture/SKYNETVS_LEARNING_EVENT_PAYLOAD_AUDIT_V2.md": "9434b1bedf816c9181383ad9405d2ab9d2b064ec7bbd004967251e50418a3ad8",
+    "docs/architecture/SKYNETVS_LEARNING_HISTORY_SNAPSHOT_V1.md": "2854af72cc5e8cc9c9735f6d92c01da90eb8bfa43025a62d32d1ab7ff82d8566",
+    "docs/maintenance/M154_ActiveEvidenceObservation_Result.json": "8a2aa3b248ba90a7d34142027560adde7e704e8bba7a60f519ef730a6eefbd8c",
+    "docs/maintenance/M154_ControlledLiveEvidenceBuild_Result.json": "6b38e448920f651c0c022554663b13335aa2abeb5a654f62f9ef64e8e3ae12cc",
+    "docs/maintenance/M154_CorrectionEvidenceActivation_Result.json": "0ceba567f18fc5a85e46a44f00ef82402d7658a7e358d96e2967557e396e6f8a",
+    "docs/maintenance/M154_CorrectionEvidenceLedger_Result.json": "374ec1a39d964de5e891c659ecaf5b59b048c60dcfc6e4ce58a7e1f0a5612cf0",
+    "docs/maintenance/M154_CorrectionEvidenceRehearsal_Result.json": "6fe3c5277f948a7142638ed408ee7ce9e12a24db92e1a9fee47c7644478d21e3",
+    "docs/maintenance/M154_CorrectionEvidenceRuntime_Result.json": "2be0f5128865de91a8e43f6b06a08388d10aea16b9695820afef93c884a7b5dc",
+    "docs/maintenance/M154_CorrectionPairEvidence_Result.json": "93d9d4dddab52015130cc7775c9f330989529d4817b5c2e3843103693623698e",
+    "docs/maintenance/M154_FreshCorrectionEvidenceReplay_Result.json": "4f33ce17b89c61c32c61bddfff3d85dc90445f299118bf88149147ce637a1d06",
+    "docs/maintenance/M154_FreshRuntimeObservation_Result.json": "05fab7cce721c45da23ad3ee1014c8943af400885e698cc9e83c9df9e633ad5a",
+    "docs/maintenance/M154_LearningEventIdentity_Result.json": "d7cae3d767d17a4dae6ec8e400f53c0541a0b20912e44ce37c02c3043f909587",
+    "docs/maintenance/M154_LearningEventPayloadAudit_Result.json": "fe12c27ea9d5f46bfb0cdbe363ea512202b8b7103586ec204cc7c15357895108",
+    "docs/maintenance/M154_LearningHistorySnapshot_Result.json": "4499dd0babd9e601f410927fadec429c6f731a1fc31b50f9246c7bd28c100b7a",
+    "docs/maintenance/M154_RuntimeObservationDiagnosticsV2_Result.json": "409c19574aebed9c282971dbab38f7124f4a6448d953b51dadf0e3b30cf0eab7",
+    "docs/maintenance/M154_RuntimeObservationDiagnostics_Result.json": "d714746fd2aed0dbd75192ff39f1877985d00961d7dd1152e6610ad918f9c718",
+    "docs/maintenance/M154_RuntimeObservationTrace.md": "05d77c87db750203d542dfd541583522e30607e205ad95502c8dfacf0969e720",
+    "docs/maintenance/M154_RuntimeObservationTrace_Result.json": "5b703ca429e6d84e3c6bf5c91ca5ac71a56815d595f104273c7796449e442c9c",
+    "docs/maintenance/M154_Workflow.md": "2f1ec141c08ef1cb5df30c6f1b0f6539b46d26b910365b1d9adeb23cda13320e",
+    "main.py": "53244ed4555dd0bc456331984523b475e3f6215ff3b3eef0d793b63976474a61",
+    "modules/command_processor.py": "ca698c8f1f45f5906bf3d06cdf473a11fd6f34205d0da1af138391649e7c455d",
+    "modules/learning/correction_evidence_activation.py": "9d8bb13cba658d6104516b21637721a0f1bbe3ee7a2027a078e62108a9907e0a",
+    "modules/learning/correction_evidence_ledger.py": "33f3ee297f48ba127702f818bddc55bd5a09d88e737cb76442169985bbd4e689",
+    "modules/learning/correction_evidence_projection.py": "392bc628045123ec6e300399aaa5207cca78982893f8839a576b7c1b9f8f4a2a",
+    "modules/learning/correction_evidence_rehearsal.py": "f6df9535a66eecadc255fbafddc489b69ddbc4c4f2bdbcb15d9dfbfc80d0c927",
+    "modules/learning/correction_evidence_runtime.py": "6fe1775f82a8a08e3a537c8ab0cd42c4826a9280b9c4d45a549b310c40142270",
+    "modules/learning/correction_pair_evidence.py": "fa3ab7283564864a3d3d039044cfe357ba635d645c2020e906ebb23c7731a539",
+    "modules/learning/learning_history_snapshot.py": "129008c0c951de3a675b585a6076487d0b8f2fd66e03d2203edd4037a1ae7081",
+    "modules/learning/learning_memory.py": "c14b7583c43e0cb0cebffb04101c64ac43bb505f38750d62cfc159d3cef0e4e0",
+    "modules/runtime_observation_trace.py": "1315d63ee7b1130ad9d851dffa67682059fd93a488dee4d79613bf57e74257f9",
+    "tools/audit_learning_data.py": "cda3ec37cbe097967ec3aa752321da689ff831c77fcbc91de73bb70d0fb116a5",
+    "tools/build_correction_memory.py": "acd5020b677fbcf24436bd527d65dda267b8878f07f5282b518744617d00078b",
+    "tools/eval_correction_evidence_activation.py": "0384cebdb8edad6c8b35eaef841605de10110fdca8c3ada6a0e815d57d455a70",
+    "tools/eval_correction_evidence_ledger.py": "aff76afa1aa646ce78bfa972ede489f81334eae8cc8f8818fb748057f0c962f8",
+    "tools/eval_correction_evidence_projection.py": "fdd56624873e60dd188edb003c12e4a528f2d1d555c1f15a6e9c44768b61f9b2",
+    "tools/eval_correction_evidence_rehearsal.py": "8a1fe5b32f05ec095f02a30ce18bee34de55ef3c16c1d20138f43540d0ee54f5",
+    "tools/eval_correction_evidence_runtime.py": "b3fccdcf63e77a9ccce3f301e796ad1a751e665264832f5782b97bd77fbb5c79",
+    "tools/eval_correction_memory_idempotence.py": "4d5cf7c6d92b06022b4ed3c71bb6273aca65deeeca87981aa7ead5768e64a7c7",
+    "tools/eval_correction_pair_evidence.py": "c0feaab9bffe88ee6b2e5766268635e0f24ec04aca913cad5373127d2386b339",
+    "tools/eval_learning_event_identity.py": "fc65574608536fb6576754a10b700d29a1b63a6fb634ffda9c0d2ebc2c351404",
+    "tools/eval_learning_event_payload_audit.py": "279b6d8681a16655e4112613ebdddb116d54f16acabe86419069b7c3356ad291",
+    "tools/eval_learning_history_snapshot.py": "6606bd1791bbcc793c3b23de262c0d1ce9c6815d455a1e4246a6d56752a01744",
+    "tools/eval_pipeline_effects.py": "15c1fa0918ed091676e93422ae670bc33343695825da356694ad1ce6d6f3ec67",
+    "tools/eval_runtime_observation_trace.py": "551ccacbae331b13e059293b05e5666e45957be36561d3bf9156cb9cabf8c274",
+    "tools/pipeline.py": "313aa99fcfb0f316a7a0e30c431752109a165495bf7a7af804d25400d7b2d3e3"
+  },
+  "selected_source_paths": [
+    ".gitignore",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_ACTIVATION_V1.md",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_LEDGER_V1.md",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_REHEARSAL_V1.md",
+    "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_RUNTIME_V1.md",
+    "docs/architecture/SKYNETVS_CORRECTION_PAIR_EVIDENCE_V1.md",
+    "docs/architecture/SKYNETVS_LEARNING_EVENT_IDENTITY_V1.md",
+    "docs/architecture/SKYNETVS_LEARNING_EVENT_PAYLOAD_AUDIT_V2.md",
+    "docs/architecture/SKYNETVS_LEARNING_HISTORY_SNAPSHOT_V1.md",
+    "docs/maintenance/M154_ActiveEvidenceObservation_Result.json",
+    "docs/maintenance/M154_ControlledLiveEvidenceBuild_Result.json",
+    "docs/maintenance/M154_CorrectionEvidenceActivation_Result.json",
+    "docs/maintenance/M154_CorrectionEvidenceLedger_Result.json",
+    "docs/maintenance/M154_CorrectionEvidenceRehearsal_Result.json",
+    "docs/maintenance/M154_CorrectionEvidenceRuntime_Result.json",
+    "docs/maintenance/M154_CorrectionPairEvidence_Result.json",
+    "docs/maintenance/M154_FreshCorrectionEvidenceReplay_Result.json",
+    "docs/maintenance/M154_FreshRuntimeObservation_Result.json",
+    "docs/maintenance/M154_LearningEventIdentity_Result.json",
+    "docs/maintenance/M154_LearningEventPayloadAudit_Result.json",
+    "docs/maintenance/M154_LearningHistorySnapshot_Result.json",
+    "docs/maintenance/M154_RuntimeObservationDiagnosticsV2_Result.json",
+    "docs/maintenance/M154_RuntimeObservationDiagnostics_Result.json",
+    "docs/maintenance/M154_RuntimeObservationTrace.md",
+    "docs/maintenance/M154_RuntimeObservationTrace_Result.json",
+    "docs/maintenance/M154_Workflow.md",
+    "main.py",
+    "modules/command_processor.py",
+    "modules/learning/correction_evidence_activation.py",
+    "modules/learning/correction_evidence_ledger.py",
+    "modules/learning/correction_evidence_projection.py",
+    "modules/learning/correction_evidence_rehearsal.py",
+    "modules/learning/correction_evidence_runtime.py",
+    "modules/learning/correction_pair_evidence.py",
+    "modules/learning/learning_history_snapshot.py",
+    "modules/learning/learning_memory.py",
+    "modules/runtime_observation_trace.py",
+    "tools/audit_learning_data.py",
+    "tools/build_correction_memory.py",
+    "tools/eval_correction_evidence_activation.py",
+    "tools/eval_correction_evidence_ledger.py",
+    "tools/eval_correction_evidence_projection.py",
+    "tools/eval_correction_evidence_rehearsal.py",
+    "tools/eval_correction_evidence_runtime.py",
+    "tools/eval_correction_memory_idempotence.py",
+    "tools/eval_correction_pair_evidence.py",
+    "tools/eval_learning_event_identity.py",
+    "tools/eval_learning_event_payload_audit.py",
+    "tools/eval_learning_history_snapshot.py",
+    "tools/eval_pipeline_effects.py",
+    "tools/eval_runtime_observation_trace.py",
+    "tools/pipeline.py"
+  ],
+  "source_branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "source_fix": "f85bde0cc569f0a8291d2cb8c02ec2bd32ac7ca8",
+  "verification_scope": "selected_fix_tree; final commit changes only workflow documentation and this review"
+}
