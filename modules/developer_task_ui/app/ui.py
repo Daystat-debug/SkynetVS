@@ -33,6 +33,7 @@ from .symbol_task_bridge import (report_fingerprint, selected_target,
                                  verify_symbol_capture, task_instruction)
 from .symbol_candidate_review import (bind_request_context, review_candidate,
                                       format_candidate_review, CandidateReviewError)
+from .symbol_behavior_plan import make_behavior_plan, format_behavior_plan
 
 
 class QuietTk(tk.Tk):
@@ -59,6 +60,9 @@ class DeveloperWindow:
         self.core_candidate_review = None
         self.core_candidate_text = ""
         self.core_candidate_state = "NOT_CHECKED"
+        self.core_behavior_plan = None
+        self.core_behavior_text = ""
+        self.core_behavior_state = "NOT_CHECKED"
         self.events: list[dict] = []
         self.muting = False
         self.ai_busy = False
@@ -707,6 +711,9 @@ class DeveloperWindow:
         self.core_candidate_review = None
         self.core_candidate_text = ""
         self.core_candidate_state = "NOT_CHECKED"
+        self.core_behavior_plan = None
+        self.core_behavior_text = ""
+        self.core_behavior_state = "NOT_CHECKED"
 
     def _clear_core_request_binding(self):
         self.core_request_context = None
@@ -821,6 +828,30 @@ class DeveloperWindow:
                    context_sha256=self.core_request_context_sha256,
                    response_sha256=report["response_sha256"],
                    artifact=str(folder.relative_to(self.store.root)))
+        self._save_core_behavior_plan(report, folder)
+
+    def _save_core_behavior_plan(self, report, folder):
+        """Additional advisory result; never upgrades DTR or Core authority."""
+        self.core_behavior_plan = None
+        self.core_behavior_state = "NOT_CHECKED"
+        self.core_behavior_text = ""
+        try:
+            plan = make_behavior_plan(report)
+            readable = format_behavior_plan(plan)
+            self.store.write(folder, "Core_BehaviorPlan.json", json_bytes(plan))
+            self.store.write(folder, "Core_BehaviorPlan.txt", readable.encode("utf-8"))
+        except Exception as exc:
+            self.core_behavior_state = "FAILED"
+            self.core_behavior_text = (
+                "Core: план поведенческой проверки не сохранён (" + type(exc).__name__ +
+                "). Структурный отчёт DTR остаётся доступен; тесты не выполнялись.\n")
+            self.event("CORE_BEHAVIOR_PLAN_NOT_SAVED", issue=type(exc).__name__)
+            return
+        self.core_behavior_plan = plan
+        self.core_behavior_state = "SAVED"
+        self.core_behavior_text = readable
+        self.event("CORE_BEHAVIOR_PLAN_SAVED", response_sha256=plan["response_sha256"],
+                   artifact=str(folder.relative_to(self.store.root)))
 
     def _show_static_preview(self, *, cached=False):
         report = self.static_preview
@@ -833,7 +864,8 @@ class DeveloperWindow:
             " · Core: " + state + "\nПапка отчётов: " + str(self.static_folder) +
             "\nПодробности и исходный diff — выше. Поведение и DTR-B не проверены.")
         prefix = ("DTR: проверка patch в памяти\n" + report["message"] + "\n\n" +
-                  self.core_candidate_text + "\nПринятый diff DTR-A (исходный текст ответа)\n")
+                  self.core_candidate_text + "\n" + self.core_behavior_text +
+                  "\nПринятый diff DTR-A (исходный текст ответа)\n")
         self.set_text(self.patch, prefix + self.review["patch_text"])
         offset = len(prefix.splitlines())
         for number, line in enumerate(self.review["patch_text"].splitlines(), offset + 1):
@@ -867,6 +899,24 @@ class DeveloperWindow:
                 "Завершённый комплект не подтверждён; отдельный DTR-предпросмотр сохранён.\n"
                 "Для новой попытки импортируй ответ повторно.\n")
             self.event("CORE_CANDIDATE_SAVED_RECEIPT_UNAVAILABLE", issue=type(exc).__name__)
+            self.core_behavior_state = "FAILED"
+            self.core_behavior_plan = None
+            self.core_behavior_text = ""
+            return
+        if self.core_behavior_state != "SAVED":
+            return
+        try:
+            if (read_plain(self.static_folder / "Core_BehaviorPlan.json", 128 * 1024) !=
+                    json_bytes(self.core_behavior_plan) or
+                    read_plain(self.static_folder / "Core_BehaviorPlan.txt", 128 * 1024) !=
+                    self.core_behavior_text.encode("utf-8")):
+                raise ValueError("CORE_BEHAVIOR_PLAN_RECEIPT_CHANGED")
+        except Exception as exc:
+            self.core_behavior_plan = None
+            self.core_behavior_state = "FAILED"
+            self.core_behavior_text = ("Core: сохранённый план проверок отсутствует или изменился. "
+                "Отчёт о структурном изменении остаётся доступен; план не подтверждён.\n")
+            self.event("CORE_BEHAVIOR_PLAN_SAVED_RECEIPT_UNAVAILABLE", issue=type(exc).__name__)
 
     def invalidate(self):
         if self.muting:

@@ -1,0 +1,63 @@
+{
+  "apply_or_patch_authority_extended": false,
+  "base_commit": "37b029b5b557b43cf0b9657af992599eeef6deac",
+  "behavior_verified": false,
+  "branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "changed_paths": [
+    "docs/maintenance/M155_CoreBehaviorPlan_Result.json",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui/app/symbol_behavior_plan.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_core_behavior_plan.py",
+    "tools/eval_core_behavior_ui.py"
+  ],
+  "check_total": 131,
+  "checks": [
+    {
+      "cases": 32,
+      "status": "PASS",
+      "suite": "package_boundaries"
+    },
+    {
+      "cases": 36,
+      "status": "PASS",
+      "suite": "core_candidate_review"
+    },
+    {
+      "cases": 22,
+      "status": "PASS",
+      "suite": "core_candidate_ui"
+    },
+    {
+      "cases": 14,
+      "status": "PASS",
+      "suite": "core_symbol_ui"
+    },
+    {
+      "cases": 17,
+      "status": "PASS",
+      "suite": "new_behavior_plan"
+    },
+    {
+      "cases": 10,
+      "status": "PASS",
+      "suite": "new_behavior_ui"
+    }
+  ],
+  "model_used": false,
+  "payload_sha256": {
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json": "c1c64217e05e513c3a2ac6f48d1b9604c83066bd0498ec4686fac7cc11307d2e",
+    "modules/developer_task_ui/app/symbol_behavior_plan.py": "75f88f9bf34d687585c7e3889d234c2badc9817059e863dfd4151ea95906f393",
+    "modules/developer_task_ui/app/ui.py": "e3b03b4c925b795ecea055ea03e96bb14ef1e4d1117bb240a17d326fc811cbf1",
+    "modules/developer_task_ui_launcher.py": "31894c22daca6327cd974bab72373f3dcd9940f5a0d46f0d17b9d4a815fd8483",
+    "tools/eval_core_behavior_plan.py": "6d002a625cfebcece6e4a277b92da0684c8c128189cc6bba6e87500628ff9c51",
+    "tools/eval_core_behavior_ui.py": "59e9f20d1925095e5d34d34a4913071e36a5f410baa8b148133dac91a1f7ab44"
+  },
+  "runtime_gui_test": "NOT_RUN",
+  "schema": "SKYNETVS_M155_CORE_BEHAVIOR_PLAN_RESULT_V1",
+  "scope": "hypothesis_and_test_obligations_only",
+  "status": "WINDOWS_STATIC_QA_PASS_UI_SMOKE_PENDING",
+  "test_code_execution": "NOT_RUN",
+  "user_code_or_private_history_exported": false
+}
