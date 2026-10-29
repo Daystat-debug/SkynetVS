@@ -1,0 +1,59 @@
+{
+  "all_cases_passed": true,
+  "base_commit": "8ae5dad6ea542a137aa1472941714dd35467f027",
+  "branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "candidate_sha256": "29105239ae6b61631cc9ef7b3cfb9f22e53c81657c26acfbbc72872eab200b87",
+  "check_total": 167,
+  "checks": [
+    {
+      "cases": 33,
+      "status": "PASS",
+      "suite": "feedback_jsonl_shape"
+    },
+    {
+      "cases": 23,
+      "status": "PASS",
+      "suite": "correction_memory_idempotence"
+    },
+    {
+      "cases": 43,
+      "status": "PASS",
+      "suite": "learning_data_audit"
+    },
+    {
+      "cases": 36,
+      "status": "PASS",
+      "suite": "correction_evidence_runtime"
+    },
+    {
+      "cases": 32,
+      "status": "PASS",
+      "suite": "package_boundaries"
+    }
+  ],
+  "event_ledger_provenance_verified": false,
+  "fix": "skip nonobject JSONL entries while retaining existing malformed-JSON behavior",
+  "installed_files": [
+    "modules/learning/feedback_analyzer.py",
+    "tools/eval_feedback_jsonl_shape.py",
+    "docs/maintenance/M158_FeedbackJsonlShapeFix_Result.json"
+  ],
+  "limitations": [
+    "NOT_A_FULL_LEARNING_PROVENANCE_AUDIT",
+    "NOT_A_GENERAL_FIX_FOR_WRONG_NESTED_JSON_FIELDS",
+    "NOT_AN_OS_SANDBOX",
+    "NO_PRODUCTION_BEHAVIOR_RUN"
+  ],
+  "main_promotion_authorized": false,
+  "model_training": false,
+  "new_correction_pairs_proven": false,
+  "patch_or_main_applied_before_approval": false,
+  "pilot_report_sha256": "56087b761c7701e0b78bf30c64084d421ea0a9d82909e0d19f40da6cd814575b",
+  "real_user_learning_data_read": false,
+  "schema": "SKYNETVS_M158_FEEDBACK_JSONL_SHAPE_FIX_RESULT_V1",
+  "scope": "FeedbackAnalyzer._read_jsonl only; synthetic regression",
+  "source_blob": "fbf40142a4c71872cb81481bd9d759088793cf6c",
+  "source_sha256": "c5b5b4e6b4da9ed791bada6d2f9e99d907e8cb83cf63affaa493656167d798d6",
+  "status": "WINDOWS_SCRATCH_TESTS_PASS_BEFORE_SCOPED_INSTALL",
+  "test_workspace": "DETACHED_GIT_ARCHIVE_SYNTHETIC_TESTS_ONLY"
+}
