@@ -89,8 +89,8 @@
       "sha256": "56f9532a5e960cb7c30e8c5ecefb4d9cebfb5dd45b479be8cf396979852a97bb"
     },
     "app/ui.py": {
-      "bytes": 106998,
-      "sha256": "e3b03b4c925b795ecea055ea03e96bb14ef1e4d1117bb240a17d326fc811cbf1"
+      "bytes": 109957,
+      "sha256": "67af6ab5845eeee1f5cf6b070e21dc355d2bf10509cc0a03bf2566c784d61872"
     },
     "launch.py": {
       "bytes": 7153,
@@ -151,6 +151,10 @@
     "app/symbol_behavior_plan.py": {
       "bytes": 13959,
       "sha256": "75f88f9bf34d687585c7e3889d234c2badc9817059e863dfd4151ea95906f393"
+    },
+    "app/pinned_behavior_evidence.py": {
+      "bytes": 14523,
+      "sha256": "db004c16ef4e9eed6255b1c1343ec4ad14bb70cf10ee69d9be8bb02afffb3a26"
     }
   },
   "schema": "SKYNETVS_M092_UI_BUNDLE_V1"

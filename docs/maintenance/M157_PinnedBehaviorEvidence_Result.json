@@ -1,0 +1,75 @@
+{
+  "apply_or_patch_authority_extended": false,
+  "base_commit": "acdc176e6b064b44fd5cdd59bb95cecd66952f5e",
+  "behavior_generalized": false,
+  "branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "changed_paths": [
+    "docs/maintenance/M157_PinnedBehaviorEvidence_Result.json",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui/app/pinned_behavior_evidence.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_pinned_behavior_evidence.py",
+    "tools/eval_pinned_behavior_ui.py"
+  ],
+  "check_total": 171,
+  "checks": [
+    {
+      "cases": 32,
+      "status": "PASS",
+      "suite": "package_boundaries"
+    },
+    {
+      "cases": 36,
+      "status": "PASS",
+      "suite": "core_candidate_review"
+    },
+    {
+      "cases": 22,
+      "status": "PASS",
+      "suite": "core_candidate_ui"
+    },
+    {
+      "cases": 14,
+      "status": "PASS",
+      "suite": "core_symbol_ui"
+    },
+    {
+      "cases": 17,
+      "status": "PASS",
+      "suite": "new_behavior_plan"
+    },
+    {
+      "cases": 10,
+      "status": "PASS",
+      "suite": "new_behavior_ui"
+    },
+    {
+      "cases": 28,
+      "status": "PASS",
+      "suite": "pinned_evidence_eval"
+    },
+    {
+      "cases": 12,
+      "status": "PASS",
+      "suite": "pinned_evidence_ui"
+    }
+  ],
+  "model_used": false,
+  "new_code_execution_from_report": false,
+  "payload_sha256": {
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json": "36b6a61595a083ec3a5d045bf1e1836783d0a59a4295043e7c71e3b75c1b7d9e",
+    "modules/developer_task_ui/app/pinned_behavior_evidence.py": "db004c16ef4e9eed6255b1c1343ec4ad14bb70cf10ee69d9be8bb02afffb3a26",
+    "modules/developer_task_ui/app/ui.py": "67af6ab5845eeee1f5cf6b070e21dc355d2bf10509cc0a03bf2566c784d61872",
+    "modules/developer_task_ui_launcher.py": "1ebda0d9d3968c89a9d04e4a8952460f49907038d99be3434f21fc9abcd9f9d9",
+    "tools/eval_pinned_behavior_evidence.py": "118228065ef476727fe53a122c8dc56832c7c1b168af630ffe1c5809d8300966",
+    "tools/eval_pinned_behavior_ui.py": "339df13320468a0388bc0ada14e3c315de206d13683c33a0de58a0298cf0d3d8"
+  },
+  "reference_reported_cases_correlated": 41,
+  "runtime_gui_test": "NOT_RUN",
+  "schema": "SKYNETVS_M157_PINNED_BEHAVIOR_EVIDENCE_RESULT_V1",
+  "scope": "pinned_pilot_evidence_correlation_only",
+  "status": "WINDOWS_STATIC_QA_PASS_UI_SMOKE_PENDING",
+  "test_code_execution": "NOT_RUN",
+  "user_code_or_private_history_exported": false
+}

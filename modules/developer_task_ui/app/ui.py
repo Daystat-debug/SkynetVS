@@ -34,6 +34,7 @@ from .symbol_task_bridge import (report_fingerprint, selected_target,
 from .symbol_candidate_review import (bind_request_context, review_candidate,
                                       format_candidate_review, CandidateReviewError)
 from .symbol_behavior_plan import make_behavior_plan, format_behavior_plan
+from .pinned_behavior_evidence import reconcile_pinned_bundle, format_pinned_evidence
 
 
 class QuietTk(tk.Tk):
@@ -63,6 +64,7 @@ class DeveloperWindow:
         self.core_behavior_plan = None
         self.core_behavior_text = ""
         self.core_behavior_state = "NOT_CHECKED"
+        self.ai_pilot_evidence = None  # Separate historical pilot; never authorizes the current DTR session.
         self.events: list[dict] = []
         self.muting = False
         self.ai_busy = False
@@ -366,6 +368,15 @@ class DeveloperWindow:
         ttk.Label(self.ai_extra_bar, text="Нужно минимум 20 разных оценок. Это не обучение генеративной LLM.",
                   foreground="#805313").pack(side="left", padx=10)
         self.ai_extras_visible = False
+
+        pilotbar = ttk.Frame(frame)
+        pilotbar.pack(fill="x", pady=(0, 3))
+        self.ai_pilot_evidence_button = ttk.Button(
+            pilotbar, text="M157: сверить свидетельства M156…",
+            command=self.import_pinned_behavior_evidence)
+        self.ai_pilot_evidence_button.pack(side="left")
+        ttk.Label(pilotbar, text="Только ранее принятый пилот · без исполнения или изменения кода",
+                  foreground="#5a6474", wraplength=690).pack(side="left", padx=(8, 0))
 
         self.ai_info = tk.StringVar(value="Готово. Собственный анализатор не требует Ollama.")
         self.ai_info_label = ttk.Label(frame, textvariable=self.ai_info, wraplength=960,
@@ -1299,6 +1310,45 @@ class DeveloperWindow:
                 self.ai_queue.put(("error", str(exc)))
         threading.Thread(target=worker, daemon=True).start()
         self.root.after(150, self.poll_ai_review)
+
+    def import_pinned_behavior_evidence(self):
+        """View only the exact previously reviewed M155/M156 pilot bundle.
+
+        This is not connected to the current DTR session's apply authority.  It
+        never executes untrusted ZIP members or loads Python code from the ZIP.
+        """
+        if self.ai_busy:
+            self.ai_info.set("Дождись завершения текущего анализа, затем импортируй свидетельства.")
+            return None
+        filename = filedialog.askopenfilename(
+            parent=self.root, title="Выбрать M157_Pilot_Evidence_Bundle.zip",
+            initialdir=str(Path.home() / "Downloads"), filetypes=[("ZIP", "*.zip")])
+        if not filename:
+            return None
+        self.ai_pilot_evidence = None
+        try:
+            raw = read_plain(Path(filename), 128 * 1024)
+            result = reconcile_pinned_bundle(raw)
+            readable = format_pinned_evidence(result)
+            folder = self.store._folder("behavior_evidence_")
+            self.store.write(folder, "Core_BehaviorEvidence.json", json_bytes(result))
+            self.store.write(folder, "Core_BehaviorEvidence.txt", readable.encode("utf-8"))
+        except Exception as exc:
+            # The prior DTR / static Core reports are unaffected even if one
+            # optional artifact could not be written. Never claim acceptance.
+            self.event("CORE_BEHAVIOR_EVIDENCE_NOT_ACCEPTED", issue=type(exc).__name__)
+            self.fail(exc)
+            return None
+        self.ai_pilot_evidence = result
+        self.ai_info.set("M157: пилотные свидетельства 41/41 сопоставлены. "
+                         "Новый запуск и разрешение применения: НЕТ. Отчёт: " + str(folder))
+        self.set_text(self.ai_text, readable)
+        self.tabs.select(self.ai_tab)
+        self.event("CORE_BEHAVIOR_EVIDENCE_PINNED_PILOT_SAVED",
+                   base_commit=result["base_commit"],
+                   plan_sha256=result["m155_plan_sha256"],
+                   artifact=str(folder.relative_to(self.store.root)))
+        return result
 
     def start_symbol_investigation(self):
         """One explicit selector, one HEAD scan, no automatic candidate choice."""
