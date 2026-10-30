@@ -1,0 +1,62 @@
+{
+  "authoritative_evidence": "WINDOWS_SCRATCH_TEST_OUTPUT_AND_MAIN_CANDIDATE_COMMIT",
+  "baseline": {
+    "cases": 33,
+    "failure_kind": "AttributeError",
+    "status": "EXPECTED_FAILURE"
+  },
+  "changed_paths": [
+    "modules/learning/feedback_analyzer.py",
+    "tools/eval_feedback_jsonl_shape.py",
+    "docs/maintenance/M158_FeedbackJsonlShapeFix_MainReview.json"
+  ],
+  "check_total": 167,
+  "checks": [
+    {
+      "cases": 33,
+      "status": "PASS",
+      "suite": "feedback_jsonl_shape"
+    },
+    {
+      "cases": 23,
+      "status": "PASS",
+      "suite": "correction_memory_idempotence"
+    },
+    {
+      "cases": 43,
+      "status": "PASS",
+      "suite": "learning_data_audit"
+    },
+    {
+      "cases": 36,
+      "status": "PASS",
+      "suite": "correction_evidence_runtime"
+    },
+    {
+      "cases": 32,
+      "status": "PASS",
+      "suite": "package_boundaries"
+    }
+  ],
+  "experimental_evidence_commit": "bc7ebd1eada5098abb855e80be6198addc45fd66",
+  "git_force_push": false,
+  "limitations": [
+    "TESTED_ON_SYNTHETIC_DATA_ONLY",
+    "NO_GENERAL_JSONL_SCHEMA_HARDENING",
+    "NO_ASSERTION_OF_NEW_CORRECTION_PAIRS",
+    "NOT_A_WINDOWS_OS_SANDBOX",
+    "ORIGINAL_LOCAL_MAIN_BRANCH_NOT_UPDATED_BY_THIS_TOOL"
+  ],
+  "main_parent_commit": "7d398c43de7d806ec8bead02fc6562a5e94428ab",
+  "no_whole_experimental_branch_merge": true,
+  "original_working_tree_changed": false,
+  "production_behavior_tested": false,
+  "real_learning_data_read": false,
+  "schema": "SKYNETVS_M158_FEEDBACK_JSONL_MAIN_PROMOTION_RESULT_V1",
+  "scope": "ONLY_FEEDBACK_ANALYZER_JSONL_TYPE_FILTER_WITH_REGRESSION_AND_REPORT",
+  "source_candidate_sha256": "29105239ae6b61631cc9ef7b3cfb9f22e53c81657c26acfbbc72872eab200b87",
+  "source_old_sha256": "c5b5b4e6b4da9ed791bada6d2f9e99d907e8cb83cf63affaa493656167d798d6",
+  "status": "SCRATCH_MAIN_TESTS_PASS_BEFORE_EXPLICIT_CONFIRMATION",
+  "test_sha256": "c5232deb81126c2d3c1affea2d2cfa49f8058483641c9ea46391958dc8f11100",
+  "training_or_weights_changed": false
+}

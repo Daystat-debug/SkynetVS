@@ -36,7 +36,9 @@ class FeedbackAnalyzer:
                 if not line:
                     continue
                 try:
-                    rows.append(json.loads(line))
+                    record = json.loads(line)
+                    if isinstance(record, dict):
+                        rows.append(record)
                 except Exception:
                     continue
         return rows
