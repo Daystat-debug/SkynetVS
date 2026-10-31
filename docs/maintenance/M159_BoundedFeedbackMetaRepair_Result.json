@@ -1,0 +1,85 @@
+{
+  "apply_or_patch_authority_extended": false,
+  "base_commit": "bc7ebd1eada5098abb855e80be6198addc45fd66",
+  "bounded_repair_suite_cases": 26,
+  "branch": "experiments/m154/ab2966ba927e474fb43df4c7d01799f1",
+  "changed_paths": [
+    "docs/maintenance/M159_BoundedFeedbackMetaRepair_Result.json",
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "modules/developer_task_ui/app/feedback_meta_repair.py",
+    "modules/developer_task_ui/app/ui.py",
+    "modules/developer_task_ui_launcher.py",
+    "tools/eval_feedback_meta_repair.py",
+    "tools/eval_feedback_meta_repair_ui.py"
+  ],
+  "check_total": 211,
+  "checks": [
+    {
+      "cases": 32,
+      "status": "PASS",
+      "suite": "package_boundaries"
+    },
+    {
+      "cases": 36,
+      "status": "PASS",
+      "suite": "core_candidate_review"
+    },
+    {
+      "cases": 22,
+      "status": "PASS",
+      "suite": "core_candidate_ui"
+    },
+    {
+      "cases": 14,
+      "status": "PASS",
+      "suite": "core_symbol_ui"
+    },
+    {
+      "cases": 17,
+      "status": "PASS",
+      "suite": "new_behavior_plan"
+    },
+    {
+      "cases": 10,
+      "status": "PASS",
+      "suite": "new_behavior_ui"
+    },
+    {
+      "cases": 28,
+      "status": "PASS",
+      "suite": "pinned_evidence_eval"
+    },
+    {
+      "cases": 12,
+      "status": "PASS",
+      "suite": "pinned_evidence_ui"
+    },
+    {
+      "cases": 26,
+      "status": "PASS",
+      "suite": "feedback_meta_repair"
+    },
+    {
+      "cases": 14,
+      "status": "PASS",
+      "suite": "feedback_meta_repair_ui"
+    }
+  ],
+  "general_code_repair_claimed": false,
+  "model_used": false,
+  "payload_sha256": {
+    "modules/developer_task_ui/BUNDLE_MANIFEST.json": "554993c10835a39ad47522ec473d83ab9c0cfc4c01a3c6fa1d00d0c24de2cfee",
+    "modules/developer_task_ui/app/feedback_meta_repair.py": "e44d74577bd92dd9dd0bee74ab1974e342c3f02174869acf5faf7edb08c345b1",
+    "modules/developer_task_ui/app/ui.py": "3d1e99c40ae0909c92e85012035d57b0805c273fb2568ddd6948344be91b9ee2",
+    "modules/developer_task_ui_launcher.py": "9f693435048a7d95dc410b4651fd109b03a448f52eecf6943557d972c532698d",
+    "tools/eval_feedback_meta_repair.py": "9b94f02d2c7e18e2941c71a7cac6674f077672aa1b8c4b742514da9d7acea189",
+    "tools/eval_feedback_meta_repair_ui.py": "f7186c283da982fffd3efa25ea211ba60c19ce6739fafa83348ca6a55d0a0cd0"
+  },
+  "real_user_source_executed": false,
+  "runtime_gui_test": "NOT_RUN",
+  "schema": "SKYNETVS_M159_BOUNDED_REPAIR_INSTALL_RESULT_V1",
+  "scope": "bounded_exact_git_feedback_meta_repair_proposal_only",
+  "status": "WINDOWS_STATIC_QA_PASS_UI_SMOKE_PENDING",
+  "test_code_execution": "PINNED_SOURCE_AND_SYNTHETIC_DATA_IN_SCRATCH_ONLY",
+  "user_code_or_private_history_exported": false
+}

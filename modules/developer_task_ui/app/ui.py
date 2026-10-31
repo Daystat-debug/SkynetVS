@@ -35,6 +35,8 @@ from .symbol_candidate_review import (bind_request_context, review_candidate,
                                       format_candidate_review, CandidateReviewError)
 from .symbol_behavior_plan import make_behavior_plan, format_behavior_plan
 from .pinned_behavior_evidence import reconcile_pinned_bundle, format_pinned_evidence
+from .feedback_meta_repair import (TARGET as REPAIR_TARGET, make_repair_proposal,
+                                   format_repair_proposal)
 
 
 class QuietTk(tk.Tk):
@@ -333,6 +335,15 @@ class DeveloperWindow:
         self.ai_task_request_button.pack(side="left")
         self.ai_task_request_button.state(["disabled"])
         ttk.Label(taskbridgebar, text="DTR-A · один файл",
+                  foreground="#5a6474").pack(side="left", padx=8)
+
+        boundedbar = ttk.Frame(frame)
+        boundedbar.pack(fill="x", pady=(0, 4))
+        self.ai_bounded_repair_button = ttk.Button(
+            boundedbar, text="M159: предложить JSONL meta fix (Git HEAD)...",
+            command=self.propose_feedback_meta_guard)
+        self.ai_bounded_repair_button.pack(side="left")
+        ttk.Label(boundedbar, text="Только точный рецепт, patch без применения",
                   foreground="#5a6474").pack(side="left", padx=8)
 
         feedbackbar = ttk.Frame(frame)
@@ -1326,6 +1337,7 @@ class DeveloperWindow:
         if not filename:
             return None
         self.ai_pilot_evidence = None
+        self.ai_bounded_repair = None  # proposal-only; never feeds apply controls
         try:
             raw = read_plain(Path(filename), 128 * 1024)
             result = reconcile_pinned_bundle(raw)
@@ -1349,6 +1361,50 @@ class DeveloperWindow:
                    plan_sha256=result["m155_plan_sha256"],
                    artifact=str(folder.relative_to(self.store.root)))
         return result
+
+    def propose_feedback_meta_guard(self):
+        """One known real nested-JSONL bug; create an advisory bounded patch only.
+
+        No model output, source execution, workspace edits, code apply or DTR privilege.
+        The requested source is captured from one current Git HEAD blob.
+        """
+        if self.ai_busy:
+            self.ai_info.set("Дождись завершения текущей операции.")
+            return None
+        if not messagebox.askyesno(
+                "M159: подготовить проверяемый кандидат?",
+                "Прочитаем один Git HEAD файл FeedbackAnalyzer, распознаем строго "
+                "закреплённый случай неверного meta и запишем patch как данные "
+                "в LocalAppData. Код не исполняется и не применяется. "
+                "Подтверждение не даёт новых полномочий. Продолжить?",
+                parent=self.root):
+            return None
+        self.ai_bounded_repair = None
+        try:
+            source = GitSourceReader(self.repository, find_git()).capture(
+                self.repository / REPAIR_TARGET)
+            proposal = make_repair_proposal(
+                path=source.path, content=source.content,
+                base_commit=source.base_commit, provenance=source.provenance)
+            readable = format_repair_proposal(proposal)
+            folder = self.store._folder("bounded_repair_")
+            self.store.write(folder, "Core_BoundedRepairProposal.json", json_bytes(proposal))
+            self.store.write(folder, "Core_BoundedRepairProposal.txt", readable.encode("utf-8"))
+            self.store.write(folder, "Core_BoundedRepair.patch",
+                             proposal["patch_text"].encode("utf-8"))
+        except Exception as exc:
+            self.event("M159_BOUNDED_REPAIR_REFUSED", issue=type(exc).__name__)
+            self.fail(exc)
+            return None
+        self.ai_bounded_repair = proposal
+        self.ai_info.set("M159: ограниченный кандидат создан; поведение не проверено. "
+                         "Только локальные файлы: " + str(folder))
+        self.set_text(self.ai_text, readable)
+        self.tabs.select(self.ai_tab)
+        self.event("M159_BOUNDED_REPAIR_SAVED", base_commit=proposal["base_commit"],
+                   proposed_sha256=proposal["candidate_sha256"],
+                   artifact=str(folder.relative_to(self.store.root)))
+        return proposal
 
     def start_symbol_investigation(self):
         """One explicit selector, one HEAD scan, no automatic candidate choice."""
