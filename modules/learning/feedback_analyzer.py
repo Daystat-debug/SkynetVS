@@ -38,7 +38,9 @@ class FeedbackAnalyzer:
                 try:
                     record = json.loads(line)
                     if isinstance(record, dict):
-                        rows.append(record)
+                        meta = record.get("meta")
+                        if meta is None or isinstance(meta, dict):
+                            rows.append(record)
                 except Exception:
                     continue
         return rows
