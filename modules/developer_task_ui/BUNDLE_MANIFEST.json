@@ -89,8 +89,8 @@
       "sha256": "56f9532a5e960cb7c30e8c5ecefb4d9cebfb5dd45b479be8cf396979852a97bb"
     },
     "app/ui.py": {
-      "bytes": 113342,
-      "sha256": "3d1e99c40ae0909c92e85012035d57b0805c273fb2568ddd6948344be91b9ee2"
+      "bytes": 116984,
+      "sha256": "737ac6138b281b27cba703c59cffe8624256de7da6d4a760b520ad32503d0c33"
     },
     "launch.py": {
       "bytes": 7153,
@@ -159,6 +159,10 @@
     "app/feedback_meta_repair.py": {
       "bytes": 7723,
       "sha256": "e44d74577bd92dd9dd0bee74ab1974e342c3f02174869acf5faf7edb08c345b1"
+    },
+    "app/task_symbol_feedback.py": {
+      "bytes": 8571,
+      "sha256": "55dface8dba5b92e21af5d69b944cc302d519e5921beeae0cbf6a7546ddbee5a"
     }
   },
   "schema": "SKYNETVS_M092_UI_BUNDLE_V1"

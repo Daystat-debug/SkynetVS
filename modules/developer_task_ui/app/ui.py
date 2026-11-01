@@ -31,6 +31,7 @@ from .symbol_investigation import (SCHEMA as SYMBOL_SCHEMA, investigate_reposito
                                    format_investigation)
 from .symbol_task_bridge import (report_fingerprint, selected_target,
                                  verify_symbol_capture, task_instruction)
+from .task_symbol_feedback import prepare_feedback as prepare_m163_feedback
 from .symbol_candidate_review import (bind_request_context, review_candidate,
                                       format_candidate_review, CandidateReviewError)
 from .symbol_behavior_plan import make_behavior_plan, format_behavior_plan
@@ -334,6 +335,10 @@ class DeveloperWindow:
             command=self.prepare_task_request_from_context)
         self.ai_task_request_button.pack(side="left")
         self.ai_task_request_button.state(["disabled"])
+        self.ai_symbol_feedback_button = ttk.Button(
+            taskbridgebar, text="Оценить функцию…", command=self.record_task_symbol_feedback)
+        self.ai_symbol_feedback_button.pack(side="left", padx=(7, 0))
+        self.ai_symbol_feedback_button.state(["disabled"])
         ttk.Label(taskbridgebar, text="DTR-A · один файл",
                   foreground="#5a6474").pack(side="left", padx=8)
 
@@ -1234,6 +1239,7 @@ class DeveloperWindow:
         self.ai_task_search_result = None
         self.ai_symbol_result = None
         self.ai_symbol_report_sha256 = None
+        self.ai_symbol_feedback_button.state(["disabled"])
         self.ai_task_request_button.state(["disabled"])
         goal = self.ai_goal.get("1.0", "end-1c").strip()
         self.ai_busy = True
@@ -1268,6 +1274,7 @@ class DeveloperWindow:
         if self.ai_goal.edit_modified():
             if self.ai_symbol_result is not None or self.ai_task_search_result is not None:
                 self.ai_task_request_button.state(["disabled"])
+                self.ai_symbol_feedback_button.state(["disabled"])
                 self.ai_info.set("Цель изменилась. Повтори поиск или исследование перед созданием запроса.")
             self.ai_goal.edit_modified(False)
 
@@ -1292,6 +1299,7 @@ class DeveloperWindow:
         self.ai_task_search_result = None
         self.ai_symbol_result = None
         self.ai_symbol_report_sha256 = None
+        self.ai_symbol_feedback_button.state(["disabled"])
         self.ai_task_request_button.state(["disabled"])
         self._populate_own_findings({})
         self.ai_proposal_button.state(["disabled"])
@@ -1449,6 +1457,7 @@ class DeveloperWindow:
         self.ai_task_search_result = None
         self.ai_symbol_result = None
         self.ai_symbol_report_sha256 = None
+        self.ai_symbol_feedback_button.state(["disabled"])
         self._populate_own_findings({})
         for button in (self.ai_button, self.ai_context_button, self.ai_bridge_button,
                        self.ai_symbol_button, self.ai_task_request_button,
@@ -1470,6 +1479,43 @@ class DeveloperWindow:
                 self.ai_queue.put(("error", str(exc)))
         threading.Thread(target=worker, daemon=True).start()
         self.root.after(150, self.poll_ai_review)
+
+    def record_task_symbol_feedback(self):
+        """Persist one explicit *relevance assertion*; no training or DTR authority."""
+        if self.ai_busy or self.ai_symbol_result is None or self.ai_symbol_report_sha256 is None:
+            self.ai_info.set("Сначала выбери конкретную функцию через «Исследовать функцию…».")
+            return
+        goal = self.ai_goal.get("1.0", "end-1c").strip()
+        selected = self.ai_symbol_result.get("selected")
+        if self.ai_symbol_result.get("status") != "COMPLETE" or not isinstance(selected, dict):
+            self.ai_info.set("В исследовании нет однозначно выбранной функции.")
+            return
+        # The question is about *relevance*, never about proving a bug or fix.
+        choice = messagebox.askyesnocancel(
+            "M163 — оценка функции для будущего обучения",
+            "Функция: " + str(selected.get("path")) + "::" + str(selected.get("qualname")) +
+            "\n\nОтносится ли это определение к указанной задаче?\n"
+            "Да — относится; Нет — не относится; Отмена — ничего не сохранять.\n\n"
+            "Сохраняем текст задачи и метаданные ТОЛЬКО в LocalAppData. "
+            "Это субъективная оценка, не разрешение обучения или применения кода.",
+            parent=self.root)
+        if choice is None:
+            return
+        try:
+            assessment = "RELEVANT" if choice else "NOT_RELEVANT"
+            record = prepare_m163_feedback(
+                repository=self.repository, goal=goal, report=self.ai_symbol_result,
+                report_sha256=self.ai_symbol_report_sha256, assessment=assessment)
+            # No new source code, user text or paths in the public development journal.
+            folder = self.store._folder("m163_task_symbol_")
+            self.store.write(folder, "M163_TaskSymbolFeedback.json", json_bytes(record))
+            self.ai_info.set("Оценка функции сохранена локально, без обучения и изменения кода: " + str(folder))
+            self.event("M163_USER_SYMBOL_RELEVANCE_RECORDED",
+                       assessment=assessment, goal_sha256=record["task_sha256"],
+                       commit=record["git_commit"], symbol_id=record["symbol"]["id"],
+                       training_approved=False)
+        except Exception as exc:
+            self.fail(exc)
 
     def _set_task_intent_gate(self, goal: str) -> str:
         """Update UI only; no source reads or patch privileges are granted."""
@@ -1600,6 +1646,7 @@ class DeveloperWindow:
         self.ai_task_search_result = None
         self.ai_symbol_result = None
         self.ai_symbol_report_sha256 = None
+        self.ai_symbol_feedback_button.state(["disabled"])
         self.ai_task_request_button.state(["disabled"])
         goal = self.ai_goal.get("1.0", "end-1c").strip()
         model = self.ai_model.get().strip()
@@ -1713,8 +1760,10 @@ class DeveloperWindow:
                     self.ai_context_copy_button.state(["!disabled"])
                     goal = self.ai_goal.get("1.0", "end-1c").strip()
                     if value["status"] == "COMPLETE":
+                        self.ai_symbol_feedback_button.state(["!disabled"])
                         summary = self._set_task_intent_gate(goal)
                     else:
+                        self.ai_symbol_feedback_button.state(["disabled"])
                         self.ai_task_request_button.state(["disabled"])
                         summary = ("Выбери точное определение из отчёта и повтори «Исследовать функцию»."
                                    if value["status"] == "CHOICE_REQUIRED" else
@@ -1730,6 +1779,7 @@ class DeveloperWindow:
                     self.ai_bridge_summary = None
                     self.ai_task_request_button.state(["disabled"])
                     self.ai_context_copy_button.state(["disabled"])
+                    self.ai_symbol_feedback_button.state(["disabled"])
                     self.ai_info.set("Не удалось оформить исследование функции: " + str(exc))
             elif kind == "report":
                 finished = True
@@ -1758,6 +1808,7 @@ class DeveloperWindow:
                 self.ai_symbol_result = None
                 self.ai_symbol_report_sha256 = None
                 self.ai_task_request_button.state(["disabled"])
+                self.ai_symbol_feedback_button.state(["disabled"])
                 self.ai_info.set("Анализ не выполнен: " + value)
                 self.set_text(self.ai_text, "Ошибка: " + value + "\nНичего не изменено.")
                 self.event("M097_ANALYSIS_REFUSED", reason=value[:300])
