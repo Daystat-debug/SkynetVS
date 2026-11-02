@@ -32,6 +32,8 @@ from .symbol_investigation import (SCHEMA as SYMBOL_SCHEMA, investigate_reposito
 from .symbol_task_bridge import (report_fingerprint, selected_target,
                                  verify_symbol_capture, task_instruction)
 from .task_symbol_feedback import prepare_feedback as prepare_m163_feedback
+from .task_symbol_shortlist import (SCHEMA as SHORTLIST_SCHEMA, shortlist_repository,
+                                   validate_choice as validate_shortlist_choice)
 from .symbol_candidate_review import (bind_request_context, review_candidate,
                                       format_candidate_review, CandidateReviewError)
 from .symbol_behavior_plan import make_behavior_plan, format_behavior_plan
@@ -83,6 +85,7 @@ class DeveloperWindow:
         self.ai_symbol_result = None  # one observed structural report, never an apply candidate
         self.ai_symbol_report_sha256 = None
         self.ai_symbol_selector = ""
+        self.ai_shortlist = None  # candidate ranking is advisory, not DTR authority
         root.title("SkynetVS — AI-разработка")
         root.geometry(f"{min(1130, root.winfo_screenwidth() - 60)}x{min(780, root.winfo_screenheight() - 100)}")
         root.minsize(790, 560)
@@ -341,6 +344,19 @@ class DeveloperWindow:
         self.ai_symbol_feedback_button.state(["disabled"])
         ttk.Label(taskbridgebar, text="DTR-A · один файл",
                   foreground="#5a6474").pack(side="left", padx=8)
+
+        shortlistbar = ttk.Frame(frame)
+        shortlistbar.pack(fill="x", pady=(0, 4))
+        self.ai_shortlist_button = ttk.Button(
+            shortlistbar, text="Подобрать функции (Git)", command=self.start_symbol_shortlist)
+        self.ai_shortlist_button.pack(side="left")
+        self.ai_shortlist_choice = ttk.Combobox(shortlistbar, state="readonly", width=53, values=())
+        self.ai_shortlist_choice.pack(side="left", padx=(6, 6), fill="x", expand=True)
+        self.ai_shortlist_choice.bind("<<ComboboxSelected>>", self._shortlist_selected)
+        self.ai_shortlist_open = ttk.Button(
+            shortlistbar, text="Исследовать выбранную", command=self.open_shortlisted_symbol)
+        self.ai_shortlist_open.pack(side="left")
+        self.ai_shortlist_open.state(["disabled"])
 
         boundedbar = ttk.Frame(frame)
         boundedbar.pack(fill="x", pady=(0, 4))
@@ -1272,6 +1288,7 @@ class DeveloperWindow:
     def ai_goal_changed(self, _event=None):
         """A displayed report never grants a shortcut for an edited goal."""
         if self.ai_goal.edit_modified():
+            self._clear_symbol_shortlist()
             if self.ai_symbol_result is not None or self.ai_task_search_result is not None:
                 self.ai_task_request_button.state(["disabled"])
                 self.ai_symbol_feedback_button.state(["disabled"])
@@ -1414,27 +1431,105 @@ class DeveloperWindow:
                    artifact=str(folder.relative_to(self.store.root)))
         return proposal
 
-    def start_symbol_investigation(self):
-        """One explicit selector, one HEAD scan, no automatic candidate choice."""
+    def _clear_symbol_shortlist(self):
+        self.ai_shortlist = None
+        self.ai_shortlist_choice.configure(values=())
+        self.ai_shortlist_choice.set("")
+        self.ai_shortlist_open.state(["disabled"])
+
+    def _shortlist_selected(self, _event=None):
+        if self.ai_busy or self.ai_shortlist is None:
+            self.ai_shortlist_open.state(["disabled"])
+            return
+        try:
+            validate_shortlist_choice(self.ai_shortlist,
+                                     self.ai_goal.get("1.0", "end-1c").strip(),
+                                     self.ai_shortlist_choice.current())
+            self.ai_shortlist_open.state(["!disabled"])
+        except Exception:
+            self.ai_shortlist_open.state(["disabled"])
+
+    def start_symbol_shortlist(self):
+        """Read-only M130/M127 ranking; user chooses, then existing AST verifies."""
         if self.ai_busy:
             return
         goal = self.ai_goal.get("1.0", "end-1c").strip()
-        selector = simpledialog.askstring(
-            "Исследовать Python-функцию",
-            "Укажи имя функции или modules/file.py::Class.method.\n"
-            "При совпадении нескольких определений будут показаны варианты; "
-            "выбери точный путь, имя и @строку из отчёта.\n\n"
-            "Исследование читает только Git HEAD, без запуска исходников.",
-            initialvalue=self.ai_symbol_selector, parent=self.root)
-        if selector is None:
+        if not goal:
+            self.ai_info.set("Укажи задачу для поиска функций.")
             return
+        self._clear_symbol_shortlist()
+        self.ai_symbol_result = None
+        self.ai_symbol_report_sha256 = None
+        self.ai_symbol_feedback_button.state(["disabled"])
+        self.ai_task_request_button.state(["disabled"])
+        self.ai_report = None
+        self.ai_proposal = None
+        self.ai_proposal_finding_id = None
+        self.ai_apply_checked = None
+        self.ai_context_text = None
+        self.ai_task_search_result = None
+        self.ai_bridge_summary = None
+        self._populate_own_findings({})
+        for button in (self.ai_proposal_button, self.ai_verify_button,
+                       self.ai_apply_button, self.ai_proposal_copy_button,
+                       self.ai_context_copy_button):
+            button.state(["disabled"])
+        self.ai_busy = True
+        for button in (self.ai_button, self.ai_context_button, self.ai_bridge_button,
+                       self.ai_symbol_button, self.ai_shortlist_button):
+            button.state(["disabled"])
+        self.ai_info.set("Подбираю функции по Git HEAD без выполнения исходников…")
+        self.set_text(self.ai_text, "Функции-кандидаты — гипотезы. Выбор вручную; применение кода не разрешено.")
+        def worker():
+            try:
+                report = shortlist_repository(self.repository, goal,
+                    notify=lambda msg: self.ai_queue.put(("progress", msg)))
+                self.ai_queue.put(("shortlist", report))
+            except Exception as exc:
+                self.ai_queue.put(("error", type(exc).__name__ + ": " + str(exc)))
+        threading.Thread(target=worker, daemon=True).start()
+        self.root.after(150, self.poll_ai_review)
+
+    def open_shortlisted_symbol(self):
+        """Never promote a rank into a verified selection without AST re-reading."""
+        if self.ai_busy or self.ai_shortlist is None:
+            return
+        try:
+            selector, commit = validate_shortlist_choice(
+                self.ai_shortlist, self.ai_goal.get("1.0", "end-1c").strip(),
+                self.ai_shortlist_choice.current())
+        except Exception as exc:
+            self._clear_symbol_shortlist()
+            self.ai_info.set("Список устарел: " + str(exc))
+            return
+        self.start_symbol_investigation(selector_override=selector,
+                                        expected_commit_override=commit)
+
+    def start_symbol_investigation(self, selector_override=None, expected_commit_override=None):
+        """One user-selected definition; existing AST independently rechecks it."""
+        if self.ai_busy:
+            return
+        goal = self.ai_goal.get("1.0", "end-1c").strip()
+        if selector_override is None:
+            selector = simpledialog.askstring(
+                "Исследовать Python-функцию",
+                "Укажи имя функции или modules/file.py::Class.method.\n"
+                "При совпадении нескольких определений будут показаны варианты; "
+                "выбери точный путь, имя и @строку из отчёта.\n\n"
+                "Исследование читает только Git HEAD, без запуска исходников.",
+                initialvalue=self.ai_symbol_selector, parent=self.root)
+            if selector is None:
+                return
+        else:
+            selector = selector_override
         selector = selector.strip()
         if not selector:
             self.ai_info.set("Укажи функцию для исследования.")
             return
-        expected_commit = None
+        expected_commit = expected_commit_override
         previous = self.ai_symbol_result
-        if (previous is not None and previous.get("status") == "CHOICE_REQUIRED" and
+        if (expected_commit is None and previous is not None and
+                previous.get("status") == "CHOICE_REQUIRED" and
                 previous.get("goal_sha256") == hashlib.sha256(goal.encode("utf-8")).hexdigest()):
             try:
                 if report_fingerprint(previous) != self.ai_symbol_report_sha256:
@@ -1447,6 +1542,7 @@ class DeveloperWindow:
                 self.fail(exc)
                 return
         self.ai_symbol_selector = selector
+        self._clear_symbol_shortlist()
         self.ai_busy = True
         self.ai_report = None
         self.ai_proposal = None
@@ -1739,6 +1835,42 @@ class DeveloperWindow:
                     self.ai_task_request_button.state(["disabled"])
                     self.ai_context_copy_button.state(["disabled"])
                     self.ai_info.set("Не удалось сопоставить поиск с AST: " + str(exc))
+            elif kind == "shortlist":
+                finished = True
+                try:
+                    if (value.get("schema") != SHORTLIST_SCHEMA or
+                            value.get("status") not in ("CANDIDATES", "NO_MATCH") or
+                            value.get("repo_worktree_not_read") is not True or
+                            value.get("no_patch_or_apply") is not True or
+                            value.get("trained_model_used") is not False or
+                            value.get("goal_sha256") != hashlib.sha256(
+                                self.ai_goal.get("1.0", "end-1c").strip().encode("utf-8")).hexdigest()):
+                        raise ValueError("M163_SHORTLIST_REPORT_STALE_OR_INVALID")
+                    rows = value["candidates"]
+                    if len(rows) > 8:
+                        raise ValueError("M163_SHORTLIST_TOO_MANY")
+                    self.ai_shortlist = value
+                    labels = [f"{i+1}. {x['path']}::{x['qualname']}@{x['start']}"
+                              for i, x in enumerate(rows)]
+                    self.ai_shortlist_choice.configure(values=tuple(labels))
+                    self.ai_shortlist_choice.set("")
+                    self.ai_shortlist_open.state(["disabled"])
+                    body = ["M163 — функции-кандидаты из Git HEAD (лексический M130/M127)",
+                            "Это НЕ нейросеть M163; модель пока не внедрена.",
+                            "Ранжирование не доказывает правильность и не даёт прав на изменения.",
+                            "Git HEAD: " + value["git_commit"]]
+                    body += labels if labels else ["Положительных совпадений не найдено; уточни задачу."]
+                    if value["partial"]:
+                        body.append("Сканирование исходников было частичным.")
+                    body.append("Выбери строку в списке и нажми «Исследовать выбранную». ")
+                    self.set_text(self.ai_text, "\n".join(body))
+                    self.ai_info.set(f"Найдено функций: {len(rows)}. Выбор вручную, затем независимый AST-анализ.")
+                    self.event("M163_SHORTLIST_DISPLAYED", commit=value["git_commit"],
+                               count=len(rows), goal_sha256=value["goal_sha256"],
+                               trained_model_used=False)
+                except Exception as exc:
+                    self._clear_symbol_shortlist()
+                    self.ai_info.set("Список не принят: " + str(exc))
             elif kind == "symbol":
                 finished = True
                 try:
@@ -1804,6 +1936,7 @@ class DeveloperWindow:
                     self.ai_info.set("Не удалось сохранить отчёт: " + str(exc))
             elif kind == "error":
                 finished = True
+                self._clear_symbol_shortlist()
                 self.ai_task_search_result = None
                 self.ai_symbol_result = None
                 self.ai_symbol_report_sha256 = None
@@ -1818,6 +1951,7 @@ class DeveloperWindow:
             self.ai_context_button.state(["!disabled"])
             self.ai_bridge_button.state(["!disabled"])
             self.ai_symbol_button.state(["!disabled"])
+            self.ai_shortlist_button.state(["!disabled"])
         elif self.ai_busy:
             self.root.after(150, self.poll_ai_review)
 
