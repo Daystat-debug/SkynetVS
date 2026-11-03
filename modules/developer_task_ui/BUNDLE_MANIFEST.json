@@ -89,8 +89,8 @@
       "sha256": "56f9532a5e960cb7c30e8c5ecefb4d9cebfb5dd45b479be8cf396979852a97bb"
     },
     "app/ui.py": {
-      "bytes": 126321,
-      "sha256": "3b4a280e89838be99c28608258421c480968aeff6fc6493a550afe7846d8a0f3"
+      "bytes": 127278,
+      "sha256": "f3b4c297cb042472ad25de394e1abb278227ac4a9bdfe1e4ecbe4759cc471000"
     },
     "launch.py": {
       "bytes": 7153,
@@ -165,12 +165,12 @@
       "sha256": "55dface8dba5b92e21af5d69b944cc302d519e5921beeae0cbf6a7546ddbee5a"
     },
     "app/task_symbol_shortlist.py": {
-      "bytes": 6939,
-      "sha256": "1338b6911cd192fc2fdf707cefc12136e18dedc5a0daa6ea7a41b86b33d9da33"
+      "bytes": 7014,
+      "sha256": "0976a9459c06d3a8f54877cd3b6cef919e1676f6d043fea189b2f5761a251eb1"
     },
     "app/task_symbol_shadow.py": {
-      "bytes": 15256,
-      "sha256": "adb9de1c8d9cdcc094333b673780969e14abff5e4aea448293f8a91c7982da80"
+      "bytes": 18590,
+      "sha256": "ab63004b5e6c22cdbff71ef206a18aaa21db8be5df2e5232608265aab75d359c"
     }
   },
   "schema": "SKYNETVS_M092_UI_BUNDLE_V1"

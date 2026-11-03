@@ -110,6 +110,77 @@ def find_model():
     return matches[0]
 
 
+
+
+# M226 live GUI refusal telemetry: finite codes only, never exception messages,
+# traceback, paths, goal text, checkpoint contents, or worker stdout.
+_SAFE_REFUSALS = frozenset({
+    "MODEL_NOT_AVAILABLE", "MODEL_RUN_DIRECTORY_LIMIT", "MODEL_RUN_UNSAFE",
+    "MODEL_PRIVATE_PATH_UNSAFE", "MODEL_FILE_UNSAFE", "MODEL_NOT_UNIQUE_OR_MISSING",
+    "M226_REQUEST_TOO_LARGE", "M226_REQUEST_INVALID", "M226_POOL_REQUEST_INVALID",
+    "M226_POOL_EMPTY", "M226_REPO_INVALID", "M226_SNAPSHOT_CHANGED",
+    "M226_HEAD_CHANGED", "M226_POOL_DUPLICATE", "M226_POOL_SOURCE_NOT_SCANNED",
+    "M226_SYMBOL_AST_MISMATCH", "M226_SYMBOL_IDENTITY_CONFLICT",
+    "M226_MODEL_PROFILE_INVALID", "M226_MODEL_TENSOR_INVALID",
+    "M226_MODEL_SCORE_NONFINITE", "M226_POOL_INVALID", "M226_POOL_LIMIT",
+    "M226_WORKER_PYTHON_UNSAFE", "M226_CHILD_FAILED",
+    "M226_SHADOW_RESULT_INVALID", "M226_SHADOW_SELECTION_ESCALATION_REFUSED",
+})
+_STAGE_NAMES = {
+    "find_model": "MODEL_DISCOVERY", "rank_pool_model": "INFERENCE",
+    "symbols_for_pool": "SYMBOLS", "scan_head": "GIT_SCAN",
+    "_run": "GIT_READ", "_sha": "GIT_READ",
+    "_worker": "WORKER", "maybe_shadow": "PARENT",
+    "worker_main": "WORKER", "pool_items": "POOL",
+}
+
+
+def _diagnostic_code(exc):
+    """Classify only trusted exception structure into a bounded, safe symbol."""
+    if isinstance(exc, ShadowRefused):
+        code = exc.args[0] if len(exc.args) == 1 else None
+        if type(code) is str and code in _SAFE_REFUSALS:
+            suffix = code[5:] if code.startswith("M226_") else code
+            return "M226_REFUSED_" + suffix
+        return "M226_REFUSED_UNRECOGNIZED"
+    if isinstance(exc, subprocess.TimeoutExpired):
+        category = "TIMEOUT"
+    elif isinstance(exc, ModuleNotFoundError):
+        category = "TORCH_MISSING" if exc.name == "torch" else "MODULE_MISSING"
+    elif isinstance(exc, ImportError):
+        category = "IMPORT_ERROR"
+    elif isinstance(exc, PermissionError):
+        category = "PERMISSION_ERROR"
+    elif isinstance(exc, FileNotFoundError):
+        category = "FILE_MISSING"
+    elif isinstance(exc, OSError):
+        category = "OS_ERROR"
+    elif isinstance(exc, (ValueError, TypeError, KeyError, AttributeError)):
+        category = "CONTRACT_ERROR"
+    elif isinstance(exc, MemoryError):
+        category = "MEMORY_ERROR"
+    elif isinstance(exc, RuntimeError):
+        category = "RUNTIME_ERROR"
+    else:
+        category = "OTHER_ERROR"
+    stage = "GENERAL"
+    tb = exc.__traceback__
+    while tb is not None:
+        function = tb.tb_frame.f_code.co_name
+        if function in _STAGE_NAMES:
+            stage = _STAGE_NAMES[function]
+        tb = tb.tb_next
+    return "M226_" + stage + "_" + category
+
+
+def _validated_child_code(result):
+    value = result.get("diagnostic_code") if type(result) is dict else None
+    if (type(value) is str and 0 < len(value) <= 80 and
+            value.startswith("M226_") and
+            all(c in "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_" for c in value)):
+        return value
+    return "M226_CHILD_UNAVAILABLE"
+
 def feature_ids(text, max_features=MAX_FEATURES):
     """Byte-for-byte M163 frozen hashed word/character n-gram feature logic."""
     text = unicodedata.normalize("NFKC", text.casefold())
@@ -253,9 +324,12 @@ def worker_main():
         result = _worker(data)
         sys.stdout.write(json.dumps(result, ensure_ascii=True, separators=(",", ":")) + "\n")
         return 0
-    except BaseException:
-        # Never expose user task, source snippets, private paths, or model data.
-        sys.stdout.write('{"schema":"' + SCHEMA + '","status":"UNAVAILABLE"}\n')
+    except BaseException as exc:
+        # Finite reason code only; no raw exception, paths, source or user text.
+        sys.stdout.write(json.dumps({
+            "schema": SCHEMA, "status": "UNAVAILABLE",
+            "diagnostic_code": _diagnostic_code(exc),
+        }, ensure_ascii=True, separators=(",", ":")) + "\n")
         return 0
 
 
@@ -266,7 +340,7 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
     try:
         pool = pool_items(ranking)
         if not pool:
-            return fallback
+            return {**fallback, "diagnostic_code": "M226_POOL_EMPTY"}
         request = {"schema": SCHEMA, "goal": goal, "commit": commit,
                    "digest": snapshot_digest(sources), "pool": pool}
         encoded = json.dumps(request, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
@@ -297,7 +371,7 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
                 len(process.stderr) <= 4096, "M226_CHILD_FAILED")
         result = json.loads(process.stdout.decode("utf-8", "strict"))
         if result.get("status") != "ADVISORY":
-            return fallback
+            return {**fallback, "diagnostic_code": _validated_child_code(result)}
         require(result.get("schema") == SCHEMA and result.get("commit") == commit and
                 result.get("model_sha256") == MODEL_SHA256 and result.get("pool_size") == len(pool) and
                 result.get("trained_on_user_labels") is False and
@@ -311,5 +385,5 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
                 "M226_SHADOW_SELECTION_ESCALATION_REFUSED")
         # Strictly advisory. In particular this result must not populate the GUI combobox.
         return result
-    except (Exception, KeyboardInterrupt):
-        return fallback
+    except (Exception, KeyboardInterrupt) as exc:
+        return {**fallback, "diagnostic_code": _diagnostic_code(exc)}

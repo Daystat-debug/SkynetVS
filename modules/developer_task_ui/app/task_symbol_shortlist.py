@@ -106,7 +106,8 @@ def shortlist_repository(repository: Path, goal: str, notify=None, *, reader=Non
     except Exception:
         result["shadow"] = {"schema": "SKYNETVS_M226_SHADOW_RANKING_V1",
                             "status": "UNAVAILABLE", "selection_authorized": False,
-                            "model_deployed": False, "no_patch_or_apply": True}
+                            "model_deployed": False, "no_patch_or_apply": True,
+                            "diagnostic_code": "M226_SHORTLIST_EXCEPTION"}
     _check(reader._sha("rev-parse", "--verify", "HEAD^{commit}") == commit,
            "M163_SHORTLIST_HEAD_CHANGED")
     return result

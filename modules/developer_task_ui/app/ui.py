@@ -1877,6 +1877,18 @@ class DeveloperWindow:
                         body.append("Выбор и AST-проверка доступны ТОЛЬКО из исходного списка M130 выше.")
                     else:
                         body.append("Модель недоступна или не прошла проверку; исходный M130 работает без изменений.")
+                        diagnostic = shadow.get("diagnostic_code") if isinstance(shadow, dict) else None
+                        if not diagnostic:
+                            if isinstance(shadow, dict) and shadow.get("status") == "ADVISORY":
+                                diagnostic = "M226_GUI_ADVISORY_CONTRACT_REJECTED"
+                            elif isinstance(shadow, dict) and shadow.get("status") == "UNAVAILABLE":
+                                diagnostic = "M226_GUI_UNAVAILABLE_NO_REASON"
+                            else:
+                                diagnostic = "M226_GUI_SHADOW_MISSING_OR_INVALID"
+                        if (type(diagnostic) is str and 0 < len(diagnostic) <= 80 and
+                                diagnostic.startswith("M226_") and
+                                all(c in "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_" for c in diagnostic)):
+                            body.append("M226_DIAGNOSTIC_CODE=" + diagnostic)
                     if value["partial"]:
                         body.append("Сканирование исходников было частичным.")
                     body.append("Выбери строку M130 в списке и нажми «Исследовать выбранную».")
