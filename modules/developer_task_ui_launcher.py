@@ -15,7 +15,7 @@ import threading
 import uuid
 from pathlib import Path
 
-_BUNDLE_MANIFEST_SHA256 = "d8ca720233e372d99edb0dd7443853f5bc3f64745dfa5305f0a50634bc81fbce"
+_BUNDLE_MANIFEST_SHA256 = "15e61081e5112f89ae400817d4f926db51e496d3f90ca68515dcf526eddb6769"
 _BUNDLE_DIRECTORY = "developer_task_ui"
 
 

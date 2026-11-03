@@ -407,7 +407,49 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
                 elif raw.lstrip().startswith(b"{") and raw.count(b"\n") > 1:
                     code = "M226_PARENT_JSON_EXTRA_OUTPUT"
                 elif raw.lstrip().startswith(b"{"):
-                    code = "M226_PARENT_JSON_OBJECT_INVALID"
+                    # Strict parser remains unchanged. Classify a malformed
+                    # object without showing any stdout bytes, error message,
+                    # target symbol, private path, or user goal.
+                    msg = exc.msg
+                    if msg == "Extra data":
+                        try:
+                            parsed, tail_pos = json.JSONDecoder().raw_decode(
+                                raw.decode("utf-8", "strict").lstrip())
+                        except (ValueError, UnicodeError):
+                            code = "M226_PARENT_JSON_EXTRA_UNPARSEABLE"
+                        else:
+                            tail = raw.decode("utf-8", "strict").lstrip()[tail_pos:].lstrip()
+                            if type(parsed) is dict and parsed.get("schema") == SCHEMA:
+                                if tail.startswith("{"):
+                                    code = "M226_PARENT_JSON_MULTIPLE_FRAMES"
+                                elif tail.startswith("\x1b"):
+                                    code = "M226_PARENT_JSON_TRAILING_ANSI"
+                                elif tail:
+                                    code = "M226_PARENT_JSON_TRAILING_NOISE"
+                                else:
+                                    code = "M226_PARENT_JSON_EXTRA_UNEXPLAINED"
+                            else:
+                                code = "M226_PARENT_JSON_EXTRA_AFTER_OTHER"
+                    elif msg == "Unterminated string starting at":
+                        code = "M226_PARENT_JSON_UNTERMINATED_STRING"
+                    elif exc.pos >= len(exc.doc) - 1:
+                        code = "M226_PARENT_JSON_INCOMPLETE_AT_END"
+                    elif msg == "Expecting ':' delimiter":
+                        code = "M226_PARENT_JSON_EXPECT_COLON"
+                    elif msg == "Expecting ',' delimiter":
+                        code = "M226_PARENT_JSON_EXPECT_COMMA"
+                    elif msg == "Expecting property name enclosed in double quotes":
+                        code = "M226_PARENT_JSON_EXPECT_PROPERTY"
+                    elif msg == "Illegal trailing comma before end of object":
+                        code = "M226_PARENT_JSON_TRAILING_COMMA"
+                    elif msg == "Invalid \\escape":
+                        code = "M226_PARENT_JSON_INVALID_ESCAPE"
+                    elif msg == "Invalid control character at":
+                        code = "M226_PARENT_JSON_CONTROL_CHARACTER"
+                    elif msg == "Invalid \\uXXXX escape":
+                        code = "M226_PARENT_JSON_INVALID_UNICODE_ESCAPE"
+                    else:
+                        code = "M226_PARENT_JSON_OTHER_SYNTAX"
                 else:
                     code = "M226_PARENT_JSON_NONOBJECT_OUTPUT"
             elif contract_stage == "CHILD_JSON" and isinstance(exc, UnicodeDecodeError):
