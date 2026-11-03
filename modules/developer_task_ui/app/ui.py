@@ -1860,9 +1860,26 @@ class DeveloperWindow:
                             "Ранжирование не доказывает правильность и не даёт прав на изменения.",
                             "Git HEAD: " + value["git_commit"]]
                     body += labels if labels else ["Положительных совпадений не найдено; уточни задачу."]
+                    # M226 shadow results NEVER feed the selection combobox.
+                    # They are advisory comparison only, on exactly the M130 pool.
+                    shadow = value.get("shadow")
+                    body.append("")
+                    body.append("M226 — теневая модель (только сравнение, НЕ выбор функции):")
+                    if (isinstance(shadow, dict) and
+                            shadow.get("schema") == "SKYNETVS_M226_SHADOW_RANKING_V1" and
+                            shadow.get("status") == "ADVISORY" and
+                            shadow.get("selection_authorized") is False and
+                            shadow.get("model_deployed") is False and
+                            shadow.get("no_patch_or_apply") is True and
+                            shadow.get("commit") == value["git_commit"] and
+                            isinstance(shadow.get("top"), list)):
+                        body += [f"  {i+1}. {selector}" for i, selector in enumerate(shadow["top"])]
+                        body.append("Выбор и AST-проверка доступны ТОЛЬКО из исходного списка M130 выше.")
+                    else:
+                        body.append("Модель недоступна или не прошла проверку; исходный M130 работает без изменений.")
                     if value["partial"]:
                         body.append("Сканирование исходников было частичным.")
-                    body.append("Выбери строку в списке и нажми «Исследовать выбранную». ")
+                    body.append("Выбери строку M130 в списке и нажми «Исследовать выбранную».")
                     self.set_text(self.ai_text, "\n".join(body))
                     self.ai_info.set(f"Найдено функций: {len(rows)}. Выбор вручную, затем независимый AST-анализ.")
                     self.event("M163_SHORTLIST_DISPLAYED", commit=value["git_commit"],

@@ -94,7 +94,19 @@ def shortlist_repository(repository: Path, goal: str, notify=None, *, reader=Non
     commit, sources, scan = scan_head(reader, notify)
     if notify:
         notify("Ранжирую определения функций по существующему лексическому поиску…")
-    result = from_ranking(goal, commit, rank(effective, sources), scan)
+    ranking = rank(effective, sources)
+    result = from_ranking(goal, commit, ranking, scan)
+    _check(reader._sha("rev-parse", "--verify", "HEAD^{commit}") == commit,
+           "M163_SHORTLIST_HEAD_CHANGED")
+    # M226 never changes M130 candidates or their ordering. Optional CPU model
+    # runs in a separate bounded process and is presentation-only evidence.
+    try:
+        from .task_symbol_shadow import maybe_shadow
+        result["shadow"] = maybe_shadow(repository, goal, commit, sources, ranking)
+    except Exception:
+        result["shadow"] = {"schema": "SKYNETVS_M226_SHADOW_RANKING_V1",
+                            "status": "UNAVAILABLE", "selection_authorized": False,
+                            "model_deployed": False, "no_patch_or_apply": True}
     _check(reader._sha("rev-parse", "--verify", "HEAD^{commit}") == commit,
            "M163_SHORTLIST_HEAD_CHANGED")
     return result
