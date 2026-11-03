@@ -169,8 +169,8 @@
       "sha256": "1338b6911cd192fc2fdf707cefc12136e18dedc5a0daa6ea7a41b86b33d9da33"
     },
     "app/task_symbol_shadow.py": {
-      "bytes": 14644,
-      "sha256": "fb37ea771b26a5fdfd9ff4db2e2c78a56e641db48ffb5820ddc048ebd83846ec"
+      "bytes": 15256,
+      "sha256": "adb9de1c8d9cdcc094333b673780969e14abff5e4aea448293f8a91c7982da80"
     }
   },
   "schema": "SKYNETVS_M092_UI_BUNDLE_V1"

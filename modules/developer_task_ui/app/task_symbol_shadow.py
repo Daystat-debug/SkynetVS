@@ -278,7 +278,18 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
                      "import worker_main;sys.exit(worker_main())")
         env = {k: v for k, v in os.environ.items() if not k.upper().startswith(("PYTHON", "GIT_", "SSH_"))}
         env["PYTHONDONTWRITEBYTECODE"] = "1"
-        process = subprocess.run([sys.executable, "-I", "-B", "-X", "utf8", "-c", bootstrap, repo],
+        # GUI uses -S; Python 3.12 may expose base sys.executable without torch.
+        # On Windows select only this repository's non-reparse .venv Python.
+        if os.name == "nt":
+            project_venv = Path(repo) / ".venv"
+            project_scripts = project_venv / "Scripts"
+            worker_python = project_scripts / "python.exe"
+            require(_plain(project_venv, directory=True) and
+                    _plain(project_scripts, directory=True) and
+                    _plain(worker_python), "M226_WORKER_PYTHON_UNSAFE")
+        else:
+            worker_python = Path(sys.executable)
+        process = subprocess.run([str(worker_python), "-I", "-B", "-X", "utf8", "-c", bootstrap, repo],
                                  input=encoded, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                  timeout=90, check=False, cwd=repo, env=env,
                                  creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
