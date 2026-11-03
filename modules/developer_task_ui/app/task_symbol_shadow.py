@@ -315,22 +315,37 @@ def _worker(request):
             "selection_authorized": False, "no_patch_or_apply": True}
 
 
-def worker_main():
-    """This entry is called only by the bounded -I/-B process."""
+def worker_main(*, protocol_fd=None):
+    """Write one ASCII JSON frame to the private pipe, not to library stdout."""
     try:
         raw = sys.stdin.buffer.read(32769)
         require(len(raw) <= 32768, "M226_REQUEST_TOO_LARGE")
         data = json.loads(raw.decode("utf-8", "strict"))
-        result = _worker(data)
-        sys.stdout.write(json.dumps(result, ensure_ascii=True, separators=(",", ":")) + "\n")
-        return 0
+        reply = _worker(data)
     except BaseException as exc:
-        # Finite reason code only; no raw exception, paths, source or user text.
-        sys.stdout.write(json.dumps({
-            "schema": SCHEMA, "status": "UNAVAILABLE",
-            "diagnostic_code": _diagnostic_code(exc),
-        }, ensure_ascii=True, separators=(",", ":")) + "\n")
-        return 0
+        # Finite reason code only. Never output exception text or task data.
+        reply = {"schema": SCHEMA, "status": "UNAVAILABLE",
+                 "diagnostic_code": _diagnostic_code(exc)}
+    frame = json.dumps(reply, ensure_ascii=True, separators=(",", ":")) + "\n"
+    if protocol_fd is None:
+        # Backward-compatible direct/test calls. GUI always uses protocol_fd.
+        sys.stdout.write(frame)
+    else:
+        # Bootstrap saved a duplicate of the child's stdout PIPE, then moved
+        # the ordinary stdout fd onto stderr BEFORE imports/inference.
+        # Any Python/torch/colorama exit-time ANSI now goes to stderr, not JSON.
+        if type(protocol_fd) is not int or protocol_fd < 3:
+            return 2
+        try:
+            remaining = memoryview(frame.encode("ascii"))
+            while remaining:
+                written = os.write(protocol_fd, remaining)
+                if written <= 0:
+                    return 2
+                remaining = remaining[written:]
+        finally:
+            os.close(protocol_fd)
+    return 0
 
 
 def maybe_shadow(repository, goal, commit, sources, ranking):
@@ -350,9 +365,10 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
         require(len(encoded) <= 32768, "M226_REQUEST_TOO_LARGE")
         repo = os.path.abspath(str(repository))
         # Task text passes only via an anonymous pipe, never via argv or disk.
-        bootstrap = ("import sys;sys.path.insert(0,sys.argv[1]);"
+        bootstrap = ("import os,sys;_m226_proto=os.dup(1);os.dup2(2,1);"
+                     "sys.path.insert(0,sys.argv[1]);"
                      "from modules.developer_task_ui.app.task_symbol_shadow "
-                     "import worker_main;sys.exit(worker_main())")
+                     "import worker_main;sys.exit(worker_main(protocol_fd=_m226_proto))")
         env = {k: v for k, v in os.environ.items() if not k.upper().startswith(("PYTHON", "GIT_", "SSH_"))}
         env["PYTHONDONTWRITEBYTECODE"] = "1"
         # GUI uses -S; Python 3.12 may expose base sys.executable without torch.
