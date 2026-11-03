@@ -337,12 +337,15 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
     """One bounded optional subprocess; never blocks or replaces M130 success."""
     fallback = {"schema": SCHEMA, "status": "UNAVAILABLE", "selection_authorized": False,
                 "model_deployed": False, "no_patch_or_apply": True}
+    contract_stage = "POOL"
     try:
         pool = pool_items(ranking)
         if not pool:
             return {**fallback, "diagnostic_code": "M226_POOL_EMPTY"}
+        contract_stage = "REQUEST_DIGEST"
         request = {"schema": SCHEMA, "goal": goal, "commit": commit,
                    "digest": snapshot_digest(sources), "pool": pool}
+        contract_stage = "REQUEST_JSON"
         encoded = json.dumps(request, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
         require(len(encoded) <= 32768, "M226_REQUEST_TOO_LARGE")
         repo = os.path.abspath(str(repository))
@@ -363,22 +366,29 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
                     _plain(worker_python), "M226_WORKER_PYTHON_UNSAFE")
         else:
             worker_python = Path(sys.executable)
+        contract_stage = "CHILD_START"
         process = subprocess.run([str(worker_python), "-I", "-B", "-X", "utf8", "-c", bootstrap, repo],
                                  input=encoded, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                  timeout=90, check=False, cwd=repo, env=env,
                                  creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+        contract_stage = "CHILD_PROCESS_CHECK"
         require(process.returncode == 0 and len(process.stdout) <= 4096 and
                 len(process.stderr) <= 4096, "M226_CHILD_FAILED")
+        contract_stage = "CHILD_JSON"
         result = json.loads(process.stdout.decode("utf-8", "strict"))
+        contract_stage = "CHILD_STATUS"
         if result.get("status") != "ADVISORY":
             return {**fallback, "diagnostic_code": _validated_child_code(result)}
+        contract_stage = "CHILD_CONTRACT"
         require(result.get("schema") == SCHEMA and result.get("commit") == commit and
                 result.get("model_sha256") == MODEL_SHA256 and result.get("pool_size") == len(pool) and
                 result.get("trained_on_user_labels") is False and
                 result.get("model_deployed") is False and
                 result.get("selection_authorized") is False and
                 result.get("no_patch_or_apply") is True, "M226_SHADOW_RESULT_INVALID")
+        contract_stage = "CHILD_TOP"
         top = result.get("top")
+        contract_stage = "ALLOWED_POOL"
         allowed = {f"{item['path']}::{item['qualname']}@{item['start']}" for item in pool}
         require(type(top) is list and len(top) == min(len(pool), 8) and
                 len(top) == len(set(top)) and all(x in allowed for x in top),
@@ -386,4 +396,22 @@ def maybe_shadow(repository, goal, commit, sources, ranking):
         # Strictly advisory. In particular this result must not populate the GUI combobox.
         return result
     except (Exception, KeyboardInterrupt) as exc:
-        return {**fallback, "diagnostic_code": _diagnostic_code(exc)}
+        code = _diagnostic_code(exc)
+        if code == "M226_PARENT_CONTRACT_ERROR":
+            # Only finite, static diagnostic classes. Never expose stdout, paths,
+            # task text, exception message, traceback or model contents.
+            if contract_stage == "CHILD_JSON" and isinstance(exc, json.JSONDecodeError):
+                raw = process.stdout if isinstance(process.stdout, bytes) else b""
+                if not raw.strip():
+                    code = "M226_PARENT_JSON_EMPTY"
+                elif raw.lstrip().startswith(b"{") and raw.count(b"\n") > 1:
+                    code = "M226_PARENT_JSON_EXTRA_OUTPUT"
+                elif raw.lstrip().startswith(b"{"):
+                    code = "M226_PARENT_JSON_OBJECT_INVALID"
+                else:
+                    code = "M226_PARENT_JSON_NONOBJECT_OUTPUT"
+            elif contract_stage == "CHILD_JSON" and isinstance(exc, UnicodeDecodeError):
+                code = "M226_PARENT_JSON_UTF8_INVALID"
+            else:
+                code = "M226_PARENT_CONTRACT_" + contract_stage
+        return {**fallback, "diagnostic_code": code}
