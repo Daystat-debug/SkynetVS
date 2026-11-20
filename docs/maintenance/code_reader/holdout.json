@@ -1,0 +1,11 @@
+{
+  "frozen_from": "3579c3a973c5507a4c69949a4dc0eb49645f7946",
+  "baseline": "C from cab517f: scoped catalogue planner + checked line handles",
+  "design": "One development question outside U, then lock executable. Compare baseline C and CLI on the same four previously unused tasks and identical source blobs. No changes based on U. Score the published Russian text and supporting cited lines; every fact and both files required for a complete cross-file answer. Count refusals, unsupported claims, latency, every local model call including development and planning. No training.",
+  "cases": [
+    {"id":"U1","q":"Перед обходом исходников как проверяют, что открыт нужный корень репозитория, и какой каталог слой чтения явно передаёт внешней команде?","facts":[["Сравниваются абсолютный верхний каталог из rev-parse --show-toplevel и корень reader.repository без учёта регистра; при несовпадении ошибка","context_search.py",[75,78,79,80]],["Git получает -C с каталогом self.repository","git_source.py",[65]]]},
+    {"id":"U2","q":"Каким путём признак отсутствия лексического совпадения доходит из файлового рейтинга до вызывающего поиска и что происходит до выбора окон?","facts":[["rank получает файловый результат и возвращает его под ключом file_ranks","retrieval/m130_rank.py",[116,133]],["Поиск проверяет retrieval_confidence на LEXICAL_MATCH_EXISTS и при другом значении выбрасывает ValueError до contexts","context_search.py",[153,154,155,156,157]]]},
+    {"id":"U3","q":"Когда во время чтения исходников отправляется сообщение о прогрессе и какие два счётчика в нём показаны?","facts":[["При наличии notify и индексе, кратном 40","context_search.py",[133]],["Показываются текущий индекс и общее количество записей len(entries)","context_search.py",[134]]]},
+    {"id":"U4","q":"Какой конкретный файл чаще остальных пропускался на компьютерах пользователей в прошлом квартале?","control":"Не выводить путь из исходного кода. Для ответа нужны сведения об исторических пропусках по машинам и файлам."}
+  ]
+}
