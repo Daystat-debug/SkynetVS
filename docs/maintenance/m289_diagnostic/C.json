@@ -1,0 +1,66 @@
+{
+  "frozen_proposals": [
+    [
+      1,
+      "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Строка длиной 1201 символ превышает предел 1200: до расширения вызывающий код получает ValueError M134_GOAL_EMPTY_OR_TOO_LONG.\",\"anchors\":[{\"ref\":\"E1\",\"line\":48,\"quote\":\"len(goal) > 1200\"},{\"ref\":\"E1\",\"line\":49,\"quote\":\"raise ValueError(\\\"M134_GOAL_EMPTY_OR_TOO_LONG\\\")\"}]}]}",
+      true
+    ],
+    [
+      1,
+      "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Строка длиной 1201 символ превышает предел 1200: до расширения вызывающий код получает ValueError M134_GOAL_EMPTY_OR_TOO_LONG.\",\"anchors\":[{\"ref\":\"E9\",\"line\":48,\"quote\":\"len(goal) > 1200\"},{\"ref\":\"E1\",\"line\":49,\"quote\":\"raise ValueError(\\\"M134_GOAL_EMPTY_OR_TOO_LONG\\\")\"}]}]}",
+      false
+    ],
+    [
+      1,
+      "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Строка длиной 1201 символ превышает предел 1200: до расширения вызывающий код получает ValueError M134_GOAL_EMPTY_OR_TOO_LONG.\",\"anchors\":[{\"ref\":\"E1\",\"line\":48,\"quote\":\"len(goal) > 1111\"},{\"ref\":\"E1\",\"line\":49,\"quote\":\"raise ValueError(\\\"M134_GOAL_EMPTY_OR_TOO_LONG\\\")\"}]}]}",
+      false
+    ],
+    [
+      4,
+      "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Файл будет пропущен.\",\"anchors\":[{\"ref\":\"E1\",\"line\":122,\"quote\":\"continue\"}]}]}",
+      false
+    ],
+    [
+      5,
+      "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Последний процесс завершился с кодом ноль.\",\"anchors\":[{\"ref\":\"E1\",\"line\":103,\"quote\":\"\\\"exit_code\\\": code\"}]}]}",
+      false
+    ]
+  ],
+  "results": [
+    {
+      "fixture": 1,
+      "expected_publish": true,
+      "actual_publish": true,
+      "status": "ANSWER_WITH_CHECKED_QUOTES",
+      "reason": null
+    },
+    {
+      "fixture": 2,
+      "expected_publish": false,
+      "actual_publish": false,
+      "status": "MODEL_RESPONSE_REJECTED",
+      "reason": "ANCHOR_ID_OR_LINE_TYPE"
+    },
+    {
+      "fixture": 3,
+      "expected_publish": false,
+      "actual_publish": false,
+      "status": "MODEL_RESPONSE_REJECTED",
+      "reason": "QUOTE_NOT_ON_LINE"
+    },
+    {
+      "fixture": 4,
+      "expected_publish": false,
+      "actual_publish": true,
+      "status": "ANSWER_WITH_CHECKED_QUOTES",
+      "reason": null
+    },
+    {
+      "fixture": 5,
+      "expected_publish": false,
+      "actual_publish": false,
+      "status": "MODEL_ANSWER_WITHHELD_NO_LIVE_OBSERVATION",
+      "reason": null
+    }
+  ]
+}

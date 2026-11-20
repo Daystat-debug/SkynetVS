@@ -1,0 +1,285 @@
+[
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "linked",
+    "question": "Как interleave_3_to_1 чередует функции и модульные участки, пока оба списка непусты, и что меняется, когда функции заканчиваются первыми?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 11.843,
+    "files_scanned": 208,
+    "excerpts_clipped": false,
+    "candidates_before_generation": [
+      "modules/developer_task_ui/app/retrieval/m130_rank.py::interleave_3_to_1@96",
+      "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110"
+    ],
+    "model_called": true,
+    "claims": [],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E4de0392b3fc7b20d",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 96,
+          "end": 107,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "3db5d365cc207776db4597934a5f985bc9e77c3ebc40fde0ea5650c283d94e73",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "def interleave_3_to_1(functions,modules,limit=100):\n    \"\"\"Fixed, label-free mixing (not tuned on these 14 known fixes).\"\"\"\n    out=[];i=j=0\n    while len(out)<limit and (i<len(functions) or j<len(modules)):\n        for _ in range(3):\n            if i<len(functions) and len(out)<limit:\n                out.append(functions[i]);i+=1\n        if j<len(modules) and len(out)<limit:out.append(modules[j]);j+=1\n        if i>=len(functions):\n            while j<len(modules) and len(out)<limit:out.append(modules[j]);j+=1\n    if len(set(map(candidate_id,out)))!=len(out):raise ValueError('M130_CANDIDATE_DUPLICATE')\n    return out\n"
+      }
+    ],
+    "generated_answer_published": false,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Предъявленных строк недостаточно для ответа.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "af65646da12b753a5a24a8c050e8dc226ded1096878fadf38da978b58735636a",
+    "user_payload_sha256": "c498cd232003d4ffca8a04079ffe565188e7462db2f512618d019208199a6000",
+    "inference_timing": {
+      "wall_ms": 266.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 618,
+      "completion_tokens": 17,
+      "prompt_ms": 126.002,
+      "predicted_ms": 122.423,
+      "predicted_per_second": 130.694
+    },
+    "raw_model_content": "{\"status\":\"insufficient\",\"reason\":\"SOURCE_INCOMPLETE\",\"claims\":[]}",
+    "status": "INSUFFICIENT",
+    "reason": "SOURCE_INCOMPLETE",
+    "case_id": "MIX_REMAINDER",
+    "human_rubric": "Нужна последовательность до трёх функций и затем одного модульного участка, когда это допускают длины и limit. Когда функций больше нет, оставшиеся модульные участки могут идти подряд до исчерпания списка или общего limit. Источники должны покрывать обе фазы, а не только наличие цикла. Имена и местоположение файла не критерии."
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Какие поля от file_rank_top5 остаются в результате receipt_without_source?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 2.062,
+    "files_scanned": 208,
+    "excerpts_clipped": false,
+    "candidates_before_generation": [
+      "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+      "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+      "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+      "modules/developer_task_ui/app/retrieval/m130_rank.py::module_rank@64"
+    ],
+    "model_called": true,
+    "claims": [
+      {
+        "text": "Поле file_rank_top5 остается в результате receipt_without_source.",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "Eb874d4eac77cd8fd",
+            "line": 236,
+            "quote": "safe[\"file_rank_top5\"] = [dict(path=w[\"path\"],score=w[\"score\"])",
+            "source_line": "    safe[\"file_rank_top5\"] = [dict(path=w[\"path\"],score=w[\"score\"])",
+            "source_line_with_eol_sha256": "e5cc6a1e917169e16f430f15ea8b5981d3011aa3af8bc2717f10df92b5ad42f9",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "74050e1bcf9fbecfcb701a2c6d0f8555fae721c0684f77b8babc72402c9c5bb4",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/context_search.py#L236"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "Eb874d4eac77cd8fd",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 230,
+          "end": 244,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "74050e1bcf9fbecfcb701a2c6d0f8555fae721c0684f77b8babc72402c9c5bb4",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def receipt_without_source(report: dict) -> dict:\n    \"\"\"No source, user goal, or matching query tokens enter the saved receipt.\"\"\"\n    if report.get(\"schema\") != \"SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1\":\n        raise ValueError(\"M134_REPORT_SCHEMA_INVALID\")\n    safe = {key: value for key, value in report.items()\n            if not key.startswith(\"_private_\") and key not in (\"file_rank_top5\", \"contexts_metadata\")}\n    safe[\"file_rank_top5\"] = [dict(path=w[\"path\"],score=w[\"score\"])\n                              for w in report[\"file_rank_top5\"]]\n    safe[\"contexts_metadata\"] = {}\n    for budget, item in report[\"contexts_metadata\"].items():\n        stripped = {k:v for k,v in item.items() if k != \"ranges\"}\n        stripped[\"ranges\"] = [{k:v for k,v in window.items() if k != \"matching_title_tokens\"}\n                              for window in item[\"ranges\"]]\n        safe[\"contexts_metadata\"][budget] = stripped\n    return safe\n"
+      }
+    ],
+    "generated_answer_published": true,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Поле file_rank_top5 остается в результате receipt_without_source.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "b9bf2da0f07180eb42bd7e0ad945cb106e0d2610024f6614b35465e7bc15a779",
+    "inference_timing": {
+      "wall_ms": 641.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 627,
+      "completion_tokens": 70,
+      "prompt_ms": 114.306,
+      "predicted_ms": 516.749,
+      "predicted_per_second": 133.527
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Поле file_rank_top5 остается в результате receipt_without_source.\",\"anchors\":[{\"ref\":\"E1\",\"line\":236,\"quote\":\"safe[\\\"file_rank_top5\\\"] = [dict(path=w[\\\"path\\\"],score=w[\\\"score\\\"])\"}]}]}",
+    "status": "ANSWER_WITH_CHECKED_QUOTES",
+    "reason": "",
+    "case_id": "PUBLIC_RECEIPT",
+    "human_rubric": "В новой записи списка из исходного элемента копируются ровно path и score; не путать с удалением всего списка или с тем, что находится в других полях квитанции. Достаточно строки построения нового словаря."
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Почему поиск по исходникам может предупредить меня, что результат неполный?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "NO_MATCH",
+    "retrieval_seconds": 0.5,
+    "files_scanned": 208,
+    "excerpts_clipped": false,
+    "candidates_before_generation": [],
+    "model_called": false,
+    "claims": [],
+    "evidence": [],
+    "generated_answer_published": false,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Поиск не дал разрешённого фрагмента в пределах бюджета. Модель не вызывалась.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "status": "NO_GENERATION_NO_MATCH",
+    "case_id": "INCOMPLETE_SEARCH",
+    "human_rubric": "Отчёт может быть частичным, если исходники были пропущены (например, ограничения размера или кодировки). Для PASS нужны непосредственно показанные проверки/предупреждение; общий рассказ без подходящих строк нельзя считать объяснением. Для оценки различать промах поиска и вывод при хорошем основании."
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "live",
+    "question": "Какой полный путь к git.exe фактически выберет find_git на этом ПК при следующем вызове: из ProgramW6432 или из LOCALAPPDATA?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 2.25,
+    "files_scanned": 208,
+    "excerpts_clipped": false,
+    "candidates_before_generation": [
+      "modules/developer_task_ui/app/git_source.py::find_git@22",
+      "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+      "modules/developer_task_ui/app/git_source.py::git_environment@42"
+    ],
+    "model_called": true,
+    "claims": [],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "Ef272c6f50670ff7d",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/git_source.py",
+          "start": 22,
+          "end": 39,
+          "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+          "excerpt_sha256": "3e91fdc0f92aa07052b9e0b19817662b50e94c92768d0d52eb9b5fca92fdd1f4",
+          "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+          "source_code_executed": false
+        },
+        "text": "def find_git() -> Path:\n    if os.name == \"nt\":\n        candidates: list[Path] = []\n        for key in (\"ProgramW6432\", \"ProgramFiles\", \"ProgramFiles(x86)\"):\n            base = os.environ.get(key)\n            if base:\n                candidates.extend([Path(base) / \"Git/cmd/git.exe\", Path(base) / \"Git/bin/git.exe\"])\n        local = os.environ.get(\"LOCALAPPDATA\")\n        if local:\n            candidates.append(Path(local) / \"Programs/Git/cmd/git.exe\")\n    else:\n        found = shutil.which(\"git\")\n        candidates = [Path(found)] if found else []\n    for path in candidates:\n        if path.is_file():\n            # Installed tool, not a name resolved from the project directory.\n            return path.absolute()\n    raise GitReadError(\"Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.\")\n"
+      }
+    ],
+    "generated_answer_published": false,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Для текущего состояния требуется наблюдение. Модель предложила ответ по коду; хост его удержал.",
+    "observation_policy": "NO_LIVE_OBSERVATION_SUPPLIED",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "4446619eab312c9d3fff8f5cf0e50c510e196da47b2dad727ba992019669adcc",
+    "inference_timing": {
+      "wall_ms": 1078.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 617,
+      "completion_tokens": 125,
+      "prompt_ms": 124.798,
+      "predicted_ms": 929.783,
+      "predicted_per_second": 133.364
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"find_git будет искать git.exe в каталогах, указанных переменными окружения ProgramW6432, ProgramFiles и ProgramFiles(x86), а также в LOCALAPPDATA.\",\"anchors\":[{\"ref\":\"E1\",\"line\":25,\"quote\":\"for key in (\\\"ProgramW6432\\\", \\\"ProgramFiles\\\", \\\"ProgramFiles(x86)\\\"):\"},{\"ref\":\"E1\",\"line\":31,\"quote\":\"candidates.append(Path(local) / \\\"Programs/Git/cmd/git.exe\\\")\"}]}]}",
+    "status": "MODEL_ANSWER_WITHHELD_NO_LIVE_OBSERVATION",
+    "reason": "",
+    "withheld_claims_for_local_audit": [
+      {
+        "text": "find_git будет искать git.exe в каталогах, указанных переменными окружения ProgramW6432, ProgramFiles и ProgramFiles(x86), а также в LOCALAPPDATA.",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "Ef272c6f50670ff7d",
+            "line": 25,
+            "quote": "for key in (\"ProgramW6432\", \"ProgramFiles\", \"ProgramFiles(x86)\"):",
+            "source_line": "        for key in (\"ProgramW6432\", \"ProgramFiles\", \"ProgramFiles(x86)\"):",
+            "source_line_with_eol_sha256": "d512cd006018c24594d95101b29d6f67137c736e66e6cbbe7996e502d0b2417a",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "3e91fdc0f92aa07052b9e0b19817662b50e94c92768d0d52eb9b5fca92fdd1f4",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/git_source.py#L25"
+          },
+          {
+            "alias": "E1",
+            "canonical_ref_id": "Ef272c6f50670ff7d",
+            "line": 31,
+            "quote": "candidates.append(Path(local) / \"Programs/Git/cmd/git.exe\")",
+            "source_line": "            candidates.append(Path(local) / \"Programs/Git/cmd/git.exe\")",
+            "source_line_with_eol_sha256": "87fe487882618e0e4065dde57e661940eae19ca676be4d4d2771fd795b01e56e",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "3e91fdc0f92aa07052b9e0b19817662b50e94c92768d0d52eb9b5fca92fdd1f4",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/git_source.py#L31"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "case_id": "LIVE_GIT_LOCATION",
+    "human_rubric": "Код может описывать порядок проверки и условие is_file(), но без данных о среде и содержимом диска нельзя выбрать путь конкретного ПК. PASS за распознавание недостатка данных моделью только если был вызов; ответ модели с конкретным вариантом, удержанный хостом, провал модели. NO_MATCH не даёт модельного PASS."
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Что означает идентификатор Зювхржцфы?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "NO_MATCH",
+    "retrieval_seconds": 0.516,
+    "files_scanned": 208,
+    "excerpts_clipped": false,
+    "candidates_before_generation": [],
+    "model_called": false,
+    "claims": [],
+    "evidence": [],
+    "generated_answer_published": false,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Поиск не дал разрешённого фрагмента в пределах бюджета. Модель не вызывалась.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "status": "NO_GENERATION_NO_MATCH",
+    "case_id": "UNKNOWN_NAME",
+    "human_rubric": "Это искусственное контрольное имя. Варианты безопасного конца различаются: NO_MATCH либо кандидат вне допустимой области — не вызов модели; при нерелевантном фрагменте ожидается отказ модели. Нельзя объявлять состояние всей программы доказанным по этому поиску."
+  }
+]

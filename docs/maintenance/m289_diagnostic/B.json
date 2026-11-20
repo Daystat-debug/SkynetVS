@@ -1,0 +1,1221 @@
+[
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Что произойдёт с запросом поиска длиной 1201 символ до добавления подсказок и какой результат получит вызывающий код?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [
+      {
+        "text": "Запрос длиной 1201 символ вызовет ошибку",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "E12966487830c47c6",
+            "line": 48,
+            "quote": "len(goal) > 1200",
+            "source_line": "    if not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or len(goal.encode(\"utf-8\")) > 2500:",
+            "source_line_with_eol_sha256": "9006789980e257a0bfb4b960d48d0fb4a8c169983551c6001dbf4f325058bcb9",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/context_search.py#L48"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E12966487830c47c6",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 47,
+          "end": 54,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def expand_query(goal: str) -> tuple[str, list[str]]:\n    if not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or len(goal.encode(\"utf-8\")) > 2500:\n        raise ValueError(\"M134_GOAL_EMPTY_OR_TOO_LONG\")\n    additions = [syn for pattern, syn in RU_HINTS if re.search(pattern, goal, re.IGNORECASE)]\n    text = goal.strip() + (\" \" + \" \".join(additions) if additions else \"\")\n    if len(text) > 2048 or len(text.encode(\"utf-8\")) > 4096:\n        raise ValueError(\"M134_EXPANDED_QUERY_TOO_LONG\")\n    return text, additions\n"
+      }
+    ],
+    "generated_answer_published": true,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Запрос длиной 1201 символ вызовет ошибку",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "2df4fbe0d0b432d537fccfaf8b6b25603dc060d9f4e57f7494ba5c9d1d978747",
+    "inference_timing": {
+      "wall_ms": 4031.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 520,
+      "completion_tokens": 56,
+      "prompt_ms": 3538.748,
+      "predicted_ms": 475.153,
+      "predicted_per_second": 115.752
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Запрос длиной 1201 символ вызовет ошибку\",\"anchors\":[{\"ref\":\"E1\",\"line\":48,\"quote\":\"len(goal) > 1200\"}]}]}",
+    "status": "ANSWER_WITH_CHECKED_QUOTES",
+    "reason": "",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "E12966487830c47c6",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 47,
+          "end": 54,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def expand_query(goal: str) -> tuple[str, list[str]]:\n    if not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or len(goal.encode(\"utf-8\")) > 2500:\n        raise ValueError(\"M134_GOAL_EMPTY_OR_TOO_LONG\")\n    additions = [syn for pattern, syn in RU_HINTS if re.search(pattern, goal, re.IGNORECASE)]\n    text = goal.strip() + (\" \" + \" \".join(additions) if additions else \"\")\n    if len(text) > 2048 or len(text.encode(\"utf-8\")) > 4096:\n        raise ValueError(\"M134_EXPANDED_QUERY_TOO_LONG\")\n    return text, additions\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H1"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Что происходит с дочерним Git-процессом при превышении первого таймаута ожидания и как об этом узнаёт вызывающий код?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [
+      {
+        "text": "При превышении первого таймаута ожидания дочерний Git-процесс убивается.",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "E2247606a1cab9573",
+            "line": 95,
+            "quote": "process.kill()",
+            "source_line": "            process.kill()",
+            "source_line_with_eol_sha256": "dfce64fe3b5968d7d19bbfb5928a20c6c137b95aab56768871d941904e5645ca",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1289c8c45491ca8405aecc302af5e6abe11bebd5aa3e262ef1253d7446ba5acc",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/git_source.py#L95"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      },
+      {
+        "text": "Вызывающий код получает сообщение об ошибке \"Превышено время ожидания Git (15 секунд); повтор не выполнялся.\".",
+        "claim_no": 2,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "E2247606a1cab9573",
+            "line": 97,
+            "quote": "errors.append(\"Превышено время ожидания Git (15 секунд); повтор не выполнялся.\")",
+            "source_line": "            errors.append(\"Превышено время ожидания Git (15 секунд); повтор не выполнялся.\")",
+            "source_line_with_eol_sha256": "24443a24b6e5d44bd01d2cb1281d1bb1bbac2fb1651efde39624f277306d55cf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1289c8c45491ca8405aecc302af5e6abe11bebd5aa3e262ef1253d7446ba5acc",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/git_source.py#L97"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      },
+      {
+        "text": "Вызывающий код проверяет завершение потоков вывода Git и добавляет соответствующую ошибку, если они не завершились.",
+        "claim_no": 3,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "E2247606a1cab9573",
+            "line": 101,
+            "quote": "errors.append(\"Потоки вывода Git не завершились.\")",
+            "source_line": "            errors.append(\"Потоки вывода Git не завершились.\")",
+            "source_line_with_eol_sha256": "fe5ccff0dbab97196af87095b12059f646eefe69abc2b118a2bc4d56bd49aeee",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1289c8c45491ca8405aecc302af5e6abe11bebd5aa3e262ef1253d7446ba5acc",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/git_source.py#L101"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E2247606a1cab9573",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/git_source.py",
+          "start": 92,
+          "end": 108,
+          "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+          "excerpt_sha256": "1289c8c45491ca8405aecc302af5e6abe11bebd5aa3e262ef1253d7446ba5acc",
+          "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+          "source_code_executed": false
+        },
+        "text": "        try:\n            code = process.wait(timeout=15)\n        except subprocess.TimeoutExpired:\n            process.kill()\n            code = process.wait(timeout=5)\n            errors.append(\"Превышено время ожидания Git (15 секунд); повтор не выполнялся.\")\n        for thread in threads:\n            thread.join(timeout=3)\n        if any(thread.is_alive() for thread in threads):\n            errors.append(\"Потоки вывода Git не завершились.\")\n        stdout, stderr = bytes(chunks[0]), bytes(chunks[1])\n        self.commands.append({\"arguments\": list(args), \"exit_code\": code,\n                              \"stdout_bytes\": len(stdout), \"stdout_sha256\": sha256(stdout),\n                              \"stderr\": stderr.decode(\"utf-8\", \"replace\")[:2048], \"errors\": list(errors)})\n        if errors or code != 0:\n            raise GitReadError(\"; \".join(errors) or (stderr.decode(\"utf-8\", \"replace\").strip()[:1200] or f\"Git exit={code}\"))\n        return stdout\n"
+      }
+    ],
+    "generated_answer_published": true,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "При превышении первого таймаута ожидания дочерний Git-процесс убивается.\nВызывающий код получает сообщение об ошибке \"Превышено время ожидания Git (15 секунд); повтор не выполнялся.\".\nВызывающий код проверяет завершение потоков вывода Git и добавляет соответствующую ошибку, если они не завершились.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "21d42f326c23bf4ffa0f5c97804a7299dc31f34bc75d43bd2a3a66f50a267128",
+    "inference_timing": {
+      "wall_ms": 1750.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 646,
+      "completion_tokens": 210,
+      "prompt_ms": 136.016,
+      "predicted_ms": 1613.288,
+      "predicted_per_second": 129.549
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"При превышении первого таймаута ожидания дочерний Git-процесс убивается.\",\"anchors\":[{\"ref\":\"E1\",\"line\":95,\"quote\":\"process.kill()\"}]},{\"text\":\"Вызывающий код получает сообщение об ошибке \\\"Превышено время ожидания Git (15 секунд); повтор не выполнялся.\\\".\",\"anchors\":[{\"ref\":\"E1\",\"line\":97,\"quote\":\"errors.append(\\\"Превышено время ожидания Git (15 секунд); повтор не выполнялся.\\\")\"}]},{\"text\":\"Вызывающий код проверяет завершение потоков вывода Git и добавляет соответствующую ошибку, если они не завершились.\",\"anchors\":[{\"ref\":\"E1\",\"line\":101,\"quote\":\"errors.append(\\\"Потоки вывода Git не завершились.\\\")\"}]}]}",
+    "status": "ANSWER_WITH_CHECKED_QUOTES",
+    "reason": "",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "E2247606a1cab9573",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/git_source.py",
+          "start": 92,
+          "end": 108,
+          "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+          "excerpt_sha256": "1289c8c45491ca8405aecc302af5e6abe11bebd5aa3e262ef1253d7446ba5acc",
+          "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+          "source_code_executed": false
+        },
+        "text": "        try:\n            code = process.wait(timeout=15)\n        except subprocess.TimeoutExpired:\n            process.kill()\n            code = process.wait(timeout=5)\n            errors.append(\"Превышено время ожидания Git (15 секунд); повтор не выполнялся.\")\n        for thread in threads:\n            thread.join(timeout=3)\n        if any(thread.is_alive() for thread in threads):\n            errors.append(\"Потоки вывода Git не завершились.\")\n        stdout, stderr = bytes(chunks[0]), bytes(chunks[1])\n        self.commands.append({\"arguments\": list(args), \"exit_code\": code,\n                              \"stdout_bytes\": len(stdout), \"stdout_sha256\": sha256(stdout),\n                              \"stderr\": stderr.decode(\"utf-8\", \"replace\")[:2048], \"errors\": list(errors)})\n        if errors or code != 0:\n            raise GitReadError(\"; \".join(errors) or (stderr.decode(\"utf-8\", \"replace\").strip()[:1200] or f\"Git exit={code}\"))\n        return stdout\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H2"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Какой текст получает ранжировщик от поиска и сколько файлов он первоначально запрашивает у файлового поиска?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E12966487830c47c6",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 47,
+          "end": 54,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def expand_query(goal: str) -> tuple[str, list[str]]:\n    if not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or len(goal.encode(\"utf-8\")) > 2500:\n        raise ValueError(\"M134_GOAL_EMPTY_OR_TOO_LONG\")\n    additions = [syn for pattern, syn in RU_HINTS if re.search(pattern, goal, re.IGNORECASE)]\n    text = goal.strip() + (\" \" + \" \".join(additions) if additions else \"\")\n    if len(text) > 2048 or len(text.encode(\"utf-8\")) > 4096:\n        raise ValueError(\"M134_EXPANDED_QUERY_TOO_LONG\")\n    return text, additions\n"
+      },
+      {
+        "alias": "E2",
+        "ref": {
+          "id": "E191f3535e4acf902",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 144,
+          "end": 154,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "5246270e4e868cea4c1cf344ffed34a3dfd67a56bc82789cf0fd519daf11e6ac",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def search_repository(repository: Path, goal: str, notify=None, *, reader=None) -> dict:\n    \"\"\"Return bounded private context and public-safe metadata (no source text).\"\"\"\n    effective, expansions = expand_query(goal)\n    if reader is None:\n        from .git_source import GitSourceReader, find_git\n        reader = GitSourceReader(repository, find_git())\n    commit, sources, scan = scan_head(reader, notify)\n    if notify:\n        notify(\"Ранжирую файлы, функции и внутренние окна (только Git HEAD)…\")\n    base = rank(effective, sources)\n    first = base[\"file_ranks\"]\n"
+      },
+      {
+        "alias": "E3",
+        "ref": {
+          "id": "Ed084b877dd1d86c2",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 110,
+          "end": 117,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "450a6deaacd5970fbdf13e2d610211e9acd3cb16fa69d8db142289fe53367a84",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "def rank(title,old_sources):\n    # Strictly BEFORE-only: ranker is never given gold, after, fixed paths or tests.\n    if not isinstance(old_sources,dict) or not old_sources:\n        raise ValueError('M130_OLD_TREE_EMPTY')\n    if not isinstance(title,str) or not title.strip() or len(title)>2048:\n        raise ValueError('M130_TITLE_INVALID')\n    files=rank_title_only(title,old_sources,top_n=10)\n    selected={};used=0;skipped=[]\n"
+      }
+    ],
+    "generated_answer_published": false,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Предъявленных строк недостаточно для ответа.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 3,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "56fc92cd26de887ec781f6eb79473897a522127de34d4dc9b788345d3d382b53",
+    "inference_timing": {
+      "wall_ms": 3578.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 925,
+      "completion_tokens": 17,
+      "prompt_ms": 3413.266,
+      "predicted_ms": 171.513,
+      "predicted_per_second": 93.287
+    },
+    "raw_model_content": "{\"status\":\"insufficient\",\"reason\":\"SOURCE_INCOMPLETE\",\"claims\":[]}",
+    "status": "INSUFFICIENT",
+    "reason": "SOURCE_INCOMPLETE",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "E12966487830c47c6",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 47,
+          "end": 54,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def expand_query(goal: str) -> tuple[str, list[str]]:\n    if not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or len(goal.encode(\"utf-8\")) > 2500:\n        raise ValueError(\"M134_GOAL_EMPTY_OR_TOO_LONG\")\n    additions = [syn for pattern, syn in RU_HINTS if re.search(pattern, goal, re.IGNORECASE)]\n    text = goal.strip() + (\" \" + \" \".join(additions) if additions else \"\")\n    if len(text) > 2048 or len(text.encode(\"utf-8\")) > 4096:\n        raise ValueError(\"M134_EXPANDED_QUERY_TOO_LONG\")\n    return text, additions\n"
+      },
+      {
+        "ref": {
+          "id": "E191f3535e4acf902",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 144,
+          "end": 154,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "5246270e4e868cea4c1cf344ffed34a3dfd67a56bc82789cf0fd519daf11e6ac",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def search_repository(repository: Path, goal: str, notify=None, *, reader=None) -> dict:\n    \"\"\"Return bounded private context and public-safe metadata (no source text).\"\"\"\n    effective, expansions = expand_query(goal)\n    if reader is None:\n        from .git_source import GitSourceReader, find_git\n        reader = GitSourceReader(repository, find_git())\n    commit, sources, scan = scan_head(reader, notify)\n    if notify:\n        notify(\"Ранжирую файлы, функции и внутренние окна (только Git HEAD)…\")\n    base = rank(effective, sources)\n    first = base[\"file_ranks\"]\n"
+      },
+      {
+        "ref": {
+          "id": "Ed084b877dd1d86c2",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 110,
+          "end": 117,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "450a6deaacd5970fbdf13e2d610211e9acd3cb16fa69d8db142289fe53367a84",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "def rank(title,old_sources):\n    # Strictly BEFORE-only: ranker is never given gold, after, fixed paths or tests.\n    if not isinstance(old_sources,dict) or not old_sources:\n        raise ValueError('M130_OLD_TREE_EMPTY')\n    if not isinstance(title,str) or not title.strip() or len(title)>2048:\n        raise ValueError('M130_TITLE_INVALID')\n    files=rank_title_only(title,old_sources,top_n=10)\n    selected={};used=0;skipped=[]\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H3"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Если очередной файл превышает суммарный бюджет ранжировщика, что с ним происходит и чем заканчивается случай, когда не осталось ни одного выбранного файла?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [
+      {
+        "text": "Если не осталось ни одного выбранного файла, возникает ошибка ValueError с сообщением 'M130_NO_SCOPE_FILES_WITHIN_LIMIT'",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "E18a36bd28d1b2000",
+            "line": 124,
+            "quote": "raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')",
+            "source_line": "    if not selected:raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')",
+            "source_line_with_eol_sha256": "f87f6d75790a23059a0534b42f2da0ddf0342ecf7e2d438232ec5136fafa51c6",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "f100e15179a8b789975cb11ad4babb551b52f39811d38fb1600d0e07ea9c8c0e",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/retrieval/m130_rank.py#L124"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E18a36bd28d1b2000",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 117,
+          "end": 125,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "f100e15179a8b789975cb11ad4babb551b52f39811d38fb1600d0e07ea9c8c0e",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "    selected={};used=0;skipped=[]\n    for row in files['bm25_title_code_path']:\n        p=row['path'];b=len(old_sources[p].encode('utf-8'))\n        if used+b>6_000_000:\n            skipped.append(dict(path=p,reason='M128_COMPATIBLE_SCOPE_SCAN_BYTES_LIMIT'))\n            continue\n        selected[p]=old_sources[p];used+=b\n    if not selected:raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')\n    sym=rank_symbols(title,selected,limit=100)\n"
+      }
+    ],
+    "generated_answer_published": true,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Если не осталось ни одного выбранного файла, возникает ошибка ValueError с сообщением 'M130_NO_SCOPE_FILES_WITHIN_LIMIT'",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "2eff0ebfa374498c1f969ddb4e82054e9fd2d71b66c49af94760f4a46e667cfe",
+    "inference_timing": {
+      "wall_ms": 718.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 507,
+      "completion_tokens": 79,
+      "prompt_ms": 93.631,
+      "predicted_ms": 596.592,
+      "predicted_per_second": 130.743
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Если не осталось ни одного выбранного файла, возникает ошибка ValueError с сообщением 'M130_NO_SCOPE_FILES_WITHIN_LIMIT'\",\"anchors\":[{\"ref\":\"E1\",\"line\":124,\"quote\":\"raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')\"}]}]}",
+    "status": "ANSWER_WITH_CHECKED_QUOTES",
+    "reason": "",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "E18a36bd28d1b2000",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 117,
+          "end": 125,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "f100e15179a8b789975cb11ad4babb551b52f39811d38fb1600d0e07ea9c8c0e",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "    selected={};used=0;skipped=[]\n    for row in files['bm25_title_code_path']:\n        p=row['path'];b=len(old_sources[p].encode('utf-8'))\n        if used+b>6_000_000:\n            skipped.append(dict(path=p,reason='M128_COMPATIBLE_SCOPE_SCAN_BYTES_LIMIT'))\n            continue\n        selected[p]=old_sources[p];used+=b\n    if not selected:raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')\n    sym=rank_symbols(title,selected,limit=100)\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H4"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "live",
+    "question": "Какой код возврата дал последний запущенный Git-процесс на моём компьютере?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E4aa4e403b9718237",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/git_source.py",
+          "start": 102,
+          "end": 108,
+          "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+          "excerpt_sha256": "d291c7e104b8acdd8cb1fa43e23a6451be1f5177964c4fbcf805694e072f4528",
+          "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+          "source_code_executed": false
+        },
+        "text": "        stdout, stderr = bytes(chunks[0]), bytes(chunks[1])\n        self.commands.append({\"arguments\": list(args), \"exit_code\": code,\n                              \"stdout_bytes\": len(stdout), \"stdout_sha256\": sha256(stdout),\n                              \"stderr\": stderr.decode(\"utf-8\", \"replace\")[:2048], \"errors\": list(errors)})\n        if errors or code != 0:\n            raise GitReadError(\"; \".join(errors) or (stderr.decode(\"utf-8\", \"replace\").strip()[:1200] or f\"Git exit={code}\"))\n        return stdout\n"
+      }
+    ],
+    "generated_answer_published": false,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Предъявленных строк недостаточно для ответа.",
+    "observation_policy": "NO_LIVE_OBSERVATION_SUPPLIED",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "1ef833a6a52e8ad97445d95fd25d1fa124c891f8324fe3c0305ecfed20682cb9",
+    "inference_timing": {
+      "wall_ms": 203.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 479,
+      "completion_tokens": 17,
+      "prompt_ms": 84.639,
+      "predicted_ms": 122.94,
+      "predicted_per_second": 130.145
+    },
+    "raw_model_content": "{\"status\":\"insufficient\",\"reason\":\"SOURCE_INCOMPLETE\",\"claims\":[]}",
+    "status": "INSUFFICIENT",
+    "reason": "SOURCE_INCOMPLETE",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "E4aa4e403b9718237",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/git_source.py",
+          "start": 102,
+          "end": 108,
+          "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+          "excerpt_sha256": "d291c7e104b8acdd8cb1fa43e23a6451be1f5177964c4fbcf805694e072f4528",
+          "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+          "source_code_executed": false
+        },
+        "text": "        stdout, stderr = bytes(chunks[0]), bytes(chunks[1])\n        self.commands.append({\"arguments\": list(args), \"exit_code\": code,\n                              \"stdout_bytes\": len(stdout), \"stdout_sha256\": sha256(stdout),\n                              \"stderr\": stderr.decode(\"utf-8\", \"replace\")[:2048], \"errors\": list(errors)})\n        if errors or code != 0:\n            raise GitReadError(\"; \".join(errors) or (stderr.decode(\"utf-8\", \"replace\").strip()[:1200] or f\"Git exit={code}\"))\n        return stdout\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H5"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "live",
+    "question": "Какой микрофон выбран сейчас в настройках Windows у пользователя?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "NO_MATCH",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": false,
+    "claims": [],
+    "evidence": [],
+    "generated_answer_published": false,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Поиск не дал разрешённого фрагмента в пределах бюджета. Модель не вызывалась.",
+    "observation_policy": "NO_LIVE_OBSERVATION_SUPPLIED",
+    "status": "NO_GENERATION_NO_MATCH",
+    "selected_before_prompt": [],
+    "all_candidates": [],
+    "case_id": "H6"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Как поиск отличает некорректный идентификатор HEAD от смены коммита во время чтения?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [
+      {
+        "text": "Поиск проверяет, не изменился ли HEAD во время чтения, сравнивая его с коммитом.",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E3",
+            "canonical_ref_id": "E71b256c4bc0abc4c",
+            "line": 137,
+            "quote": "reader._sha(\"rev-parse\", \"--verify\", \"HEAD^{commit}\") != commit:",
+            "source_line": "    if reader._sha(\"rev-parse\", \"--verify\", \"HEAD^{commit}\") != commit:",
+            "source_line_with_eol_sha256": "85f148cef844c6317c758cbf400f1b54741bb4f4d27fb2abbf16086fb66396a6",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "116d3a5f479308c5b0e9dbc07f2ebf31b6ef4f3385226df9f12f73bc0f7e7eea",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/context_search.py#L137"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E9c016fd3a0ecd125",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/git_source.py",
+          "start": 110,
+          "end": 114,
+          "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+          "excerpt_sha256": "2fbfaff908690ac2a5f37721670bc63699c0548b9adbd013b22b3cb3db6e28eb",
+          "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+          "source_code_executed": false
+        },
+        "text": "    def _sha(self, *args: str) -> str:\n        text = self._run(*args).decode(\"ascii\", \"strict\").strip()\n        if not re.fullmatch(\"[0-9a-f]{40}\", text):\n            raise GitReadError(\"Текущий DTR-A требует Git SHA-1 из 40 символов; ответ Git не подходит.\")\n        return text\n"
+      },
+      {
+        "alias": "E2",
+        "ref": {
+          "id": "E4692ce9883dcc3c3",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 81,
+          "end": 82,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "898b392b2174b63e15c3442268bee22b06290b594b5d0c2dca6d8f7435b6bf9f",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "    commit = reader._sha(\"rev-parse\", \"--verify\", \"HEAD^{commit}\")\n    raw = reader._run(\"ls-tree\", \"-r\", \"-z\", \"--full-tree\", commit, \"--\", \"main.py\", \"modules\", limit=MAX_TREE_LIST_BYTES)\n"
+      },
+      {
+        "alias": "E3",
+        "ref": {
+          "id": "E71b256c4bc0abc4c",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 135,
+          "end": 141,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "116d3a5f479308c5b0e9dbc07f2ebf31b6ef4f3385226df9f12f73bc0f7e7eea",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "    if not sources:\n        raise ValueError(\"M134_NO_READABLE_PYTHON_SOURCES\")\n    if reader._sha(\"rev-parse\", \"--verify\", \"HEAD^{commit}\") != commit:\n        raise ValueError(\"M134_GIT_HEAD_CHANGED_DURING_SEARCH\")\n    return commit, sources, {\"tracked_python_paths\": len(entries), \"sources_read\": len(sources),\n                             \"source_bytes\": used, \"skipped\": skipped,\n                             \"scope\": \"GIT_HEAD_MAIN_PY_AND_MODULES_PY_ONLY\", \"partial\": any(skipped.values())}\n"
+      }
+    ],
+    "generated_answer_published": true,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Поиск проверяет, не изменился ли HEAD во время чтения, сравнивая его с коммитом.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 3,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "bce89f0989512ed358531207dea43a62b20912f632e5631e9e0eb1ec1851d8a3",
+    "inference_timing": {
+      "wall_ms": 735.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 694,
+      "completion_tokens": 77,
+      "prompt_ms": 132.93,
+      "predicted_ms": 585.654,
+      "predicted_per_second": 129.769
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Поиск проверяет, не изменился ли HEAD во время чтения, сравнивая его с коммитом.\",\"anchors\":[{\"ref\":\"E3\",\"line\":137,\"quote\":\"reader._sha(\\\"rev-parse\\\", \\\"--verify\\\", \\\"HEAD^{commit}\\\") != commit:\"}]}]}",
+    "status": "ANSWER_WITH_CHECKED_QUOTES",
+    "reason": "",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "E9c016fd3a0ecd125",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/git_source.py",
+          "start": 110,
+          "end": 114,
+          "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+          "excerpt_sha256": "2fbfaff908690ac2a5f37721670bc63699c0548b9adbd013b22b3cb3db6e28eb",
+          "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+          "source_code_executed": false
+        },
+        "text": "    def _sha(self, *args: str) -> str:\n        text = self._run(*args).decode(\"ascii\", \"strict\").strip()\n        if not re.fullmatch(\"[0-9a-f]{40}\", text):\n            raise GitReadError(\"Текущий DTR-A требует Git SHA-1 из 40 символов; ответ Git не подходит.\")\n        return text\n"
+      },
+      {
+        "ref": {
+          "id": "E4692ce9883dcc3c3",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 81,
+          "end": 82,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "898b392b2174b63e15c3442268bee22b06290b594b5d0c2dca6d8f7435b6bf9f",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "    commit = reader._sha(\"rev-parse\", \"--verify\", \"HEAD^{commit}\")\n    raw = reader._run(\"ls-tree\", \"-r\", \"-z\", \"--full-tree\", commit, \"--\", \"main.py\", \"modules\", limit=MAX_TREE_LIST_BYTES)\n"
+      },
+      {
+        "ref": {
+          "id": "E71b256c4bc0abc4c",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 135,
+          "end": 141,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "116d3a5f479308c5b0e9dbc07f2ebf31b6ef4f3385226df9f12f73bc0f7e7eea",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "    if not sources:\n        raise ValueError(\"M134_NO_READABLE_PYTHON_SOURCES\")\n    if reader._sha(\"rev-parse\", \"--verify\", \"HEAD^{commit}\") != commit:\n        raise ValueError(\"M134_GIT_HEAD_CHANGED_DURING_SEARCH\")\n    return commit, sources, {\"tracked_python_paths\": len(entries), \"sources_read\": len(sources),\n                             \"source_bytes\": used, \"skipped\": skipped,\n                             \"scope\": \"GIT_HEAD_MAIN_PY_AND_MODULES_PY_ONLY\", \"partial\": any(skipped.values())}\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H7"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Как список кандидатов для окон контекста собирается из функций и модулей и какой список поиск передаёт отборщику окон?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [
+      {
+        "text": "Список кандидатов для окон контекста собирается из функций и модулей через ранжирование и объединение.",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "Ec9f460583d9e3d2c",
+            "line": 125,
+            "quote": "sym=rank_symbols(title,selected,limit=100)",
+            "source_line": "    sym=rank_symbols(title,selected,limit=100)",
+            "source_line_with_eol_sha256": "3fb17afa0eaaa0515074d3178af11403c65c1cbf71fc9222962f0e5ccaa39a4b",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "6a1de244656fd8b070162c21f8a06aafc0f9eecbb99d4e3fd70a15f4e346881c",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/retrieval/m130_rank.py#L125"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      },
+      {
+        "text": "Объединённый список передаётся отборщику окон как mixed_3F1M_rank_top100.",
+        "claim_no": 2,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "Ec9f460583d9e3d2c",
+            "line": 128,
+            "quote": "combined=interleave_3_to_1(functions,modules,limit=100)",
+            "source_line": "    combined=interleave_3_to_1(functions,modules,limit=100)",
+            "source_line_with_eol_sha256": "9133ce3497afd340392e75c4888c4b61666907dd801d74c9d53e58ddeb8a6d67",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "6a1de244656fd8b070162c21f8a06aafc0f9eecbb99d4e3fd70a15f4e346881c",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/retrieval/m130_rank.py#L128"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      },
+      {
+        "text": "Отборщик окон использует этот список для построения контекстов.",
+        "claim_no": 3,
+        "anchors": [
+          {
+            "alias": "E3",
+            "canonical_ref_id": "Eb2da3e99a26353fb",
+            "line": 157,
+            "quote": "windows = contexts(effective, sources, base[\"mixed_3F1M_rank_top100\"])",
+            "source_line": "    windows = contexts(effective, sources, base[\"mixed_3F1M_rank_top100\"])",
+            "source_line_with_eol_sha256": "2911460387d62fe3a23eb0fc5b3e7a0b2e8554ade1ea707ecea4c8e6eb6898da",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "203cb41a79c29b7eed877d031979f24e2974c1958446cc3041adc1bf21b7c9dd",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/context_search.py#L157"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "Ec9f460583d9e3d2c",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 125,
+          "end": 130,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "6a1de244656fd8b070162c21f8a06aafc0f9eecbb99d4e3fd70a15f4e346881c",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "    sym=rank_symbols(title,selected,limit=100)\n    functions=[{**c,'kind':c['kind']} for c in sym['bm25_name_body']]\n    modules,mod_parse,nmodules=module_rank(title,selected)\n    combined=interleave_3_to_1(functions,modules,limit=100)\n    contexts={str(b):build_context(title,old_sources,combined,b,max_candidates=10)\n              for b in (4096,8192)}\n"
+      },
+      {
+        "alias": "E2",
+        "ref": {
+          "id": "Ef1720ab0eee591d8",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 135,
+          "end": 138,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "6f4ebf59cbe753bd6bb24d2f5b7d0b8a2eabf269c4aa2fa21a8d8ef5c9cfe2a3",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "                function_candidates_total=sym['symbol_candidates'],module_candidates_total=nmodules,\n                function_parse_diagnostics=sym['parse_diagnostics'],module_parse_diagnostics=mod_parse,\n                function_rank_top100=functions,module_rank_top100=modules,\n                mixed_3F1M_rank_top100=combined,contexts_local_only=contexts,\n"
+      },
+      {
+        "alias": "E3",
+        "ref": {
+          "id": "Eb2da3e99a26353fb",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 153,
+          "end": 157,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "203cb41a79c29b7eed877d031979f24e2974c1958446cc3041adc1bf21b7c9dd",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "    base = rank(effective, sources)\n    first = base[\"file_ranks\"]\n    if first[\"retrieval_confidence\"] != \"LEXICAL_MATCH_EXISTS\":\n        raise ValueError(\"M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода\")\n    windows = contexts(effective, sources, base[\"mixed_3F1M_rank_top100\"])\n"
+      }
+    ],
+    "generated_answer_published": true,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Список кандидатов для окон контекста собирается из функций и модулей через ранжирование и объединение.\nОбъединённый список передаётся отборщику окон как mixed_3F1M_rank_top100.\nОтборщик окон использует этот список для построения контекстов.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 3,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "b0375e8b471cb1e82f168b8fc8005a30e4798ff6363fdbefbcafb8ac316bf3b2",
+    "inference_timing": {
+      "wall_ms": 1750.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 735,
+      "completion_tokens": 207,
+      "prompt_ms": 132.992,
+      "predicted_ms": 1593.832,
+      "predicted_per_second": 129.248
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Список кандидатов для окон контекста собирается из функций и модулей через ранжирование и объединение.\",\"anchors\":[{\"ref\":\"E1\",\"line\":125,\"quote\":\"sym=rank_symbols(title,selected,limit=100)\"}]},{\"text\":\"Объединённый список передаётся отборщику окон как mixed_3F1M_rank_top100.\",\"anchors\":[{\"ref\":\"E1\",\"line\":128,\"quote\":\"combined=interleave_3_to_1(functions,modules,limit=100)\"}]},{\"text\":\"Отборщик окон использует этот список для построения контекстов.\",\"anchors\":[{\"ref\":\"E3\",\"line\":157,\"quote\":\"windows = contexts(effective, sources, base[\\\"mixed_3F1M_rank_top100\\\"])\"}]}]}",
+    "status": "ANSWER_WITH_CHECKED_QUOTES",
+    "reason": "",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "Ec9f460583d9e3d2c",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 125,
+          "end": 130,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "6a1de244656fd8b070162c21f8a06aafc0f9eecbb99d4e3fd70a15f4e346881c",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "    sym=rank_symbols(title,selected,limit=100)\n    functions=[{**c,'kind':c['kind']} for c in sym['bm25_name_body']]\n    modules,mod_parse,nmodules=module_rank(title,selected)\n    combined=interleave_3_to_1(functions,modules,limit=100)\n    contexts={str(b):build_context(title,old_sources,combined,b,max_candidates=10)\n              for b in (4096,8192)}\n"
+      },
+      {
+        "ref": {
+          "id": "Ef1720ab0eee591d8",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 135,
+          "end": 138,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "6f4ebf59cbe753bd6bb24d2f5b7d0b8a2eabf269c4aa2fa21a8d8ef5c9cfe2a3",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "                function_candidates_total=sym['symbol_candidates'],module_candidates_total=nmodules,\n                function_parse_diagnostics=sym['parse_diagnostics'],module_parse_diagnostics=mod_parse,\n                function_rank_top100=functions,module_rank_top100=modules,\n                mixed_3F1M_rank_top100=combined,contexts_local_only=contexts,\n"
+      },
+      {
+        "ref": {
+          "id": "Eb2da3e99a26353fb",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 153,
+          "end": 157,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "203cb41a79c29b7eed877d031979f24e2974c1958446cc3041adc1bf21b7c9dd",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "    base = rank(effective, sources)\n    first = base[\"file_ranks\"]\n    if first[\"retrieval_confidence\"] != \"LEXICAL_MATCH_EXISTS\":\n        raise ValueError(\"M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода\")\n    windows = contexts(effective, sources, base[\"mixed_3F1M_rank_top100\"])\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H8"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "По каким результатам сравнительных испытаний для отбора исходников выбрали бюджет именно 6 000 000 байт?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [
+      {
+        "text": "Бюджет 6 000 000 байт был выбран как ограничение для суммарного размера выбранных исходников.",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "E18a36bd28d1b2000",
+            "line": 120,
+            "quote": "if used+b>6_000_000:",
+            "source_line": "        if used+b>6_000_000:",
+            "source_line_with_eol_sha256": "45e21bc6524527363b1f5b611bdf5ac6b2f12957dc41136a28046fc425bce54e",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "f100e15179a8b789975cb11ad4babb551b52f39811d38fb1600d0e07ea9c8c0e",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/retrieval/m130_rank.py#L120"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E18a36bd28d1b2000",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 117,
+          "end": 125,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "f100e15179a8b789975cb11ad4babb551b52f39811d38fb1600d0e07ea9c8c0e",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "    selected={};used=0;skipped=[]\n    for row in files['bm25_title_code_path']:\n        p=row['path'];b=len(old_sources[p].encode('utf-8'))\n        if used+b>6_000_000:\n            skipped.append(dict(path=p,reason='M128_COMPATIBLE_SCOPE_SCAN_BYTES_LIMIT'))\n            continue\n        selected[p]=old_sources[p];used+=b\n    if not selected:raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')\n    sym=rank_symbols(title,selected,limit=100)\n"
+      }
+    ],
+    "generated_answer_published": true,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Бюджет 6 000 000 байт был выбран как ограничение для суммарного размера выбранных исходников.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "0d6edbf89dad7744f41db37b8971302e27b8bd7c23a05204180d9749d7cd547c",
+    "inference_timing": {
+      "wall_ms": 703.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 502,
+      "completion_tokens": 81,
+      "prompt_ms": 84.554,
+      "predicted_ms": 613.562,
+      "predicted_per_second": 130.386
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Бюджет 6 000 000 байт был выбран как ограничение для суммарного размера выбранных исходников.\",\"anchors\":[{\"ref\":\"E1\",\"line\":120,\"quote\":\"if used+b>6_000_000:\"}]}]}",
+    "status": "ANSWER_WITH_CHECKED_QUOTES",
+    "reason": "",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "E18a36bd28d1b2000",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 117,
+          "end": 125,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "f100e15179a8b789975cb11ad4babb551b52f39811d38fb1600d0e07ea9c8c0e",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "    selected={};used=0;skipped=[]\n    for row in files['bm25_title_code_path']:\n        p=row['path'];b=len(old_sources[p].encode('utf-8'))\n        if used+b>6_000_000:\n            skipped.append(dict(path=p,reason='M128_COMPATIBLE_SCOPE_SCAN_BYTES_LIMIT'))\n            continue\n        selected[p]=old_sources[p];used+=b\n    if not selected:raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')\n    sym=rank_symbols(title,selected,limit=100)\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H9"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Какой процент вопросов размеченного русского набора получил правильный файл в первой пятёрке по данным этого отчёта поиска?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "Ef39c4ac8f1aebb86",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 159,
+          "end": 169,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "872c727909968bca265cd73a2565a51492934504fed710fb2ed371f6867d87bd",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "    return {\"schema\": \"SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1\", \"git_commit\": commit,\n            \"goal_sha256\": _sha(goal.encode(\"utf-8\")),\n            \"expanded_query_sha256\": _sha(effective.encode(\"utf-8\")),\n            \"query_expansion\": expansions,\n            \"scan\": scan,\n            \"file_rank_top5\": first[\"bm25_title_code_path\"][:5],\n            \"candidate_files_full_tree\": base[\"file_candidates_full_tree\"],\n            \"candidate_functions\": base[\"function_candidates_total\"],\n            \"candidate_modules\": base[\"module_candidates_total\"],\n            \"contexts_metadata\": meta,\n            \"_private_8k_text\": windows[\"8192\"][\"text\"],\n"
+      },
+      {
+        "alias": "E2",
+        "ref": {
+          "id": "Ed63861197c673f51",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 131,
+          "end": 141,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "72df849588c67a1e343dc277742d6884b6f83f22560ee1e7ce2a0aa20dd833a9",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "    return dict(schema='SKYNETVS_M130_BEFORE_ONLY_CANDIDATE_POOL_V1',\n                file_candidates_full_tree=files['candidate_count'],\n                file_ranks=files,\n                scanned_paths=list(selected),scanned_total_bytes=used,scan_skipped=skipped,\n                function_candidates_total=sym['symbol_candidates'],module_candidates_total=nmodules,\n                function_parse_diagnostics=sym['parse_diagnostics'],module_parse_diagnostics=mod_parse,\n                function_rank_top100=functions,module_rank_top100=modules,\n                mixed_3F1M_rank_top100=combined,contexts_local_only=contexts,\n                no_after_gold_test_patch_or_fix_path_consumed=True,\n                oracle_file_preselection=False,trained_model=False,\n                title_original_historical_text_verified=False)\n"
+      }
+    ],
+    "generated_answer_published": false,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Предъявленных строк недостаточно для ответа.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 2,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "7761d1ae50523d214baaac64a4cd0104fc7a22aa767fbe8c79b4e71dc3494240",
+    "inference_timing": {
+      "wall_ms": 281.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 800,
+      "completion_tokens": 17,
+      "prompt_ms": 160.769,
+      "predicted_ms": 123.688,
+      "predicted_per_second": 129.358
+    },
+    "raw_model_content": "{\"status\":\"insufficient\",\"reason\":\"SOURCE_INCOMPLETE\",\"claims\":[]}",
+    "status": "INSUFFICIENT",
+    "reason": "SOURCE_INCOMPLETE",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "Ef39c4ac8f1aebb86",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 159,
+          "end": 169,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "872c727909968bca265cd73a2565a51492934504fed710fb2ed371f6867d87bd",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "    return {\"schema\": \"SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1\", \"git_commit\": commit,\n            \"goal_sha256\": _sha(goal.encode(\"utf-8\")),\n            \"expanded_query_sha256\": _sha(effective.encode(\"utf-8\")),\n            \"query_expansion\": expansions,\n            \"scan\": scan,\n            \"file_rank_top5\": first[\"bm25_title_code_path\"][:5],\n            \"candidate_files_full_tree\": base[\"file_candidates_full_tree\"],\n            \"candidate_functions\": base[\"function_candidates_total\"],\n            \"candidate_modules\": base[\"module_candidates_total\"],\n            \"contexts_metadata\": meta,\n            \"_private_8k_text\": windows[\"8192\"][\"text\"],\n"
+      },
+      {
+        "ref": {
+          "id": "Ed63861197c673f51",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 131,
+          "end": 141,
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "72df849588c67a1e343dc277742d6884b6f83f22560ee1e7ce2a0aa20dd833a9",
+          "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+          "source_code_executed": false
+        },
+        "text": "    return dict(schema='SKYNETVS_M130_BEFORE_ONLY_CANDIDATE_POOL_V1',\n                file_candidates_full_tree=files['candidate_count'],\n                file_ranks=files,\n                scanned_paths=list(selected),scanned_total_bytes=used,scan_skipped=skipped,\n                function_candidates_total=sym['symbol_candidates'],module_candidates_total=nmodules,\n                function_parse_diagnostics=sym['parse_diagnostics'],module_parse_diagnostics=mod_parse,\n                function_rank_top100=functions,module_rank_top100=modules,\n                mixed_3F1M_rank_top100=combined,contexts_local_only=contexts,\n                no_after_gold_test_patch_or_fix_path_consumed=True,\n                oracle_file_preselection=False,trained_model=False,\n                title_original_historical_text_verified=False)\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H10"
+  },
+  {
+    "schema": "M289_GROUNDED_TURN_V1",
+    "basis": "static",
+    "question": "Какой здесь лимит на запрос?",
+    "source_commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+    "retrieval_status": "READY",
+    "retrieval_seconds": 0.0,
+    "files_scanned": null,
+    "excerpts_clipped": null,
+    "candidates_before_generation": [],
+    "model_called": true,
+    "claims": [
+      {
+        "text": "Лимит на длину запроса составляет 1200 символов.",
+        "claim_no": 1,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "E12966487830c47c6",
+            "line": 48,
+            "quote": "len(goal) > 1200",
+            "source_line": "    if not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or len(goal.encode(\"utf-8\")) > 2500:",
+            "source_line_with_eol_sha256": "9006789980e257a0bfb4b960d48d0fb4a8c169983551c6001dbf4f325058bcb9",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/context_search.py#L48"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      },
+      {
+        "text": "Лимит на расширенный запрос составляет 2048 символов.",
+        "claim_no": 2,
+        "anchors": [
+          {
+            "alias": "E1",
+            "canonical_ref_id": "E12966487830c47c6",
+            "line": 52,
+            "quote": "len(text) > 2048",
+            "source_line": "    if len(text) > 2048 or len(text.encode(\"utf-8\")) > 4096:",
+            "source_line_with_eol_sha256": "fd05b9228e5060bccb336bf8174178676e492bc80ee62d44014cd7e875c0fd3e",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/e67c9ad013f4fa451046b9c461e8f055db8beaaf/modules/developer_task_ui/app/context_search.py#L52"
+          }
+        ],
+        "citation_status": "LITERAL_LINES_VERIFIED",
+        "semantic_support": "UNREVIEWED",
+        "requires_human_review": true
+      }
+    ],
+    "evidence": [
+      {
+        "alias": "E1",
+        "ref": {
+          "id": "E12966487830c47c6",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 47,
+          "end": 54,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def expand_query(goal: str) -> tuple[str, list[str]]:\n    if not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or len(goal.encode(\"utf-8\")) > 2500:\n        raise ValueError(\"M134_GOAL_EMPTY_OR_TOO_LONG\")\n    additions = [syn for pattern, syn in RU_HINTS if re.search(pattern, goal, re.IGNORECASE)]\n    text = goal.strip() + (\" \" + \" \".join(additions) if additions else \"\")\n    if len(text) > 2048 or len(text.encode(\"utf-8\")) > 4096:\n        raise ValueError(\"M134_EXPANDED_QUERY_TOO_LONG\")\n    return text, additions\n"
+      }
+    ],
+    "generated_answer_published": true,
+    "source_executed": false,
+    "tool_calls_enabled": false,
+    "semantic_quality": "NOT_SCORED_REQUIRES_HUMAN",
+    "display_ru": "Лимит на длину запроса составляет 1200 символов.\nЛимит на расширенный запрос составляет 2048 символов.",
+    "observation_policy": "STATIC_SOURCE_ONLY",
+    "available_excerpt_count": 1,
+    "omitted_whole_excerpt_count": 0,
+    "system_sha256": "5dc55edcf6097b82d8528f507bbb7fb85e84904d42de2a86b1a005240e0cd0a9",
+    "user_payload_sha256": "08ccc2c867c4fe1ac0a9d77bf1394b2f97f9321e394b7dad1472617a62c172cb",
+    "inference_timing": {
+      "wall_ms": 859.0,
+      "finish_reason": "stop",
+      "prompt_tokens": 491,
+      "completion_tokens": 102,
+      "prompt_ms": 84.33,
+      "predicted_ms": 775.45,
+      "predicted_per_second": 130.247
+    },
+    "raw_model_content": "{\"status\":\"answer\",\"reason\":\"\",\"claims\":[{\"text\":\"Лимит на длину запроса составляет 1200 символов.\",\"anchors\":[{\"ref\":\"E1\",\"line\":48,\"quote\":\"len(goal) > 1200\"}]},{\"text\":\"Лимит на расширенный запрос составляет 2048 символов.\",\"anchors\":[{\"ref\":\"E1\",\"line\":52,\"quote\":\"len(text) > 2048\"}]}]}",
+    "status": "ANSWER_WITH_CHECKED_QUOTES",
+    "reason": "",
+    "selected_before_prompt": [
+      {
+        "ref": {
+          "id": "E12966487830c47c6",
+          "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 47,
+          "end": 54,
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "945b29192b65b9a12b1cff08f72c3b87056fee217ec649843c8e6a07b900240b",
+          "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+          "source_code_executed": false
+        },
+        "text": "def expand_query(goal: str) -> tuple[str, list[str]]:\n    if not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or len(goal.encode(\"utf-8\")) > 2500:\n        raise ValueError(\"M134_GOAL_EMPTY_OR_TOO_LONG\")\n    additions = [syn for pattern, syn in RU_HINTS if re.search(pattern, goal, re.IGNORECASE)]\n    text = goal.strip() + (\" \" + \" \".join(additions) if additions else \"\")\n    if len(text) > 2048 or len(text.encode(\"utf-8\")) > 4096:\n        raise ValueError(\"M134_EXPANDED_QUERY_TOO_LONG\")\n    return text, additions\n"
+      }
+    ],
+    "all_candidates": [],
+    "case_id": "H11"
+  },
+  {
+    "question": "Какой хеш сохраняет поиск?",
+    "status": "BLOCKED_BUDGET",
+    "model_called": false,
+    "evidence": [],
+    "bytes_required": 2732,
+    "basis": "static",
+    "case_id": "H12"
+  }
+]

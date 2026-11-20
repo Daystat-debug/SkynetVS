@@ -1,0 +1,50 @@
+{
+  "provider_sessions": [
+    {
+      "group": "A",
+      "release": "b11960",
+      "backend": "Vulkan",
+      "model": "Qwen3-8B-Q4_K_M.gguf",
+      "ctx": 4096,
+      "max_tokens": 448,
+      "requests": 2,
+      "stopped": true,
+      "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+      "runtime_zip_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9",
+      "global_config_policy": "PROGRAMDATA_OMITTED_PRIVATE_EMPTY_APPDATA",
+      "tools_enabled": false,
+      "device": "Vulkan0",
+      "verified_listener": true,
+      "auth_probes": "NO_KEY_AND_WRONG_KEY_DENIED_WITH_AND_WITHOUT_ORIGIN",
+      "selected_gpu_verified": true,
+      "offloaded_layers": [
+        37,
+        37
+      ],
+      "startup_seconds": 16.359
+    },
+    {
+      "group": "B",
+      "release": "b11960",
+      "backend": "Vulkan",
+      "model": "Qwen3-8B-Q4_K_M.gguf",
+      "ctx": 4096,
+      "max_tokens": 448,
+      "requests": 10,
+      "stopped": true,
+      "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+      "runtime_zip_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9",
+      "global_config_policy": "PROGRAMDATA_OMITTED_PRIVATE_EMPTY_APPDATA",
+      "tools_enabled": false,
+      "device": "Vulkan0",
+      "verified_listener": true,
+      "auth_probes": "NO_KEY_AND_WRONG_KEY_DENIED_WITH_AND_WITHOUT_ORIGIN",
+      "selected_gpu_verified": true,
+      "offloaded_layers": [
+        37,
+        37
+      ],
+      "startup_seconds": 13.266
+    }
+  ]
+}
