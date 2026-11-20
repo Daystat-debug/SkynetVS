@@ -1,0 +1,3884 @@
+{
+  "phase": "rank",
+  "source": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+  "baseline": "d5b5f26dc06ec1e617f2c3a5dcae07c8bc26b5eb",
+  "freeze": "09d8dc930effe79c1304629f155156224db45537",
+  "members": {
+    "cases289.py": "7b35bf058d7cfb282c75dd1cf70cf44ca9cbdc482223ae325507837c95594668",
+    "ground289.py": "ba014ea71066067790ed6ba99eb3f154715b82f98adabe5cac1aa4a0c06d88e1",
+    "m254_core.py": "571f68154a7439bbf2581cdb548f8cd0caa1413865c82efb355be54d879d72a5",
+    "m254_runner.py": "ffc43262b89553d514764b6ed5f45fc0d8f96a223d6ab1d3bd5fe7e57afb8a89",
+    "retrieval284.py": "91cf554ba1f6f16ee506d22ef2fbf7e25a2893143d698794d8a1c8e9f234fc73",
+    "run289.py": "653af3f0f5ccc933d81d865358d47ff965cfa58c4aac408146aeefbe4c042064",
+    "runtime289.py": "316a423b9e8903571360ed0935fbd1aed2546fb6b366eaa11a8f4212404b154f",
+    "ui289.py": "0c7e9baa6409fe8a7d6559d2b9b64aeaebe68a8250786ffc6de8b8c7a31543a0"
+  },
+  "blobs": {
+    "modules/developer_task_ui/app/retrieval/m130_rank.py": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+    "modules/developer_task_ui/app/context_search.py": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+    "modules/developer_task_ui/app/git_source.py": "78d5c9669ab7f26f6a3e2123329ae54c064a742f"
+  },
+  "repeats": 2,
+  "cases": {
+    "H1": {
+      "question": "Что произойдёт с запросом поиска длиной 1201 символ до добавления подсказок и какой результат получит вызывающий код?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "expand_query",
+          [
+            [
+              48
+            ],
+            [
+              48,
+              49,
+              50
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "вызы",
+        "длин",
+        "доба",
+        "запр",
+        "подс",
+        "поис",
+        "полу",
+        "прои",
+        "резу",
+        "симв"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          212.067,
+          212.38
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1893.462,
+          1906.773
+        ]
+      }
+    },
+    "H2": {
+      "question": "Что происходит с дочерним Git-процессом при превышении первого таймаута ожидания и как об этом узнаёт вызывающий код?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._run",
+          [
+            [
+              93
+            ],
+            [
+              95,
+              96
+            ],
+            [
+              97,
+              106,
+              107
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "git"
+      ],
+      "russian_prefixes": [
+        "вызы",
+        "доче",
+        "ожид",
+        "перв",
+        "прев",
+        "прои",
+        "проц",
+        "тайм",
+        "узна"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          1
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2006.053,
+          1890.888
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          6
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2109.92,
+          1856.959
+        ]
+      }
+    },
+    "H3": {
+      "question": "Какой текст получает ранжировщик от поиска и сколько файлов он первоначально запрашивает у файлового поиска?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "expand_query",
+          [
+            [
+              50,
+              51
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              146,
+              153
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              116
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "document",
+        "file"
+      ],
+      "russian_prefixes": [
+        "запр",
+        "перв",
+        "поис",
+        "полу",
+        "ранж",
+        "текс",
+        "файл"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          3,
+          4
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1930.151,
+          1660.249
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          2,
+          6
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2255.675,
+          2178.172
+        ]
+      }
+    },
+    "H4": {
+      "question": "Если очередной файл превышает суммарный бюджет ранжировщика, что с ним происходит и чем заканчивается случай, когда не осталось ни одного выбранного файла?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              120
+            ],
+            [
+              121,
+              122
+            ],
+            [
+              124
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "document",
+        "file"
+      ],
+      "russian_prefixes": [
+        "бюдж",
+        "выбр",
+        "зака",
+        "одно",
+        "оста",
+        "очер",
+        "прев",
+        "прои",
+        "ранж",
+        "случ",
+        "сумм",
+        "файл"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          6
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1960.292,
+          2003.678
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          4
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2064.838,
+          2041.998
+        ]
+      }
+    },
+    "H5": {
+      "question": "Какой код возврата дал последний запущенный Git-процесс на моём компьютере?",
+      "basis": "live",
+      "rubric": [],
+      "support_ranges": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          102,
+          108
+        ]
+      ],
+      "m126_tokens": [
+        "git"
+      ],
+      "russian_prefixes": [
+        "возв",
+        "запу",
+        "комп",
+        "моем",
+        "посл",
+        "проц"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_LIVE_OBSERVATION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1864.229,
+          1932.498
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_LIVE_OBSERVATION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2693.231,
+          2110.401
+        ]
+      }
+    },
+    "H6": {
+      "question": "Какой микрофон выбран сейчас в настройках Windows у пользователя?",
+      "basis": "live",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [
+        "windows"
+      ],
+      "russian_prefixes": [
+        "выбр",
+        "микр",
+        "наст",
+        "поль",
+        "сейч"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::module_rank@64",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_LIVE_OBSERVATION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2108.735,
+          2083.787
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::module_rank@64",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_LIVE_OBSERVATION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1985.324,
+          2441.594
+        ]
+      }
+    },
+    "H7": {
+      "question": "Как поиск отличает некорректный идентификатор HEAD от смены коммита во время чтения?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._sha",
+          [
+            [
+              112
+            ],
+            [
+              112,
+              113
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "scan_head",
+          [
+            [
+              81,
+              137
+            ],
+            [
+              137,
+              138
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "head"
+      ],
+      "russian_prefixes": [
+        "врем",
+        "иден",
+        "комм",
+        "неко",
+        "отли",
+        "поис",
+        "смен",
+        "чтен"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          2
+        ],
+        "facts": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "reason": "AMBIGUOUS_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1984.475,
+          2115.272
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          3
+        ],
+        "facts": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "reason": "AMBIGUOUS_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2046.166,
+          2066.555
+        ]
+      }
+    },
+    "H8": {
+      "question": "Как список кандидатов для окон контекста собирается из функций и модулей и какой список поиск передаёт отборщику окон?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              125,
+              126,
+              127
+            ],
+            [
+              128
+            ],
+            [
+              138
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              157
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "канд",
+        "конт",
+        "моду",
+        "окон",
+        "отбо",
+        "пере",
+        "поис",
+        "соби",
+        "спис",
+        "функ"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1715.379,
+          1971.011
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          219.692,
+          210.529
+        ]
+      }
+    },
+    "H9": {
+      "question": "По каким результатам сравнительных испытаний для отбора исходников выбрали бюджет именно 6 000 000 байт?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          117,
+          125
+        ]
+      ],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "байт",
+        "бюдж",
+        "выбр",
+        "имен",
+        "испы",
+        "исхо",
+        "отбо",
+        "резу",
+        "срав"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          206.662,
+          215.009
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2030.094,
+          2098.421
+        ]
+      }
+    },
+    "H10": {
+      "question": "Какой процент вопросов размеченного русского набора получил правильный файл в первой пятёрке по данным этого отчёта поиска?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          159,
+          169
+        ],
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          131,
+          141
+        ]
+      ],
+      "m126_tokens": [
+        "document",
+        "file"
+      ],
+      "russian_prefixes": [
+        "вопр",
+        "данн",
+        "набо",
+        "отче",
+        "перв",
+        "поис",
+        "полу",
+        "прав",
+        "проц",
+        "пяте",
+        "разм",
+        "русс",
+        "файл"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1970.99,
+          2214.008
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1876.654,
+          2016.842
+        ]
+      }
+    },
+    "H11": {
+      "question": "Какой здесь лимит на запрос?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          47,
+          54
+        ]
+      ],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "запр",
+        "лими"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          210.25,
+          212.906
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          221.41,
+          242.686
+        ]
+      }
+    },
+    "H12": {
+      "question": "Какой хеш сохраняет поиск?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          95,
+          99
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          117,
+          122
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          43,
+          45
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          159,
+          162
+        ]
+      ],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "поис",
+        "сохр"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          216.63,
+          212.383
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          216.034,
+          216.935
+        ]
+      }
+    },
+    "N1": {
+      "question": "Как форматировщик контекста реагирует на отчёт с неизвестной схемой?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "format_context",
+          [
+            [
+              203,
+              204
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "конт",
+        "неиз",
+        "отче",
+        "реаг",
+        "схем",
+        "форм"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          207.327,
+          293.114
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          249.696,
+          253.059
+        ]
+      }
+    },
+    "N2": {
+      "question": "Какие переменные окружения убирает git_environment до добавления настроек локального Git?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "git_environment",
+          [
+            [
+              43,
+              44
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "environment",
+        "git"
+      ],
+      "russian_prefixes": [
+        "доба",
+        "лока",
+        "наст",
+        "окру",
+        "пере",
+        "убир"
+      ],
+      "B": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "d3a75c37940c19471d34f1f2b459358df6a3f355aebdcffd0e57ddabf2ce176d",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [
+          1
+        ],
+        "facts": [
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true
+        ],
+        "source_bytes": 581,
+        "prompt_bytes": 2163,
+        "over_budget": false,
+        "ms": [
+          2350.512,
+          2056.694
+        ]
+      },
+      "A": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "d3a75c37940c19471d34f1f2b459358df6a3f355aebdcffd0e57ddabf2ce176d",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [
+          1
+        ],
+        "facts": [
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true
+        ],
+        "source_bytes": 581,
+        "prompt_bytes": 2163,
+        "over_budget": false,
+        "ms": [
+          2173.725,
+          1722.894
+        ]
+      }
+    },
+    "N3": {
+      "question": "Как при поиске модульных участков исключаются тела асинхронных функций?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "modules_from_source",
+          [
+            [
+              33,
+              34,
+              37
+            ],
+            [
+              42,
+              44
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "асин",
+        "искл",
+        "моду",
+        "поис",
+        "тела",
+        "учас",
+        "функ"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          229.094,
+          212.002
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2362.753,
+          2151.31
+        ]
+      }
+    },
+    "N4": {
+      "question": "При чтении списка дерева Git где запрашивается ls-tree и как запускающий код проверяет, что такая команда разрешена?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "scan_head",
+          [
+            [
+              81,
+              82
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._run",
+          [
+            [
+              60,
+              61
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "access",
+        "command",
+        "git",
+        "intent",
+        "ls",
+        "permission",
+        "restart",
+        "security",
+        "shutdown",
+        "start",
+        "test",
+        "tree",
+        "verify"
+      ],
+      "russian_prefixes": [
+        "дере",
+        "запр",
+        "запу",
+        "кома",
+        "пров",
+        "разр",
+        "спис",
+        "така",
+        "чтен"
+      ],
+      "B": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72"
+        ],
+        "selected": [
+          {
+            "id": "Ee69a8bf1a389d9cc",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 59,
+            "end": 64,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "f97fb38a7c70fe5e167676059e791a9548c48cf27485f0c936065d8c0e11426d",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          },
+          {
+            "id": "Ee865381a5ede02ca",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 130,
+            "end": 137,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "a52e62d0b5c4b287ee33059b470b8894bc831f6d6125b85199f100dbb8971bd8",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          },
+          {
+            "id": "Eedb88863d140888c",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 79,
+            "end": 86,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "b8fb5edd1d3bb5821778fde745ae9dedb55a6fd9b8f6bd17af47e9f30ec060dd",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "1e778fa6e0e8c487cb09311b15e61e41fe208f860bbc2e8c769b80ad43f25100",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            59,
+            64
+          ],
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            130,
+            137
+          ],
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            79,
+            86
+          ]
+        ],
+        "positions": [
+          3,
+          1
+        ],
+        "facts": [
+          true,
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true,
+          false,
+          true
+        ],
+        "source_bytes": 1633,
+        "prompt_bytes": 3565,
+        "over_budget": false,
+        "ms": [
+          5503.05,
+          5680.937
+        ]
+      },
+      "A": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72"
+        ],
+        "selected": [
+          {
+            "id": "Ee69a8bf1a389d9cc",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 59,
+            "end": 64,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "f97fb38a7c70fe5e167676059e791a9548c48cf27485f0c936065d8c0e11426d",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          },
+          {
+            "id": "Ee865381a5ede02ca",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 130,
+            "end": 137,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "a52e62d0b5c4b287ee33059b470b8894bc831f6d6125b85199f100dbb8971bd8",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          },
+          {
+            "id": "Eedb88863d140888c",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 79,
+            "end": 86,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "b8fb5edd1d3bb5821778fde745ae9dedb55a6fd9b8f6bd17af47e9f30ec060dd",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "1e778fa6e0e8c487cb09311b15e61e41fe208f860bbc2e8c769b80ad43f25100",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            59,
+            64
+          ],
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            130,
+            137
+          ],
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            79,
+            86
+          ]
+        ],
+        "positions": [
+          3,
+          1
+        ],
+        "facts": [
+          true,
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true,
+          false,
+          true
+        ],
+        "source_bytes": 1633,
+        "prompt_bytes": 3565,
+        "over_budget": false,
+        "ms": [
+          5660.369,
+          5728.025
+        ]
+      }
+    },
+    "N5": {
+      "question": "Кто вычисляет число функций-кандидатов и как это число попадает в итоговый отчёт поиска?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              125,
+              135
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              153,
+              166
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "вычи",
+        "итог",
+        "канд",
+        "отче",
+        "поис",
+        "попа",
+        "функ",
+        "числ"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          450.785,
+          215.494
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1735.695,
+          2008.376
+        ]
+      }
+    },
+    "N6": {
+      "question": "При поиске без переданного reader откуда берётся путь к Git под Windows и кто передаёт его объекту чтения?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "find_git",
+          [
+            [
+              25,
+              28
+            ],
+            [
+              35,
+              36,
+              38
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              147,
+              148,
+              149
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "git",
+        "reader",
+        "windows"
+      ],
+      "russian_prefixes": [
+        "бере",
+        "объе",
+        "отку",
+        "пере",
+        "поис",
+        "путь",
+        "чтен"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          8,
+          6
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2102.801,
+          1878.328
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          8,
+          6
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2094.146,
+          1660.601
+        ]
+      }
+    },
+    "N7": {
+      "question": "Что означает термин «щюзфырь» в исходниках?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "исхо",
+        "озна",
+        "терм",
+        "щюзф"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          208.978,
+          216.129
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          213.648,
+          218.39
+        ]
+      }
+    },
+    "N8": {
+      "question": "Какая температура видеокарты на этом ПК прямо сейчас?",
+      "basis": "live",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "виде",
+        "прям",
+        "сейч",
+        "темп"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          213.124,
+          215.252
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          205.902,
+          222.763
+        ]
+      }
+    },
+    "P1": {
+      "question": "Как _include обращается с исключённым каталогом и с именем, начинающимся на тестовый префикс?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "_include",
+          [
+            [
+              60,
+              61,
+              62
+            ],
+            [
+              63,
+              64
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "include",
+        "test",
+        "verify"
+      ],
+      "russian_prefixes": [
+        "имен",
+        "искл",
+        "ката",
+        "начи",
+        "обра",
+        "преф",
+        "тест"
+      ],
+      "A": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110"
+        ],
+        "selected": [
+          {
+            "id": "E027277708a06c91a",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 57,
+            "end": 65,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "0618a5432a5c0e98805c26e02b9b387ca3a8f9d9af7ff7d243923a553ee39cc7",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "41c3cdcb0d49755db8120a5fda7b4d1e09aa789d26180ff7db6519e348010077",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            57,
+            65
+          ]
+        ],
+        "positions": [
+          1
+        ],
+        "facts": [
+          true,
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true
+        ],
+        "source_bytes": 303,
+        "prompt_bytes": 1851,
+        "over_budget": false,
+        "ms": [
+          1970.107,
+          2133.898
+        ]
+      },
+      "B": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110"
+        ],
+        "selected": [
+          {
+            "id": "E027277708a06c91a",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 57,
+            "end": 65,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "0618a5432a5c0e98805c26e02b9b387ca3a8f9d9af7ff7d243923a553ee39cc7",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "41c3cdcb0d49755db8120a5fda7b4d1e09aa789d26180ff7db6519e348010077",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            57,
+            65
+          ]
+        ],
+        "positions": [
+          1
+        ],
+        "facts": [
+          true,
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true
+        ],
+        "source_bytes": 303,
+        "prompt_bytes": 1851,
+        "over_budget": false,
+        "ms": [
+          2060.889,
+          2034.618
+        ]
+      }
+    },
+    "P2": {
+      "question": "Как по HEAD замечают, что ревизия изменилась между началом и концом чтения?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "scan_head",
+          [
+            [
+              81
+            ],
+            [
+              137,
+              138
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "head"
+      ],
+      "russian_prefixes": [
+        "заме",
+        "изме",
+        "конц",
+        "нача",
+        "реви",
+        "чтен"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          3
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "AMBIGUOUS_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2032.367,
+          2019.856
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          2
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "AMBIGUOUS_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1944.314,
+          1989.544
+        ]
+      }
+    },
+    "P3": {
+      "question": "Где search_repository передаёт расширенный запрос ранжировщику и где тот вызывает rank_title_only с ограничением числа путей?",
+      "basis": "linked",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              146,
+              153
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              116
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "rank",
+        "repository",
+        "search",
+        "title"
+      ],
+      "russian_prefixes": [
+        "вызы",
+        "запр",
+        "огра",
+        "пере",
+        "путе",
+        "ранж",
+        "расш",
+        "числ"
+      ],
+      "A": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::module_rank@64",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::expand_query@47",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68"
+        ],
+        "selected": [
+          {
+            "id": "E191f3535e4acf902",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 144,
+            "end": 154,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "5246270e4e868cea4c1cf344ffed34a3dfd67a56bc82789cf0fd519daf11e6ac",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          },
+          {
+            "id": "E38ddfbbbfb735211",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 110,
+            "end": 125,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "3a6afa763dcf8eee210a55fec8223e55366c66cc360fef72d5c68bc3a813e460",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "24fa7bd27a185e230635cfb8a0e586f9c0f8f28afbd075a0c6d72a5779d6ddcb",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            144,
+            154
+          ],
+          [
+            "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            110,
+            125
+          ]
+        ],
+        "positions": [
+          1,
+          2
+        ],
+        "facts": [
+          true,
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true,
+          true
+        ],
+        "source_bytes": 1455,
+        "prompt_bytes": 3516,
+        "over_budget": false,
+        "ms": [
+          3843.191,
+          3910.112
+        ]
+      },
+      "B": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::module_rank@64",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::expand_query@47",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54"
+        ],
+        "selected": [
+          {
+            "id": "E191f3535e4acf902",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 144,
+            "end": 154,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "5246270e4e868cea4c1cf344ffed34a3dfd67a56bc82789cf0fd519daf11e6ac",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          },
+          {
+            "id": "E38ddfbbbfb735211",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 110,
+            "end": 125,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "3a6afa763dcf8eee210a55fec8223e55366c66cc360fef72d5c68bc3a813e460",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "24fa7bd27a185e230635cfb8a0e586f9c0f8f28afbd075a0c6d72a5779d6ddcb",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            144,
+            154
+          ],
+          [
+            "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            110,
+            125
+          ]
+        ],
+        "positions": [
+          2,
+          3
+        ],
+        "facts": [
+          true,
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true,
+          true
+        ],
+        "source_bytes": 1455,
+        "prompt_bytes": 3516,
+        "over_budget": false,
+        "ms": [
+          6346.879,
+          5750.562
+        ]
+      }
+    },
+    "P4": {
+      "question": "Как при обходе дерева scan_head получает идентификатор ревизии и по какому признаку метод _sha отвергает некорректный ответ?",
+      "basis": "linked",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "scan_head",
+          [
+            [
+              81
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._sha",
+          [
+            [
+              111,
+              112,
+              113
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "head",
+        "scan",
+        "sha"
+      ],
+      "russian_prefixes": [
+        "дере",
+        "иден",
+        "како",
+        "мето",
+        "неко",
+        "обхо",
+        "отве",
+        "полу",
+        "приз",
+        "реви"
+      ],
+      "B": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::_sha@43",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110"
+        ],
+        "selected": [
+          {
+            "id": "Efbfbcb941f4c9638",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 68,
+            "end": 84,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "377dd6458979613de4ac5ce7333352c5519f7f7f74a1a3e7b7ef3fb87cc301bb",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          },
+          {
+            "id": "Ef53271a5250ae545",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 43,
+            "end": 44,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "b29fa6bcfe26279ef98d7b5dab72a1d3410efdc35201953322dd6386d8a22c70",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          },
+          {
+            "id": "E9c016fd3a0ecd125",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 110,
+            "end": 114,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "2fbfaff908690ac2a5f37721670bc63699c0548b9adbd013b22b3cb3db6e28eb",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "26e87c9e3423ae7a33f44a52d95e19f83671297bde459c00d6ba023d6664e8a3",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            68,
+            84
+          ],
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            43,
+            44
+          ],
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            110,
+            114
+          ]
+        ],
+        "positions": [
+          1,
+          4
+        ],
+        "facts": [
+          true,
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true,
+          false,
+          true
+        ],
+        "source_bytes": 1387,
+        "prompt_bytes": 3531,
+        "over_budget": false,
+        "ms": [
+          5665.64,
+          5651.172
+        ]
+      },
+      "A": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::_sha@43",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110"
+        ],
+        "selected": [
+          {
+            "id": "Efbfbcb941f4c9638",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 68,
+            "end": 84,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "377dd6458979613de4ac5ce7333352c5519f7f7f74a1a3e7b7ef3fb87cc301bb",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          },
+          {
+            "id": "Ef53271a5250ae545",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 43,
+            "end": 44,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "b29fa6bcfe26279ef98d7b5dab72a1d3410efdc35201953322dd6386d8a22c70",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          },
+          {
+            "id": "E9c016fd3a0ecd125",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 110,
+            "end": 114,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "2fbfaff908690ac2a5f37721670bc63699c0548b9adbd013b22b3cb3db6e28eb",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "26e87c9e3423ae7a33f44a52d95e19f83671297bde459c00d6ba023d6664e8a3",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            68,
+            84
+          ],
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            43,
+            44
+          ],
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            110,
+            114
+          ]
+        ],
+        "positions": [
+          1,
+          4
+        ],
+        "facts": [
+          true,
+          true
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true,
+          false,
+          true
+        ],
+        "source_bytes": 1387,
+        "prompt_bytes": 3531,
+        "over_budget": false,
+        "ms": [
+          5580.767,
+          5534.315
+        ]
+      }
+    },
+    "P5": {
+      "question": "Где задаются GIT_TERMINAL_PROMPT и GIT_ASKPASS и почему дочерний процесс получает это окружение?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "git_environment",
+          [
+            [
+              48
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._run",
+          [
+            [
+              66,
+              67
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "askpass",
+        "git",
+        "prompt",
+        "terminal"
+      ],
+      "russian_prefixes": [
+        "доче",
+        "зада",
+        "окру",
+        "полу",
+        "проц"
+      ],
+      "A": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "a283163d8ccf4b88b736acbbdf3c956f47e5660b646c89fa898bd06682c21d93",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [
+          1,
+          6
+        ],
+        "facts": [
+          true,
+          false
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true
+        ],
+        "source_bytes": 581,
+        "prompt_bytes": 2163,
+        "over_budget": false,
+        "ms": [
+          2119.026,
+          1951.56
+        ]
+      },
+      "B": {
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "a283163d8ccf4b88b736acbbdf3c956f47e5660b646c89fa898bd06682c21d93",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [
+          1,
+          6
+        ],
+        "facts": [
+          true,
+          false
+        ],
+        "reason": "SUPPORTED_MENTIONS",
+        "fragment_on_target": [
+          true
+        ],
+        "source_bytes": 581,
+        "prompt_bytes": 2163,
+        "over_budget": false,
+        "ms": [
+          2155.823,
+          1710.233
+        ]
+      }
+    },
+    "P6": {
+      "question": "Каким был измеренный P99_LATENCY_MS для вызова scan_head на контрольном стенде?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [
+        "head",
+        "latency",
+        "ms",
+        "scan"
+      ],
+      "russian_prefixes": [
+        "вызо",
+        "изме",
+        "конт",
+        "стен"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "MISSING_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1994.715,
+          2155.755
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "MISSING_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2254.756,
+          2073.04
+        ]
+      }
+    },
+    "P7": {
+      "question": "Как main.py использует find_git при старте голосового помощника?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [
+        "audio",
+        "find",
+        "git",
+        "main",
+        "speech",
+        "voice"
+      ],
+      "russian_prefixes": [
+        "голо",
+        "испо",
+        "помо",
+        "стар"
+      ],
+      "A": {
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "REQUESTED_PATH_OUTSIDE_SCOPE",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1749.79,
+          2114.189
+        ]
+      },
+      "B": {
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "REQUESTED_PATH_OUTSIDE_SCOPE",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1992.515,
+          2262.564
+        ]
+      }
+    },
+    "P8": {
+      "question": "Какое значение GIT_TERMINAL_PROMPT сейчас у уже запущенного процесса на этом ПК?",
+      "basis": "live",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [
+        "git",
+        "prompt",
+        "terminal"
+      ],
+      "russian_prefixes": [
+        "запу",
+        "знач",
+        "проц",
+        "сейч"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_LIVE_OBSERVATION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1908.378,
+          2301.267
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_LIVE_OBSERVATION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2057.368,
+          1920.75
+        ]
+      }
+    },
+    "Q1": {
+      "question": "Сколько секунд дочернему процессу дают на завершение и что делают, когда время ожидания превышено?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._run",
+          [
+            [
+              93
+            ],
+            [
+              94,
+              95,
+              96
+            ],
+            [
+              97
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "restart",
+        "shutdown",
+        "start"
+      ],
+      "russian_prefixes": [
+        "врем",
+        "дают",
+        "доче",
+        "заве",
+        "ожид",
+        "прев",
+        "проц",
+        "секу"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::candidate_id@22",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::module_rank@64",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::modules_from_source@26",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          4
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2141.696,
+          2005.737
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::candidate_id@22",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::module_rank@64",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::modules_from_source@26"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          1
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1925.118,
+          1940.658
+        ]
+      }
+    },
+    "Q2": {
+      "question": "По какому признаку двоичный файл признают неподходящим для текстового запроса?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader.capture",
+          [
+            [
+              144,
+              145,
+              146
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "document",
+        "file"
+      ],
+      "russian_prefixes": [
+        "двои",
+        "запр",
+        "како",
+        "непо",
+        "приз",
+        "текс",
+        "файл"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          1
+        ],
+        "facts": [
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2492.628,
+          2020.358
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          8
+        ],
+        "facts": [
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2388.583,
+          2122.166
+        ]
+      }
+    },
+    "Q3": {
+      "question": "Когда в отчёте появляется предупреждение, что поиск неполный, и какие причины пропуска файлов там названы?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "format_context",
+          [
+            [
+              216,
+              217
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [
+        "document",
+        "file"
+      ],
+      "russian_prefixes": [
+        "назв",
+        "непо",
+        "отче",
+        "поис",
+        "появ",
+        "пред",
+        "прич",
+        "проп",
+        "файл"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1905.501,
+          2165.943
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          1
+        ],
+        "facts": [
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2003.39,
+          2156.97
+        ]
+      }
+    },
+    "Q4": {
+      "question": "В каком порядке чередуются куски верхнего уровня и тела подпрограмм, если доступны обе очереди?",
+      "basis": "static",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "interleave_3_to_1",
+          [
+            [
+              99,
+              100,
+              101,
+              102,
+              103
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "верх",
+        "дост",
+        "како",
+        "куск",
+        "очер",
+        "подп",
+        "поря",
+        "тела",
+        "уров",
+        "чере"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          215.345,
+          230.129
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          205.521,
+          206.71
+        ]
+      }
+    },
+    "Q5": {
+      "question": "Кто подсчитывает число модульных участков и где это число показывают человеку рядом с числом функций?",
+      "basis": "linked",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              127,
+              135
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "format_context",
+          [
+            [
+              211
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "моду",
+        "подс",
+        "пока",
+        "рядо",
+        "учас",
+        "функ",
+        "чело",
+        "числ"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          210.455,
+          212.984
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          1
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2078.559,
+          1952.885
+        ]
+      }
+    },
+    "Q6": {
+      "question": "Как отбрасывают ответ с неверным числом символов в идентификаторе ревизии и где при обходе дерева запрашивают саму ревизию?",
+      "basis": "linked",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._sha",
+          [
+            [
+              111,
+              112,
+              113
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "scan_head",
+          [
+            [
+              81,
+              82
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "дере",
+        "запр",
+        "иден",
+        "неве",
+        "обхо",
+        "отбр",
+        "отве",
+        "реви",
+        "саму",
+        "симв",
+        "числ"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          1,
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1829.518,
+          1921.039
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          220.578,
+          217.341
+        ]
+      }
+    },
+    "Q7": {
+      "question": "Как начинается поиск без готового объекта чтения и что произойдёт, если программа для работы с репозиторием не найдена в стандартных каталогах?",
+      "basis": "linked",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              147,
+              148,
+              149
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "find_git",
+          [
+            [
+              35,
+              36,
+              38,
+              39
+            ]
+          ]
+        ]
+      ],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "гото",
+        "ката",
+        "найд",
+        "начи",
+        "объе",
+        "поис",
+        "прог",
+        "прои",
+        "рабо",
+        "репо",
+        "стан",
+        "чтен"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          213.925,
+          454.023
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::find_git@22"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          1
+        ],
+        "facts": [
+          false,
+          false
+        ],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2423.89,
+          1943.975
+        ]
+      }
+    },
+    "Q8": {
+      "question": "Какой размер здесь считается нормальным?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "норм",
+        "разм",
+        "счит"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          220.064,
+          211.569
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          222.091,
+          208.794
+        ]
+      }
+    },
+    "Q9": {
+      "question": "Какова измеренная на прошлой неделе доля неполных поисков среди всех обращений пользователей?",
+      "basis": "static",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "всех",
+        "доля",
+        "изме",
+        "како",
+        "неде",
+        "непо",
+        "обра",
+        "поис",
+        "поль",
+        "прош",
+        "сред"
+      ],
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          244.653,
+          230.646
+        ]
+      },
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_CODE_MENTION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          1683.567,
+          1974.153
+        ]
+      }
+    },
+    "Q10": {
+      "question": "Сколько потоков вывода прямо сейчас не завершилось на этом компьютере?",
+      "basis": "live",
+      "rubric": [],
+      "support_ranges": [],
+      "m126_tokens": [],
+      "russian_prefixes": [
+        "выво",
+        "заве",
+        "комп",
+        "пото",
+        "прям",
+        "сейч"
+      ],
+      "B": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_LIVE_OBSERVATION",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          2177.982,
+          1987.32
+        ]
+      },
+      "A": {
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": [],
+        "reason": "NO_MATCH",
+        "fragment_on_target": [],
+        "source_bytes": 0,
+        "prompt_bytes": 0,
+        "over_budget": false,
+        "ms": [
+          209.606,
+          209.208
+        ]
+      }
+    }
+  },
+  "ground_tests": [
+    "LINKED_VALID",
+    "LINKED_CLAIM_NEEDS_TWO_SOURCE_LINES",
+    "DUPLICATE_SOURCE_LINE",
+    "QUOTE_NOT_ON_LINE",
+    "ANCHOR_LINE_OUTSIDE_EXCERPT",
+    "ANCHOR_ID_OR_LINE_TYPE",
+    "LITERAL_NOT_ENTAILMENT",
+    "LIVE_POLICY_NO_GOLD",
+    "MODEL_ABSTENTION",
+    "NO_MATCH_NO_CALL",
+    "LENGTH_WITHHELD",
+    "DUPLICATE_JSON_KEY",
+    "HEAD_CHANGED",
+    "TEXT_SWAPPED",
+    "CANONICAL_ID_FORGERY"
+  ],
+  "n4_profile": [
+    {
+      "arm": "single",
+      "total_ms": 1784.013,
+      "spans": [
+        {
+          "stage": "search",
+          "ms": 22.692,
+          "selector": null
+        },
+        {
+          "stage": "inspect",
+          "ms": 1356.852,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        }
+      ],
+      "other_ms": 404.469
+    },
+    {
+      "arm": "multi",
+      "total_ms": 6489.28,
+      "spans": [
+        {
+          "stage": "search",
+          "ms": 22.073,
+          "selector": null
+        },
+        {
+          "stage": "inspect",
+          "ms": 1497.976,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        },
+        {
+          "stage": "inspect",
+          "ms": 2447.115,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        },
+        {
+          "stage": "inspect",
+          "ms": 1665.658,
+          "selector": "modules/developer_task_ui/app/context_search.py::scan_head@68"
+        },
+        {
+          "stage": "pack",
+          "ms": 3.863,
+          "selector": null
+        }
+      ],
+      "other_ms": 852.595
+    },
+    {
+      "arm": "multi",
+      "total_ms": 5623.124,
+      "spans": [
+        {
+          "stage": "search",
+          "ms": 22.941,
+          "selector": null
+        },
+        {
+          "stage": "inspect",
+          "ms": 1751.825,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        },
+        {
+          "stage": "inspect",
+          "ms": 1538.521,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        },
+        {
+          "stage": "inspect",
+          "ms": 1501.616,
+          "selector": "modules/developer_task_ui/app/context_search.py::scan_head@68"
+        },
+        {
+          "stage": "pack",
+          "ms": 4.166,
+          "selector": null
+        }
+      ],
+      "other_ms": 804.055
+    },
+    {
+      "arm": "single",
+      "total_ms": 2044.212,
+      "spans": [
+        {
+          "stage": "search",
+          "ms": 23.692,
+          "selector": null
+        },
+        {
+          "stage": "inspect",
+          "ms": 1617.104,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        }
+      ],
+      "other_ms": 403.416
+    },
+    {
+      "arm": "single",
+      "total_ms": 1965.268,
+      "spans": [
+        {
+          "stage": "search",
+          "ms": 22.847,
+          "selector": null
+        },
+        {
+          "stage": "inspect",
+          "ms": 1532.72,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        }
+      ],
+      "other_ms": 409.701
+    },
+    {
+      "arm": "multi",
+      "total_ms": 5580.204,
+      "spans": [
+        {
+          "stage": "search",
+          "ms": 233.334,
+          "selector": null
+        },
+        {
+          "stage": "inspect",
+          "ms": 1315.893,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        },
+        {
+          "stage": "inspect",
+          "ms": 1572.971,
+          "selector": "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        },
+        {
+          "stage": "inspect",
+          "ms": 1645.088,
+          "selector": "modules/developer_task_ui/app/context_search.py::scan_head@68"
+        },
+        {
+          "stage": "pack",
+          "ms": 3.753,
+          "selector": null
+        }
+      ],
+      "other_ms": 809.165
+    }
+  ]
+}

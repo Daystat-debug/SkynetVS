@@ -69,6 +69,8 @@ def windows(core, snapshot, candidates, question):
 
 
 class MultiFragment:
+    select_windows = staticmethod(windows)
+
     def __init__(self, bridge, retrieval, grounding, basis):
         self.bridge = bridge
         self.retrieval = retrieval
@@ -100,7 +102,7 @@ class MultiFragment:
                 self.reason = "REQUESTED_PATH_OUTSIDE_SCOPE"
                 report["status"] = "OUT_OF_SCOPE"
                 return report
-        selected, self.reason = windows(self.bridge.core, snapshot, candidates, question)
+        selected, self.reason = self.select_windows(self.bridge.core, snapshot, candidates, question)
         if not selected:
             return report
         for w in selected:
