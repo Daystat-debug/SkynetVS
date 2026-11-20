@@ -12,6 +12,7 @@ import tempfile
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import m289_diagnostic as pilot
 import skynet_source_windows as windows
+import skynet_explanation_review as review
 from m289_multifragment import PY_PATH
 
 
@@ -24,6 +25,7 @@ MESSAGES = {
     "external": "Указанный источник вне доступной области. Доступны три файла подсистемы поиска; назовите операцию в одном из них.",
     "incomplete": "В разрешённых исходниках не нашлось проверяемых строк для всех частей вопроса. Уточните операцию или текст сообщения.",
     "invalid": "Не удалось проверить предложенные моделью ссылки или формат ответа. Ответ удержан.",
+    "review": "При повторном чтении цитат модель не подтвердила все части объяснения. Уточните, какой шаг нужно разобрать.",
     "budget": "Исходник или вопрос не помещается в лимит локального чтения.",
 }
 
@@ -252,7 +254,17 @@ def mapped_answer(q, sources, ground, provider):
     return result
 
 
-def answer(q, sources, ground, provider):
+def reviewed_context(q, shown, sources, ground, provider):
+    sources.current()
+    try:
+        result = review.evaluate(q, shown, sources, ground, provider, sys.modules[__name__])
+    except (ValueError, KeyError, TypeError, RecursionError):
+        result = refusal("invalid")
+    sources.current()
+    return result
+
+
+def run_question(q, sources, ground, provider, *, reviewed):
     if not ground._text(q, 600):
         return refusal("ambiguous")
     if any(not any(p == f or p.endswith("/"+f) for p in sources.pages) for f in PY_PATH.findall(q)):
@@ -261,14 +273,25 @@ def answer(q, sources, ground, provider):
     user, shown = windows.prompt(q, sources)
     if not shown:
         return refusal("incomplete")
-    raw, timing = provider.complete(windows.ANSWER, user)
-    try:
-        result = publish(raw, sources, shown, ground) if timing["finish_reason"] == "stop" else refusal("invalid")
-    except (KeyError, ValueError, TypeError, RecursionError):
-        result = refusal("invalid")
+    if reviewed:
+        result = reviewed_context(q, shown, sources, ground, provider)
+    else:
+        raw, timing = provider.complete(windows.ANSWER, user)
+        try:
+            result = publish(raw, sources, shown, ground) if timing["finish_reason"] == "stop" else refusal("invalid")
+        except (KeyError, ValueError, TypeError, RecursionError):
+            result = refusal("invalid")
     sources.current()
     result.update(commit=sources.commit, shown=sorted(shown))
     return result
+
+
+def answer(q, sources, ground, provider):
+    return run_question(q, sources, ground, provider, reviewed=True)
+
+
+def baseline_answer(q, sources, ground, provider):
+    return run_question(q, sources, ground, provider, reviewed=False)
 
 
 def display(result):
@@ -276,8 +299,10 @@ def display(result):
         print(result["text"])
     for c in result["claims"]:
         print(c["text"])
-        for a in c["anchors"]:
+        for a in c.get("evidence_blocks", c["anchors"]):
             print(" ", a["url"])
+    if result.get("model_review"):
+        print("Строки сверены с Git. Полноту и смысл оценивала та же локальная модель.")
 
 
 def main():
@@ -290,7 +315,7 @@ def main():
             display(answer(args.question.strip(), sources, ground, provider))
             print("Вызовов локальной модели:", provider.p.calls if provider.p else 0)
             return
-        print("Введите вопрос. /exit — выход. До одного обращения к модели на вопрос.")
+        print("Введите вопрос. /exit — выход. До двух обращений к модели на вопрос.")
         while True:
             try:
                 q = input("> ").strip()
@@ -300,7 +325,7 @@ def main():
                 break
             if not q:
                 continue
-            if provider.p is not None and provider.p.calls >= 16:
+            if provider.p is not None and provider.p.calls > 14:
                 print("Лимит сессии модели. Для следующих вопросов запустите команду снова.")
                 break
             display(answer(q, sources, ground, provider))

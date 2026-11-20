@@ -58,7 +58,25 @@ def run():
         raise AssertionError("fabricated line accepted")
     assert cli.answer("Что в main.py?",src,g,None)["reason"] == "external"
     fake = Fixed({"claims":[{"text":"Функция возвращает 807.","lines":["A:2"]}]})
-    assert cli.answer("Откуда берётся значение 807?",src,g,fake)["status"] == "answer"
+    assert cli.baseline_answer("Откуда берётся значение 807?",src,g,fake)["status"] == "answer"
+    class Pair:
+        def __init__(self, *values):
+            self.values = iter(values)
+
+        def complete(self, system, user):
+            return Fixed(next(self.values)).complete(system, user)
+
+    draft = {"claims":[{"text":"Функция возвращает 807.", "blocks":[1]}]}
+    question = "Откуда берётся значение 807?"
+    verdict = {"complete":True, "supported":[True]}
+    checked = cli.answer(question, src, g, Pair(draft, verdict))
+    assert checked["model_review"] == verdict
+    assert checked["claims"][0]["evidence_blocks"][0]["url"].endswith("#L1-L2")
+    for rejected in ({"complete":False,"supported":[True]}, {"complete":True,"supported":[False]},
+                     {"complete":True,"supported":[]}, {"complete":True,"supported":[1]}):
+        assert cli.answer(question, src, g, Pair(draft, rejected))["status"] == "withheld"
+    draft["claims"][0]["blocks"] = [99]
+    assert cli.answer(question, src, g, Pair(draft))["reason"] == "invalid"
     msg, offered = cli.windows.prompt("Откуда берётся значение 807?",src)
     assert offered["A:2"] == (p,2) and len((cli.windows.ANSWER+msg).encode()) <= 9600
     owners, edges = cli.windows.code_graph({"a.py":"def x():\n    return 1",
