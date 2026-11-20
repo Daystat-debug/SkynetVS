@@ -1,0 +1,1733 @@
+{
+  "source": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+  "freeze": "72c214290cbcc9f87e526bf3ee433277b304d9bf",
+  "pilot_pack": "db2e8be37e2083906d27e06561d60120af97a8ac83cfeb3ec4fb210fd88ba81b",
+  "scope": [
+    "modules/developer_task_ui/app/context_search.py",
+    "modules/developer_task_ui/app/git_source.py",
+    "modules/developer_task_ui/app/retrieval/m130_rank.py"
+  ],
+  "package_members": {
+    "cases289.py": "7b35bf058d7cfb282c75dd1cf70cf44ca9cbdc482223ae325507837c95594668",
+    "ground289.py": "ba014ea71066067790ed6ba99eb3f154715b82f98adabe5cac1aa4a0c06d88e1",
+    "m254_core.py": "571f68154a7439bbf2581cdb548f8cd0caa1413865c82efb355be54d879d72a5",
+    "m254_runner.py": "ffc43262b89553d514764b6ed5f45fc0d8f96a223d6ab1d3bd5fe7e57afb8a89",
+    "retrieval284.py": "91cf554ba1f6f16ee506d22ef2fbf7e25a2893143d698794d8a1c8e9f234fc73",
+    "run289.py": "653af3f0f5ccc933d81d865358d47ff965cfa58c4aac408146aeefbe4c042064",
+    "runtime289.py": "316a423b9e8903571360ed0935fbd1aed2546fb6b366eaa11a8f4212404b154f",
+    "ui289.py": "0c7e9baa6409fe8a7d6559d2b9b64aeaebe68a8250786ffc6de8b8c7a31543a0"
+  },
+  "scan": {
+    "tracked_python_paths": 208,
+    "sources_read": 208,
+    "source_bytes": 3624561,
+    "skipped": {
+      "too_large": 0,
+      "total_budget": 0,
+      "not_utf8": 0,
+      "binary": 0
+    },
+    "scope": "GIT_HEAD_MAIN_PY_AND_MODULES_PY_ONLY",
+    "partial": false
+  },
+  "arms": [
+    "base",
+    "scoped"
+  ],
+  "pairs_per_question": 3,
+  "cases": {
+    "H1": {
+      "question": "Что произойдёт с запросом поиска длиной 1201 символ до добавления подсказок и какой результат получит вызывающий код?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "expand_query",
+          [
+            [
+              48
+            ],
+            [
+              48,
+              49,
+              50
+            ]
+          ]
+        ]
+      ],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          649.891,
+          775.148,
+          559.029
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          167.549,
+          228.713,
+          182.219
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ]
+      }
+    },
+    "H2": {
+      "question": "Что происходит с дочерним Git-процессом при превышении первого таймаута ожидания и как об этом узнаёт вызывающий код?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._run",
+          [
+            [
+              93
+            ],
+            [
+              95,
+              96
+            ],
+            [
+              97,
+              106,
+              107
+            ]
+          ]
+        ]
+      ],
+      "tokens": [
+        "git"
+      ],
+      "hints": [],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 72,
+        "ms": [
+          2048.889,
+          2523.18,
+          2383.574
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer/developer_task_workspace_git.py::_run_source_git_bytes@302",
+          "modules/developer/developer_task_workspace_git.py::_run_git_bytes@258",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer/developer_task_patch_apply_git.py::_run_git@206",
+          "modules/developer/developer_task_workspace_git.py::workspace_git_command_prefix@185",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer/developer_task_workspace_git.py::_run_git_checked@364"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "fd11b6270439050241aeb949fd46c84466f7a5ec0c64696933fbc4364405ffa2",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 2,
+        "ms": [
+          1810.514,
+          1997.024,
+          1838.256
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "fd11b6270439050241aeb949fd46c84466f7a5ec0c64696933fbc4364405ffa2",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [
+          6
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    "H3": {
+      "question": "Какой текст получает ранжировщик от поиска и сколько файлов он первоначально запрашивает у файлового поиска?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "expand_query",
+          [
+            [
+              50,
+              51
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              146,
+              153
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              116
+            ]
+          ]
+        ]
+      ],
+      "tokens": [
+        "file",
+        "document"
+      ],
+      "hints": [
+        "file document"
+      ],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 119,
+        "ms": [
+          2357.975,
+          2205.903,
+          2474.984
+        ],
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/developer/developer_task_execution_boundary_composition_payload.py::_file_version@1023",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::validate_compile_ast_document_chain@1331",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::encode_compile_ast_document@1241",
+          "modules/developer/developer_task_execution_runtime_attestation_contract.py::_load_document@369",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::_load_document@472",
+          "modules/developer_task_ui/app/core.py::request_document@148",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::DeveloperTaskExecutionCompileAstDocument.to_dict@415",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::DeveloperTaskExecutionCompileAstDocument.field@418"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 3,
+        "ms": [
+          1880.989,
+          1794.777,
+          1789.571
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        ],
+        "selected": [
+          {
+            "id": "Eb874d4eac77cd8fd",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 230,
+            "end": 244,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "74050e1bcf9fbecfcb701a2c6d0f8555fae721c0684f77b8babc72402c9c5bb4",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "17a0461fd3b282f39e4645912bd6962b185670786a586775a49b77f84e0a6ee6",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            230,
+            244
+          ]
+        ],
+        "positions": [
+          null,
+          3,
+          4
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    "H4": {
+      "question": "Если очередной файл превышает суммарный бюджет ранжировщика, что с ним происходит и чем заканчивается случай, когда не осталось ни одного выбранного файла?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              120
+            ],
+            [
+              121,
+              122
+            ],
+            [
+              124
+            ]
+          ]
+        ]
+      ],
+      "tokens": [
+        "file",
+        "document"
+      ],
+      "hints": [
+        "file document"
+      ],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 119,
+        "ms": [
+          2637.95,
+          2331.182,
+          2386.934
+        ],
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/developer/developer_task_execution_boundary_composition_payload.py::_file_version@1023",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::validate_compile_ast_document_chain@1331",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::encode_compile_ast_document@1241",
+          "modules/developer/developer_task_execution_runtime_attestation_contract.py::_load_document@369",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::_load_document@472",
+          "modules/developer_task_ui/app/core.py::request_document@148",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::DeveloperTaskExecutionCompileAstDocument.to_dict@415",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::DeveloperTaskExecutionCompileAstDocument.field@418"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 3,
+        "ms": [
+          2227.869,
+          1814.276,
+          1898.297
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        ],
+        "selected": [
+          {
+            "id": "Eb874d4eac77cd8fd",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 230,
+            "end": 244,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "74050e1bcf9fbecfcb701a2c6d0f8555fae721c0684f77b8babc72402c9c5bb4",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "77c6987aafff1ea549d18b727e59bc620df40cffee656b040bbb114f5dfb848b",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            230,
+            244
+          ]
+        ],
+        "positions": [
+          4
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    "H5": {
+      "question": "Какой код возврата дал последний запущенный Git-процесс на моём компьютере?",
+      "rubric": [],
+      "tokens": [
+        "git"
+      ],
+      "hints": [],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 72,
+        "ms": [
+          2254.777,
+          2299.157,
+          2291.884
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer/developer_task_workspace_git.py::_run_source_git_bytes@302",
+          "modules/developer/developer_task_workspace_git.py::_run_git_bytes@258",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer/developer_task_patch_apply_git.py::_run_git@206",
+          "modules/developer/developer_task_workspace_git.py::workspace_git_command_prefix@185",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer/developer_task_workspace_git.py::_run_git_checked@364"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "a14e17e9a6daaea4f3124abf85a391de0e8db84d08ad831a3906607bdd175cdf",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [],
+        "facts": []
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 2,
+        "ms": [
+          1762.24,
+          1820.137,
+          1880.728
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "a14e17e9a6daaea4f3124abf85a391de0e8db84d08ad831a3906607bdd175cdf",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [],
+        "facts": []
+      }
+    },
+    "H6": {
+      "question": "Какой микрофон выбран сейчас в настройках Windows у пользователя?",
+      "rubric": [],
+      "tokens": [
+        "windows"
+      ],
+      "hints": [],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 70,
+        "ms": [
+          2143.485,
+          2350.058,
+          2191.893
+        ],
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::build_windows_sandbox_environment@449",
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::_require_windows@105",
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::launch_windows_sandbox@472",
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::snapshot_windows_sandbox_processes@321",
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::_normalized_windows_path@366",
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::terminate_observed_windows_sandbox_processes@503",
+          "modules/developer/developer_task_execution_backend_host.py::_windows_directory@276",
+          "modules/developer/developer_task_execution_backend_host.py::_read_windows_directory@250"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 2,
+        "ms": [
+          2087.56,
+          1991.458,
+          1839.09
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::module_rank@64",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [
+          {
+            "id": "E9ed8463b4ae98d98",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 64,
+            "end": 77,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "b3230d634a93f662bf8bd0fd9fd77ef012e79aee99e11d84d9a35bec1339891e",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false
+          },
+          {
+            "id": "E853671188469b4f1",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 85,
+            "end": 85,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "f1a419e1017ba738934bed244ec128f4dfdb3c4ab0be023c59c4fcbe707431be",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "0d4b8bbc470cf9fba3216147ec0b2c67cf230c91a5b0147d2b78515a01d188af",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            64,
+            77
+          ],
+          [
+            "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            85,
+            85
+          ]
+        ],
+        "positions": [],
+        "facts": []
+      }
+    },
+    "H7": {
+      "question": "Как поиск отличает некорректный идентификатор HEAD от смены коммита во время чтения?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._sha",
+          [
+            [
+              112
+            ],
+            [
+              112,
+              113
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "scan_head",
+          [
+            [
+              81,
+              137
+            ],
+            [
+              137,
+              138
+            ]
+          ]
+        ]
+      ],
+      "tokens": [
+        "head"
+      ],
+      "hints": [],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 45,
+        "ms": [
+          2399.493,
+          2777.05,
+          2400.129
+        ],
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/developer/developer_task_execution_environment_inventory.py::_require_current_head@367",
+          "modules/developer_task_ui/app/self_review.py::GitHeadCatalog.verify_head@170",
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/self_review.py::GitHeadCatalog.get@156",
+          "modules/developer_task_ui/app/self_review.py::GitHeadCatalog.__init__@128",
+          "modules/developer_task_ui/app/self_review.py::GitHeadCatalog.paths@153",
+          "modules/developer_task_ui/app/context_search.py::format_context@202"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          4
+        ],
+        "facts": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 2,
+        "ms": [
+          1931.886,
+          2025.361,
+          1941.375
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::_render_current_head_labels@175",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/context_search.py::format_context@202",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [
+          {
+            "id": "Efc47fd2a4bba7341",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 175,
+            "end": 188,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "98e87e6a47c1b93a573dfba07e36744cb2c49a49be67ff429f39904ac23616fb",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          },
+          {
+            "id": "E158b2c664b8575c7",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 189,
+            "end": 189,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "f787e4d5464c199f9f5a9468a12451ff751fa7e0328cca4640456f4b7cb5703e",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "27ba70a1f11fabc0e8dc35652d653190deead70c3da12636aeb4fac858ed948a",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            175,
+            188
+          ],
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            189,
+            189
+          ]
+        ],
+        "positions": [
+          null,
+          2
+        ],
+        "facts": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    "H8": {
+      "question": "Как список кандидатов для окон контекста собирается из функций и модулей и какой список поиск передаёт отборщику окон?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              125,
+              126,
+              127
+            ],
+            [
+              128
+            ],
+            [
+              138
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              157
+            ]
+          ]
+        ]
+      ],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          632.14,
+          604.384,
+          523.435
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          167.833,
+          170.764,
+          165.074
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    "H9": {
+      "question": "По каким результатам сравнительных испытаний для отбора исходников выбрали бюджет именно 6 000 000 байт?",
+      "rubric": [],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          520.877,
+          517.14,
+          522.515
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          165.248,
+          164.514,
+          164.163
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      }
+    },
+    "H10": {
+      "question": "Какой процент вопросов размеченного русского набора получил правильный файл в первой пятёрке по данным этого отчёта поиска?",
+      "rubric": [],
+      "tokens": [
+        "file",
+        "document"
+      ],
+      "hints": [
+        "file document"
+      ],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 119,
+        "ms": [
+          2197.709,
+          2416.645,
+          2419.509
+        ],
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/developer/developer_task_execution_boundary_composition_payload.py::_file_version@1023",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::validate_compile_ast_document_chain@1331",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::encode_compile_ast_document@1241",
+          "modules/developer/developer_task_execution_runtime_attestation_contract.py::_load_document@369",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::_load_document@472",
+          "modules/developer_task_ui/app/core.py::request_document@148",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::DeveloperTaskExecutionCompileAstDocument.to_dict@415",
+          "modules/developer/developer_task_execution_compile_ast_contract.py::DeveloperTaskExecutionCompileAstDocument.field@418"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 3,
+        "ms": [
+          1924.578,
+          1938.392,
+          1854.332
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/context_search.py::receipt_without_source@230",
+          "modules/developer_task_ui/app/context_search.py::_include@57",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::rank@110",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/retrieval/m130_rank.py::main@144",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116"
+        ],
+        "selected": [
+          {
+            "id": "Eb874d4eac77cd8fd",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 230,
+            "end": 244,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "74050e1bcf9fbecfcb701a2c6d0f8555fae721c0684f77b8babc72402c9c5bb4",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "7034c05dc50f933fa3fd37a455c9e4a034a83304cb3703766d5d7180e6d89952",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/context_search.py",
+            230,
+            244
+          ]
+        ],
+        "positions": [],
+        "facts": []
+      }
+    },
+    "H11": {
+      "question": "Какой здесь лимит на запрос?",
+      "rubric": [],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          855.141,
+          521.811,
+          529.72
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          176.123,
+          174.105,
+          168.522
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      }
+    },
+    "H12": {
+      "question": "Какой хеш сохраняет поиск?",
+      "rubric": [],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          534.033,
+          525.424,
+          521.472
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          172.045,
+          164.165,
+          167.911
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      }
+    },
+    "N1": {
+      "question": "Как форматировщик контекста реагирует на отчёт с неизвестной схемой?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "format_context",
+          [
+            [
+              203,
+              204
+            ]
+          ]
+        ]
+      ],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          531.161,
+          513.374,
+          521.506
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          167.711,
+          178.481,
+          163.73
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false
+        ]
+      }
+    },
+    "N2": {
+      "question": "Какие переменные окружения убирает git_environment до добавления настроек локального Git?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "git_environment",
+          [
+            [
+              43,
+              44
+            ]
+          ]
+        ]
+      ],
+      "tokens": [
+        "git",
+        "environment"
+      ],
+      "hints": [],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 87,
+        "ms": [
+          2094.461,
+          2324.956,
+          2363.433
+        ],
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/developer/developer_task_execution_environment_inventory.py::_build_git_environment@277",
+          "modules/developer/developer_task_workspace_git.py::build_workspace_git_environment@175",
+          "modules/developer/developer_task_preflight.py::_build_git_environment@181",
+          "modules/developer/developer_task_patch_index.py::_build_patch_index_git_environment@183",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer/developer_task_patch_index.py::_prepare_temporary_git_environment@784",
+          "modules/developer/developer_task_execution_toolchain_observation.py::_build_git_environment@667",
+          "modules/developer/developer_task_workspace_git.py::build_probe_environment@139"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          5
+        ],
+        "facts": [
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 2,
+        "ms": [
+          1825.52,
+          1779.126,
+          1986.633
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144"
+        ],
+        "selected": [
+          {
+            "id": "Eeac0311341fe86c6",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 42,
+            "end": 50,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "1ac7c9960afc63e88539e3ab36a5b84315943517dfde99e742036ee8506c2546",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "d3a75c37940c19471d34f1f2b459358df6a3f355aebdcffd0e57ddabf2ce176d",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            42,
+            50
+          ]
+        ],
+        "positions": [
+          1
+        ],
+        "facts": [
+          true
+        ]
+      }
+    },
+    "N3": {
+      "question": "Как при поиске модульных участков исключаются тела асинхронных функций?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "modules_from_source",
+          [
+            [
+              33,
+              34,
+              37
+            ],
+            [
+              42,
+              44
+            ]
+          ]
+        ]
+      ],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          604.581,
+          521.539,
+          518.852
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          168.071,
+          163.543,
+          161.399
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ]
+      }
+    },
+    "N4": {
+      "question": "При чтении списка дерева Git где запрашивается ls-tree и как запускающий код проверяет, что такая команда разрешена?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "scan_head",
+          [
+            [
+              81,
+              82
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "GitSourceReader._run",
+          [
+            [
+              60,
+              61
+            ]
+          ]
+        ]
+      ],
+      "tokens": [
+        "git",
+        "ls",
+        "tree",
+        "command",
+        "intent",
+        "start",
+        "restart",
+        "shutdown",
+        "verify",
+        "test",
+        "security",
+        "access",
+        "permission"
+      ],
+      "hints": [
+        "command intent",
+        "start restart shutdown",
+        "verify test",
+        "security access permission"
+      ],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 168,
+        "ms": [
+          2252.334,
+          2247.589,
+          2285.622
+        ],
+        "status": "OUT_OF_SCOPE",
+        "gate": "NO_GENERATION_OUT_OF_SCOPE",
+        "candidates": [
+          "modules/intent_rules.py::get_exact_intent@154",
+          "modules/intent_rules.py::build_incomplete_command_meta@162",
+          "modules/developer/developer_task_workspace_git.py::workspace_git_command_prefix@185",
+          "modules/developer/developer_task_workspace_git.py::source_git_command_prefix@220",
+          "modules/developer/developer_task_workspace_git.py::_source_git_command_prefix@206",
+          "modules/developer/developer_task_workspace_git.py::_git_command_prefix@225",
+          "modules/developer/developer_task_workspace_git.py::_verify_workspace@783",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59"
+        ],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          8
+        ],
+        "facts": [
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 3,
+        "ms": [
+          1967.158,
+          1883.004,
+          1946.924
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/context_search.py::scan_head@68",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72"
+        ],
+        "selected": [
+          {
+            "id": "Ef15a75fd467925b8",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 59,
+            "end": 72,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "0a793d9cc49f92adbbe85ecd63d2e0fd0bc6d8376e47d0754af72cb6aa8635c2",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          },
+          {
+            "id": "Eb4c38055525699e2",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 92,
+            "end": 97,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "57dd40e49366ffebf672823c22ba7d97ce8be8afba588dac439c08738ca91448",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "28c341ebf6d940340ba3531eed078f691dcc6c4da6635096fcb2062cafb0512f",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            59,
+            72
+          ],
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            92,
+            97
+          ]
+        ],
+        "positions": [
+          3,
+          1
+        ],
+        "facts": [
+          false,
+          true
+        ]
+      }
+    },
+    "N5": {
+      "question": "Кто вычисляет число функций-кандидатов и как это число попадает в итоговый отчёт поиска?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "rank",
+          [
+            [
+              125,
+              135
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              153,
+              166
+            ]
+          ]
+        ]
+      ],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          636.133,
+          614.822,
+          524.196
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          205.551,
+          167.483,
+          163.986
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false
+        ]
+      }
+    },
+    "N6": {
+      "question": "При поиске без переданного reader откуда берётся путь к Git под Windows и кто передаёт его объекту чтения?",
+      "rubric": [
+        [
+          "modules/developer_task_ui/app/git_source.py",
+          "find_git",
+          [
+            [
+              25,
+              28
+            ],
+            [
+              35,
+              36,
+              38
+            ]
+          ]
+        ],
+        [
+          "modules/developer_task_ui/app/context_search.py",
+          "search_repository",
+          [
+            [
+              147,
+              148,
+              149
+            ]
+          ]
+        ]
+      ],
+      "tokens": [
+        "reader",
+        "git",
+        "windows"
+      ],
+      "hints": [],
+      "base": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 109,
+        "ms": [
+          2208.123,
+          2285.673,
+          2366.333
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::build_windows_sandbox_environment@449",
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::_require_windows@105",
+          "modules/developer/developer_task_execution_backend_lifecycle_windows.py::launch_windows_sandbox@472"
+        ],
+        "selected": [
+          {
+            "id": "Ead4047886e445367",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 54,
+            "end": 57,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "0ce4b50b5da549b247a08acbec0829278da2b11d8376c5552b24f5533d6c405c",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "19b7d10492e90c9e26e171802b1cffee80dbf03e041ec5f69c3e39cb2af98fd8",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            54,
+            57
+          ]
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ]
+      },
+      "scoped": {
+        "file_gate": "LEXICAL_MATCH_EXISTS",
+        "positive_files": 3,
+        "ms": [
+          1875.348,
+          1787.342,
+          1871.727
+        ],
+        "status": "READY",
+        "gate": "PROVIDER_BOUNDARY",
+        "candidates": [
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.__init__@54",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader.capture@116",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._sha@110",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run@59",
+          "modules/developer_task_ui/app/git_source.py::GitSourceReader._run.consume@72",
+          "modules/developer_task_ui/app/context_search.py::search_repository@144",
+          "modules/developer_task_ui/app/git_source.py::git_environment@42",
+          "modules/developer_task_ui/app/git_source.py::find_git@22"
+        ],
+        "selected": [
+          {
+            "id": "Ead4047886e445367",
+            "commit": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+            "path": "modules/developer_task_ui/app/git_source.py",
+            "start": 54,
+            "end": 57,
+            "source_sha256": "6b2509fb33e048477659454779dba146c97955145b163b2a7a44ba83767836a1",
+            "excerpt_sha256": "0ce4b50b5da549b247a08acbec0829278da2b11d8376c5552b24f5533d6c405c",
+            "blob_oid": "78d5c9669ab7f26f6a3e2123329ae54c064a742f",
+            "source_code_executed": false
+          }
+        ],
+        "payload_sha256": "19b7d10492e90c9e26e171802b1cffee80dbf03e041ec5f69c3e39cb2af98fd8",
+        "sent": [
+          [
+            "modules/developer_task_ui/app/git_source.py",
+            54,
+            57
+          ]
+        ],
+        "positions": [
+          8,
+          6
+        ],
+        "facts": [
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    "N7": {
+      "question": "Что означает термин «щюзфырь» в исходниках?",
+      "rubric": [],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          607.744,
+          698.997,
+          580.202
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          169.636,
+          197.042,
+          204.096
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      }
+    },
+    "N8": {
+      "question": "Какая температура видеокарты на этом ПК прямо сейчас?",
+      "rubric": [],
+      "tokens": [],
+      "hints": [],
+      "base": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          751.188,
+          604.598,
+          576.738
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      },
+      "scoped": {
+        "file_gate": "NO_LEXICAL_MATCH",
+        "positive_files": 0,
+        "ms": [
+          164.635,
+          162.619,
+          176.43
+        ],
+        "status": "NO_MATCH",
+        "gate": "NO_GENERATION_NO_MATCH",
+        "candidates": [],
+        "selected": [],
+        "payload_sha256": null,
+        "sent": [],
+        "positions": [],
+        "facts": []
+      }
+    }
+  }
+}
