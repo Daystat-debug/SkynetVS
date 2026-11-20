@@ -11,6 +11,7 @@ import tempfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import m289_diagnostic as pilot
+import skynet_source_windows as windows
 from m289_multifragment import PY_PATH
 
 
@@ -222,7 +223,7 @@ def publish(raw, sources, shown, ground):
     return {"status": "answer", "text": checked["display_ru"], "claims": checked["claims"]}
 
 
-def answer(q, sources, ground, provider):
+def mapped_answer(q, sources, ground, provider):
     if not ground._text(q, 600):
         return refusal("ambiguous")
     if any(not any(p == f or p.endswith("/"+f) for p in sources.pages) for f in PY_PATH.findall(q)):
@@ -251,6 +252,25 @@ def answer(q, sources, ground, provider):
     return result
 
 
+def answer(q, sources, ground, provider):
+    if not ground._text(q, 600):
+        return refusal("ambiguous")
+    if any(not any(p == f or p.endswith("/"+f) for p in sources.pages) for f in PY_PATH.findall(q)):
+        return refusal("external")
+    sources.current()
+    user, shown = windows.prompt(q, sources)
+    if not shown:
+        return refusal("incomplete")
+    raw, timing = provider.complete(windows.ANSWER, user)
+    try:
+        result = publish(raw, sources, shown, ground) if timing["finish_reason"] == "stop" else refusal("invalid")
+    except (KeyError, ValueError, TypeError, RecursionError):
+        result = refusal("invalid")
+    sources.current()
+    result.update(commit=sources.commit, shown=sorted(shown))
+    return result
+
+
 def display(result):
     if result["status"] != "answer":
         print(result["text"])
@@ -270,7 +290,7 @@ def main():
             display(answer(args.question.strip(), sources, ground, provider))
             print("Вызовов локальной модели:", provider.p.calls if provider.p else 0)
             return
-        print("Введите вопрос. /exit — выход. До четырёх обращений к модели на вопрос.")
+        print("Введите вопрос. /exit — выход. До одного обращения к модели на вопрос.")
         while True:
             try:
                 q = input("> ").strip()
@@ -280,7 +300,7 @@ def main():
                 break
             if not q:
                 continue
-            if provider.p is not None and provider.p.calls > 12:
+            if provider.p is not None and provider.p.calls >= 16:
                 print("Лимит сессии модели. Для следующих вопросов запустите команду снова.")
                 break
             display(answer(q, sources, ground, provider))

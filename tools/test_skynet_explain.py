@@ -57,6 +57,13 @@ def run():
     else:
         raise AssertionError("fabricated line accepted")
     assert cli.answer("Что в main.py?",src,g,None)["reason"] == "external"
+    fake = Fixed({"claims":[{"text":"Функция возвращает 807.","lines":["A:2"]}]})
+    assert cli.answer("Откуда берётся значение 807?",src,g,fake)["status"] == "answer"
+    msg, offered = cli.windows.prompt("Откуда берётся значение 807?",src)
+    assert offered["A:2"] == (p,2) and len((cli.windows.ANSWER+msg).encode()) <= 9600
+    owners, edges = cli.windows.code_graph({"a.py":"def x():\n    return 1",
+                                            "b.py":"def y():\n    return x()"})
+    assert edges[owners["b.py",2]][0][1] == owners["a.py",1]
     reader.head = "b" * 40
     try:
         src.current()

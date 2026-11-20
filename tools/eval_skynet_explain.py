@@ -61,12 +61,16 @@ def measure(trace, questions, call, provider, blobs):
 
 
 def run(arm, output):
-    assert arm in {"baseline","cli"} and not sys.flags.optimize
+    assert arm in {"baseline","cli","final"} and not sys.flags.optimize
     assert sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode
     control = json.loads(pilot.git("show", FREEZE + ":" + CONTROL))
     questions = [(x["id"], x["q"]) for x in control["cases"]]
+    if arm == "final":
+        holdout = json.loads(pilot.git("show","a718d2c:docs/maintenance/code_reader/final_holdout.json"))
+        questions = [r for r in questions if r[0] in {"U1","U3"}]
+        questions.extend((x["id"],x["q"]) for x in holdout["cases"])
     with output.open("x", encoding="utf8", newline="\n") as stream, tempfile.TemporaryDirectory() as temp:
-        trace = Trace(stream, 16 if arm == "cli" else 8)
+        trace = Trace(stream, {"cli":16,"baseline":8,"final":4}[arm])
         work = Path(temp)
         repo = work / "repo"
         pilot.git("clone","--quiet","--no-local","--no-checkout",str(pilot.ROOT),str(repo))
@@ -75,10 +79,11 @@ def run(arm, output):
         assert all(pilot.git("show","HEAD:"+p) == blob for p,blob in blobs.items())
         trace.write("inputs", arm=arm, freeze=FREEZE, source=pilot.PIN,
                     blobs={p:pilot.sha(b) for p,b in blobs.items()})
-        if arm == "cli":
+        if arm in {"cli","final"}:
             with cli.local_reader(repo) as (src, g, lazy):
                 assert src.raw == blobs
-                measure(trace, questions, lambda q: cli.answer(q,src,g,trace), lazy, blobs)
+                fn = cli.answer if arm == "final" else cli.mapped_answer
+                measure(trace, questions, lambda q: fn(q,src,g,trace), lazy, blobs)
                 info = lazy.p.info if lazy.p else {}
         else:
             pilot.verify_package()
