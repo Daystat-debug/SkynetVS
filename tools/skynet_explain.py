@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import m289_diagnostic as pilot
 import skynet_source_windows as windows
 import skynet_explanation_review as review
+import skynet_evidence_reader as evidence
 from m289_multifragment import PY_PATH
 
 
@@ -95,8 +96,11 @@ class GitSources:
             raise ValueError("HEAD_CHANGED_RESTART")
 
     def item(self, path, line):
-        ref = self.core.reference(self.snapshot, path, line, line)
-        body = self.raw[path].splitlines(keepends=True)[line - 1]
+        return self.span(path, line, line)
+
+    def span(self, path, start, end):
+        ref = self.core.reference(self.snapshot, path, start, end)
+        body = b"".join(self.raw[path].splitlines(keepends=True)[start-1:end])
         if (not self.core.check_reference(self.snapshot, ref) or self.oids[path] != ref["blob_oid"]
                 or pilot.sha(body) != ref["excerpt_sha256"] or pilot.sha(self.raw[path]) != ref["source_sha256"]):
             raise ValueError("REFERENCE_INTEGRITY")
@@ -104,7 +108,7 @@ class GitSources:
 
 
 @contextmanager
-def local_reader(repository=None):
+def local_reader(repository=None, *, prose=False):
     if not (sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and not sys.flags.optimize):
         raise ValueError("USE_PYTHON_I_S_B")
     pilot.verify_package()
@@ -130,7 +134,8 @@ def local_reader(repository=None):
         sources = GitSources(launch.ExistingTools(root).reader, core, ret.SCOPE)
         sessions = {"provider_sessions": []}
         try:
-            with runner.LazyProvider(work, sessions, "reader", rt.LocalProvider) as provider:
+            factory = evidence.prose_provider(rt.LocalProvider) if prose else rt.LocalProvider
+            with runner.LazyProvider(work, sessions, "reader", factory) as provider:
                 yield sources, ground, provider
         finally:
             del sys.path[:2]
@@ -264,12 +269,14 @@ def reviewed_context(q, shown, sources, ground, provider):
     return result
 
 
-def answer(q, sources, ground, provider, *, reviewed=False):
+def answer(q, sources, ground, provider, *, reviewed=False, prose=False):
     if not ground._text(q, 600):
         return refusal("ambiguous")
     if any(not any(p == f or p.endswith("/"+f) for p in sources.pages) for f in PY_PATH.findall(q)):
         return refusal("external")
     sources.current()
+    if prose:
+        return evidence.answer(q, sources, provider, strict, refusal)
     user, shown = windows.prompt(q, sources)
     if not shown:
         return refusal("incomplete")
@@ -287,6 +294,12 @@ def answer(q, sources, ground, provider, *, reviewed=False):
 
 
 def display(result):
+    if result.get("sources"):
+        print("Объяснение модели. Полнота и смысл требуют проверки.")
+        print(result["text"], "\n\nПрочитанные моделью строки, сверенные с Git:")
+        for ref in result["sources"]:
+            print(" ", ref["url"])
+        return
     if result["status"] != "answer":
         print(result["text"])
     for c in result["claims"]:
@@ -301,16 +314,19 @@ def display(result):
 
 def main():
     parser = argparse.ArgumentParser(description="Русские вопросы к трём разрешённым Git-исходникам SkynetVS.")
-    parser.add_argument("--review", action="store_true", help="Эксперимент с блоками кода и повторной оценкой ответа.")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--review", action="store_true", help="Эксперимент с блоками кода и повторной оценкой ответа.")
+    modes.add_argument("--prose", action="store_true", help="Свободное объяснение с проверенным списком прочитанных строк.")
     parser.add_argument("question", nargs="?", help="Без вопроса открывается диалог. Для выхода введите /exit.")
     args = parser.parse_args()
-    with local_reader() as (sources, ground, provider):
+    with local_reader(prose=args.prose) as (sources, ground, provider):
         print("Git HEAD", sources.commit, "\n" + "\n".join(sources.pages), flush=True)
         if args.question:
-            display(answer(args.question.strip(), sources, ground, provider, reviewed=args.review))
+            result = answer(args.question.strip(), sources, ground, provider, reviewed=args.review, prose=args.prose)
+            display(result)
             print("Вызовов локальной модели:", provider.p.calls if provider.p else 0)
-            return
-        per_question = 2 if args.review else 1
+            return result
+        per_question = 2 if args.review or args.prose else 1
         print(f"Введите вопрос. /exit — выход. Лимит обращений к модели на вопрос — {per_question}.")
         while True:
             try:
@@ -324,7 +340,7 @@ def main():
             if provider.p is not None and provider.p.calls + per_question > 16:
                 print("Лимит сессии модели. Для следующих вопросов запустите команду снова.")
                 break
-            display(answer(q, sources, ground, provider, reviewed=args.review))
+            display(answer(q, sources, ground, provider, reviewed=args.review, prose=args.prose))
 
 
 if __name__ == "__main__":

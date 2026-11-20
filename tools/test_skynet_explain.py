@@ -57,6 +57,26 @@ def run():
     else:
         raise AssertionError("fabricated line accepted")
     assert cli.answer("Что в main.py?",src,g,None)["reason"] == "external"
+    assert cli.answer("Что в main.py?",src,g,None,prose=True)["reason"] == "external"
+    class Scripted:
+        def __init__(self, *values):
+            self.values = iter(values)
+
+        def complete(self, system, user):
+            assert len((system + user).encode()) <= cli.evidence.BUDGET
+            return next(self.values), {"finish_reason":"stop"}
+
+    route = '{"read":[1]}'
+    for wording, expected in (("Функция возвращает 807.", "draft"), ("Частично: известно значение.", "partial"),
+                              ("Недостаточно данных: нужен журнал.", "withheld")):
+        result = cli.answer("Что возвращает функция?", src, g, Scripted(route, wording), prose=True)
+        assert result["status"] == expected and result["text"] == wording
+        ref, = result["sources"]
+        assert ref == dict(src.span(p,1,2)["ref"],url=ref["url"])
+        assert ref["url"].endswith(f"/{reader.head}/{p}#L1-L2") and result["semantic_support"] == "UNREVIEWED"
+    assert cli.answer("Что возвращает функция?", src,g,Scripted('{"read":[999]}'),prose=True)["reason"] == "invalid"
+    assert cli.evidence.explain("Вопрос", [("foreign.py",1)],src,None,cli.refusal)["reason"] == "incomplete"
+    assert cli.answer("Какие ссылки?",src,g,Scripted(route,"Ссылка https://example.org"),prose=True)["reason"] == "invalid"
     fake = Fixed({"claims":[{"text":"Функция возвращает 807.","lines":["A:2"]}]})
     assert cli.answer("Откуда берётся значение 807?",src,g,fake)["status"] == "answer"
     class Pair:
