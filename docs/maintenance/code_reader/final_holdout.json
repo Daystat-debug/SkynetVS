@@ -1,0 +1,8 @@
+{
+  "before":"c69989b5874670fac764d5f253ce777887365e20",
+  "plan":"Last iteration: deterministic lexical code windows plus static cross-file call neighbours, single local generation. No generated descriptions. Four remaining calls: replay U1/U3 for regression, then V1/V2 once without tuning. U is now regression, V is fresh. Do not infer baseline results on V.",
+  "cases":[
+    {"id":"V1","q":"Когда обход исходников читает содержимое объекта командой cat-file, какой аргумент отличает это чтение от запроса размера и разрешает ли слой запуска такую команду?","facts":[["Размер запрашивается через -s, содержимое через blob с идентификатором объекта","context_search.py",[107,117]],["cat-file есть в разрешённом списке команд слоя запуска","git_source.py",[60]]]},
+    {"id":"V2","q":"Что произойдёт с дочерним процессом и очередным блоком данных, если при чтении вывода будет превышено ограничение?","facts":[["Записывается ошибка переполнения и процесс принудительно завершается","git_source.py",[78,79,80]],["Чтение цикла прекращается до добавления блока в накопленный вывод","git_source.py",[81,82]]]}
+  ]
+}
