@@ -1,0 +1,22 @@
+{
+  "source": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+  "baseline": "e88c0c9403e0d3bc8ec4aec54f7cd16d94655692",
+  "protocol": "Compare scoped top-one to experimental packing with the same ordered candidates. H/N are regression only. Three paired alternating warm runs per case, stop at provider. Score a fact only when every marked line is present in the actual JSON. A fragment without any marked supporting line is off-target. Include abstention controls in the fragment, budget and timing statistics. No adjustments after first run.",
+  "cases": [
+    ["P1","static","Как _include обращается с исключённым каталогом и с именем, начинающимся на тестовый префикс?",[["cs","_include",[[60,61,62],[63,64]]]]],
+    ["P2","static","Как по HEAD замечают, что ревизия изменилась между началом и концом чтения?",[["cs","scan_head",[[81],[137,138]]]]],
+    ["P3","linked","Где search_repository передаёт расширенный запрос ранжировщику и где тот вызывает rank_title_only с ограничением числа путей?",[["cs","search_repository",[[146,153]]],["rk","rank",[[116]]]]],
+    ["P4","linked","Как при обходе дерева scan_head получает идентификатор ревизии и по какому признаку метод _sha отвергает некорректный ответ?",[["cs","scan_head",[[81]]],["gs","GitSourceReader._sha",[[111,112,113]]]]],
+    ["P5","static","Где задаются GIT_TERMINAL_PROMPT и GIT_ASKPASS и почему дочерний процесс получает это окружение?",[["gs","git_environment",[[48]]],["gs","GitSourceReader._run",[[66,67]]]]],
+    ["P6","static","Каким был измеренный P99_LATENCY_MS для вызова scan_head на контрольном стенде?",[]],
+    ["P7","static","Как main.py использует find_git при старте голосового помощника?",[]],
+    ["P8","live","Какое значение GIT_TERMINAL_PROMPT сейчас у уже запущенного процесса на этом ПК?",[]]
+  ],
+  "notes": {
+    "paths": {"cs":"context_search.py","gs":"git_source.py","rk":"retrieval/m130_rank.py"},
+    "P2":"Weak HEAD-only wording challenges an irrelevant upper candidate; check actual baseline top-1.",
+    "P6":"No benchmark observations in the allowed source files.",
+    "P7":"The named entry point is outside the frozen scope.",
+    "P8":"Static default is insufficient to observe a running process."
+  }
+}
