@@ -1,0 +1,18 @@
+{
+  "03b8efc09aab":{"supported_facts":[],"unsupported_claims":[],"note":"Общий отказ на отвечаемый T1."},
+  "077af053eac7":{"supported_facts":[],"unsupported_claims":[],"note":"Общий отказ на отвечаемый T4."},
+  "277ae2c59bca":{"supported_facts":[1],"unsupported_claims":[],"note":"Первый предел 1200 подтверждён. Байтовый предел не назван. Цитата 2048 подлинная, но относится к расширению, а не к повторной проверке в ранжировщике."},
+  "292d8a971ac5":{"supported_facts":[1,2],"unsupported_claims":[],"note":"Первая фраза корректно передаёт оба исходных предела. Вторая достоверно описывает функцию расширения. Не показана отдельная проверка длины ранжировщиком. Дополнительное число 4096 относится к расширению."},
+  "2c0ca7676689":{"supported_facts":[],"unsupported_claims":[],"note":"Запрос T5 не дал опубликованных фактов."},
+  "4b00d437c4cd":{"supported_facts":[],"unsupported_claims":[],"specific_refusal":false,"note":"Статистика не выдумана, потребность в данных о прошлых запусках не объяснена."},
+  "58fae95ee06f":{"supported_facts":[],"unsupported_claims":[],"note":"Отказ до генерации на отвечаемый T1."},
+  "5925d3858283":{"supported_facts":[],"unsupported_claims":[],"note":"Общий отказ на отвечаемый T3."},
+  "6450c4d97420":{"supported_facts":[],"unsupported_claims":[],"note":"Отказ до генерации на отвечаемый T4."},
+  "7b59cae1d6cd":{"supported_facts":[],"unsupported_claims":[],"note":"Отказ до генерации на отвечаемый T2."},
+  "83834d392ed8":{"supported_facts":[],"unsupported_claims":[],"specific_refusal":false,"note":"Текущее состояние не приписано ПК; отсутствие наблюдения не объяснено пользователю."},
+  "a0f909c63f6b":{"supported_facts":[],"unsupported_claims":[],"specific_refusal":false,"note":"Штатное сообщение о недостаточных строках не объясняет отсутствие статистики по пользователям."},
+  "a5694c320e22":{"supported_facts":[],"unsupported_claims":[],"note":"Отказ до генерации на отвечаемый T3."},
+  "a6ca357eb1aa":{"supported_facts":[],"unsupported_claims":[],"note":"Общий отказ на отвечаемый T2."},
+  "b60b25b95e2f":{"supported_facts":[],"unsupported_claims":[],"specific_refusal":false,"note":"В ответ на неопределённую ссылку на число не задан уточняющий вопрос."},
+  "e67c5e4f6a43":{"supported_facts":[],"unsupported_claims":[],"note":"Общий отказ на отвечаемый T5."}
+}
