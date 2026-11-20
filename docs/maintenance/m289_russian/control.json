@@ -1,0 +1,20 @@
+{
+  "baseline": "d5b5f26dc06ec1e617f2c3a5dcae07c8bc26b5eb",
+  "source": "e67c9ad013f4fa451046b9c461e8f055db8beaaf",
+  "design": "All Q questions are natural Russian without Python names. First measure A=old search and old admission, B=Russian lexical evidence in scoped source and old admission. Then measure C=same B candidates and admission using local Russian evidence only when the old gate lacks a code mention. Freeze wording, blobs, fact lines, negative/ambiguous expectations. No tuning after exposure. H/N/P regression only. Two warm timings per arm and case. Separately profile N4 single and multi three times each. Primary: all required lines of a fact in actual serialized payload. False match: fragment with no reference line, or provider call for a Q control. Count coverage at 1/4, complete multifile, time to provider/refusal. No model.",
+  "paths": {"cs":"context_search.py","gs":"git_source.py","rk":"retrieval/m130_rank.py"},
+  "cases": [
+    ["Q1","static","Сколько секунд дочернему процессу дают на завершение и что делают, когда время ожидания превышено?",[["gs","GitSourceReader._run",[[93],[94,95,96],[97]]]]],
+    ["Q2","static","По какому признаку двоичный файл признают неподходящим для текстового запроса?",[["gs","GitSourceReader.capture",[[144,145,146]]]]],
+    ["Q3","static","Когда в отчёте появляется предупреждение, что поиск неполный, и какие причины пропуска файлов там названы?",[["cs","format_context",[[216,217]]]]],
+    ["Q4","static","В каком порядке чередуются куски верхнего уровня и тела подпрограмм, если доступны обе очереди?",[["rk","interleave_3_to_1",[[99,100,101,102,103]]]]],
+    ["Q5","linked","Кто подсчитывает число модульных участков и где это число показывают человеку рядом с числом функций?",[["rk","rank",[[127,135]]],["cs","format_context",[[211]]]]],
+    ["Q6","linked","Как отбрасывают ответ с неверным числом символов в идентификаторе ревизии и где при обходе дерева запрашивают саму ревизию?",[["gs","GitSourceReader._sha",[[111,112,113]]],["cs","scan_head",[[81,82]]]]],
+    ["Q7","linked","Как начинается поиск без готового объекта чтения и что произойдёт, если программа для работы с репозиторием не найдена в стандартных каталогах?",[["cs","search_repository",[[147,148,149]]],["gs","find_git",[[35,36,38,39]]]]],
+    ["Q8","static","Какой размер здесь считается нормальным?",[]],
+    ["Q9","static","Какова измеренная на прошлой неделе доля неполных поисков среди всех обращений пользователей?",[]],
+    ["Q10","live","Сколько потоков вывода прямо сейчас не завершилось на этом компьютере?",[]]
+  ],
+  "controls": {"Q8":"ambiguous object and unit; abstain or clarify","Q9":"no measured population statistics in allowed blobs","Q10":"live observation absent"},
+  "limits": "Small open holdout by the experiment author. Reference lines are never input to search or admission."
+}
