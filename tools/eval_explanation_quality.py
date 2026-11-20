@@ -61,8 +61,7 @@ def run(group, arm, output):
                     else:
                         result = cli.reviewed_context(q, shown, src, ground, trace)
                 else:
-                    fn = cli.baseline_answer if arm == "baseline" else cli.answer
-                    result = fn(q, src, ground, trace)
+                    result = cli.answer(q, src, ground, trace, reviewed=arm == "reviewed")
                 elapsed = round(time.perf_counter() - before, 3)
                 verify(result, src.commit, src.raw)
                 trace.write("result", case=trace.case, seconds=elapsed, result=result)
@@ -72,5 +71,48 @@ def run(group, arm, output):
         trace.write("done", calls=trace.count, session=info)
 
 
+def verify_recording(path):
+    """Check literal evidence and call accounting without starting a provider."""
+    records = [json.loads(line) for line in path.read_text(encoding="utf8").splitlines()]
+    setup, done = records[0], records[-1]
+    assert setup["kind"] == "setup" and setup["freeze"] == FREEZE and done["kind"] == "done"
+    control = json.loads(pilot.git("show", FREEZE + ":" + CONTROL))
+    commit = control["source"]
+    assert setup["source"] == commit and set(setup["blobs"]) == set(control["aliases"].values())
+    blobs = {p: pilot.git("show", commit + ":" + p) for p in setup["blobs"]}
+    for p, oid in setup["blobs"].items():
+        assert pilot.git("rev-parse", commit + ":" + p).decode().strip() == oid
+    pos, calls = 1, 0
+    for case in control[setup["group"]]:
+        start = calls
+        while records[pos]["kind"] == "input":
+            inp, reserve, completion = records[pos:pos+3]
+            pos += 3
+            calls += 1
+            assert reserve["kind"] == "reserve" and completion["kind"] == "completion"
+            assert reserve["seq"] == completion["seq"] == calls
+            assert inp["case"] == reserve["case"] == case["id"] and case["q"] in inp["user_text"]
+            for key in ("system", "user"):
+                assert pilot.sha(inp[key + "_text"].encode()) == reserve[key]
+            assert len((inp["system_text"] + inp["user_text"]).encode()) == reserve["input_bytes"]
+        assert calls - start <= (1 if setup["arm"] == "baseline" else 2)
+        row = records[pos]
+        pos += 1
+        assert row["kind"] == "result" and row["case"] == case["id"]
+        result = row["result"]
+        verify(result, commit, blobs)
+        for c in result["claims"]:
+            for ref, anchor in zip(c.get("evidence_blocks", []), c["anchors"]):
+                p, lo, hi = ref["path"], ref["start"], ref["end"]
+                assert p == anchor["path"] and 1 <= lo <= anchor["line"] <= hi <= len(blobs[p].splitlines())
+                assert ref["url"] == anchor["url"].split("#")[0] + f"#L{lo}-L{hi}"
+    assert pos == len(records)-1 and done["calls"] == calls == done["session"]["requests"] and done["session"]["stopped"]
+    print(path.name, calls, "generations verified")
+
+
 if __name__ == "__main__":
-    run(sys.argv[1], sys.argv[2], Path(sys.argv[3]))
+    if sys.argv[1] == "verify" and not sys.flags.optimize:
+        for name in sys.argv[2:]:
+            verify_recording(Path(name))
+    else:
+        run(sys.argv[1], sys.argv[2], Path(sys.argv[3]))

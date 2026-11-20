@@ -264,7 +264,7 @@ def reviewed_context(q, shown, sources, ground, provider):
     return result
 
 
-def run_question(q, sources, ground, provider, *, reviewed):
+def answer(q, sources, ground, provider, *, reviewed=False):
     if not ground._text(q, 600):
         return refusal("ambiguous")
     if any(not any(p == f or p.endswith("/"+f) for p in sources.pages) for f in PY_PATH.findall(q)):
@@ -286,14 +286,6 @@ def run_question(q, sources, ground, provider, *, reviewed):
     return result
 
 
-def answer(q, sources, ground, provider):
-    return run_question(q, sources, ground, provider, reviewed=True)
-
-
-def baseline_answer(q, sources, ground, provider):
-    return run_question(q, sources, ground, provider, reviewed=False)
-
-
 def display(result):
     if result["status"] != "answer":
         print(result["text"])
@@ -303,19 +295,23 @@ def display(result):
             print(" ", a["url"])
     if result.get("model_review"):
         print("Строки сверены с Git. Полноту и смысл оценивала та же локальная модель.")
+    elif result["status"] == "answer":
+        print("Строки сверены с Git. Смысл и полнота этого ответа требуют проверки.")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Русские вопросы к трём разрешённым Git-исходникам SkynetVS.")
+    parser.add_argument("--review", action="store_true", help="Эксперимент с блоками кода и повторной оценкой ответа.")
     parser.add_argument("question", nargs="?", help="Без вопроса открывается диалог. Для выхода введите /exit.")
     args = parser.parse_args()
     with local_reader() as (sources, ground, provider):
         print("Git HEAD", sources.commit, "\n" + "\n".join(sources.pages), flush=True)
         if args.question:
-            display(answer(args.question.strip(), sources, ground, provider))
+            display(answer(args.question.strip(), sources, ground, provider, reviewed=args.review))
             print("Вызовов локальной модели:", provider.p.calls if provider.p else 0)
             return
-        print("Введите вопрос. /exit — выход. До двух обращений к модели на вопрос.")
+        per_question = 2 if args.review else 1
+        print(f"Введите вопрос. /exit — выход. Лимит обращений к модели на вопрос — {per_question}.")
         while True:
             try:
                 q = input("> ").strip()
@@ -325,10 +321,10 @@ def main():
                 break
             if not q:
                 continue
-            if provider.p is not None and provider.p.calls > 14:
+            if provider.p is not None and provider.p.calls + per_question > 16:
                 print("Лимит сессии модели. Для следующих вопросов запустите команду снова.")
                 break
-            display(answer(q, sources, ground, provider))
+            display(answer(q, sources, ground, provider, reviewed=args.review))
 
 
 if __name__ == "__main__":

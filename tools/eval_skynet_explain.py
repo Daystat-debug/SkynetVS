@@ -82,7 +82,7 @@ def run(arm, output):
         if arm in {"cli","final"}:
             with cli.local_reader(repo) as (src, g, lazy):
                 assert src.raw == blobs
-                fn = cli.baseline_answer if arm == "final" else cli.mapped_answer
+                fn = cli.answer if arm == "final" else cli.mapped_answer
                 measure(trace, questions, lambda q: fn(q,src,g,trace), lazy, blobs)
                 info = lazy.p.info if lazy.p else {}
         else:
