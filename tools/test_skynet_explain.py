@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import skynet_explain as cli
@@ -77,6 +78,19 @@ def run():
     assert cli.answer("Что возвращает функция?", src,g,Scripted('{"read":[999]}'),prose=True)["reason"] == "invalid"
     assert cli.evidence.explain("Вопрос", [("foreign.py",1)],src,None,cli.refusal)["reason"] == "incomplete"
     assert cli.answer("Какие ссылки?",src,g,Scripted(route,"Ссылка https://example.org"),prose=True)["reason"] == "invalid"
+    trace_sources = {"modules/pkg/a.py":"def render(x, *, size=5):\n    return x\n",
+                     "modules/pkg/b.py":("from .a import render as make\ndef run(value):\n    return make(value)\n"
+                                 "def shadow(make):\n    return make(2)\n"
+                                 "def indirect():\n    def nested():\n        return make(3)\n    return nested\n")}
+    snapshot = core.Snapshot(reader.head,trace_sources,{"partial":False}).checked_copy()
+    source_view = SimpleNamespace(pages={f:cli.page(s) for f,s in trace_sources.items()}, snapshot=snapshot,
+                                  current=lambda:None, commit=reader.head,
+                                  span=lambda f,a,b:{"ref":core.reference(snapshot,f,a,b)})
+    sites = cli.calls.lookup("Кто вызывает render?", source_view, cli.refusal)
+    item, = sites["claims"]
+    assert "`run`" in item["text"] and "возвращается" in item["text"]
+    assert "`x` получает `value`" in item["text"] and "`size=5`" in item["text"]
+    assert {r["path"] for r in item["evidence_blocks"]} == set(trace_sources)
     fake = Fixed({"claims":[{"text":"Функция возвращает 807.","lines":["A:2"]}]})
     assert cli.answer("Откуда берётся значение 807?",src,g,fake)["status"] == "answer"
     class Pair:

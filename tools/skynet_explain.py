@@ -14,6 +14,7 @@ import m289_diagnostic as pilot
 import skynet_source_windows as windows
 import skynet_explanation_review as review
 import skynet_evidence_reader as evidence
+import skynet_call_sites as calls
 from m289_multifragment import PY_PATH
 
 
@@ -269,12 +270,14 @@ def reviewed_context(q, shown, sources, ground, provider):
     return result
 
 
-def answer(q, sources, ground, provider, *, reviewed=False, prose=False):
+def answer(q, sources, ground, provider, *, reviewed=False, prose=False, callers=False):
     if not ground._text(q, 600):
         return refusal("ambiguous")
     if any(not any(p == f or p.endswith("/"+f) for p in sources.pages) for f in PY_PATH.findall(q)):
         return refusal("external")
     sources.current()
+    if callers:
+        return calls.lookup(q,sources,refusal)
     if prose:
         return evidence.answer(q, sources, provider, strict, refusal)
     user, shown = windows.prompt(q, sources)
@@ -317,16 +320,17 @@ def main():
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--review", action="store_true", help="Эксперимент с блоками кода и повторной оценкой ответа.")
     modes.add_argument("--prose", action="store_true", help="Свободное объяснение с проверенным списком прочитанных строк.")
+    modes.add_argument("--calls", action="store_true", help="Найти прямые вызовы именованной функции и объяснить передачу аргументов.")
     parser.add_argument("question", nargs="?", help="Без вопроса открывается диалог. Для выхода введите /exit.")
     args = parser.parse_args()
     with local_reader(prose=args.prose) as (sources, ground, provider):
         print("Git HEAD", sources.commit, "\n" + "\n".join(sources.pages), flush=True)
         if args.question:
-            result = answer(args.question.strip(), sources, ground, provider, reviewed=args.review, prose=args.prose)
+            result = answer(args.question.strip(), sources, ground, provider, reviewed=args.review, prose=args.prose, callers=args.calls)
             display(result)
             print("Вызовов локальной модели:", provider.p.calls if provider.p else 0)
             return result
-        per_question = 2 if args.review or args.prose else 1
+        per_question = 0 if args.calls else (2 if args.review or args.prose else 1)
         print(f"Введите вопрос. /exit — выход. Лимит обращений к модели на вопрос — {per_question}.")
         while True:
             try:
@@ -340,7 +344,7 @@ def main():
             if provider.p is not None and provider.p.calls + per_question > 16:
                 print("Лимит сессии модели. Для следующих вопросов запустите команду снова.")
                 break
-            display(answer(q, sources, ground, provider, reviewed=args.review, prose=args.prose))
+            display(answer(q, sources, ground, provider, reviewed=args.review, prose=args.prose, callers=args.calls))
 
 
 if __name__ == "__main__":
