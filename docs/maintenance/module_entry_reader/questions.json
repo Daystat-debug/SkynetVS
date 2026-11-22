@@ -1,0 +1,121 @@
+{
+  "source": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+  "baseline": "bfdefabf3ed12dc8d92e006a0cafa58b074dd98a",
+  "protocol": "Freeze before implementation. Compare direct AST sites by caller context, exact call expression and occurrence. Fixture strings are inert. T1/T2 are repeats. R1 uses another real file. No runtime occurrence may be inferred.",
+  "real": [
+    {
+      "id": "T1",
+      "mode": "compose",
+      "q": "Кто вызывает rank_title_only и откуда берётся title_token_count?",
+      "sites": [
+        "m130_rank.py:117:function",
+        "m126_rank.py:103:module_entry"
+      ],
+      "facts": [
+        "files",
+        "result",
+        "len(query)",
+        "tokens(title)"
+      ],
+      "joins": 0
+    },
+    {
+      "id": "T2",
+      "mode": "auto",
+      "q": "Кто вызывает rank_title_only?",
+      "sites": [
+        "m130_rank.py:117:function",
+        "m126_rank.py:103:module_entry"
+      ],
+      "facts": [
+        "files",
+        "result"
+      ]
+    },
+    {
+      "id": "R1",
+      "mode": "calls",
+      "q": "Кто вызывает main?",
+      "sites": [
+        "m130_rank.py:155:module_entry"
+      ],
+      "facts": []
+    }
+  ],
+  "target": "weigh",
+  "definition": "def weigh(x): return x\n",
+  "alias": "from .a import weigh as measure\n",
+  "cases": [
+    [
+      "G1",
+      "alias",
+      "def helper(x): return measure(x)\nif '__main__' == __name__:\n    output = measure(10)\n",
+      [
+        "function:measure(x)",
+        "module_entry:measure(10)"
+      ]
+    ],
+    [
+      "G2",
+      "alias",
+      "if __name__ == '__main__':\n    output = (measure(1), measure(2), measure(measure(3)))\n",
+      [
+        "module_entry:measure(1)",
+        "module_entry:measure(2)",
+        "module_entry:measure(measure(3))",
+        "module_entry:measure(3)"
+      ]
+    ],
+    [
+      "G3",
+      "alias",
+      "def wrapper(measure): return measure(1)\nif __name__ == '__main__':\n    measure = other\n    measure(2)\n",
+      []
+    ],
+    [
+      "G4",
+      "alias",
+      "if ready: measure(1)\nif __name__ != '__main__': measure(2)\nif __name__ == '__main__' and ready: measure(3)\n",
+      []
+    ],
+    [
+      "G5",
+      "alias",
+      "if __name__ == '__main__':\n    if enabled: measure(4)\n    callback = lambda: measure(5)\nelse:\n    measure(6)\n",
+      []
+    ],
+    [
+      "G6",
+      "alias",
+      "__name__ = '__main__'\nif __name__ == '__main__': measure(1)\n",
+      []
+    ],
+    [
+      "G7",
+      "local",
+      "if __name__ == '__main__': weigh(1)\ndef weigh(x): return x\n",
+      []
+    ],
+    [
+      "G8",
+      "alias",
+      "if __name__ == '__main__':\n    measure(7); measure(7)\n",
+      [
+        "module_entry:measure(7)",
+        "module_entry:measure(7)"
+      ]
+    ],
+    [
+      "G9",
+      "alias",
+      "if flag: measure = substitute\nif __name__ == '__main__': measure(0)\n",
+      []
+    ],
+    [
+      "G10",
+      "alias",
+      "if __name__ == '__main__':\n    def delayed(): return measure(4)\n    output = [measure(x) for x in items]\n",
+      []
+    ]
+  ]
+}
