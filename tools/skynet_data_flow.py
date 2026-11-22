@@ -106,8 +106,9 @@ def stems(text):
 
 
 class Slice:
-    def __init__(self, src):
+    def __init__(self, src, *, evidence=None):
         self.src = src
+        self.evidence = evidence
         self.functions = []
         self.producers = defaultdict(list)
         self.users = defaultdict(list)
@@ -216,6 +217,8 @@ class Slice:
             sites.signature(target.node).bind(*value.args,**{k.arg:k.value for k in value.keywords})
         except TypeError:
             return self.stop(f"Аргументы `{expr}` не соответствуют видимой сигнатуре.",fn,value)
+        if self.evidence is not None:
+            self.evidence.add(sites.CallSite.resolved(self.src,fn.path,value,target.path,target.node))
         if target.path != fn.path:
             self.say(f"Импорт связывает `{name}` с `{target.node.name}` в {target.path.rsplit('/',1)[-1]}.",fn,binding)
         self.say(f"При вызове `{target.node.name}` {sites.argument_text(target.node,value)}",

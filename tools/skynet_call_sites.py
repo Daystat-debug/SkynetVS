@@ -2,6 +2,7 @@
 import ast
 import inspect
 import re
+from dataclasses import dataclass
 from pathlib import PurePosixPath
 
 
@@ -117,7 +118,24 @@ def destination(parent, call):
     return "Результат используется внутри выражения."
 
 
-def lookup(q, src, refuse, paths=None):
+@dataclass(frozen=True, order=True)
+class CallSite:
+    commit: str
+    path: str
+    line: int
+    column: int
+    end_line: int
+    end_column: int
+    definition_path: str
+    definition_line: int
+
+    @classmethod
+    def resolved(cls, src, path, call, target_path, fn):
+        return cls(src.commit,path,call.lineno,call.col_offset,call.end_lineno,call.end_col_offset,
+                   target_path,fn.lineno)
+
+
+def lookup(q, src, refuse, paths=None, *, evidence=None):
     src.current()
     paths = sorted(src.pages if paths is None else paths)
     if not set(paths) <= src.pages.keys():
@@ -154,15 +172,18 @@ def lookup(q, src, refuse, paths=None):
                 if p != target_path:
                     locations.append((p,names[call.func.id].lineno,names[call.func.id].end_lineno))
                 text = f"`{caller.name}` вызывает `{fn.name}`: {argument_text(fn,call)} {assigned}"
-                found.append((p,call.lineno,text,locations))
+                site = CallSite.resolved(src,p,call,target_path,fn)
+                found.append((p,call.lineno,text,locations,site))
     claims = []
-    for _, _, text, loc in sorted(found):
+    for _, _, text, loc, site in sorted(found):
         refs = []
         for p, a, b in dict.fromkeys(loc):
             # The suite can start on the signature line for a one-line function.
             ref = src.span(p,a,max(a,b))["ref"]
             refs.append(dict(ref, url=f"https://github.com/Daystat-debug/SkynetVS/blob/{src.commit}/{p}#L{a}-L{ref['end']}"))
         claims.append({"text":text,"anchors":[], "evidence_blocks":refs})
+        if evidence is not None:
+            evidence[site] = len(claims)-1
     src.current()
     if not claims:
         return dict(refuse("incomplete"), text=f"В проверенных файлах не найден прямой вызов `{fn.name}` по статически разрешённому имени внутри функции верхнего уровня. Вызовы через другие файлы, методы и динамические ссылки этим поиском не охвачены.")

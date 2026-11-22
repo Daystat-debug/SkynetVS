@@ -17,6 +17,7 @@ import skynet_evidence_reader as evidence
 import skynet_call_sites as calls
 import skynet_data_flow as flow
 import skynet_auto as auto_reader
+import skynet_compose as composed_reader
 from m289_multifragment import PY_PATH
 
 
@@ -273,16 +274,17 @@ def reviewed_context(q, shown, sources, ground, provider):
 
 
 def answer(q, sources, ground, provider, *, reviewed=False, prose=False, callers=False, data_flow=False,
-           automatic=False, clarification=None):
+           automatic=False, composed=False, clarification=None):
     if not ground._text(q, 600):
         result = refusal("ambiguous")
-        return dict(result,auto_route="clarify") if automatic else result
+        return dict(result,auto_route="clarify") if automatic or composed else result
     if any(not any(p == f or p.endswith("/"+f) for p in sources.pages) for f in PY_PATH.findall(q)):
         result = refusal("external")
-        return dict(result,auto_route="external") if automatic else result
+        return dict(result,auto_route="external") if automatic or composed else result
     sources.current()
-    if automatic:
-        result = auto_reader.answer(q,sources,refusal,clarification)
+    if automatic or composed:
+        reader = composed_reader if composed else auto_reader
+        result = reader.answer(q,sources,refusal,clarification)
         sources.current()
         return result
     if data_flow:
@@ -313,8 +315,8 @@ def display(result):
     if "auto_target" in result:
         label = "Прямые вызовы" if result["auto_route"] == "calls" else "Происхождение поля"
         print(f"{label} · {result['auto_target']}")
-        for ref in result["selection_evidence"]:
-            print("  Основание выбора функции:", ref["url"])
+    for ref in result.get("selection_evidence",[]):
+        print("  Основание выбора функции:", ref["url"])
     if result.get("sources"):
         print("Объяснение модели. Полнота и смысл требуют проверки.")
         print(result["text"], "\n\nПрочитанные моделью строки, сверенные с Git:")
@@ -341,18 +343,19 @@ def main():
     modes.add_argument("--calls", action="store_true", help="Найти прямые вызовы именованной функции и объяснить передачу аргументов.")
     modes.add_argument("--flow", action="store_true", help="Проследить поле возвращаемого словаря по его имени или подписи в выводе.")
     modes.add_argument("--auto", action="store_true", help="Задать вопрос о вызовах или происхождении значения обычным языком.")
+    modes.add_argument("--compose", action="store_true", help="Связать места вызова с трассировкой значений в одном ответе.")
     parser.add_argument("question", nargs="?", help="Без вопроса открывается диалог. Для выхода введите /exit.")
     args = parser.parse_args()
     with local_reader(prose=args.prose) as (sources, ground, provider):
         print("Git HEAD", sources.commit, "\n" + "\n".join(sources.pages), flush=True)
         modes_selected = dict(reviewed=args.review, prose=args.prose, callers=args.calls,
-                              data_flow=args.flow, automatic=args.auto)
+                              data_flow=args.flow, automatic=args.auto, composed=args.compose)
         if args.question:
             result = answer(args.question.strip(), sources, ground, provider, **modes_selected)
             display(result)
             print("Вызовов локальной модели:", provider.p.calls if provider.p else 0)
             return result
-        per_question = 0 if args.auto or args.calls or args.flow else (2 if args.review or args.prose else 1)
+        per_question = 0 if args.compose or args.auto or args.calls or args.flow else (2 if args.review or args.prose else 1)
         print(f"Введите вопрос. /exit — выход. Лимит обращений к модели на вопрос — {per_question}.")
         pending = None
         while True:
