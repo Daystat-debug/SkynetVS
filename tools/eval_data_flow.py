@@ -1,5 +1,5 @@
 """Run the frozen questions through the CLI on a detached source tree, or verify a saved run."""
-from contextlib import redirect_stdout
+from contextlib import nullcontext, redirect_stdout
 import io
 import json
 from pathlib import Path
@@ -46,16 +46,15 @@ def measure(plan):
         repo = Path(tmp)/"repo"
         pilot.git("clone","--local","--quiet","--no-checkout",str(pilot.ROOT),str(repo))
         pilot.git("checkout","--quiet","--detach",commit,cwd=repo)
-        reader = cli.local_reader
-        for case in plan["cases"]:
-            output = io.StringIO()
-            started = time.perf_counter()
-            with patch.object(cli,"local_reader",lambda **kw:reader(repo,**kw)), redirect_stdout(output), \
-                    patch.object(sys,"argv",["skynet_explain.py","--flow",case["q"]]):
-                result = cli.main()
-            elapsed = round(time.perf_counter()-started,3)
-            run["results"].append(dict(id=case["id"],q=case["q"],answer=result,seconds=elapsed,console=output.getvalue()))
-            print(case["id"], result["status"], elapsed, flush=True)
+        with cli.local_reader(repo) as session, patch.object(cli,"local_reader",lambda **kw:nullcontext(session)):
+            for case in plan["cases"]:
+                output = io.StringIO()
+                started = time.perf_counter()
+                with redirect_stdout(output), patch.object(sys,"argv",["skynet_explain.py","--flow",case["q"]]):
+                    result = cli.main()
+                elapsed = round(time.perf_counter()-started,3)
+                run["results"].append(dict(id=case["id"],q=case["q"],answer=result,seconds=elapsed,console=output.getvalue()))
+                print(case["id"], result["status"], elapsed, flush=True)
     return run
 
 

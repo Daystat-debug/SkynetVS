@@ -1,0 +1,777 @@
+{
+  "lock": "d475f4e4c64db4d41bbd8d45d1ddf77205faf3cf",
+  "source": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+  "implementation": "28c9b27cc8df7ff09c6b42b82e1d2c5d36204b60",
+  "results": [
+    {
+      "id": "D0",
+      "q": "Откуда берётся число функций-кандидатов и как оно попадает в итоговый отчёт?",
+      "answer": {
+        "status": "flow_limited",
+        "field": "candidate_functions",
+        "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+        "text": "Статическая цепочка на путях, где функция вернула словарь:",
+        "claims": [
+          {
+            "text": "`search_repository` формирует поле `candidate_functions` из `base['function_candidates_total']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Eb90a452d247cef91",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 166,
+                "end": 166,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "69ec659efcc8e9ed05dfa606e626d8369c7012dac038a90aad9b24ece562a1b7",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L166-L166"
+              }
+            ]
+          },
+          {
+            "text": "Читается значение по ключу: `base['function_candidates_total']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Eb90a452d247cef91",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 166,
+                "end": 166,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "69ec659efcc8e9ed05dfa606e626d8369c7012dac038a90aad9b24ece562a1b7",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L166-L166"
+              }
+            ]
+          },
+          {
+            "text": "В `search_repository` выполнено присваивание `base = rank(effective, sources)`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E4740bca0fc3b26be",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 153,
+                "end": 153,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "cdaec34a6399b98004643bb4c914a62577fd47703a63a4949d6df4fce13eadae",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L153-L153"
+              }
+            ]
+          },
+          {
+            "text": "Импорт связывает `rank` с `rank` в m130_rank.py.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E5bbbb5b07d8ca875",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 14,
+                "end": 14,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "9a0ef84b8c246385be0e6d966835bb36675e198726cc4278edeb169e8108b3d7",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L14-L14"
+              }
+            ]
+          },
+          {
+            "text": "При вызове `rank` `title` получает `effective`, `old_sources` получает `sources`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ef02e1cd69326a61f",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 110,
+                "end": 111,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f21a78c48d08594bdf6c7d28151f00bb80ee69885976f5072b0dcb55e249e7bb",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L111"
+              }
+            ]
+          },
+          {
+            "text": "`rank` возвращает поле `function_candidates_total` со значением `sym['symbol_candidates']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E1fb0f1f8a14a1b4a",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 135,
+                "end": 135,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "0782ef0d7e7264d603c43f90e4b7ca2ac8d831a8785286ba2ededdfed5a5dfa8",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L135-L135"
+              }
+            ]
+          },
+          {
+            "text": "Читается значение по ключу: `sym['symbol_candidates']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E1fb0f1f8a14a1b4a",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 135,
+                "end": 135,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "0782ef0d7e7264d603c43f90e4b7ca2ac8d831a8785286ba2ededdfed5a5dfa8",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L135-L135"
+              }
+            ]
+          },
+          {
+            "text": "В `rank` выполнено присваивание `sym = rank_symbols(title, selected, limit=100)`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ebb3e684d3407cf2f",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 125,
+                "end": 125,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "3fb17afa0eaaa0515074d3178af11403c65c1cbf71fc9222962f0e5ccaa39a4b",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L125-L125"
+              }
+            ]
+          },
+          {
+            "text": "Источник вызова `rank_symbols(title, selected, limit=100)` импортирован из `.m127_symbol`. Его реализация не установлена в разрешённом снимке.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ebe6775f2337e111a",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 18,
+                "end": 18,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "aa850c8a507cf4c13b229ee65ea8d2c9bdc4dbe94fe84528cfe78beb42d09a9d",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L18-L18"
+              }
+            ]
+          },
+          {
+            "text": "В `format_context` подпись «функций» сопровождает чтение `report['candidate_functions']`. Это потребитель поля, если ему передан этот отчёт и достигнута данная строка. Факт передачи не установлен.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E58817a1440fe2d66",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 211,
+                "end": 211,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "c41ec81e468b9070201475fd01374d3f6e84af6967a4808e92657c6ce54895b6",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L211-L211"
+              }
+            ]
+          }
+        ]
+      },
+      "seconds": 0.134,
+      "console": "Git HEAD ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37 \nmodules/developer_task_ui/app/context_search.py\nmodules/developer_task_ui/app/git_source.py\nmodules/developer_task_ui/app/retrieval/m130_rank.py\nСтатическая цепочка на путях, где функция вернула словарь:\n`search_repository` формирует поле `candidate_functions` из `base['function_candidates_total']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L166-L166\nЧитается значение по ключу: `base['function_candidates_total']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L166-L166\nВ `search_repository` выполнено присваивание `base = rank(effective, sources)`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L153-L153\nИмпорт связывает `rank` с `rank` в m130_rank.py.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L14-L14\nПри вызове `rank` `title` получает `effective`, `old_sources` получает `sources`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L111\n`rank` возвращает поле `function_candidates_total` со значением `sym['symbol_candidates']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L135-L135\nЧитается значение по ключу: `sym['symbol_candidates']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L135-L135\nВ `rank` выполнено присваивание `sym = rank_symbols(title, selected, limit=100)`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L125-L125\nИсточник вызова `rank_symbols(title, selected, limit=100)` импортирован из `.m127_symbol`. Его реализация не установлена в разрешённом снимке.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L18-L18\nВ `format_context` подпись «функций» сопровождает чтение `report['candidate_functions']`. Это потребитель поля, если ему передан этот отчёт и достигнута данная строка. Факт передачи не установлен.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L211-L211\nВызовов локальной модели: 0\n"
+    },
+    {
+      "id": "F1",
+      "q": "Откуда отчёт получает количество файлов-кандидатов и где его выводят?",
+      "answer": {
+        "status": "flow_limited",
+        "field": "candidate_files_full_tree",
+        "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+        "text": "Статическая цепочка на путях, где функция вернула словарь:",
+        "claims": [
+          {
+            "text": "`search_repository` формирует поле `candidate_files_full_tree` из `base['file_candidates_full_tree']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ea12590512d62f1f0",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 165,
+                "end": 165,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "db9c47430528e203c07439b2685acfd804888af3779e3bd9a4312a3425d3208b",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L165-L165"
+              }
+            ]
+          },
+          {
+            "text": "Читается значение по ключу: `base['file_candidates_full_tree']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ea12590512d62f1f0",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 165,
+                "end": 165,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "db9c47430528e203c07439b2685acfd804888af3779e3bd9a4312a3425d3208b",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L165-L165"
+              }
+            ]
+          },
+          {
+            "text": "В `search_repository` выполнено присваивание `base = rank(effective, sources)`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E4740bca0fc3b26be",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 153,
+                "end": 153,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "cdaec34a6399b98004643bb4c914a62577fd47703a63a4949d6df4fce13eadae",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L153-L153"
+              }
+            ]
+          },
+          {
+            "text": "Импорт связывает `rank` с `rank` в m130_rank.py.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E5bbbb5b07d8ca875",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 14,
+                "end": 14,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "9a0ef84b8c246385be0e6d966835bb36675e198726cc4278edeb169e8108b3d7",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L14-L14"
+              }
+            ]
+          },
+          {
+            "text": "При вызове `rank` `title` получает `effective`, `old_sources` получает `sources`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ef02e1cd69326a61f",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 110,
+                "end": 111,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f21a78c48d08594bdf6c7d28151f00bb80ee69885976f5072b0dcb55e249e7bb",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L111"
+              }
+            ]
+          },
+          {
+            "text": "`rank` возвращает поле `file_candidates_full_tree` со значением `files['candidate_count']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E42e6289c2a8b795f",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 132,
+                "end": 132,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "1a4434c21231840003132844edcf60181eeda02c443490296c300b410d4a12f2",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L132-L132"
+              }
+            ]
+          },
+          {
+            "text": "Читается значение по ключу: `files['candidate_count']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E42e6289c2a8b795f",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 132,
+                "end": 132,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "1a4434c21231840003132844edcf60181eeda02c443490296c300b410d4a12f2",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L132-L132"
+              }
+            ]
+          },
+          {
+            "text": "В `rank` выполнено присваивание `files = rank_title_only(title, old_sources, top_n=10)`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Eb13e2ebb3ca5f51e",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 116,
+                "end": 116,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "5459394092a20d0eab6004263c40293bbb82b3344c991882853b46ed69d5e105",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L116-L116"
+              }
+            ]
+          },
+          {
+            "text": "Источник вызова `rank_title_only(title, old_sources, top_n=10)` импортирован из `.m126_rank`. Его реализация не установлена в разрешённом снимке.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E3d2b0ccdfdff41d2",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 17,
+                "end": 17,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "a1f489bf28169a96d2e090c360969b8514f5776fecfd95927d49e0ed1ef16f6f",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L17-L17"
+              }
+            ]
+          },
+          {
+            "text": "В `format_context` подпись «Файлов-кандидатов» сопровождает чтение `report['candidate_files_full_tree']`. Это потребитель поля, если ему передан этот отчёт и достигнута данная строка. Факт передачи не установлен.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E58817a1440fe2d66",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 211,
+                "end": 211,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "c41ec81e468b9070201475fd01374d3f6e84af6967a4808e92657c6ce54895b6",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L211-L211"
+              }
+            ]
+          }
+        ]
+      },
+      "seconds": 0.126,
+      "console": "Git HEAD ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37 \nmodules/developer_task_ui/app/context_search.py\nmodules/developer_task_ui/app/git_source.py\nmodules/developer_task_ui/app/retrieval/m130_rank.py\nСтатическая цепочка на путях, где функция вернула словарь:\n`search_repository` формирует поле `candidate_files_full_tree` из `base['file_candidates_full_tree']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L165-L165\nЧитается значение по ключу: `base['file_candidates_full_tree']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L165-L165\nВ `search_repository` выполнено присваивание `base = rank(effective, sources)`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L153-L153\nИмпорт связывает `rank` с `rank` в m130_rank.py.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L14-L14\nПри вызове `rank` `title` получает `effective`, `old_sources` получает `sources`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L111\n`rank` возвращает поле `file_candidates_full_tree` со значением `files['candidate_count']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L132-L132\nЧитается значение по ключу: `files['candidate_count']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L132-L132\nВ `rank` выполнено присваивание `files = rank_title_only(title, old_sources, top_n=10)`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L116-L116\nИсточник вызова `rank_title_only(title, old_sources, top_n=10)` импортирован из `.m126_rank`. Его реализация не установлена в разрешённом снимке.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L17-L17\nВ `format_context` подпись «Файлов-кандидатов» сопровождает чтение `report['candidate_files_full_tree']`. Это потребитель поля, если ему передан этот отчёт и достигнута данная строка. Факт передачи не установлен.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L211-L211\nВызовов локальной модели: 0\n"
+    },
+    {
+      "id": "F2",
+      "q": "Как число модульных участков доходит до строки отчёта?",
+      "answer": {
+        "status": "flow",
+        "field": "candidate_modules",
+        "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+        "text": "Статическая цепочка на путях, где функция вернула словарь:",
+        "claims": [
+          {
+            "text": "`search_repository` формирует поле `candidate_modules` из `base['module_candidates_total']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E48e558dae68b1d92",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 167,
+                "end": 167,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "9c5247faf69324b93387eaaaa1ab4fc75eddc3bf4bb3f9eb0735fd989e60fcce",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L167-L167"
+              }
+            ]
+          },
+          {
+            "text": "Читается значение по ключу: `base['module_candidates_total']`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E48e558dae68b1d92",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 167,
+                "end": 167,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "9c5247faf69324b93387eaaaa1ab4fc75eddc3bf4bb3f9eb0735fd989e60fcce",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L167-L167"
+              }
+            ]
+          },
+          {
+            "text": "В `search_repository` выполнено присваивание `base = rank(effective, sources)`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E4740bca0fc3b26be",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 153,
+                "end": 153,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "cdaec34a6399b98004643bb4c914a62577fd47703a63a4949d6df4fce13eadae",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L153-L153"
+              }
+            ]
+          },
+          {
+            "text": "Импорт связывает `rank` с `rank` в m130_rank.py.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E5bbbb5b07d8ca875",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 14,
+                "end": 14,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "9a0ef84b8c246385be0e6d966835bb36675e198726cc4278edeb169e8108b3d7",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L14-L14"
+              }
+            ]
+          },
+          {
+            "text": "При вызове `rank` `title` получает `effective`, `old_sources` получает `sources`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ef02e1cd69326a61f",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 110,
+                "end": 111,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f21a78c48d08594bdf6c7d28151f00bb80ee69885976f5072b0dcb55e249e7bb",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L111"
+              }
+            ]
+          },
+          {
+            "text": "`rank` возвращает поле `module_candidates_total` со значением `nmodules`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E1fb0f1f8a14a1b4a",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 135,
+                "end": 135,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "0782ef0d7e7264d603c43f90e4b7ca2ac8d831a8785286ba2ededdfed5a5dfa8",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L135-L135"
+              }
+            ]
+          },
+          {
+            "text": "В `rank` выполнено присваивание `modules, mod_parse, nmodules = module_rank(title, selected)`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E173396e979563711",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 127,
+                "end": 127,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f1f78298c9e7a20404eef548061b233216dc4b64f6c64b8c03bb358a94fd294b",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L127-L127"
+              }
+            ]
+          },
+          {
+            "text": "При вызове `module_rank` `title` получает `title`, `scanned` получает `selected`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ed65d11920676e7ea",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 64,
+                "end": 64,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "a8142cfa0239fb1b0ee54ca39df1e57d0f4cece13be9c4bfc0c5b190e763de55",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L64-L64"
+              }
+            ]
+          },
+          {
+            "text": "Ранний возврат при `not windows`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Eb6fe9e84155e382a",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 73,
+                "end": 73,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f109174964b97d37473f8389089ee427f20ccf0c936e5c27b911c8ff18d790c7",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L73-L73"
+              }
+            ]
+          },
+          {
+            "text": "Элемент 3 возвращаемой последовательности — `0`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Eb6fe9e84155e382a",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 73,
+                "end": 73,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f109174964b97d37473f8389089ee427f20ccf0c936e5c27b911c8ff18d790c7",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L73-L73"
+              }
+            ]
+          },
+          {
+            "text": "Значение задано литералом `0`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Eb6fe9e84155e382a",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 73,
+                "end": 73,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f109174964b97d37473f8389089ee427f20ccf0c936e5c27b911c8ff18d790c7",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L73-L73"
+              }
+            ]
+          },
+          {
+            "text": "Если выполнение дошло до заключительного возврата:",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ebe63f2d6664cefd8",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 93,
+                "end": 93,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "91760b40b40ea1a952e6b62d4ca6821e8dc61f949135ad8383f0156c0424707a",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L93-L93"
+              }
+            ]
+          },
+          {
+            "text": "Элемент 3 возвращаемой последовательности — `len(windows)`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ebe63f2d6664cefd8",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 93,
+                "end": 93,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "91760b40b40ea1a952e6b62d4ca6821e8dc61f949135ad8383f0156c0424707a",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L93-L93"
+              }
+            ]
+          },
+          {
+            "text": "Итог вычисляется как длина: `len(windows)`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Ebe63f2d6664cefd8",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 93,
+                "end": 93,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "91760b40b40ea1a952e6b62d4ca6821e8dc61f949135ad8383f0156c0424707a",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L93-L93"
+              }
+            ]
+          },
+          {
+            "text": "В `format_context` подпись «модульных участков» сопровождает чтение `report['candidate_modules']`. Это потребитель поля, если ему передан этот отчёт и достигнута данная строка. Факт передачи не установлен.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "E58817a1440fe2d66",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 211,
+                "end": 211,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "c41ec81e468b9070201475fd01374d3f6e84af6967a4808e92657c6ce54895b6",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L211-L211"
+              }
+            ]
+          }
+        ]
+      },
+      "seconds": 0.131,
+      "console": "Git HEAD ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37 \nmodules/developer_task_ui/app/context_search.py\nmodules/developer_task_ui/app/git_source.py\nmodules/developer_task_ui/app/retrieval/m130_rank.py\nСтатическая цепочка на путях, где функция вернула словарь:\n`search_repository` формирует поле `candidate_modules` из `base['module_candidates_total']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L167-L167\nЧитается значение по ключу: `base['module_candidates_total']`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L167-L167\nВ `search_repository` выполнено присваивание `base = rank(effective, sources)`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L153-L153\nИмпорт связывает `rank` с `rank` в m130_rank.py.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L14-L14\nПри вызове `rank` `title` получает `effective`, `old_sources` получает `sources`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L111\n`rank` возвращает поле `module_candidates_total` со значением `nmodules`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L135-L135\nВ `rank` выполнено присваивание `modules, mod_parse, nmodules = module_rank(title, selected)`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L127-L127\nПри вызове `module_rank` `title` получает `title`, `scanned` получает `selected`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L64-L64\nРанний возврат при `not windows`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L73-L73\nЭлемент 3 возвращаемой последовательности — `0`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L73-L73\nЗначение задано литералом `0`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L73-L73\nЕсли выполнение дошло до заключительного возврата:\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L93-L93\nЭлемент 3 возвращаемой последовательности — `len(windows)`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L93-L93\nИтог вычисляется как длина: `len(windows)`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/retrieval/m130_rank.py#L93-L93\nВ `format_context` подпись «модульных участков» сопровождает чтение `report['candidate_modules']`. Это потребитель поля, если ему передан этот отчёт и достигнута данная строка. Факт передачи не установлен.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L211-L211\nВызовов локальной модели: 0\n"
+    },
+    {
+      "id": "F3",
+      "q": "Что лежит в поле no_patch_or_apply возвращаемого отчёта?",
+      "answer": {
+        "status": "flow",
+        "field": "no_patch_or_apply",
+        "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+        "text": "Статическая цепочка на путях, где функция вернула словарь:",
+        "claims": [
+          {
+            "text": "`search_repository` формирует поле `no_patch_or_apply` из `True`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Eae6a8cbe7f9a570b",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 171,
+                "end": 171,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "4e4e7c92573f3d9c7f71f1572d7c1c10d5a74e8ea71446f862c7bd5d0f1d01d3",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L171-L171"
+              }
+            ]
+          },
+          {
+            "text": "Значение задано литералом `True`.",
+            "anchors": [],
+            "evidence_blocks": [
+              {
+                "id": "Eae6a8cbe7f9a570b",
+                "commit": "ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 171,
+                "end": 171,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "4e4e7c92573f3d9c7f71f1572d7c1c10d5a74e8ea71446f862c7bd5d0f1d01d3",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L171-L171"
+              }
+            ]
+          }
+        ]
+      },
+      "seconds": 0.093,
+      "console": "Git HEAD ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37 \nmodules/developer_task_ui/app/context_search.py\nmodules/developer_task_ui/app/git_source.py\nmodules/developer_task_ui/app/retrieval/m130_rank.py\nСтатическая цепочка на путях, где функция вернула словарь:\n`search_repository` формирует поле `no_patch_or_apply` из `True`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L171-L171\nЗначение задано литералом `True`.\n  https://github.com/Daystat-debug/SkynetVS/blob/ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37/modules/developer_task_ui/app/context_search.py#L171-L171\nВызовов локальной модели: 0\n"
+    },
+    {
+      "id": "F4",
+      "q": "Откуда в отчёт берётся число кандидатов?",
+      "answer": {
+        "status": "withheld",
+        "reason": "ambiguous",
+        "text": "Уточните одно поле возвращаемого словаря. Поля с подписью в выводе: candidate_files_full_tree, candidate_functions, candidate_modules",
+        "claims": []
+      },
+      "seconds": 0.069,
+      "console": "Git HEAD ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37 \nmodules/developer_task_ui/app/context_search.py\nmodules/developer_task_ui/app/git_source.py\nmodules/developer_task_ui/app/retrieval/m130_rank.py\nУточните одно поле возвращаемого словаря. Поля с подписью в выводе: candidate_files_full_tree, candidate_functions, candidate_modules\nВызовов локальной модели: 0\n"
+    },
+    {
+      "id": "F5",
+      "q": "Сколько файлов-кандидатов было в последнем запуске на моём компьютере?",
+      "answer": {
+        "status": "withheld",
+        "reason": "live",
+        "text": "Нужно наблюдение конкретного запуска. Пришлите его вывод или журнал.",
+        "claims": []
+      },
+      "seconds": 0.066,
+      "console": "Git HEAD ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37 \nmodules/developer_task_ui/app/context_search.py\nmodules/developer_task_ui/app/git_source.py\nmodules/developer_task_ui/app/retrieval/m130_rank.py\nНужно наблюдение конкретного запуска. Пришлите его вывод или журнал.\nВызовов локальной модели: 0\n"
+    },
+    {
+      "id": "F6",
+      "q": "Как main.py читает значение candidate_functions?",
+      "answer": {
+        "status": "withheld",
+        "reason": "external",
+        "text": "Указанный источник вне доступной области. Доступны три файла подсистемы поиска; назовите операцию в одном из них.",
+        "claims": []
+      },
+      "seconds": 0.0,
+      "console": "Git HEAD ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37 \nmodules/developer_task_ui/app/context_search.py\nmodules/developer_task_ui/app/git_source.py\nmodules/developer_task_ui/app/retrieval/m130_rank.py\nУказанный источник вне доступной области. Доступны три файла подсистемы поиска; назовите операцию в одном из них.\nВызовов локальной модели: 0\n"
+    },
+    {
+      "id": "F7",
+      "q": "Какая функция передаёт результат поиска в format_context?",
+      "answer": {
+        "status": "withheld",
+        "reason": "incomplete",
+        "text": "В проверенных файлах не найден прямой вызов `format_context` по статически разрешённому имени внутри функции верхнего уровня. Вызовы через другие файлы, методы и динамические ссылки этим поиском не охвачены.",
+        "claims": []
+      },
+      "seconds": 0.123,
+      "console": "Git HEAD ebb901a21f661ffa8df8f13ddf8ee53a6d7dfd37 \nmodules/developer_task_ui/app/context_search.py\nmodules/developer_task_ui/app/git_source.py\nmodules/developer_task_ui/app/retrieval/m130_rank.py\nВ проверенных файлах не найден прямой вызов `format_context` по статически разрешённому имени внутри функции верхнего уровня. Вызовы через другие файлы, методы и динамические ссылки этим поиском не охвачены.\nВызовов локальной модели: 0\n"
+    }
+  ]
+}
