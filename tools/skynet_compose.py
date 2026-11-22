@@ -66,7 +66,8 @@ def compose(steps, src, refuse, relation_requested):
         for field,trace in origins.items():
             shared = sorted(found.keys() & trace.keys())
             if not shared:
-                notes.append(f"По доступной трассировке связь результата `{callee}` с полем `{field}` не установлена.")
+                notes.append(f"Связь конкретного места вызова `{callee}` с дальнейшей передачей "
+                             f"поля `{field}` по этой трассе не установлена.")
             for site in shared:
                 # Only the claim about this particular caller receives the join.
                 claim = answers["calls",callee]["claims"][found[site]]
@@ -97,10 +98,14 @@ def compose(steps, src, refuse, relation_requested):
     complete = all(r["status"] in {"flow","call_sites"} for r in answers.values())
     if relation_requested and not relations:
         complete = False
-    return {"status":"composed" if complete else "composed_limited", "auto_route":"compose",
+    result = {"status":"composed" if complete else "composed_limited", "auto_route":"compose",
+            "completion_scope":"requested_static_steps",
             "text":"\n".join(["По разрешённому Git-снимку:",*notes]), "claims":claims,
             "actions":[{"tool":k,"target":n,"status":r["status"]} for (k,n),r in answers.items()],
             "relations":relations, "commit":src.commit, "selection_evidence":unique_refs(selection)}
+    if sites:
+        result["call_coverage"] = calls.coverage(src.pages)
+    return result
 
 
 def decide(parts,index,refuse,overrides):

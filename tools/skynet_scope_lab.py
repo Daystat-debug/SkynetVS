@@ -14,7 +14,6 @@ SOURCE = "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235"
 BASE = frozenset((cli.pilot.CS, cli.pilot.GS, cli.pilot.RK))
 SCOPE = BASE | {cli.pilot.PREFIX + "retrieval/" + name for name in ("m126_rank.py", "m127_symbol.py")}
 MODES = {"calls": "callers", "flow": "data_flow", "auto": "automatic", "compose": "composed"}
-CALL_LIMIT = "Проверяются прямые вызовы внутри функций верхнего уровня. Блок запуска модуля, методы и динамические вызовы вне этой проверки."
 
 
 class Objects:
@@ -104,8 +103,6 @@ def ask(mode, question, sources, ground, pending=None):
 
 def display(result):
     cli.display(result)
-    if result.get("status") == "call_sites" or any(a["tool"] == "calls" for a in result.get("actions", [])):
-        print(CALL_LIMIT)
 
 
 def main():

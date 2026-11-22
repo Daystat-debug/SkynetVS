@@ -78,6 +78,29 @@ def regression():
     return bool(failures)
 
 
+def compare_previous(run, baseline):
+    """All old claims, range hashes, routes and joins must survive; only T1/T2 acquire a new site."""
+    for name, group in run["profiles"].items():
+        archived = baseline["profiles"][name]
+        assert group["blobs"] == archived["blobs"]
+        for now, old in zip(group["rows"], archived["rows"], strict=True):
+            assert [now[k] for k in ("id","mode","question")] == [old[k] for k in ("id","mode","question")]
+            answer, before = now["answer"], old["answer"]
+            for k in before.keys() - {"text","claims"}:
+                assert answer[k] == before[k], (name, now["id"], k)
+            old_sites, added = [], []
+            for c in answer["claims"]:
+                if c.get("call_site", {}).get("kind") == "module_entry":
+                    added.append((Path(c["call_site"]["path"]).name,c["call_site"]["line"]))
+                else:
+                    old_sites.append({k:v for k,v in c.items() if k != "call_site"})
+            assert old_sites == before["claims"]
+            expect_new = name == "five" and now["id"] in {"T1","T2"}
+            assert added == ([("m126_rank.py",103)] if expect_new else [])
+            if "call_coverage" not in answer:
+                assert answer == before and now["console"] == old["console"]
+
+
 if __name__ == "__main__":
     if sys.argv[1:] == ["regression"]:
         sys.exit(regression())
@@ -88,13 +111,8 @@ if __name__ == "__main__":
     path = pilot.ROOT / DIR / (stage + ".json")
     measured = run(stage)
     if verify:
-        saved = json.loads(path.read_text(encoding="utf8"))
-        for result in (measured, saved):
-            del result["implementation"]
-            for group in result["profiles"].values():
-                for row in group["rows"]:
-                    del row["seconds"]
-        assert measured == saved, "Answer, decision, Git evidence or rendered output changed"
-        print("Exact replay verified.")
+        saved = json.loads(pilot.git("show", "bfdefabf3ed12dc8d92e006a0cafa58b074dd98a:" + DIR + "/paired.json"))
+        compare_previous(measured, saved)
+        print("14/14 archived question/profile pairs retain their decisions, claims, spans and joins; T1/T2 gain the guarded call.")
     else:
         pilot.dump(path, measured)

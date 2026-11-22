@@ -2,7 +2,7 @@
 import ast
 import inspect
 import re
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import PurePosixPath
 
 
@@ -135,6 +135,44 @@ class CallSite:
                    target_path,fn.lineno)
 
 
+def main_guard(node):
+    if not isinstance(node, ast.If):
+        return False
+    test = node.test
+    if not isinstance(test, ast.Compare) or len(test.ops) != 1 or not isinstance(test.ops[0], ast.Eq):
+        return False
+    left, right = test.left, test.comparators[0]
+    if isinstance(right, ast.Name):
+        left, right = right, left
+    return (isinstance(left, ast.Name) and left.id == "__name__"
+            and isinstance(right, ast.Constant) and right.value == "__main__")
+
+
+def call_roots(tree, names):
+    for block in tree.body:
+        if isinstance(block, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            allowed = {name for name in names if all(n is block for n in bindings(block,name))}
+            yield block, allowed, [(stmt, block) for stmt in block.body]
+        elif (main_guard(block) and unique_binding(tree, "__name__", None)
+              and not possible_attribute_write([tree], "__name__")):
+            # The target must already be bound when module-level execution reaches the guard.
+            allowed = {name for name, binding in names.items() if binding.end_lineno < block.lineno}
+            roots = [(stmt.value, stmt) for stmt in block.body
+                     if isinstance(stmt, (ast.Assign, ast.AnnAssign, ast.Expr)) and stmt.value is not None]
+            yield block, allowed, roots
+
+
+def coverage(paths):
+    return {"paths":sorted(paths), "contexts":["top_level_function", "module_entry_direct_statement"],
+            "project_exhaustive":False, "execution_observed":False}
+
+
+COVERAGE_TEXT = ("Проверены прямые вызовы по имени внутри функций верхнего уровня и в теле "
+                 "if __name__ == '__main__' (значения присваиваний и отдельные выражения). "
+                 "Вложенные ветви блока запуска, методы и динамические вызовы вне охвата. "
+                 "Факт выполнения неизвестен.")
+
+
 def lookup(q, src, refuse, paths=None, *, evidence=None):
     src.current()
     paths = sorted(src.pages if paths is None else paths)
@@ -148,15 +186,13 @@ def lookup(q, src, refuse, paths=None, *, evidence=None):
         return dict(refuse("ambiguous"), text="Укажите одно имя функции верхнего уровня из доступных файлов.")
     target_path, fn = targets[0]
     if possible_attribute_write(trees.values(),fn.name):
-        return dict(refuse("incomplete"),text=f"В доступном коде возможна замена атрибута `{fn.name}`. Цель вызова не установлена.")
+        return dict(refuse("incomplete"),call_coverage=coverage(paths),
+                    text=f"В доступном коде возможна замена атрибута `{fn.name}`. Цель вызова не установлена.")
     found = []
     for p, tree in trees.items():
         names = resolved_names(tree, p, target_path, fn, trees[target_path])
-        for caller in tree.body:
-            if not isinstance(caller,(ast.FunctionDef,ast.AsyncFunctionDef)):
-                continue
-            allowed = {name for name in names if all(n is caller for n in bindings(caller,name))}
-            pending = [(stmt,caller) for stmt in caller.body]
+        for caller, allowed, pending in call_roots(tree, names):
+            entry = isinstance(caller, ast.If)
             while pending:
                 call, parent = pending.pop()
                 if isinstance(call,(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef,ast.Lambda,
@@ -167,25 +203,32 @@ def lookup(q, src, refuse, paths=None, *, evidence=None):
                     continue
                 assigned = destination(parent, call)
                 statement = parent if isinstance(parent,(ast.Assign,ast.AnnAssign,ast.Return,ast.Expr)) else call
-                locations = [(target_path, fn.lineno, fn.body[0].lineno-1), (p,caller.lineno,caller.lineno),
+                locations = [(target_path, fn.lineno, fn.body[0].lineno-1),
+                             (p,caller.lineno,caller.test.end_lineno if entry else caller.lineno),
                              (p,statement.lineno,statement.end_lineno)]
                 if p != target_path:
                     locations.append((p,names[call.func.id].lineno,names[call.func.id].end_lineno))
-                text = f"`{caller.name}` вызывает `{fn.name}`: {argument_text(fn,call)} {assigned}"
+                origin = (f"При запуске модуля как программы, если выполнение дойдёт до выражения "
+                          f"`{ast.unparse(call)}`, возможен вызов `{fn.name}`" if entry
+                          else f"`{caller.name}` вызывает `{fn.name}`")
+                text = f"{origin}: {argument_text(fn,call)} {assigned}"
                 site = CallSite.resolved(src,p,call,target_path,fn)
-                found.append((p,call.lineno,text,locations,site))
+                context = dict(kind="module_entry" if entry else "function",
+                               caller=None if entry else caller.name, context_line=caller.lineno)
+                found.append((site,context,text,locations))
     claims = []
-    for _, _, text, loc, site in sorted(found):
+    for site, context, text, loc in sorted(found, key=lambda row:row[0]):
         refs = []
         for p, a, b in dict.fromkeys(loc):
             # The suite can start on the signature line for a one-line function.
             ref = src.span(p,a,max(a,b))["ref"]
             refs.append(dict(ref, url=f"https://github.com/Daystat-debug/SkynetVS/blob/{src.commit}/{p}#L{a}-L{ref['end']}"))
-        claims.append({"text":text,"anchors":[], "evidence_blocks":refs})
+        claims.append({"text":text,"anchors":[], "evidence_blocks":refs, "call_site":dict(asdict(site), **context)})
         if evidence is not None:
             evidence[site] = len(claims)-1
     src.current()
     if not claims:
-        return dict(refuse("incomplete"), text=f"В проверенных файлах не найден прямой вызов `{fn.name}` по статически разрешённому имени внутри функции верхнего уровня. Вызовы через другие файлы, методы и динамические ссылки этим поиском не охвачены.")
-    return {"status":"call_sites", "text":"Прямые вызовы в функциях верхнего уровня проверенных файлов:",
-            "claims":claims, "commit":src.commit}
+        return dict(refuse("incomplete"), call_coverage=coverage(paths), commit=src.commit,
+                    text=f"В поддерживаемых контекстах выбранных файлов прямой вызов `{fn.name}` не установлен.")
+    return {"status":"call_sites", "text":"Статически разрешённые места вызова в выбранных файлах:",
+            "claims":claims, "commit":src.commit, "call_coverage":coverage(paths)}

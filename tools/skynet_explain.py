@@ -325,6 +325,8 @@ def display(result):
         return
     if result["status"] != "answer":
         print(result["text"])
+    if "call_coverage" in result:
+        print(f"Проверено файлов: {len(result['call_coverage']['paths'])}.", calls.COVERAGE_TEXT)
     for c in result["claims"]:
         print(c["text"])
         for a in c.get("evidence_blocks", c["anchors"]):
