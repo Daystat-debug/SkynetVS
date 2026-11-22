@@ -34,6 +34,11 @@ def run():
     other = ask("Откуда берётся поле enabled_flag? Кто вызывает collect?")
     assert other["relations"] == [] and "не установлена" in other["text"]
     assert [s["tool"] for s in other["actions"]] == ["flow","calls"]
+    explicit = ask("Кто вызывает collect и как формируется enabled_flag? Это значение пришло из этого вызова?")
+    assert explicit["relations"] == [] and explicit["status"] == "composed_limited"
+    several = ask("Кто вызывает collect? Откуда берётся final_score и как формируется enabled_flag?")
+    assert [a["target"] for a in several["actions"]] == ["collect","final_score","enabled_flag"]
+    assert [r["field"] for r in several["relations"]] == ["final_score"]
     assert len(ask("Кто вызывает collect, какие параметры передаёт и куда уходит ответ?")["actions"]) == 1
     unclear = ask("Кто вызывает collect и откуда берётся значение?")
     assert unclear["auto_route"] == "clarify"
@@ -46,6 +51,7 @@ def run():
     changed = reader.replace("data = get(9)", "data = get(9); data['score'] = 555")
     modified = ask(query,changed)
     assert not modified["relations"], "stale provenance after same-line overwrite"
+    assert any("не установлен" in c["text"] for c in modified["claims"])
     # A quoted diagnostic with punctuation must remain one selector.
     marked = producer.replace("return", "if not v: raise ValueError('Ошибка, и что?')\n    return")
     src = fixture({"modules/p/a.py":marked,"modules/p/b.py":reader})

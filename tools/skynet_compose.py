@@ -44,7 +44,7 @@ def unique_refs(refs):
     return list({r["url"]:r for r in refs}.values())
 
 
-def compose(steps, src, refuse):
+def compose(steps, src, refuse, relation_requested):
     src.current()
     answers, sites, origins, selection = {}, {}, {}, []
     for kind,name,locations in steps:
@@ -55,24 +55,30 @@ def compose(steps, src, refuse):
             sites[name] = {}
             result = calls.lookup(name,src,refuse,evidence=sites[name])
         else:
-            origins[name] = set()
+            origins[name] = {}
             result = flow.Slice(src,evidence=origins[name]).answer(name,refuse)
         answers[kind,name] = result
         src.current()
 
     relations, notes = [], []
+    redundant = {field:set() for field in origins}
     for callee,found in sites.items():
         for field,trace in origins.items():
-            shared = sorted(found.keys() & trace)
+            shared = sorted(found.keys() & trace.keys())
             if not shared:
                 notes.append(f"По доступной трассировке связь результата `{callee}` с полем `{field}` не установлена.")
             for site in shared:
                 # Only the claim about this particular caller receives the join.
                 claim = answers["calls",callee]["claims"][found[site]]
-                claim["text"] += f" Результат этого вызова участвует в формировании поля `{field}`."
+                claim["text"] += f" На прослеженном пути результат этого вызова участвует в формировании поля `{field}`."
                 field_claim = answers["flow",field]["claims"][0]
                 claim["evidence_blocks"] = unique_refs(claim["evidence_blocks"] + field_claim["evidence_blocks"])
+                redundant[field].update(trace[site])
                 relations.append(dict(function=callee,field=field,site=asdict(site)))
+            if shared:
+                for site in found.keys() - trace.keys():
+                    claim = answers["calls",callee]["claims"][found[site]]
+                    claim["text"] += f" Для этого места связь с полем `{field}` не установлена."
     claims = []
     for (kind,name),part in answers.items():
         if not part["claims"]:
@@ -83,11 +89,14 @@ def compose(steps, src, refuse):
         else:
             # Keep the trace in order; attach citations to small paragraphs instead
             # of interrupting each operation with a repeated URL.
-            for i in range(0,len(part["claims"]),3):
-                group = part["claims"][i:i+3]
+            remaining = [c for i,c in enumerate(part["claims"]) if i not in redundant[name]]
+            for i in range(0,len(remaining),3):
+                group = remaining[i:i+3]
                 claims.append({"text":" ".join(c["text"] for c in group), "anchors":[],
                                "evidence_blocks":unique_refs([r for c in group for r in c["evidence_blocks"]])})
     complete = all(r["status"] in {"flow","call_sites"} for r in answers.values())
+    if relation_requested and not relations:
+        complete = False
     return {"status":"composed" if complete else "composed_limited", "auto_route":"compose",
             "text":"\n".join(["По разрешённому Git-снимку:",*notes]), "claims":claims,
             "actions":[{"tool":k,"target":n,"status":r["status"]} for (k,n),r in answers.items()],
@@ -145,4 +154,4 @@ def answer(q,src,refuse,previous=None):
     steps = decide(parts,index,refuse,overrides)
     if isinstance(steps,dict):
         return steps
-    return compose(steps,src,refuse)
+    return compose(steps,src,refuse,any(RELATION.fullmatch(p) for p in parts))

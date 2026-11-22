@@ -56,8 +56,12 @@ def assigned(fn, name, use):
     writes = sites.bindings(fn.node, name)
     if len(writes) != 1 or not isinstance(writes[0], ast.Name):
         return None
+    read_at = (use.lineno,use.col_offset)
     for stmt in fn.node.body:
-        if not isinstance(stmt,ast.Assign) or len(stmt.targets) != 1 or stmt.end_lineno >= use.lineno:
+        if not isinstance(stmt,ast.Assign) or len(stmt.targets) != 1:
+            continue
+        written_at = (stmt.end_lineno,stmt.end_col_offset)
+        if written_at > read_at:
             continue
         target = stmt.targets[0]
         index = None
@@ -68,7 +72,7 @@ def assigned(fn, name, use):
         elif target is not writes[0]:
             continue
         for n in ast.walk(fn.node):
-            if not stmt.end_lineno < getattr(n,"lineno",0) <= use.lineno:
+            if not written_at <= (getattr(n,"lineno",0),getattr(n,"col_offset",0)) <= read_at:
                 continue
             for child in ast.iter_child_nodes(n):
                 if local_name(child, name) and child is not use:
@@ -164,10 +168,13 @@ class Slice:
         if depth >= 16 or len(self.claims) >= 64:
             return self.stop("Достигнута граница глубины трассировки.",fn,value)
         if isinstance(value,ast.Constant) and not projections:
+            if self.already_described(fn,value,expr):
+                return
             return self.say(f"Значение задано литералом `{expr}`.",fn,value)
         key = literal_key(value)
         if key is not None:
-            self.say(f"Читается значение по ключу: `{expr}`.",fn,value)
+            if not self.already_described(fn,value,expr):
+                self.say(f"Читается значение по ключу: `{expr}`.",fn,value)
             return self.walk(fn,value.value,(key,*projections),depth+1)
         if isinstance(value,ast.Name):
             origin = assigned(fn,value.id,value)
@@ -217,12 +224,13 @@ class Slice:
             sites.signature(target.node).bind(*value.args,**{k.arg:k.value for k in value.keywords})
         except TypeError:
             return self.stop(f"Аргументы `{expr}` не соответствуют видимой сигнатуре.",fn,value)
-        if self.evidence is not None:
-            self.evidence.add(sites.CallSite.resolved(self.src,fn.path,value,target.path,target.node))
         if target.path != fn.path:
             self.say(f"Импорт связывает `{name}` с `{target.node.name}` в {target.path.rsplit('/',1)[-1]}.",fn,binding)
         self.say(f"При вызове `{target.node.name}` {sites.argument_text(target.node,value)}",
                  target,target.node,max(target.node.lineno,target.node.body[0].lineno-1))
+        if self.evidence is not None:
+            site = sites.CallSite.resolved(self.src,fn.path,value,target.path,target.node)
+            self.evidence.setdefault(site,[]).append(len(self.claims)-1)
         exits = returns(target)
         if not exits:
             return self.stop(f"Структура возвратов `{name}` вне поддерживаемого подмножества.",fn,value)
@@ -237,6 +245,14 @@ class Slice:
                 self.stop("Этот возврат не содержит значения для дальнейшего чтения.",target,ret)
             else:
                 self.walk(target,ret.value,projections,depth+1)
+
+    def already_described(self,fn,node,expr):
+        if self.evidence is None or not self.claims:
+            return False
+        previous = self.claims[-1]
+        ref = previous["evidence_blocks"][0]
+        return (ref["path"] == fn.path and ref["start"] <= node.lineno <= node.end_lineno <= ref["end"]
+                and f"`{expr}`" in previous["text"])
 
     def answer(self,q,refuse):
         if re.search(r"последн\w*\s+запуск|сейчас|мо[её]м компьютере",q,re.I):

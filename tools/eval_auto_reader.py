@@ -30,17 +30,27 @@ def regression_plan():
     return {"cases":cases,"source":PREVIOUS,"dialogues":[]}
 
 
-def capture(q=None, replies=()):
+def capture(q=None, replies=(), *, mode="--auto", record_order=False):
     results = []
     original = cli.answer
     def observe(*args, **kw):
-        with patch.object(cli.calls,"lookup",wraps=cli.calls.lookup) as calls, \
-                patch.object(cli.flow.Slice,"answer",autospec=True,side_effect=cli.flow.Slice.answer) as flow:
+        events = []
+        lookup,trace = cli.calls.lookup,cli.flow.Slice.answer
+        def lookup_spy(name,*a,**k):
+            events.append("calls:"+name)
+            return lookup(name,*a,**k)
+        def flow_spy(index,name,*a,**k):
+            events.append("flow:"+name)
+            return trace(index,name,*a,**k)
+        with patch.object(cli.calls,"lookup",side_effect=lookup_spy) as calls, \
+                patch.object(cli.flow.Slice,"answer",autospec=True,side_effect=flow_spy) as flow:
             answer = original(*args,**kw)
         results.append({"q":args[0],"answer":answer,"calls":calls.call_count,"flow":flow.call_count})
+        if record_order:
+            results[-1]["executed"] = events
         return answer
     output = io.StringIO()
-    argv = ["skynet_explain.py","--auto"] + ([q] if q else [])
+    argv = ["skynet_explain.py",mode] + ([q] if q else [])
     started = time.perf_counter()
     with patch.object(cli,"answer",observe), patch.object(sys,"argv",argv), redirect_stdout(output), \
             patch("builtins.input",side_effect=[*replies,"/exit"]):
