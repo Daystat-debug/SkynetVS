@@ -45,10 +45,47 @@ def bindings(node, name):
             if (isinstance(n, ast.Name) and isinstance(n.ctx,(ast.Store,ast.Del)) and n.id == name
                 or isinstance(n, ast.arg) and n.arg == name
                 or isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef,ast.ExceptHandler)) and n.name == name
+                or isinstance(n,(ast.MatchAs, ast.MatchStar)) and n.name == name
+                or isinstance(n,ast.MatchMapping) and n.rest == name
                 or isinstance(n, ast.alias) and (n.asname or n.name.split(".")[0]) in {name, "*"})]
 
 
-def resolved_names(tree, path, target_path, fn):
+def unique_binding(tree, name, binding):
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Global) and name in n.names:
+            return False
+        if isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id in {"exec","eval","globals","locals","vars"}:
+            return False
+    others = []
+    for stmt in tree.body:
+        if isinstance(stmt,(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef)):
+            if stmt.name == name:
+                others.append(stmt)
+            # Defaults, annotations, decorators and class bases may bind in the enclosing scope.
+            for field, value in ast.iter_fields(stmt):
+                if field != "body":
+                    nodes = value if isinstance(value,list) else [value]
+                    others.extend(n for node in nodes if isinstance(node,ast.AST) for n in ast.walk(node)
+                                  if isinstance(n,ast.Name) and isinstance(n.ctx,ast.Store) and n.id == name)
+        else:
+            others.extend(bindings(stmt,name))
+    return others == ([] if binding is None else [binding])
+
+
+def possible_attribute_write(trees, name):
+    for tree in trees:
+        for node in ast.walk(tree):
+            if isinstance(node,ast.Attribute) and node.attr == name and isinstance(node.ctx,(ast.Store,ast.Del)):
+                return True
+            if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id in {"setattr","delattr"}:
+                if len(node.args) < 2 or not isinstance(node.args[1],ast.Constant) or node.args[1].value == name:
+                    return True
+    return False
+
+
+def resolved_names(tree, path, target_path, fn, target_tree):
+    if fn.decorator_list or not unique_binding(target_tree,fn.name,fn):
+        return {}
     names = {}
     for stmt in tree.body:
         if stmt is fn and path == target_path:
@@ -66,18 +103,7 @@ def resolved_names(tree, path, target_path, fn):
                 for alias in stmt.names:
                     if alias.name == fn.name:
                         names[alias.asname or alias.name] = (alias, stmt)
-    resolved = {}
-    for name,(binding, definition) in names.items():
-        others = []
-        for stmt in tree.body:
-            if isinstance(stmt,(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef)):
-                if stmt.name == name:
-                    others.append(stmt)
-            else:
-                others.extend(bindings(stmt,name))
-        if others == [binding]:
-            resolved[name] = definition
-    return resolved
+    return {name:definition for name,(binding,definition) in names.items() if unique_binding(tree,name,binding)}
 
 
 def destination(parent, call):
@@ -103,9 +129,11 @@ def lookup(q, src, refuse, paths=None):
     if len(targets) != 1:
         return dict(refuse("ambiguous"), text="Укажите одно имя функции верхнего уровня из доступных файлов.")
     target_path, fn = targets[0]
+    if possible_attribute_write(trees.values(),fn.name):
+        return dict(refuse("incomplete"),text=f"В доступном коде возможна замена атрибута `{fn.name}`. Цель вызова не установлена.")
     found = []
     for p, tree in trees.items():
-        names = resolved_names(tree, p, target_path, fn)
+        names = resolved_names(tree, p, target_path, fn, trees[target_path])
         for caller in tree.body:
             if not isinstance(caller,(ast.FunctionDef,ast.AsyncFunctionDef)):
                 continue
