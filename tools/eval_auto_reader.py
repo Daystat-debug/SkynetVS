@@ -13,6 +13,21 @@ from eval_data_flow import cli, pilot, verify, verify_output
 
 LOCK = "151203313826c2b8e627fc9e266048e6909d8a12"
 QUESTIONS = "docs/maintenance/auto_reader/questions.json"
+PREVIOUS = "c6acb522c7eeb2feea938f4ed40c04f9af119782"
+
+
+def regression_plan():
+    suites = [
+        ("docs/maintenance/data_flow/questions.json", "cases", [
+            ("flow","candidate_functions"),("flow","candidate_files_full_tree"),("flow","candidate_modules"),
+            ("flow","no_patch_or_apply"),("clarify",None),("observation",None),("external",None),("calls","format_context")]),
+        ("docs/maintenance/evidence_reader/calls_protocol.json","cli", [
+            ("calls","rank"),("calls","interleave_3_to_1"),("calls","format_context"),("clarify",None)])]
+    cases = []
+    for path,key,targets in suites:
+        old = json.loads(pilot.git("show",PREVIOUS+":"+path))
+        cases.extend(dict(case,route=r,target=t) for case,(r,t) in zip(old[key],targets,strict=True))
+    return {"cases":cases,"source":PREVIOUS,"dialogues":[]}
 
 
 def capture(q=None, replies=()):
@@ -33,8 +48,8 @@ def capture(q=None, replies=()):
     return results,output.getvalue(),round(time.perf_counter()-started,3)
 
 
-def measure(plan):
-    run = dict(lock=LOCK,source=plan["source"],implementation=pilot.git("rev-parse","HEAD").decode().strip(),
+def measure(plan, lock):
+    run = dict(lock=lock,source=plan["source"],implementation=pilot.git("rev-parse","HEAD").decode().strip(),
                results=[],dialogues=[])
     with tempfile.TemporaryDirectory() as tmp:
         repo = Path(tmp)/"repo"
@@ -64,8 +79,8 @@ def score(case,row):
             and row["calls"] == int(route == "calls") and row["flow"] == int(route == "flow"))
 
 
-def check(run,plan):
-    verify(run,plan,lock=LOCK)
+def check(run,plan,lock):
+    verify(run,plan,lock=lock)
     blobs = {p:pilot.git("show",plan["source"]+":"+p) for p in (pilot.CS,pilot.RK,pilot.GS)}
     qs = {c["id"]:c for c in plan["cases"]}
     for case,row in zip(plan["cases"],run["results"],strict=True):
@@ -81,14 +96,16 @@ def check(run,plan):
 
 if __name__ == "__main__":
     assert sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and not sys.flags.optimize
-    mode,name = sys.argv[1:]
-    plan = json.loads(pilot.git("show",LOCK+":"+QUESTIONS))
+    mode,name,*flags = sys.argv[1:]
+    assert flags in ([],["regression"])
+    plan = regression_plan() if flags else json.loads(pilot.git("show",LOCK+":"+QUESTIONS))
+    lock = PREVIOUS if flags else LOCK
     if mode == "run":
         with Path(name).open("x",encoding="utf8",newline="\n") as out:
-            run = measure(plan)
+            run = measure(plan,lock)
             json.dump(run,out,ensure_ascii=False,indent=2)
             out.write("\n")
     else:
         assert mode == "verify"
         run = json.loads(Path(name).read_text(encoding="utf8"))
-    check(run,plan)
+    check(run,plan,lock)
