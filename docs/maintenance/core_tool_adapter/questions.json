@@ -1,0 +1,12 @@
+{
+  "source_commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+  "cases": [
+    {"id":"K1","q":"Где вызывают rank_symbols и как формируется function_candidates_total?","state":"answered","tools":["calls","flow"],"facts":["selected","sym","symbol_candidates","len(rows)"],"edge":["rank_symbols","function_candidates_total"]},
+    {"id":"K2","q":"Из какой функции вызывают rank_title_only?","state":"answered","tools":["calls"],"contexts":["function","module_entry"],"facts":["files","packet","top_n","result"]},
+    {"id":"K3","q":"Как формируется query_expansion?","state":"insufficient","reason":"partial_trace","facts":["expansions"],"publish_claims":false},
+    {"id":"K4","q":"Откуда берётся число кандидатов?","state":"insufficient","reason":"clarification","publish_claims":false},
+    {"id":"K5","q":"Кто вызывает rank в main.py?","state":"insufficient","reason":"out_of_scope","publish_claims":false},
+    {"id":"K6","q":"Сколько файлов было в последнем запуске?","state":"insufficient","reason":"observation_required","publish_claims":false}
+  ],
+  "faults":["unsupported source before reading","forged Git locator","genuine anchor belonging to another claim","cancel before retrieval","cancel during provider and discard late output","deadline before publication"]
+}
