@@ -8,7 +8,7 @@
       "mode": "compose",
       "q": "Кто вызывает rank_title_only и откуда берётся title_token_count?",
       "sites": [
-        "m130_rank.py:117:function",
+        "m130_rank.py:116:function",
         "m126_rank.py:103:module_entry"
       ],
       "facts": [
@@ -24,7 +24,7 @@
       "mode": "auto",
       "q": "Кто вызывает rank_title_only?",
       "sites": [
-        "m130_rank.py:117:function",
+        "m130_rank.py:116:function",
         "m126_rank.py:103:module_entry"
       ],
       "facts": [
