@@ -1,0 +1,12 @@
+ebb901a, tools/test_flow_reader.py, prospective expected calls compared with lookup output
+explicit_alias linked OK
+same_name_other_module withheld OK
+two_definitions withheld OK
+parameter_shadow withheld OK
+conditional_rebind withheld OK
+star_import withheld OK
+qualified_outside_subset withheld OK
+export_reassigned linked FALSE_LINK
+decorated_export linked FALSE_LINK
+pattern_capture linked FALSE_LINK
+other_function_global_write linked FALSE_LINK
