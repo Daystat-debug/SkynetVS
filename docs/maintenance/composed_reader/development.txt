@@ -1,0 +1,10 @@
+First implementation: c0d555078ff2717b03c1d2f80286c46bba730432
+Command: .\.venv\Scripts\python.exe -I -S -B tools/test_composed_reader.py
+Exit: 1
+Observed final exception:
+AssertionError: stale provenance after same-line overwrite
+
+Second implementation: e8a73a3a3b4849f70e28bf68d0a651a784389dc2
+Same command, including additional branch-independent and explicit-relation checks
+Exit: 0
+Composition, exact call identity, boundaries, follow-up and distinct operations verified.
