@@ -16,27 +16,34 @@ LOCK = "d475f4e4c64db4d41bbd8d45d1ddf77205faf3cf"
 QUESTIONS = "docs/maintenance/data_flow/questions.json"
 
 
-def verify(run, plan):
+def verify(run, plan, *, lock=LOCK):
     commit = plan["source"]
-    assert run["lock"] == LOCK and run["source"] == commit
+    assert run["lock"] == lock and run["source"] == commit
     blobs = {p:pilot.git("show",commit+":"+p) for p in (pilot.CS,pilot.RK,pilot.GS)}
     for case,r in zip(plan["cases"],run["results"],strict=True):
         assert (r["id"],r["q"]) == (case["id"],case["q"])
         assert "Вызовов локальной модели: 0" in r["console"]
-        for claim in r["answer"]["claims"]:
-            assert claim["text"] in r["console"] and claim["evidence_blocks"]
-            for ref in claim["evidence_blocks"]:
-                p,lo,hi = ref["path"],ref["start"],ref["end"]
-                raw = blobs[p]
-                lines = raw.splitlines(keepends=True)
-                assert 1 <= lo <= hi <= len(lines)
-                identity = [commit,p,lo,hi,pilot.sha(raw),pilot.sha(b"".join(lines[lo-1:hi]))]
-                assert identity == [ref[k] for k in ("commit","path","start","end","source_sha256","excerpt_sha256")]
-                assert ref["id"] == "E"+pilot.sha(json.dumps(identity).encode())[:16]
-                assert ref["blob_oid"] == pilot.git("rev-parse",commit+":"+p).decode().strip()
-                assert ref["url"] == f"https://github.com/Daystat-debug/SkynetVS/blob/{commit}/{p}#L{lo}-L{hi}"
-                assert ref["url"] in r["console"] and ref["source_code_executed"] is False
+        verify_output(r["answer"], r["console"], commit, blobs)
     print("Verified frozen questions, CLI output, zero model calls and Git evidence.")
+
+
+def verify_output(answer, console, commit, blobs):
+    refs = list(answer.get("selection_evidence", []))
+    assert answer["text"] in console
+    for claim in answer["claims"]:
+        assert claim["text"] in console and claim["evidence_blocks"]
+        refs.extend(claim["evidence_blocks"])
+    for ref in refs:
+        p,lo,hi = ref["path"],ref["start"],ref["end"]
+        raw = blobs[p]
+        lines = raw.splitlines(keepends=True)
+        assert 1 <= lo <= hi <= len(lines)
+        identity = [commit,p,lo,hi,pilot.sha(raw),pilot.sha(b"".join(lines[lo-1:hi]))]
+        assert identity == [ref[k] for k in ("commit","path","start","end","source_sha256","excerpt_sha256")]
+        assert ref["id"] == "E"+pilot.sha(json.dumps(identity).encode())[:16]
+        assert ref["blob_oid"] == pilot.git("rev-parse",commit+":"+p).decode().strip()
+        assert ref["url"] == f"https://github.com/Daystat-debug/SkynetVS/blob/{commit}/{p}#L{lo}-L{hi}"
+        assert ref["url"] in console and ref["source_code_executed"] is False
 
 
 def measure(plan):

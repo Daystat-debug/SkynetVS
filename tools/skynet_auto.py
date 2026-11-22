@@ -9,20 +9,22 @@ import skynet_data_flow as flow
 IDENT = re.compile(r"\b[A-Za-z_]\w*\b")
 QUOTED = re.compile(r'«([^»]+)»|"([^"]+)"|“([^”]+)”')
 CALLER = re.compile(
-    r"\b(?:кто|откуда|где|кто именно|каки\w* функци\w*|из как\w+ (?:мест|функци|модул)\w*)\s+"
+    r"\b(?:кто|откуда|где|каки\w* функци\w*|из как\w+ (?:код|мест|функци|модул)\w*)\s+"
     r"(?:\w+\s+){0,3}(?:вызыва\w*|вызвал\w*|обраща\w*|переда[еёю]т\w*)\b"
     r"|\b(?:мест[ао]?|точк\w*|список|цепочк\w*)\s+(?:прям\w*\s+)?вызов\w*"
     r"|\b(?:аргумент\w*|параметр\w*)\s+(?:\w+\s+){0,2}переда\w*\s+(?:в|при)\b")
 ORIGIN = re.compile(
     r"\b(?:откуда|источник\w*|происхожд\w*|происход\w*|бер[её]тся|берутся|"
     r"заполня\w*|формиру\w*|вычисля\w*|прослед\w*|попада\w*|содерж\w*|"
-    r"записыва\w*|хран\w*|лежит|доходит|значение поля)\b")
+    r"записыва\w*|хран\w*|лежит|доходит|значение поля)\b"
+    r"|\bгде\s+(?:\w+\s+){0,3}(?:выводится|отображается|читается)\b")
 EVENT = re.compile(
     r"\b(?:сейчас|вчера\w*|сегодня|только что|в реальном времени|на мо[её]м (?:пк|компьютере)|"
     r"сколько раз|(?:последн|прошл|текущ)\w*\s+(?:запуск|сеанс|прогон)\w*)\b")
 OTHER = re.compile(
     r"\b(?:почему|зачем|исправ\w*|оптимиз\w*|перепиш\w*|измени\w*|замени\w*|"
-    r"удали\w*|добавь|придум\w*|ускор\w*|стоимост\w*|сложност\w*|медлен\w*)\b"
+    r"удали\w*|добавь|придум\w*|предлож\w*|ускор\w*|стоимост\w*|сложност\w*|медлен\w*)\b"
+    r"|\b(?:сколько|объ[её]м|расход)\s+(?:\w+\s+){0,2}(?:памяти|времени|байт)\b"
     r"|\b(?:вызыва\w*|вызвал\w*)\s+(?:ошибк|исключени|сбой)\w*"
     r"|\b(?:кого|что|какие функции)\s+вызывает\s+[a-z_]")  # outgoing calls
 
@@ -52,7 +54,9 @@ def field_options(q, index):
             continue
         for _,label,_ in readers:
             stems = flow.stems(label)
-            if stems and stems[0] in words:
+            if stems and set(stems) <= words and (
+                    len(stems) > 1 or re.search(r"числ|количеств|сч[её]тчик|пол[еяю]|строк|подпис|показател",q,re.I)
+                    or flow.stems(q) == stems):
                 found.add(key)
     return sorted(found)
 
@@ -103,13 +107,18 @@ def function_options(q, functions):
 
 def routes(q, index, previous, refuse):
     plain = QUOTED.sub(" ",q).lower().replace("ё","е")
-    ask = lambda msg, intent=None, opts=(): base_clarification(refuse,msg,intent,opts)
+    def ask(msg, intent=None, opts=()):
+        return base_clarification(refuse,msg,intent,opts)
     if EVENT.search(plain):
         return dict(refuse("live"),auto_route="observation")
-    if OTHER.search(plain) or ".py" in plain:
+    if ".py" in plain:
+        return ask("Вы указали файл. Поиск вызовов проверяет все три разрешённых файла. Уточните функцию или поле без ограничения мест поиска.")
+    if OTHER.search(plain):
         return ask("Я могу проследить происхождение поля отчёта или найти прямые места вызова функции в доступном снимке. Какую операцию проверить?")
     call = bool(CALLER.search(plain))
-    origin = bool(ORIGIN.search(re.sub(r"откуда\s+вызыва\w*","",plain)))
+    if call and re.search(r"\b(?:не|никто|никогда)\b",plain):
+        return ask("По исходникам можно перечислить доказанные прямые вызовы. Какую функцию проверить в таком виде?")
+    origin = bool(ORIGIN.search(re.sub(r"откуда(?=\s+вызыва)", "", plain)))
     if previous and not (call or origin):
         options = previous["options"]
         if q.isascii() and q.isdigit() and len(q) <= 3 and 1 <= int(q) <= len(options):
@@ -125,14 +134,23 @@ def routes(q, index, previous, refuse):
                         return kind,name,[]
     if not (call or origin):
         return ask("Вас интересует, кто вызывает функцию, или откуда берётся значение поля отчёта? Укажите функцию либо подпись в отчёте.")
-    functions = top_functions(index)
-    fn_matches = function_options(q,functions) if call else []
-    keys = field_options(q,index) if origin else []
+    # Keep the arguments of two requests apart before offering a choice.
+    call_q = field_q = q
+    if call and origin:
+        parts = re.split(r"\s+и\s+|[;?]",q,maxsplit=1,flags=re.I)
+        if len(parts) == 2:
+            first,second = parts
+            if CALLER.search(first.lower()) and ORIGIN.search(second.lower()):
+                call_q,field_q = first,second
+            elif CALLER.search(second.lower()) and ORIGIN.search(first.lower()):
+                call_q,field_q = second,first
+    fn_matches = function_options(call_q,top_functions(index)) if call else []
+    keys = field_options(field_q,index) if origin else []
     fields = labels(index)
-    opts = [("flow",k,fields.get(k,k)) for k in keys]
+    opts = [("flow",k,fields.get(k,k)) for k in keys if len(index.producers[k]) == 1]
     if call and origin:
         return ask("В вопросе есть признаки поиска вызовов и трассировки значения. С чего начать?", opts=[
-            ("calls",name,"Вызовы "+name) for name,_ in fn_matches] + opts)
+            ("calls",name,"Вызовы "+name) for name,_ in fn_matches if sum(n == name for n,_ in fn_matches) == 1] + opts)
     if call:
         if len(fn_matches) == 1:
             name,refs = fn_matches[0]

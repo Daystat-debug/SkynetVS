@@ -72,6 +72,9 @@ def run():
     assert ask("вчера",pending)["auto_route"] == "observation"
     assert ask("external.py",pending)["auto_route"] == "external"
     assert ask("999",pending)["auto_route"] == "clarify"
+    both = ask("Кто вызывает convert и откуда берётся поле sample_count?")["clarification"]
+    assert [(r,n) for r,n,_ in both["options"]] == [("calls","convert"),("flow","sample_count")]
+    assert ask("1",both)["auto_target"] == "convert" and ask("2",both)["auto_target"] == "sample_count"
     assert not failures, f"{len(failures)} routing errors"
     print(f"{len(cases)} intents and clarification checks passed.")
 
