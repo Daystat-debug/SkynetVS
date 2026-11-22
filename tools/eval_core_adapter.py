@@ -1,5 +1,4 @@
 """Replay frozen questions and inject publication faults without executing analyzed source."""
-from copy import deepcopy
 import json
 from pathlib import Path
 import sys
@@ -147,7 +146,8 @@ def faults(host, q):
 
 
 def replay_key(report):
-    copy = deepcopy(report)
+    # Compare the JSON contract on the wire (tool clarification options may be Python tuples).
+    copy = json.loads(json.dumps(report, allow_nan=False))
     for row in copy["questions"]:
         for key in ("task_request","evidence_set"):
             row["result"][key]["task_id"] = "<host-generated>"

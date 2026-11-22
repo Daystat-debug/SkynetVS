@@ -1,0 +1,1250 @@
+{
+  "protocol": "f68ce89b699f5e97890d389abddfc6dd0d286f8b",
+  "source": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+  "questions": [
+    {
+      "id": "K1",
+      "result": {
+        "task_request": {
+          "task_id": "c0ae7b924f14462bb672d8bbf78cea24",
+          "kind": "explain_code",
+          "question": "Где вызывают rank_symbols и как формируется function_candidates_total?",
+          "source_id": "skynetvs.retrieval"
+        },
+        "state": "answered",
+        "stage": "verification",
+        "evidence_set": {
+          "task_id": "c0ae7b924f14462bb672d8bbf78cea24",
+          "source_id": "skynetvs.retrieval",
+          "snapshot_id": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+          "coverage": "partial",
+          "gaps": [
+            "static_subset"
+          ],
+          "items": [
+            {
+              "ref_id": "Ed3f1b065377250eb",
+              "text": "def rank_symbols(issue_title,old_sources,limit=40):\n",
+              "locator": {
+                "id": "Ed3f1b065377250eb",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                "start": 72,
+                "end": 72,
+                "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+                "excerpt_sha256": "7ab8331806d35534da64e7870e1871cb3d0b2fa8cd51ca3cbf8a428b9a1f30c4",
+                "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m127_symbol.py#L72-L72"
+              }
+            },
+            {
+              "ref_id": "E11598500228411c4",
+              "text": "def rank(title,old_sources):\n",
+              "locator": {
+                "id": "E11598500228411c4",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 110,
+                "end": 110,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f2eab977d38c89f3e569cbcccf1566df0dddeb543df54e4ade667aea89bb79e2",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L110"
+              }
+            },
+            {
+              "ref_id": "Ee2e676b07f330209",
+              "text": "    sym=rank_symbols(title,selected,limit=100)\n",
+              "locator": {
+                "id": "Ee2e676b07f330209",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 125,
+                "end": 125,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "3fb17afa0eaaa0515074d3178af11403c65c1cbf71fc9222962f0e5ccaa39a4b",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m130_rank.py#L125-L125"
+              }
+            },
+            {
+              "ref_id": "Ef019b46aa206cc0b",
+              "text": "from .m127_symbol import rank_symbols,tokens\n",
+              "locator": {
+                "id": "Ef019b46aa206cc0b",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 18,
+                "end": 18,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "aa850c8a507cf4c13b229ee65ea8d2c9bdc4dbe94fe84528cfe78beb42d09a9d",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m130_rank.py#L18-L18"
+              }
+            },
+            {
+              "ref_id": "Ecdaafd062c7cff45",
+              "text": "                function_candidates_total=sym['symbol_candidates'],module_candidates_total=nmodules,\n",
+              "locator": {
+                "id": "Ecdaafd062c7cff45",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 135,
+                "end": 135,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "0782ef0d7e7264d603c43f90e4b7ca2ac8d831a8785286ba2ededdfed5a5dfa8",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m130_rank.py#L135-L135"
+              }
+            },
+            {
+              "ref_id": "E16742b1c108fa8d0",
+              "text": "    return {'schema':'SKYNETVS_M127_SYMBOL_RETRIEVAL_V1','symbol_candidates':len(rows),\n",
+              "locator": {
+                "id": "E16742b1c108fa8d0",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                "start": 108,
+                "end": 108,
+                "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+                "excerpt_sha256": "4ac5dce610bcd3d09e6d20a109a3bc88bff2bcfe8b77ab4b379cfdf4e7966e44",
+                "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m127_symbol.py#L108-L108"
+              }
+            },
+            {
+              "ref_id": "Ed35c3bc11938d258",
+              "text": "    rows=[]\n",
+              "locator": {
+                "id": "Ed35c3bc11938d258",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                "start": 87,
+                "end": 87,
+                "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+                "excerpt_sha256": "a066b9aad46a07051c02881f610a8b5f046f55e7f66f68cca3217fb91e64c1e2",
+                "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m127_symbol.py#L87-L87"
+              }
+            },
+            {
+              "ref_id": "Eeb062b24d965b5a1",
+              "text": "    for i,s in enumerate(symbols):\n",
+              "locator": {
+                "id": "Eeb062b24d965b5a1",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                "start": 88,
+                "end": 88,
+                "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+                "excerpt_sha256": "95b8853ad29fdbdddb07490b42d41e1b14ea85b7439491f02f96224d85188d30",
+                "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m127_symbol.py#L88-L88"
+              }
+            },
+            {
+              "ref_id": "E686af0b724361a77",
+              "text": "        rows.append(row)\n",
+              "locator": {
+                "id": "E686af0b724361a77",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                "start": 102,
+                "end": 102,
+                "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+                "excerpt_sha256": "1ed21cdecf87a6db9f4e2459f1b76981ff4ccf9036bb1bbb405f35219906c552",
+                "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m127_symbol.py#L102-L102"
+              }
+            }
+          ],
+          "analysis": {
+            "route": "compose",
+            "actions": [
+              {
+                "tool": "calls",
+                "target": "rank_symbols",
+                "status": "call_sites"
+              },
+              {
+                "tool": "flow",
+                "target": "function_candidates_total",
+                "status": "flow"
+              }
+            ],
+            "tool_status": "composed",
+            "reason": null,
+            "allowed_paths": [
+              "modules/developer_task_ui/app/context_search.py",
+              "modules/developer_task_ui/app/git_source.py",
+              "modules/developer_task_ui/app/retrieval/m126_rank.py",
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "modules/developer_task_ui/app/retrieval/m130_rank.py"
+            ],
+            "observations": [
+              {
+                "text": "`rank` вызывает `rank_symbols`: `issue_title` получает `title`, `old_sources` получает `selected`, `limit` получает `100`. Результат присваивается `sym`. На прослеженном пути результат этого вызова участвует в формировании поля `function_candidates_total`.",
+                "anchors": [
+                  {
+                    "ref_id": "Ed3f1b065377250eb",
+                    "lines": [
+                      72,
+                      72
+                    ]
+                  },
+                  {
+                    "ref_id": "E11598500228411c4",
+                    "lines": [
+                      110,
+                      110
+                    ]
+                  },
+                  {
+                    "ref_id": "Ee2e676b07f330209",
+                    "lines": [
+                      125,
+                      125
+                    ]
+                  },
+                  {
+                    "ref_id": "Ef019b46aa206cc0b",
+                    "lines": [
+                      18,
+                      18
+                    ]
+                  },
+                  {
+                    "ref_id": "Ecdaafd062c7cff45",
+                    "lines": [
+                      135,
+                      135
+                    ]
+                  }
+                ],
+                "call_site": {
+                  "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                  "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                  "line": 125,
+                  "column": 8,
+                  "end_line": 125,
+                  "end_column": 46,
+                  "definition_path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                  "definition_line": 72,
+                  "kind": "function",
+                  "caller": "rank",
+                  "context_line": 110
+                }
+              },
+              {
+                "text": "`rank` формирует поле `function_candidates_total` из `sym['symbol_candidates']`. В `rank` выполнено присваивание `sym = rank_symbols(title, selected, limit=100)`. Импорт связывает `rank_symbols` с `rank_symbols` в m127_symbol.py.",
+                "anchors": [
+                  {
+                    "ref_id": "Ecdaafd062c7cff45",
+                    "lines": [
+                      135,
+                      135
+                    ]
+                  },
+                  {
+                    "ref_id": "Ee2e676b07f330209",
+                    "lines": [
+                      125,
+                      125
+                    ]
+                  },
+                  {
+                    "ref_id": "Ef019b46aa206cc0b",
+                    "lines": [
+                      18,
+                      18
+                    ]
+                  }
+                ]
+              },
+              {
+                "text": "`rank_symbols` возвращает поле `symbol_candidates` со значением `len(rows)`. Итог вычисляется как длина: `len(rows)`. Видимое начальное присваивание: `rows = []`.",
+                "anchors": [
+                  {
+                    "ref_id": "E16742b1c108fa8d0",
+                    "lines": [
+                      108,
+                      108
+                    ]
+                  },
+                  {
+                    "ref_id": "Ed35c3bc11938d258",
+                    "lines": [
+                      87,
+                      87
+                    ]
+                  }
+                ]
+              },
+              {
+                "text": "Цикл перебирает `enumerate(symbols)`. В теле цикла список пополняется операцией `rows.append(row)`.",
+                "anchors": [
+                  {
+                    "ref_id": "Eeb062b24d965b5a1",
+                    "lines": [
+                      88,
+                      88
+                    ]
+                  },
+                  {
+                    "ref_id": "E686af0b724361a77",
+                    "lines": [
+                      102,
+                      102
+                    ]
+                  }
+                ]
+              }
+            ],
+            "selection": [],
+            "relations": [
+              {
+                "function": "rank_symbols",
+                "field": "function_candidates_total",
+                "site": {
+                  "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                  "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                  "line": 125,
+                  "column": 8,
+                  "end_line": 125,
+                  "end_column": 46,
+                  "definition_path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                  "definition_line": 72
+                },
+                "basis": "same_resolved_call_in_calls_and_flow",
+                "supports": {
+                  "call": "Ee2e676b07f330209",
+                  "definition": "Ed3f1b065377250eb"
+                }
+              }
+            ],
+            "message": "По разрешённому Git-снимку:",
+            "call_coverage": {
+              "paths": [
+                "modules/developer_task_ui/app/context_search.py",
+                "modules/developer_task_ui/app/git_source.py",
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                "modules/developer_task_ui/app/retrieval/m130_rank.py"
+              ],
+              "contexts": [
+                "top_level_function",
+                "module_entry_direct_statement"
+              ],
+              "project_exhaustive": false,
+              "execution_observed": false
+            },
+            "clarification": null
+          }
+        },
+        "answer_proposal": {
+          "status": "answer",
+          "claims": [
+            {
+              "text": "`rank` вызывает `rank_symbols`: `issue_title` получает `title`, `old_sources` получает `selected`, `limit` получает `100`. Результат присваивается `sym`. На прослеженном пути результат этого вызова участвует в формировании поля `function_candidates_total`.",
+              "anchors": [
+                {
+                  "ref_id": "Ed3f1b065377250eb",
+                  "lines": [
+                    72,
+                    72
+                  ]
+                },
+                {
+                  "ref_id": "E11598500228411c4",
+                  "lines": [
+                    110,
+                    110
+                  ]
+                },
+                {
+                  "ref_id": "Ee2e676b07f330209",
+                  "lines": [
+                    125,
+                    125
+                  ]
+                },
+                {
+                  "ref_id": "Ef019b46aa206cc0b",
+                  "lines": [
+                    18,
+                    18
+                  ]
+                },
+                {
+                  "ref_id": "Ecdaafd062c7cff45",
+                  "lines": [
+                    135,
+                    135
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "`rank` формирует поле `function_candidates_total` из `sym['symbol_candidates']`. В `rank` выполнено присваивание `sym = rank_symbols(title, selected, limit=100)`. Импорт связывает `rank_symbols` с `rank_symbols` в m127_symbol.py.",
+              "anchors": [
+                {
+                  "ref_id": "Ecdaafd062c7cff45",
+                  "lines": [
+                    135,
+                    135
+                  ]
+                },
+                {
+                  "ref_id": "Ee2e676b07f330209",
+                  "lines": [
+                    125,
+                    125
+                  ]
+                },
+                {
+                  "ref_id": "Ef019b46aa206cc0b",
+                  "lines": [
+                    18,
+                    18
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "`rank_symbols` возвращает поле `symbol_candidates` со значением `len(rows)`. Итог вычисляется как длина: `len(rows)`. Видимое начальное присваивание: `rows = []`.",
+              "anchors": [
+                {
+                  "ref_id": "E16742b1c108fa8d0",
+                  "lines": [
+                    108,
+                    108
+                  ]
+                },
+                {
+                  "ref_id": "Ed35c3bc11938d258",
+                  "lines": [
+                    87,
+                    87
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Цикл перебирает `enumerate(symbols)`. В теле цикла список пополняется операцией `rows.append(row)`.",
+              "anchors": [
+                {
+                  "ref_id": "Eeb062b24d965b5a1",
+                  "lines": [
+                    88,
+                    88
+                  ]
+                },
+                {
+                  "ref_id": "E686af0b724361a77",
+                  "lines": [
+                    102,
+                    102
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "delivered_ref_ids": [
+          "Ed3f1b065377250eb",
+          "E11598500228411c4",
+          "Ee2e676b07f330209",
+          "Ef019b46aa206cc0b",
+          "Ecdaafd062c7cff45",
+          "E16742b1c108fa8d0",
+          "Ed35c3bc11938d258",
+          "Eeb062b24d965b5a1",
+          "E686af0b724361a77"
+        ],
+        "assessment": {
+          "references": "checked",
+          "static_relations": 1,
+          "answer_completeness": "not_assessed",
+          "semantic_review": "not_independently_reviewed",
+          "execution_observed": false
+        }
+      }
+    },
+    {
+      "id": "K2",
+      "result": {
+        "task_request": {
+          "task_id": "6a014377fbd2404b9c7fa5b914fdf335",
+          "kind": "explain_code",
+          "question": "Из какой функции вызывают rank_title_only?",
+          "source_id": "skynetvs.retrieval"
+        },
+        "state": "answered",
+        "stage": "verification",
+        "evidence_set": {
+          "task_id": "6a014377fbd2404b9c7fa5b914fdf335",
+          "source_id": "skynetvs.retrieval",
+          "snapshot_id": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+          "coverage": "partial",
+          "gaps": [
+            "static_subset"
+          ],
+          "items": [
+            {
+              "ref_id": "Ebfa85073b929f939",
+              "text": "def rank_title_only(title, before_files, top_n=10):\n",
+              "locator": {
+                "id": "Ebfa85073b929f939",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                "start": 34,
+                "end": 34,
+                "source_sha256": "a60ff912e960184def3aa4ce90654b1b2415d53429ced402bbef3def5e0e9787",
+                "excerpt_sha256": "740a6a90f92967a8360d455fb278ddeebbaf643da2f7f147aa916ef292657ba8",
+                "blob_oid": "6971777d633b480f205f1af00a23d8699cb3c250",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m126_rank.py#L34-L34"
+              }
+            },
+            {
+              "ref_id": "E43bdce6bdf6b59c2",
+              "text": "if __name__=='__main__':\n",
+              "locator": {
+                "id": "E43bdce6bdf6b59c2",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                "start": 94,
+                "end": 94,
+                "source_sha256": "a60ff912e960184def3aa4ce90654b1b2415d53429ced402bbef3def5e0e9787",
+                "excerpt_sha256": "37d332aadfde5b6a1fb798005484808775e11934bf8f84f53147b4c167bae16d",
+                "blob_oid": "6971777d633b480f205f1af00a23d8699cb3c250",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m126_rank.py#L94-L94"
+              }
+            },
+            {
+              "ref_id": "Ed3563bf940013b46",
+              "text": "    result=rank_title_only(packet['issue_title_current'],packet['before_sources'])\n",
+              "locator": {
+                "id": "Ed3563bf940013b46",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                "start": 103,
+                "end": 103,
+                "source_sha256": "a60ff912e960184def3aa4ce90654b1b2415d53429ced402bbef3def5e0e9787",
+                "excerpt_sha256": "ef490753cbcf2d155985e398466b70a05906e2e603b0873864f4efc3636bd4ce",
+                "blob_oid": "6971777d633b480f205f1af00a23d8699cb3c250",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m126_rank.py#L103-L103"
+              }
+            },
+            {
+              "ref_id": "E11598500228411c4",
+              "text": "def rank(title,old_sources):\n",
+              "locator": {
+                "id": "E11598500228411c4",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 110,
+                "end": 110,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "f2eab977d38c89f3e569cbcccf1566df0dddeb543df54e4ade667aea89bb79e2",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L110"
+              }
+            },
+            {
+              "ref_id": "E6273d46972dcf202",
+              "text": "    files=rank_title_only(title,old_sources,top_n=10)\n",
+              "locator": {
+                "id": "E6273d46972dcf202",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 116,
+                "end": 116,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "5459394092a20d0eab6004263c40293bbb82b3344c991882853b46ed69d5e105",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m130_rank.py#L116-L116"
+              }
+            },
+            {
+              "ref_id": "E018de24ca4d8a6a3",
+              "text": "from .m126_rank import rank_title_only\n",
+              "locator": {
+                "id": "E018de24ca4d8a6a3",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                "start": 17,
+                "end": 17,
+                "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+                "excerpt_sha256": "a1f489bf28169a96d2e090c360969b8514f5776fecfd95927d49e0ed1ef16f6f",
+                "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/retrieval/m130_rank.py#L17-L17"
+              }
+            }
+          ],
+          "analysis": {
+            "route": "calls",
+            "actions": [
+              {
+                "tool": "calls",
+                "target": "rank_title_only",
+                "status": "call_sites"
+              }
+            ],
+            "tool_status": "call_sites",
+            "reason": null,
+            "allowed_paths": [
+              "modules/developer_task_ui/app/context_search.py",
+              "modules/developer_task_ui/app/git_source.py",
+              "modules/developer_task_ui/app/retrieval/m126_rank.py",
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "modules/developer_task_ui/app/retrieval/m130_rank.py"
+            ],
+            "observations": [
+              {
+                "text": "При запуске модуля как программы, если выполнение дойдёт до выражения `rank_title_only(packet['issue_title_current'], packet['before_sources'])`, возможен вызов `rank_title_only`: `title` получает `packet['issue_title_current']`, `before_files` получает `packet['before_sources']`. По умолчанию используются `top_n=10`. Результат присваивается `result`.",
+                "anchors": [
+                  {
+                    "ref_id": "Ebfa85073b929f939",
+                    "lines": [
+                      34,
+                      34
+                    ]
+                  },
+                  {
+                    "ref_id": "E43bdce6bdf6b59c2",
+                    "lines": [
+                      94,
+                      94
+                    ]
+                  },
+                  {
+                    "ref_id": "Ed3563bf940013b46",
+                    "lines": [
+                      103,
+                      103
+                    ]
+                  }
+                ],
+                "call_site": {
+                  "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                  "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                  "line": 103,
+                  "column": 11,
+                  "end_line": 103,
+                  "end_column": 82,
+                  "definition_path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                  "definition_line": 34,
+                  "kind": "module_entry",
+                  "caller": null,
+                  "context_line": 94
+                }
+              },
+              {
+                "text": "`rank` вызывает `rank_title_only`: `title` получает `title`, `before_files` получает `old_sources`, `top_n` получает `10`. Результат присваивается `files`.",
+                "anchors": [
+                  {
+                    "ref_id": "Ebfa85073b929f939",
+                    "lines": [
+                      34,
+                      34
+                    ]
+                  },
+                  {
+                    "ref_id": "E11598500228411c4",
+                    "lines": [
+                      110,
+                      110
+                    ]
+                  },
+                  {
+                    "ref_id": "E6273d46972dcf202",
+                    "lines": [
+                      116,
+                      116
+                    ]
+                  },
+                  {
+                    "ref_id": "E018de24ca4d8a6a3",
+                    "lines": [
+                      17,
+                      17
+                    ]
+                  }
+                ],
+                "call_site": {
+                  "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                  "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                  "line": 116,
+                  "column": 10,
+                  "end_line": 116,
+                  "end_column": 53,
+                  "definition_path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                  "definition_line": 34,
+                  "kind": "function",
+                  "caller": "rank",
+                  "context_line": 110
+                }
+              }
+            ],
+            "selection": [],
+            "relations": [],
+            "message": "Статически разрешённые места вызова в выбранных файлах:",
+            "call_coverage": {
+              "paths": [
+                "modules/developer_task_ui/app/context_search.py",
+                "modules/developer_task_ui/app/git_source.py",
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                "modules/developer_task_ui/app/retrieval/m130_rank.py"
+              ],
+              "contexts": [
+                "top_level_function",
+                "module_entry_direct_statement"
+              ],
+              "project_exhaustive": false,
+              "execution_observed": false
+            },
+            "clarification": null
+          }
+        },
+        "answer_proposal": {
+          "status": "answer",
+          "claims": [
+            {
+              "text": "При запуске модуля как программы, если выполнение дойдёт до выражения `rank_title_only(packet['issue_title_current'], packet['before_sources'])`, возможен вызов `rank_title_only`: `title` получает `packet['issue_title_current']`, `before_files` получает `packet['before_sources']`. По умолчанию используются `top_n=10`. Результат присваивается `result`.",
+              "anchors": [
+                {
+                  "ref_id": "Ebfa85073b929f939",
+                  "lines": [
+                    34,
+                    34
+                  ]
+                },
+                {
+                  "ref_id": "E43bdce6bdf6b59c2",
+                  "lines": [
+                    94,
+                    94
+                  ]
+                },
+                {
+                  "ref_id": "Ed3563bf940013b46",
+                  "lines": [
+                    103,
+                    103
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "`rank` вызывает `rank_title_only`: `title` получает `title`, `before_files` получает `old_sources`, `top_n` получает `10`. Результат присваивается `files`.",
+              "anchors": [
+                {
+                  "ref_id": "Ebfa85073b929f939",
+                  "lines": [
+                    34,
+                    34
+                  ]
+                },
+                {
+                  "ref_id": "E11598500228411c4",
+                  "lines": [
+                    110,
+                    110
+                  ]
+                },
+                {
+                  "ref_id": "E6273d46972dcf202",
+                  "lines": [
+                    116,
+                    116
+                  ]
+                },
+                {
+                  "ref_id": "E018de24ca4d8a6a3",
+                  "lines": [
+                    17,
+                    17
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "delivered_ref_ids": [
+          "Ebfa85073b929f939",
+          "E43bdce6bdf6b59c2",
+          "Ed3563bf940013b46",
+          "E11598500228411c4",
+          "E6273d46972dcf202",
+          "E018de24ca4d8a6a3"
+        ],
+        "assessment": {
+          "references": "checked",
+          "static_relations": 0,
+          "answer_completeness": "not_assessed",
+          "semantic_review": "not_independently_reviewed",
+          "execution_observed": false
+        }
+      }
+    },
+    {
+      "id": "K3",
+      "result": {
+        "task_request": {
+          "task_id": "8f7565bd11004d9c89200ef51d3a11f3",
+          "kind": "explain_code",
+          "question": "Как формируется query_expansion?",
+          "source_id": "skynetvs.retrieval"
+        },
+        "state": "insufficient",
+        "stage": "verification",
+        "evidence_set": {
+          "task_id": "8f7565bd11004d9c89200ef51d3a11f3",
+          "source_id": "skynetvs.retrieval",
+          "snapshot_id": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+          "coverage": "partial",
+          "gaps": [
+            "partial_trace",
+            "static_subset"
+          ],
+          "items": [
+            {
+              "ref_id": "E7fe75b581cb9e315",
+              "text": "            \"query_expansion\": expansions,\n",
+              "locator": {
+                "id": "E7fe75b581cb9e315",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 162,
+                "end": 162,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "0794c8544408fa7552b62d4dcee5e23d241b6bb7397ade4457d2579766882543",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/context_search.py#L162-L162"
+              }
+            },
+            {
+              "ref_id": "Ef5b26fc3928b6949",
+              "text": "    effective, expansions = expand_query(goal)\n",
+              "locator": {
+                "id": "Ef5b26fc3928b6949",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 146,
+                "end": 146,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "9303d5b02e864f065de48649f707e42f92af7706bf010a6114e30787463ef5fb",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/context_search.py#L146-L146"
+              }
+            },
+            {
+              "ref_id": "E91f061a9b0025f6a",
+              "text": "def expand_query(goal: str) -> tuple[str, list[str]]:\n",
+              "locator": {
+                "id": "E91f061a9b0025f6a",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 47,
+                "end": 47,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "ae54e34d09e0d4e13ed3d877521a779ddef69eb422fb720bb99383642fbb76b9",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/context_search.py#L47-L47"
+              }
+            },
+            {
+              "ref_id": "Eb2121ab5af318faf",
+              "text": "    return text, additions\n",
+              "locator": {
+                "id": "Eb2121ab5af318faf",
+                "commit": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+                "path": "modules/developer_task_ui/app/context_search.py",
+                "start": 54,
+                "end": 54,
+                "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+                "excerpt_sha256": "afd616039bc5f127ca86e637d5b2be6de34c5da96e5495dd19b647ad84bb5067",
+                "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+                "source_code_executed": false,
+                "url": "https://github.com/Daystat-debug/SkynetVS/blob/ee908b063c31a5c9dd8e97ef64ca2ddc3b423235/modules/developer_task_ui/app/context_search.py#L54-L54"
+              }
+            }
+          ],
+          "analysis": {
+            "route": "flow",
+            "actions": [
+              {
+                "tool": "flow",
+                "target": "query_expansion",
+                "status": "flow_limited"
+              }
+            ],
+            "tool_status": "flow_limited",
+            "reason": "partial_trace",
+            "allowed_paths": [
+              "modules/developer_task_ui/app/context_search.py",
+              "modules/developer_task_ui/app/git_source.py",
+              "modules/developer_task_ui/app/retrieval/m126_rank.py",
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "modules/developer_task_ui/app/retrieval/m130_rank.py"
+            ],
+            "observations": [
+              {
+                "text": "`search_repository` формирует поле `query_expansion` из `expansions`.",
+                "anchors": [
+                  {
+                    "ref_id": "E7fe75b581cb9e315",
+                    "lines": [
+                      162,
+                      162
+                    ]
+                  }
+                ]
+              },
+              {
+                "text": "В `search_repository` выполнено присваивание `effective, expansions = expand_query(goal)`.",
+                "anchors": [
+                  {
+                    "ref_id": "Ef5b26fc3928b6949",
+                    "lines": [
+                      146,
+                      146
+                    ]
+                  }
+                ]
+              },
+              {
+                "text": "При вызове `expand_query` `goal` получает `goal`.",
+                "anchors": [
+                  {
+                    "ref_id": "E91f061a9b0025f6a",
+                    "lines": [
+                      47,
+                      47
+                    ]
+                  }
+                ]
+              },
+              {
+                "text": "Элемент 2 возвращаемой последовательности — `additions`.",
+                "anchors": [
+                  {
+                    "ref_id": "Eb2121ab5af318faf",
+                    "lines": [
+                      54,
+                      54
+                    ]
+                  }
+                ]
+              },
+              {
+                "text": "Для `additions` единственный неизменённый источник до чтения не установлен.",
+                "anchors": [
+                  {
+                    "ref_id": "Eb2121ab5af318faf",
+                    "lines": [
+                      54,
+                      54
+                    ]
+                  }
+                ]
+              }
+            ],
+            "selection": [],
+            "relations": [],
+            "message": "Статическая цепочка на путях, где функция вернула словарь:",
+            "call_coverage": null,
+            "clarification": null
+          }
+        },
+        "answer_proposal": {
+          "status": "insufficient",
+          "claims": [],
+          "reason": "partial_trace"
+        },
+        "delivered_ref_ids": [
+          "E7fe75b581cb9e315",
+          "Ef5b26fc3928b6949",
+          "E91f061a9b0025f6a",
+          "Eb2121ab5af318faf"
+        ],
+        "assessment": {
+          "references": "checked",
+          "static_relations": 0,
+          "answer_completeness": "partial",
+          "semantic_review": "not_independently_reviewed",
+          "execution_observed": false
+        }
+      }
+    },
+    {
+      "id": "K4",
+      "result": {
+        "task_request": {
+          "task_id": "9da2b186adc74b53a84fab079089b6c8",
+          "kind": "explain_code",
+          "question": "Откуда берётся число кандидатов?",
+          "source_id": "skynetvs.retrieval"
+        },
+        "state": "insufficient",
+        "stage": "verification",
+        "evidence_set": {
+          "task_id": "9da2b186adc74b53a84fab079089b6c8",
+          "source_id": "skynetvs.retrieval",
+          "snapshot_id": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+          "coverage": "partial",
+          "gaps": [
+            "clarification",
+            "static_subset"
+          ],
+          "items": [],
+          "analysis": {
+            "route": "clarify",
+            "actions": [],
+            "tool_status": "withheld",
+            "reason": "clarification",
+            "allowed_paths": [
+              "modules/developer_task_ui/app/context_search.py",
+              "modules/developer_task_ui/app/git_source.py",
+              "modules/developer_task_ui/app/retrieval/m126_rank.py",
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "modules/developer_task_ui/app/retrieval/m130_rank.py"
+            ],
+            "observations": [],
+            "selection": [],
+            "relations": [],
+            "message": "Какое одно поле проследить? Укажите название или подпись в отчёте.\n1. Файлов-кандидатов\n2. функций\n3. модульных участков",
+            "call_coverage": null,
+            "clarification": {
+              "intent": "flow",
+              "options": [
+                [
+                  "flow",
+                  "candidate_files_full_tree",
+                  "Файлов-кандидатов"
+                ],
+                [
+                  "flow",
+                  "candidate_functions",
+                  "функций"
+                ],
+                [
+                  "flow",
+                  "candidate_modules",
+                  "модульных участков"
+                ]
+              ]
+            }
+          }
+        },
+        "answer_proposal": {
+          "status": "insufficient",
+          "claims": [],
+          "reason": "clarification"
+        },
+        "delivered_ref_ids": [],
+        "assessment": {
+          "references": "none",
+          "static_relations": 0,
+          "answer_completeness": "not_assessed",
+          "semantic_review": "not_independently_reviewed",
+          "execution_observed": false
+        }
+      }
+    },
+    {
+      "id": "K5",
+      "result": {
+        "task_request": {
+          "task_id": "c5bca3412aca4b389ca30283c3a85bf8",
+          "kind": "explain_code",
+          "question": "Кто вызывает rank в main.py?",
+          "source_id": "skynetvs.retrieval"
+        },
+        "state": "insufficient",
+        "stage": "verification",
+        "evidence_set": {
+          "task_id": "c5bca3412aca4b389ca30283c3a85bf8",
+          "source_id": "skynetvs.retrieval",
+          "snapshot_id": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+          "coverage": "partial",
+          "gaps": [
+            "out_of_scope",
+            "static_subset"
+          ],
+          "items": [],
+          "analysis": {
+            "route": "external",
+            "actions": [],
+            "tool_status": "withheld",
+            "reason": "out_of_scope",
+            "allowed_paths": [
+              "modules/developer_task_ui/app/context_search.py",
+              "modules/developer_task_ui/app/git_source.py",
+              "modules/developer_task_ui/app/retrieval/m126_rank.py",
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "modules/developer_task_ui/app/retrieval/m130_rank.py"
+            ],
+            "observations": [],
+            "selection": [],
+            "relations": [],
+            "message": "Запрошенный файл вне разрешённой области этого снимка.",
+            "call_coverage": null,
+            "clarification": null
+          }
+        },
+        "answer_proposal": {
+          "status": "insufficient",
+          "claims": [],
+          "reason": "out_of_scope"
+        },
+        "delivered_ref_ids": [],
+        "assessment": {
+          "references": "none",
+          "static_relations": 0,
+          "answer_completeness": "not_assessed",
+          "semantic_review": "not_independently_reviewed",
+          "execution_observed": false
+        }
+      }
+    },
+    {
+      "id": "K6",
+      "result": {
+        "task_request": {
+          "task_id": "ec7adf1d334d4b8e9faff5d8b054663e",
+          "kind": "explain_code",
+          "question": "Сколько файлов было в последнем запуске?",
+          "source_id": "skynetvs.retrieval"
+        },
+        "state": "insufficient",
+        "stage": "verification",
+        "evidence_set": {
+          "task_id": "ec7adf1d334d4b8e9faff5d8b054663e",
+          "source_id": "skynetvs.retrieval",
+          "snapshot_id": "ee908b063c31a5c9dd8e97ef64ca2ddc3b423235",
+          "coverage": "partial",
+          "gaps": [
+            "observation_required",
+            "static_subset"
+          ],
+          "items": [],
+          "analysis": {
+            "route": "observation",
+            "actions": [],
+            "tool_status": "withheld",
+            "reason": "observation_required",
+            "allowed_paths": [
+              "modules/developer_task_ui/app/context_search.py",
+              "modules/developer_task_ui/app/git_source.py",
+              "modules/developer_task_ui/app/retrieval/m126_rank.py",
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "modules/developer_task_ui/app/retrieval/m130_rank.py"
+            ],
+            "observations": [],
+            "selection": [],
+            "relations": [],
+            "message": "Нужно наблюдение конкретного запуска. Пришлите его вывод или журнал.",
+            "call_coverage": null,
+            "clarification": null
+          }
+        },
+        "answer_proposal": {
+          "status": "insufficient",
+          "claims": [],
+          "reason": "observation_required"
+        },
+        "delivered_ref_ids": [],
+        "assessment": {
+          "references": "none",
+          "static_relations": 0,
+          "answer_completeness": "not_assessed",
+          "semantic_review": "not_independently_reviewed",
+          "execution_observed": false
+        }
+      }
+    }
+  ],
+  "controls": [
+    {
+      "case": "unsupported_source",
+      "state": "failed",
+      "stage": "retrieval",
+      "reason": "unsupported_source"
+    },
+    {
+      "case": "cancel_before_read",
+      "state": "cancelled",
+      "stage": "accepted",
+      "reason": "cancelled"
+    },
+    {
+      "case": "forged_git_url",
+      "state": "failed",
+      "stage": "retrieval",
+      "reason": "invalid_reference"
+    },
+    {
+      "case": "genuine_wrong_claim_anchor",
+      "state": "failed",
+      "stage": "verification",
+      "reason": "claim_binding"
+    },
+    {
+      "case": "unissued_reference",
+      "state": "failed",
+      "stage": "verification",
+      "reason": "invalid_anchor"
+    },
+    {
+      "case": "cancel_during_provider",
+      "state": "cancelled",
+      "stage": "generation",
+      "reason": "cancelled"
+    },
+    {
+      "case": "deadline_before_publication",
+      "state": "failed",
+      "stage": "verification",
+      "reason": "deadline"
+    },
+    {
+      "case": "detached_provider_result",
+      "state": "answered",
+      "stage": "verification",
+      "reason": null
+    },
+    {
+      "case": "unexpected_expanded_profile",
+      "state": "failed",
+      "stage": "retrieval",
+      "reason": "snapshot_policy"
+    },
+    {
+      "case": "three_file_host",
+      "state": "insufficient",
+      "stage": "verification",
+      "reason": "clarification"
+    }
+  ],
+  "model_generations": 0
+}
