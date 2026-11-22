@@ -1,5 +1,6 @@
 """Headless experimental host for the static Cognitive Core explain_code scenario."""
 import argparse
+from functools import cache
 import json
 from pathlib import Path
 import sys
@@ -11,16 +12,26 @@ from skynet_core_task import AnswerProposal, EvidenceSet, Rejected, Task
 
 SOURCE_ID = "skynetvs.retrieval"
 WEB = "https://github.com/Daystat-debug/SkynetVS/blob/"
+_runtime_lock = Lock()
+
+
+@cache
+def _runtime():
+    # The pinned module loader is single-use. Reuse only its verified tools across hosts.
+    return lab.trusted_tools()
 
 
 def open_profile(baseline):
-    core, launch, ground = lab.trusted_tools()
+    with _runtime_lock:
+        core, launch, ground = _runtime()
     return lab.snapshot(core, launch, baseline=baseline), ground
 
 
 def checked_item(src, locator):
+    if not isinstance(locator, dict) or not {"path", "start", "end"} <= locator.keys():
+        raise Rejected("invalid_reference")
     path, lo, hi = locator["path"], locator["start"], locator["end"]
-    if path not in src.raw or type(lo) is not int or type(hi) is not int:
+    if not isinstance(path, str) or path not in src.raw or type(lo) is not int or type(hi) is not int:
         raise Rejected("invalid_reference")
     try:
         span = src.span(path, lo, hi)
@@ -31,6 +42,32 @@ def checked_item(src, locator):
     if locator != canonical:
         raise Rejected("invalid_reference")
     return dict(ref_id=canonical["id"], text=span["text"], locator=canonical)
+
+
+def grounded_relations(relations, observations, items):
+    """Bind the composer's exact-site joins to issued anchors, without resolving calls again."""
+    grounded = []
+    for edge in relations:
+        site = edge["site"]
+        matched = [o for o in observations if "call_site" in o and
+                   all(o["call_site"].get(k) == v for k, v in site.items())]
+        if len(matched) != 1:
+            raise Rejected("unbound_relation")
+        anchors = matched[0]["anchors"]
+        supports = {}
+        for role, path, start, end in (
+                ("call",site["path"],site["line"],site["end_line"]),
+                ("definition",site["definition_path"],site["definition_line"],site["definition_line"])):
+            for a in anchors:
+                loc = items[a["ref_id"]]["locator"]
+                if (loc["commit"] == site["commit"] and loc["path"] == path
+                        and loc["start"] <= start <= end <= loc["end"]):
+                    supports[role] = a["ref_id"]
+                    break
+            else:
+                raise Rejected("unbound_relation")
+        grounded.append(dict(edge, basis="same_resolved_call_in_calls_and_flow", supports=supports))
+    return grounded
 
 
 def collect(request, src, ground):
@@ -70,7 +107,7 @@ def collect(request, src, ground):
 
     analysis = dict(route=route, actions=actions, tool_status=status, reason=reason,
                     allowed_paths=sorted(src.raw), observations=observations, selection=selection,
-                    relations=result.get("relations", []), message=result["text"],
+                    relations=grounded_relations(result.get("relations", []), observations, items), message=result["text"],
                     call_coverage=result.get("call_coverage"), clarification=result.get("clarification"))
     # Only the supported static subset has been investigated, even when all files were opened.
     return EvidenceSet(task_id=request.task_id, source_id=request.source_id, snapshot_id=src.commit,
@@ -122,11 +159,20 @@ class Host:
         if list(by_id) != delivered:
             raise Rejected("delivery_mismatch")
         analysis = evidence["analysis"]
+        if not isinstance(draft, dict) or not isinstance(draft.get("claims"), list):
+            raise Rejected("invalid_proposal")
         if draft.get("status") == "answer":
             if set(draft) != {"status","claims"} or analysis["reason"] or not draft["claims"]:
                 raise Rejected("invalid_proposal")
             for c in draft["claims"]:
+                if (not isinstance(c, dict) or set(c) != {"text", "anchors"} or not isinstance(c["text"], str)
+                        or not isinstance(c["anchors"], list) or not c["anchors"]):
+                    raise Rejected("invalid_proposal")
                 for a in c["anchors"]:
+                    if (not isinstance(a, dict) or set(a) != {"ref_id", "lines"}
+                            or not isinstance(a["ref_id"], str) or not isinstance(a["lines"], list)
+                            or len(a["lines"]) != 2 or any(type(n) is not int for n in a["lines"])):
+                        raise Rejected("invalid_anchor")
                     item = by_id.get(a["ref_id"])
                     if item is None or a["lines"] != [item["locator"]["start"], item["locator"]["end"]]:
                         raise Rejected("invalid_anchor")

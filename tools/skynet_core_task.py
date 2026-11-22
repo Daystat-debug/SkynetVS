@@ -43,6 +43,13 @@ class Task:
         self.stage = "accepted"
         self.result = None
 
+    @property
+    def state(self):
+        with self.lock:
+            if self.result is not None:
+                return self.result["state"]
+            return "accepted" if self.stage == "accepted" else "running"
+
     def _finish(self, state, **data):
         # Caller holds the same lock for cancellation, expiry and publication.
         if self.result is None:
@@ -83,7 +90,8 @@ class Task:
                     return self.result
                 packet = deepcopy(evidence)
                 delivered = [item["ref_id"] for item in packet["items"]]
-                proposal = propose(self.request, packet)
+                # Detach from provider-owned objects before checking the exact value to publish.
+                proposal = deepcopy(propose(self.request, packet))
             else:
                 reason = evidence["gaps"][0] if evidence["gaps"] else "no_evidence"
                 proposal = AnswerProposal(status="insufficient", claims=[], reason=reason)
