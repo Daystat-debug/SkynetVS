@@ -1,0 +1,60 @@
+.\.venv\Scripts\python.exe -I -S -B tools/test_skynet_explain.py
+Scope, blob, stale HEAD, literal selection, byte budget, verified links and 15 grounding checks passed.
+
+.\.venv\Scripts\python.exe -I -S -B tools/test_flow_reader.py
+explicit_alias linked OK
+same_name_other_module withheld OK
+two_definitions withheld OK
+parameter_shadow withheld OK
+conditional_rebind withheld OK
+star_import withheld OK
+qualified_outside_subset withheld OK
+export_reassigned withheld OK
+decorated_export withheld OK
+pattern_capture withheld OK
+other_function_global_write withheld OK
+Field projection, branch, binding, mutation and evidence-scope checks passed.
+
+.\.venv\Scripts\python.exe -I -S -B tools/test_auto_reader.py
+17 intents and clarification checks passed.
+
+.\.venv\Scripts\python.exe -I -S -B tools/test_composed_reader.py
+Composition, exact call identity, boundaries, follow-up and distinct operations verified.
+
+.\.venv\Scripts\python.exe -I -S -B tools/test_expanded_reader.py
+Pinned-object scope, checked spans, no source imports and lexical edge cases passed.
+
+.\.venv\Scripts\python.exe -I -S -B tools/eval_module_entry.py verify
+10 frozen AST cases and 6 real question/profile pairs verified.
+
+.\.venv\Scripts\python.exe -I -S -B tools/eval_expanded_reader.py regression
+38/38 archived decisions, claims, spans and joins match. []
+
+.\.venv\Scripts\python.exe -I -S -B tools/eval_expanded_reader.py verify
+three S1 withheld 0.0314
+three S2 withheld 0.0255
+three T1 withheld 0.0248
+three T2 withheld 0.029
+three T3 withheld 0.0142
+three T4 withheld 0.0
+three T5 withheld 0.0248
+five S1 composed 0.1747
+five S2 flow 0.0361
+five T1 composed 0.0912
+five T2 call_sites 0.0528
+five T3 withheld 0.0189
+five T4 withheld 0.0
+five T5 withheld 0.031
+14/14 archived question/profile pairs retain their decisions, claims, spans and joins; T1/T2 gain the guarded call.
+
+.\.venv\Scripts\python.exe -B -m tools.eval_package_boundaries | Select-Object -Last 6; exit $LASTEXITCODE
+=== SUMMARY ===
+{
+  "case_count": 32,
+  "fail_count": 0
+}
+
+CLI subprocess transcript replay
+T1 standalone CLI transcript matches
+T2 standalone CLI transcript matches
+R1 standalone CLI transcript matches
