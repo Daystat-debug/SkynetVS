@@ -112,7 +112,7 @@ def routes(q, index, previous, refuse):
     if EVENT.search(plain):
         return dict(refuse("live"),auto_route="observation")
     if ".py" in plain:
-        return ask("Вы указали файл. Поиск вызовов проверяет все три разрешённых файла. Уточните функцию или поле без ограничения мест поиска.")
+        return ask("Вы указали файл. Поиск вызовов проверяет всю разрешённую область. Уточните функцию или поле без ограничения мест поиска.")
     if OTHER.search(plain):
         return ask("Я могу проследить происхождение поля отчёта или найти прямые места вызова функции в доступном снимке. Какую операцию проверить?")
     call = bool(CALLER.search(plain))

@@ -136,7 +136,7 @@ def answer(q,src,refuse,previous=None):
     if auto.EVENT.search(plain):
         return dict(refuse("live"),auto_route="observation")
     if auto.OTHER.search(plain) or ".py" in plain:
-        return auto.base_clarification(refuse,"Для этой задачи доступны прямые вызовы и происхождение полей трёх файлов. Уточните требуемый статический разбор.")
+        return auto.base_clarification(refuse,"Для этой задачи доступны прямые вызовы и происхождение полей разрешённого снимка. Уточните требуемый статический разбор.")
     index = flow.Slice(src)
     overrides = {}
     if previous and "parts" in previous and not re.search(r"[?;!]|\b(?:кто|как|где|откуда|покажи)\b",plain):

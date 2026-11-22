@@ -68,6 +68,8 @@ class Objects:
 
 
 class Sources(cli.GitSources):
+    lexical_flows = True
+
     def head(self):
         # Every ls-tree addresses this literal commit, even across branch switches.
         return SOURCE
@@ -88,7 +90,9 @@ def trusted_tools():
 
 def snapshot(core, launch, *, baseline=False):
     reader = Objects(launch, baseline=baseline)
-    return Sources(reader, core, reader.scope)
+    sources = Sources(reader, core, reader.scope)
+    sources.lexical_flows = not baseline
+    return sources
 
 
 def ask(mode, question, sources, ground, pending=None):

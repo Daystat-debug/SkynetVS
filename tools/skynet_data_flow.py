@@ -38,15 +38,32 @@ def literal_key(node):
     return None
 
 
-def returns(fn):
+def local_nodes(root):
+    """Walk expressions in this scope, including defaults, excluding nested suites."""
+    pending = [root]
+    while pending:
+        node = pending.pop()
+        yield node
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)):
+            for field, value in ast.iter_fields(node):
+                if field != "body":
+                    pending.extend(v for v in (value if isinstance(value, list) else [value]) if isinstance(v, ast.AST))
+        else:
+            pending.extend(ast.iter_child_nodes(node))
+
+
+def returns(fn, *, lexical=False):
     """Only a final return and optional single, top-level guarded early returns."""
     result = []
+    walk = local_nodes if lexical else ast.walk
     for stmt in fn.node.body:
+        if lexical and any(isinstance(n, (ast.Yield, ast.YieldFrom)) for n in walk(stmt)):
+            return []
         if isinstance(stmt, ast.If) and not stmt.orelse and len(stmt.body) == 1 and isinstance(stmt.body[0], ast.Return):
             result.append((stmt.body[0], stmt.test))
         elif isinstance(stmt, ast.Return) and stmt is fn.node.body[-1]:
             result.append((stmt, None))
-        elif any(isinstance(n, ast.Return) for n in ast.walk(stmt)):
+        elif any(isinstance(n, ast.Return) for n in walk(stmt)):
             return []
     return result if result and result[-1][1] is None else []
 
@@ -119,6 +136,7 @@ class Slice:
         self.trees = {}
         self.claims = []
         self.limited = False
+        self.lexical = getattr(src, "lexical_flows", False)
         for path in sorted(src.pages):
             tree = ast.parse(src.snapshot.sources[path])
             self.trees[path] = tree
@@ -129,7 +147,7 @@ class Slice:
                 self.functions.append(fn)
                 if node.decorator_list or not sites.unique_binding(tree,node.name,node):
                     continue
-                exits = returns(fn)
+                exits = returns(fn, lexical=self.lexical)
                 if len(exits) == 1:
                     for key, pair in fields(fn,exits[0][0].value).items():
                         self.producers[key].append((fn,*pair))
@@ -147,6 +165,30 @@ class Slice:
     def stop(self, why, fn, node):
         self.limited = True
         self.say(why,fn,node)
+
+    def describe_count(self, fn, value):
+        """Cite a visible initialization and direct loop appends; do not infer cardinality."""
+        if len(value.args) != 1 or not isinstance(value.args[0], ast.Name):
+            return
+        name = value.args[0].id
+        writes = sites.bindings(fn.node, name)
+        init = next((s for s in fn.node.body if isinstance(s, ast.Assign) and s.end_lineno < value.lineno
+                     and len(s.targets) == 1 and local_name(s.targets[0], name) and writes == s.targets), None)
+        if init is None:
+            return
+        self.say(f"Видимое начальное присваивание: `{ast.unparse(init)}`.", fn, init)
+        if not isinstance(init.value, ast.List):
+            return
+        for loop in fn.node.body:
+            if not (isinstance(loop, ast.For) and init.end_lineno < loop.lineno <= loop.end_lineno < value.lineno):
+                continue
+            for step in loop.body:
+                op = step.value if isinstance(step, ast.Expr) else None
+                if (isinstance(op, ast.Call) and isinstance(op.func, ast.Attribute)
+                        and op.func.attr == "append" and local_name(op.func.value, name)):
+                    self.say(f"Цикл перебирает `{ast.unparse(loop.iter)}`.", fn, loop, loop.iter.end_lineno)
+                    self.say(f"В теле цикла список пополняется операцией `{ast.unparse(op)}`.", fn, step)
+                    return
 
     def choose(self, q):
         explicit = set(re.findall(r"\b[A-Za-z_]\w*\b",q))
@@ -202,7 +244,12 @@ class Slice:
         name = value.func.id
         if (name == "len" and not projections and not sites.bindings(fn.node,name)
                 and sites.unique_binding(fn.tree,name,None)):
-            return self.say(f"Итог вычисляется как длина: `{expr}`.",fn,value)
+            if self.lexical and (len(value.args) != 1 or isinstance(value.args[0], ast.Starred) or value.keywords):
+                return self.stop("Для этого вызова длины аргумент статически не установлен.",fn,value)
+            self.say(f"Итог вычисляется как длина: `{expr}`.",fn,value)
+            if self.lexical:
+                self.describe_count(fn,value)
+            return
         candidates = []
         if not sites.bindings(fn.node,name):
             for target in self.functions:
@@ -231,7 +278,7 @@ class Slice:
         if self.evidence is not None:
             site = sites.CallSite.resolved(self.src,fn.path,value,target.path,target.node)
             self.evidence.setdefault(site,[]).append(len(self.claims)-1)
-        exits = returns(target)
+        exits = returns(target, lexical=self.lexical)
         if not exits:
             return self.stop(f"Структура возвратов `{name}` вне поддерживаемого подмножества.",fn,value)
         for ret, guard in exits:
