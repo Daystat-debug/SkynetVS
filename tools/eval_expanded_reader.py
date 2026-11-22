@@ -43,9 +43,46 @@ def run(stage):
                 stage=stage, generations=0, profiles=results)
 
 
+def regression():
+    """Replay old standalone questions in the three-file profile. Compare decisions, claims and spans."""
+    core, launch, ground = lab.trusted_tools()
+    src = lab.snapshot(core, launch, baseline=True)
+
+    def archive(path):
+        return pilot.git("show", lab.SOURCE + ":docs/maintenance/" + path)
+
+    cases = []
+    for folder, mode in (("data_flow", "flow"), ("auto_reader", "auto"), ("composed_reader", "compose")):
+        for row in json.loads(archive(folder + "/answers.json"))["results"]:
+            cases.append((mode, row["id"], row["q"], row["answer"]))
+    questions = {r["id"]: r["q"] for r in json.loads(archive("evidence_reader/calls_protocol.json"))["cli"]}
+    for line in archive("evidence_reader/calls.jsonl").splitlines():
+        row = json.loads(line)
+        if "result" in row:
+            cases.append(("calls", row["case"], questions[row["case"]], row["result"]))
+
+    def facts(answer):
+        decisions = [answer.get(k) for k in ("status", "reason", "auto_route", "auto_target", "field", "actions")]
+        claims = [(c["text"], [(r["path"], r["start"], r["end"], r["blob_oid"], r["excerpt_sha256"])
+                               for r in c["evidence_blocks"]]) for c in answer["claims"]]
+        edges = [(e["function"], e["field"], {k:v for k,v in e["site"].items() if k != "commit"})
+                 for e in answer.get("relations", [])]
+        return decisions, claims, edges
+
+    failures = []
+    for mode, name, question, expected in cases:
+        actual = lab.cli.answer(question, src, ground, None, **{lab.MODES[mode]: True})
+        if facts(actual) != facts(expected):
+            failures.append((mode, name))
+    print(f"{len(cases) - len(failures)}/{len(cases)} archived decisions, claims, spans and joins match.", failures)
+    return bool(failures)
+
+
 if __name__ == "__main__":
+    if sys.argv[1:] == ["regression"]:
+        sys.exit(regression())
     if sys.argv[1:] not in (["discovery"], ["paired"], ["verify"]):
-        sys.exit("Expected discovery, paired or verify")
+        sys.exit("Expected discovery, paired, verify or regression")
     verify = sys.argv[1] == "verify"
     stage = "paired" if verify else sys.argv[1]
     path = pilot.ROOT / DIR / (stage + ".json")
