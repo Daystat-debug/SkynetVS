@@ -10,6 +10,7 @@ from time import monotonic
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import skynet_core_explain as host
+import skynet_argument_flow as arguments
 
 SOURCE = host.SOURCE_ID + ".git-head"
 MAX_STEPS = 6
@@ -51,6 +52,8 @@ REASONS = {
     "missing_producer": "В поддерживаемых возвратах пяти файлов производитель этого поля не найден.",
     "stale_snapshot": "Во время исследования изменился Git HEAD. Повторите вопрос для нового снимка.",
     "outgoing_unsupported": "Вы спросили, какие функции вызывает сам производитель. Этот режим проверяет только входящие обращения к нему.",
+    "argument_unproven": "В проверенных прямых вызовах не удалось проследить передачу аргумента из указанной функции.",
+    "unknown_parameter": "У целевой функции не найден указанный обычный именованный параметр.",
 }
 
 
@@ -251,6 +254,14 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         if cli.auto_reader.EVENT.search(req.question):
             return packet(req, src, reason="observation_required")
         plain = " ".join(req.question.strip().rstrip("?.!").replace("\x60", "").split())
+        goal = arguments.parse(plain)
+        if goal:
+            plan = "trace_argument"
+            search = arguments.Search(req, src, lookup or cli.calls.lookup, trace,
+                                      min(MAX_STEPS, steps), task.deadline, head_current, site_anchors)
+            return packet(req, src, *search.solve(*goal))
+        if arguments.QUALIFIED.search(plain) and re.search(r"аргумент|параметр|переда[её]тся",plain,re.I):
+            return packet(req, src, reason="clarification")
         if OUTGOING_OWNER.match(plain):
             return packet(req, src, reason="outgoing_unsupported")
         owner = OWNER_QUERY.fullmatch(plain)
@@ -273,7 +284,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return evidence
 
     def verify(req, evidence, draft, delivered):
-        if plan == "callers_of_field_producer":
+        if plan in ("callers_of_field_producer", "trace_argument"):
             head_current(src)
         return host.verify_snapshot(src, req, evidence, draft, delivered)
 

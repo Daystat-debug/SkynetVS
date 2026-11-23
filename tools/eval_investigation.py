@@ -157,6 +157,18 @@ def suite(root):
     return rows,times
 
 
+def check_regression(rows):
+    # The accepted 0.2 checkpoint corrected only the previously missed T4.
+    archive = json.loads(pilot.git("show","1de73ad:"+DIR+"/results.json"))["rows"]
+    assert rows[:-1] == archive[:-1]
+    previous, current = archive[-1], rows[-1]
+    assert previous["case"] == current["case"] == "T4" and not previous["meets_rubric"]
+    assert current["meets_rubric"] and current["state"] == "answered" and current["reason"] is None
+    for key in ("required_edges","one_calls_edges","one_compose_status","one_compose_claims"):
+        assert current[key] == previous[key]
+    return dict(identical=len(rows)-1,corrected=current["case"])
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", choices=("record","verify"))
@@ -167,7 +179,7 @@ def main():
     if args.mode == "record":
         pilot.dump(dest, dict(rows=rows, case_ms=times, hard_deadline_control="withheld"))
     else:
-        assert json.loads(dest.read_text(encoding="utf8"))["rows"] == rows
+        print("Against immutable Core 0.1 results:",check_regression(rows))
     print("Rubric",sum(row["meets_rubric"] for row in rows),"/",len(rows),
           "median",median(times),"ms; failures",[r["case"] for r in rows if not r["meets_rubric"]])
 

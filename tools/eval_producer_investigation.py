@@ -187,12 +187,8 @@ def suite(root):
 
 
 def regress(root):
-    archive = json.loads((pilot.ROOT/old.DIR/"results.json").read_text(encoding="utf8"))["rows"]
     current,_ = old.suite(root)
-    assert current[:-1] == archive[:-1]
-    last = current[-1]
-    assert last["case"] == "T4" and last["meets_rubric"] and not archive[-1]["meets_rubric"]
-    return dict(identical=14,corrected=last["case"])
+    return old.check_regression(current)
 
 
 def main():
