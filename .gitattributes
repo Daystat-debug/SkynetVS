@@ -1,2 +1,12 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Physical source bytes verified by the timer/volume action-boundary checks.
+/modules/action_authority.py text eol=lf
+/modules/action_broker.py text eol=lf
+/modules/action_contract.py text eol=lf
+/modules/timer_action_runtime.py text eol=lf
+/modules/audio_control.py text eol=crlf
+/modules/dialog_state.py text eol=crlf
+/modules/media_control.py text eol=crlf
+/modules/timer_service.py text eol=crlf
