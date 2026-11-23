@@ -1,0 +1,631 @@
+{
+  "protocol": "5d0256a7bdec3b24ce0bc6778b5719d4172f4e70",
+  "head": "fb454238a95db7a33d47ed536e21c3e9dd970f41",
+  "questions": [
+    {
+      "id": "W1",
+      "mode": "git-head",
+      "snapshot": "fb454238a95db7a33d47ed536e21c3e9dd970f41",
+      "decision": "answered",
+      "proposal": {
+        "status": "answer",
+        "claims": [
+          {
+            "text": "`rank` вызывает `rank_symbols`: `issue_title` получает `title`, `old_sources` получает `selected`, `limit` получает `100`. Результат присваивается `sym`. На прослеженном пути результат этого вызова участвует в формировании поля `function_candidates_total`.",
+            "anchors": [
+              {
+                "ref_id": "Ece3700518e51f255",
+                "lines": [
+                  72,
+                  72
+                ]
+              },
+              {
+                "ref_id": "Eb8aab94e29cbf658",
+                "lines": [
+                  110,
+                  110
+                ]
+              },
+              {
+                "ref_id": "E59b1818e132b6841",
+                "lines": [
+                  125,
+                  125
+                ]
+              },
+              {
+                "ref_id": "E3658f44bb8b048a2",
+                "lines": [
+                  18,
+                  18
+                ]
+              },
+              {
+                "ref_id": "E21f5d677b0f4db0e",
+                "lines": [
+                  135,
+                  135
+                ]
+              }
+            ]
+          },
+          {
+            "text": "`rank` формирует поле `function_candidates_total` из `sym['symbol_candidates']`. В `rank` выполнено присваивание `sym = rank_symbols(title, selected, limit=100)`. Импорт связывает `rank_symbols` с `rank_symbols` в m127_symbol.py.",
+            "anchors": [
+              {
+                "ref_id": "E21f5d677b0f4db0e",
+                "lines": [
+                  135,
+                  135
+                ]
+              },
+              {
+                "ref_id": "E59b1818e132b6841",
+                "lines": [
+                  125,
+                  125
+                ]
+              },
+              {
+                "ref_id": "E3658f44bb8b048a2",
+                "lines": [
+                  18,
+                  18
+                ]
+              }
+            ]
+          },
+          {
+            "text": "`rank_symbols` возвращает поле `symbol_candidates` со значением `len(rows)`. Итог вычисляется как длина: `len(rows)`. Видимое начальное присваивание: `rows = []`.",
+            "anchors": [
+              {
+                "ref_id": "Ea996a0a15ad1235d",
+                "lines": [
+                  108,
+                  108
+                ]
+              },
+              {
+                "ref_id": "Ede466836120774e2",
+                "lines": [
+                  87,
+                  87
+                ]
+              }
+            ]
+          },
+          {
+            "text": "Цикл перебирает `enumerate(symbols)`. В теле цикла список пополняется операцией `rows.append(row)`.",
+            "anchors": [
+              {
+                "ref_id": "Ec0dd4d2b22467fa3",
+                "lines": [
+                  88,
+                  88
+                ]
+              },
+              {
+                "ref_id": "E2c918a99b2b1a3ad",
+                "lines": [
+                  102,
+                  102
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "relations": [
+        {
+          "function": "rank_symbols",
+          "field": "function_candidates_total",
+          "site": {
+            "commit": "fb454238a95db7a33d47ed536e21c3e9dd970f41",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "line": 125,
+            "column": 8,
+            "end_line": 125,
+            "end_column": 46,
+            "definition_path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+            "definition_line": 72
+          },
+          "basis": "same_resolved_call_in_calls_and_flow",
+          "supports": {
+            "call": "E59b1818e132b6841",
+            "definition": "Ece3700518e51f255"
+          }
+        }
+      ],
+      "items": [
+        {
+          "ref_id": "Ece3700518e51f255",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 72,
+          "end": 72,
+          "excerpt": "def rank_symbols(issue_title,old_sources,limit=40):\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "7ab8331806d35534da64e7870e1871cb3d0b2fa8cd51ca3cbf8a428b9a1f30c4"
+        },
+        {
+          "ref_id": "Eb8aab94e29cbf658",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 110,
+          "end": 110,
+          "excerpt": "def rank(title,old_sources):\n",
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "f2eab977d38c89f3e569cbcccf1566df0dddeb543df54e4ade667aea89bb79e2"
+        },
+        {
+          "ref_id": "E59b1818e132b6841",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 125,
+          "end": 125,
+          "excerpt": "    sym=rank_symbols(title,selected,limit=100)\n",
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "3fb17afa0eaaa0515074d3178af11403c65c1cbf71fc9222962f0e5ccaa39a4b"
+        },
+        {
+          "ref_id": "E3658f44bb8b048a2",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 18,
+          "end": 18,
+          "excerpt": "from .m127_symbol import rank_symbols,tokens\n",
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "aa850c8a507cf4c13b229ee65ea8d2c9bdc4dbe94fe84528cfe78beb42d09a9d"
+        },
+        {
+          "ref_id": "E21f5d677b0f4db0e",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 135,
+          "end": 135,
+          "excerpt": "                function_candidates_total=sym['symbol_candidates'],module_candidates_total=nmodules,\n",
+          "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+          "excerpt_sha256": "0782ef0d7e7264d603c43f90e4b7ca2ac8d831a8785286ba2ededdfed5a5dfa8"
+        },
+        {
+          "ref_id": "Ea996a0a15ad1235d",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 108,
+          "end": 108,
+          "excerpt": "    return {'schema':'SKYNETVS_M127_SYMBOL_RETRIEVAL_V1','symbol_candidates':len(rows),\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "4ac5dce610bcd3d09e6d20a109a3bc88bff2bcfe8b77ab4b379cfdf4e7966e44"
+        },
+        {
+          "ref_id": "Ede466836120774e2",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 87,
+          "end": 87,
+          "excerpt": "    rows=[]\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "a066b9aad46a07051c02881f610a8b5f046f55e7f66f68cca3217fb91e64c1e2"
+        },
+        {
+          "ref_id": "Ec0dd4d2b22467fa3",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 88,
+          "end": 88,
+          "excerpt": "    for i,s in enumerate(symbols):\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "95b8853ad29fdbdddb07490b42d41e1b14ea85b7439491f02f96224d85188d30"
+        },
+        {
+          "ref_id": "E2c918a99b2b1a3ad",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 102,
+          "end": 102,
+          "excerpt": "        rows.append(row)\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "1ed21cdecf87a6db9f4e2459f1b76981ff4ccf9036bb1bbb405f35219906c552"
+        }
+      ]
+    },
+    {
+      "id": "W1",
+      "mode": "working-tree",
+      "snapshot": "wt-sha256-2c65c803a04144b2ea35bc760cfd1a7f065ab8001489cf504e380e0ccbd24e68",
+      "decision": "answered",
+      "proposal": {
+        "status": "answer",
+        "claims": [
+          {
+            "text": "`rank` вызывает `rank_symbols`: `issue_title` получает `title`, `old_sources` получает `selected`, `limit` получает `37`. Результат присваивается `sym`. На прослеженном пути результат этого вызова участвует в формировании поля `function_candidates_total`.",
+            "anchors": [
+              {
+                "ref_id": "Wdf0631a0931b25e5986970b42ee7b2b7b1ec3308b62fc943c0e8b24b4a215d7b",
+                "lines": [
+                  72,
+                  72
+                ]
+              },
+              {
+                "ref_id": "Wf16253d22116bea2a65b2220d93d4b5e6fc67b8f86a7ee36532b94a656275fc1",
+                "lines": [
+                  110,
+                  110
+                ]
+              },
+              {
+                "ref_id": "W8c083e232830db5e7839f196741330dd387c76c6e1084c86359c5061a4fcb480",
+                "lines": [
+                  125,
+                  125
+                ]
+              },
+              {
+                "ref_id": "Wf7b3d044b030e0812c1dd03ae7e0749be1a4ede1f6db25e12ae3daca9e2d480d",
+                "lines": [
+                  18,
+                  18
+                ]
+              },
+              {
+                "ref_id": "W7d9508a68998cf24798552733a8a447a423eadd0bf4dfd624d8ba4d9f2817634",
+                "lines": [
+                  135,
+                  135
+                ]
+              }
+            ]
+          },
+          {
+            "text": "`rank` формирует поле `function_candidates_total` из `sym['symbol_candidates']`. В `rank` выполнено присваивание `sym = rank_symbols(title, selected, limit=37)`. Импорт связывает `rank_symbols` с `rank_symbols` в m127_symbol.py.",
+            "anchors": [
+              {
+                "ref_id": "W7d9508a68998cf24798552733a8a447a423eadd0bf4dfd624d8ba4d9f2817634",
+                "lines": [
+                  135,
+                  135
+                ]
+              },
+              {
+                "ref_id": "W8c083e232830db5e7839f196741330dd387c76c6e1084c86359c5061a4fcb480",
+                "lines": [
+                  125,
+                  125
+                ]
+              },
+              {
+                "ref_id": "Wf7b3d044b030e0812c1dd03ae7e0749be1a4ede1f6db25e12ae3daca9e2d480d",
+                "lines": [
+                  18,
+                  18
+                ]
+              }
+            ]
+          },
+          {
+            "text": "`rank_symbols` возвращает поле `symbol_candidates` со значением `len(rows)`. Итог вычисляется как длина: `len(rows)`. Видимое начальное присваивание: `rows = []`.",
+            "anchors": [
+              {
+                "ref_id": "Wc8c7f66874ae734382f79345ff6c5e8ce438afd1334acf729b89996a3b9c315c",
+                "lines": [
+                  108,
+                  108
+                ]
+              },
+              {
+                "ref_id": "W7720788d854e837c85fd100bd2de4b8cdf82edccd4736d170a5ca3849b1f2f31",
+                "lines": [
+                  87,
+                  87
+                ]
+              }
+            ]
+          },
+          {
+            "text": "Цикл перебирает `enumerate(symbols)`. В теле цикла список пополняется операцией `rows.append(row)`.",
+            "anchors": [
+              {
+                "ref_id": "Wd72a48a4cd125dec43f34ccb1086ad999f16d6f2f01729d5a80f66c52cffa4ef",
+                "lines": [
+                  88,
+                  88
+                ]
+              },
+              {
+                "ref_id": "Wf1001a8668d1a367e8ecba5b752f03d4e124ed0263d2a110716b75297d71c473",
+                "lines": [
+                  102,
+                  102
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "relations": [
+        {
+          "function": "rank_symbols",
+          "field": "function_candidates_total",
+          "site": {
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "line": 125,
+            "column": 8,
+            "end_line": 125,
+            "end_column": 45,
+            "definition_path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+            "definition_line": 72,
+            "snapshot_id": "wt-sha256-2c65c803a04144b2ea35bc760cfd1a7f065ab8001489cf504e380e0ccbd24e68"
+          },
+          "basis": "same_resolved_call_in_calls_and_flow",
+          "supports": {
+            "call": "W8c083e232830db5e7839f196741330dd387c76c6e1084c86359c5061a4fcb480",
+            "definition": "Wdf0631a0931b25e5986970b42ee7b2b7b1ec3308b62fc943c0e8b24b4a215d7b"
+          }
+        }
+      ],
+      "items": [
+        {
+          "ref_id": "Wdf0631a0931b25e5986970b42ee7b2b7b1ec3308b62fc943c0e8b24b4a215d7b",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 72,
+          "end": 72,
+          "excerpt": "def rank_symbols(issue_title,old_sources,limit=40):\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "7ab8331806d35534da64e7870e1871cb3d0b2fa8cd51ca3cbf8a428b9a1f30c4"
+        },
+        {
+          "ref_id": "Wf16253d22116bea2a65b2220d93d4b5e6fc67b8f86a7ee36532b94a656275fc1",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 110,
+          "end": 110,
+          "excerpt": "def rank(title,old_sources):\n",
+          "source_sha256": "426d832608cb33104b9bc3e437e96016721fbb0a5ef23713c2243e58ec97d74d",
+          "excerpt_sha256": "f2eab977d38c89f3e569cbcccf1566df0dddeb543df54e4ade667aea89bb79e2"
+        },
+        {
+          "ref_id": "W8c083e232830db5e7839f196741330dd387c76c6e1084c86359c5061a4fcb480",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 125,
+          "end": 125,
+          "excerpt": "    sym=rank_symbols(title,selected,limit=37)\n",
+          "source_sha256": "426d832608cb33104b9bc3e437e96016721fbb0a5ef23713c2243e58ec97d74d",
+          "excerpt_sha256": "c2e3d6aaf5e51391252c08390ad3a081f4d17bc7cc259b77658758a7cca665a6"
+        },
+        {
+          "ref_id": "Wf7b3d044b030e0812c1dd03ae7e0749be1a4ede1f6db25e12ae3daca9e2d480d",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 18,
+          "end": 18,
+          "excerpt": "from .m127_symbol import rank_symbols,tokens\n",
+          "source_sha256": "426d832608cb33104b9bc3e437e96016721fbb0a5ef23713c2243e58ec97d74d",
+          "excerpt_sha256": "aa850c8a507cf4c13b229ee65ea8d2c9bdc4dbe94fe84528cfe78beb42d09a9d"
+        },
+        {
+          "ref_id": "W7d9508a68998cf24798552733a8a447a423eadd0bf4dfd624d8ba4d9f2817634",
+          "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+          "start": 135,
+          "end": 135,
+          "excerpt": "                function_candidates_total=sym['symbol_candidates'],module_candidates_total=nmodules,\n",
+          "source_sha256": "426d832608cb33104b9bc3e437e96016721fbb0a5ef23713c2243e58ec97d74d",
+          "excerpt_sha256": "0782ef0d7e7264d603c43f90e4b7ca2ac8d831a8785286ba2ededdfed5a5dfa8"
+        },
+        {
+          "ref_id": "Wc8c7f66874ae734382f79345ff6c5e8ce438afd1334acf729b89996a3b9c315c",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 108,
+          "end": 108,
+          "excerpt": "    return {'schema':'SKYNETVS_M127_SYMBOL_RETRIEVAL_V1','symbol_candidates':len(rows),\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "4ac5dce610bcd3d09e6d20a109a3bc88bff2bcfe8b77ab4b379cfdf4e7966e44"
+        },
+        {
+          "ref_id": "W7720788d854e837c85fd100bd2de4b8cdf82edccd4736d170a5ca3849b1f2f31",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 87,
+          "end": 87,
+          "excerpt": "    rows=[]\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "a066b9aad46a07051c02881f610a8b5f046f55e7f66f68cca3217fb91e64c1e2"
+        },
+        {
+          "ref_id": "Wd72a48a4cd125dec43f34ccb1086ad999f16d6f2f01729d5a80f66c52cffa4ef",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 88,
+          "end": 88,
+          "excerpt": "    for i,s in enumerate(symbols):\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "95b8853ad29fdbdddb07490b42d41e1b14ea85b7439491f02f96224d85188d30"
+        },
+        {
+          "ref_id": "Wf1001a8668d1a367e8ecba5b752f03d4e124ed0263d2a110716b75297d71c473",
+          "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+          "start": 102,
+          "end": 102,
+          "excerpt": "        rows.append(row)\n",
+          "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+          "excerpt_sha256": "1ed21cdecf87a6db9f4e2459f1b76981ff4ccf9036bb1bbb405f35219906c552"
+        }
+      ]
+    },
+    {
+      "id": "W2",
+      "mode": "git-head",
+      "snapshot": "fb454238a95db7a33d47ed536e21c3e9dd970f41",
+      "decision": "answered",
+      "proposal": {
+        "status": "answer",
+        "claims": [
+          {
+            "text": "`search_repository` формирует поле `no_model_training` из `True`.",
+            "anchors": [
+              {
+                "ref_id": "E0a11c29c396f465c",
+                "lines": [
+                  171,
+                  171
+                ]
+              }
+            ]
+          },
+          {
+            "text": "Значение задано литералом `True`.",
+            "anchors": [
+              {
+                "ref_id": "E0a11c29c396f465c",
+                "lines": [
+                  171,
+                  171
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "relations": [],
+      "items": [
+        {
+          "ref_id": "E0a11c29c396f465c",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 171,
+          "end": 171,
+          "excerpt": "            \"no_patch_or_apply\": True, \"no_model_training\": True,\n",
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "4e4e7c92573f3d9c7f71f1572d7c1c10d5a74e8ea71446f862c7bd5d0f1d01d3"
+        }
+      ]
+    },
+    {
+      "id": "W2",
+      "mode": "working-tree",
+      "snapshot": "wt-sha256-2c65c803a04144b2ea35bc760cfd1a7f065ab8001489cf504e380e0ccbd24e68",
+      "decision": "answered",
+      "proposal": {
+        "status": "answer",
+        "claims": [
+          {
+            "text": "`search_repository` формирует поле `no_model_training` из `True`.",
+            "anchors": [
+              {
+                "ref_id": "W83cb4a3213179ac480569eb2765052c325b46113fe0aa32a7a94d57ed8695594",
+                "lines": [
+                  171,
+                  171
+                ]
+              }
+            ]
+          },
+          {
+            "text": "Значение задано литералом `True`.",
+            "anchors": [
+              {
+                "ref_id": "W83cb4a3213179ac480569eb2765052c325b46113fe0aa32a7a94d57ed8695594",
+                "lines": [
+                  171,
+                  171
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "relations": [],
+      "items": [
+        {
+          "ref_id": "W83cb4a3213179ac480569eb2765052c325b46113fe0aa32a7a94d57ed8695594",
+          "path": "modules/developer_task_ui/app/context_search.py",
+          "start": 171,
+          "end": 171,
+          "excerpt": "            \"no_patch_or_apply\": True, \"no_model_training\": True,\n",
+          "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+          "excerpt_sha256": "4e4e7c92573f3d9c7f71f1572d7c1c10d5a74e8ea71446f862c7bd5d0f1d01d3"
+        }
+      ]
+    },
+    {
+      "id": "W3",
+      "mode": "git-head",
+      "snapshot": "fb454238a95db7a33d47ed536e21c3e9dd970f41",
+      "decision": "insufficient",
+      "proposal": {
+        "status": "insufficient",
+        "claims": [],
+        "reason": "out_of_scope"
+      },
+      "relations": [],
+      "items": []
+    },
+    {
+      "id": "W3",
+      "mode": "working-tree",
+      "snapshot": "wt-sha256-2c65c803a04144b2ea35bc760cfd1a7f065ab8001489cf504e380e0ccbd24e68",
+      "decision": "insufficient",
+      "proposal": {
+        "status": "insufficient",
+        "claims": [],
+        "reason": "out_of_scope"
+      },
+      "relations": [],
+      "items": []
+    }
+  ],
+  "controls": [
+    {
+      "case": "same_size_time_new_content",
+      "reason": "working_changed",
+      "stage": "verification"
+    },
+    {
+      "case": "same_bytes_new_file",
+      "reason": "working_changed",
+      "stage": "verification"
+    },
+    {
+      "case": "unquoted_member_changed",
+      "reason": "working_changed",
+      "stage": "verification"
+    },
+    {
+      "case": "writer_open_before_capture",
+      "reason": "working_busy",
+      "stage": "retrieval"
+    },
+    {
+      "case": "writer_during_capture_and_final_check",
+      "reason": "write_open_denied_twice"
+    },
+    {
+      "case": "writer_after_reference_verification",
+      "reason": "write_open_denied"
+    },
+    {
+      "case": "five_path_escapes",
+      "reason": "working_path_outside_profile"
+    },
+    {
+      "case": "hardlink",
+      "reason": "working_file_type",
+      "stage": "retrieval"
+    },
+    {
+      "case": "create_file_symlink",
+      "reason": "SKIPPED_WINERROR_1314"
+    },
+    {
+      "case": "injected_file_reparse_attribute",
+      "reason": "working_reparse_point",
+      "stage": "retrieval"
+    },
+    {
+      "case": "ancestor_junction",
+      "reason": "working_reparse_point",
+      "stage": "retrieval"
+    },
+    {
+      "case": "forged_remote_locator",
+      "reason": "invalid_reference",
+      "stage": "retrieval"
+    },
+    {
+      "case": "new_task_new_snapshot",
+      "reason": "38_in_new_snapshot_37_in_original"
+    },
+    {
+      "case": "prior_snapshot_same_excerpt",
+      "reason": "invalid_reference"
+    }
+  ],
+  "model_generations": 0
+}
