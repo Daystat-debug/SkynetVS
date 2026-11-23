@@ -54,6 +54,28 @@ class FirstPath(PathFirst):
     first_only = True
 
 
+class Greedy(arguments.Search):
+    """Filter on the required formal early, prefer a complete proof, otherwise try one branch."""
+    def witness(self, origin, target, formal):
+        seen = set()
+        suffix = []
+        while (target,formal) not in seen:
+            seen.add((target,formal))
+            choices = []
+            for site in self.incoming(target):
+                transfer = self.bind(site,formal,origin)
+                if transfer:
+                    previous,claim = transfer
+                    if previous is None:
+                        return [claim,*suffix]
+                    choices.append((site.caller.node.name,previous,claim))
+            if not choices:
+                break
+            target,formal,claim = choices[0]
+            suffix.insert(0,claim)
+        return []
+
+
 def baseline(reader,src,q,goal):
     task = host.Task(q,loop.SOURCE,timeout=loop.TIME_LIMIT)
     trace = []
@@ -88,7 +110,7 @@ def checkout_fixture(root,base,raw):
     return commit
 
 
-def challenge(rng,width,number,raw,negative=None):
+def challenge(rng,width,number,raw,negative=None,plausible=False):
     # Record the oracle while EMITTING statements. No AST reader or planner is used to label tasks.
     def fresh():
         return "f_"+format(rng.getrandbits(52),"x")
@@ -108,22 +130,26 @@ def challenge(rng,width,number,raw,negative=None):
     emit("    return payload")
     for i,arm in enumerate(arms):
         define(arm,"incoming")
-        if i == chosen:
-            alias = emit("    copy = incoming")
+        if i == chosen or plausible:
+            copy_line = emit("    copy = incoming")
             if negative == "reassigned":
                 emit("    copy = 9")
             call = "()" if negative == "default" else "(payload=copy)"
-            leaf_line = emit(f"    return {leaf}{call}")
+            call_line = emit(f"    return {leaf}{call}")
+            if i == chosen:
+                alias,leaf_line = copy_line,call_line
         else:
             expr = "incoming + 1" if i % 2 else str(i+1)
             emit(f"    return {leaf}(payload={expr})")
     define(origin,"ticket")
     for i,arm in enumerate(arms):
+        if plausible and i != chosen:
+            continue
         line = emit(f"    {arm}(ticket)")
         if i == chosen:
             origin_line = line
     q = f"Что из {origin} передаётся в {leaf}.payload?"
-    case = dict(id=f"G{number:02}",q=q,goal=[origin,leaf,"payload"],width=width)
+    case = dict(id=("B" if plausible else "G")+f"{number:02}",q=q,goal=[origin,leaf,"payload"],width=width)
     if negative:
         case["reason"] = "argument_unproven"
     else:
@@ -169,10 +195,12 @@ def evaluate(case,root,commit,defs,prior,ordinal):
     runners = [("core02",lambda:prior.investigate(q,root,opener=inputs)),
                ("first",lambda:baseline(FirstPath,src,q,case["goal"])),
                ("all_paths",lambda:baseline(PathFirst,src,q,case["goal"])),
+               ("greedy",lambda:baseline(Greedy,src,q,case["goal"])),
                ("core03",lambda:loop.investigate(q,root,opener=inputs))]
     row = dict(id=case["id"],positive="hops" in case,commit=commit)
     times = {}
-    for arm,run in runners[ordinal%4:] + runners[:ordinal%4]:
+    offset = ordinal % len(runners)
+    for arm,run in runners[offset:] + runners[:offset]:
         start = perf_counter()
         result = run()
         times[arm] = round((perf_counter()-start)*1000,1)
@@ -185,6 +213,37 @@ def evaluate(case,root,commit,defs,prior,ordinal):
             row["answer"] = [dict(text=c["text"],locations=[[r["path"],r["start"],r["end"]]
                                  for r in c["refs"]]) for c in result["claims"]]
     return row,times
+
+
+def refusal_controls(root,base,case):
+    set_head(root,base)
+    src,ground = loop.read_head(root)
+    rows = {}
+    def check(name, reason, state, count, **kwargs):
+        result = loop.investigate(kwargs.pop("question",case["q"]),root,opener=lambda _: (src,ground),**kwargs)
+        actual = (result["state"],result.get("reason"),len(result["steps"]),result["claims"])
+        assert actual == (state,reason,count,[]), (name,actual)
+        rows[name] = reason
+    check("one_step","step_budget","insufficient",1,steps=1)
+    check("outside","out_of_scope","insufficient",0,question=case["q"]+" в main.py")
+    check("live","observation_required","insufficient",0,question=case["q"]+" в последнем запуске")
+    lookup = host.lab.cli.calls.lookup
+    check("other_real_target","endpoint_binding","failed",1,lookup=lambda _,s,r:lookup("rank_symbols",s,r))
+    def bad_ref(name,s,r):
+        raw = lookup(name,s,r)
+        raw["claims"][0]["evidence_blocks"][0]["url"] += "#unissued"
+        return raw
+    check("unissued_reference","invalid_reference","failed",1,lookup=bad_ref)
+    def changed_head(name,s,r):
+        raw = lookup(name,s,r)
+        set_head(root,"1de73ad")
+        return raw
+    check("changed_head","stale_snapshot","failed",1,lookup=changed_head)
+    set_head(root,base)
+    def broken(*args):
+        raise RuntimeError("fixture unavailable")
+    check("tool_error","tool_error","failed",1,lookup=broken)
+    return rows
 
 
 def run_all(temp):
@@ -205,13 +264,18 @@ def run_all(temp):
     for number,width in enumerate([2]*4+[4]*4+[8]*4+[4,4],1):
         modified,case,defs = challenge(rng,width,number,raw,{13:"reassigned",14:"default"}.get(number))
         trials.append((case,defs,modified))
+    branching = json.loads(pilot.git("show","2cb561a:"+DIR+"/branching.json"))
+    second_rng = random.Random(branching["seed"])
+    for number,width in enumerate([2]*3+[3]*3+[6]*3,1):
+        modified,case,defs = challenge(second_rng,width,number,raw,plausible=True)
+        trials.append((case,defs,modified))
     rows,timing = [],{}
     for n,(case,defs,modified) in enumerate(trials):
         commit = checkout_fixture(root,base,modified) if modified else base
         row,ms = evaluate(case,root,commit,defs,prior,n)
         rows.append(row)
         timing[case["id"]] = ms
-    return rows,timing
+    return rows,timing,refusal_controls(root,base,plan["cases"][0])
 
 
 def main():
@@ -219,14 +283,20 @@ def main():
     parser.add_argument("mode", choices=("record","verify"))
     args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix="skynet-argflow-") as temp:
-        rows,timing = run_all(Path(temp))
+        rows,timing,controls = run_all(Path(temp))
     dest = pilot.ROOT/DIR/"results.json"
+    first = [{k:v for k,v in r.items() if k != "greedy"} for r in rows[:23]]
+    assert json.loads(dest.read_text(encoding="utf8"))["rows"] == first
+    extra = dict(greedy_first={r["id"]:r["greedy"] for r in rows[:23]},branching=rows[23:])
+    supplement = dest.with_name("supplement.json")
     if args.mode == "record":
-        pilot.dump(dest,dict(rows=rows,ms=timing))
+        pilot.dump(supplement,dict(extra,ms=timing))
     else:
-        assert json.loads(dest.read_text(encoding="utf8"))["rows"] == rows
-    for label,group in (("project",rows[:9]),("generated",rows[9:])):
-        for arm in ("core02","first","all_paths","core03"):
+        saved = json.loads(supplement.read_text(encoding="utf8"))
+        assert all(saved[k] == v for k,v in extra.items())
+    print("Refusal controls:",controls)
+    for label,group in (("project",rows[:9]),("generated",rows[9:23]),("plausible",rows[23:])):
+        for arm in ("core02","first","all_paths","greedy","core03"):
             print(label,arm,sum(r[arm]["correct"] for r in group),"/",len(group),
                   median(timing[r["id"]][arm] for r in group),"ms")
 
