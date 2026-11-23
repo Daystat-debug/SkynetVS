@@ -11,6 +11,7 @@ from time import monotonic
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import skynet_core_explain as host
 import skynet_argument_flow as arguments
+import skynet_diagnostic_path as diagnostic
 
 SOURCE = host.SOURCE_ID + ".git-head"
 MAX_STEPS = 6
@@ -54,6 +55,9 @@ REASONS = {
     "outgoing_unsupported": "Вы спросили, какие функции вызывает сам производитель. Этот режим проверяет только входящие обращения к нему.",
     "argument_unproven": "В проверенных прямых вызовах не удалось проследить передачу аргумента из указанной функции.",
     "unknown_parameter": "У целевой функции не найден указанный обычный именованный параметр.",
+    "diagnostic_missing": "В доступных функциях не найден явный raise с таким текстом или кодом. Уточните сообщение.",
+    "diagnostic_ambiguous": "Эта диагностика встречается в нескольких местах. От какой функции проследить один путь?",
+    "diagnostic_context": "Место сообщения найдено, но его контекст не поддерживается статической проверкой.",
 }
 
 
@@ -234,7 +238,8 @@ def path_evidence(req, src, names, lookup, trace, steps, deadline):
     return packet(req, src, reason="path_unproven")
 
 
-def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEPS):
+def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEPS,
+                diagnostic_planner=diagnostic.witness):
     task = host.Task(question, SOURCE, timeout=TIME_LIMIT)
     trace = []
     plan = "interpret"
@@ -253,6 +258,14 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
             return packet(req, src, reason="out_of_scope")
         if cli.auto_reader.EVENT.search(req.question):
             return packet(req, src, reason="observation_required")
+        symptom = diagnostic.interpret(req.question)
+        if symptom is not None:
+            plan = "explain_diagnostic"
+            if not symptom or paths:
+                return packet(req, src, reason="clarification")
+            search = arguments.Search(req, src, lookup or cli.calls.lookup, trace,
+                                      min(MAX_STEPS, steps), task.deadline, head_current, site_anchors)
+            return packet(req, src, *diagnostic.solve(search, symptom, diagnostic_planner))
         plain = " ".join(req.question.strip().rstrip("?.!").replace("\x60", "").split())
         goal = arguments.parse(plain)
         if goal:
@@ -284,7 +297,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return evidence
 
     def verify(req, evidence, draft, delivered):
-        if plan in ("callers_of_field_producer", "trace_argument"):
+        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic"):
             head_current(src)
         return host.verify_snapshot(src, req, evidence, draft, delivered)
 
@@ -297,6 +310,9 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     proposal = result["answer_proposal"]
     if proposal["status"] != "answer":
         return dict(public, reason=proposal["reason"])
+    if plan == "explain_diagnostic":
+        public["coverage"] = "one_static_site"
+        public["execution_observed"] = False
     by_id = {i["ref_id"]: i["locator"] for i in evidence["items"]}
     for claim, obs in zip(proposal["claims"], evidence["analysis"]["observations"], strict=True):
         public["claims"].append(dict(text=claim["text"], refs=[by_id[a["ref_id"]] for a in claim["anchors"]]))
@@ -334,6 +350,8 @@ def main():
         if out["state"] != "answered":
             print(REASONS.get(out["reason"], "Ответ удержан."), "(" + out["reason"] + ")")
         else:
+            if out["plan"] == "explain_diagnostic":
+                print("Один статический пример. Входные значения и распространение исключения до пользователя не проверялись.")
             for claim in out["claims"]:
                 print(claim["text"])
                 for ref in claim["refs"]:
