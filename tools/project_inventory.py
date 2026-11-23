@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import os
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 from typing import Iterable
 
 
@@ -231,7 +232,7 @@ def build_focus_hints(root: Path) -> list[str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Build a local filesystem report, including untracked paths.")
     parser.add_argument(
         "--root",
         default=".",
@@ -239,8 +240,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--out",
-        default="project_inventory.md",
-        help="Output markdown file. Default: project_inventory.md",
+        help="Write to this Markdown file. Default: a new file in the system temp directory.",
     )
     parser.add_argument(
         "--max-depth",
@@ -251,7 +251,6 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
-    out = Path(args.out).resolve()
 
     if not root.exists():
         print(f"[FAIL] root does not exist: {root}")
@@ -262,15 +261,18 @@ def main() -> int:
     lines.extend(build_summary(root))
     lines.extend(build_focus_hints(root))
 
-    out.write_text("\n".join(lines), encoding="utf-8")
+    report = "\n".join(lines)
+    if args.out is None:
+        with NamedTemporaryFile(mode="w", encoding="utf-8", prefix="skynetvs-inventory-",
+                                suffix=".md", delete=False) as output:
+            output.write(report)
+            out = Path(output.name)
+    else:
+        out = Path(args.out).resolve()
+        out.write_text(report, encoding="utf-8")
 
     print(f"[OK] inventory written: {out}")
-    print("")
-    print("Send me this file or paste its contents:")
-    print(f"  {out}")
-    print("")
-    print("Important:")
-    print("  Do NOT send .env contents or secrets.")
+    print("Local report includes filesystem metadata. For development navigation use tools/navigation_lab/nav.py.")
     return 0
 
 

@@ -284,8 +284,12 @@ def audit(snap):
         yield "\t".join((path, *classify(path)))
 
 
-def topics(snap, key):
-    cards = json.loads(Path(__file__).with_name("topics.json").read_text(encoding="utf-8"))
+def topic_cards():
+    return json.loads(Path(__file__).with_name("topics.json").read_text(encoding="utf-8"))
+
+
+def topics(snap, key, cards=None):
+    cards = topic_cards() if cards is None else cards
     if not key:
         return [f"{name}  {card['task']}" for name, card in cards.items()]
     card = cards[key]
@@ -298,6 +302,31 @@ def topics(snap, key):
     return rows
 
 
+def task_route(snap, question):
+    """Return cards supported by distinct subject terms; retain incomparable matches."""
+    def terms(text):
+        words = re.findall(r"[^\W_]+", text.casefold().replace("ё", "е"))
+        # Process words recur in a developer question regardless of its subject.
+        generic = {"провер", "запуск", "показа", "посмот", "исполь", "отдель", "нужный"}
+        return {word[:6] for word in words if len(word) >= 3 or word == "ui"} - generic
+
+    cards = topic_cards()
+    wanted = terms(question)
+    matches = {}
+    for key, card in cards.items():
+        evidence = wanted & terms(key + " " + card["task"])
+        if evidence:
+            matches[key] = evidence
+    if not matches:
+        return ["Нет совпадений в карточках. Список областей: topic."]
+    candidates = sorted(key for key, terms_found in matches.items()
+                        if not any(terms_found < other for other in matches.values()))
+    if len(candidates) > 1:
+        return ["Уточните область:"] + [f"topic {k}  {cards[k]['task']}" for k in candidates]
+    key = candidates[0]
+    return [f"topic {key}", *topics(snap, key, cards)]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--snapshot", default="HEAD")
@@ -307,6 +336,7 @@ def main():
         cmds.add_parser(cmd).add_argument("symbols", nargs="+")
     cmds.add_parser("file").add_argument("path")
     cmds.add_parser("topic").add_argument("key", nargs="?")
+    cmds.add_parser("task").add_argument("question", nargs="+")
     for cmd in ("audit", "edges", "session"):
         cmds.add_parser(cmd)
     args = parser.parse_args()
@@ -318,9 +348,11 @@ def main():
             print(row)
         return
     print("snapshot", snap.sha)
-    if args.cmd == "topic":
+    if args.cmd in ("topic", "task"):
         try:
-            print("\n".join(topics(snap, args.key)))
+            rows = (topics(snap, args.key) if args.cmd == "topic"
+                    else task_route(snap, " ".join(args.question)))
+            print("\n".join(rows))
         except (KeyError, ValueError) as exc:
             parser.error(str(exc))
         return

@@ -1,0 +1,461 @@
+{
+  "baseline": "ce6500fb97cba391f0081ed822828638b54e5c2a",
+  "cases": [
+    {
+      "id": "D1",
+      "menu": {
+        "elapsed_ms": [
+          225.79,
+          210.71,
+          214.94,
+          217.62
+        ],
+        "commands": 2,
+        "stdout_bytes": 1099,
+        "contains_requested_paths": true,
+        "median_ms": 216.28
+      },
+      "task": {
+        "elapsed_ms": [
+          121.78,
+          107.46,
+          106.86,
+          107.12
+        ],
+        "commands": 1,
+        "stdout_bytes": 245,
+        "returned": [
+          "topic reminders",
+          "Напоминания, состояние и хранилище",
+          "entry: modules/reminder_service.py",
+          "boundary: modules/reminder_repository.py",
+          "check: tools/eval_reminder_service.py"
+        ],
+        "matches_rubric": true,
+        "assisted_commands": 1,
+        "assisted_bytes": 245,
+        "assisted_elapsed_ms": [
+          121.79,
+          107.46,
+          106.86,
+          107.12
+        ],
+        "median_ms": 107.29
+      }
+    },
+    {
+      "id": "D2",
+      "menu": {
+        "elapsed_ms": [
+          224.53,
+          211.0,
+          214.03,
+          209.28
+        ],
+        "commands": 2,
+        "stdout_bytes": 1139,
+        "contains_requested_paths": true,
+        "median_ms": 212.51
+      },
+      "task": {
+        "elapsed_ms": [
+          106.73,
+          216.62,
+          109.86,
+          104.1
+        ],
+        "commands": 1,
+        "stdout_bytes": 278,
+        "returned": [
+          "topic ui",
+          "Отдельный процесс Developer Tasks и состав поставки",
+          "entry: modules/developer_task_ui/launch.py",
+          "boundary: modules/developer_task_ui/BUNDLE_MANIFEST.json",
+          "check: tools/eval_core_symbol_ui.py"
+        ],
+        "matches_rubric": true,
+        "assisted_commands": 1,
+        "assisted_bytes": 278,
+        "assisted_elapsed_ms": [
+          106.73,
+          216.62,
+          109.86,
+          104.1
+        ],
+        "median_ms": 108.3
+      }
+    },
+    {
+      "id": "D3",
+      "menu": {
+        "elapsed_ms": [
+          211.28,
+          218.28,
+          226.03,
+          211.22
+        ],
+        "commands": 2,
+        "stdout_bytes": 1098,
+        "contains_requested_paths": true,
+        "median_ms": 214.78
+      },
+      "task": {
+        "elapsed_ms": [
+          106.97,
+          103.11,
+          121.28,
+          116.47
+        ],
+        "commands": 1,
+        "stdout_bytes": 261,
+        "returned": [
+          "Уточните область:",
+          "topic actions  Полномочия и исполнение действий",
+          "topic developer  Контракты Developer Tasks и разрешённые зависимости"
+        ],
+        "matches_rubric": false,
+        "assisted_commands": 2,
+        "assisted_bytes": 489,
+        "assisted_elapsed_ms": [
+          211.26,
+          208.41,
+          233.63,
+          220.79
+        ],
+        "median_ms": 111.72
+      }
+    },
+    {
+      "id": "D4",
+      "menu": {
+        "elapsed_ms": [
+          214.08,
+          207.98,
+          208.52,
+          210.86
+        ],
+        "commands": 2,
+        "stdout_bytes": 1106,
+        "contains_requested_paths": true,
+        "median_ms": 209.69
+      },
+      "task": {
+        "elapsed_ms": [
+          107.03,
+          103.4,
+          106.21,
+          104.47
+        ],
+        "commands": 1,
+        "stdout_bytes": 251,
+        "returned": [
+          "topic pipeline",
+          "Регистрация команд и эффекты pipeline",
+          "entry: tools/pipeline.py",
+          "boundary: docs/maintenance/M154_PipelineEffects_Result.json",
+          "check: tools/eval_pipeline_effects.py"
+        ],
+        "matches_rubric": true,
+        "assisted_commands": 1,
+        "assisted_bytes": 251,
+        "assisted_elapsed_ms": [
+          107.03,
+          103.4,
+          106.21,
+          104.47
+        ],
+        "median_ms": 105.34
+      }
+    },
+    {
+      "id": "D5",
+      "menu": {
+        "elapsed_ms": [
+          103.3,
+          107.22,
+          105.38,
+          104.27
+        ],
+        "commands": 1,
+        "stdout_bytes": 870,
+        "median_ms": 104.82
+      },
+      "task": {
+        "elapsed_ms": [
+          112.9,
+          108.14,
+          104.78,
+          105.08
+        ],
+        "commands": 1,
+        "stdout_bytes": 242,
+        "returned": [
+          "Уточните область:",
+          "topic actions  Полномочия и исполнение действий",
+          "topic reminders  Напоминания, состояние и хранилище"
+        ],
+        "matches_rubric": true,
+        "median_ms": 106.61
+      }
+    },
+    {
+      "id": "D6",
+      "menu": {
+        "elapsed_ms": [
+          106.01,
+          103.67,
+          103.97,
+          104.04
+        ],
+        "commands": 1,
+        "stdout_bytes": 870,
+        "median_ms": 104.0
+      },
+      "task": {
+        "elapsed_ms": [
+          107.39,
+          102.04,
+          105.96,
+          105.85
+        ],
+        "commands": 1,
+        "stdout_bytes": 139,
+        "returned": [
+          "Нет совпадений в карточках. Список областей: topic."
+        ],
+        "matches_rubric": true,
+        "median_ms": 105.91
+      }
+    },
+    {
+      "id": "D7",
+      "menu": {
+        "elapsed_ms": [
+          205.43,
+          207.44,
+          207.49,
+          213.36
+        ],
+        "commands": 2,
+        "stdout_bytes": 1099,
+        "contains_requested_paths": true,
+        "median_ms": 207.47
+      },
+      "task": {
+        "elapsed_ms": [
+          106.87,
+          106.69,
+          106.37,
+          105.61
+        ],
+        "commands": 1,
+        "stdout_bytes": 139,
+        "returned": [
+          "Нет совпадений в карточках. Список областей: topic."
+        ],
+        "matches_rubric": false,
+        "assisted_commands": 3,
+        "assisted_bytes": 1238,
+        "assisted_elapsed_ms": [
+          318.17,
+          316.67,
+          327.28,
+          312.94
+        ],
+        "median_ms": 106.53
+      }
+    },
+    {
+      "id": "X1",
+      "menu": {
+        "elapsed_ms": [
+          215.21,
+          210.78,
+          222.67,
+          207.36
+        ],
+        "commands": 2,
+        "stdout_bytes": 1144,
+        "contains_requested_paths": true,
+        "median_ms": 213.0
+      },
+      "task": {
+        "elapsed_ms": [
+          111.09,
+          105.9,
+          104.87,
+          103.94
+        ],
+        "commands": 1,
+        "stdout_bytes": 290,
+        "returned": [
+          "topic developer",
+          "Контракты Developer Tasks и разрешённые зависимости",
+          "entry: modules/developer/developer_task_contract.py",
+          "boundary: tools/eval_package_boundaries.py",
+          "check: tools/eval_developer_task_contract.py"
+        ],
+        "matches_rubric": true,
+        "assisted_commands": 1,
+        "assisted_bytes": 290,
+        "assisted_elapsed_ms": [
+          111.09,
+          105.91,
+          104.87,
+          103.95
+        ],
+        "median_ms": 105.39
+      }
+    },
+    {
+      "id": "X2",
+      "menu": {
+        "elapsed_ms": [
+          205.54,
+          212.33,
+          209.23,
+          216.67
+        ],
+        "commands": 2,
+        "stdout_bytes": 1124,
+        "contains_requested_paths": true,
+        "median_ms": 210.78
+      },
+      "task": {
+        "elapsed_ms": [
+          111.95,
+          109.43,
+          102.71,
+          102.21
+        ],
+        "commands": 1,
+        "stdout_bytes": 267,
+        "returned": [
+          "topic native",
+          "Происхождение исходников trusted_host",
+          "entry: native/trusted_host/README_RU.md",
+          "boundary: native/trusted_host/SOURCE_BASELINE.json",
+          "check: native/trusted_host/check_source_baseline.py"
+        ],
+        "matches_rubric": true,
+        "assisted_commands": 1,
+        "assisted_bytes": 267,
+        "assisted_elapsed_ms": [
+          111.95,
+          109.43,
+          102.72,
+          102.21
+        ],
+        "median_ms": 106.07
+      }
+    },
+    {
+      "id": "X3",
+      "menu": {
+        "elapsed_ms": [
+          221.54,
+          206.91,
+          206.79,
+          204.54
+        ],
+        "commands": 2,
+        "stdout_bytes": 1096,
+        "contains_requested_paths": true,
+        "median_ms": 206.85
+      },
+      "task": {
+        "elapsed_ms": [
+          108.55,
+          104.55,
+          101.86,
+          104.45
+        ],
+        "commands": 1,
+        "stdout_bytes": 241,
+        "returned": [
+          "topic commands",
+          "Распознавание и обработка команды",
+          "entry: modules/command_processor.py",
+          "boundary: modules/command_runtime.py",
+          "check: tools/eval_command_processor.py"
+        ],
+        "matches_rubric": true,
+        "assisted_commands": 1,
+        "assisted_bytes": 241,
+        "assisted_elapsed_ms": [
+          108.55,
+          104.55,
+          101.86,
+          104.45
+        ],
+        "median_ms": 104.5
+      }
+    },
+    {
+      "id": "X4",
+      "menu": {
+        "elapsed_ms": [
+          101.92,
+          101.83,
+          101.73,
+          107.35
+        ],
+        "commands": 1,
+        "stdout_bytes": 870,
+        "median_ms": 101.88
+      },
+      "task": {
+        "elapsed_ms": [
+          105.53,
+          100.81,
+          105.3,
+          109.37
+        ],
+        "commands": 1,
+        "stdout_bytes": 253,
+        "returned": [
+          "Уточните область:",
+          "topic reminders  Напоминания, состояние и хранилище",
+          "topic voice  Голосовой цикл, запуск и остановка служб"
+        ],
+        "matches_rubric": true,
+        "median_ms": 105.41
+      }
+    },
+    {
+      "id": "X5",
+      "menu": {
+        "elapsed_ms": [
+          101.1,
+          105.98,
+          107.72,
+          107.51
+        ],
+        "commands": 1,
+        "stdout_bytes": 870,
+        "median_ms": 106.75
+      },
+      "task": {
+        "elapsed_ms": [
+          108.15,
+          104.46,
+          112.15,
+          113.16
+        ],
+        "commands": 1,
+        "stdout_bytes": 139,
+        "returned": [
+          "Нет совпадений в карточках. Список областей: topic."
+        ],
+        "matches_rubric": true,
+        "median_ms": 110.15
+      }
+    }
+  ],
+  "inventory": {
+    "legacy_default_rewrites_tracked_report": true,
+    "temp_default_outside_checkout": true,
+    "explicit_and_default_equal_legacy_report": true,
+    "checkout_clean": true
+  }
+}
