@@ -1,0 +1,14 @@
+{
+  "baseline": "793cd41bf6f691ca13ca1b5770606180a16e6279",
+  "purpose": "Prediction only, no action dispatch. Compare the installed classifier with a disposable fit. Keep all previously correct held-out decisions and check the original full risk guard without changing its threshold.",
+  "cases": [
+    ["стоп, закончи слушать", "STOP_LISTEN"],
+    ["перестань принимать мои команды", "STOP_LISTEN"],
+    ["закрой режим прослушивания команд", "STOP_LISTEN"],
+    ["прекрати говорить пожалуйста", "STOP_TALKING"],
+    ["поставь музыку на паузу пожалуйста", "MUSIC_PAUSE"],
+    ["перезапусти музыку пожалуйста", "MUSIC_RESTART"],
+    ["перезапусти программу скайнет пожалуйста", "RESTART_SKYNETVS"],
+    ["заверши работу помощника пожалуйста", "EXIT_SKYNETVS"]
+  ]
+}
