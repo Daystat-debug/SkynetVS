@@ -1,0 +1,54 @@
+{
+  "model": {
+    "calls": 7,
+    "startup_seconds": 8.641,
+    "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+    "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9",
+    "stopped": true
+  },
+  "observations": [
+    {
+      "id": "T02",
+      "label": "local",
+      "finish": "stop",
+      "wall_ms": 1734.0
+    },
+    {
+      "id": "T03",
+      "label": "local",
+      "finish": "stop",
+      "wall_ms": 1844.0
+    },
+    {
+      "id": "T08",
+      "label": "other",
+      "finish": "stop",
+      "wall_ms": 1828.0
+    },
+    {
+      "id": "T10",
+      "label": "local",
+      "finish": "stop",
+      "wall_ms": 1672.0
+    },
+    {
+      "id": "T15",
+      "label": "other",
+      "finish": "stop",
+      "wall_ms": 1813.0
+    },
+    {
+      "id": "R05",
+      "label": "local",
+      "finish": "stop",
+      "wall_ms": 1625.0
+    },
+    {
+      "id": "R14",
+      "label": "local",
+      "finish": "stop",
+      "wall_ms": 1829.0
+    }
+  ],
+  "matched": true
+}

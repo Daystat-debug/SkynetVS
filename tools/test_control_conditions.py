@@ -7,6 +7,7 @@ from itertools import product
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import skynet_control_conditions as control
+from eval_control_answer_text import displayed
 
 
 def evaluate(term, values, loops=None):
@@ -33,6 +34,15 @@ def proof(body, target="return 42"):
 
 
 class Conditions(unittest.TestCase):
+    def test_visible_polarity_and_location(self):
+        fn = ast.parse("def f(x):\n    if x: return 7").body[0]
+        claim = ("В f исследована инструкция `return 7` (стр. 2). Для достижения строки требуется: "
+                 "`x` истинно (стр. 2). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.")
+        self.assertEqual(displayed(claim, fn, 2), 2)
+        self.assertEqual(displayed(claim.replace("истинно","ложно"), fn, 2), -2)
+        with self.assertRaises(AssertionError):
+            displayed(claim.replace("`x` истинно (стр. 2)", "`x` истинно (стр. 1)"), fn, 2)
+
     def test_choices_and_prior_exits(self):
         term = proof("if a:\n    if b: return 0\nelse:\n    if c: raise Bad()\nif d:\n    return 42")
         for a,b,c,d in product((False,True), repeat=4):

@@ -1,0 +1,43 @@
+[
+  {
+    "question": "ValueError: M130_TITLE_INVALID",
+    "ms": 687,
+    "snapshot": "576be55a1c92f7bcd6cf97eb6d65494fb7a8b15a",
+    "target": 115,
+    "tools": [
+      "locate_statement",
+      "prove_local_control"
+    ]
+  },
+  {
+    "question": "ValueError: M130_TITLE_INVALID",
+    "ms": 605,
+    "snapshot": "576be55a1c92f7bcd6cf97eb6d65494fb7a8b15a",
+    "target": 115,
+    "tools": [
+      "locate_statement",
+      "prove_local_control"
+    ]
+  },
+  {
+    "question": "ValueError: M130_TITLE_INVALID",
+    "ms": 620,
+    "snapshot": "576be55a1c92f7bcd6cf97eb6d65494fb7a8b15a",
+    "target": 115,
+    "tools": [
+      "locate_statement",
+      "prove_local_control"
+    ]
+  },
+  {
+    "question": "Увидел M141_M131_DISPLAY_SCHEMA_CHANGED. Какой набор проверок ведёт сюда по коду?",
+    "ms": 17763,
+    "snapshot": "576be55a1c92f7bcd6cf97eb6d65494fb7a8b15a",
+    "target": 189,
+    "tools": [
+      "classify_intent",
+      "locate_statement",
+      "prove_local_control"
+    ]
+  }
+]

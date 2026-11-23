@@ -1,0 +1,5354 @@
+{
+  "rows": [
+    {
+      "id": "T01",
+      "q": "Почему возникает ошибка M134_LS_TREE_FORMAT_INVALID?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_LS_TREE_FORMAT_INVALID",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В scan_head исследована инструкция `raise ValueError('M134_LS_TREE_FORMAT_INVALID')` (стр. 85). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` ложно (стр. 79) и `not records or records[-1] != b''` истинно (стр. 84). При расчёте учтены переходы `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                68,
+                68
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                79,
+                79
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                80,
+                80
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                84,
+                84
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                85,
+                85
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            79
+          ],
+          84
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_LS_TREE_FORMAT_INVALID",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В scan_head исследована инструкция `raise ValueError('M134_LS_TREE_FORMAT_INVALID')` (стр. 85). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` ложно (стр. 79) и `not records or records[-1] != b''` истинно (стр. 84). При расчёте учтены переходы `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                68,
+                68
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                79,
+                79
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                80,
+                80
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                84,
+                84
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                85,
+                85
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            79
+          ],
+          84
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T02",
+      "q": "Что должно успеть выполниться, чтобы управление дошло до _render_current_head_labels@184?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "_render_current_head_labels@184",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "_render_current_head_labels",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В _render_current_head_labels исследована инструкция `return raw` (стр. 184). Для достижения строки требуется: `not isinstance(raw, str)` ложно (стр. 181) и `not raw` истинно (стр. 183). При расчёте учтены переходы `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')` (стр. 182). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                175,
+                175
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                181,
+                181
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                182,
+                182
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                183,
+                183
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                184,
+                184
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            181
+          ],
+          183
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "_render_current_head_labels@184",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "_render_current_head_labels",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В _render_current_head_labels исследована инструкция `return raw` (стр. 184). Для достижения строки требуется: `not isinstance(raw, str)` ложно (стр. 181) и `not raw` истинно (стр. 183). При расчёте учтены переходы `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')` (стр. 182). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                175,
+                175
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                181,
+                181
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                182,
+                182
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                183,
+                183
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                184,
+                184
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            181
+          ],
+          183
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T03",
+      "q": "Увидел M141_M131_DISPLAY_SCHEMA_CHANGED. Какой набор проверок ведёт сюда по коду?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M141_M131_DISPLAY_SCHEMA_CHANGED",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "_render_current_head_labels",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В _render_current_head_labels исследована инструкция `raise ValueError('M141_M131_DISPLAY_SCHEMA_CHANGED')` (стр. 189). Для достижения строки требуется: `not isinstance(raw, str)` ложно (стр. 181) и `not raw` ложно (стр. 183) и `len(lines) < 2 or not lines[0].startswith(prefix) or lines[1] != marker` истинно (стр. 188). При расчёте учтены переходы `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')` (стр. 182), `return raw` (стр. 184). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                175,
+                175
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                181,
+                181
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                182,
+                182
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                183,
+                183
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                184,
+                184
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                188,
+                188
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                189,
+                189
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "not",
+              181
+            ],
+            [
+              "not",
+              183
+            ]
+          ],
+          188
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M141_M131_DISPLAY_SCHEMA_CHANGED",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "_render_current_head_labels",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В _render_current_head_labels исследована инструкция `raise ValueError('M141_M131_DISPLAY_SCHEMA_CHANGED')` (стр. 189). Для достижения строки требуется: `not isinstance(raw, str)` ложно (стр. 181) и `not raw` ложно (стр. 183) и `len(lines) < 2 or not lines[0].startswith(prefix) or lines[1] != marker` истинно (стр. 188). При расчёте учтены переходы `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')` (стр. 182), `return raw` (стр. 184). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                175,
+                175
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                181,
+                181
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                182,
+                182
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                183,
+                183
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                184,
+                184
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                188,
+                188
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                189,
+                189
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            181
+          ],
+          [
+            "and",
+            [
+              "not",
+              183
+            ],
+            188
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T04",
+      "q": "При каком условии возникает сообщение M134_NO_SOURCES_OR_SOURCE_LIMIT_EXCEEDED?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_NO_SOURCES_OR_SOURCE_LIMIT_EXCEEDED",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В scan_head исследована инструкция `raise ValueError('M134_NO_SOURCES_OR_SOURCE_LIMIT_EXCEEDED')` (стр. 102). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` ложно (стр. 79) и `not records or records[-1] != b''` ложно (стр. 84) и для всех итераций `for entry in records[:-1]` (стр. 87, включая пустой перебор) выполнено (`not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92)) и `not entries or len(entries) > MAX_TRACKED_PY or len({name for name, _ in entries}) != len(entries)` истинно (стр. 101). При расчёте учтены переходы `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80), `raise ValueError('M134_LS_TREE_FORMAT_INVALID')` (стр. 85), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 90), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 93), `continue` (стр. 96). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                68,
+                68
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                79,
+                79
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                80,
+                80
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                84,
+                84
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                85,
+                85
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                87,
+                87
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                89,
+                89
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                90,
+                90
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                92,
+                92
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                93,
+                93
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                95,
+                95
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                96,
+                96
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                98,
+                98
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                101,
+                101
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                102,
+                102
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            79
+          ],
+          [
+            "and",
+            [
+              "not",
+              84
+            ],
+            [
+              "and",
+              [
+                "all",
+                87,
+                [
+                  "and",
+                  [
+                    "not",
+                    89
+                  ],
+                  [
+                    "not",
+                    92
+                  ]
+                ]
+              ],
+              101
+            ]
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_NO_SOURCES_OR_SOURCE_LIMIT_EXCEEDED",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В scan_head исследована инструкция `raise ValueError('M134_NO_SOURCES_OR_SOURCE_LIMIT_EXCEEDED')` (стр. 102). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` ложно (стр. 79) и `not records or records[-1] != b''` ложно (стр. 84) и для всех итераций `for entry in records[:-1]` (стр. 87, включая пустой перебор) выполнено ((если `not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92) и `mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))` ложно (стр. 95), требуется да, иначе — `not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92) и `mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))` истинно (стр. 95))) и `not entries or len(entries) > MAX_TRACKED_PY or len({name for name, _ in entries}) != len(entries)` истинно (стр. 101). При расчёте учтены переходы `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80), `raise ValueError('M134_LS_TREE_FORMAT_INVALID')` (стр. 85), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 90), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 93), `continue` (стр. 96). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                68,
+                68
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                79,
+                79
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                80,
+                80
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                84,
+                84
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                85,
+                85
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                87,
+                87
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                89,
+                89
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                90,
+                90
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                92,
+                92
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                93,
+                93
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                95,
+                95
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                96,
+                96
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                98,
+                98
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                101,
+                101
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                102,
+                102
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [
+          "('all', 87, 95)"
+        ],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "and",
+              [
+                "not",
+                79
+              ],
+              [
+                "not",
+                84
+              ]
+            ],
+            [
+              "all",
+              87,
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "and",
+                    [
+                      "not",
+                      89
+                    ],
+                    [
+                      "not",
+                      92
+                    ]
+                  ],
+                  [
+                    "not",
+                    95
+                  ]
+                ],
+                true,
+                [
+                  "and",
+                  [
+                    "and",
+                    [
+                      "not",
+                      89
+                    ],
+                    [
+                      "not",
+                      92
+                    ]
+                  ],
+                  95
+                ]
+              ]
+            ]
+          ],
+          101
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T05",
+      "q": "scan_head@97",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "scan_head@97",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В scan_head исследована инструкция `name = path.decode('utf-8', 'strict')` (стр. 97). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` ложно (стр. 79) и `not records or records[-1] != b''` ложно (стр. 84) и для предыдущих итераций `for entry in records[:-1]` (стр. 87, включая пустой перебор) выполнено ((если `not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92) и `mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))` ложно (стр. 95), требуется да, иначе — `not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92) и `mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))` истинно (стр. 95))) и началась рассматриваемая итерация `for entry in records[:-1]` (стр. 87) и `not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92) и `mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))` ложно (стр. 95). При расчёте учтены переходы `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80), `raise ValueError('M134_LS_TREE_FORMAT_INVALID')` (стр. 85), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 90), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 93), `continue` (стр. 96). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                68,
+                68
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                79,
+                79
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                80,
+                80
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                84,
+                84
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                85,
+                85
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                87,
+                87
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                89,
+                89
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                90,
+                90
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                92,
+                92
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                93,
+                93
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                95,
+                95
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                96,
+                96
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                97,
+                97
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                98,
+                98
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [
+          "('past', 87, 95)"
+        ],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "not",
+              79
+            ],
+            [
+              "not",
+              84
+            ]
+          ],
+          [
+            "and",
+            [
+              "past",
+              87,
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "and",
+                    [
+                      "not",
+                      89
+                    ],
+                    [
+                      "not",
+                      92
+                    ]
+                  ],
+                  [
+                    "not",
+                    95
+                  ]
+                ],
+                true,
+                [
+                  "and",
+                  [
+                    "and",
+                    [
+                      "not",
+                      89
+                    ],
+                    [
+                      "not",
+                      92
+                    ]
+                  ],
+                  95
+                ]
+              ]
+            ],
+            [
+              "and",
+              [
+                "iteration",
+                87
+              ],
+              [
+                "and",
+                [
+                  "and",
+                  [
+                    "not",
+                    89
+                  ],
+                  [
+                    "not",
+                    92
+                  ]
+                ],
+                [
+                  "not",
+                  95
+                ]
+              ]
+            ]
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "scan_head@97",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В scan_head исследована инструкция `name = path.decode('utf-8', 'strict')` (стр. 97). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` ложно (стр. 79) и `not records or records[-1] != b''` ложно (стр. 84) и для предыдущих итераций `for entry in records[:-1]` (стр. 87, включая пустой перебор) выполнено (`not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92)) и началась рассматриваемая итерация `for entry in records[:-1]` (стр. 87) и `not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92) и `mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))` ложно (стр. 95). При расчёте учтены переходы `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80), `raise ValueError('M134_LS_TREE_FORMAT_INVALID')` (стр. 85), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 90), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 93), `continue` (стр. 96). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                68,
+                68
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                79,
+                79
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                80,
+                80
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                84,
+                84
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                85,
+                85
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                87,
+                87
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                89,
+                89
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                90,
+                90
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                92,
+                92
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                93,
+                93
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                95,
+                95
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                96,
+                96
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                97,
+                97
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                98,
+                98
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            79
+          ],
+          [
+            "and",
+            [
+              "not",
+              84
+            ],
+            [
+              "and",
+              [
+                "past",
+                87,
+                [
+                  "and",
+                  [
+                    "not",
+                    89
+                  ],
+                  [
+                    "not",
+                    92
+                  ]
+                ]
+              ],
+              [
+                "and",
+                [
+                  "iteration",
+                  87
+                ],
+                [
+                  "and",
+                  [
+                    "not",
+                    89
+                  ],
+                  [
+                    "and",
+                    [
+                      "not",
+                      92
+                    ],
+                    [
+                      "not",
+                      95
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T06",
+      "q": "rank_title_only@56",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "rank_title_only@56",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "rank_title_only",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В rank_title_only исследована инструкция `lengths[path] = sum(counter.values())` (стр. 56). Для достижения строки требуется: `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 40) и `not isinstance(before_files, dict) or not before_files or len(before_files) > 800` ложно (стр. 42) и `not isinstance(top_n, int) or top_n < 1 or top_n > 50` ложно (стр. 44) и для предыдущих итераций `for (path, source) in before_files.items()` (стр. 48, включая пустой перебор) выполнено (`not isinstance(path, str) or not path.endswith('.py') or '\\\\' in path or ('..' in path.split('/'))` ложно (стр. 49) и `not isinstance(source, str) or len(source) > 2500000` ложно (стр. 51)) и началась рассматриваемая итерация `for (path, source) in before_files.items()` (стр. 48) и `not isinstance(path, str) or not path.endswith('.py') or '\\\\' in path or ('..' in path.split('/'))` ложно (стр. 49) и `not isinstance(source, str) or len(source) > 2500000` ложно (стр. 51). При расчёте учтены переходы `raise ValueError('M126_QUERY_INVALID')` (стр. 41), `raise ValueError('M126_FILES_LIMIT')` (стр. 43), `raise ValueError('M126_TOP_N_INVALID')` (стр. 45), `raise ValueError('M126_PATH_INVALID')` (стр. 50), `raise ValueError('M126_SOURCE_INVALID')` (стр. 52). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                34,
+                34
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                40,
+                40
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                41,
+                41
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                42,
+                42
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                43,
+                43
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                44,
+                44
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                45,
+                45
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                48,
+                48
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                49,
+                49
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                50,
+                50
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                51,
+                51
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                52,
+                52
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                56,
+                56
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            40
+          ],
+          [
+            "and",
+            [
+              "not",
+              42
+            ],
+            [
+              "and",
+              [
+                "not",
+                44
+              ],
+              [
+                "and",
+                [
+                  "past",
+                  48,
+                  [
+                    "and",
+                    [
+                      "not",
+                      49
+                    ],
+                    [
+                      "not",
+                      51
+                    ]
+                  ]
+                ],
+                [
+                  "and",
+                  [
+                    "iteration",
+                    48
+                  ],
+                  [
+                    "and",
+                    [
+                      "not",
+                      49
+                    ],
+                    [
+                      "not",
+                      51
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "rank_title_only@56",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "rank_title_only",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В rank_title_only исследована инструкция `lengths[path] = sum(counter.values())` (стр. 56). Для достижения строки требуется: `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 40) и `not isinstance(before_files, dict) or not before_files or len(before_files) > 800` ложно (стр. 42) и `not isinstance(top_n, int) or top_n < 1 or top_n > 50` ложно (стр. 44) и для предыдущих итераций `for (path, source) in before_files.items()` (стр. 48, включая пустой перебор) выполнено (`not isinstance(path, str) or not path.endswith('.py') or '\\\\' in path or ('..' in path.split('/'))` ложно (стр. 49) и `not isinstance(source, str) or len(source) > 2500000` ложно (стр. 51)) и началась рассматриваемая итерация `for (path, source) in before_files.items()` (стр. 48) и `not isinstance(path, str) or not path.endswith('.py') or '\\\\' in path or ('..' in path.split('/'))` ложно (стр. 49) и `not isinstance(source, str) or len(source) > 2500000` ложно (стр. 51). При расчёте учтены переходы `raise ValueError('M126_QUERY_INVALID')` (стр. 41), `raise ValueError('M126_FILES_LIMIT')` (стр. 43), `raise ValueError('M126_TOP_N_INVALID')` (стр. 45), `raise ValueError('M126_PATH_INVALID')` (стр. 50), `raise ValueError('M126_SOURCE_INVALID')` (стр. 52). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                34,
+                34
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                40,
+                40
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                41,
+                41
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                42,
+                42
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                43,
+                43
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                44,
+                44
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                45,
+                45
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                48,
+                48
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                49,
+                49
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                50,
+                50
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                51,
+                51
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                52,
+                52
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m126_rank.py",
+                56,
+                56
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "and",
+              [
+                "not",
+                40
+              ],
+              [
+                "not",
+                42
+              ]
+            ],
+            [
+              "not",
+              44
+            ]
+          ],
+          [
+            "and",
+            [
+              "past",
+              48,
+              [
+                "and",
+                [
+                  "not",
+                  49
+                ],
+                [
+                  "not",
+                  51
+                ]
+              ]
+            ],
+            [
+              "and",
+              [
+                "iteration",
+                48
+              ],
+              [
+                "and",
+                [
+                  "not",
+                  49
+                ],
+                [
+                  "not",
+                  51
+                ]
+              ]
+            ]
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T07",
+      "q": "ValueError: M130_TITLE_INVALID",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M130_TITLE_INVALID",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "rank",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В rank исследована инструкция `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` истинно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                110,
+                110
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                112,
+                112
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                113,
+                113
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                114,
+                114
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                115,
+                115
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            112
+          ],
+          114
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M130_TITLE_INVALID",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "rank",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В rank исследована инструкция `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` истинно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                110,
+                110
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                112,
+                112
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                113,
+                113
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                114,
+                114
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                115,
+                115
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            112
+          ],
+          114
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T08",
+      "q": "Меня интересует смысл M127_INPUT_TOO_LARGE. Какие проверки к нему приводят?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M127_INPUT_TOO_LARGE",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "extract_symbols",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В extract_symbols исследована инструкция `raise ValueError('M127_INPUT_TOO_LARGE')` (стр. 33). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources or len(old_sources) > 24` ложно (стр. 30) и `sum((len(v.encode('utf-8')) if isinstance(v, str) else 10000000 for v in old_sources.values())) > 6000000` истинно (стр. 32). При расчёте учтены переходы `raise ValueError('M127_OLD_SOURCES_INVALID')` (стр. 31). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                28,
+                28
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                30,
+                30
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                31,
+                31
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                32,
+                32
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                33,
+                33
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            30
+          ],
+          32
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M127_INPUT_TOO_LARGE",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "extract_symbols",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В extract_symbols исследована инструкция `raise ValueError('M127_INPUT_TOO_LARGE')` (стр. 33). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources or len(old_sources) > 24` ложно (стр. 30) и `sum((len(v.encode('utf-8')) if isinstance(v, str) else 10000000 for v in old_sources.values())) > 6000000` истинно (стр. 32). При расчёте учтены переходы `raise ValueError('M127_OLD_SOURCES_INVALID')` (стр. 31). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                28,
+                28
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                30,
+                30
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                31,
+                31
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                32,
+                32
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+                33,
+                33
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            30
+          ],
+          32
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T09",
+      "q": "Почему возникает ошибка M134_INVALID_GIT_BLOB_SIZE?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "forward": {
+        "state": "insufficient",
+        "reason": "control_unsupported",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_INVALID_GIT_BLOB_SIZE",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "control_unsupported"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": null,
+        "correct": false,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "insufficient",
+        "reason": "control_unsupported",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_INVALID_GIT_BLOB_SIZE",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "control_unsupported"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": null,
+        "correct": false,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T10",
+      "q": "С чего код вдруг выдаёт M134_GIT_PROJECT_ROOT_MISMATCH?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_GIT_PROJECT_ROOT_MISMATCH",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В scan_head исследована инструкция `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` истинно (стр. 79). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                68,
+                68
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                79,
+                79
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                80,
+                80
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": 79,
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_GIT_PROJECT_ROOT_MISMATCH",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "scan_head",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В scan_head исследована инструкция `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` истинно (стр. 79). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                68,
+                68
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                79,
+                79
+              ],
+              [
+                "modules/developer_task_ui/app/context_search.py",
+                80,
+                80
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": 79,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T11",
+      "q": "git_environment@50",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "git_environment@50",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "git_environment",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В git_environment исследована инструкция `return env` (стр. 50). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                42,
+                42
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                50,
+                50
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": true,
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "git_environment@50",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "git_environment",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В git_environment исследована инструкция `return env` (стр. 50). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                42,
+                42
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                50,
+                50
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": true,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T12",
+      "q": "Где возникает ошибка M134_REPORT_SCHEMA_INVALID?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "backward": {
+        "state": "insufficient",
+        "reason": "diagnostic_ambiguous",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_REPORT_SCHEMA_INVALID",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "insufficient",
+        "reason": "diagnostic_ambiguous",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M134_REPORT_SCHEMA_INVALID",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T13",
+      "q": "ValueError: M482_HEADER_LOST",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "forward": {
+        "state": "insufficient",
+        "reason": "diagnostic_missing",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M482_HEADER_LOST",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "insufficient",
+        "reason": "diagnostic_missing",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M482_HEADER_LOST",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T14",
+      "q": "Почему сейчас происходит ошибка M141_INVALID_DISPLAY_CONTEXT?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "backward": {
+        "state": "insufficient",
+        "reason": "observation_required",
+        "steps": [],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "insufficient",
+        "reason": "observation_required",
+        "steps": [],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T15",
+      "q": "Разбери M126_FILES_LIMIT и заодно перепиши проверку.",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "forward": {
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": [
+          {
+            "tool": "classify_intent",
+            "target": "local_control",
+            "status": "other"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": [
+          {
+            "tool": "classify_intent",
+            "target": "local_control",
+            "status": "other"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T16",
+      "q": "Какие условия в modules/actions.py привели к M127_TITLE_INVALID?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "backward": {
+        "state": "insufficient",
+        "reason": "out_of_scope",
+        "steps": [],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "insufficient",
+        "reason": "out_of_scope",
+        "steps": [],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T17",
+      "q": "scan_head@1",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "forward": {
+        "state": "insufficient",
+        "reason": "statement_ambiguous",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "scan_head@1",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "insufficient",
+        "reason": "statement_ambiguous",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "scan_head@1",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "T18",
+      "q": "Почему из expand_query возникает ошибка M127_INPUT_TOO_LARGE?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "backward": {
+        "state": "insufficient",
+        "reason": "caller_conditions_unproven",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M127_INPUT_TOO_LARGE",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "insufficient",
+        "reason": "caller_conditions_unproven",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M127_INPUT_TOO_LARGE",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "R05",
+      "q": "Откуда берётся ошибка M130_MODULE_SPAN_COUNT_LIMIT?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "forward": {
+        "state": "insufficient",
+        "reason": "diagnostic_ambiguous",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M130_MODULE_SPAN_COUNT_LIMIT",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "insufficient",
+        "reason": "diagnostic_ambiguous",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M130_MODULE_SPAN_COUNT_LIMIT",
+            "status": "searching"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "R09",
+      "q": "Почему возникает сообщение «Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.»?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "find_git@39",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "find_git",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В find_git исследована инструкция `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')` (стр. 39). Для достижения строки требуется: для всех итераций `for path in candidates` (стр. 35, включая пустой перебор) выполнено (`path.is_file()` ложно (стр. 36)). При расчёте учтены переходы `return path.absolute()` (стр. 38). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                22,
+                22
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                23,
+                23
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                25,
+                25
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                27,
+                27
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                30,
+                30
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                35,
+                35
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                36,
+                36
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                38,
+                38
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                39,
+                39
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "all",
+          35,
+          [
+            "not",
+            36
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "find_git@39",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "find_git",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В find_git исследована инструкция `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')` (стр. 39). Для достижения строки требуется: для всех итераций `for path in candidates` (стр. 35, включая пустой перебор) выполнено (`path.is_file()` ложно (стр. 36)). При расчёте учтены переходы `return path.absolute()` (стр. 38). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                22,
+                22
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                23,
+                23
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                25,
+                25
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                27,
+                27
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                30,
+                30
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                35,
+                35
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                36,
+                36
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                38,
+                38
+              ],
+              [
+                "modules/developer_task_ui/app/git_source.py",
+                39,
+                39
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "all",
+          35,
+          [
+            "not",
+            36
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "R14",
+      "q": "Наткнулся на M130_CANDIDATE_DUPLICATE. На что именно ругается код?",
+      "commit": "d7dafa045d8e32cce7a50318a0fe947cea0bb605",
+      "positive": false,
+      "forward": {
+        "state": "insufficient",
+        "reason": "control_unsupported",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M130_CANDIDATE_DUPLICATE",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "interleave_3_to_1",
+            "status": "control_unsupported"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "insufficient",
+        "reason": "control_unsupported",
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "M130_CANDIDATE_DUPLICATE",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "interleave_3_to_1",
+            "status": "control_unsupported"
+          }
+        ],
+        "claims": [],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G00",
+      "q": "Почему возникает ошибка OUT_BE6D683C6?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_BE6D683C6",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_6291158116",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_6291158116 исследована инструкция `raise ValueError('OUT_BE6D683C6')` (стр. 165). Для достижения строки требуется: `env.v_8b6b0d21` ложно (стр. 158) и (если `env.v_2fd9634a` истинно (стр. 161), требуется `env.v_c44de86e` ложно (стр. 162) и `env.v_25224ba5` истинно (стр. 164), иначе — `env.v_25224ba5` истинно (стр. 164)). При расчёте учтены переходы `raise ValueError('early')` (стр. 159), `return 1` (стр. 163). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                157,
+                157
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                158,
+                158
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                159,
+                159
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                161,
+                161
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                162,
+                162
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                163,
+                163
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                164,
+                164
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                165,
+                165
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            158
+          ],
+          [
+            "if",
+            161,
+            [
+              "and",
+              [
+                "not",
+                162
+              ],
+              164
+            ],
+            164
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_BE6D683C6",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_6291158116",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_6291158116 исследована инструкция `raise ValueError('OUT_BE6D683C6')` (стр. 165). Для достижения строки требуется: `env.v_8b6b0d21` ложно (стр. 158) и (если `env.v_2fd9634a` истинно (стр. 161), требуется `env.v_c44de86e` ложно (стр. 162), иначе — да) и `env.v_25224ba5` истинно (стр. 164). При расчёте учтены переходы `raise ValueError('early')` (стр. 159), `return 1` (стр. 163). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                157,
+                157
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                158,
+                158
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                159,
+                159
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                161,
+                161
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                162,
+                162
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                163,
+                163
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                164,
+                164
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                165,
+                165
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "not",
+              158
+            ],
+            [
+              "if",
+              161,
+              [
+                "not",
+                162
+              ],
+              true
+            ]
+          ],
+          164
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G01",
+      "q": "Почему возникает ошибка OUT_9CF304A70?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_9CF304A70",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_810b5731e0",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_810b5731e0 исследована инструкция `raise ValueError('OUT_9CF304A70')` (стр. 180). Для достижения строки требуется: (если `env.v_27ee5fb8` истинно (стр. 168), требуется `env.v_f80ed31` ложно (стр. 169), иначе — `env.v_26086ed3` ложно (стр. 172)) и для всех итераций `for item in env.items` (стр. 174, включая пустой перебор) выполнено ((если `item.v_67b8163e` ложно (стр. 175) и `item.v_10168b64` ложно (стр. 177), требуется да, иначе — `item.v_67b8163e` истинно (стр. 175))) и `env.v_a068707c` истинно (стр. 179). При расчёте учтены переходы `raise ValueError('early')` (стр. 170), `return 1` (стр. 173), `continue` (стр. 176), `return 2` (стр. 178). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                167,
+                167
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                168,
+                168
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                169,
+                169
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                170,
+                170
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                172,
+                172
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                173,
+                173
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                174,
+                174
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                175,
+                175
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                176,
+                176
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                177,
+                177
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                178,
+                178
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                179,
+                179
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                180,
+                180
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "if",
+              168,
+              [
+                "not",
+                169
+              ],
+              [
+                "not",
+                172
+              ]
+            ],
+            [
+              "all",
+              174,
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "not",
+                    175
+                  ],
+                  [
+                    "not",
+                    177
+                  ]
+                ],
+                true,
+                175
+              ]
+            ]
+          ],
+          179
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_9CF304A70",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_810b5731e0",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_810b5731e0 исследована инструкция `raise ValueError('OUT_9CF304A70')` (стр. 180). Для достижения строки требуется: (если `env.v_27ee5fb8` истинно (стр. 168), требуется `env.v_f80ed31` ложно (стр. 169) и для всех итераций `for item in env.items` (стр. 174, включая пустой перебор) выполнено ((если `item.v_67b8163e` истинно (стр. 175), требуется да, иначе — `item.v_10168b64` ложно (стр. 177))) и `env.v_a068707c` истинно (стр. 179), иначе — `env.v_26086ed3` ложно (стр. 172) и для всех итераций `for item in env.items` (стр. 174, включая пустой перебор) выполнено ((если `item.v_67b8163e` истинно (стр. 175), требуется да, иначе — `item.v_10168b64` ложно (стр. 177))) и `env.v_a068707c` истинно (стр. 179)). При расчёте учтены переходы `raise ValueError('early')` (стр. 170), `return 1` (стр. 173), `continue` (стр. 176), `return 2` (стр. 178). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                167,
+                167
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                168,
+                168
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                169,
+                169
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                170,
+                170
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                172,
+                172
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                173,
+                173
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                174,
+                174
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                175,
+                175
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                176,
+                176
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                177,
+                177
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                178,
+                178
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                179,
+                179
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                180,
+                180
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          168,
+          [
+            "and",
+            [
+              "not",
+              169
+            ],
+            [
+              "and",
+              [
+                "all",
+                174,
+                [
+                  "if",
+                  175,
+                  true,
+                  [
+                    "not",
+                    177
+                  ]
+                ]
+              ],
+              179
+            ]
+          ],
+          [
+            "and",
+            [
+              "not",
+              172
+            ],
+            [
+              "and",
+              [
+                "all",
+                174,
+                [
+                  "if",
+                  175,
+                  true,
+                  [
+                    "not",
+                    177
+                  ]
+                ]
+              ],
+              179
+            ]
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G02",
+      "q": "Почему возникает ошибка OUT_118B5B3BB?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_118B5B3BB",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_c999377f09",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_c999377f09 исследована инструкция `raise ValueError('OUT_118B5B3BB')` (стр. 188). Для достижения строки требуется: (если `env.v_1f038b8a` истинно (стр. 183), требуется (если `env.v_267579bb` истинно (стр. 184), требуется `env.v_f467a3ee` ложно (стр. 185) и `env.v_31fac4d2` истинно (стр. 187), иначе — `env.v_31fac4d2` истинно (стр. 187)), иначе — `env.v_31fac4d2` истинно (стр. 187)). При расчёте учтены переходы `return 1` (стр. 186). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                182,
+                182
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                183,
+                183
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                184,
+                184
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                185,
+                185
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                186,
+                186
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                187,
+                187
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                188,
+                188
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          183,
+          [
+            "if",
+            184,
+            [
+              "and",
+              [
+                "not",
+                185
+              ],
+              187
+            ],
+            187
+          ],
+          187
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_118B5B3BB",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_c999377f09",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_c999377f09 исследована инструкция `raise ValueError('OUT_118B5B3BB')` (стр. 188). Для достижения строки требуется: (если `env.v_1f038b8a` истинно (стр. 183), требуется (если `env.v_267579bb` истинно (стр. 184), требуется `env.v_f467a3ee` ложно (стр. 185), иначе — да), иначе — да) и `env.v_31fac4d2` истинно (стр. 187). При расчёте учтены переходы `return 1` (стр. 186). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                182,
+                182
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                183,
+                183
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                184,
+                184
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                185,
+                185
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                186,
+                186
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                187,
+                187
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                188,
+                188
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "if",
+            183,
+            [
+              "if",
+              184,
+              [
+                "not",
+                185
+              ],
+              true
+            ],
+            true
+          ],
+          187
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G03",
+      "q": "Почему возникает ошибка OUT_A5CC547B1?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_A5CC547B1",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_e0c08aa8ce",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_e0c08aa8ce исследована инструкция `raise ValueError('OUT_A5CC547B1')` (стр. 204). Для достижения строки требуется: (если `env.v_e8fc8537` истинно (стр. 191), требуется (если `env.v_8e4af924` истинно (стр. 192), требуется `env.v_7f828dce` ложно (стр. 193), иначе — `env.v_d3819eb` ложно (стр. 196)), иначе — да) и для всех итераций `for item in env.items` (стр. 198, включая пустой перебор) выполнено ((если `item.v_b625d191` ложно (стр. 199) и `item.v_27c4d74d` ложно (стр. 201), требуется да, иначе — `item.v_b625d191` истинно (стр. 199))) и `env.v_dc1f24f0` истинно (стр. 203). При расчёте учтены переходы `return 1` (стр. 194), `raise ValueError('early')` (стр. 197), `continue` (стр. 200), `return 2` (стр. 202). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                190,
+                190
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                191,
+                191
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                192,
+                192
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                193,
+                193
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                194,
+                194
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                196,
+                196
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                197,
+                197
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                198,
+                198
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                199,
+                199
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                200,
+                200
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                201,
+                201
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                202,
+                202
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                203,
+                203
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                204,
+                204
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "if",
+              191,
+              [
+                "if",
+                192,
+                [
+                  "not",
+                  193
+                ],
+                [
+                  "not",
+                  196
+                ]
+              ],
+              true
+            ],
+            [
+              "all",
+              198,
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "not",
+                    199
+                  ],
+                  [
+                    "not",
+                    201
+                  ]
+                ],
+                true,
+                199
+              ]
+            ]
+          ],
+          203
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_A5CC547B1",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_e0c08aa8ce",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_e0c08aa8ce исследована инструкция `raise ValueError('OUT_A5CC547B1')` (стр. 204). Для достижения строки требуется: (если `env.v_e8fc8537` истинно (стр. 191), требуется (если `env.v_8e4af924` истинно (стр. 192), требуется `env.v_7f828dce` ложно (стр. 193) и для всех итераций `for item in env.items` (стр. 198, включая пустой перебор) выполнено ((если `item.v_b625d191` истинно (стр. 199), требуется да, иначе — `item.v_27c4d74d` ложно (стр. 201))) и `env.v_dc1f24f0` истинно (стр. 203), иначе — `env.v_d3819eb` ложно (стр. 196) и для всех итераций `for item in env.items` (стр. 198, включая пустой перебор) выполнено ((если `item.v_b625d191` истинно (стр. 199), требуется да, иначе — `item.v_27c4d74d` ложно (стр. 201))) и `env.v_dc1f24f0` истинно (стр. 203)), иначе — для всех итераций `for item in env.items` (стр. 198, включая пустой перебор) выполнено ((если `item.v_b625d191` истинно (стр. 199), требуется да, иначе — `item.v_27c4d74d` ложно (стр. 201))) и `env.v_dc1f24f0` истинно (стр. 203)). При расчёте учтены переходы `return 1` (стр. 194), `raise ValueError('early')` (стр. 197), `continue` (стр. 200), `return 2` (стр. 202). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                190,
+                190
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                191,
+                191
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                192,
+                192
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                193,
+                193
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                194,
+                194
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                196,
+                196
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                197,
+                197
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                198,
+                198
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                199,
+                199
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                200,
+                200
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                201,
+                201
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                202,
+                202
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                203,
+                203
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                204,
+                204
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          191,
+          [
+            "if",
+            192,
+            [
+              "and",
+              [
+                "not",
+                193
+              ],
+              [
+                "and",
+                [
+                  "all",
+                  198,
+                  [
+                    "if",
+                    199,
+                    true,
+                    [
+                      "not",
+                      201
+                    ]
+                  ]
+                ],
+                203
+              ]
+            ],
+            [
+              "and",
+              [
+                "not",
+                196
+              ],
+              [
+                "and",
+                [
+                  "all",
+                  198,
+                  [
+                    "if",
+                    199,
+                    true,
+                    [
+                      "not",
+                      201
+                    ]
+                  ]
+                ],
+                203
+              ]
+            ]
+          ],
+          [
+            "and",
+            [
+              "all",
+              198,
+              [
+                "if",
+                199,
+                true,
+                [
+                  "not",
+                  201
+                ]
+              ]
+            ],
+            203
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G04",
+      "q": "Почему возникает ошибка OUT_1005F644?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_1005F644",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_3d8b5505de",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_3d8b5505de исследована инструкция `raise ValueError('OUT_1005F644')` (стр. 211). Для достижения строки требуется: (если `env.v_5e94c73e` истинно (стр. 207), требуется `env.v_37e31373` ложно (стр. 208) и `env.v_8353391b` истинно (стр. 210), иначе — `env.v_8353391b` истинно (стр. 210)). При расчёте учтены переходы `raise ValueError('early')` (стр. 209). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                206,
+                206
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                207,
+                207
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                208,
+                208
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                209,
+                209
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                210,
+                210
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                211,
+                211
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          207,
+          [
+            "and",
+            [
+              "not",
+              208
+            ],
+            210
+          ],
+          210
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_1005F644",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_3d8b5505de",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_3d8b5505de исследована инструкция `raise ValueError('OUT_1005F644')` (стр. 211). Для достижения строки требуется: (если `env.v_5e94c73e` истинно (стр. 207), требуется `env.v_37e31373` ложно (стр. 208), иначе — да) и `env.v_8353391b` истинно (стр. 210). При расчёте учтены переходы `raise ValueError('early')` (стр. 209). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                206,
+                206
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                207,
+                207
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                208,
+                208
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                209,
+                209
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                210,
+                210
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                211,
+                211
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "if",
+            207,
+            [
+              "not",
+              208
+            ],
+            true
+          ],
+          210
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G05",
+      "q": "Почему возникает ошибка OUT_AD18232C2?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_AD18232C2",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_484e5ab5ef",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_484e5ab5ef исследована инструкция `raise ValueError('OUT_AD18232C2')` (стр. 231). Для достижения строки требуется: (если `env.v_86b0a72` истинно (стр. 214), требуется (если `env.v_5cea41a5` истинно (стр. 215), требуется `env.v_228e6a42` ложно (стр. 216), иначе — да), иначе — (если `env.v_7ea5c0fd` истинно (стр. 219), требуется `env.v_8ff3a1a4` ложно (стр. 220), иначе — `env.v_87c6761d` ложно (стр. 223))) и для всех итераций `for item in env.items` (стр. 225, включая пустой перебор) выполнено ((если `item.v_35ee2b9b` ложно (стр. 226) и `item.v_7b0f97cb` ложно (стр. 228), требуется да, иначе — `item.v_35ee2b9b` истинно (стр. 226))) и `env.v_b8812376` истинно (стр. 230). При расчёте учтены переходы `raise ValueError('early')` (стр. 217), `raise ValueError('early')` (стр. 221), `raise ValueError('early')` (стр. 224), `continue` (стр. 227), `return 2` (стр. 229). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                213,
+                213
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                214,
+                214
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                215,
+                215
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                216,
+                216
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                217,
+                217
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                219,
+                219
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                220,
+                220
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                221,
+                221
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                223,
+                223
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                224,
+                224
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                225,
+                225
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                226,
+                226
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                227,
+                227
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                228,
+                228
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                229,
+                229
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                230,
+                230
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                231,
+                231
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "if",
+              214,
+              [
+                "if",
+                215,
+                [
+                  "not",
+                  216
+                ],
+                true
+              ],
+              [
+                "if",
+                219,
+                [
+                  "not",
+                  220
+                ],
+                [
+                  "not",
+                  223
+                ]
+              ]
+            ],
+            [
+              "all",
+              225,
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "not",
+                    226
+                  ],
+                  [
+                    "not",
+                    228
+                  ]
+                ],
+                true,
+                226
+              ]
+            ]
+          ],
+          230
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_AD18232C2",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_484e5ab5ef",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_484e5ab5ef исследована инструкция `raise ValueError('OUT_AD18232C2')` (стр. 231). Для достижения строки требуется: (если `env.v_86b0a72` истинно (стр. 214), требуется (если `env.v_5cea41a5` истинно (стр. 215), требуется `env.v_228e6a42` ложно (стр. 216) и для всех итераций `for item in env.items` (стр. 225, включая пустой перебор) выполнено ((если `item.v_35ee2b9b` истинно (стр. 226), требуется да, иначе — `item.v_7b0f97cb` ложно (стр. 228))) и `env.v_b8812376` истинно (стр. 230), иначе — для всех итераций `for item in env.items` (стр. 225, включая пустой перебор) выполнено ((если `item.v_35ee2b9b` истинно (стр. 226), требуется да, иначе — `item.v_7b0f97cb` ложно (стр. 228))) и `env.v_b8812376` истинно (стр. 230)), иначе — (если `env.v_7ea5c0fd` истинно (стр. 219), требуется `env.v_8ff3a1a4` ложно (стр. 220) и для всех итераций `for item in env.items` (стр. 225, включая пустой перебор) выполнено ((если `item.v_35ee2b9b` истинно (стр. 226), требуется да, иначе — `item.v_7b0f97cb` ложно (стр. 228))) и `env.v_b8812376` истинно (стр. 230), иначе — `env.v_87c6761d` ложно (стр. 223) и для всех итераций `for item in env.items` (стр. 225, включая пустой перебор) выполнено ((если `item.v_35ee2b9b` истинно (стр. 226), требуется да, иначе — `item.v_7b0f97cb` ложно (стр. 228))) и `env.v_b8812376` истинно (стр. 230))). При расчёте учтены переходы `raise ValueError('early')` (стр. 217), `raise ValueError('early')` (стр. 221), `raise ValueError('early')` (стр. 224), `continue` (стр. 227), `return 2` (стр. 229). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                213,
+                213
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                214,
+                214
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                215,
+                215
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                216,
+                216
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                217,
+                217
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                219,
+                219
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                220,
+                220
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                221,
+                221
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                223,
+                223
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                224,
+                224
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                225,
+                225
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                226,
+                226
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                227,
+                227
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                228,
+                228
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                229,
+                229
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                230,
+                230
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                231,
+                231
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          214,
+          [
+            "if",
+            215,
+            [
+              "and",
+              [
+                "not",
+                216
+              ],
+              [
+                "and",
+                [
+                  "all",
+                  225,
+                  [
+                    "if",
+                    226,
+                    true,
+                    [
+                      "not",
+                      228
+                    ]
+                  ]
+                ],
+                230
+              ]
+            ],
+            [
+              "and",
+              [
+                "all",
+                225,
+                [
+                  "if",
+                  226,
+                  true,
+                  [
+                    "not",
+                    228
+                  ]
+                ]
+              ],
+              230
+            ]
+          ],
+          [
+            "if",
+            219,
+            [
+              "and",
+              [
+                "not",
+                220
+              ],
+              [
+                "and",
+                [
+                  "all",
+                  225,
+                  [
+                    "if",
+                    226,
+                    true,
+                    [
+                      "not",
+                      228
+                    ]
+                  ]
+                ],
+                230
+              ]
+            ],
+            [
+              "and",
+              [
+                "not",
+                223
+              ],
+              [
+                "and",
+                [
+                  "all",
+                  225,
+                  [
+                    "if",
+                    226,
+                    true,
+                    [
+                      "not",
+                      228
+                    ]
+                  ]
+                ],
+                230
+              ]
+            ]
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G06",
+      "q": "Почему возникает ошибка OUT_34CDA89?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_34CDA89",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_e2fb15428a",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_e2fb15428a исследована инструкция `raise ValueError('OUT_34CDA89')` (стр. 237). Для достижения строки требуется: `env.v_8c820253` ложно (стр. 234) и `env.v_f71fdb2` истинно (стр. 236). При расчёте учтены переходы `raise ValueError('early')` (стр. 235). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                233,
+                233
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                234,
+                234
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                235,
+                235
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                236,
+                236
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                237,
+                237
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            234
+          ],
+          236
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_34CDA89",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_e2fb15428a",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_e2fb15428a исследована инструкция `raise ValueError('OUT_34CDA89')` (стр. 237). Для достижения строки требуется: `env.v_8c820253` ложно (стр. 234) и `env.v_f71fdb2` истинно (стр. 236). При расчёте учтены переходы `raise ValueError('early')` (стр. 235). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                233,
+                233
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                234,
+                234
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                235,
+                235
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                236,
+                236
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                237,
+                237
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            234
+          ],
+          236
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G07",
+      "q": "Почему возникает ошибка OUT_1FAC8B78D?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_1FAC8B78D",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_745866b4ea",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_745866b4ea исследована инструкция `raise ValueError('OUT_1FAC8B78D')` (стр. 254). Для достижения строки требуется: (если `env.v_861b8c7e` истинно (стр. 240), требуется (если `env.v_a3d96a44` истинно (стр. 241), требуется `env.v_b26e0beb` ложно (стр. 242), иначе — да), иначе — (если `env.v_decdc111` истинно (стр. 245), требуется `env.v_d4287b61` ложно (стр. 246), иначе — да)) и для всех итераций `for item in env.items` (стр. 248, включая пустой перебор) выполнено ((если `item.v_a8a5ad2` ложно (стр. 249) и `item.v_f937517e` ложно (стр. 251), требуется да, иначе — `item.v_a8a5ad2` истинно (стр. 249))) и `env.v_4b7d88a5` истинно (стр. 253). При расчёте учтены переходы `raise ValueError('early')` (стр. 243), `raise ValueError('early')` (стр. 247), `continue` (стр. 250), `return 2` (стр. 252). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                239,
+                239
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                240,
+                240
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                241,
+                241
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                242,
+                242
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                243,
+                243
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                245,
+                245
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                246,
+                246
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                247,
+                247
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                248,
+                248
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                249,
+                249
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                250,
+                250
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                251,
+                251
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                252,
+                252
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                253,
+                253
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                254,
+                254
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "if",
+              240,
+              [
+                "if",
+                241,
+                [
+                  "not",
+                  242
+                ],
+                true
+              ],
+              [
+                "if",
+                245,
+                [
+                  "not",
+                  246
+                ],
+                true
+              ]
+            ],
+            [
+              "all",
+              248,
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "not",
+                    249
+                  ],
+                  [
+                    "not",
+                    251
+                  ]
+                ],
+                true,
+                249
+              ]
+            ]
+          ],
+          253
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_1FAC8B78D",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_745866b4ea",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_745866b4ea исследована инструкция `raise ValueError('OUT_1FAC8B78D')` (стр. 254). Для достижения строки требуется: (если `env.v_861b8c7e` истинно (стр. 240), требуется (если `env.v_a3d96a44` истинно (стр. 241), требуется `env.v_b26e0beb` ложно (стр. 242) и для всех итераций `for item in env.items` (стр. 248, включая пустой перебор) выполнено ((если `item.v_a8a5ad2` истинно (стр. 249), требуется да, иначе — `item.v_f937517e` ложно (стр. 251))) и `env.v_4b7d88a5` истинно (стр. 253), иначе — для всех итераций `for item in env.items` (стр. 248, включая пустой перебор) выполнено ((если `item.v_a8a5ad2` истинно (стр. 249), требуется да, иначе — `item.v_f937517e` ложно (стр. 251))) и `env.v_4b7d88a5` истинно (стр. 253)), иначе — (если `env.v_decdc111` истинно (стр. 245), требуется `env.v_d4287b61` ложно (стр. 246) и для всех итераций `for item in env.items` (стр. 248, включая пустой перебор) выполнено ((если `item.v_a8a5ad2` истинно (стр. 249), требуется да, иначе — `item.v_f937517e` ложно (стр. 251))) и `env.v_4b7d88a5` истинно (стр. 253), иначе — для всех итераций `for item in env.items` (стр. 248, включая пустой перебор) выполнено ((если `item.v_a8a5ad2` истинно (стр. 249), требуется да, иначе — `item.v_f937517e` ложно (стр. 251))) и `env.v_4b7d88a5` истинно (стр. 253))). При расчёте учтены переходы `raise ValueError('early')` (стр. 243), `raise ValueError('early')` (стр. 247), `continue` (стр. 250), `return 2` (стр. 252). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                239,
+                239
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                240,
+                240
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                241,
+                241
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                242,
+                242
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                243,
+                243
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                245,
+                245
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                246,
+                246
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                247,
+                247
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                248,
+                248
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                249,
+                249
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                250,
+                250
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                251,
+                251
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                252,
+                252
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                253,
+                253
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                254,
+                254
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          240,
+          [
+            "if",
+            241,
+            [
+              "and",
+              [
+                "not",
+                242
+              ],
+              [
+                "and",
+                [
+                  "all",
+                  248,
+                  [
+                    "if",
+                    249,
+                    true,
+                    [
+                      "not",
+                      251
+                    ]
+                  ]
+                ],
+                253
+              ]
+            ],
+            [
+              "and",
+              [
+                "all",
+                248,
+                [
+                  "if",
+                  249,
+                  true,
+                  [
+                    "not",
+                    251
+                  ]
+                ]
+              ],
+              253
+            ]
+          ],
+          [
+            "if",
+            245,
+            [
+              "and",
+              [
+                "not",
+                246
+              ],
+              [
+                "and",
+                [
+                  "all",
+                  248,
+                  [
+                    "if",
+                    249,
+                    true,
+                    [
+                      "not",
+                      251
+                    ]
+                  ]
+                ],
+                253
+              ]
+            ],
+            [
+              "and",
+              [
+                "all",
+                248,
+                [
+                  "if",
+                  249,
+                  true,
+                  [
+                    "not",
+                    251
+                  ]
+                ]
+              ],
+              253
+            ]
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G08",
+      "q": "Почему возникает ошибка OUT_8F0CFE9D1?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_8F0CFE9D1",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_644c401710",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_644c401710 исследована инструкция `raise ValueError('OUT_8F0CFE9D1')` (стр. 261). Для достижения строки требуется: (если `env.v_a24d56bd` истинно (стр. 257), требуется `env.v_94b2b551` ложно (стр. 258) и `env.v_5f81cc1e` истинно (стр. 260), иначе — `env.v_5f81cc1e` истинно (стр. 260)). При расчёте учтены переходы `return 1` (стр. 259). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                256,
+                256
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                257,
+                257
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                258,
+                258
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                259,
+                259
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                260,
+                260
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                261,
+                261
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          257,
+          [
+            "and",
+            [
+              "not",
+              258
+            ],
+            260
+          ],
+          260
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_8F0CFE9D1",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_644c401710",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_644c401710 исследована инструкция `raise ValueError('OUT_8F0CFE9D1')` (стр. 261). Для достижения строки требуется: (если `env.v_a24d56bd` истинно (стр. 257), требуется `env.v_94b2b551` ложно (стр. 258), иначе — да) и `env.v_5f81cc1e` истинно (стр. 260). При расчёте учтены переходы `return 1` (стр. 259). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                256,
+                256
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                257,
+                257
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                258,
+                258
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                259,
+                259
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                260,
+                260
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                261,
+                261
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "if",
+            257,
+            [
+              "not",
+              258
+            ],
+            true
+          ],
+          260
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G09",
+      "q": "Почему возникает ошибка OUT_A292EC3A5?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_A292EC3A5",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_25e2bf17cd",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_25e2bf17cd исследована инструкция `raise ValueError('OUT_A292EC3A5')` (стр. 273). Для достижения строки требуется: (если `env.v_2312fb0d` истинно (стр. 264), требуется `env.v_490e93f9` ложно (стр. 265), иначе — да) и для всех итераций `for item in env.items` (стр. 267, включая пустой перебор) выполнено ((если `item.v_19b0f78` ложно (стр. 268) и `item.v_2b247602` ложно (стр. 270), требуется да, иначе — `item.v_19b0f78` истинно (стр. 268))) и `env.v_e9aef91` истинно (стр. 272). При расчёте учтены переходы `raise ValueError('early')` (стр. 266), `continue` (стр. 269), `return 2` (стр. 271). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                263,
+                263
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                264,
+                264
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                265,
+                265
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                266,
+                266
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                267,
+                267
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                268,
+                268
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                269,
+                269
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                270,
+                270
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                271,
+                271
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                272,
+                272
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                273,
+                273
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "if",
+              264,
+              [
+                "not",
+                265
+              ],
+              true
+            ],
+            [
+              "all",
+              267,
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "not",
+                    268
+                  ],
+                  [
+                    "not",
+                    270
+                  ]
+                ],
+                true,
+                268
+              ]
+            ]
+          ],
+          272
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_A292EC3A5",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_25e2bf17cd",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_25e2bf17cd исследована инструкция `raise ValueError('OUT_A292EC3A5')` (стр. 273). Для достижения строки требуется: (если `env.v_2312fb0d` истинно (стр. 264), требуется `env.v_490e93f9` ложно (стр. 265) и для всех итераций `for item in env.items` (стр. 267, включая пустой перебор) выполнено ((если `item.v_19b0f78` истинно (стр. 268), требуется да, иначе — `item.v_2b247602` ложно (стр. 270))) и `env.v_e9aef91` истинно (стр. 272), иначе — для всех итераций `for item in env.items` (стр. 267, включая пустой перебор) выполнено ((если `item.v_19b0f78` истинно (стр. 268), требуется да, иначе — `item.v_2b247602` ложно (стр. 270))) и `env.v_e9aef91` истинно (стр. 272)). При расчёте учтены переходы `raise ValueError('early')` (стр. 266), `continue` (стр. 269), `return 2` (стр. 271). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                263,
+                263
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                264,
+                264
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                265,
+                265
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                266,
+                266
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                267,
+                267
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                268,
+                268
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                269,
+                269
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                270,
+                270
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                271,
+                271
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                272,
+                272
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                273,
+                273
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          264,
+          [
+            "and",
+            [
+              "not",
+              265
+            ],
+            [
+              "and",
+              [
+                "all",
+                267,
+                [
+                  "if",
+                  268,
+                  true,
+                  [
+                    "not",
+                    270
+                  ]
+                ]
+              ],
+              272
+            ]
+          ],
+          [
+            "and",
+            [
+              "all",
+              267,
+              [
+                "if",
+                268,
+                true,
+                [
+                  "not",
+                  270
+                ]
+              ]
+            ],
+            272
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G10",
+      "q": "Почему возникает ошибка OUT_33707A54E?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_33707A54E",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_2dab8ed393",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_2dab8ed393 исследована инструкция `raise ValueError('OUT_33707A54E')` (стр. 283). Для достижения строки требуется: `env.v_54b7f09b` ложно (стр. 276) и (если `env.v_ef87bef4` истинно (стр. 279), требуется `env.v_fff7c417` ложно (стр. 280) и `env.v_94727c33` истинно (стр. 282), иначе — `env.v_94727c33` истинно (стр. 282)). При расчёте учтены переходы `raise ValueError('early')` (стр. 277), `raise ValueError('early')` (стр. 281). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                275,
+                275
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                276,
+                276
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                277,
+                277
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                279,
+                279
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                280,
+                280
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                281,
+                281
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                282,
+                282
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                283,
+                283
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "not",
+            276
+          ],
+          [
+            "if",
+            279,
+            [
+              "and",
+              [
+                "not",
+                280
+              ],
+              282
+            ],
+            282
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_33707A54E",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_2dab8ed393",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_2dab8ed393 исследована инструкция `raise ValueError('OUT_33707A54E')` (стр. 283). Для достижения строки требуется: `env.v_54b7f09b` ложно (стр. 276) и (если `env.v_ef87bef4` истинно (стр. 279), требуется `env.v_fff7c417` ложно (стр. 280), иначе — да) и `env.v_94727c33` истинно (стр. 282). При расчёте учтены переходы `raise ValueError('early')` (стр. 277), `raise ValueError('early')` (стр. 281). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                275,
+                275
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                276,
+                276
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                277,
+                277
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                279,
+                279
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                280,
+                280
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                281,
+                281
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                282,
+                282
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                283,
+                283
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "not",
+              276
+            ],
+            [
+              "if",
+              279,
+              [
+                "not",
+                280
+              ],
+              true
+            ]
+          ],
+          282
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    },
+    {
+      "id": "G11",
+      "q": "Почему возникает ошибка OUT_B2172989B?",
+      "commit": "8d31e9a0da0693623deee71f951fa6468ce33fca",
+      "positive": true,
+      "forward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_B2172989B",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_906b4f82f0",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_906b4f82f0 исследована инструкция `raise ValueError('OUT_B2172989B')` (стр. 296). Для достижения строки требуется: (если `env.v_c6fa5f6` истинно (стр. 286), требуется (если `env.v_f02cbc3c` истинно (стр. 287), требуется `env.v_1bbc1fc1` ложно (стр. 288), иначе — да), иначе — да) и для всех итераций `for item in env.items` (стр. 290, включая пустой перебор) выполнено ((если `item.v_e139b331` ложно (стр. 291) и `item.v_f24f5bdf` ложно (стр. 293), требуется да, иначе — `item.v_e139b331` истинно (стр. 291))) и `env.v_6708f1d9` истинно (стр. 295). При расчёте учтены переходы `raise ValueError('early')` (стр. 289), `continue` (стр. 292), `return 2` (стр. 294). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                285,
+                285
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                286,
+                286
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                287,
+                287
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                288,
+                288
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                289,
+                289
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                290,
+                290
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                291,
+                291
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                292,
+                292
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                293,
+                293
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                294,
+                294
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                295,
+                295
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                296,
+                296
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "and",
+          [
+            "and",
+            [
+              "if",
+              286,
+              [
+                "if",
+                287,
+                [
+                  "not",
+                  288
+                ],
+                true
+              ],
+              true
+            ],
+            [
+              "all",
+              290,
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "not",
+                    291
+                  ],
+                  [
+                    "not",
+                    293
+                  ]
+                ],
+                true,
+                291
+              ]
+            ]
+          ],
+          295
+        ],
+        "correct": true,
+        "unwarranted": false
+      },
+      "backward": {
+        "state": "answered",
+        "reason": null,
+        "steps": [
+          {
+            "tool": "locate_statement",
+            "target": "OUT_B2172989B",
+            "status": "located"
+          },
+          {
+            "tool": "prove_local_control",
+            "target": "case_906b4f82f0",
+            "status": "proved"
+          }
+        ],
+        "claims": [
+          {
+            "text": "В case_906b4f82f0 исследована инструкция `raise ValueError('OUT_B2172989B')` (стр. 296). Для достижения строки требуется: (если `env.v_c6fa5f6` истинно (стр. 286), требуется (если `env.v_f02cbc3c` истинно (стр. 287), требуется `env.v_1bbc1fc1` ложно (стр. 288) и для всех итераций `for item in env.items` (стр. 290, включая пустой перебор) выполнено ((если `item.v_e139b331` истинно (стр. 291), требуется да, иначе — `item.v_f24f5bdf` ложно (стр. 293))) и `env.v_6708f1d9` истинно (стр. 295), иначе — для всех итераций `for item in env.items` (стр. 290, включая пустой перебор) выполнено ((если `item.v_e139b331` истинно (стр. 291), требуется да, иначе — `item.v_f24f5bdf` ложно (стр. 293))) и `env.v_6708f1d9` истинно (стр. 295)), иначе — для всех итераций `for item in env.items` (стр. 290, включая пустой перебор) выполнено ((если `item.v_e139b331` истинно (стр. 291), требуется да, иначе — `item.v_f24f5bdf` ложно (стр. 293))) и `env.v_6708f1d9` истинно (стр. 295)). При расчёте учтены переходы `raise ValueError('early')` (стр. 289), `continue` (стр. 292), `return 2` (стр. 294). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+            "refs": [
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                285,
+                285
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                286,
+                286
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                287,
+                287
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                288,
+                288
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                289,
+                289
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                290,
+                290
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                291,
+                291
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                292,
+                292
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                293,
+                293
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                294,
+                294
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                295,
+                295
+              ],
+              [
+                "modules/developer_task_ui/app/retrieval/m130_rank.py",
+                296,
+                296
+              ]
+            ]
+          }
+        ],
+        "missing": [],
+        "excess": [],
+        "wrong_logic": false,
+        "formula": [
+          "if",
+          286,
+          [
+            "if",
+            287,
+            [
+              "and",
+              [
+                "not",
+                288
+              ],
+              [
+                "and",
+                [
+                  "all",
+                  290,
+                  [
+                    "if",
+                    291,
+                    true,
+                    [
+                      "not",
+                      293
+                    ]
+                  ]
+                ],
+                295
+              ]
+            ],
+            [
+              "and",
+              [
+                "all",
+                290,
+                [
+                  "if",
+                  291,
+                  true,
+                  [
+                    "not",
+                    293
+                  ]
+                ]
+              ],
+              295
+            ]
+          ],
+          [
+            "and",
+            [
+              "all",
+              290,
+              [
+                "if",
+                291,
+                true,
+                [
+                  "not",
+                  293
+                ]
+              ]
+            ],
+            295
+          ]
+        ],
+        "correct": true,
+        "unwarranted": false
+      }
+    }
+  ],
+  "ms": {
+    "T01": {
+      "forward": 122.6,
+      "backward": 130.1
+    },
+    "T02": {
+      "backward": 104.4,
+      "forward": 116.2
+    },
+    "T03": {
+      "forward": 164.1,
+      "backward": 177.6
+    },
+    "T04": {
+      "backward": 203.6,
+      "forward": 219.3
+    },
+    "T05": {
+      "forward": 201.1,
+      "backward": 87.8
+    },
+    "T06": {
+      "backward": 94.3,
+      "forward": 112.9
+    },
+    "T07": {
+      "forward": 154.8,
+      "backward": 129.1
+    },
+    "T08": {
+      "backward": 113.9,
+      "forward": 108.9
+    },
+    "T09": {
+      "forward": 110.7,
+      "backward": 90.9
+    },
+    "T10": {
+      "backward": 91.1,
+      "forward": 87.1
+    },
+    "T11": {
+      "forward": 81.6,
+      "backward": 86.0
+    },
+    "T12": {
+      "backward": 138.2,
+      "forward": 92.3
+    },
+    "T13": {
+      "forward": 97.5,
+      "backward": 115.5
+    },
+    "T14": {
+      "backward": 0.1,
+      "forward": 0.0
+    },
+    "T15": {
+      "forward": 34.8,
+      "backward": 28.4
+    },
+    "T16": {
+      "backward": 0.1,
+      "forward": 0.0
+    },
+    "T17": {
+      "forward": 116.9,
+      "backward": 96.1
+    },
+    "T18": {
+      "backward": 109.5,
+      "forward": 91.9
+    },
+    "R05": {
+      "forward": 82.0,
+      "backward": 144.5
+    },
+    "R09": {
+      "backward": 137.7,
+      "forward": 121.9
+    },
+    "R14": {
+      "forward": 150.1,
+      "backward": 117.5
+    },
+    "G00": {
+      "backward": 134.6,
+      "forward": 177.4
+    },
+    "G01": {
+      "forward": 130.0,
+      "backward": 114.3
+    },
+    "G02": {
+      "backward": 98.4,
+      "forward": 102.9
+    },
+    "G03": {
+      "forward": 152.5,
+      "backward": 121.4
+    },
+    "G04": {
+      "backward": 101.4,
+      "forward": 109.9
+    },
+    "G05": {
+      "forward": 140.5,
+      "backward": 113.3
+    },
+    "G06": {
+      "backward": 116.0,
+      "forward": 113.9
+    },
+    "G07": {
+      "forward": 181.2,
+      "backward": 142.9
+    },
+    "G08": {
+      "backward": 133.2,
+      "forward": 132.3
+    },
+    "G09": {
+      "forward": 134.3,
+      "backward": 182.4
+    },
+    "G10": {
+      "backward": 134.4,
+      "forward": 142.8
+    },
+    "G11": {
+      "forward": 146.7,
+      "backward": 116.9
+    }
+  },
+  "intent": {},
+  "model": {}
+}

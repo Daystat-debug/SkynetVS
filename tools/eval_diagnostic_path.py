@@ -154,6 +154,18 @@ def measure(root, src, ground, case, defs, prior, order, accepted):
         if arm == "core04" and result["state"] == "answered" and any(c.get("edge") for c in result["claims"]):
             current = loop.investigate(case["q"], root, **inputs)
             assert current["state"] == "partial" and current["claims"] == result["claims"]
+        elif arm == "core04" and result["state"] == "answered":
+            current = loop.investigate(case["q"], root, **inputs)
+            if case["id"] == "R17":
+                # A previous iteration of extract_symbols may enter try/except.
+                assert (current["state"],current["reason"],current["claims"]) == (
+                    "insufficient","control_unsupported",[])
+            else:
+                assert current["state"] == "answered" and current["coverage"] == "explicit_control_in_one_function"
+                old.verify_refs(root, src.commit, current["claims"][0]["refs"])
+                meta = current["control"]
+                assert meta["function"] == case["owner"]
+                assert prior_eval.anchored(result["claims"][-1]["refs"], meta["path"], meta["line"])
     return row, timings
 
 

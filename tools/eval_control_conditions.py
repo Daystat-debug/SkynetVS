@@ -13,6 +13,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import eval_diagnostic_path as archive
+from eval_control_answer_text import displayed
 from test_control_conditions import control
 
 loop, pilot, old = archive.loop, archive.pilot, archive.old
@@ -217,6 +218,9 @@ def grade(case, out, src, root):
     name, line = case["target"]
     owners = [f for f in loop.host.lab.cli.flow.Slice(src).functions if f.node.name == name]
     fn, = owners
+    if meta:
+        visible = displayed(claims[0]["text"], fn.node, line)
+        assert truth_signature(normalize(visible)) == truth_signature(got), "public text disagrees with proof"
     identity = not meta or (meta["path"],meta["function"],meta["line"]) == (fn.path,name,line)
     coverage = all(archive.prior_eval.anchored(refs,fn.path,n) for n in [line,fn.node.lineno,*case["refs"]])
     row["correct"] = bool(identity and coverage and not row["wrong_logic"] and out["state"] == "answered")
