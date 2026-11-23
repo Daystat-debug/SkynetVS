@@ -158,9 +158,8 @@ class Slice:
         first = start.lineno
         if last is None:
             last = start.end_lineno
-        ref = self.src.span(fn.path,first,last)["ref"]
-        link = f"https://github.com/Daystat-debug/SkynetVS/blob/{self.src.commit}/{fn.path}#L{first}-L{last}"
-        self.claims.append({"text":text, "anchors":[], "evidence_blocks":[dict(ref,url=link)]})
+        ref = sites.cited(self.src,fn.path,first,last)
+        self.claims.append({"text":text, "anchors":[], "evidence_blocks":[ref]})
 
     def stop(self, why, fn, node):
         self.limited = True

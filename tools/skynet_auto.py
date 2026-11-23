@@ -174,6 +174,5 @@ def answer(q,src,refuse,previous=None):
     result = calls.lookup(name,src,refuse) if route == "calls" else index.answer(name,refuse)
     refs = []
     for path,a,b in dict.fromkeys(locations):
-        ref = src.span(path,a,b)["ref"]
-        refs.append(dict(ref,url=f"https://github.com/Daystat-debug/SkynetVS/blob/{src.commit}/{path}#L{a}-L{b}"))
+        refs.append(calls.cited(src,path,a,b))
     return dict(result,auto_route=route,auto_target=name,selection_evidence=refs)

@@ -18,20 +18,28 @@ MODES = {"calls": "callers", "flow": "data_flow", "auto": "automatic", "compose"
 
 class Objects:
     """Only object IDs seen at a manifest path in SOURCE may reach cat-file."""
-    def __init__(self, launch, *, baseline=False):
-        self.root = launch.plain(cli.pilot.ROOT, directory=True)
+    def __init__(self, launch, *, baseline=False, root=None, at_head=False):
+        self.root = launch.plain(root or cli.pilot.ROOT, directory=True)
         launch.plain(self.root / ".git", directory=True)
         self.exe = launch.plain(Path(r"C:\Program Files\Git\cmd\git.exe"), hardlinks=True)
         self.scope = BASE if baseline else SCOPE
         self.sizes = {}
+        self.commit = SOURCE
+        self.at_head = at_head
+        if at_head:
+            head = self._run("rev-parse", "--verify", "HEAD^{commit}").strip()
+            if not re.fullmatch(rb"[0-9a-f]{40}", head):
+                raise ValueError("LAB_HEAD")
+            self.commit = head.decode("ascii")
 
     def _run(self, *args, limit=4096):
-        tree = (len(args) == 6 and args[:5] == ("ls-tree", "-z", "--full-tree", SOURCE, "--")
+        head = self.at_head and args == ("rev-parse", "--verify", "HEAD^{commit}")
+        tree = (len(args) == 6 and args[:5] == ("ls-tree", "-z", "--full-tree", self.commit, "--")
                 and args[-1] in self.scope)
         size = len(args) == 3 and args[:2] == ("cat-file", "-s") and args[2] in self.sizes
         blob = (len(args) == 3 and args[:2] == ("cat-file", "blob") and args[2] in self.sizes
                 and self.sizes[args[2]] is not None and limit == self.sizes[args[2]] + 1)
-        if not (tree or size or blob) or not (1 <= limit <= (262145 if blob else 4096)):
+        if not (head or tree or size or blob) or not (1 <= limit <= (262145 if blob else 4096)):
             raise ValueError("LAB_OBJECT_SCOPE")
         env = {k: os.environ[k] for k in ("SystemRoot", "WINDIR", "TEMP", "TMP") if k in os.environ}
         env.update(GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull, GIT_NO_LAZY_FETCH="1",
@@ -71,7 +79,7 @@ class Sources(cli.GitSources):
 
     def head(self):
         # Every ls-tree addresses this literal commit, even across branch switches.
-        return SOURCE
+        return self.reader.commit
 
 
 def trusted_tools():

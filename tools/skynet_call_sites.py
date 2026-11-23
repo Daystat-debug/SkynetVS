@@ -134,6 +134,23 @@ class CallSite:
         return cls(src.commit,path,call.lineno,call.col_offset,call.end_lineno,call.end_col_offset,
                    target_path,fn.lineno)
 
+    def record(self, src):
+        data = asdict(self)
+        if getattr(src, "working_tree", False):
+            data["snapshot_id"] = data.pop("commit")
+        return data
+
+
+def cited(src, path, start, end):
+    ref = src.span(path, start, end)["ref"]
+    return with_url(src, ref, path, start, end)
+
+
+def with_url(src, ref, path, start, end):
+    if getattr(src, "working_tree", False):
+        return ref  # The local source owns its locator, including the snapshot-qualified URL.
+    return dict(ref, url=f"https://github.com/Daystat-debug/SkynetVS/blob/{src.commit}/{path}#L{start}-L{end}")
+
 
 def main_guard(node):
     if not isinstance(node, ast.If):
@@ -221,9 +238,8 @@ def lookup(q, src, refuse, paths=None, *, evidence=None):
         refs = []
         for p, a, b in dict.fromkeys(loc):
             # The suite can start on the signature line for a one-line function.
-            ref = src.span(p,a,max(a,b))["ref"]
-            refs.append(dict(ref, url=f"https://github.com/Daystat-debug/SkynetVS/blob/{src.commit}/{p}#L{a}-L{ref['end']}"))
-        claims.append({"text":text,"anchors":[], "evidence_blocks":refs, "call_site":dict(asdict(site), **context)})
+            refs.append(cited(src,p,a,max(a,b)))
+        claims.append({"text":text,"anchors":[], "evidence_blocks":refs, "call_site":dict(site.record(src), **context)})
         if evidence is not None:
             evidence[site] = len(claims)-1
     src.current()

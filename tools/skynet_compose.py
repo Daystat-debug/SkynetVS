@@ -1,6 +1,5 @@
 """Compose bounded static reads; join only identical, resolved AST call expressions."""
 import re
-from dataclasses import asdict
 
 import skynet_auto as auto
 import skynet_call_sites as calls
@@ -49,8 +48,7 @@ def compose(steps, src, refuse, relation_requested):
     answers, sites, origins, selection = {}, {}, {}, []
     for kind,name,locations in steps:
         for path,a,b in locations:
-            ref = src.span(path,a,b)["ref"]
-            selection.append(dict(ref,url=f"https://github.com/Daystat-debug/SkynetVS/blob/{src.commit}/{path}#L{a}-L{b}"))
+            selection.append(calls.cited(src,path,a,b))
         if kind == "calls":
             sites[name] = {}
             result = calls.lookup(name,src,refuse,evidence=sites[name])
@@ -75,7 +73,7 @@ def compose(steps, src, refuse, relation_requested):
                 field_claim = answers["flow",field]["claims"][0]
                 claim["evidence_blocks"] = unique_refs(claim["evidence_blocks"] + field_claim["evidence_blocks"])
                 redundant[field].update(trace[site])
-                relations.append(dict(function=callee,field=field,site=asdict(site)))
+                relations.append(dict(function=callee,field=field,site=site.record(src)))
             if shared:
                 for site in found.keys() - trace.keys():
                     claim = answers["calls",callee]["claims"][found[site]]
@@ -100,7 +98,7 @@ def compose(steps, src, refuse, relation_requested):
         complete = False
     result = {"status":"composed" if complete else "composed_limited", "auto_route":"compose",
             "completion_scope":"requested_static_steps",
-            "text":"\n".join(["По разрешённому Git-снимку:",*notes]), "claims":claims,
+            "text":"\n".join([getattr(src, "heading", "По разрешённому Git-снимку:"),*notes]), "claims":claims,
             "actions":[{"tool":k,"target":n,"status":r["status"]} for (k,n),r in answers.items()],
             "relations":relations, "commit":src.commit, "selection_evidence":unique_refs(selection)}
     if sites:
