@@ -74,6 +74,11 @@ def grounded_relations(relations, observations, items):
 def collect(request, src, ground):
     # compose delegates single questions to auto; both dispatch calls and flow in-process.
     result = lab.ask("compose", request.question, src, ground)
+    return pack_result(request, src, result)
+
+
+def pack_result(request, src, result):
+    """Issue snapshot-bound evidence for one trusted static tool observation."""
     items = {}
 
     def issue(ref):
