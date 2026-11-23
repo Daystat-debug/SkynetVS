@@ -1,0 +1,11 @@
+{
+  "implementation":"ba1c4de",
+  "questions":[
+    {"id":"T1","q":"Перечисли точки прямых вызовов функции, создающей ключ retrieval_confidence.","field":"retrieval_confidence","producer":"rank_title_only","callers":["rank","__main__"]},
+    {"id":"T2","q":"Добирается ли main до module_rank?","path":["main","rank","module_rank"]},
+    {"id":"T3","q":"Как из rank попасть к modules_from_source?","path":["rank","module_rank","modules_from_source"]},
+    {"id":"T4","q":"Кто вызывает функцию, которая формирует function_candidates_total?","fixture_change":"move the literal key from rank to rank_symbols in two Git blobs; do not change the question","field":"function_candidates_total","producer":"rank_symbols","callers":["rank"]},
+    {"id":"T5","q":"Чей результат содержит title_token_count и кто пользуется этой функцией?","field":"title_token_count","producer":"rank_title_only","callers":["rank","__main__"]},
+    {"id":"T6","q":"Можно ли из format_context добраться до interleave_3_to_1?","reason":"path_unproven"}
+  ]
+}
