@@ -1,0 +1,27 @@
+{
+  "implementation": "ab442dd1c9d41d7c23894a9dfe943ec141d4ebe7",
+  "definitions": {"find_git": ["modules/developer_task_ui/app/git_source.py", 22]},
+  "integrity_question": "Из search_repository при каком условии возникает ошибка M127_SYMBOL_LIMIT?",
+  "cases": [
+    {"id":"R01","q":"При каком условии появляется сообщение M134_EXPANDED_QUERY_TOO_LONG?","owner":"expand_query","refs":[52,53],"facts":["M134_EXPANDED_QUERY_TOO_LONG","len(text)","2048","или","encode","4096"],"edges":[]},
+    {"id":"R02","q":"Как из search_repository дойти до ошибки M127_SYMBOL_LIMIT?","owner":"extract_symbols","refs":[68],"facts":["M127_SYMBOL_LIMIT","len(out)","больше","3500"],"edges":[["search_repository","rank",153,14],["rank","rank_symbols",125,18],["rank_symbols","extract_symbols",77]]},
+    {"id":"R03","q":"Где в rank срабатывает проверка с сообщением M126_SOURCE_INVALID?","owner":"rank_title_only","refs":[48,51,52],"facts":["M126_SOURCE_INVALID","before_files.items()","isinstance(source, str)","или","len(source)","2500000"],"edges":[["rank","rank_title_only",116,17]]},
+    {"id":"R04","q":"Почему возникает ошибка M134_NO_LEXICAL_MATCH?","owner":"search_repository","refs":[155,156],"facts":["M134_NO_LEXICAL_MATCH","retrieval_confidence","LEXICAL_MATCH_EXISTS","отличается"],"edges":[]},
+    {"id":"R05","q":"Откуда берётся ошибка M130_MODULE_SPAN_COUNT_LIMIT?","reason":"diagnostic_ambiguous"},
+    {"id":"R06","q":"Покажи путь от rank до ошибки M130_MODULE_SPAN_COUNT_LIMIT.","alternatives":[
+      {"owner":"module_rank","refs":[72],"facts":["M130_MODULE_SPAN_COUNT_LIMIT","len(windows)","больше","4000"],"edges":[["rank","module_rank",127]]},
+      {"owner":"modules_from_source","refs":[41,60],"facts":["M130_MODULE_SPAN_COUNT_LIMIT","len(output)","больше","4000","i <= len(lines)"],"edges":[["rank","module_rank",127],["module_rank","modules_from_source",69]]}
+    ]},
+    {"id":"R07","q":"ValueError: M127_TOP_LIMIT_INVALID","owner":"rank_symbols","refs":[75,76],"facts":["M127_TOP_LIMIT_INVALID","isinstance(limit, int)","или","меньше","1","больше","100"],"edges":[]},
+    {"id":"R08","q":"KeyError: M127_TOP_LIMIT_INVALID","reason":"diagnostic_missing"},
+    {"id":"R09","q":"Почему возникает сообщение «Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.»?","owner":"find_git","refs":[35,36,38,39],"facts":["Установленный Git не найден","path.is_file"],"edges":[]},
+    {"id":"R10","q":"Почему из expand_query возникает ошибка M127_TOP_LIMIT_INVALID?","reason":"path_unproven"},
+    {"id":"R11","q":"Где возникает ошибка M931_SOURCE_FROZEN?","reason":"diagnostic_missing"},
+    {"id":"R12","q":"Почему сейчас возникла ошибка M130_OLD_TREE_EMPTY?","reason":"observation_required"},
+    {"id":"R13","q":"Почему в modules/actions.py возникла ошибка M130_TITLE_INVALID?","reason":"out_of_scope"},
+    {"id":"R14","q":"Наткнулся на M130_CANDIDATE_DUPLICATE. На что именно ругается код?","owner":"interleave_3_to_1","refs":[106],"facts":["M130_CANDIDATE_DUPLICATE","candidate_id","len(out)","отличается"],"edges":[]},
+    {"id":"R15","q":"Из search_repository покажи один путь до сообщения M130_NO_SCOPE_FILES_WITHIN_LIMIT.","owner":"rank","refs":[124],"facts":["M130_NO_SCOPE_FILES_WITHIN_LIMIT","selected","ложно"],"edges":[["search_repository","rank",153,14]]},
+    {"id":"R16","q":"При каком условии возникает ошибка M126_TOP_N_INVALID и как её исправить?","reason":"clarification"},
+    {"id":"R17","q":"ValueError: M127_OLD_SOURCE_PATH_INVALID","owner":"extract_symbols","refs":[35,36,37],"facts":["M127_OLD_SOURCE_PATH_INVALID","old_sources.items()","isinstance(path, str)","endswith","x00","startswith","split","или"],"edges":[]}
+  ]
+}

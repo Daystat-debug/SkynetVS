@@ -103,6 +103,8 @@ def fixture(rng, number, raw):
 
 
 def score(case, result, root, commit, defs):
+    if "alternatives" in case:
+        return any(score(option, result, root, commit, defs) for option in case["alternatives"])
     claims = result["claims"]
     for claim in claims:
         old.verify_refs(root, commit, claim["refs"])
@@ -135,7 +137,7 @@ def public(result):
 
 def measure(root, src, ground, case, defs, prior, order):
     inputs = dict(opener=lambda _: (src, ground))
-    row = dict(id=case["id"], question=case["q"], commit=src.commit, positive="edges" in case)
+    row = dict(id=case["id"], question=case["q"], commit=src.commit, positive="reason" not in case)
     timings = {}
     for arm in ARMS[order:] + ARMS[:order]:
         start = perf_counter()
