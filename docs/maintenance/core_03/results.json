@@ -1,0 +1,1715 @@
+{
+  "rows": [
+    {
+      "id": "P1",
+      "positive": true,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "rank_title_only",
+        "rank"
+      ],
+      "answer": [
+        {
+          "text": "В search_repository выражение «effective» передаётся в rank.title.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              110,
+              111
+            ],
+            [
+              "modules/developer_task_ui/app/context_search.py",
+              144,
+              144
+            ],
+            [
+              "modules/developer_task_ui/app/context_search.py",
+              153,
+              153
+            ],
+            [
+              "modules/developer_task_ui/app/context_search.py",
+              14,
+              14
+            ]
+          ]
+        },
+        {
+          "text": "В rank выражение «title» передаётся в rank_title_only.title.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m126_rank.py",
+              34,
+              34
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              110,
+              110
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              116,
+              116
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              17,
+              17
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "positive": true,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "extract_symbols",
+        "rank_symbols"
+      ],
+      "answer": [
+        {
+          "text": "В rank выражение «selected» передаётся в rank_symbols.old_sources.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              72,
+              72
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              110,
+              110
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              125,
+              125
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              18,
+              18
+            ]
+          ]
+        },
+        {
+          "text": "В rank_symbols выражение «old_sources» передаётся в extract_symbols.old_sources.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              28,
+              28
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              72,
+              72
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              77,
+              77
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      }
+    },
+    {
+      "id": "P3",
+      "positive": false,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "all_paths": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      },
+      "core03": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 1,
+        "claims": 0
+      },
+      "actions": [
+        "modules_from_source"
+      ],
+      "answer": [],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      }
+    },
+    {
+      "id": "P4",
+      "positive": true,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "module_rank",
+        "rank"
+      ],
+      "answer": [
+        {
+          "text": "В main выражение «data['issue_title_current']» передаётся в rank.title.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              110,
+              111
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              144,
+              144
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              151,
+              151
+            ]
+          ]
+        },
+        {
+          "text": "В rank выражение «title» передаётся в module_rank.title.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              64,
+              64
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              110,
+              110
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              127,
+              127
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      }
+    },
+    {
+      "id": "P5",
+      "positive": true,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 1,
+        "claims": 1
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 1,
+        "claims": 1
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 1,
+        "claims": 1
+      },
+      "actions": [
+        "scan_head"
+      ],
+      "answer": [
+        {
+          "text": "В search_repository выражение «notify» передаётся в scan_head.notify.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/context_search.py",
+              68,
+              68
+            ],
+            [
+              "modules/developer_task_ui/app/context_search.py",
+              144,
+              144
+            ],
+            [
+              "modules/developer_task_ui/app/context_search.py",
+              150,
+              150
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P6",
+      "positive": false,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "first": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 1,
+        "claims": 0
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 1,
+        "claims": 0
+      },
+      "core03": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 1,
+        "claims": 0
+      },
+      "actions": [
+        "modules_from_source"
+      ],
+      "answer": [],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      }
+    },
+    {
+      "id": "P7",
+      "positive": false,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "all_paths": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "core03": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "actions": [],
+      "answer": [],
+      "core02": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      }
+    },
+    {
+      "id": "P8",
+      "positive": false,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "core03": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "unknown_parameter",
+        "steps": 0,
+        "claims": 0
+      },
+      "actions": [],
+      "answer": [],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "unknown_parameter",
+        "steps": 0,
+        "claims": 0
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "unknown_parameter",
+        "steps": 0,
+        "claims": 0
+      }
+    },
+    {
+      "id": "P9",
+      "positive": true,
+      "commit": "1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "core03": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "actions": [],
+      "answer": []
+    },
+    {
+      "id": "G01",
+      "positive": true,
+      "commit": "8ea643ad0e0fb5b733895c2ade90e0b48b31e895",
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_577585efdf2fd",
+        "f_4d8174b5f4e72"
+      ],
+      "answer": [
+        {
+          "text": "В f_e39d7e42fc055 выражение «ticket» передаётся в f_4d8174b5f4e72.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              160,
+              160
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              167,
+              167
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              168,
+              168
+            ]
+          ]
+        },
+        {
+          "text": "В f_4d8174b5f4e72 выражение «copy» передаётся в f_577585efdf2fd.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              160,
+              160
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              162,
+              162
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              161,
+              161
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      }
+    },
+    {
+      "id": "G02",
+      "positive": true,
+      "commit": "0860c4b1d740d9178a6c8d775949741c5dbcec28",
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 3,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_26a1946b3a12",
+        "f_429d8d386b57d"
+      ],
+      "answer": [
+        {
+          "text": "В f_e40fec34a4c8c выражение «ticket» передаётся в f_429d8d386b57d.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              163,
+              163
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              167,
+              167
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              169,
+              169
+            ]
+          ]
+        },
+        {
+          "text": "В f_429d8d386b57d выражение «copy» передаётся в f_26a1946b3a12.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              163,
+              163
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              165,
+              165
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              164,
+              164
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      }
+    },
+    {
+      "id": "G03",
+      "positive": true,
+      "commit": "38e9ab009a09e36d5d1b9e39abb1bbd713ff9b65",
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_1ff20fea1abc3",
+        "f_a0b1bc9e1f9d5"
+      ],
+      "answer": [
+        {
+          "text": "В f_e7d84db7c19b3 выражение «ticket» передаётся в f_a0b1bc9e1f9d5.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              160,
+              160
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              167,
+              167
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              168,
+              168
+            ]
+          ]
+        },
+        {
+          "text": "В f_a0b1bc9e1f9d5 выражение «copy» передаётся в f_1ff20fea1abc3.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              160,
+              160
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              162,
+              162
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              161,
+              161
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      }
+    },
+    {
+      "id": "G04",
+      "positive": true,
+      "commit": "13f0a2adc30f2f5e4bfac48f593796e2aeecb125",
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 3,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_9fed27761a35",
+        "f_dde5d37bd5ce6"
+      ],
+      "answer": [
+        {
+          "text": "В f_d5288929bed5 выражение «ticket» передаётся в f_dde5d37bd5ce6.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              163,
+              163
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              167,
+              167
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              169,
+              169
+            ]
+          ]
+        },
+        {
+          "text": "В f_dde5d37bd5ce6 выражение «copy» передаётся в f_9fed27761a35.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              163,
+              163
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              165,
+              165
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              164,
+              164
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "G05",
+      "positive": true,
+      "commit": "3da306f1c5982eea5a5fcfb3c1716099727916e6",
+      "first": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 3,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_25d63ebdb41f6",
+        "f_a12e4ccc719a4"
+      ],
+      "answer": [
+        {
+          "text": "В f_3cfe3ad4dfef выражение «ticket» передаётся в f_a12e4ccc719a4.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              163,
+              163
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              173,
+              173
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              175,
+              175
+            ]
+          ]
+        },
+        {
+          "text": "В f_a12e4ccc719a4 выражение «copy» передаётся в f_25d63ebdb41f6.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              163,
+              163
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              165,
+              165
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              164,
+              164
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      }
+    },
+    {
+      "id": "G06",
+      "positive": true,
+      "commit": "af2c3303aaf9754e2248c5f052240e3bc34ba132",
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 3,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_a45e356b3d722",
+        "f_bbe8de68ba5c9"
+      ],
+      "answer": [
+        {
+          "text": "В f_bbddad4e94425 выражение «ticket» передаётся в f_bbe8de68ba5c9.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              163,
+              163
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              173,
+              173
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              175,
+              175
+            ]
+          ]
+        },
+        {
+          "text": "В f_bbe8de68ba5c9 выражение «copy» передаётся в f_a45e356b3d722.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              163,
+              163
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              165,
+              165
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              164,
+              164
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      }
+    },
+    {
+      "id": "G07",
+      "positive": true,
+      "commit": "bd8810b7e89d4bd0c891b6e8d6e8231d451d530a",
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_b2621c3cd932b",
+        "f_6c9ac3c726932"
+      ],
+      "answer": [
+        {
+          "text": "В f_98aeeefc54896 выражение «ticket» передаётся в f_6c9ac3c726932.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              160,
+              160
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              173,
+              173
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              174,
+              174
+            ]
+          ]
+        },
+        {
+          "text": "В f_6c9ac3c726932 выражение «copy» передаётся в f_b2621c3cd932b.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              160,
+              160
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              162,
+              162
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              161,
+              161
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      }
+    },
+    {
+      "id": "G08",
+      "positive": true,
+      "commit": "7eed7cb8e1fc8be22004d579636f4855ca6d53be",
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_ce50b25f38013",
+        "f_61801511b4429"
+      ],
+      "answer": [
+        {
+          "text": "В f_105164bca24c4 выражение «ticket» передаётся в f_61801511b4429.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              160,
+              160
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              173,
+              173
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              174,
+              174
+            ]
+          ]
+        },
+        {
+          "text": "В f_61801511b4429 выражение «copy» передаётся в f_ce50b25f38013.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              160,
+              160
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              162,
+              162
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              161,
+              161
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "G09",
+      "positive": true,
+      "commit": "58b785d7f1aa8b6a6debdb3f920b1203fa20485d",
+      "first": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      },
+      "all_paths": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "step_budget",
+        "steps": 6,
+        "claims": 0
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_6e3fa75f15643",
+        "f_84d6256615d2c"
+      ],
+      "answer": [
+        {
+          "text": "В f_f52e643aa06e2 выражение «ticket» передаётся в f_84d6256615d2c.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              181,
+              181
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              185,
+              185
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              193,
+              193
+            ]
+          ]
+        },
+        {
+          "text": "В f_84d6256615d2c выражение «copy» передаётся в f_6e3fa75f15643.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              181,
+              181
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              183,
+              183
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              182,
+              182
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      }
+    },
+    {
+      "id": "G10",
+      "positive": true,
+      "commit": "1e704e73163e9541cef7b8641db80c37b3514b9a",
+      "all_paths": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 4,
+        "claims": 2
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_b8ce03c81c0e5",
+        "f_11d8660af6778"
+      ],
+      "answer": [
+        {
+          "text": "В f_7ce324085f5ee выражение «ticket» передаётся в f_11d8660af6778.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              166,
+              166
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              185,
+              185
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              188,
+              188
+            ]
+          ]
+        },
+        {
+          "text": "В f_11d8660af6778 выражение «copy» передаётся в f_b8ce03c81c0e5.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              166,
+              166
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              168,
+              168
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              167,
+              167
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      }
+    },
+    {
+      "id": "G11",
+      "positive": true,
+      "commit": "5411ee1c0762c47de279f0e329663fa9de09688f",
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_c00ff642874ee",
+        "f_79c07721d3733"
+      ],
+      "answer": [
+        {
+          "text": "В f_4e617ab63481 выражение «ticket» передаётся в f_79c07721d3733.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              181,
+              181
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              185,
+              185
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              193,
+              193
+            ]
+          ]
+        },
+        {
+          "text": "В f_79c07721d3733 выражение «copy» передаётся в f_c00ff642874ee.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              181,
+              181
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              183,
+              183
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              182,
+              182
+            ]
+          ]
+        }
+      ],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      },
+      "all_paths": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "step_budget",
+        "steps": 6,
+        "claims": 0
+      }
+    },
+    {
+      "id": "G12",
+      "positive": true,
+      "commit": "1b1c9f57ac2eadfe296ab1a8cf53ee9bbd9257f7",
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      },
+      "all_paths": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "step_budget",
+        "steps": 6,
+        "claims": 0
+      },
+      "core03": {
+        "correct": true,
+        "state": "answered",
+        "reason": null,
+        "steps": 2,
+        "claims": 2
+      },
+      "actions": [
+        "f_2fa1d3af6e467",
+        "f_a3a61018f5cc3"
+      ],
+      "answer": [
+        {
+          "text": "В f_890b6ca992f52 выражение «ticket» передаётся в f_a3a61018f5cc3.incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              181,
+              181
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              185,
+              185
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              193,
+              193
+            ]
+          ]
+        },
+        {
+          "text": "В f_a3a61018f5cc3 выражение «copy» передаётся в f_2fa1d3af6e467.payload. Привязка copy получена из incoming.",
+          "locations": [
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              157,
+              157
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              181,
+              181
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              183,
+              183
+            ],
+            [
+              "modules/developer_task_ui/app/retrieval/m130_rank.py",
+              182,
+              182
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "G13",
+      "positive": false,
+      "commit": "ec7311b852f03bb56032da2dd9a9530473979ece",
+      "first": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      },
+      "all_paths": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 5,
+        "claims": 0
+      },
+      "core03": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 1,
+        "claims": 0
+      },
+      "actions": [
+        "f_eeacec06a5e14"
+      ],
+      "answer": [],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      }
+    },
+    {
+      "id": "G14",
+      "positive": false,
+      "commit": "b45241673f862952b8fb660697ec3ca1436377eb",
+      "all_paths": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 5,
+        "claims": 0
+      },
+      "core03": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 1,
+        "claims": 0
+      },
+      "actions": [
+        "f_c8d7183a43669"
+      ],
+      "answer": [],
+      "core02": {
+        "correct": false,
+        "state": "insufficient",
+        "reason": "clarification",
+        "steps": 0,
+        "claims": 0
+      },
+      "first": {
+        "correct": true,
+        "state": "insufficient",
+        "reason": "argument_unproven",
+        "steps": 2,
+        "claims": 0
+      }
+    }
+  ],
+  "ms": {
+    "P1": {
+      "core02": 90.3,
+      "first": 197.4,
+      "all_paths": 142.2,
+      "core03": 132.4
+    },
+    "P2": {
+      "first": 119.3,
+      "all_paths": 121.3,
+      "core03": 124.2,
+      "core02": 70.3
+    },
+    "P3": {
+      "all_paths": 120.7,
+      "core03": 87.8,
+      "core02": 76.2,
+      "first": 123.2
+    },
+    "P4": {
+      "core03": 126.0,
+      "core02": 64.6,
+      "first": 122.3,
+      "all_paths": 123.7
+    },
+    "P5": {
+      "core02": 62.1,
+      "first": 83.8,
+      "all_paths": 84.4,
+      "core03": 84.1
+    },
+    "P6": {
+      "first": 83.1,
+      "all_paths": 84.5,
+      "core03": 83.4,
+      "core02": 61.1
+    },
+    "P7": {
+      "all_paths": 49.1,
+      "core03": 48.6,
+      "core02": 65.0,
+      "first": 50.1
+    },
+    "P8": {
+      "core03": 48.3,
+      "core02": 65.2,
+      "first": 47.8,
+      "all_paths": 47.4
+    },
+    "P9": {
+      "core02": 63.3,
+      "first": 120.9,
+      "all_paths": 123.1,
+      "core03": 0.2
+    },
+    "G01": {
+      "first": 122.8,
+      "all_paths": 122.0,
+      "core03": 119.9,
+      "core02": 77.0
+    },
+    "G02": {
+      "all_paths": 159.1,
+      "core03": 121.0,
+      "core02": 95.8,
+      "first": 132.1
+    },
+    "G03": {
+      "core03": 121.9,
+      "core02": 67.8,
+      "first": 125.2,
+      "all_paths": 125.5
+    },
+    "G04": {
+      "core02": 70.9,
+      "first": 119.7,
+      "all_paths": 160.0,
+      "core03": 127.4
+    },
+    "G05": {
+      "first": 130.9,
+      "all_paths": 162.3,
+      "core03": 126.6,
+      "core02": 76.2
+    },
+    "G06": {
+      "all_paths": 163.8,
+      "core03": 128.9,
+      "core02": 70.5,
+      "first": 131.2
+    },
+    "G07": {
+      "core03": 130.5,
+      "core02": 80.4,
+      "first": 133.2,
+      "all_paths": 129.9
+    },
+    "G08": {
+      "core02": 86.9,
+      "first": 131.7,
+      "all_paths": 143.7,
+      "core03": 142.7
+    },
+    "G09": {
+      "first": 144.6,
+      "all_paths": 288.6,
+      "core03": 138.5,
+      "core02": 81.8
+    },
+    "G10": {
+      "all_paths": 212.8,
+      "core03": 143.9,
+      "core02": 80.3,
+      "first": 137.5
+    },
+    "G11": {
+      "core03": 140.3,
+      "core02": 78.1,
+      "first": 138.9,
+      "all_paths": 291.4
+    },
+    "G12": {
+      "core02": 107.1,
+      "first": 154.9,
+      "all_paths": 284.6,
+      "core03": 137.0
+    },
+    "G13": {
+      "first": 147.3,
+      "all_paths": 257.6,
+      "core03": 94.8,
+      "core02": 79.1
+    },
+    "G14": {
+      "all_paths": 238.2,
+      "core03": 98.0,
+      "core02": 77.1,
+      "first": 132.1
+    }
+  }
+}

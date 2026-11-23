@@ -1,0 +1,5 @@
+{
+  "implementation":"072ce0f",
+  "seed":4537547028202301029,
+  "purpose":"Supplement after first measurements, with no changes to the system under test. In the first diamonds only one branch could pass the local binding check. Now every arm forwards a local copy, but only a randomly selected arm is called by the named origin. Other arms have no incoming edge. Three graphs at each width 2, 3 and 6. Keep every draw, including any budget exhaustion. Add a strong greedy baseline that binds early, checks for the origin immediately and otherwise follows its first viable continuation. Give every simple baseline the correct parsed goal. Report these strata separately."
+}
