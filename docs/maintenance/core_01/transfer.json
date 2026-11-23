@@ -1,0 +1,9 @@
+{
+  "implementation": "30fcbee",
+  "tasks": [
+    {"id":"T1","question":"Может ли search_repository через другие функции вызвать modules_from_source?","path":["search_repository","rank","module_rank","modules_from_source"]},
+    {"id":"T2","question":"Найди маршрут из main к rank_title_only.","path":["main","rank","rank_title_only"]},
+    {"id":"T3","question":"Проверь путь вызовов от extract_symbols до search_repository.","reason":"path_unproven"},
+    {"id":"T4","question":"Дотягивается ли search_repository через промежуточные функции до interleave_3_to_1?","path":["search_repository","rank","interleave_3_to_1"]}
+  ]
+}
