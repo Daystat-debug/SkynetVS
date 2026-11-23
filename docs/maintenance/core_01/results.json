@@ -1,0 +1,372 @@
+{
+  "rows": [
+    {
+      "case": "A",
+      "meets_rubric": true,
+      "state": "answered",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "extract_symbols",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 11,
+      "reason": null,
+      "required_edges": 3,
+      "published_edges": [
+        [
+          "search_repository",
+          "rank"
+        ],
+        [
+          "rank",
+          "rank_symbols"
+        ],
+        [
+          "rank_symbols",
+          "extract_symbols"
+        ]
+      ],
+      "one_calls_edges": 1,
+      "one_compose_status": "withheld",
+      "one_compose_claims": 0
+    },
+    {
+      "case": "B",
+      "meets_rubric": true,
+      "state": "answered",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "modules_from_source",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 1,
+      "refs": 3,
+      "reason": null,
+      "required_edges": 1,
+      "published_edges": [
+        [
+          "module_rank",
+          "modules_from_source"
+        ]
+      ],
+      "one_calls_edges": 1,
+      "one_compose_status": "withheld",
+      "one_compose_claims": 0
+    },
+    {
+      "case": "C",
+      "meets_rubric": true,
+      "state": "insufficient",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "reason": "clarification"
+    },
+    {
+      "case": "D",
+      "meets_rubric": true,
+      "state": "insufficient",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "search_repository",
+          "status": "withheld"
+        },
+        {
+          "tool": "calls",
+          "target": "main",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "reason": "path_unproven"
+    },
+    {
+      "case": "E",
+      "meets_rubric": true,
+      "state": "insufficient",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "reason": "out_of_scope"
+    },
+    {
+      "case": "F",
+      "meets_rubric": true,
+      "state": "insufficient",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "extract_symbols",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "reason": "step_budget"
+    },
+    {
+      "case": "G",
+      "meets_rubric": true,
+      "state": "failed",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "extract_symbols",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "started"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "reason": "tool_error"
+    },
+    {
+      "case": "H",
+      "meets_rubric": true,
+      "state": "failed",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "extract_symbols",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "started"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "reason": "invalid_reference"
+    },
+    {
+      "case": "I",
+      "meets_rubric": true,
+      "state": "answered",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "extract_symbols",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 11,
+      "reason": null,
+      "required_edges": 3,
+      "published_edges": [
+        [
+          "search_repository",
+          "rank"
+        ],
+        [
+          "rank",
+          "rank_symbols"
+        ],
+        [
+          "rank_symbols",
+          "extract_symbols"
+        ]
+      ],
+      "one_calls_edges": 1,
+      "one_compose_status": "withheld",
+      "one_compose_claims": 0
+    },
+    {
+      "case": "J",
+      "meets_rubric": true,
+      "state": "answered",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "expand_query",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 1,
+      "refs": 3,
+      "reason": null
+    },
+    {
+      "case": "K",
+      "meets_rubric": true,
+      "state": "answered",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "candidate_functions",
+          "status": "flow"
+        }
+      ],
+      "claims": 16,
+      "refs": 16,
+      "reason": null
+    },
+    {
+      "case": "T1",
+      "meets_rubric": true,
+      "state": "answered",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "modules_from_source",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "module_rank",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 10,
+      "reason": null,
+      "required_edges": 3,
+      "published_edges": [
+        [
+          "search_repository",
+          "rank"
+        ],
+        [
+          "rank",
+          "module_rank"
+        ],
+        [
+          "module_rank",
+          "modules_from_source"
+        ]
+      ],
+      "one_calls_edges": 1,
+      "one_compose_status": "withheld",
+      "one_compose_claims": 0
+    },
+    {
+      "case": "T2",
+      "meets_rubric": true,
+      "state": "answered",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "rank_title_only",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 7,
+      "reason": null,
+      "required_edges": 2,
+      "published_edges": [
+        [
+          "main",
+          "rank"
+        ],
+        [
+          "rank",
+          "rank_title_only"
+        ]
+      ],
+      "one_calls_edges": 1,
+      "one_compose_status": "withheld",
+      "one_compose_claims": 0
+    },
+    {
+      "case": "T3",
+      "meets_rubric": true,
+      "state": "insufficient",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "search_repository",
+          "status": "withheld"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "reason": "path_unproven"
+    },
+    {
+      "case": "T4",
+      "meets_rubric": false,
+      "state": "insufficient",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "reason": "clarification",
+      "required_edges": 2,
+      "published_edges": [],
+      "one_calls_edges": 1,
+      "one_compose_status": "withheld",
+      "one_compose_claims": 0
+    }
+  ],
+  "case_ms": [
+    403,
+    306,
+    289,
+    356,
+    259,
+    299,
+    304,
+    326,
+    352,
+    348,
+    382,
+    350,
+    322,
+    309,
+    322
+  ],
+  "hard_deadline_control": "withheld"
+}

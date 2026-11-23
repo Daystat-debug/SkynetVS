@@ -1,0 +1,41 @@
+{
+  "rows": [
+    {
+      "case": "A",
+      "qwen_correct": true,
+      "model_ms": 290,
+      "deterministic_correct": true,
+      "deterministic_ms": 1,
+      "finish": "stop"
+    },
+    {
+      "case": "B",
+      "qwen_correct": true,
+      "model_ms": 250,
+      "deterministic_correct": true,
+      "deterministic_ms": 0,
+      "finish": "stop"
+    },
+    {
+      "case": "J",
+      "qwen_correct": true,
+      "model_ms": 202,
+      "deterministic_correct": true,
+      "deterministic_ms": 533,
+      "finish": "stop"
+    },
+    {
+      "case": "K",
+      "qwen_correct": false,
+      "model_ms": 196,
+      "deterministic_correct": true,
+      "deterministic_ms": 536,
+      "finish": "stop"
+    }
+  ],
+  "generations": 4,
+  "startup_ms": 15746,
+  "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+  "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9",
+  "stopped": true
+}
