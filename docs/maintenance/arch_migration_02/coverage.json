@@ -1,0 +1,67 @@
+{
+  "snapshot": "e64002a36d41d99b7b5ae44398c3cf5301fcfe22",
+  "returncode": 1,
+  "counts": {
+    "PASS": 9,
+    "FAIL": 1,
+    "SKIP": 0,
+    "NOT_RUN": 93,
+    "TOTAL": 103
+  },
+  "failed": [
+    "NLU risk guard"
+  ],
+  "model_source": "installed",
+  "model_sha256": "15d44ef334ba395e8272816c7efaeafe01ccbfa1210e74e14de08d714508b307",
+  "controls": {
+    "rows": [
+      {
+        "text": "\u0441\u0442\u043e\u043f, \u0437\u0430\u043a\u043e\u043d\u0447\u0438 \u0441\u043b\u0443\u0448\u0430\u0442\u044c",
+        "expected": "STOP_LISTEN",
+        "actual": null
+      },
+      {
+        "text": "\u043f\u0435\u0440\u0435\u0441\u0442\u0430\u043d\u044c \u043f\u0440\u0438\u043d\u0438\u043c\u0430\u0442\u044c \u043c\u043e\u0438 \u043a\u043e\u043c\u0430\u043d\u0434\u044b",
+        "expected": "STOP_LISTEN",
+        "actual": null
+      },
+      {
+        "text": "\u0437\u0430\u043a\u0440\u043e\u0439 \u0440\u0435\u0436\u0438\u043c \u043f\u0440\u043e\u0441\u043b\u0443\u0448\u0438\u0432\u0430\u043d\u0438\u044f \u043a\u043e\u043c\u0430\u043d\u0434",
+        "expected": "STOP_LISTEN",
+        "actual": "START_LEARNING"
+      },
+      {
+        "text": "\u043f\u0440\u0435\u043a\u0440\u0430\u0442\u0438 \u0433\u043e\u0432\u043e\u0440\u0438\u0442\u044c \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430",
+        "expected": "STOP_TALKING",
+        "actual": "STOP_TALKING"
+      },
+      {
+        "text": "\u043f\u043e\u0441\u0442\u0430\u0432\u044c \u043c\u0443\u0437\u044b\u043a\u0443 \u043d\u0430 \u043f\u0430\u0443\u0437\u0443 \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430",
+        "expected": "MUSIC_PAUSE",
+        "actual": "MUSIC_PAUSE"
+      },
+      {
+        "text": "\u043f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438 \u043c\u0443\u0437\u044b\u043a\u0443 \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430",
+        "expected": "MUSIC_RESTART",
+        "actual": null
+      },
+      {
+        "text": "\u043f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0443 \u0441\u043a\u0430\u0439\u043d\u0435\u0442 \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430",
+        "expected": "RESTART_SKYNETVS",
+        "actual": "RESTART_SKYNETVS"
+      },
+      {
+        "text": "\u0437\u0430\u0432\u0435\u0440\u0448\u0438 \u0440\u0430\u0431\u043e\u0442\u0443 \u043f\u043e\u043c\u043e\u0449\u043d\u0438\u043a\u0430 \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430",
+        "expected": "EXIT_SKYNETVS",
+        "actual": "EXIT_SKYNETVS"
+      }
+    ],
+    "stop_raw": 0.3744
+  },
+  "intent_coverage": {
+    "project_intents": 47,
+    "covered_intents": 47,
+    "missing_eval_intents": [],
+    "extra_eval_intents": []
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "base": "793cd41bf6f691ca13ca1b5770606180a16e6279",
+  "identical_evaluations": {
+    "targeted": {
+      "reminder_datetime": {
+        "rc": 0,
+        "summary": {
+          "case_count": 18,
+          "fail_count": 0
+        }
+      },
+      "reminder_command_parser": {
+        "rc": 0,
+        "summary": {
+          "case_count": 17,
+          "fail_count": 0
+        }
+      },
+      "reminder_repository": {
+        "rc": 0,
+        "summary": {
+          "case_count": 11,
+          "fail_count": 0
+        }
+      },
+      "reminder_service": {
+        "rc": 0,
+        "summary": {
+          "case_count": 12,
+          "fail_count": 0
+        }
+      },
+      "reminder_actions": {
+        "rc": 0,
+        "summary": {
+          "case_count": 9,
+          "fail_count": 0
+        }
+      },
+      "reminder_runtime": {
+        "rc": 0,
+        "summary": {
+          "case_count": 9,
+          "fail_count": 0
+        }
+      },
+      "package_boundaries": {
+        "rc": 0,
+        "summary": {
+          "case_count": 32,
+          "fail_count": 0
+        }
+      }
+    },
+    "date_payload_sha256": "49edf5ea7a66806d21686e53537384700ccd78af3c4484f4e8866351b76e91e5"
+  },
+  "pickle_forward_rollback": [
+    "ok",
+    "ok"
+  ],
+  "json_forward_rollback_identical": true
+}
