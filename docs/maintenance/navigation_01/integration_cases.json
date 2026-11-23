@@ -1,0 +1,13 @@
+{
+  "baseline": "ce6500fb97cba391f0081ed822828638b54e5c2a",
+  "protocol": "No filenames, symbols or topic keys as inputs. Compare accepted menu + operator topic selection with direct routing over the same ten cards. Count a positive only if the returned card contains both required paths. Check ambiguity and unsupported questions separately. Measure actual CLI invocations, stdout bytes and elapsed wall time.",
+  "cases": [
+    {"id":"D1","question":"Где хранится состояние напоминаний и какой проверкой проверить добавление нового напоминания?","keys":["reminders"],"paths":["modules/reminder_repository.py","tools/eval_reminder_service.py"]},
+    {"id":"D2","question":"После обновления отдельное окно Developer Tasks отклонило комплект поставки. Где проверить запуск и состав комплекта?","keys":["ui"],"paths":["modules/developer_task_ui/launch.py","modules/developer_task_ui/BUNDLE_MANIFEST.json"]},
+    {"id":"D3","question":"Как выяснить, кто разрешает исполнять действия и где проверяются полномочия исполнителя?","keys":["actions"],"paths":["modules/action_broker.py","tools/eval_action_execution_boundary.py"]},
+    {"id":"D4","question":"Какие эффекты возможны при запуске конвейера проверок и где проверяется описание этих эффектов?","keys":["pipeline"],"paths":["tools/pipeline.py","tools/eval_pipeline_effects.py"]},
+    {"id":"D5","question":"Интересуют одновременно напоминания и полномочия исполнителей. С какой подсистемы начать?","keys":["reminders","actions"],"paths":[]},
+    {"id":"D6","question":"Где настраивается цвет значка в области уведомлений?","keys":[],"paths":[]},
+    {"id":"D7","question":"Почему помощник забыл просьбу позвонить завтра утром? Где проверить, что она сохранилась?","keys":["reminders"],"paths":["modules/reminder_repository.py","tools/eval_reminder_service.py"]}
+  ]
+}
