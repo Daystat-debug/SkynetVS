@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import skynet_core_explain as host
 import skynet_argument_flow as arguments
 import skynet_diagnostic_path as diagnostic
+import skynet_causal_query as causal
 
 SOURCE = host.SOURCE_ID + ".git-head"
 MAX_STEPS = 6
@@ -37,6 +38,11 @@ OWNER = rf"(?:функци[а-я]+,? (?:которая {ACTIVE}|{PARTICIPLE})|п
 OWNER_QUERY = re.compile(rf"{ASK}{INCOMING} {OWNER} (?:пол[ея] |ключ[а]? )?({NAME})", re.I)
 OUTGOING_OWNER = re.compile(r"(?:какие функции|кого|что) (?:напрямую )?вызывает (?:функция|производитель)\b", re.I)
 REASONS = {
+    "control_unsupported": "Существенный участок пути содержит неподдерживаемое управление. Полная локальная причина не установлена.",
+    "control_unreachable": "В поддерживаемой структуре управления до указанной инструкции нет перехода.",
+    "statement_ambiguous": "Укажите строку с одной инструкцией внутри выбранной функции.",
+    "caller_conditions_unproven": "Для объяснения от этого входа нужны условия нескольких функций. Подтверждения локальной причины недостаточно.",
+    "interpretation_unavailable": "Не удалось проверить смысл вопроса локальной моделью. Можно передать точный код диагностики или функцию@строку.",
     "clarification": "Уточните две разные однозначные функции и направление поиска или задайте вопрос об одном поле.",
     "out_of_scope": "Запрошен источник вне пяти разрешённых файлов.",
     "path_unproven": "В поддерживаемых статических вызовах путь установить не удалось.",
@@ -239,7 +245,8 @@ def path_evidence(req, src, names, lookup, trace, steps, deadline):
 
 
 def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEPS,
-                diagnostic_planner=diagnostic.witness):
+                diagnostic_planner=diagnostic.witness, why=False, classifier=causal.classify,
+                proof_type=causal.control.Proof):
     task = host.Task(question, SOURCE, timeout=TIME_LIMIT)
     trace = []
     plan = "interpret"
@@ -259,6 +266,19 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         if cli.auto_reader.EVENT.search(req.question):
             return packet(req, src, reason="observation_required")
         symptom = diagnostic.interpret(req.question)
+        if why or (symptom and not symptom.origin) or (not symptom and causal.unbound_subject(req.question)):
+            plan = "local_control"
+            if paths:
+                return packet(req, src, reason="clarification")
+            try:
+                if steps < 2:
+                    return packet(req, src, reason="step_budget")
+                subject = causal.select(req.question, symptom, trace, classifier)
+                search = arguments.Search(req, src, lookup or cli.calls.lookup, trace,
+                                          min(MAX_STEPS, steps), task.deadline, head_current, site_anchors)
+                return packet(req, src, *causal.solve(search, subject, proof_type))
+            except (causal.control.Gap, arguments.Limit) as exc:
+                return packet(req, src, reason=str(exc))
         if symptom is not None:
             plan = "explain_diagnostic"
             if not symptom or paths:
@@ -297,7 +317,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return evidence
 
     def verify(req, evidence, draft, delivered):
-        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic"):
+        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic", "local_control"):
             head_current(src)
         return host.verify_snapshot(src, req, evidence, draft, delivered)
 
@@ -311,8 +331,13 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     if proposal["status"] != "answer":
         return dict(public, reason=proposal["reason"])
     if plan == "explain_diagnostic":
+        public["state"] = "partial"
         public["coverage"] = "one_static_site"
         public["execution_observed"] = False
+    elif plan == "local_control":
+        public["coverage"] = "explicit_control_in_one_function"
+        public["execution_observed"] = False
+        public["control"] = evidence["analysis"]["observations"][0]["control"]
     by_id = {i["ref_id"]: i["locator"] for i in evidence["items"]}
     for claim, obs in zip(proposal["claims"], evidence["analysis"]["observations"], strict=True):
         public["claims"].append(dict(text=claim["text"], refs=[by_id[a["ref_id"]] for a in claim["anchors"]]))
@@ -321,10 +346,10 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     return public
 
 
-def supervised(question, *, timeout=TIME_LIMIT):
+def supervised(question, *, timeout=TIME_LIMIT, why=False):
     if len(question) > 600:
         return dict(state="insufficient", reason="clarification", claims=[], steps=[])
-    cmd = [sys.executable, "-I", "-S", "-B", str(Path(__file__).resolve()), "--worker"]
+    cmd = [sys.executable, "-I", "-S", "-B", str(Path(__file__).resolve()), "--why-worker" if why else "--worker"]
     try:
         run = subprocess.run(cmd, input=question.encode("utf8"), capture_output=True, timeout=timeout)
         if not run.returncode:
@@ -338,8 +363,9 @@ def main():
     parser = argparse.ArgumentParser(description="Исследовать статические вызовы и поля в пяти файлах Git HEAD.")
     parser.add_argument("question")
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
     args = parser.parse_args()
-    out = supervised(args.question)
+    out = supervised(args.question, why=args.why)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, indent=2))
     else:
@@ -347,11 +373,11 @@ def main():
             print("Git-снимок", out["snapshot"])
         if out["steps"]:
             print("Ход поиска:", " → ".join(f'{s["tool"]}({s["target"]})' for s in out["steps"]))
-        if out["state"] != "answered":
+        if out["state"] not in ("answered", "partial"):
             print(REASONS.get(out["reason"], "Ответ удержан."), "(" + out["reason"] + ")")
         else:
             if out["plan"] == "explain_diagnostic":
-                print("Один статический пример. Входные значения и распространение исключения до пользователя не проверялись.")
+                print("Подтверждены места вызовов и локальная ветвь. Объяснение причины от входа частичное.")
             for claim in out["claims"]:
                 print(claim["text"])
                 for ref in claim["refs"]:
@@ -363,9 +389,9 @@ def main():
 if __name__ == "__main__":
     if not sys.stdout.isatty():
         sys.stdout.reconfigure(encoding="utf8")
-    if sys.argv[1:] == ["--worker"]:
+    if sys.argv[1:] in (["--worker"], ["--why-worker"]):
         data = sys.stdin.buffer.read(2401)
-        result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT)
+        result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker")
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())

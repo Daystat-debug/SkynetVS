@@ -136,7 +136,7 @@ def public(result):
                         for c in result["claims"]])
 
 
-def measure(root, src, ground, case, defs, prior, order):
+def measure(root, src, ground, case, defs, prior, order, accepted):
     inputs = dict(opener=lambda _: (src, ground))
     row = dict(id=case["id"], question=case["q"], commit=src.commit, positive="reason" not in case)
     timings = {}
@@ -146,15 +146,18 @@ def measure(root, src, ground, case, defs, prior, order):
             result = prior.investigate(case["q"], root, **inputs)
         else:
             planner = {"direct": direct, "sequential": sequential, "core04": diag.witness}[arm]
-            result = loop.investigate(case["q"], root, diagnostic_planner=planner, **inputs)
+            result = accepted.investigate(case["q"], root, diagnostic_planner=planner, **inputs)
         timings[arm] = round((perf_counter() - start) * 1000, 1)
         assert len(result["steps"]) <= loop.MAX_STEPS
         correct = score(case, result, root, src.commit, defs)
         row[arm] = dict(correct=correct, **public(result))
+        if arm == "core04" and result["state"] == "answered" and any(c.get("edge") for c in result["claims"]):
+            current = loop.investigate(case["q"], root, **inputs)
+            assert current["state"] == "partial" and current["claims"] == result["claims"]
     return row, timings
 
 
-def controls(root, case):
+def controls(root, case, accepted):
     src, ground = loop.read_head(root)
     lookup = loop.host.lab.cli.calls.lookup
 
@@ -173,19 +176,25 @@ def controls(root, case):
               ("head", "stale_snapshot", dict(lookup=switched))]
     outcomes = {}
     for label, reason, opts in checks:
-        result = loop.investigate(case, root, opener=lambda _: (src, ground), **opts)
+        result = accepted.investigate(case, root, opener=lambda _: (src, ground), **opts)
         assert not result["claims"] and result.get("reason") == reason, (label, result)
         outcomes[label] = result["reason"]
     set_head(root, BASE)
     return outcomes
 
 
-def run(temp, plan):
-    previous = temp / "core03.py"
-    previous.write_bytes(pilot.git("show", BASE + ":tools/skynet_investigate.py"))
-    spec = importlib.util.spec_from_file_location("accepted_core03", previous)
+def pinned_host(temp, name, revision):
+    previous = temp / (name + ".py")
+    previous.write_bytes(pilot.git("show", revision + ":tools/skynet_investigate.py"))
+    spec = importlib.util.spec_from_file_location(name, previous)
     prior = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(prior)  # trusted pinned host, separate from the five unexecuted subjects
+    return prior
+
+
+def run(temp, plan):
+    prior = pinned_host(temp, "accepted_core03", BASE)
+    accepted = pinned_host(temp, "accepted_core04", "d7dafa045d8e32cce7a50318a0fe947cea0bb605")
     root = temp / "fixture"
     pilot.git("clone", "--quiet", "--local", "--no-checkout", str(pilot.ROOT), str(root))
     set_head(root, BASE)
@@ -199,11 +208,11 @@ def run(temp, plan):
         commit = prior_eval.checkout_fixture(root, BASE, modified) if modified else BASE
         src, ground = loop.read_head(root)
         assert src.commit == commit
-        row, timing = measure(root, src, ground, case, defs, prior, i % len(ARMS))
+        row, timing = measure(root, src, ground, case, defs, prior, i % len(ARMS), accepted)
         rows.append(row)
         times[case["id"]] = timing
     set_head(root, BASE)
-    return rows, times, controls(root, plan["integrity_question"])
+    return rows, times, controls(root, plan["integrity_question"], accepted)
 
 
 def main():
