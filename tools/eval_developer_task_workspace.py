@@ -37,6 +37,8 @@ def _git(
 ) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         ["git", "-C", str(root), *args],
+        # Preserve explicitly empty Git config values after patch.dict restores os.environ on Windows.
+        env=os.environ.copy(),
         stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -52,6 +54,7 @@ def _git_bytes(
 ) -> subprocess.CompletedProcess[bytes]:
     return subprocess.run(
         ["git", "-C", str(root), *args],
+        env=os.environ.copy(),
         stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
