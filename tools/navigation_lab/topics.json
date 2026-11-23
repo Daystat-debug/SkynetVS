@@ -1,0 +1,62 @@
+{
+  "voice": {
+    "task": "Голосовой цикл, запуск и остановка служб",
+    "entry": "main.py",
+    "boundary": "modules/runtime/voice_lifecycle.py",
+    "check": "tools/eval_runtime_architecture_audit.py"
+  },
+  "commands": {
+    "task": "Распознавание и обработка команды",
+    "entry": "modules/command_processor.py",
+    "boundary": "modules/command_runtime.py",
+    "check": "tools/eval_command_processor.py"
+  },
+  "actions": {
+    "task": "Полномочия и исполнение действий",
+    "entry": "modules/action_broker.py",
+    "boundary": "modules/action_contract.py",
+    "check": "tools/eval_action_execution_boundary.py"
+  },
+  "reminders": {
+    "task": "Напоминания, состояние и хранилище",
+    "entry": "modules/reminder_service.py",
+    "boundary": "modules/reminder_repository.py",
+    "check": "tools/eval_reminder_service.py"
+  },
+  "memory": {
+    "task": "Использование доказательств коррекции в runtime",
+    "entry": "modules/learning/correction_evidence_runtime.py",
+    "boundary": "docs/architecture/SKYNETVS_CORRECTION_EVIDENCE_RUNTIME_V1.md",
+    "check": "tools/eval_correction_evidence_runtime.py"
+  },
+  "ui": {
+    "task": "Отдельный процесс Developer Tasks и состав поставки",
+    "entry": "modules/developer_task_ui/launch.py",
+    "boundary": "modules/developer_task_ui/BUNDLE_MANIFEST.json",
+    "check": "tools/eval_core_symbol_ui.py"
+  },
+  "developer": {
+    "task": "Контракты Developer Tasks и разрешённые зависимости",
+    "entry": "modules/developer/developer_task_contract.py",
+    "boundary": "tools/eval_package_boundaries.py",
+    "check": "tools/eval_developer_task_contract.py"
+  },
+  "cognitive": {
+    "task": "Исследование кода Cognitive Core и проверка источников",
+    "entry": "tools/skynet_investigate.py",
+    "boundary": "docs/architecture/SKYNETVS_COGNITIVE_CORE_V2.md",
+    "check": "tools/eval_argument_flow.py"
+  },
+  "native": {
+    "task": "Происхождение исходников trusted_host",
+    "entry": "native/trusted_host/README_RU.md",
+    "boundary": "native/trusted_host/SOURCE_BASELINE.json",
+    "check": "native/trusted_host/check_source_baseline.py"
+  },
+  "pipeline": {
+    "task": "Регистрация команд и эффекты pipeline",
+    "entry": "tools/pipeline.py",
+    "boundary": "docs/maintenance/M154_PipelineEffects_Result.json",
+    "check": "tools/eval_pipeline_effects.py"
+  }
+}

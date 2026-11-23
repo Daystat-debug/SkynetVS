@@ -1,0 +1,566 @@
+{
+  "snapshot": "bceec9c91ce25f58a603adfb32e109543a384fb4",
+  "python": "3.12.10",
+  "git": "git version 2.45.1.windows.1",
+  "os": "Windows",
+  "rounds": [
+    {
+      "grep_batch_ms": 527.519,
+      "grep_batch_bytes": 3477,
+      "index_build_ms": 1282.366,
+      "index_batch_ms": 1282.782,
+      "index_batch_bytes": 1435,
+      "batch_grep_batch_ms": 82.436,
+      "batch_grep_batch_bytes": 3477,
+      "quick_build_ms": 213.958,
+      "quick_batch_ms": 214.078,
+      "quick_batch_bytes": 1435
+    },
+    {
+      "index_build_ms": 1198.509,
+      "index_batch_ms": 1198.716,
+      "index_batch_bytes": 1435,
+      "batch_grep_batch_ms": 95.521,
+      "batch_grep_batch_bytes": 3477,
+      "quick_build_ms": 215.119,
+      "quick_batch_ms": 215.239,
+      "quick_batch_bytes": 1435,
+      "grep_batch_ms": 450.359,
+      "grep_batch_bytes": 3477
+    },
+    {
+      "batch_grep_batch_ms": 75.527,
+      "batch_grep_batch_bytes": 3477,
+      "quick_build_ms": 211.229,
+      "quick_batch_ms": 211.35,
+      "quick_batch_bytes": 1435,
+      "grep_batch_ms": 446.455,
+      "grep_batch_bytes": 3477,
+      "index_build_ms": 1204.76,
+      "index_batch_ms": 1204.901,
+      "index_batch_bytes": 1435
+    },
+    {
+      "quick_build_ms": 219.075,
+      "quick_batch_ms": 219.198,
+      "quick_batch_bytes": 1435,
+      "grep_batch_ms": 442.065,
+      "grep_batch_bytes": 3477,
+      "index_build_ms": 1195.275,
+      "index_batch_ms": 1195.426,
+      "index_batch_bytes": 1435,
+      "batch_grep_batch_ms": 81.169,
+      "batch_grep_batch_bytes": 3477
+    },
+    {
+      "grep_batch_ms": 438.954,
+      "grep_batch_bytes": 3477,
+      "index_build_ms": 1214.653,
+      "index_batch_ms": 1214.802,
+      "index_batch_bytes": 1435,
+      "batch_grep_batch_ms": 85.907,
+      "batch_grep_batch_bytes": 3477,
+      "quick_build_ms": 223.517,
+      "quick_batch_ms": 223.661,
+      "quick_batch_bytes": 1435
+    },
+    {
+      "index_build_ms": 1184.641,
+      "index_batch_ms": 1184.779,
+      "index_batch_bytes": 1435,
+      "batch_grep_batch_ms": 79.675,
+      "batch_grep_batch_bytes": 3477,
+      "quick_build_ms": 217.26,
+      "quick_batch_ms": 217.377,
+      "quick_batch_bytes": 1435,
+      "grep_batch_ms": 435.772,
+      "grep_batch_bytes": 3477
+    },
+    {
+      "batch_grep_batch_ms": 74.719,
+      "batch_grep_batch_bytes": 3477,
+      "quick_build_ms": 214.777,
+      "quick_batch_ms": 214.895,
+      "quick_batch_bytes": 1435,
+      "grep_batch_ms": 436.407,
+      "grep_batch_bytes": 3477,
+      "index_build_ms": 1274.254,
+      "index_batch_ms": 1274.393,
+      "index_batch_bytes": 1435
+    },
+    {
+      "quick_build_ms": 219.872,
+      "quick_batch_ms": 219.995,
+      "quick_batch_bytes": 1435,
+      "grep_batch_ms": 443.002,
+      "grep_batch_bytes": 3477,
+      "index_build_ms": 1216.995,
+      "index_batch_ms": 1217.133,
+      "index_batch_bytes": 1435,
+      "batch_grep_batch_ms": 79.01,
+      "batch_grep_batch_bytes": 3477
+    }
+  ],
+  "cases": {
+    "CommandProcessor": {
+      "grep": {
+        "utf8_bytes_without_header": 920,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          97.226,
+          76.035,
+          76.699,
+          75.813,
+          72.397,
+          73.632,
+          72.992,
+          73.835
+        ]
+      },
+      "index": {
+        "utf8_bytes_without_header": 317,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.028,
+          0.029,
+          0.023,
+          0.03,
+          0.023,
+          0.02,
+          0.021,
+          0.021
+        ]
+      },
+      "batch_grep": {
+        "utf8_bytes_without_header": 920,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.001,
+          0.001,
+          0.001,
+          0.001,
+          0.001,
+          0.001,
+          0.001,
+          0.001
+        ]
+      },
+      "quick": {
+        "utf8_bytes_without_header": 317,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.018,
+          0.018,
+          0.018,
+          0.019,
+          0.033,
+          0.018,
+          0.017,
+          0.018
+        ]
+      }
+    },
+    "ReminderService": {
+      "grep": {
+        "utf8_bytes_without_header": 558,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          97.412,
+          73.927,
+          74.168,
+          75.641,
+          73.422,
+          72.057,
+          73.061,
+          74.779
+        ]
+      },
+      "index": {
+        "utf8_bytes_without_header": 175,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.02,
+          0.021,
+          0.015,
+          0.016,
+          0.015,
+          0.015,
+          0.015,
+          0.014
+        ]
+      },
+      "batch_grep": {
+        "utf8_bytes_without_header": 558,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "quick": {
+        "utf8_bytes_without_header": 175,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.01,
+          0.01,
+          0.011,
+          0.01,
+          0.012,
+          0.01,
+          0.01,
+          0.011
+        ]
+      }
+    },
+    "ActionBroker": {
+      "grep": {
+        "utf8_bytes_without_header": 448,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          92.532,
+          80.007,
+          74.274,
+          74.329,
+          72.519,
+          72.784,
+          75.746,
+          70.59
+        ]
+      },
+      "index": {
+        "utf8_bytes_without_header": 210,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.014,
+          0.017,
+          0.011,
+          0.011,
+          0.011,
+          0.012,
+          0.011,
+          0.011
+        ]
+      },
+      "batch_grep": {
+        "utf8_bytes_without_header": 448,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "quick": {
+        "utf8_bytes_without_header": 210,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.008,
+          0.008,
+          0.008,
+          0.008,
+          0.008,
+          0.008,
+          0.008,
+          0.008
+        ]
+      }
+    },
+    "RuntimeServiceHealthMonitor": {
+      "grep": {
+        "utf8_bytes_without_header": 601,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          82.665,
+          76.553,
+          73.252,
+          72.68,
+          74.79,
+          72.332,
+          71.32,
+          72.011
+        ]
+      },
+      "index": {
+        "utf8_bytes_without_header": 227,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.011,
+          0.013,
+          0.009,
+          0.008,
+          0.009,
+          0.009,
+          0.009,
+          0.009
+        ]
+      },
+      "batch_grep": {
+        "utf8_bytes_without_header": 601,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "quick": {
+        "utf8_bytes_without_header": 227,
+        "coverage": {
+          "definition": true,
+          "dependency": true,
+          "check": true
+        },
+        "query_ms": [
+          0.008,
+          0.007,
+          0.008,
+          0.007,
+          0.008,
+          0.007,
+          0.008,
+          0.008
+        ]
+      }
+    },
+    "OperationTelemetry": {
+      "grep": {
+        "utf8_bytes_without_header": 415,
+        "coverage": {
+          "definition": true,
+          "dependency": null,
+          "check": true
+        },
+        "query_ms": [
+          77.617,
+          70.461,
+          74.573,
+          71.991,
+          71.936,
+          71.442,
+          70.442,
+          77.987
+        ]
+      },
+      "index": {
+        "utf8_bytes_without_header": 340,
+        "coverage": {
+          "definition": true,
+          "dependency": null,
+          "check": true
+        },
+        "query_ms": [
+          0.024,
+          0.036,
+          0.022,
+          0.022,
+          0.023,
+          0.022,
+          0.022,
+          0.022
+        ]
+      },
+      "batch_grep": {
+        "utf8_bytes_without_header": 415,
+        "coverage": {
+          "definition": true,
+          "dependency": null,
+          "check": true
+        },
+        "query_ms": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "quick": {
+        "utf8_bytes_without_header": 340,
+        "coverage": {
+          "definition": true,
+          "dependency": null,
+          "check": true
+        },
+        "query_ms": [
+          0.018,
+          0.018,
+          0.017,
+          0.017,
+          0.018,
+          0.018,
+          0.017,
+          0.018
+        ]
+      }
+    },
+    "Task": {
+      "grep": {
+        "utf8_bytes_without_header": 485,
+        "coverage": {
+          "definition": true,
+          "dependency": null,
+          "check": true
+        },
+        "query_ms": [
+          78.675,
+          73.177,
+          73.305,
+          71.425,
+          73.698,
+          73.353,
+          72.66,
+          73.606
+        ]
+      },
+      "index": {
+        "utf8_bytes_without_header": 116,
+        "coverage": {
+          "definition": true,
+          "dependency": null,
+          "check": true
+        },
+        "query_ms": [
+          0.012,
+          0.015,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01
+        ]
+      },
+      "batch_grep": {
+        "utf8_bytes_without_header": 485,
+        "coverage": {
+          "definition": true,
+          "dependency": null,
+          "check": true
+        },
+        "query_ms": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "quick": {
+        "utf8_bytes_without_header": 116,
+        "coverage": {
+          "definition": true,
+          "dependency": null,
+          "check": true
+        },
+        "query_ms": [
+          0.008,
+          0.008,
+          0.007,
+          0.008,
+          0.007,
+          0.007,
+          0.007,
+          0.007
+        ]
+      }
+    }
+  },
+  "limits": {
+    "rows_per_group": 8,
+    "tokens": null
+  },
+  "median": {
+    "grep_batch_ms": 442.5335,
+    "grep_batch_bytes": 3477.0,
+    "index_build_ms": 1209.7065,
+    "index_batch_ms": 1209.8515,
+    "index_batch_bytes": 1435.0,
+    "batch_grep_batch_ms": 80.422,
+    "batch_grep_batch_bytes": 3477.0,
+    "quick_build_ms": 216.1895,
+    "quick_batch_ms": 216.308,
+    "quick_batch_bytes": 1435.0
+  }
+}
