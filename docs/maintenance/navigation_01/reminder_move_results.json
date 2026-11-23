@@ -1,0 +1,228 @@
+{
+  "baseline_revision": "ce6500fb97cba391f0081ed822828638b54e5c2a",
+  "integration_revision": "a21f9be67a7f4a0388d37ef00912ca2065b9a77f",
+  "parser_blob": "98238b4324f4328f8fe40b7c3463c7310ffe130e",
+  "baseline": {
+    "targeted": {
+      "reminder_datetime": {
+        "rc": 0,
+        "summary": {
+          "case_count": 18,
+          "fail_count": 0
+        }
+      },
+      "reminder_command_parser": {
+        "rc": 0,
+        "summary": {
+          "case_count": 17,
+          "fail_count": 0
+        }
+      },
+      "reminder_repository": {
+        "rc": 0,
+        "summary": {
+          "case_count": 11,
+          "fail_count": 0
+        }
+      },
+      "reminder_service": {
+        "rc": 0,
+        "summary": {
+          "case_count": 12,
+          "fail_count": 0
+        }
+      },
+      "reminder_actions": {
+        "rc": 0,
+        "summary": {
+          "case_count": 9,
+          "fail_count": 0
+        }
+      },
+      "reminder_runtime": {
+        "rc": 0,
+        "summary": {
+          "case_count": 9,
+          "fail_count": 0
+        }
+      },
+      "package_boundaries": {
+        "rc": 0,
+        "summary": {
+          "case_count": 32,
+          "fail_count": 0
+        }
+      }
+    },
+    "date_payload_sha256": "49edf5ea7a66806d21686e53537384700ccd78af3c4484f4e8866351b76e91e5",
+    "pipeline": {
+      "rc": 1,
+      "counts": {
+        "PASS": 6,
+        "FAIL": 1,
+        "SKIP": 0,
+        "NOT_RUN": 96,
+        "TOTAL": 103
+      },
+      "failed": [
+        "Evaluate NLU"
+      ],
+      "missing_intents": [
+        "EXIT_SKYNETVS",
+        "OPEN_DEVELOPER_TASK",
+        "RESTART_SKYNETVS",
+        "START_LEARNING"
+      ]
+    }
+  },
+  "trial": {
+    "targeted": {
+      "reminder_datetime": {
+        "rc": 0,
+        "summary": {
+          "case_count": 18,
+          "fail_count": 0
+        }
+      },
+      "reminder_command_parser": {
+        "rc": 0,
+        "summary": {
+          "case_count": 17,
+          "fail_count": 0
+        }
+      },
+      "reminder_repository": {
+        "rc": 0,
+        "summary": {
+          "case_count": 11,
+          "fail_count": 0
+        }
+      },
+      "reminder_service": {
+        "rc": 0,
+        "summary": {
+          "case_count": 12,
+          "fail_count": 0
+        }
+      },
+      "reminder_actions": {
+        "rc": 0,
+        "summary": {
+          "case_count": 9,
+          "fail_count": 0
+        }
+      },
+      "reminder_runtime": {
+        "rc": 0,
+        "summary": {
+          "case_count": 9,
+          "fail_count": 0
+        }
+      },
+      "package_boundaries": {
+        "rc": 0,
+        "summary": {
+          "case_count": 32,
+          "fail_count": 0
+        }
+      }
+    },
+    "date_payload_sha256": "49edf5ea7a66806d21686e53537384700ccd78af3c4484f4e8866351b76e91e5",
+    "pipeline": {
+      "rc": 1,
+      "counts": {
+        "PASS": 6,
+        "FAIL": 1,
+        "SKIP": 0,
+        "NOT_RUN": 96,
+        "TOTAL": 103
+      },
+      "failed": [
+        "Evaluate NLU"
+      ],
+      "missing_intents": [
+        "EXIT_SKYNETVS",
+        "OPEN_DEVELOPER_TASK",
+        "RESTART_SKYNETVS",
+        "START_LEARNING"
+      ]
+    }
+  },
+  "shipped": {
+    "targeted": {
+      "reminder_datetime": {
+        "rc": 0,
+        "summary": {
+          "case_count": 18,
+          "fail_count": 0
+        }
+      },
+      "reminder_command_parser": {
+        "rc": 0,
+        "summary": {
+          "case_count": 17,
+          "fail_count": 0
+        }
+      },
+      "reminder_repository": {
+        "rc": 0,
+        "summary": {
+          "case_count": 11,
+          "fail_count": 0
+        }
+      },
+      "reminder_service": {
+        "rc": 0,
+        "summary": {
+          "case_count": 12,
+          "fail_count": 0
+        }
+      },
+      "reminder_actions": {
+        "rc": 0,
+        "summary": {
+          "case_count": 9,
+          "fail_count": 0
+        }
+      },
+      "reminder_runtime": {
+        "rc": 0,
+        "summary": {
+          "case_count": 9,
+          "fail_count": 0
+        }
+      },
+      "package_boundaries": {
+        "rc": 0,
+        "summary": {
+          "case_count": 32,
+          "fail_count": 0
+        }
+      }
+    },
+    "date_payload_sha256": "49edf5ea7a66806d21686e53537384700ccd78af3c4484f4e8866351b76e91e5",
+    "pipeline": {
+      "rc": 1,
+      "counts": {
+        "PASS": 6,
+        "FAIL": 1,
+        "SKIP": 0,
+        "NOT_RUN": 96,
+        "TOTAL": 103
+      },
+      "failed": [
+        "Evaluate NLU"
+      ],
+      "missing_intents": [
+        "EXIT_SKYNETVS",
+        "OPEN_DEVELOPER_TASK",
+        "RESTART_SKYNETVS",
+        "START_LEARNING"
+      ]
+    }
+  },
+  "trial_class_module": "modules.reminders.datetime_parser",
+  "legacy_to_trial": "ok",
+  "trial_to_rollback": "ModuleNotFoundError modules.reminders",
+  "m01_revert_restores_parent_tree": true
+}
