@@ -1,0 +1,9 @@
+{
+  "implementation":"ba1c4de",
+  "first_observation":{"id":"R1","state":"answered","plan":"callers_of_field_producer","claims":3,"error":"incoming sites published for an outgoing question"},
+  "questions":[
+    {"id":"R1","q":"Какие функции вызывает функция, которая формирует function_candidates_total?","reason":"outgoing_unsupported","steps":0},
+    {"id":"R2","q":"Какие функции вызывают функцию, которая формирует function_candidates_total?","field":"function_candidates_total","producer":"rank","callers":["search_repository","main"]},
+    {"id":"R3","q":"Кого вызывает производитель поля symbol_candidates?","reason":"outgoing_unsupported","steps":0}
+  ]
+}
