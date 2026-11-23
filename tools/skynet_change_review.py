@@ -7,7 +7,6 @@ import skynet_core_explain as app
 import skynet_data_flow as flow
 from skynet_working_tree import WorkingSources
 
-QUESTION = "Что я изменил относительно Git HEAD и какие связанные участки кода стоит проверить?"
 DEFINITIONS = (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
 LABELS = {"function":"Определение", "signature":"Заголовок или декораторы", "condition":"Условие",
           "call":"Вызов", "value":"Значение", "field":"Поле результата", "statement":"Инструкция",
@@ -21,6 +20,24 @@ def shape(node):
 def preview(node):
     text = ast.unparse(node).split("\n", 1)[0]
     return text if len(text) <= 180 else text[:177] + "…"
+
+
+def logical_lines(text):
+    lines = text.replace("\r\n","\n").replace("\r","\n").split("\n")
+    if lines[-1] == "":
+        lines.pop()
+    return lines
+
+
+def equality_change(old, new):
+    if not (isinstance(old,ast.Compare) and isinstance(new,ast.Compare)
+            and len(old.ops) == len(new.ops) == 1 and shape(old.left) == shape(new.left)
+            and shape(old.comparators[0]) == shape(new.comparators[0])):
+        return {}
+    ops = type(old.ops[0]),type(new.ops[0])
+    if set(ops) in ({ast.Gt,ast.GtE},{ast.Lt,ast.LtE}):
+        return {"numeric_equality_now_true":ops[1] in (ast.GtE,ast.LtE)}
+    return {}
 
 
 def checked_ref(src, path, lo, hi):
@@ -40,6 +57,15 @@ class Changes:
         self.path, self.head, self.work = path, head, work
         self.rows = []
 
+    def returned_fields(self, tree, owner, expr):
+        if isinstance(expr,ast.Dict):
+            return flow.fields(None,expr)
+        if len(owner) == 1 and isinstance(expr,ast.Call):
+            defs = [n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name == owner[0]]
+            if len(defs) == 1:
+                return flow.fields(flow.Function(self.path,tree,defs[0]),expr)
+        return {}
+
     def emit(self, kind, owner, left, right, **details):
         if len(self.rows) >= 48:
             raise app.Rejected("review_budget")
@@ -49,6 +75,8 @@ class Changes:
 
     def statements(self, left, right, owner):
         # Equal subtrees align even when their line numbers shift. Unpaired blocks remain additions/removals.
+        if len(left) * len(right) > 1_000_000:
+            raise app.Rejected("review_budget")
         matcher = SequenceMatcher(None, [shape(n) for n in left], [shape(n) for n in right], autojunk=False)
         for tag,a,b,c,d in matcher.get_opcodes():
             if tag == "equal":
@@ -65,7 +93,12 @@ class Changes:
     def single(self, node, owner, *, removed):
         defined = isinstance(node, DEFINITIONS)
         name = (*owner,node.name) if defined else owner
-        self.emit("function" if defined else "statement",name,node if removed else None,None if removed else node)
+        details = {}
+        if defined:
+            other = self.new_tree if removed else self.old_tree
+            if not any(isinstance(n,DEFINITIONS) and n.name == node.name for n in ast.walk(other)):
+                details["definition_delta"] = "removed" if removed else "added"
+        self.emit("function" if defined else "statement",name,node if removed else None,None if removed else node,**details)
 
     def statement(self, left, right, owner):
         if isinstance(left, DEFINITIONS) or isinstance(right, DEFINITIONS):
@@ -82,42 +115,72 @@ class Changes:
             return
         if isinstance(left,(ast.If,ast.While)) and type(left) == type(right):
             if shape(left.test) != shape(right.test):
-                self.emit("condition",owner,left.test,right.test)
+                self.emit("condition",owner,left.test,right.test,**equality_change(left.test,right.test))
             self.statements(left.body,right.body,owner)
             self.statements(left.orelse,right.orelse,owner)
             return
-        if (isinstance(left,ast.Return) and isinstance(right,ast.Return)
-                and isinstance(left.value,ast.Dict) and isinstance(right.value,ast.Dict)):
-            keys = left.value.keys
-            other = right.value.keys
-            if (all(isinstance(k,ast.Constant) and type(k.value) is str for k in [*keys,*other])
-                    and [k.value for k in keys] == [k.value for k in other]
-                    and len(set(k.value for k in keys)) == len(keys)):
-                for key,old,new in zip(keys,left.value.values,right.value.values):
-                    if shape(old) != shape(new):
-                        self.emit("field",owner,old,new,field=key.value)
+        # Descend through an unchanged enclosing header, e.g. an if inside a for/with/try.
+        # If handlers/patterns also changed, keep a conservative statement-level diff.
+        suites = ("body","orelse","finalbody")
+        if type(left) == type(right) and isinstance(getattr(left,"body",None),list):
+            def shell(node):
+                return shape(type(node)(**{k:([] if k in suites else v) for k,v in ast.iter_fields(node)}))
+            if shell(left) == shell(right):
+                for k in suites:
+                    self.statements(getattr(left,k,[]),getattr(right,k,[]),owner)
                 return
+        if isinstance(left,ast.Return) and isinstance(right,ast.Return) and type(left.value) == type(right.value):
+            keys = self.returned_fields(self.old_tree,owner,left.value)
+            other = self.returned_fields(self.new_tree,owner,right.value)
+            if keys and list(keys) == list(other):
+                changed = False
+                for key,(_,old) in keys.items():
+                    new = other[key][1]
+                    if shape(old) != shape(new):
+                        self.emit("field",owner,old,new,field=key)
+                        changed = True
+                if changed:
+                    return
         if isinstance(left,(ast.Assign,ast.Return,ast.Expr)) and type(left) == type(right):
             if not isinstance(left,ast.Assign) or list(map(shape,left.targets)) == list(map(shape,right.targets)):
                 old, new = left.value, right.value
                 if old is not None and new is not None:
-                    self.emit("call" if isinstance(old,ast.Call) or isinstance(new,ast.Call) else "value",owner,old,new)
+                    details = {}
+                    if (isinstance(new,ast.Call) and isinstance(new.func,ast.Name)):
+                        details["call_expression"] = dict(name=new.func.id,line=new.lineno,column=new.col_offset,
+                            end_line=new.end_lineno,end_column=new.end_col_offset)
+                    if isinstance(left,ast.Assign):
+                        details["assignment"] = ", ".join(preview(t) for t in right.targets)
+                    self.emit("call" if isinstance(old,ast.Call) or isinstance(new,ast.Call) else "value",
+                              owner,old,new,**details)
                     return
         self.emit("statement",owner,left,right)
+        # The first line of a compound statement can be unchanged. Show an actual differing line.
+        old = ast.unparse(left).splitlines()
+        new = ast.unparse(right).splitlines()
+        for i in range(min(len(old),len(new))):
+            if old[i] != new[i]:
+                self.rows[-1]["before"]["expression"] = old[i].strip()[:180]
+                self.rows[-1]["after"]["expression"] = new[i].strip()[:180]
+                break
 
     def compare(self):
         old = self.head.snapshot.sources[self.path]
         new = self.work.snapshot.sources[self.path]
-        a,b = ast.parse(old),ast.parse(new)
+        self.old_tree, self.new_tree = a,b = ast.parse(old),ast.parse(new)
+        if any(sum(1 for _ in ast.walk(t)) > 16000 for t in (a,b)):
+            raise app.Rejected("review_budget")
         if shape(a) != shape(b):
             self.statements(a.body,b.body,())
             return self.rows
         # Give real ranges even for comment-only changes. On insertion there may be no old range.
-        left,right = old.splitlines(),new.splitlines()
+        left,right = logical_lines(old),logical_lines(new)
         if left == right:
-            spans = [(0,1,0,1)]
+            spans = [(0,min(1,len(left)),0,min(1,len(right)))]
             kind = "encoding"
         else:
+            if len(left) * len(right) > 8_000_000:
+                raise app.Rejected("review_budget")
             spans = [(a,b,c,d) for tag,a,b,c,d in SequenceMatcher(None,left,right).get_opcodes() if tag != "equal"]
             kind = "text"
         if len(spans) > 48:
@@ -138,20 +201,30 @@ class Related:
     def fields(self):
         return flow.Slice(self.src)
 
+    def calls(self,name):
+        if name not in self.callers:
+            result = app.lab.cli.calls.lookup(name,self.src,app.lab.cli.refusal)
+            self.callers[name] = result["claims"]
+        return self.callers[name]
+
     def find(self, path, row):
         owner = row["owner"]
         if len(owner) != 1:
             return []
         name, = owner
-        if name not in self.callers:
-            result = app.lab.cli.calls.lookup(name,self.src,app.lab.cli.refusal)
-            self.callers[name] = result["claims"]
         links = []
-        for claim in self.callers[name]:
+        for claim in self.calls(name):
             site = claim["call_site"]
             if site["definition_path"] == path:
                 refs = [app.checked_item(self.src,r)["locator"] for r in claim["evidence_blocks"]]
                 links.append(dict(kind="direct_call",name=site["caller"] or "__main__",site=site,refs=refs))
+        expr = row.get("call_expression")
+        if expr:
+            for claim in self.calls(expr["name"]):
+                site = claim["call_site"]
+                if site["path"] == path and all(site[k] == expr[k] for k in ("line","column","end_line","end_column")):
+                    refs = [app.checked_item(self.src,r)["locator"] for r in claim["evidence_blocks"]]
+                    links.append(dict(kind="direct_target",name=expr["name"],site=site,refs=refs))
         key = row.get("field")
         if key is not None:
             producers = self.fields.producers.get(key, [])
@@ -165,21 +238,28 @@ class Related:
 def advice(row):
     kind = row["kind"]
     if kind == "condition":
+        if "numeric_equality_now_true" in row:
+            value = "истинно" if row["numeric_equality_now_true"] else "ложно"
+            return (f"При равенстве обычных числовых операндов условие теперь {value}.",
+                    "Проверьте выбор ветви при точном равенстве и на ближайших значениях ниже и выше границы.")
         return "Может измениться выбор ветви.", "Сравните обе ветви на значениях по обе стороны границы и при равенстве."
     if kind == "call":
         return "Может измениться результат в месте вызова.", "Сравните переданные аргументы, значение результата и его использование вызывающей функцией."
     if kind == "field":
         key = row["field"]
         return f"Потребитель поля {key!r} может получить другое значение.", f"Проверьте значение {key!r} на входе, где прежний и новый источники различаются."
-    if kind in ("text","encoding"):
+    if kind == "encoding":
+        return ("Содержимое строк совпадает. Возможная причина — правила перевода строк при checkout.",
+                "При необходимости сверьте политику переводов строк и завершающий перевод строки.")
+    if kind == "text":
         return "Различий в обычном AST Python здесь не установлено.", "При необходимости проверьте директивы инструментов и правила оформления."
     if kind in ("function","signature"):
         return "Возможны изменения доступности или контракта определения.", "Проверьте импорт, аргументы и прямые и косвенные обращения к определению."
     return "Возможное влияние зависит от пути выполнения.", "Проверьте результат изменённого участка на характерном и граничном входах."
 
 
-def review(root, publish=lambda report:report):
-    """The callback consumes the verified result while the Working Tree publication guard is held."""
+def review(root):
+    """Accept a coherent pair under the publication guard. Rendering performs no source reads."""
     with app._runtime_lock:
         core, launch, _ = app._runtime()
     reader = app.lab.Objects(launch,root=root,at_head=True)
@@ -201,7 +281,7 @@ def review(root, publish=lambda report:report):
     with work.publication_guard():
         if reader._run("rev-parse","--verify","HEAD^{commit}").decode("ascii").strip() != head.commit:
             raise app.Rejected("review_head_changed")
-        return publish(report)
+        return report
 
 
 def display(report):
@@ -209,18 +289,30 @@ def display(report):
     print("Обследовано файлов:",len(report["allowed_files"]))
     if not report["changes"]:
         print("В разрешённых файлах сохранённые байты совпадают с HEAD.")
+    representation = [r["path"] for r in report["changes"] if r["kind"] == "encoding"]
+    if representation:
+        print("Совпадают текст строк и обычный AST; отличается байтовое представление:",", ".join(representation))
+        print("Возможная причина — преобразование переводов строк при checkout.")
     for row in report["changes"]:
+        if row["kind"] == "encoding":
+            continue
         owner = ".".join(row["owner"]) or "уровень модуля"
-        print(f"\n{row['path']} · {owner} · {LABELS[row['kind']]}",row.get("field",""))
+        delta = {"added":"добавлено", "removed":"удалено"}.get(row.get("definition_delta"),"")
+        print(f"\n{row['path']} · {owner} · {LABELS[row['kind']]}",row.get("field",""),delta)
+        if "assignment" in row:
+            print("  Получатель:",row["assignment"])
         for key,label in (("before","HEAD"),("after","Сохранено")):
             side = row[key]
-            print(f"  {label}:", (side.get("expression","") + " " + side["ref"]["url"]) if side else "участок отсутствует")
+            print(f"  {label}:", (side.get("expression","") + " " + side["ref"]["url"]) if side else "нет сопоставленного фрагмента")
         for link in row["related"]:
             if link["kind"] == "direct_call":
                 print("  Установлено место прямого вызова:",link["name"])
+            elif link["kind"] == "direct_target":
+                print("  Разрешена цель изменённого вызова:",link["name"])
             else:
                 print("  Чтение того же ключа:",link["name"],"· передача именно этого отчёта не доказана.")
             for ref in link["refs"]:
                 print("   ",ref["url"])
         print(" ",row["possible_effect"],row["suggested_check"])
-    print("Проверки предложены по статическому сравнению. Выполнение кода и наличие дефекта не подтверждались.")
+    print("Связи ограничены пятью файлами и поддерживаемыми прямыми вызовами и чтениями полей. "
+          "Проверки предложены по исходникам. Выполнение кода и наличие дефекта не подтверждались.")
