@@ -268,8 +268,25 @@ def main():
                       help="Исследовать пять сохранённых файлов рабочего проекта.")
     mode.add_argument("--git-head", dest="mode", action="store_const", const="git-head",
                       help="Исследовать те же пять файлов из Git HEAD на начало задачи.")
-    parser.add_argument("question")
+    mode.add_argument("--changes", dest="mode", action="store_const", const="changes",
+                      help="Сравнить сохранённый код с HEAD и показать связанные места и проверки.")
+    parser.add_argument("question", nargs="?")
     args = parser.parse_args()
+    from skynet_change_review import QUESTION, review, display as display_changes
+    is_review_question = (args.question or "").strip().rstrip("?").casefold() == QUESTION.rstrip("?").casefold()
+    if args.mode == "changes" or (not args.mode and is_review_question):
+        if args.question and not is_review_question:
+            parser.error("--changes выполняет фиксированный обзор пяти файлов. Запустите без дополнительного вопроса.")
+        try:
+            review(lab.cli.pilot.ROOT, lambda r: print(json.dumps(r, ensure_ascii=False, indent=2))
+                   if args.json else display_changes(r))
+        except (ValueError, RuntimeError, OSError, SyntaxError) as exc:
+            reason = str(exc) if isinstance(exc, Rejected) else "review_unavailable"
+            print(json.dumps(dict(state="failed",reason=reason)) if args.json else f"Обзор удержан: {reason}")
+            return 1
+        return 0
+    if not args.question:
+        parser.error("Укажите вопрос или --changes.")
     host = WorkspaceHost(args.mode, lab.cli.pilot.ROOT) if args.mode else Host()
     task = host.task(args.question)
     try:
