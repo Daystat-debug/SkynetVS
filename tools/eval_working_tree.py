@@ -1,10 +1,8 @@
 """Run the frozen paired test in a private Git clone. Only this fixture writer edits source."""
 import _winapi
-from copy import deepcopy
 import json
 import os
 from pathlib import Path
-import subprocess
 import sys
 import tempfile
 from unittest.mock import patch
@@ -125,6 +123,20 @@ def safety(root, changed, case):
         assert host.run(host.task(case["q"]))["state"] == "answered"
     assert len(blocked) == 2
     rows.append(dict(case="writer_during_capture_and_final_check",reason="write_open_denied_twice"))
+    verify = app.verify_snapshot
+    at_decision = []
+    def try_save_after_verify(*args):
+        assessment = verify(*args)
+        try:
+            with changed.open("r+b"):
+                raise AssertionError("Writer entered after reference verification")
+        except PermissionError:
+            at_decision.append(True)
+        return assessment
+    with patch.object(app,"verify_snapshot",try_save_after_verify):
+        assert host.run(host.task(case["q"]))["state"] == "answered"
+    assert at_decision == [True]
+    rows.append(dict(case="writer_after_reference_verification",reason="write_open_denied"))
     for name in ("../outside.py", "../"+app.lab.cli.pilot.RK, str(other), "*.py", "x.py:stream"):
         try:
             wt.checked_path(root,name)
@@ -140,6 +152,33 @@ def safety(root, changed, case):
         expect("hardlink","working_file_type")
     finally:
         link.unlink()
+    # Try a real file symlink on the current host; separately test the file reparse-attribute gate.
+    backing = root.parent / "symbol-target.py"
+    changed.rename(backing)
+    try:
+        try:
+            changed.symlink_to(backing)
+        except OSError as exc:
+            if exc.winerror != 1314:
+                raise
+            rows.append(dict(case="create_file_symlink",reason="SKIPPED_WINERROR_1314"))
+        else:
+            try:
+                expect("file_symlink","working_reparse_point")
+            finally:
+                changed.unlink()
+    finally:
+        backing.rename(changed)
+    actual_stat = os.fstat
+    inode = changed.stat().st_ino
+    def file_reparse(fd):
+        info = actual_stat(fd)
+        if info.st_ino == inode:
+            from types import SimpleNamespace
+            return SimpleNamespace(st_file_attributes=info.st_file_attributes | wt.stat.FILE_ATTRIBUTE_REPARSE_POINT)
+        return info
+    with patch.object(wt.os,"fstat",file_reparse):
+        expect("injected_file_reparse_attribute","working_reparse_point")
     parent = changed.parent
     outside = root.parent / "outside"
     assert parent.is_relative_to(root) and outside.parent == root.parent and not outside.exists()
@@ -167,6 +206,15 @@ def safety(root, changed, case):
     assert newer["evidence_set"]["snapshot_id"] != before
     assert any("`limit` получает `38`" in c["text"] for c in newer["answer_proposal"]["claims"])
     rows.append(dict(case="new_task_new_snapshot",reason="38_in_new_snapshot_37_in_original"))
+    # The excerpt in another member is byte-identical but belongs to the previous capture.
+    ref = snap.span(app.lab.cli.pilot.GS,1,1)["ref"]
+    try:
+        app.checked_item(wt.WorkingSources(root),ref)
+    except app.Rejected as exc:
+        assert str(exc) == "invalid_reference"
+    else:
+        raise AssertionError("Previous snapshot reference accepted")
+    rows.append(dict(case="prior_snapshot_same_excerpt",reason="invalid_reference"))
     return rows
 
 
@@ -186,7 +234,8 @@ def main():
         pilot.dump(path,result)
     else:
         assert result == json.loads(path.read_text(encoding="utf8"))
-    print("6 paired answers and",len(controls),"filesystem/publication checks verified")
+    skipped = sum(row["reason"].startswith("SKIPPED") for row in controls)
+    print(f"6 query/profile results verified; controls: {len(controls)-skipped} passed, {skipped} skipped.")
 
 
 if __name__ == "__main__":

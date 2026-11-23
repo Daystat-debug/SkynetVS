@@ -14,6 +14,10 @@ from types import MappingProxyType
 import skynet_scope_lab as lab
 from skynet_core_task import Rejected
 
+SHARE_READ = 1
+OPEN_REPARSE_POINT = 0x00200000
+BACKUP_SEMANTICS = 0x02000000
+
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
@@ -31,8 +35,8 @@ def open_plain(stack, path, directory):
     import _winapi
     import msvcrt
     # OPEN_REPARSE_POINT applies to the final component. Its ancestors are already pinned.
-    flags = 0x00200000 | (0x02000000 if directory else 0)  # BACKUP_SEMANTICS for directories.
-    handle = _winapi.CreateFile(str(path), _winapi.GENERIC_READ, 1, 0, _winapi.OPEN_EXISTING, flags, 0)
+    flags = OPEN_REPARSE_POINT | (BACKUP_SEMANTICS if directory else 0)
+    handle = _winapi.CreateFile(str(path), _winapi.GENERIC_READ, SHARE_READ, 0, _winapi.OPEN_EXISTING, flags, 0)
     try:
         fd = msvcrt.open_osfhandle(handle, os.O_RDONLY | os.O_BINARY)
     except BaseException:
@@ -65,6 +69,8 @@ def checked_path(root, name):
 @contextmanager
 def locked_files(root):
     if os.name != "nt" or not root.is_absolute() or len(root.drive) != 2 or ".." in root.parts:
+        raise Rejected("working_root")
+    if ctypes.windll.kernel32.GetDriveTypeW(root.anchor) != 3:  # DRIVE_FIXED
         raise Rejected("working_root")
     with ExitStack() as stack:
         try:
