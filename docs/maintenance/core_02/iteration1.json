@@ -1,0 +1,617 @@
+{
+  "rows": [
+    {
+      "id": "A",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "B",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "symbol_candidates",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 6,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "C",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "D",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "interleave_3_to_1",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 7,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "E",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "modules_from_source",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "module_rank",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "F",
+      "met": true,
+      "state": "insufficient",
+      "reason": "ambiguous_producer",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "schema",
+          "status": "ambiguous_producer"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "ambiguous_producer"
+      }
+    },
+    {
+      "id": "G",
+      "met": true,
+      "state": "insufficient",
+      "reason": "missing_producer",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "never_recorded",
+          "status": "missing_producer"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "missing_producer"
+      }
+    },
+    {
+      "id": "H",
+      "met": true,
+      "state": "insufficient",
+      "reason": "no_match",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "candidate_functions",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "search_repository",
+          "status": "withheld"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "no_match"
+      }
+    },
+    {
+      "id": "I",
+      "met": true,
+      "state": "failed",
+      "reason": "tool_error",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "started"
+        }
+      ],
+      "claims": 0,
+      "refs": 0
+    },
+    {
+      "id": "J",
+      "met": true,
+      "state": "failed",
+      "reason": "endpoint_binding",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 0,
+      "refs": 0
+    },
+    {
+      "id": "K",
+      "met": true,
+      "state": "failed",
+      "reason": "stale_snapshot",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        }
+      ],
+      "claims": 0,
+      "refs": 0
+    },
+    {
+      "id": "L",
+      "met": true,
+      "state": "insufficient",
+      "reason": "step_budget",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        }
+      ],
+      "claims": 0,
+      "refs": 0
+    },
+    {
+      "id": "M",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "N",
+      "met": true,
+      "state": "insufficient",
+      "reason": "out_of_scope",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "out_of_scope"
+      }
+    },
+    {
+      "id": "O",
+      "met": true,
+      "state": "insufficient",
+      "reason": "observation_required",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "observation_required"
+      }
+    },
+    {
+      "id": "T1",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "retrieval_confidence",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_title_only",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "T2",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "module_rank",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 6,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "T3",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "modules_from_source",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "module_rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 6,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "T4",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 6,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "T5",
+      "met": false,
+      "state": "insufficient",
+      "reason": "clarification",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "T6",
+      "met": true,
+      "state": "insufficient",
+      "reason": "path_unproven",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "interleave_3_to_1",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "search_repository",
+          "status": "withheld"
+        },
+        {
+          "tool": "calls",
+          "target": "main",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "ms": {
+    "A": {
+      "loop": 119.2,
+      "compose": 51.6,
+      "fixed": 126.5
+    },
+    "B": {
+      "loop": 98.7,
+      "compose": 47.8,
+      "fixed": 84.1
+    },
+    "C": {
+      "loop": 99.6,
+      "compose": 78.6,
+      "fixed": 110.1
+    },
+    "D": {
+      "loop": 69.7,
+      "compose": 80.1
+    },
+    "E": {
+      "loop": 84.4,
+      "compose": 83.0
+    },
+    "F": {
+      "loop": 63.3,
+      "compose": 46.7,
+      "fixed": 47.1
+    },
+    "G": {
+      "loop": 62.1,
+      "compose": 47.6,
+      "fixed": 46.3
+    },
+    "H": {
+      "loop": 96.8,
+      "compose": 49.1,
+      "fixed": 131.9
+    },
+    "I": {
+      "loop": 64.9
+    },
+    "J": {
+      "loop": 81.6
+    },
+    "K": {
+      "loop": 107.0
+    },
+    "L": {
+      "loop": 63.1
+    },
+    "M": {
+      "loop": 96.3,
+      "compose": 46.1,
+      "fixed": 107.8
+    },
+    "N": {
+      "loop": 0.1,
+      "compose": 15.1
+    },
+    "O": {
+      "loop": 0.1,
+      "compose": 15.0
+    },
+    "T1": {
+      "loop": 95.0,
+      "compose": 47.2,
+      "fixed": 79.3
+    },
+    "T2": {
+      "loop": 70.1,
+      "compose": 77.6
+    },
+    "T3": {
+      "loop": 70.5,
+      "compose": 83.1
+    },
+    "T4": {
+      "loop": 100.3,
+      "compose": 48.3,
+      "fixed": 80.8
+    },
+    "T5": {
+      "loop": 31.7,
+      "compose": 48.5,
+      "fixed": 99.4
+    },
+    "T6": {
+      "loop": 104.8,
+      "compose": 84.6
+    }
+  },
+  "core01": {
+    "identical": 14,
+    "corrected": "T4"
+  }
+}

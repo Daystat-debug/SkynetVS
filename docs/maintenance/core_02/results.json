@@ -1,0 +1,787 @@
+{
+  "rows": [
+    {
+      "id": "A",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "B",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "symbol_candidates",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 6,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "C",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "D",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "interleave_3_to_1",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 7,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "E",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "modules_from_source",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "module_rank",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "F",
+      "met": true,
+      "state": "insufficient",
+      "reason": "ambiguous_producer",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "schema",
+          "status": "ambiguous_producer"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "ambiguous_producer"
+      }
+    },
+    {
+      "id": "G",
+      "met": true,
+      "state": "insufficient",
+      "reason": "missing_producer",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "never_recorded",
+          "status": "missing_producer"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "missing_producer"
+      }
+    },
+    {
+      "id": "H",
+      "met": true,
+      "state": "insufficient",
+      "reason": "no_match",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "candidate_functions",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "search_repository",
+          "status": "withheld"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "no_match"
+      }
+    },
+    {
+      "id": "I",
+      "met": true,
+      "state": "failed",
+      "reason": "tool_error",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "started"
+        }
+      ],
+      "claims": 0,
+      "refs": 0
+    },
+    {
+      "id": "J",
+      "met": true,
+      "state": "failed",
+      "reason": "endpoint_binding",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 0,
+      "refs": 0
+    },
+    {
+      "id": "K",
+      "met": true,
+      "state": "failed",
+      "reason": "stale_snapshot",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        }
+      ],
+      "claims": 0,
+      "refs": 0
+    },
+    {
+      "id": "L",
+      "met": true,
+      "state": "insufficient",
+      "reason": "step_budget",
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        }
+      ],
+      "claims": 0,
+      "refs": 0
+    },
+    {
+      "id": "M",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "N",
+      "met": true,
+      "state": "insufficient",
+      "reason": "out_of_scope",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "out_of_scope"
+      }
+    },
+    {
+      "id": "O",
+      "met": true,
+      "state": "insufficient",
+      "reason": "observation_required",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": true,
+        "state": "insufficient",
+        "reason": "observation_required"
+      }
+    },
+    {
+      "id": "T1",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "retrieval_confidence",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_title_only",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "T2",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "module_rank",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 6,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "T3",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "modules_from_source",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "module_rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 6,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "T4",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 6,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "T5",
+      "met": false,
+      "state": "insufficient",
+      "reason": "clarification",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "T6",
+      "met": true,
+      "state": "insufficient",
+      "reason": "path_unproven",
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "interleave_3_to_1",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "search_repository",
+          "status": "withheld"
+        },
+        {
+          "tool": "calls",
+          "target": "main",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "R1",
+      "met": true,
+      "state": "insufficient",
+      "reason": "outgoing_unsupported",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "R2",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "function_candidates_total",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "R3",
+      "met": true,
+      "state": "insufficient",
+      "reason": "outgoing_unsupported",
+      "steps": [],
+      "claims": 0,
+      "refs": 0,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "U1",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "nonzero_scores",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_title_only",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    },
+    {
+      "id": "U2",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "calls",
+          "target": "extract_symbols",
+          "status": "call_sites"
+        },
+        {
+          "tool": "calls",
+          "target": "rank_symbols",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 2,
+      "refs": 7,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      }
+    },
+    {
+      "id": "U3",
+      "met": true,
+      "state": "answered",
+      "reason": null,
+      "steps": [
+        {
+          "tool": "flow",
+          "target": "file_ranks",
+          "status": "producer_verified"
+        },
+        {
+          "tool": "calls",
+          "target": "rank",
+          "status": "call_sites"
+        }
+      ],
+      "claims": 3,
+      "refs": 9,
+      "compose": {
+        "met": false,
+        "state": "insufficient",
+        "reason": "clarification"
+      },
+      "fixed": {
+        "met": true,
+        "state": "answered",
+        "reason": null
+      }
+    }
+  ],
+  "ms": {
+    "A": {
+      "loop": 117.9,
+      "compose": 52.4,
+      "fixed": 117.3
+    },
+    "B": {
+      "loop": 97.5,
+      "compose": 46.0,
+      "fixed": 81.9
+    },
+    "C": {
+      "loop": 97.6,
+      "compose": 77.6,
+      "fixed": 112.9
+    },
+    "D": {
+      "loop": 68.8,
+      "compose": 83.6
+    },
+    "E": {
+      "loop": 84.1,
+      "compose": 80.5
+    },
+    "F": {
+      "loop": 62.5,
+      "compose": 46.1,
+      "fixed": 46.2
+    },
+    "G": {
+      "loop": 62.1,
+      "compose": 47.0,
+      "fixed": 47.8
+    },
+    "H": {
+      "loop": 123.5,
+      "compose": 81.0,
+      "fixed": 197.9
+    },
+    "I": {
+      "loop": 80.6
+    },
+    "J": {
+      "loop": 104.1
+    },
+    "K": {
+      "loop": 132.7
+    },
+    "L": {
+      "loop": 63.0
+    },
+    "M": {
+      "loop": 96.8,
+      "compose": 47.9,
+      "fixed": 107.5
+    },
+    "N": {
+      "loop": 0.1,
+      "compose": 14.8
+    },
+    "O": {
+      "loop": 0.1,
+      "compose": 15.3
+    },
+    "T1": {
+      "loop": 97.4,
+      "compose": 46.5,
+      "fixed": 79.6
+    },
+    "T2": {
+      "loop": 75.3,
+      "compose": 80.8
+    },
+    "T3": {
+      "loop": 64.5,
+      "compose": 79.1
+    },
+    "T4": {
+      "loop": 95.3,
+      "compose": 50.4,
+      "fixed": 80.8
+    },
+    "T5": {
+      "loop": 30.9,
+      "compose": 47.3,
+      "fixed": 84.7
+    },
+    "T6": {
+      "loop": 104.7,
+      "compose": 85.5
+    },
+    "R1": {
+      "loop": 0.1,
+      "compose": 47.6
+    },
+    "R2": {
+      "loop": 98.3,
+      "compose": 46.3,
+      "fixed": 108.8
+    },
+    "R3": {
+      "loop": 0.1,
+      "compose": 78.8
+    },
+    "U1": {
+      "loop": 97.1,
+      "compose": 45.6,
+      "fixed": 96.9
+    },
+    "U2": {
+      "loop": 66.7,
+      "compose": 78.6
+    },
+    "U3": {
+      "loop": 100.9,
+      "compose": 46.3,
+      "fixed": 105.9
+    }
+  },
+  "core01": {
+    "identical": 14,
+    "corrected": "T4"
+  }
+}
