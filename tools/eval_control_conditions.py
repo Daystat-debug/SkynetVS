@@ -223,7 +223,8 @@ def grade(case, out, src, root):
     return row
 
 
-def run(plan, temp, decisions, live):
+def run(plan, temp, decisions, live, arms=ARMS, oracles=None):
+    oracles = {"guards": Guards} if oracles is None else oracles
     root = temp/"fixture"
     pilot.git("clone","--quiet","--local","--no-checkout",str(pilot.ROOT),str(root))
     archive.set_head(root,BASE)
@@ -252,13 +253,13 @@ def run(plan, temp, decisions, live):
             opts = dict(opener=lambda _: (src,ground))
             row = dict(id=case["id"],q=case["q"],commit=src.commit,positive="reason" not in case)
             times[case["id"]] = {}
-            offset = i % len(ARMS)
-            for arm in ARMS[offset:]+ARMS[:offset]:
+            offset = i % len(arms)
+            for arm in arms[offset:]+arms[:offset]:
                 start = perf_counter()
                 if arm == "core04":
                     answer = prev.investigate(case["q"],root,**opts)
-                elif arm == "guards":
-                    answer = loop.investigate(case.get("selector",case["q"]),root,why=True,proof_type=Guards,
+                elif arm in oracles:
+                    answer = loop.investigate(case.get("selector",case["q"]),root,why=True,proof_type=oracles[arm],
                                               classifier=lambda _:False,**opts)
                 else:
                     answer = loop.investigate(case["q"],root,why=True,
@@ -297,21 +298,27 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("mode",choices=("record","verify"))
     parser.add_argument("--live-model",action="store_true")
+    parser.add_argument("--compare-direction",action="store_true",help="Compare forward and backward search with the same oracle subjects.")
     args = parser.parse_args()
-    plan = json.loads((DIR/"transfer.json").read_text(encoding="utf8"))
-    path = DIR/"results.json"
+    plan = json.loads(pilot.git("show","dc09dd33f799dba15505530bb278adf62ea06568:docs/maintenance/core_05/transfer.json"))
+    path = DIR/("direction.json" if args.compare_direction else "results.json")
     saved = json.loads(path.read_text(encoding="utf8")) if args.mode=="verify" else {}
     decisions = dict(saved.get("intent",{}))
     live = args.mode=="record" or args.live_model
+    arms, oracles = ARMS, None
+    if args.compare_direction:
+        from skynet_forward_baseline import Forward
+        oracles = {"forward":Forward,"backward":control.Proof}
+        arms = tuple(oracles)
     with tempfile.TemporaryDirectory(prefix="skynet-control-") as temp:
-        rows,ms,model = run(plan,Path(temp),decisions,live)
+        rows,ms,model = run(plan,Path(temp),decisions,live,arms,oracles)
     if args.mode=="record":
         pilot.dump(path,dict(rows=rows,ms=ms,intent=decisions,model=model))
     else:
         assert rows==saved["rows"] and decisions==saved["intent"]
     for prefix in ("T","G","R"):
         group = [r for r in rows if r["id"].startswith(prefix)]
-        print(prefix,len(group), {arm:sum(r[arm]["correct"] for r in group) for arm in ARMS})
+        print(prefix,len(group), {arm:sum(r[arm]["correct"] for r in group) for arm in arms})
     print("Model calls in this run:",model.get("calls",0),"; integrity controls: 4/4")
 
 
