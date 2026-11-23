@@ -1,0 +1,4159 @@
+{
+ "rows": [
+  {
+   "id": "R01",
+   "question": "При каком условии появляется сообщение M134_EXPANDED_QUERY_TOO_LONG?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M134_EXPANDED_QUERY_TOO_LONG",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В expand_query записано `raise ValueError('M134_EXPANDED_QUERY_TOO_LONG')`. Условия окружающих ветвей при достижении этого места: хотя бы одно из условий (`len(text)` больше `2048` или `len(text.encode('utf-8'))` больше `4096`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        47,
+        47
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        53,
+        53
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        52,
+        52
+       ]
+      ]
+     }
+    ]
+   },
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M134_EXPANDED_QUERY_TOO_LONG",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В expand_query записано `raise ValueError('M134_EXPANDED_QUERY_TOO_LONG')`. Условия окружающих ветвей при достижении этого места: хотя бы одно из условий (`len(text)` больше `2048` или `len(text.encode('utf-8'))` больше `4096`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        47,
+        47
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        53,
+        53
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        52,
+        52
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M134_EXPANDED_QUERY_TOO_LONG",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В expand_query записано `raise ValueError('M134_EXPANDED_QUERY_TOO_LONG')`. Условия окружающих ветвей при достижении этого места: хотя бы одно из условий (`len(text)` больше `2048` или `len(text.encode('utf-8'))` больше `4096`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        47,
+        47
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        53,
+        53
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        52,
+        52
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "R02",
+   "question": "Как из search_repository дойти до ошибки M127_SYMBOL_LIMIT?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "direct": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_SYMBOL_LIMIT",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "extract_symbols",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_SYMBOL_LIMIT",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "extract_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле search_repository есть прямой вызов rank.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        111
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        144,
+        144
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        153,
+        153
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        14,
+        14
+       ]
+      ]
+     },
+     {
+      "text": "В теле rank есть прямой вызов rank_symbols.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        72,
+        72
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        125,
+        125
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        18,
+        18
+       ]
+      ]
+     },
+     {
+      "text": "В теле rank_symbols есть прямой вызов extract_symbols.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        28,
+        28
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        72,
+        72
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        77,
+        77
+       ]
+      ]
+     },
+     {
+      "text": "В extract_symbols записано `raise ValueError('M127_SYMBOL_LIMIT')`. Условия окружающих ветвей при достижении этого места: `len(out)` больше `3500`.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        28,
+        28
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        68,
+        68
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_SYMBOL_LIMIT",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "extract_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле search_repository есть прямой вызов rank.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        111
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        144,
+        144
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        153,
+        153
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        14,
+        14
+       ]
+      ]
+     },
+     {
+      "text": "В теле rank есть прямой вызов rank_symbols.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        72,
+        72
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        125,
+        125
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        18,
+        18
+       ]
+      ]
+     },
+     {
+      "text": "В теле rank_symbols есть прямой вызов extract_symbols.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        28,
+        28
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        72,
+        72
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        77,
+        77
+       ]
+      ]
+     },
+     {
+      "text": "В extract_symbols записано `raise ValueError('M127_SYMBOL_LIMIT')`. Условия окружающих ветвей при достижении этого места: `len(out)` больше `3500`.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        28,
+        28
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        68,
+        68
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "R03",
+   "question": "Где в rank срабатывает проверка с сообщением M126_SOURCE_INVALID?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M126_SOURCE_INVALID",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank_title_only",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле rank есть прямой вызов rank_title_only.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        34,
+        34
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        116,
+        116
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        17,
+        17
+       ]
+      ]
+     },
+     {
+      "text": "В rank_title_only записано `raise ValueError('M126_SOURCE_INVALID')`. Условия окружающих ветвей при достижении этого места: при очередной итерации `for (path, source) in before_files.items()`. хотя бы одно из условий (выражение `isinstance(source, str)` ложно или `len(source)` больше `2500000`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        34,
+        34
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        52,
+        52
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        48,
+        48
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        51,
+        51
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M126_SOURCE_INVALID",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank_title_only",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле rank есть прямой вызов rank_title_only.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        34,
+        34
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        116,
+        116
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        17,
+        17
+       ]
+      ]
+     },
+     {
+      "text": "В rank_title_only записано `raise ValueError('M126_SOURCE_INVALID')`. Условия окружающих ветвей при достижении этого места: при очередной итерации `for (path, source) in before_files.items()`. хотя бы одно из условий (выражение `isinstance(source, str)` ложно или `len(source)` больше `2500000`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        34,
+        34
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        52,
+        52
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        48,
+        48
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        51,
+        51
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M126_SOURCE_INVALID",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank_title_only",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле rank есть прямой вызов rank_title_only.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        34,
+        34
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        116,
+        116
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        17,
+        17
+       ]
+      ]
+     },
+     {
+      "text": "В rank_title_only записано `raise ValueError('M126_SOURCE_INVALID')`. Условия окружающих ветвей при достижении этого места: при очередной итерации `for (path, source) in before_files.items()`. хотя бы одно из условий (выражение `isinstance(source, str)` ложно или `len(source)` больше `2500000`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        34,
+        34
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        52,
+        52
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        48,
+        48
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        51,
+        51
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "R04",
+   "question": "Почему возникает ошибка M134_NO_LEXICAL_MATCH?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M134_NO_LEXICAL_MATCH",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В search_repository записано `raise ValueError('M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода')`. Условия окружающих ветвей при достижении этого места: `first['retrieval_confidence']` отличается от `'LEXICAL_MATCH_EXISTS'`.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        144,
+        144
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        156,
+        156
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        155,
+        155
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M134_NO_LEXICAL_MATCH",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В search_repository записано `raise ValueError('M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода')`. Условия окружающих ветвей при достижении этого места: `first['retrieval_confidence']` отличается от `'LEXICAL_MATCH_EXISTS'`.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        144,
+        144
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        156,
+        156
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        155,
+        155
+       ]
+      ]
+     }
+    ]
+   },
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M134_NO_LEXICAL_MATCH",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В search_repository записано `raise ValueError('M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода')`. Условия окружающих ветвей при достижении этого места: `first['retrieval_confidence']` отличается от `'LEXICAL_MATCH_EXISTS'`.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        144,
+        144
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        156,
+        156
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        155,
+        155
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "R05",
+   "question": "Откуда берётся ошибка M130_MODULE_SPAN_COUNT_LIMIT?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": false,
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "sequential": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "core04": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "R06",
+   "question": "Покажи путь от rank до ошибки M130_MODULE_SPAN_COUNT_LIMIT.",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M130_MODULE_SPAN_COUNT_LIMIT",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "modules_from_source",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "module_rank",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле rank есть прямой вызов module_rank.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        64,
+        64
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        127,
+        127
+       ]
+      ]
+     },
+     {
+      "text": "В module_rank записано `raise ValueError('M130_MODULE_SPAN_COUNT_LIMIT')`. Условия окружающих ветвей при достижении этого места: `len(windows)` больше `4000`.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        64,
+        64
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        72,
+        72
+       ]
+      ]
+     }
+    ]
+   },
+   "sequential": {
+    "correct": false,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M130_MODULE_SPAN_COUNT_LIMIT",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "modules_from_source",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "module_rank",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле rank есть прямой вызов module_rank.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        64,
+        64
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        127,
+        127
+       ]
+      ]
+     },
+     {
+      "text": "В теле module_rank есть прямой вызов modules_from_source.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        26,
+        26
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        64,
+        64
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        69,
+        69
+       ]
+      ]
+     },
+     {
+      "text": "В modules_from_source записано `raise ValueError('M130_MODULE_SPAN_COUNT_LIMIT')`. Условия окружающих ветвей при достижении этого места: `i` меньше или равно `len(lines)`. `len(output)` больше `4000`.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        26,
+        26
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        60,
+        60
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        41,
+        41
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M130_MODULE_SPAN_COUNT_LIMIT",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "modules_from_source",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "module_rank",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле rank есть прямой вызов module_rank.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        64,
+        64
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        127,
+        127
+       ]
+      ]
+     },
+     {
+      "text": "В module_rank записано `raise ValueError('M130_MODULE_SPAN_COUNT_LIMIT')`. Условия окружающих ветвей при достижении этого места: `len(windows)` больше `4000`.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        64,
+        64
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        72,
+        72
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "R07",
+   "question": "ValueError: M127_TOP_LIMIT_INVALID",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В rank_symbols записано `raise ValueError('M127_TOP_LIMIT_INVALID')`. Условия окружающих ветвей при достижении этого места: хотя бы одно из условий (выражение `isinstance(limit, int)` ложно или `limit` меньше `1` или `limit` больше `100`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        72,
+        72
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        76,
+        76
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        75,
+        75
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В rank_symbols записано `raise ValueError('M127_TOP_LIMIT_INVALID')`. Условия окружающих ветвей при достижении этого места: хотя бы одно из условий (выражение `isinstance(limit, int)` ложно или `limit` меньше `1` или `limit` больше `100`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        72,
+        72
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        76,
+        76
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        75,
+        75
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В rank_symbols записано `raise ValueError('M127_TOP_LIMIT_INVALID')`. Условия окружающих ветвей при достижении этого места: хотя бы одно из условий (выражение `isinstance(limit, int)` ложно или `limit` меньше `1` или `limit` больше `100`).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        72,
+        72
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        76,
+        76
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        75,
+        75
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "R08",
+   "question": "KeyError: M127_TOP_LIMIT_INVALID",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": false,
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "R09",
+   "question": "Почему возникает сообщение «Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.»?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": false,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В find_git записано `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')`. Условия окружающих ветвей при достижении этого места: внешних условий if или цикла у строки нет.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/git_source.py",
+        22,
+        22
+       ],
+       [
+        "modules/developer_task_ui/app/git_source.py",
+        39,
+        39
+       ]
+      ]
+     }
+    ]
+   },
+   "sequential": {
+    "correct": false,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В find_git записано `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')`. Условия окружающих ветвей при достижении этого места: внешних условий if или цикла у строки нет.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/git_source.py",
+        22,
+        22
+       ],
+       [
+        "modules/developer_task_ui/app/git_source.py",
+        39,
+        39
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": false,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В find_git записано `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')`. Условия окружающих ветвей при достижении этого места: внешних условий if или цикла у строки нет.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/git_source.py",
+        22,
+        22
+       ],
+       [
+        "modules/developer_task_ui/app/git_source.py",
+        39,
+        39
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "R10",
+   "question": "Почему из expand_query возникает ошибка M127_TOP_LIMIT_INVALID?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": false,
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank_symbols",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "search_repository",
+      "status": "withheld"
+     },
+     {
+      "tool": "calls",
+      "target": "main",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_TOP_LIMIT_INVALID",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "search_repository",
+      "status": "withheld"
+     },
+     {
+      "tool": "calls",
+      "target": "main",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "R11",
+   "question": "Где возникает ошибка M931_SOURCE_FROZEN?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": false,
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M931_SOURCE_FROZEN",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M931_SOURCE_FROZEN",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M931_SOURCE_FROZEN",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "R12",
+   "question": "Почему сейчас возникла ошибка M130_OLD_TREE_EMPTY?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": false,
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "observation_required",
+    "steps": [],
+    "claims": []
+   },
+   "core03": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "observation_required",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "observation_required",
+    "steps": [],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "observation_required",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "R13",
+   "question": "Почему в modules/actions.py возникла ошибка M130_TITLE_INVALID?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": false,
+   "core03": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "out_of_scope",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "out_of_scope",
+    "steps": [],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "out_of_scope",
+    "steps": [],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "out_of_scope",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "R14",
+   "question": "Наткнулся на M130_CANDIDATE_DUPLICATE. На что именно ругается код?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "direct": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "sequential": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "core04": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "R15",
+   "question": "Из search_repository покажи один путь до сообщения M130_NO_SCOPE_FILES_WITHIN_LIMIT.",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M130_NO_SCOPE_FILES_WITHIN_LIMIT",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле search_repository есть прямой вызов rank.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        111
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        144,
+        144
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        153,
+        153
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        14,
+        14
+       ]
+      ]
+     },
+     {
+      "text": "В rank записано `raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')`. Условия окружающих ветвей при достижении этого места: выражение `selected` ложно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        124,
+        124
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M130_NO_SCOPE_FILES_WITHIN_LIMIT",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле search_repository есть прямой вызов rank.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        111
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        144,
+        144
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        153,
+        153
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        14,
+        14
+       ]
+      ]
+     },
+     {
+      "text": "В rank записано `raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')`. Условия окружающих ветвей при достижении этого места: выражение `selected` ложно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        124,
+        124
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M130_NO_SCOPE_FILES_WITHIN_LIMIT",
+      "status": "searched",
+      "matches": 1
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле search_repository есть прямой вызов rank.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        111
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        144,
+        144
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        153,
+        153
+       ],
+       [
+        "modules/developer_task_ui/app/context_search.py",
+        14,
+        14
+       ]
+      ]
+     },
+     {
+      "text": "В rank записано `raise ValueError('M130_NO_SCOPE_FILES_WITHIN_LIMIT')`. Условия окружающих ветвей при достижении этого места: выражение `selected` ложно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        110,
+        110
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        124,
+        124
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "R16",
+   "question": "При каком условии возникает ошибка M126_TOP_N_INVALID и как её исправить?",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": false,
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "core03": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "R17",
+   "question": "ValueError: M127_OLD_SOURCE_PATH_INVALID",
+   "commit": "dc7000c6ce693964e551c9af16f5d710c286c9ec",
+   "positive": true,
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_OLD_SOURCE_PATH_INVALID",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В extract_symbols записано `raise ValueError('M127_OLD_SOURCE_PATH_INVALID')`. Условия окружающих ветвей при достижении этого места: при очередной итерации `for (path, src) in sorted(old_sources.items())`. хотя бы одно из условий (выражение `isinstance(path, str)` ложно или выражение `path.endswith('.py')` ложно или выражение `'\\\\' in path` истинно или выражение `'\\x00' in path` истинно или выражение `path.startswith('/')` истинно или выражение `'..' in path.split('/')` истинно).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        28,
+        28
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        37,
+        37
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        35,
+        35
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        36,
+        36
+       ]
+      ]
+     }
+    ]
+   },
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_OLD_SOURCE_PATH_INVALID",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В extract_symbols записано `raise ValueError('M127_OLD_SOURCE_PATH_INVALID')`. Условия окружающих ветвей при достижении этого места: при очередной итерации `for (path, src) in sorted(old_sources.items())`. хотя бы одно из условий (выражение `isinstance(path, str)` ложно или выражение `path.endswith('.py')` ложно или выражение `'\\\\' in path` истинно или выражение `'\\x00' in path` истинно или выражение `path.startswith('/')` истинно или выражение `'..' in path.split('/')` истинно).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        28,
+        28
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        37,
+        37
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        35,
+        35
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        36,
+        36
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "M127_OLD_SOURCE_PATH_INVALID",
+      "status": "searched",
+      "matches": 1
+     }
+    ],
+    "claims": [
+     {
+      "text": "В extract_symbols записано `raise ValueError('M127_OLD_SOURCE_PATH_INVALID')`. Условия окружающих ветвей при достижении этого места: при очередной итерации `for (path, src) in sorted(old_sources.items())`. хотя бы одно из условий (выражение `isinstance(path, str)` ложно или выражение `path.endswith('.py')` ложно или выражение `'\\\\' in path` истинно или выражение `'\\x00' in path` истинно или выражение `path.startswith('/')` истинно или выражение `'..' in path.split('/')` истинно).",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        28,
+        28
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        37,
+        37
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        35,
+        35
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        36,
+        36
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "G00",
+   "question": "Из fn_36b0229666f при каком условии возникает ошибка CASE_11E9DE4DF?",
+   "commit": "2538a771efc337ff7afe4ed3c84b770dd1803400",
+   "positive": true,
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_11E9DE4DF",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_e57c160d59",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_cc476b2daa2",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_36b0229666f есть прямой вызов fn_cc476b2daa2.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        161,
+        161
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        183,
+        183
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        184,
+        184
+       ]
+      ]
+     },
+     {
+      "text": "В fn_cc476b2daa2 записано `raise ValueError('CASE_11E9DE4DF')`. Условия окружающих ветвей при достижении этого места: выражение `value` ложно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        161,
+        161
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        165,
+        165
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        162,
+        162
+       ]
+      ]
+     }
+    ]
+   },
+   "sequential": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "step_budget",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_11E9DE4DF",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_e57c160d59",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_dfc1375dc0f",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_662697b9327",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_5161e3261f3",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_13df7ef1df0",
+      "status": "withheld"
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_11E9DE4DF",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_e57c160d59",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_cc476b2daa2",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_36b0229666f есть прямой вызов fn_cc476b2daa2.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        161,
+        161
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        183,
+        183
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        184,
+        184
+       ]
+      ]
+     },
+     {
+      "text": "В fn_cc476b2daa2 записано `raise ValueError('CASE_11E9DE4DF')`. Условия окружающих ветвей при достижении этого места: выражение `value` ложно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        161,
+        161
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        165,
+        165
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        162,
+        162
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "G01",
+   "question": "Из fn_c0f15c91d5c при каком условии возникает ошибка CASE_AC96C6187?",
+   "commit": "3efe7b97614d441a8ae649f5006262c08e10b95d",
+   "positive": true,
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_AC96C6187",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_c76ea53227f",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_35e639f1ff4",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_db1506fd0d2",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_c0f15c91d5c есть прямой вызов fn_db1506fd0d2.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        170,
+        170
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        173,
+        173
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        174,
+        174
+       ]
+      ]
+     },
+     {
+      "text": "В теле fn_db1506fd0d2 есть прямой вызов fn_35e639f1ff4.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        170,
+        170
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        171,
+        171
+       ]
+      ]
+     },
+     {
+      "text": "В теле fn_35e639f1ff4 есть прямой вызов fn_c76ea53227f.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        168,
+        168
+       ]
+      ]
+     },
+     {
+      "text": "В fn_c76ea53227f записано `raise ValueError('CASE_AC96C6187')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        159,
+        159
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        158,
+        158
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_AC96C6187",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_c76ea53227f",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_9e26f7366cb",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_35e639f1ff4",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_efd061a9b5d",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_db1506fd0d2",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_c0f15c91d5c есть прямой вызов fn_db1506fd0d2.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        170,
+        170
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        173,
+        173
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        174,
+        174
+       ]
+      ]
+     },
+     {
+      "text": "В теле fn_db1506fd0d2 есть прямой вызов fn_35e639f1ff4.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        170,
+        170
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        171,
+        171
+       ]
+      ]
+     },
+     {
+      "text": "В теле fn_35e639f1ff4 есть прямой вызов fn_c76ea53227f.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        168,
+        168
+       ]
+      ]
+     },
+     {
+      "text": "В fn_c76ea53227f записано `raise ValueError('CASE_AC96C6187')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        159,
+        159
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        158,
+        158
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_AC96C6187",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_c76ea53227f",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_9e26f7366cb",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G02",
+   "question": "При каком условии возникает ошибка CASE_6BBB935DF?",
+   "commit": "c1de5d853df59317257b97effd93d65bb5abd939",
+   "positive": false,
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_6BBB935DF",
+      "status": "searched",
+      "matches": 2
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_6BBB935DF",
+      "status": "searched",
+      "matches": 2
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_6BBB935DF",
+      "status": "searched",
+      "matches": 2
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G03",
+   "question": "Из fn_df884c298d9 при каком условии возникает ошибка CASE_A0194B52?",
+   "commit": "4071a1b0996f1e128942e19702ce1b96c2e2577e",
+   "positive": false,
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_A0194B52",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_61c4485c602",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_fce8e6c9232",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_A0194B52",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_61c4485c602",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_3bfa5e2f3c7",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_913def8623",
+      "status": "withheld"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_fce8e6c9232",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_64e6c5cd084",
+      "status": "withheld"
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_A0194B52",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_61c4485c602",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_fce8e6c9232",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_3bfa5e2f3c7",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_64e6c5cd084",
+      "status": "withheld"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_913def8623",
+      "status": "withheld"
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G04",
+   "question": "Из fn_c25c057716a при каком условии возникает ошибка CASE_D97146CBB?",
+   "commit": "452a875b551b876994e3ab7ab66b6a81ec44ca4a",
+   "positive": false,
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_D97146CBB",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_D97146CBB",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_D97146CBB",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "G05",
+   "question": "Из fn_1be5cadd95d при каком условии возникает ошибка CASE_4649E83CA?",
+   "commit": "497a430bf890ffa7c819caeaab3af5e662fb222d",
+   "positive": false,
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_4649E83CA",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_4649E83CA",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_4649E83CA",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G06",
+   "question": "Из fn_9faf667b75d при каком условии возникает ошибка CASE_CB9B4FF7E?",
+   "commit": "05e9dd15f13e67f93e4373e65aa246841d6a1a85",
+   "positive": true,
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_CB9B4FF7E",
+      "status": "searched",
+      "matches": 4
+     },
+     {
+      "tool": "calls",
+      "target": "fn_61d9523622a",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_56f77f2edb4",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_e1ec5e76618",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_9faf667b75d есть прямой вызов fn_e1ec5e76618.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        189,
+        189
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        190,
+        190
+       ]
+      ]
+     },
+     {
+      "text": "В fn_e1ec5e76618 записано `raise ValueError('CASE_CB9B4FF7E')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        169,
+        169
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        168,
+        168
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_CB9B4FF7E",
+      "status": "searched",
+      "matches": 4
+     },
+     {
+      "tool": "calls",
+      "target": "fn_61d9523622a",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_56f77f2edb4",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_e1ec5e76618",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_9faf667b75d есть прямой вызов fn_e1ec5e76618.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        189,
+        189
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        190,
+        190
+       ]
+      ]
+     },
+     {
+      "text": "В fn_e1ec5e76618 записано `raise ValueError('CASE_CB9B4FF7E')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        169,
+        169
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        168,
+        168
+       ]
+      ]
+     }
+    ]
+   },
+   "sequential": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "step_budget",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_CB9B4FF7E",
+      "status": "searched",
+      "matches": 4
+     },
+     {
+      "tool": "calls",
+      "target": "fn_61d9523622a",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_bdf879b7995",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_cc84d3c6ae",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_62c301577dc",
+      "status": "withheld"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_56f77f2edb4",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G07",
+   "question": "Из fn_99c5e88e189 при каком условии возникает ошибка CASE_95EEBEE59?",
+   "commit": "688b0a6f4abf33796f42f6cb08cc6e71983a6743",
+   "positive": true,
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_95EEBEE59",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_78efcc316f8",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_c32898b1ae7",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_95EEBEE59",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_78efcc316f8",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f58fc480ee1",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_b1b3a72805f",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_99c5e88e189 есть прямой вызов fn_b1b3a72805f.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        170,
+        170
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        173,
+        173
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        174,
+        174
+       ]
+      ]
+     },
+     {
+      "text": "В теле fn_b1b3a72805f есть прямой вызов fn_f58fc480ee1.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        170,
+        170
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        171,
+        171
+       ]
+      ]
+     },
+     {
+      "text": "В теле fn_f58fc480ee1 есть прямой вызов fn_78efcc316f8.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        168,
+        168
+       ]
+      ]
+     },
+     {
+      "text": "В fn_78efcc316f8 записано `raise ValueError('CASE_95EEBEE59')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        159,
+        159
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        158,
+        158
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_95EEBEE59",
+      "status": "searched",
+      "matches": 2
+     },
+     {
+      "tool": "calls",
+      "target": "fn_78efcc316f8",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_c32898b1ae7",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f58fc480ee1",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_bddd77600b8",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_b1b3a72805f",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_99c5e88e189 есть прямой вызов fn_b1b3a72805f.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        170,
+        170
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        173,
+        173
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        174,
+        174
+       ]
+      ]
+     },
+     {
+      "text": "В теле fn_b1b3a72805f есть прямой вызов fn_f58fc480ee1.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        170,
+        170
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        171,
+        171
+       ]
+      ]
+     },
+     {
+      "text": "В теле fn_f58fc480ee1 есть прямой вызов fn_78efcc316f8.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        167,
+        167
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        168,
+        168
+       ]
+      ]
+     },
+     {
+      "text": "В fn_78efcc316f8 записано `raise ValueError('CASE_95EEBEE59')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        159,
+        159
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        158,
+        158
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "G08",
+   "question": "При каком условии возникает ошибка CASE_5D31A135D?",
+   "commit": "68edadaec1a1053713ff4eb32fe8fd050324970d",
+   "positive": false,
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_5D31A135D",
+      "status": "searched",
+      "matches": 3
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_5D31A135D",
+      "status": "searched",
+      "matches": 3
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_5D31A135D",
+      "status": "searched",
+      "matches": 3
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "G09",
+   "question": "Из fn_7c0b4bcc3ae при каком условии возникает ошибка CASE_BF30B79BB?",
+   "commit": "ee32e2628aec0ccd7bbdebf454235874d18e4fcb",
+   "positive": false,
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "step_budget",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_BF30B79BB",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_8db583a947",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_34bb1158c70",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_7ee48343871",
+      "status": "withheld"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_d41fc842e88",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_14f5075719f",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "step_budget",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_BF30B79BB",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_8db583a947",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_d41fc842e88",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_30307b12634",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_34bb1158c70",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_14f5075719f",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_BF30B79BB",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_8db583a947",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_d41fc842e88",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_30307b12634",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G10",
+   "question": "Из fn_e3a4787d49e при каком условии возникает ошибка CASE_45F7B3D0E?",
+   "commit": "f201ca55c601b9d8aca1c81d057cffe6260029c5",
+   "positive": false,
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_45F7B3D0E",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_45F7B3D0E",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_45F7B3D0E",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G11",
+   "question": "Из fn_89e78893d53 при каком условии возникает ошибка CASE_A32486A8A?",
+   "commit": "78fa462fa6c877638f5135957a86bc8e3a1bea37",
+   "positive": false,
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_A32486A8A",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_A32486A8A",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_A32486A8A",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G12",
+   "question": "Из fn_9998b711b1e при каком условии возникает ошибка CASE_44644FF18?",
+   "commit": "b3e24a50eb65275c8745196239494f6d006a1a6d",
+   "positive": true,
+   "direct": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_44644FF18",
+      "status": "searched",
+      "matches": 4
+     },
+     {
+      "tool": "calls",
+      "target": "fn_8d6181ab2f3",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_9998b711b1e есть прямой вызов fn_8d6181ab2f3.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        177,
+        177
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        178,
+        178
+       ]
+      ]
+     },
+     {
+      "text": "В fn_8d6181ab2f3 записано `raise ValueError('CASE_44644FF18')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        159,
+        159
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        158,
+        158
+       ]
+      ]
+     }
+    ]
+   },
+   "sequential": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_44644FF18",
+      "status": "searched",
+      "matches": 4
+     },
+     {
+      "tool": "calls",
+      "target": "fn_8d6181ab2f3",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_9998b711b1e есть прямой вызов fn_8d6181ab2f3.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        177,
+        177
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        178,
+        178
+       ]
+      ]
+     },
+     {
+      "text": "В fn_8d6181ab2f3 записано `raise ValueError('CASE_44644FF18')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        159,
+        159
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        158,
+        158
+       ]
+      ]
+     }
+    ]
+   },
+   "core04": {
+    "correct": true,
+    "state": "answered",
+    "reason": null,
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_44644FF18",
+      "status": "searched",
+      "matches": 4
+     },
+     {
+      "tool": "calls",
+      "target": "fn_8d6181ab2f3",
+      "status": "call_sites"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В теле fn_9998b711b1e есть прямой вызов fn_8d6181ab2f3.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        177,
+        177
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        178,
+        178
+       ]
+      ]
+     },
+     {
+      "text": "В fn_8d6181ab2f3 записано `raise ValueError('CASE_44644FF18')`. Условия окружающих ветвей при достижении этого места: выражение `value` истинно.",
+      "refs": [
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        157,
+        157
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        159,
+        159
+       ],
+       [
+        "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        158,
+        158
+       ]
+      ]
+     }
+    ]
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "G13",
+   "question": "Из fn_b8d8952baf3 при каком условии возникает ошибка CASE_2E90AE496?",
+   "commit": "2967a9bc59db49a3d7b600572d98575c9c144795",
+   "positive": true,
+   "sequential": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "step_budget",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_2E90AE496",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_4f21c9facf5",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f45bd1e53fa",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f613b5358ff",
+      "status": "withheld"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_3eb1a7e4907",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_de02ef2b7d5",
+      "status": "withheld"
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "step_budget",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_2E90AE496",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_4f21c9facf5",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_3eb1a7e4907",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_ef0da7f2c6f",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f45bd1e53fa",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_de02ef2b7d5",
+      "status": "withheld"
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_2E90AE496",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_4f21c9facf5",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_3eb1a7e4907",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_ef0da7f2c6f",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G14",
+   "question": "При каком условии возникает ошибка CASE_84A661195?",
+   "commit": "7d1c8e566a3bcef6ed34dae06357e6cefe9ec627",
+   "positive": false,
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_84A661195",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_84A661195",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_ambiguous",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_84A661195",
+      "status": "searched",
+      "matches": 4
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G15",
+   "question": "Из fn_e1c2a765f9e при каком условии возникает ошибка CASE_95DB6749C?",
+   "commit": "e2d2f430714ef81303e2fe9e01a75d4301ba1e05",
+   "positive": false,
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "path_unproven",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_95DB6749C",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_20a8f6c01b9",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_4ccdfac9437",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_8874b0bd8a1",
+      "status": "call_sites"
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "step_budget",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_95DB6749C",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_20a8f6c01b9",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f3b907c176d",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_50bfb59c8e",
+      "status": "withheld"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_4ccdfac9437",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f592e8152b2",
+      "status": "withheld"
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "step_budget",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_95DB6749C",
+      "status": "searched",
+      "matches": 3
+     },
+     {
+      "tool": "calls",
+      "target": "fn_20a8f6c01b9",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_4ccdfac9437",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_8874b0bd8a1",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f3b907c176d",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "fn_f592e8152b2",
+      "status": "withheld"
+     }
+    ],
+    "claims": []
+   }
+  },
+  {
+   "id": "G16",
+   "question": "Из fn_31d7980b56e при каком условии возникает ошибка CASE_7A6E64905?",
+   "commit": "2fbb40d489c972241a1b8d37654b6aa727b94705",
+   "positive": false,
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_7A6E64905",
+      "status": "searched",
+      "matches": 3
+     }
+    ],
+    "claims": []
+   },
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_7A6E64905",
+      "status": "searched",
+      "matches": 3
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_context",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_7A6E64905",
+      "status": "searched",
+      "matches": 3
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   }
+  },
+  {
+   "id": "G17",
+   "question": "Из fn_8ef03814381 при каком условии возникает ошибка CASE_BA656BB9D?",
+   "commit": "2bebf298e78b08f5108e999f8af5672758c2a1f7",
+   "positive": false,
+   "sequential": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_BA656BB9D",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "core04": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_BA656BB9D",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   },
+   "core03": {
+    "correct": false,
+    "state": "insufficient",
+    "reason": "clarification",
+    "steps": [],
+    "claims": []
+   },
+   "direct": {
+    "correct": true,
+    "state": "insufficient",
+    "reason": "diagnostic_missing",
+    "steps": [
+     {
+      "tool": "locate_raise",
+      "target": "CASE_BA656BB9D",
+      "status": "searched",
+      "matches": 0
+     }
+    ],
+    "claims": []
+   }
+  }
+ ],
+ "ms": {
+  "R01": {
+   "core03": 66.4,
+   "direct": 66.4,
+   "sequential": 66.3,
+   "core04": 65.1
+  },
+  "R02": {
+   "direct": 102.6,
+   "sequential": 172.3,
+   "core04": 175.0,
+   "core03": 68.4
+  },
+  "R03": {
+   "sequential": 122.0,
+   "core04": 112.7,
+   "core03": 72.0,
+   "direct": 113.1
+  },
+  "R04": {
+   "core04": 64.7,
+   "core03": 0.1,
+   "direct": 69.2,
+   "sequential": 66.1
+  },
+  "R05": {
+   "core03": 67.6,
+   "direct": 16.9,
+   "sequential": 17.2,
+   "core04": 15.6
+  },
+  "R06": {
+   "direct": 133.2,
+   "sequential": 133.9,
+   "core04": 136.4,
+   "core03": 0.1
+  },
+  "R07": {
+   "sequential": 67.6,
+   "core04": 64.4,
+   "core03": 62.2,
+   "direct": 68.8
+  },
+  "R08": {
+   "core04": 64.2,
+   "core03": 64.9,
+   "direct": 68.7,
+   "sequential": 68.5
+  },
+  "R09": {
+   "core03": 0.2,
+   "direct": 66.0,
+   "sequential": 67.4,
+   "core04": 68.7
+  },
+  "R10": {
+   "direct": 98.0,
+   "sequential": 199.3,
+   "core04": 218.1,
+   "core03": 0.1
+  },
+  "R11": {
+   "sequential": 64.9,
+   "core04": 65.7,
+   "core03": 63.5,
+   "direct": 65.4
+  },
+  "R12": {
+   "core04": 0.1,
+   "core03": 0.0,
+   "direct": 0.0,
+   "sequential": 0.0
+  },
+  "R13": {
+   "core03": 0.1,
+   "direct": 0.0,
+   "sequential": 0.0,
+   "core04": 0.0
+  },
+  "R14": {
+   "direct": 31.0,
+   "sequential": 30.9,
+   "core04": 30.7,
+   "core03": 31.9
+  },
+  "R15": {
+   "sequential": 103.7,
+   "core04": 107.2,
+   "core03": 0.1,
+   "direct": 105.0
+  },
+  "R16": {
+   "core04": 15.4,
+   "core03": 0.1,
+   "direct": 15.7,
+   "sequential": 15.4
+  },
+  "R17": {
+   "core03": 69.7,
+   "direct": 65.6,
+   "sequential": 65.7,
+   "core04": 66.6
+  },
+  "G00": {
+   "direct": 146.8,
+   "sequential": 242.3,
+   "core04": 139.5,
+   "core03": 76.6
+  },
+  "G01": {
+   "sequential": 177.0,
+   "core04": 246.3,
+   "core03": 74.8,
+   "direct": 144.6
+  },
+  "G02": {
+   "core04": 71.6,
+   "core03": 75.7,
+   "direct": 71.7,
+   "sequential": 69.6
+  },
+  "G03": {
+   "core03": 72.0,
+   "direct": 140.7,
+   "sequential": 249.2,
+   "core04": 262.8
+  },
+  "G04": {
+   "direct": 75.3,
+   "sequential": 76.0,
+   "core04": 74.3,
+   "core03": 81.5
+  },
+  "G05": {
+   "sequential": 73.4,
+   "core04": 77.1,
+   "core03": 80.0,
+   "direct": 75.2
+  },
+  "G06": {
+   "core04": 189.5,
+   "core03": 78.7,
+   "direct": 189.3,
+   "sequential": 250.3
+  },
+  "G07": {
+   "core03": 74.8,
+   "direct": 144.0,
+   "sequential": 193.9,
+   "core04": 257.6
+  },
+  "G08": {
+   "direct": 76.0,
+   "sequential": 81.5,
+   "core04": 75.0,
+   "core03": 79.3
+  },
+  "G09": {
+   "sequential": 260.7,
+   "core04": 261.4,
+   "core03": 86.8,
+   "direct": 197.5
+  },
+  "G10": {
+   "core04": 81.3,
+   "core03": 93.4,
+   "direct": 89.0,
+   "sequential": 83.4
+  },
+  "G11": {
+   "core03": 81.0,
+   "direct": 77.1,
+   "sequential": 75.2,
+   "core04": 76.5
+  },
+  "G12": {
+   "direct": 124.9,
+   "sequential": 127.9,
+   "core04": 123.8,
+   "core03": 93.0
+  },
+  "G13": {
+   "sequential": 251.0,
+   "core04": 254.6,
+   "core03": 80.5,
+   "direct": 186.6
+  },
+  "G14": {
+   "core04": 83.1,
+   "core03": 93.0,
+   "direct": 78.8,
+   "sequential": 80.6
+  },
+  "G15": {
+   "core03": 79.4,
+   "direct": 192.0,
+   "sequential": 249.8,
+   "core04": 264.1
+  },
+  "G16": {
+   "direct": 76.6,
+   "sequential": 74.6,
+   "core04": 77.0,
+   "core03": 83.9
+  },
+  "G17": {
+   "sequential": 71.2,
+   "core04": 125.2,
+   "core03": 78.0,
+   "direct": 75.0
+  }
+ },
+ "controls": {
+  "budget": "step_budget",
+  "reference": "invalid_reference",
+  "target": "endpoint_binding",
+  "head": "stale_snapshot"
+ }
+}

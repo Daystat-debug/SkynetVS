@@ -16,6 +16,7 @@ from eval_producer_investigation import anchored, set_head
 old, loop, pilot = prior_eval.old, prior_eval.loop, prior_eval.pilot
 diag = loop.diagnostic
 BASE = "dc7000c6ce693964e551c9af16f5d710c286c9ec"
+CONTROL_COMMIT = "353849895e2c0bc20fb5df6eef659f86f13796ce"
 DIR = pilot.ROOT / "docs/maintenance/core_04"
 ARMS = ("core03", "direct", "sequential", "core04")
 
@@ -209,7 +210,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", choices=("record", "verify"))
     args = parser.parse_args()
-    plan = json.loads((DIR / "transfer.json").read_text(encoding="utf8"))
+    plan = json.loads(pilot.git("show", CONTROL_COMMIT + ":docs/maintenance/core_04/transfer.json"))
     with tempfile.TemporaryDirectory(prefix="skynet-diagnostic-") as tmp:
         rows, ms, checks = run(Path(tmp), plan)
     dest = DIR / "results.json"

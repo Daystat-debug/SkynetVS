@@ -1,0 +1,12 @@
+{
+  "question": "R02",
+  "snapshot": "353849895e2c0bc20fb5df6eef659f86f13796ce",
+  "ms": [
+    772,
+    782,
+    727,
+    706,
+    704
+  ],
+  "includes": "Python process, worker, five-file capture, accepted answer, PowerShell JSON decode"
+}
