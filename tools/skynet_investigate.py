@@ -22,6 +22,15 @@ PATHS = (
     rf"как (?:из|от) ({NAME}) (?:вызовы? )?(?:доходит|доходят|попасть|дойти) (?:до|к) ({NAME})",
     rf"может ли ({NAME}) (?:косвенно |через другие функции )?вызвать ({NAME})",
 )
+# Direction and the operator are separate slots; a pair of identifiers alone is insufficient.
+REACH = r"(?:дотягива[а-я]+|достига[а-я]+|достиг[а-я]+|доход[а-я]+|дойти|добра[а-я]+|добира[а-я]+|попа[а-я]+)"
+VIA = r"(?:косвенно|через (?:промежуточн[а-я]+|другие) функци[а-я]+)"
+ASK = r"(?:(?:покажи|найди|перечисли|укажи) )?"
+INCOMING = (r"(?:(?:кто|где|откуда|какие функции) (?:напрямую )?"
+            r"(?:вызыва[а-я]+|обраща[а-я]+ к)|(?:места|точки|список) (?:прямых )?вызов[а-я]+)")
+OUTPUT = r"(?:формиру[а-я]+|возвраща[а-я]+|заполня[а-я]+|созда[а-я]+)"
+OWNER = rf"(?:функци[а-я]+,? (?:которая )?{OUTPUT}|производител[а-я]+)"
+OWNER_QUERY = re.compile(rf"{ASK}{INCOMING} {OWNER} (?:пол[ея] |ключ[а]? )?({NAME})", re.I)
 REASONS = {
     "clarification": "Уточните две разные однозначные функции и направление поиска или задайте вопрос об одном поле.",
     "out_of_scope": "Запрошен источник вне пяти разрешённых файлов.",
@@ -35,6 +44,9 @@ REASONS = {
     "observation_required": "Нужны наблюдения конкретного запуска.",
     "partial_trace": "Статических данных недостаточно для полной трассировки.",
     "no_match": "Подходящих доказательств в снимке не найдено.",
+    "ambiguous_producer": "У поля или имени его производителя несколько подходящих определений в разрешённой области.",
+    "missing_producer": "В поддерживаемых возвратах пяти файлов производитель этого поля не найден.",
+    "stale_snapshot": "Во время исследования изменился Git HEAD. Повторите вопрос для нового снимка.",
 }
 
 
@@ -44,6 +56,22 @@ def endpoints(question):
         match = re.fullmatch(pattern, plain, re.I)  # group values preserve identifier case
         if match:
             return match.groups()
+    # Locate the destination by its preposition and account for every remaining word.
+    # Among others this covers both verb-first and source-first reachability questions.
+    names = list(re.finditer(rf"\b{NAME}\b", plain))
+    if len(names) == 2:
+        first, second = names
+        before = plain[:first.start()].strip()
+        between = plain[first.end():second.start()].strip()
+        after = plain[second.end():].strip()
+        if not after and (
+            re.fullmatch(rf"{REACH}(?: ли)?(?: (?:из|от))?", before, re.I)
+            and re.fullmatch(rf"(?:{VIA} )?(?:до|к)", between, re.I)
+            or re.fullmatch(r"(?:(?:можно ли|как) )?(?:из|от)", before, re.I)
+            and re.fullmatch(rf"(?:{VIA} )?{REACH}(?: {VIA})? (?:до|к)", between, re.I)
+            or not before and re.fullmatch(rf"(?:{VIA} )?{REACH}(?: ли)?(?: {VIA})? (?:до|к)", between, re.I)
+        ):
+            return first.group(), second.group()
     return None
 
 
@@ -59,6 +87,91 @@ def packet(req, src, observations=(), items=(), reason=None):
                             coverage="partial", gaps=([reason] if reason else []) + ["static_subset"],
                             items=list(items), analysis=dict(observations=list(observations),
                                                             relations=[], reason=reason))
+
+
+def head_current(src):
+    if src.reader._run("rev-parse", "--verify", "HEAD^{commit}").decode("ascii").strip() != src.commit:
+        raise host.Rejected("stale_snapshot")
+
+
+def site_anchors(site, obs, items):
+    refs = [items[a["ref_id"]]["locator"] for a in obs["anchors"]]
+    for path, lo, hi in ((site["path"], site["line"], site["end_line"]),
+                         (site["path"], site["context_line"], site["context_line"]),
+                         (site["definition_path"], site["definition_line"], site["definition_line"])):
+        if not any(r["path"] == path and r["start"] <= lo <= hi <= r["end"] for r in refs):
+            raise host.Rejected("endpoint_binding")
+
+
+def producer_callers(req, src, field, lookup, trace, steps, deadline):
+    cli = host.lab.cli
+
+    def step(tool, target):
+        if monotonic() >= deadline:
+            raise host.Rejected("deadline")
+        if len(trace) >= steps:
+            return False
+        head_current(src)
+        trace.append(dict(tool=tool, target=target, status="started"))
+        return True
+
+    if not step("flow", field):
+        return packet(req, src, reason="step_budget")
+    # Use the producer projection of flow rather than tracing an unrelated downstream value.
+    index = cli.flow.Slice(src)
+    owners = index.producers.get(field, ())
+    if len(owners) != 1:
+        reason = "ambiguous_producer" if owners else "missing_producer"
+        trace[-1]["status"] = reason
+        return packet(req, src, reason=reason)
+    fn, key, value = owners[0]
+    name = fn.node.name
+    definitions = cli.auto_reader.top_functions(index)
+    if sum(node.name == name for _, node in definitions) != 1:
+        trace[-1]["status"] = "ambiguous_producer"
+        return packet(req, src, reason="ambiguous_producer")
+    expected = (src.commit, fn.path, fn.node.lineno)
+    refs = []
+    for lo, hi in ((fn.node.lineno, fn.node.lineno), (key.lineno, value.end_lineno)):
+        ref = cli.calls.cited(src, fn.path, lo, hi)
+        if (ref["commit"], ref["path"], ref["start"], ref["end"]) != (src.commit, fn.path, lo, hi):
+            raise host.Rejected("endpoint_binding")
+        refs.append(ref)
+    owner = dict(text=f"Функция {name} формирует поле {field} в возвращаемом словаре.", evidence_blocks=refs)
+    evidence = host.pack_result(req, src, dict(status="flow", claims=[owner], text=""))
+    observations = evidence["analysis"]["observations"]
+    items = {item["ref_id"]: item for item in evidence["items"]}
+    trace[-1]["status"] = "producer_verified"
+    if not step("calls", name):
+        return packet(req, src, reason="step_budget")
+    try:
+        result = lookup(name, src, cli.refusal)
+    except Exception:
+        raise host.Rejected("tool_error") from None
+    calls = host.pack_result(req, src, result)
+    trace[-1]["status"] = result["status"]
+    if calls["analysis"]["reason"]:
+        return packet(req, src, reason=calls["analysis"]["reason"])
+    if result.get("commit") != src.commit or result["status"] != "call_sites":
+        raise host.Rejected("endpoint_binding")
+    items.update((i["ref_id"], i) for i in calls["items"])
+    if len(items) > 96:
+        return packet(req, src, reason="evidence_budget")
+    for obs in calls["analysis"]["observations"]:
+        site = obs["call_site"]
+        if (site["commit"], site["definition_path"], site["definition_line"]) != expected:
+            raise host.Rejected("endpoint_binding")
+        site_anchors(site, obs, items)
+        if site["kind"] == "module_entry":
+            text = f"В блоке запуска модуля как программы возможен прямой вызов {name}."
+        elif site["kind"] == "function" and any(
+                (p, node.lineno, node.name) == (site["path"], site["context_line"], site["caller"])
+                for p, node in definitions):
+            text = f"В теле {site['caller']} есть прямой вызов {name}."
+        else:
+            raise host.Rejected("endpoint_binding")
+        observations.append(dict(obs, text=text))
+    return packet(req, src, observations, items.values())
 
 
 def path_evidence(req, src, names, lookup, trace, steps, deadline):
@@ -103,12 +216,7 @@ def path_evidence(req, src, names, lookup, trace, steps, deadline):
                     (site["definition_path"], site["definition_line"]) != definitions[target][0] or
                     (site["path"], site["context_line"]) != definitions[caller][0]):
                 raise host.Rejected("endpoint_binding")
-            refs = [items[a["ref_id"]]["locator"] for a in obs["anchors"]]
-            for path, lo, hi in ((site["path"], site["line"], site["end_line"]),
-                                 (site["path"], site["context_line"], site["context_line"]),
-                                 (site["definition_path"], site["definition_line"], site["definition_line"])):
-                if not any(r["path"] == path and r["start"] <= lo <= hi <= r["end"] for r in refs):
-                    raise host.Rejected("endpoint_binding")
+            site_anchors(site, obs, items)
             chain = [dict(obs, text=f"В теле {caller} есть прямой вызов {target}.",
                           edge=[caller, target]), *suffix]
             if caller == start:
@@ -137,6 +245,14 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         paths = cli.PY_PATH.findall(req.question)
         if any(not any(p == f or p.endswith("/" + f) for p in src.pages) for f in paths):
             return packet(req, src, reason="out_of_scope")
+        if cli.auto_reader.EVENT.search(req.question):
+            return packet(req, src, reason="observation_required")
+        plain = " ".join(req.question.strip().rstrip("?.!").replace("\x60", "").split())
+        owner = OWNER_QUERY.fullmatch(plain)
+        if owner:
+            plan = "callers_of_field_producer"
+            return producer_callers(req, src, owner[1], lookup or cli.calls.lookup, trace,
+                                    min(MAX_STEPS, steps), task.deadline)
         names = endpoints(req.question)
         if names:
             plan = "find_call_path"
@@ -152,6 +268,8 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return evidence
 
     def verify(req, evidence, draft, delivered):
+        if plan == "callers_of_field_producer":
+            head_current(src)
         return host.verify_snapshot(src, req, evidence, draft, delivered)
 
     result = task.run(retrieve, host.propose, verify)
