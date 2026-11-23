@@ -798,6 +798,12 @@ REMINDER_CASES: List[Case] = [
 
 CASE_GROUPS: List[tuple[str, List[Case]]] = [
     ("base", BASE_CASES),
+    ("assistant_controls", [
+        {"text": "начни обучение", "intent": "START_LEARNING"},
+        {"text": "открой режим разработки", "intent": "OPEN_DEVELOPER_TASK"},
+        {"text": "заверши свою работу", "intent": "EXIT_SKYNETVS"},
+        {"text": "перезапусти себя", "intent": "RESTART_SKYNETVS"},
+    ]),
     ("app", APP_CASES),
     ("music", MUSIC_CASES),
     ("editor_dictation", EDITOR_DICTATION_CASES),
