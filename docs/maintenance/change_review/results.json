@@ -1,0 +1,71 @@
+{
+  "protocol": "9e2c2831e02002c9342885668df35cb4c6ea58cb",
+  "fixture_head": "be11ff08c5ddde4eb1878550ad9973dcbd0d37f7",
+  "cases": [
+    {
+      "case": "empty",
+      "changes": 0,
+      "related": 0,
+      "checked_references": 0
+    },
+    {
+      "case": "comment",
+      "changes": 1,
+      "related": 0,
+      "checked_references": 1
+    },
+    {
+      "case": "boundary_and_call",
+      "changes": 2,
+      "related": 5,
+      "checked_references": 22
+    },
+    {
+      "case": "report_field",
+      "changes": 1,
+      "related": 1,
+      "checked_references": 3
+    },
+    {
+      "case": "added_and_removed",
+      "changes": 2,
+      "related": 0,
+      "checked_references": 2
+    },
+    {
+      "case": "outside",
+      "changes": 0,
+      "related": 0,
+      "checked_references": 0
+    },
+    {
+      "case": "invalid",
+      "reason": "working_invalid_python",
+      "published": false
+    },
+    {
+      "case": "moved_head",
+      "reason": "review_head_changed",
+      "published": false
+    },
+    {
+      "case": "changed_working",
+      "reason": "working_changed",
+      "published": false
+    },
+    {
+      "case": "transfer_nested_condition",
+      "changes": 1,
+      "related": 0,
+      "checked_references": 2
+    },
+    {
+      "case": "transfer_constructor_field",
+      "changes": 1,
+      "related": 2,
+      "checked_references": 9
+    }
+  ],
+  "file_symlink": "UNVERIFIED",
+  "model_generations": 0
+}

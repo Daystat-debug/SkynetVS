@@ -1,0 +1,54 @@
+[
+  {
+    "run": "eval_change_review.py verify",
+    "exit": 0
+  },
+  {
+    "run": "eval_core_adapter.py verify",
+    "exit": 0
+  },
+  {
+    "run": "test_core_task.py",
+    "exit": 0
+  },
+  {
+    "run": "eval_module_entry.py verify",
+    "exit": 0
+  },
+  {
+    "run": "eval_expanded_reader.py verify",
+    "exit": 0
+  },
+  {
+    "run": "eval_expanded_reader.py regression",
+    "exit": 0
+  },
+  {
+    "run": "test_expanded_reader.py",
+    "exit": 0
+  },
+  {
+    "run": "test_auto_reader.py",
+    "exit": 0
+  },
+  {
+    "run": "test_composed_reader.py",
+    "exit": 0
+  },
+  {
+    "run": "test_flow_reader.py",
+    "exit": 0
+  },
+  {
+    "run": "test_skynet_explain.py",
+    "exit": 0
+  },
+  {
+    "run": "architecture boundaries",
+    "exit": 0
+  },
+  {
+    "run": "standalone CLI (no transcript persisted)",
+    "exit": 0
+  }
+]
