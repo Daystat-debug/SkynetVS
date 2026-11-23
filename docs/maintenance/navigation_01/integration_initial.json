@@ -1,0 +1,242 @@
+{
+  "baseline": "ce6500fb97cba391f0081ed822828638b54e5c2a",
+  "cases": [
+    {
+      "id": "D1",
+      "menu": {
+        "elapsed_ms": [
+          234.0,
+          222.83,
+          210.6,
+          213.55
+        ],
+        "commands": 2,
+        "stdout_bytes": 1099,
+        "contains_requested_paths": true,
+        "median_ms": 218.19
+      },
+      "task": {
+        "elapsed_ms": [
+          109.01,
+          106.96,
+          105.29,
+          104.66
+        ],
+        "commands": 1,
+        "stdout_bytes": 245,
+        "returned": [
+          "topic reminders",
+          "Напоминания, состояние и хранилище",
+          "entry: modules/reminder_service.py",
+          "boundary: modules/reminder_repository.py",
+          "check: tools/eval_reminder_service.py"
+        ],
+        "matches_rubric": true,
+        "median_ms": 106.12
+      }
+    },
+    {
+      "id": "D2",
+      "menu": {
+        "elapsed_ms": [
+          207.71,
+          217.15,
+          210.58,
+          210.4
+        ],
+        "commands": 2,
+        "stdout_bytes": 1139,
+        "contains_requested_paths": true,
+        "median_ms": 210.49
+      },
+      "task": {
+        "elapsed_ms": [
+          108.86,
+          103.99,
+          104.99,
+          107.89
+        ],
+        "commands": 1,
+        "stdout_bytes": 278,
+        "returned": [
+          "topic ui",
+          "Отдельный процесс Developer Tasks и состав поставки",
+          "entry: modules/developer_task_ui/launch.py",
+          "boundary: modules/developer_task_ui/BUNDLE_MANIFEST.json",
+          "check: tools/eval_core_symbol_ui.py"
+        ],
+        "matches_rubric": true,
+        "median_ms": 106.44
+      }
+    },
+    {
+      "id": "D3",
+      "menu": {
+        "elapsed_ms": [
+          214.13,
+          207.56,
+          205.94,
+          209.08
+        ],
+        "commands": 2,
+        "stdout_bytes": 1098,
+        "contains_requested_paths": true,
+        "median_ms": 208.32
+      },
+      "task": {
+        "elapsed_ms": [
+          108.93,
+          104.78,
+          104.95,
+          104.0
+        ],
+        "commands": 1,
+        "stdout_bytes": 242,
+        "returned": [
+          "topic actions",
+          "Полномочия и исполнение действий",
+          "entry: modules/action_broker.py",
+          "boundary: modules/action_contract.py",
+          "check: tools/eval_action_execution_boundary.py"
+        ],
+        "matches_rubric": true,
+        "median_ms": 104.87
+      }
+    },
+    {
+      "id": "D4",
+      "menu": {
+        "elapsed_ms": [
+          212.47,
+          209.12,
+          224.11,
+          211.9
+        ],
+        "commands": 2,
+        "stdout_bytes": 1106,
+        "contains_requested_paths": true,
+        "median_ms": 212.19
+      },
+      "task": {
+        "elapsed_ms": [
+          107.3,
+          105.88,
+          110.2,
+          107.47
+        ],
+        "commands": 1,
+        "stdout_bytes": 357,
+        "returned": [
+          "Уточните область:",
+          "topic cognitive  Исследование кода Cognitive Core и проверка источников",
+          "topic pipeline  Регистрация команд и эффекты pipeline",
+          "topic voice  Голосовой цикл, запуск и остановка служб"
+        ],
+        "matches_rubric": false,
+        "median_ms": 107.38
+      }
+    },
+    {
+      "id": "D5",
+      "menu": {
+        "elapsed_ms": [
+          107.96,
+          106.9,
+          109.74,
+          102.27
+        ],
+        "commands": 1,
+        "stdout_bytes": 870,
+        "median_ms": 107.43
+      },
+      "task": {
+        "elapsed_ms": [
+          106.74,
+          105.28,
+          106.76,
+          105.1
+        ],
+        "commands": 1,
+        "stdout_bytes": 242,
+        "returned": [
+          "topic actions",
+          "Полномочия и исполнение действий",
+          "entry: modules/action_broker.py",
+          "boundary: modules/action_contract.py",
+          "check: tools/eval_action_execution_boundary.py"
+        ],
+        "matches_rubric": false,
+        "median_ms": 106.01
+      }
+    },
+    {
+      "id": "D6",
+      "menu": {
+        "elapsed_ms": [
+          102.98,
+          103.64,
+          105.99,
+          108.06
+        ],
+        "commands": 1,
+        "stdout_bytes": 870,
+        "median_ms": 104.81
+      },
+      "task": {
+        "elapsed_ms": [
+          108.54,
+          102.93,
+          101.92,
+          109.04
+        ],
+        "commands": 1,
+        "stdout_bytes": 139,
+        "returned": [
+          "Нет совпадений в карточках. Список областей: topic."
+        ],
+        "matches_rubric": true,
+        "median_ms": 105.74
+      }
+    },
+    {
+      "id": "D7",
+      "menu": {
+        "elapsed_ms": [
+          221.79,
+          218.55,
+          212.28,
+          206.16
+        ],
+        "commands": 2,
+        "stdout_bytes": 1099,
+        "contains_requested_paths": true,
+        "median_ms": 215.42
+      },
+      "task": {
+        "elapsed_ms": [
+          114.9,
+          113.28,
+          102.39,
+          104.9
+        ],
+        "commands": 1,
+        "stdout_bytes": 284,
+        "returned": [
+          "topic cognitive",
+          "Исследование кода Cognitive Core и проверка источников",
+          "entry: tools/skynet_investigate.py",
+          "boundary: docs/architecture/SKYNETVS_COGNITIVE_CORE_V2.md",
+          "check: tools/eval_argument_flow.py"
+        ],
+        "matches_rubric": false,
+        "median_ms": 109.09
+      }
+    }
+  ],
+  "inventory": {
+    "legacy_default_rewrites_tracked_report": true,
+    "temp_default_outside_checkout": true,
+    "explicit_and_default_equal_legacy_report": true,
+    "checkout_clean": true
+  }
+}

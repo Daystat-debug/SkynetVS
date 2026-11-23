@@ -1,0 +1,10 @@
+{
+  "protocol": "Apply the same path and ambiguity rubric to these additional descriptions after the routing revision. Closed before running that revision.",
+  "cases": [
+    {"id":"X1","question":"Где описан контракт задач разработчика и какой тест относится к самому контракту?","keys":["developer"],"paths":["modules/developer/developer_task_contract.py","tools/eval_developer_task_contract.py"]},
+    {"id":"X2","question":"Хочу разобраться в происхождении исходников доверенного хоста. Где его базовая версия и чем сверить её?","keys":["native"],"paths":["native/trusted_host/SOURCE_BASELINE.json","native/trusted_host/check_source_baseline.py"]},
+    {"id":"X3","question":"Мне нужно понять обработку распознанной команды. Где искать обработчик и адресную проверку?","keys":["commands"],"paths":["modules/command_processor.py","tools/eval_command_processor.py"]},
+    {"id":"X4","question":"Нужно разобраться в напоминаниях и голосовом цикле. Покажи обе области.","keys":["reminders","voice"],"paths":[]},
+    {"id":"X5","question":"Как проверить, почему не устанавливается цвет подсветки клавиатуры?","keys":[],"paths":[]}
+  ]
+}
