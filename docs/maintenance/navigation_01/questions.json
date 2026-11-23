@@ -1,0 +1,13 @@
+{
+  "snapshot": "bceec9c91ce25f58a603adfb32e109543a384fb4",
+  "task": "Given a symbol, locate its top-level definition, a specified kind of local dependency if applicable, and a relevant targeted check. Compare the same snapshot. Count actual UTF-8 output bytes, answer coverage and elapsed time. No token estimator.",
+  "cases": [
+    ["CommandProcessor","modules/command_processor.py","modules/command_runtime.py","tools/eval_command_processor.py"],
+    ["ReminderService","modules/reminder_service.py","modules/reminder_repository.py","tools/eval_reminder_service.py"],
+    ["ActionBroker","modules/action_broker.py","modules/action_authority.py","tools/eval_action_execution_boundary.py"],
+    ["RuntimeServiceHealthMonitor","modules/runtime_service_health_monitor.py","modules/runtime_service_health.py","tools/eval_runtime_service_health_monitor.py"],
+    ["OperationTelemetry","modules/core/operation_telemetry.py",null,"tools/eval_operation_telemetry.py"],
+    ["Task","tools/skynet_core_task.py",null,"tools/test_core_task.py"]
+  ],
+  "additional_controls": ["duplicate definition ReminderRepository", "vendor copy must remain a distinct path", "string launch in pipeline", "unknown symbol", "audit covers each tracked path exactly once"]
+}
