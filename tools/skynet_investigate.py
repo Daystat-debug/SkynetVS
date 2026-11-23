@@ -26,11 +26,14 @@ PATHS = (
 REACH = r"(?:дотягива[а-я]+|достига[а-я]+|достиг[а-я]+|доход[а-я]+|дойти|добра[а-я]+|добира[а-я]+|попа[а-я]+)"
 VIA = r"(?:косвенно|через (?:промежуточн[а-я]+|другие) функци[а-я]+)"
 ASK = r"(?:(?:покажи|найди|перечисли|укажи) )?"
-INCOMING = (r"(?:(?:кто|где|откуда|какие функции) (?:напрямую )?"
-            r"(?:вызыва[а-я]+|обраща[а-я]+ к)|(?:места|точки|список) (?:прямых )?вызов[а-я]+)")
-OUTPUT = r"(?:формиру[а-я]+|возвраща[а-я]+|заполня[а-я]+|созда[а-я]+)"
-OWNER = rf"(?:функци[а-я]+,? (?:которая )?{OUTPUT}|производител[а-я]+)"
+INCOMING = (r"(?:кто (?:напрямую )?(?:вызывает|обращается к)|какие функции (?:напрямую )?"
+            r"(?:вызывают|обращаются к)|(?:где|откуда) (?:напрямую )?"
+            r"(?:вызывают|вызывается|обращаются к)|(?:места|точки|список) (?:прямых )?вызов[а-я]+)")
+ACTIVE = r"(?:формирует|возвращает|заполняет|созда[её]т)"
+PARTICIPLE = r"(?:формирующ|возвращающ|заполняющ|создающ)(?:ая|ую|ей)"
+OWNER = rf"(?:функци[а-я]+,? (?:которая {ACTIVE}|{PARTICIPLE})|производител[а-я]+)"
 OWNER_QUERY = re.compile(rf"{ASK}{INCOMING} {OWNER} (?:пол[ея] |ключ[а]? )?({NAME})", re.I)
+OUTGOING_OWNER = re.compile(r"(?:какие функции|кого|что) (?:напрямую )?вызывает (?:функция|производитель)\b", re.I)
 REASONS = {
     "clarification": "Уточните две разные однозначные функции и направление поиска или задайте вопрос об одном поле.",
     "out_of_scope": "Запрошен источник вне пяти разрешённых файлов.",
@@ -47,6 +50,7 @@ REASONS = {
     "ambiguous_producer": "У поля или имени его производителя несколько подходящих определений в разрешённой области.",
     "missing_producer": "В поддерживаемых возвратах пяти файлов производитель этого поля не найден.",
     "stale_snapshot": "Во время исследования изменился Git HEAD. Повторите вопрос для нового снимка.",
+    "outgoing_unsupported": "Вы спросили, какие функции вызывает сам производитель. Этот режим проверяет только входящие обращения к нему.",
 }
 
 
@@ -64,14 +68,13 @@ def endpoints(question):
         before = plain[:first.start()].strip()
         between = plain[first.end():second.start()].strip()
         after = plain[second.end():].strip()
-        if not after and (
-            re.fullmatch(rf"{REACH}(?: ли)?(?: (?:из|от))?", before, re.I)
-            and re.fullmatch(rf"(?:{VIA} )?(?:до|к)", between, re.I)
-            or re.fullmatch(r"(?:(?:можно ли|как) )?(?:из|от)", before, re.I)
-            and re.fullmatch(rf"(?:{VIA} )?{REACH}(?: {VIA})? (?:до|к)", between, re.I)
-            or not before and re.fullmatch(rf"(?:{VIA} )?{REACH}(?: ли)?(?: {VIA})? (?:до|к)", between, re.I)
-        ):
-            return first.group(), second.group()
+        frames = ((rf"{REACH}(?: ли)?(?: (?:из|от))?", rf"(?:{VIA} )?(?:до|к)"),
+                  (r"(?:(?:можно ли|как) )?(?:из|от)", rf"(?:{VIA} )?{REACH}(?: {VIA})? (?:до|к)"),
+                  ("", rf"(?:{VIA} )?{REACH}(?: ли)?(?: {VIA})? (?:до|к)"))
+        if not after:
+            for prefix, link in frames:
+                if re.fullmatch(prefix, before, re.I) and re.fullmatch(link, between, re.I):
+                    return first.group(), second.group()
     return None
 
 
@@ -248,6 +251,8 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         if cli.auto_reader.EVENT.search(req.question):
             return packet(req, src, reason="observation_required")
         plain = " ".join(req.question.strip().rstrip("?.!").replace("\x60", "").split())
+        if OUTGOING_OWNER.match(plain):
+            return packet(req, src, reason="outgoing_unsupported")
         owner = OWNER_QUERY.fullmatch(plain)
         if owner:
             plan = "callers_of_field_producer"
