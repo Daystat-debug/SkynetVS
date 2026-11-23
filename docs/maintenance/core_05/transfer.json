@@ -1,0 +1,27 @@
+{
+  "implementation": "4753e75a8abd8aa3acb9f59cb46979854ea32151",
+  "notation": "Predicate numbers are source lines at evaluation time; a negative number negates the observation. all/past quantify entire/earlier iterations, iteration requires an item. refs include transitions material to the explanation. R is regression only.",
+  "cases": [
+    {"id":"T01","q":"Почему возникает ошибка M134_LS_TREE_FORMAT_INVALID?","selector":"M134_LS_TREE_FORMAT_INVALID","target":["scan_head",85],"formula":["and",-79,84],"refs":[79,80,84]},
+    {"id":"T02","q":"Что должно успеть выполниться, чтобы управление дошло до _render_current_head_labels@184?","selector":"_render_current_head_labels@184","target":["_render_current_head_labels",184],"formula":["and",-181,183],"refs":[181,182,183]},
+    {"id":"T03","q":"Увидел M141_M131_DISPLAY_SCHEMA_CHANGED. Какой набор проверок ведёт сюда по коду?","selector":"M141_M131_DISPLAY_SCHEMA_CHANGED","target":["_render_current_head_labels",189],"formula":["and",-181,-183,188],"refs":[181,182,183,184,188]},
+    {"id":"T04","q":"При каком условии возникает сообщение M134_NO_SOURCES_OR_SOURCE_LIMIT_EXCEEDED?","selector":"M134_NO_SOURCES_OR_SOURCE_LIMIT_EXCEEDED","target":["scan_head",102],"formula":["and",-79,-84,["all",87,["and",-89,-92]],101],"refs":[79,80,84,85,87,89,90,92,93,101]},
+    {"id":"T05","q":"scan_head@97","selector":"scan_head@97","target":["scan_head",97],"formula":["and",-79,-84,["past",87,["and",-89,-92]],["iteration",87],-89,-92,-95],"refs":[79,80,84,85,87,89,90,92,93,95,96]},
+    {"id":"T06","q":"rank_title_only@56","selector":"rank_title_only@56","target":["rank_title_only",56],"formula":["and",-40,-42,-44,["past",48,["and",-49,-51]],["iteration",48],-49,-51],"refs":[40,41,42,43,44,45,48,49,50,51,52]},
+    {"id":"T07","q":"ValueError: M130_TITLE_INVALID","selector":"M130_TITLE_INVALID","target":["rank",115],"formula":["and",-112,114],"refs":[112,113,114]},
+    {"id":"T08","q":"Меня интересует смысл M127_INPUT_TOO_LARGE. Какие проверки к нему приводят?","selector":"M127_INPUT_TOO_LARGE","target":["extract_symbols",33],"formula":["and",-30,32],"refs":[30,31,32]},
+    {"id":"T09","q":"Почему возникает ошибка M134_INVALID_GIT_BLOB_SIZE?","selector":"M134_INVALID_GIT_BLOB_SIZE","target":["scan_head",109],"formula":["and",-79,-84,["all",87,["and",-89,-92]],-101,["past",106,["and",-108,["if",111,true,["if",114,true,["and",-118,-121]]]]],["iteration",106],108],"refs":[79,80,84,85,87,89,90,92,93,101,102,106,108,109,111,113,114,116,118,119,121,122]},
+    {"id":"T10","q":"С чего код вдруг выдаёт M134_GIT_PROJECT_ROOT_MISMATCH?","selector":"M134_GIT_PROJECT_ROOT_MISMATCH","target":["scan_head",80],"formula":79,"refs":[79]},
+    {"id":"T11","q":"git_environment@50","selector":"git_environment@50","target":["git_environment",50],"formula":true,"refs":[]},
+    {"id":"T12","q":"Где возникает ошибка M134_REPORT_SCHEMA_INVALID?","reason":"diagnostic_ambiguous"},
+    {"id":"T13","q":"ValueError: M482_HEADER_LOST","reason":"diagnostic_missing"},
+    {"id":"T14","q":"Почему сейчас происходит ошибка M141_INVALID_DISPLAY_CONTEXT?","reason":"observation_required"},
+    {"id":"T15","q":"Разбери M126_FILES_LIMIT и заодно перепиши проверку.","reason":"clarification"},
+    {"id":"T16","q":"Какие условия в modules/actions.py привели к M127_TITLE_INVALID?","reason":"out_of_scope"},
+    {"id":"T17","q":"scan_head@1","reason":"statement_ambiguous"},
+    {"id":"T18","q":"Почему из expand_query возникает ошибка M127_INPUT_TOO_LARGE?","reason":"caller_conditions_unproven"},
+    {"id":"R05","q":"Откуда берётся ошибка M130_MODULE_SPAN_COUNT_LIMIT?","selector":"M130_MODULE_SPAN_COUNT_LIMIT","reason":"diagnostic_ambiguous"},
+    {"id":"R09","q":"Почему возникает сообщение «Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.»?","selector":"find_git@39","target":["find_git",39],"formula":["all",35,-36],"refs":[35,36,38]},
+    {"id":"R14","q":"Наткнулся на M130_CANDIDATE_DUPLICATE. На что именно ругается код?","selector":"M130_CANDIDATE_DUPLICATE","reason":"control_unsupported"}
+  ]
+}
