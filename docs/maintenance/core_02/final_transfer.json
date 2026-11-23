@@ -1,0 +1,8 @@
+{
+  "implementation":"3f2f4ad",
+  "questions":[
+    {"id":"U1","q":"Кто обращается к функции, которая возвращает ключ nonzero_scores?","field":"nonzero_scores","producer":"rank_title_only","callers":["rank","__main__"]},
+    {"id":"U2","q":"Доходит ли rank косвенно до extract_symbols?","path":["rank","rank_symbols","extract_symbols"]},
+    {"id":"U3","q":"Перечисли места вызова функции, заполняющей поле file_ranks.","field":"file_ranks","producer":"rank","callers":["search_repository","main"]}
+  ]
+}
