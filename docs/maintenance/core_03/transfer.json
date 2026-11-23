@@ -1,0 +1,17 @@
+{
+  "implementation":"072ce0f",
+  "fixture":"1836acd4cf0f12900c007904e21b4a6ff0b6b5d3",
+  "seed":13070698039845475399,
+  "generated":"Draw opaque identifiers and one passing arm independently per diamond. Four graphs per width in order 2,4,8; all cases retained. Source calls every branch; exactly one forwards its incoming parameter via a local alias, others supply a computed expression or a literal. Two further negatives: rebind the alias or omit the argument. Use the emitting template, not the analyzer, as the line/argument oracle.",
+  "cases":[
+    {"id":"P1","q":"Какое выражение из search_repository доходит до rank_title_only.title?","goal":["search_repository","rank_title_only","title"],"hops":[["search_repository","rank","title","effective",153,14],["rank","rank_title_only","title","title",116,17]]},
+    {"id":"P2","q":"Покажи передачу из rank в extract_symbols.old_sources.","goal":["rank","extract_symbols","old_sources"],"hops":[["rank","rank_symbols","old_sources","selected",125,18],["rank_symbols","extract_symbols","old_sources","old_sources",77]]},
+    {"id":"P3","q":"Что из rank передаётся в modules_from_source.path?","goal":["rank","modules_from_source","path"],"reason":"argument_unproven"},
+    {"id":"P4","q":"Какое значение из main попадает в module_rank.title?","goal":["main","module_rank","title"],"hops":[["main","rank","title","data['issue_title_current']",151],["rank","module_rank","title","title",127]]},
+    {"id":"P5","q":"Проследи аргумент из search_repository в scan_head.notify.","goal":["search_repository","scan_head","notify"],"hops":[["search_repository","scan_head","notify","notify",150]]},
+    {"id":"P6","q":"Что из module_rank передаётся в modules_from_source.window?","goal":["module_rank","modules_from_source","window"],"reason":"argument_unproven"},
+    {"id":"P7","q":"Что из main передаётся в rank_symbolic.limit?","goal":["main","rank_symbolic","limit"],"reason":"clarification"},
+    {"id":"P8","q":"Покажи значение из rank для module_rank.missing_input.","goal":["rank","module_rank","missing_input"],"reason":"unknown_parameter"},
+    {"id":"P9","q":"Чем main снабжает параметр rank_title_only.title?","goal":["main","rank_title_only","title"],"hops":[["main","rank","title","data['issue_title_current']",151],["rank","rank_title_only","title","title",116,17]]}
+  ]
+}
