@@ -1,0 +1,14 @@
+{
+  "head": "fb454238a95db7a33d47ed536e21c3e9dd970f41",
+  "edit": {
+    "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+    "before": "sym=rank_symbols(title,selected,limit=100)",
+    "after": "sym=rank_symbols(title,selected,limit=37)"
+  },
+  "cases": [
+    {"id":"W1","q":"Кто передаёт параметры в rank_symbols и как формируется function_candidates_total?","expect":"rank присваивает sym, limit 100 в HEAD и 37 в рабочей копии. Счётчик по-прежнему происходит из len(rows), та же статическая связь."},
+    {"id":"W2","q":"Как вычисляется поле no_model_training?","expect":"Литерал True в обеих версиях. Локатор зависит от типа источника."},
+    {"id":"W3","q":"Где в outside.py вызывают rank_symbols?","expect":"out_of_scope, без доказательств."}
+  ],
+  "controls":["реальный каталог проекта только для чтения","выход за корень","reparse-файл или каталог","жёсткая ссылка","писатель при чтении","замена файла с теми же байтами","изменение с прежней длиной и временем","изменение другого разрешённого файла","подложная ссылка","успешное чтение новой версии следующей задачей"]
+}
