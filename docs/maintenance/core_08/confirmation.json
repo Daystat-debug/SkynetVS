@@ -1,0 +1,24 @@
+{
+ "source":"2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+ "implementation":"c717a225c71e9edd2a43ea36951938f2b6234393",
+ "rubric":"Same source and typed-answer obligations. No credit for a suggested anchor on a positive. The two markers of an edge are listed caller first. For single sites F coordinates are relative to the pinned rank blob. Includes natural negative questions that share vocabulary with valid sites.",
+ "fixture":["","def capture_status(battery, microphone):","    if battery == 0:","        return 'Camera battery depleted'","    if not microphone:","        return 'Microphone disconnected'","    return 'Recording ready to begin'","","def studio_session():","    label = 'Studio schedule confirmed'","    return capture_status(80, True)","","def inspect_video(frame_rate):","    if frame_rate < 24:","        return 'Video frame rate below minimum'","    return 'Video frame rate accepted'"],
+ "cases":[
+  {"id":"C01","q":"Где исправность размера объекта Git проверяют ещё до чтения самого содержимого — пришёл ли вообще размер в числовом виде?","path":"C","owner":"scan_head","line":109,"refs":[68,109],"action":"where"},
+  {"id":"C02","q":"Где при смешивании двух очередей обнаруживают дубликат результата?","path":"R","owner":"interleave_3_to_1","line":106,"refs":[96,106],"action":"where"},
+  {"id":"C03","q":"Где прерывают поиск, если лексическое сопоставление не дало совпадения с задачей?","path":"C","owner":"search_repository","line":156,"refs":[144,156],"action":"where"},
+  {"id":"C04","q":"Что должно произойти, чтобы появилось «M130_TITLE_INVALID»?","path":"R","owner":"rank","line":115,"refs":[110,112,113,114,115],"controls":[["rank",115,["and",-112,114]]],"action":"when"},
+  {"id":"C05","q":"Функции с сообщениями «M127_TITLE_INVALID» и «M130_NO_SCOPE_FILES_WITHIN_LIMIT» напрямую вызывают одна другую? Покажи свидетельство.","edge":["rank","rank_symbols"],"marks":[["R",124],["S",74]],"must":{"R":[18,110,124,125],"S":[72,74]}},
+  {"id":"C06","q":"Есть ли вызов между «M134_GIT_PROJECT_ROOT_MISMATCH» и «M134_NO_LEXICAL_MATCH»?","edge":["search_repository","scan_head"],"marks":[["C",156],["C",80]],"must":{"C":[68,80,144,150,156]}},
+  {"id":"C07","q":"Где отклоняется задача из-за несовпадения номера коммита с номером, подписанным бухгалтерией?","reasons":["observation_missing","observation_ambiguous","clarification","no_match"]},
+  {"id":"C08","q":"Сколько раз за последний запуск поиску не удалось подобрать подходящий файл?","reasons":["observation_required"]},
+  {"id":"C09","q":"Где в modules/media/export_clip.py описана подготовка материала к записи?","reasons":["out_of_scope"]},
+  {"id":"F21","q":"Где оператору сигнализируют, что аккумулятор камеры разряжен?","path":"R","owner":"capture_status","line":4,"refs":[2,4],"action":"where"},
+  {"id":"F22","q":"Почему система сообщает об отсоединённом микрофоне?","path":"R","owner":"capture_status","line":6,"refs":[2,3,4,5,6],"controls":[["capture_status",6,["and",-3,5]]],"action":"when"},
+  {"id":"F23","q":"При каких условиях частоту кадров видеоматериала признают ниже допустимой?","path":"R","owner":"inspect_video","line":15,"refs":[13,14,15],"controls":[["inspect_video",15,14]],"action":"when"},
+  {"id":"F24","q":"Где подтверждается готовность начинать запись?","path":"R","owner":"capture_status","line":7,"refs":[2,7],"action":"where"},
+  {"id":"F25","q":"Есть ли прямой вызов между «Recording ready» и «Studio schedule»?","edge":["studio_session","capture_status"],"marks":[["R",10],["R",7]],"must":{"R":[2,7,9,10,11]}},
+  {"id":"F26","q":"Какой участок предсказывает оставшееся время съёмки по напряжению батареи?","reasons":["observation_missing","observation_ambiguous","clarification","no_match"]},
+  {"id":"F27","q":"Есть ли прямой вызов между «frame rate accepted» и «Camera battery»?","reasons":["path_unproven"]}
+ ]
+}
