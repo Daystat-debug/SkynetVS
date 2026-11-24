@@ -1,0 +1,44 @@
+{
+  "head": "a8db74b80aa8a389e3d3611f2350d63c76a91804",
+  "id": "T01",
+  "q": "Как из main дойти до ошибки M126_TOP_N_INVALID?",
+  "method": "separate CLI and supervised worker per sample, same current HEAD and Python, legacy dispatch vs --research",
+  "rows": [
+    {
+      "arm": "core05",
+      "ms": 697.2,
+      "verdict": null,
+      "steps": 3
+    },
+    {
+      "arm": "adaptive",
+      "ms": 755.9,
+      "verdict": "excluded_route",
+      "steps": 6
+    },
+    {
+      "arm": "adaptive",
+      "ms": 755.7,
+      "verdict": "excluded_route",
+      "steps": 6
+    },
+    {
+      "arm": "core05",
+      "ms": 706.8,
+      "verdict": null,
+      "steps": 3
+    },
+    {
+      "arm": "core05",
+      "ms": 690.3,
+      "verdict": null,
+      "steps": 3
+    },
+    {
+      "arm": "adaptive",
+      "ms": 751.1,
+      "verdict": "excluded_route",
+      "steps": 6
+    }
+  ]
+}

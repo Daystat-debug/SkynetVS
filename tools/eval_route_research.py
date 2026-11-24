@@ -15,6 +15,7 @@ from eval_route_fixtures import suite
 
 archive, loop, old, pilot = controls.archive, controls.loop, controls.old, controls.pilot
 BASE = "7b0dab53f726e649e4b3bbd899391c97a2269b7d"
+FROZEN_CASES = "a8db74b80aa8a389e3d3611f2350d63c76a91804:docs/maintenance/core_06/transfer.json"
 DIR = pilot.ROOT / "docs/maintenance/core_06"
 ARMS = ("core05", "first", "lazy", "eager", "adaptive")
 PATHS = {"R":old.RANK, "S":old.SYMBOL, "T":old.TITLE, "C":pilot.CS, "G":pilot.PREFIX+"git_source.py"}
@@ -125,7 +126,8 @@ def run(plan, temp):
             times[case["id"]][arm] = round(1000*(perf_counter()-start),1)
             row[arm] = inspect_answer(case,out,root,src)
             assert len(out["steps"]) <= loop.MAX_STEPS
-            assert not any("model" in s["tool"] or "qwen" in s["tool"] for s in out["steps"]), out["steps"]
+            assert not any(s["tool"] == "classify_intent" or "model" in s["tool"] or "qwen" in s["tool"]
+                           for s in out["steps"]), out["steps"]
         rows.append(row)
     archive.set_head(root,BASE)
     return rows,times,integrity(root,*loop.read_head(root))
@@ -135,7 +137,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", choices=("record","verify"))
     args = parser.parse_args()
-    plan = json.loads((DIR/"transfer.json").read_text(encoding="utf8"))
+    plan = json.loads(pilot.git("show",FROZEN_CASES))
     with tempfile.TemporaryDirectory(prefix="skynet-route-") as tmp:
         rows,times,checks = run(plan,Path(tmp))
     dest = DIR/"results.json"
