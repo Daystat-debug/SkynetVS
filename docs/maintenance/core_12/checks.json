@@ -1,0 +1,162 @@
+{
+ "flags": [
+  "-I",
+  "-S",
+  "-B"
+ ],
+ "historical": [
+  {
+   "command": "test_requirements.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py guards",
+   "exit": 0
+  },
+  {
+   "command": "eval_requirements.py projection",
+   "exit": 0
+  },
+  {
+   "command": "eval_requirements.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify --final",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify --second",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify --separate --delivery",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify --separate --lexical-control",
+   "exit": 0
+  },
+  {
+   "command": "eval_package_boundaries.py",
+   "exit": 0
+  },
+  {
+   "command": "test_core_task.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_control_conditions.py verify --compare-direction",
+   "exit": 0
+  },
+  {
+   "command": "eval_core_adapter.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_investigation.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_control_conditions.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_task_parts.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_diagnostic_path.py verify",
+   "exit": 0
+  },
+  {
+   "command": "test_task_parts.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_producer_investigation.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_route_research.py verify",
+   "exit": 0
+  },
+  {
+   "command": "test_obligation_check.py",
+   "exit": 0
+  },
+  {
+   "command": "build_obligation_memory.py --verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_task_parts.py verify --final",
+   "exit": 0
+  },
+  {
+   "command": "eval_obligation_check.py ablate",
+   "exit": 0
+  },
+  {
+   "command": "eval_obligation_check.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_argument_flow.py verify",
+   "exit": 0
+  }
+ ],
+ "current": [
+  {
+   "command": "build_experience_policy.py --verify",
+   "exit": 0,
+   "s": 25.506,
+   "output": "{'feature': 'several_quotes', 'no': {'action': 'memory_only'}, 'yes': {'action': 'shared_evidence'}}} experience [(11, 0), (6, 0.35), (6, 0.7)]\r\ncalibration rewards / depth [(13, 0), (13, 1), (14, 2)]"
+  },
+  {
+   "command": "eval_experience.py verify",
+   "exit": 0,
+   "s": 38.134,
+   "output": "26 35 15 3 9 138.6 0\r\nexperience_release 2 5 0 1 21 30 12 4 5 122.8 0\r\nreceipt_zero 3 6 1 3 22 35 15 4 6 152.0 0\r\nreceipt_seed 2 4 2 2 19 35 14 5 8 134.0 0\r\nreceipt_trained 2 4 2 0 16 36 9 7 3 115.2 0"
+  },
+  {
+   "command": "eval_experience.py verify --domains",
+   "exit": 0,
+   "s": 38.777,
+   "output": "8 22 13 7 7 116.3 0\r\nexperience_release 7 3 2 1 17 20 14 8 5 112.6 0\r\nreceipt_zero 8 4 2 4 21 24 17 5 5 118.6 0\r\nreceipt_seed 7 4 1 6 20 23 17 3 4 131.0 0\r\nreceipt_trained 8 4 2 3 19 24 15 4 2 121.3 0"
+  },
+  {
+   "command": "eval_experience.py verify --retention",
+   "exit": 0,
+   "s": 15.871,
+   "output": " 10 7 8 0 86.7 0\r\nexperience_seed 4 5 4 1 13 21 14 3 2 110.0 0\r\nexperience_release 5 5 3 0 14 19 13 4 2 108.8 0\r\nreceipt_seed 4 4 3 6 13 19 13 2 4 107.3 0\r\nreceipt_trained 5 4 2 3 15 23 13 2 2 113.4 0"
+  },
+  {
+   "command": "test_experience.py",
+   "exit": 0,
+   "s": 1.287,
+   "output": "....\r\n----------------------------------------------------------------------\r\nRan 4 tests in 0.745s\r\n\r\nOK"
+  },
+  {
+   "command": "eval_package_boundaries.py",
+   "exit": 0,
+   "s": 2.481,
+   "output": "S HAVE NO STATIC NATIVE IMPORTS ===\r\n{\r\n  \"actual\": [],\r\n  \"expected\": [],\r\n  \"ok\": true\r\n}\r\n[OK] MODULES HAVE NO STATIC NATIVE IMPORTS\r\n\r\n=== SUMMARY ===\r\n{\r\n  \"case_count\": 32,\r\n  \"fail_count\": 0\r\n}"
+  }
+ ],
+ "elapsed_note": "Wall-clock durations include local parallel verification and process startup; they are not isolated CPU benchmarks.",
+ "cli": {
+  "id": "R5",
+  "exit": 0,
+  "wall_s": 0.9728665,
+  "stdout": "Git-снимок c2dec15999c2f12b838106487a8f2d25aa59f371\r\nХод поиска: interpret_parts(question) → locate_observation(1) → calls(rank_symbols) → locate_observation(2) → calls(expand_query)\r\nУстановлено — Кто непосредственно вызывает проверку с «M127_TITLE_INVALID» [1, 2]\r\nУстановлено — и кто обращается к обработчику «M134_GOAL_EMPTY_OR_TOO_LONG»? [3, 4]\r\n[1] В rank_symbols на строке 74 записано выражение `'M127_TITLE_INVALID'`.\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/retrieval/m127_symbol.py#L72-L72\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/retrieval/m127_symbol.py#L74-L74\r\n[2] В rank на строке 125 записан прямой вызов rank_symbols.\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/retrieval/m127_symbol.py#L72-L72\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L110\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/retrieval/m130_rank.py#L125-L125\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/retrieval/m130_rank.py#L18-L18\r\n[3] В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/context_search.py#L47-L47\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/context_search.py#L49-L49\r\n[4] В search_repository на строке 146 записан прямой вызов expand_query.\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/context_search.py#L47-L47\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/context_search.py#L144-L144\r\n  https://github.com/Daystat-debug/SkynetVS/blob/c2dec15999c2f12b838106487a8f2d25aa59f371/modules/developer_task_ui/app/context_search.py#L146-L146\r\nОбласть вывода — статические связи пяти файлов. Выполнение не наблюдалось."
+ }
+}
