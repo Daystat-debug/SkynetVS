@@ -263,10 +263,12 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     trace = []
     plan = "interpret"
     strategy = discovery
+    object_catalog = None
+    suggestions = None
     src = None
 
     def retrieve(req):
-        nonlocal src, plan, strategy
+        nonlocal src, plan, strategy, object_catalog, suggestions
         src, ground = opener(root)
         if set(src.raw) != host.lab.SCOPE or req.source_id != SOURCE:
             raise host.Rejected("snapshot_policy")
@@ -277,7 +279,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         if any(not any(p == f or p.endswith("/" + f) for p in src.pages) for f in paths):
             return packet(req, src, reason="out_of_scope")
         learned = discovery in task_parts.experience.POLICIES
-        if learned or discovery in task_parts.experience.LEARNERS or discovery in ("parts","parts_once","lexical_parts","residual","flat_residual","independent","memory_only","shared_evidence"):
+        if learned or discovery in task_parts.objects.POLICIES or discovery in task_parts.experience.LEARNERS or discovery in ("parts","parts_once","lexical_parts","residual","flat_residual","independent","memory_only","shared_evidence"):
             plan="task_parts"
             if paths:
                 return packet(req,src,reason="clarification")
@@ -285,7 +287,16 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
                 strategy = task_parts.experience.select(discovery,req.question)
             search=arguments.Search(req,src,lookup or cli.calls.lookup,trace,min(MAX_STEPS,steps),
                                     task.deadline,head_current,site_anchors)
-            output,meta=task_parts.research(search,req.question,select,strategy)
+            if strategy in task_parts.objects.POLICIES:
+                if len(task_parts.split(req.question))>8:
+                    return packet(req,src,reason="part_budget")
+                try:
+                    object_catalog=requirements.goals.effects(search)
+                    suggestions=task_parts.objects.nominations(task_parts.split(req.question),object_catalog,
+                                                               src.commit,strategy,select)
+                except requirements.Gap as exc:
+                    return packet(req,src,reason=str(exc))
+            output,meta=task_parts.research(search,req.question,select,strategy,object_catalog,suggestions)
             evidence=packet(req,src,*output)
             evidence["analysis"]["task_parts"]=meta
             return evidence
@@ -397,6 +408,9 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
             task_parts.verify(req.question,meta,evidence["analysis"]["observations"],discovery=="flat_residual",
                               checked=strategy in ("independent","memory_only"),shared=strategy=="shared_evidence",
                               learner=strategy if strategy in task_parts.experience.LEARNERS else None)
+            if strategy in task_parts.objects.POLICIES:
+                task_parts.objects.verify(task_parts.split(req.question),meta,evidence["analysis"]["observations"],
+                                          evidence["items"],object_catalog,src.commit,strategy,suggestions)
             if draft["status"]=="answer":
                 assessment["answer_completeness"]=("interpreted_requirements_met" if all(
                     p["status"]=="established" for p in meta["parts"]) else "partial")
@@ -492,7 +506,7 @@ def main():
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--requirements", action="store_true", help="Проверить требования по частям и показать, что осталось неизвестным.")
-    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid","0.12"),help="0.12 выбирает стратегию по опыту. По умолчанию 0.10.")
+    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid","0.12","0.13"),help="0.13 связывает каждую часть с выражением в Git. По умолчанию 0.10.")
     modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
     modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
@@ -512,6 +526,10 @@ def main():
             status={"unknown":"Не установлено","partial":"Установлено частично","established":"Установлено"}
             cited=", ".join(str(i+1) for i in part["claims"])
             print(status[part["status"]], "—",part["text"].strip(),f"[{cited}]" if cited else "")
+            binding=part.get("binding",{})
+            if binding.get("object"):
+                obj=binding["object"]
+                print(f'  Цель поиска: {obj["path"]} · {obj["owner"]}, строка {obj["line"]}.')
             if part.get("residual") and part["status"]!="established":
                 print("  Осталось проверить:",part["residual"]["text"])
             for issue in part["issues"]:
@@ -519,6 +537,7 @@ def main():
                       "unsupported":"Для этой части нет статического инструмента.","ambiguous":"Нужно уточнение.",
                       "uninterpreted":"Требование не удалось распознать.",
                       "unverified_meaning":"Не подтверждено, что факты отвечают на эту просьбу.",
+                      "semantic_candidate":"Соответствие описания выбранному выражению требует подтверждения.",
                       "part_budget":"Запрос содержит больше восьми частей."}.get(issue,issue)))
         if out["state"] not in ("answered", "partial"):
             print(REASONS.get(out["reason"], "Ответ удержан."), "(" + out["reason"] + ")")
@@ -577,7 +596,7 @@ def task_interpreter(resources):
 if __name__ == "__main__":
     if not sys.stdout.isatty():
         sys.stdout.reconfigure(encoding="utf8")
-    policies = {"0.9":"requirements","0.10":"residual","0.11":"memory_only","0.11-hybrid":"independent","0.12":"experience_release"}
+    policies = {"0.9":"requirements","0.10":"residual","0.11":"memory_only","0.11-hybrid":"independent","0.12":"experience_release","0.13":"object_graph"}
     versioned = len(sys.argv)==3 and sys.argv[1]=="--requirements-worker" and sys.argv[2] in policies
     if versioned or sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)

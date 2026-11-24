@@ -5,6 +5,7 @@ import re
 import skynet_requirements as req
 import skynet_obligation_check as obligations
 import skynet_experience as experience
+import skynet_object_binding as objects
 
 ISSUES = ("runtime", "external", "unsupported", "ambiguous")
 REVIEW = """Проверь каждый пункт задачи сам по себе. В data есть текст пункта и краткие
@@ -85,7 +86,7 @@ def plan(parts, select, policy):
     return parsed
 
 
-def research(search, question, select, policy):
+def research(search, question, select, policy, object_catalog=None, suggestions=None):
     ctl=req.observed.ObservedRoute(search,None,None)
     flat=policy=="flat_residual"
     residual=policy in ("residual","flat_residual")
@@ -100,7 +101,14 @@ def research(search, question, select, policy):
     effects={}
     try:
         step=ctl.step("interpret_parts","question")
-        if policy in experience.LEARNERS:
+        if policy in objects.POLICIES:
+            edges,bound=objects.resolve(parts,object_catalog,search.src.commit,policy,suggestions)
+            proposals=experience.shared_plan(parts) if policy=="object_offline" else plan(parts,select,"parts_once")
+            planned=[]
+            for p,edge,(needs,issues,_) in zip(parts,edges,proposals,strict=True):
+                p["binding"]=edge
+                planned.append((needs,issues+(["semantic_candidate"] if edge["tentative"] and needs else []),edge["target"]))
+        elif policy in experience.LEARNERS:
             planned=experience.learned_plan(parts,policy)
         elif policy=="shared_evidence":
             planned=experience.shared_plan(parts)
@@ -127,16 +135,20 @@ def research(search, question, select, policy):
         for target,indices in groups.items():
             try:
                 locate=ctl.step("locate_observation",str(target+1))
-                if catalog is None:
+                if object_catalog is not None:
+                    if target not in bound:
+                        raise req.Gap(parts[target]["binding"]["gap"])
+                    effect=bound[target]
+                elif catalog is None:
                     catalog=req.goals.effects(search)
                 text=parts[target]["text"]
                 qs=req.goals.quoted(text)
-                if qs:
+                if object_catalog is None and qs:
                     hits=req.language.candidates("«"+qs[0]+"»",catalog,"explore")
                     if len(qs)!=1 or len(hits)!=1:
                         raise req.Gap("observation_ambiguous")
                     effect=hits[0]
-                else:
+                elif object_catalog is None:
                     effect,_,_=req.language.choose("Где "+text,catalog,"explore")
                 needs=req.closure([k for i in indices for k in parts[i]["need"]])
                 effects[target]=effect
