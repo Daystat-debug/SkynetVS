@@ -1,6 +1,8 @@
 import ast
+import json
 from pathlib import Path
 import sys
+import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -18,6 +20,19 @@ def catalog():
 
 
 class Binding(unittest.TestCase):
+    def test_shipped_policy_on_historical_a1_a2(self):
+        panel=json.loads(old.prev.ev.pilot.git("show",old.GROUPED))
+        panel["cases"]=[case for case in panel["cases"] if case[0] in ("A1","A2")]
+        with tempfile.TemporaryDirectory() as tmp:
+            rows,_,_=old.prev.run(Path(tmp),panel,False,{},("experience_release","object_assisted"))
+        self.assertTrue(rows[0]["experience_release"]["false_complete"])
+        for row in rows:
+            result=row["object_assisted"]
+            self.assertTrue(result["useful_full"])
+            self.assertEqual(result["calls"],[])
+            self.assertEqual([p["binding"]["object"]["owner"] for p in result["answer"]["parts"]],
+                             ["measure_tank","read_gauge"])
+
     def test_occurrences_same_line_and_backreferences(self):
         ps=parts.split("Где «Чашка наполнена водой» и где «Кофейник нагрелся утром»? Кто вызывает обработчик первой? А для второго?")
         edges,found=binding.resolve(ps,catalog(),"sha","object_graph")

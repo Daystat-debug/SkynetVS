@@ -14,6 +14,7 @@ import skynet_task_parts as parts
 
 prev=prior.prev
 PLAN="59847e4a6b0c38b4173a4761593f31e977fd594e:docs/maintenance/core_13/transfer.json"
+FINAL="ddd2b60e4032def685af34b01942ac87b5506a0e:docs/maintenance/core_13/confirmation.json"
 DIR=prior.build.DIR.parent/"core_13"
 FULL=("residual","memory_only","experience_release","object_local","object_recent","object_offline","object_graph")
 ORACLE=("parts_once","object_local","object_recent","object_offline","object_graph")
@@ -112,7 +113,7 @@ def summary(rows,arms,ms,cache):
 
 
 def breakdown(panel,rows,arm):
-    exact=unquoted_useful=unquoted_count=refusals=0
+    exact=unquoted_useful=unquoted_count=refusals=unavailable_closed=0
     semantic=tentative=direct=reference=0
     for (key,q,demands),row in zip(panel["cases"],rows,strict=True):
         record=row[arm]
@@ -126,7 +127,10 @@ def breakdown(panel,rows,arm):
             continue
         requested=[[] for _ in spans]
         for cue,_,k in demands:
-            requested[place(q,cue,spans)].append(panel.get("oracle_overrides",{}).get(key+"/"+cue,k))
+            idx=place(q,cue,spans)
+            requested[idx].append(panel.get("oracle_overrides",{}).get(key+"/"+cue,k))
+            if k in parts.ISSUES and spans[idx]["status"]=="established":
+                unavailable_closed+=1
         matched=True
         for span,labels in zip(spans,requested,strict=True):
             expected=set(parts.req.closure([k for k in labels if k in parts.req.KINDS]))
@@ -141,18 +145,20 @@ def breakdown(panel,rows,arm):
         exact+=matched
     return dict(exact_requirements=exact,insufficient=refusals,unquoted_useful=unquoted_useful,
                 unquoted_total=unquoted_count,direct=direct,references=reference,
-                semantic=semantic,tentative=tentative)
+                semantic=semantic,tentative=tentative,unavailable_demands_marked_established=unavailable_closed)
 
 
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("mode",choices=("record","verify","summary"))
-    p.add_argument("--history",action="store_true")
+    group=p.add_mutually_exclusive_group()
+    group.add_argument("--history",action="store_true")
+    group.add_argument("--final",action="store_true")
     p.add_argument("--file",type=Path)
     a=p.parse_args()
-    ref=prior.GROUPED if a.history else PLAN
+    ref=prior.GROUPED if a.history else FINAL if a.final else PLAN
     panel=json.loads(prev.ev.pilot.git("show",ref))
-    path=a.file or DIR/("history.json" if a.history else "results.json")
+    path=a.file or DIR/("history.json" if a.history else "confirmation_results.json" if a.final else "results.json")
     live=a.mode=="record"
     if live and path.exists():
         p.error("record requires a new file")
@@ -164,7 +170,9 @@ def main():
                 print(block,arm,breakdown(panel,saved[block+"_rows"],arm))
         return
     cache=saved.get("generations",{})
-    arms=("experience_release","object_graph") if a.history else FULL
+    arms=(("experience_release","object_graph") if a.history else
+          ("residual","memory_only","experience_release","shared_evidence","object_offline","object_graph","object_assisted")
+          if a.final else FULL)
     with patch.object(prev,"grade",grade),tempfile.TemporaryDirectory() as tmp:
         rows,times,sessions=prev.run(Path(tmp),panel,live,cache,arms)
     if not live:
@@ -173,14 +181,15 @@ def main():
         times=saved["ms"]
     data=dict(plan=ref,full_rows=rows,ms=times,full=summary(rows,arms,times,cache),generations=cache)
     if not a.history:
+        oracle=("parts_once","object_offline","object_graph","object_assisted") if a.final else ORACLE
         propose=oracle_planner(inputs(panel))
         with patch.object(parts,"plan",propose),patch.object(parts.experience,"shared_plan",propose),\
                 patch.object(prev,"grade",grade),tempfile.TemporaryDirectory() as tmp:
-            known,t,_=prev.run(Path(tmp),panel,False,cache,ORACLE)
+            known,t,_=prev.run(Path(tmp),panel,False,cache,oracle)
         if not live:
             assert known==saved["oracle_rows"]
             t=saved["oracle_ms"]
-        data.update(oracle_rows=known,oracle_ms=t,oracle=summary(known,ORACLE,t,cache))
+        data.update(oracle_rows=known,oracle_ms=t,oracle=summary(known,oracle,t,cache))
     if live:
         with path.open("x",encoding="utf8",newline="\n") as f:
             json.dump(dict(data,sessions=sessions),f,ensure_ascii=False,indent=1)

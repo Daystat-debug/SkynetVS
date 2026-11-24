@@ -1,0 +1,7081 @@
+{
+ "plan": "c2dec15999c2f12b838106487a8f2d25aa59f371:docs/maintenance/core_12/grouped_transfer.json",
+ "full_rows": [
+  {
+   "id": "R1",
+   "question": "Нужны выражения всех параметров в месте вызова обработчика «M127_TITLE_INVALID» и номер документа, утвердившего предел.",
+   "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "выражения всех",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "номер документа",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "rank_symbols",
+       "line": 74
+      },
+      {
+       "tool": "calls",
+       "target": "rank_symbols",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "rank_symbols",
+       "status": "bound"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_symbols на строке 74 записано выражение `'M127_TITLE_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         74,
+         74
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank на строке 125 записан прямой вызов rank_symbols.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         125,
+         125
+        ],
+        [
+         "R",
+         18,
+         18
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: issue_title ← `title`, old_sources ← `selected`, limit ← `100`.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         125,
+         125
+        ],
+        [
+         "R",
+         18,
+         18
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 80,
+       "text": "Нужны выражения всех параметров в месте вызова обработчика «M127_TITLE_INVALID» ",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 80,
+       "end": 99,
+       "text": "и номер документа, ",
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "partial"
+      },
+      {
+       "start": 99,
+       "end": 119,
+       "text": "утвердившего предел.",
+       "need": [],
+       "issues": [
+        "external"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "memory_only",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "выражения всех",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "номер документа",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "R1/object_graph/0",
+     "R1/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "rank_symbols",
+       "line": 74
+      },
+      {
+       "tool": "calls",
+       "target": "rank_symbols",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "rank_symbols",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_symbols на строке 74 записано выражение `'M127_TITLE_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         74,
+         74
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank на строке 125 записан прямой вызов rank_symbols.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         125,
+         125
+        ],
+        [
+         "R",
+         18,
+         18
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: issue_title ← `title`, old_sources ← `selected`, limit ← `100`.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         125,
+         125
+        ],
+        [
+         "R",
+         18,
+         18
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 80,
+       "text": "Нужны выражения всех параметров в месте вызова обработчика «M127_TITLE_INVALID» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "rank_symbols",
+         "line": 74,
+         "column": 25,
+         "end": 74,
+         "end_column": 45
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established"
+      },
+      {
+       "start": 80,
+       "end": 119,
+       "text": "и номер документа, утвердившего предел.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "external",
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "R2",
+   "question": "В «M134_GOAL_EMPTY_OR_TOO_LONG» покажи саму инструкцию отказа и входное выражение, пришедшее от вызывающего кода.",
+   "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "инструкцию",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "входное выражение",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [
+     "R2/object_graph/0",
+     "R2/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 62,
+       "text": "В «M134_GOAL_EMPTY_OR_TOO_LONG» покажи саму инструкцию отказа ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 62,
+       "end": 113,
+       "text": "и входное выражение, пришедшее от вызывающего кода.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "external",
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "инструкцию",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "входное выражение",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 62,
+       "text": "В «M134_GOAL_EMPTY_OR_TOO_LONG» покажи саму инструкцию отказа ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 62,
+       "end": 83,
+       "text": "и входное выражение, ",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 83,
+       "end": 113,
+       "text": "пришедшее от вызывающего кода.",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "memory_only",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "R3",
+   "question": "Мне нужны строка «M134_GOAL_EMPTY_OR_TOO_LONG», строка «M127_TITLE_INVALID» и условие появления второй.",
+   "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "строка «M134",
+      "kind": "site",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "строка «M127",
+      "kind": "site",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "условие появления второй",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 76,
+       "text": "Мне нужны строка «M134_GOAL_EMPTY_OR_TOO_LONG», строка «M127_TITLE_INVALID» ",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 76,
+       "end": 103,
+       "text": "и условие появления второй.",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "shared_evidence",
+     "reason": "unverified_meaning"
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "строка «M134",
+      "kind": "site",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "строка «M127",
+      "kind": "site",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "условие появления второй",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [
+     "R3/object_graph/0"
+    ],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 76,
+       "text": "Мне нужны строка «M134_GOAL_EMPTY_OR_TOO_LONG», строка «M127_TITLE_INVALID» ",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 76,
+       "end": 103,
+       "text": "и условие появления второй.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "external",
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "R4",
+   "question": "Где выбрасывается «M127_TITLE_INVALID»? Нужны ещё счётчик её срабатываний сегодня и фамилия ответственного по штатному расписанию.",
+   "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "Где выбрасывается",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "счётчик её",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     },
+     {
+      "cue": "фамилия ответственного",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "R4/object_graph/0",
+     "R4/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "rank_symbols",
+       "line": 74
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_symbols на строке 74 записано выражение `'M127_TITLE_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         74,
+         74
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "Где выбрасывается «M127_TITLE_INVALID»? ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "rank_symbols",
+         "line": 74,
+         "column": 25,
+         "end": 74,
+         "end_column": 45
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 40,
+       "end": 82,
+       "text": "Нужны ещё счётчик её срабатываний сегодня ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "rank_symbols",
+         "line": 74,
+         "column": 25,
+         "end": 74,
+         "end_column": 45
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 82,
+       "end": 130,
+       "text": "и фамилия ответственного по штатному расписанию.",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "external"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "Где выбрасывается",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "счётчик её",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     },
+     {
+      "cue": "фамилия ответственного",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "rank_symbols",
+       "line": 74
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_symbols на строке 74 записано выражение `'M127_TITLE_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         74,
+         74
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "Где выбрасывается «M127_TITLE_INVALID»? ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 40,
+       "end": 82,
+       "text": "Нужны ещё счётчик её срабатываний сегодня ",
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 82,
+       "end": 130,
+       "text": "и фамилия ответственного по штатному расписанию.",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "memory_only",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "R5",
+   "question": "Кто непосредственно вызывает проверку с «M127_TITLE_INVALID» и кто обращается к обработчику «M134_GOAL_EMPTY_OR_TOO_LONG»?",
+   "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "Кто непосредственно",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "кто обращается",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "rank_symbols",
+       "line": 74
+      },
+      {
+       "tool": "calls",
+       "target": "rank_symbols",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_symbols на строке 74 записано выражение `'M127_TITLE_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         74,
+         74
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank на строке 125 записан прямой вызов rank_symbols.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         125,
+         125
+        ],
+        [
+         "R",
+         18,
+         18
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 61,
+       "text": "Кто непосредственно вызывает проверку с «M127_TITLE_INVALID» ",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 61,
+       "end": 122,
+       "text": "и кто обращается к обработчику «M134_GOAL_EMPTY_OR_TOO_LONG»?",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established"
+      }
+     ],
+     "strategy": "shared_evidence",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "Кто непосредственно",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "кто обращается",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "R5/object_graph/0"
+    ],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "rank_symbols",
+       "line": 74
+      },
+      {
+       "tool": "calls",
+       "target": "rank_symbols",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@146",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_symbols на строке 74 записано выражение `'M127_TITLE_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         74,
+         74
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank на строке 125 записан прямой вызов rank_symbols.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         125,
+         125
+        ],
+        [
+         "R",
+         18,
+         18
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В search_repository исследована инструкция `effective, expansions = expand_query(goal)` (стр. 146). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "search_repository",
+        "line": 146,
+        "condition": true,
+        "work": 3
+       }
+      }
+     ],
+     "snapshot": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+     "parts": [
+      {
+       "start": 0,
+       "end": 61,
+       "text": "Кто непосредственно вызывает проверку с «M127_TITLE_INVALID» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "rank_symbols",
+         "line": 74,
+         "column": 25,
+         "end": 74,
+         "end_column": 45
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 61,
+       "end": 122,
+       "text": "и кто обращается к обработчику «M134_GOAL_EMPTY_OR_TOO_LONG»?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "e6544e62f42fa44eb63acb4957f813377f8fe3a1",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "caller_condition"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3,
+        4
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "A1",
+   "question": "Проследи два обращения: кто вызывает проверку отключения насоса по уровню воды и кто вызывает проверку ремонта манометра?",
+   "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "кто вызывает проверку отключения",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "кто вызывает проверку ремонта",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "A1/object_graph/0"
+    ],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "measure_tank",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "measure_tank",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_gauge",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_gauge",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В measure_tank на строке 159 записано выражение `'Насос отключён по уровню воды'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В supply_water на строке 163 записан прямой вызов measure_tank.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "supply_water",
+        "measure_tank"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В read_gauge на строке 167 записано выражение `'Манометр требует ремонта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В read_panel на строке 171 записан прямой вызов read_gauge.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "read_panel",
+        "read_gauge"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 79,
+       "text": "Проследи два обращения: кто вызывает проверку отключения насоса по уровню воды ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "c468c148cd377dae2673ca136bee872428246d95",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "measure_tank",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 71
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 79,
+       "end": 121,
+       "text": "и кто вызывает проверку ремонта манометра?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "c468c148cd377dae2673ca136bee872428246d95",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_gauge",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "кто вызывает проверку отключения",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "кто вызывает проверку ремонта",
+      "kind": "caller",
+      "type_found": true,
+      "site": "wrong",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": true,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "measure_tank",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "measure_tank@159",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "measure_tank",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "measure_tank",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "supply_water@163",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В measure_tank на строке 159 записано выражение `'Насос отключён по уровню воды'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В measure_tank исследована инструкция `return 'Насос отключён по уровню воды'` (стр. 159). Для достижения строки требуется: `full` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "measure_tank",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "full"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В supply_water на строке 163 записан прямой вызов measure_tank.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "supply_water",
+        "measure_tank"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: full ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В supply_water исследована инструкция `return measure_tank(True)` (стр. 163). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "supply_water",
+        "line": 163,
+        "condition": true,
+        "work": 1
+       }
+      }
+     ],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 79,
+       "text": "Проследи два обращения: кто вызывает проверку отключения насоса по уровню воды ",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "status": "established"
+      },
+      {
+       "start": 79,
+       "end": 121,
+       "text": "и кто вызывает проверку ремонта манометра?",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "status": "established"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "A2",
+   "question": "Хочу увидеть вызывающую функцию для «Насос отключён по уровню воды» и вызывающую функцию для «Манометр требует ремонта».",
+   "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "увидеть вызывающую",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "и вызывающую",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "measure_tank",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "measure_tank",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_gauge",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_gauge",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В measure_tank на строке 159 записано выражение `'Насос отключён по уровню воды'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В supply_water на строке 163 записан прямой вызов measure_tank.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "supply_water",
+        "measure_tank"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В read_gauge на строке 167 записано выражение `'Манометр требует ремонта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В read_panel на строке 171 записан прямой вызов read_gauge.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "read_panel",
+        "read_gauge"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 68,
+       "text": "Хочу увидеть вызывающую функцию для «Насос отключён по уровню воды» ",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 68,
+       "end": 120,
+       "text": "и вызывающую функцию для «Манометр требует ремонта».",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established"
+      }
+     ],
+     "strategy": "shared_evidence",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "увидеть вызывающую",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "и вызывающую",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "A2/object_graph/0"
+    ],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "measure_tank",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "measure_tank",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_gauge",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_gauge",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В measure_tank на строке 159 записано выражение `'Насос отключён по уровню воды'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В supply_water на строке 163 записан прямой вызов measure_tank.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "supply_water",
+        "measure_tank"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В read_gauge на строке 167 записано выражение `'Манометр требует ремонта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В read_panel на строке 171 записан прямой вызов read_gauge.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "read_panel",
+        "read_gauge"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 68,
+       "text": "Хочу увидеть вызывающую функцию для «Насос отключён по уровню воды» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "c468c148cd377dae2673ca136bee872428246d95",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "measure_tank",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 71
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 68,
+       "end": 120,
+       "text": "и вызывающую функцию для «Манометр требует ремонта».",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "c468c148cd377dae2673ca136bee872428246d95",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_gauge",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "A3",
+   "question": "Где находится сообщение о наполнении резервуара водой, кто вызывает его обработчик и сколько секунд длилось последнее наполнение?",
+   "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "Где находится",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "кто вызывает",
+      "kind": "caller",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false
+     },
+     {
+      "cue": "сколько секунд",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "A3/object_graph/0",
+     "A3/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "measure_tank",
+       "line": 160
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В measure_tank на строке 160 записано выражение `'Резервуар наполняется водой'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 83,
+       "text": "Где находится сообщение о наполнении резервуара водой, кто вызывает его обработчик ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "c468c148cd377dae2673ca136bee872428246d95",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "measure_tank",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 65
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 83,
+       "end": 129,
+       "text": "и сколько секунд длилось последнее наполнение?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "external",
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "Где находится",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "кто вызывает",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "сколько секунд",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "measure_tank",
+       "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "measure_tank@160",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "measure_tank",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "measure_tank",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "supply_water@163",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В measure_tank на строке 160 записано выражение `'Резервуар наполняется водой'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В measure_tank исследована инструкция `return 'Резервуар наполняется водой'` (стр. 160). Для достижения строки требуется: `full` ложно (стр. 158). При расчёте учтены переходы `return 'Насос отключён по уровню воды'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "measure_tank",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "full"
+         ]
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В supply_water на строке 163 записан прямой вызов measure_tank.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "supply_water",
+        "measure_tank"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: full ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В supply_water исследована инструкция `return measure_tank(True)` (стр. 163). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "supply_water",
+        "line": 163,
+        "condition": true,
+        "work": 1
+       }
+      }
+     ],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 83,
+       "text": "Где находится сообщение о наполнении резервуара водой, кто вызывает его обработчик ",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "status": "established"
+      },
+      {
+       "start": 83,
+       "end": 129,
+       "text": "и сколько секунд длилось последнее наполнение?",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "A4",
+   "question": "В какой строке кода манометр требует ремонта и какая подстановка аргумента приводит управление в эту функцию?",
+   "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "В какой строке",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "подстановка аргумента",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "read_gauge",
+       "line": 167
+      }
+     ],
+     "claims": [
+      {
+       "text": "В read_gauge на строке 167 записано выражение `'Манометр требует ремонта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 45,
+       "text": "В какой строке кода манометр требует ремонта ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 45,
+       "end": 109,
+       "text": "и какая подстановка аргумента приводит управление в эту функцию?",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "В какой строке",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "подстановка аргумента",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "A4/object_graph/0"
+    ],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "read_gauge",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_gauge",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "read_gauge",
+       "status": "bound"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В read_gauge на строке 167 записано выражение `'Манометр требует ремонта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В read_panel на строке 171 записан прямой вызов read_gauge.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "read_panel",
+        "read_gauge"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: broken ← `False`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 45,
+       "text": "В какой строке кода манометр требует ремонта ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "c468c148cd377dae2673ca136bee872428246d95",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_gauge",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 45,
+       "end": 109,
+       "text": "и какая подстановка аргумента приводит управление в эту функцию?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "c468c148cd377dae2673ca136bee872428246d95",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_gauge",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "A5",
+   "question": "Сколько воды реально закачано сегодня и сколько раз манометр выдавал показания за эту смену?",
+   "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "Сколько воды",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     },
+     {
+      "cue": "сколько раз",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "insufficient",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "A5/object_graph/0",
+     "A5/object_graph/1"
+    ],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 38,
+       "text": "Сколько воды реально закачано сегодня ",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 38,
+       "end": 92,
+       "text": "и сколько раз манометр выдавал показания за эту смену?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": 0,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "runtime"
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "Сколько воды",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     },
+     {
+      "cue": "сколько раз",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "insufficient",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "c468c148cd377dae2673ca136bee872428246d95",
+     "parts": [
+      {
+       "start": 0,
+       "end": 38,
+       "text": "Сколько воды реально закачано сегодня ",
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 38,
+       "end": 92,
+       "text": "и сколько раз манометр выдавал показания за эту смену?",
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "reason": "runtime"
+    }
+   }
+  },
+  {
+   "id": "B1",
+   "question": "Объясни, кто обращается к функции с «Глина готова к глазурованию», с каким аргументом он это делает и при каком условии достигается строка.",
+   "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "кто обращается",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "с каким аргументом",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "при каком условии",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 4
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "fire_clay@160",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "fire_clay",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "fire_clay",
+       "status": "bound"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 160 записано выражение `'Глина готова к глазурованию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В fire_clay исследована инструкция `return 'Глина готова к глазурованию'` (стр. 160). Для достижения строки требуется: `glazed` ложно (стр. 158). При расчёте учтены переходы `return 'Изделие отправлено на повторный обжиг'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "fire_clay",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "glazed"
+         ]
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В load_kiln на строке 163 записан прямой вызов fire_clay.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "load_kiln",
+        "fire_clay"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: glazed ← `False`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 9,
+       "text": "Объясни, ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 9,
+       "end": 67,
+       "text": "кто обращается к функции с «Глина готова к глазурованию», ",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        0,
+        2
+       ],
+       "status": "established"
+      },
+      {
+       "start": 67,
+       "end": 100,
+       "text": "с каким аргументом он это делает ",
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        0,
+        2,
+        3
+       ],
+       "status": "established"
+      },
+      {
+       "start": 100,
+       "end": 139,
+       "text": "и при каком условии достигается строка.",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "strategy": "memory_only",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "кто обращается",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "с каким аргументом",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false
+     },
+     {
+      "cue": "при каком условии",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [
+     "B1/object_graph/0",
+     "B1/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 160
+      },
+      {
+       "tool": "calls",
+       "target": "fire_clay",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 160 записано выражение `'Глина готова к глазурованию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В load_kiln на строке 163 записан прямой вызов fire_clay.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "load_kiln",
+        "fire_clay"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 100,
+       "text": "Объясни, кто обращается к функции с «Глина готова к глазурованию», с каким аргументом он это делает ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e1276cfb81496d25be271fd18e53e81c275436cf",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "fire_clay",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 64
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 100,
+       "end": 139,
+       "text": "и при каком условии достигается строка.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "external",
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "B2",
+   "question": "В каком случае изделие отправляется на повторный обжиг и сколько шёл последний обжиг, по какому тарифу оплачивали печь?",
+   "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "В каком случае",
+      "kind": "condition",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false
+     },
+     {
+      "cue": "сколько шёл",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     },
+     {
+      "cue": "какому тарифу",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "B2/object_graph/0"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "fire_clay@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 159 записано выражение `'Изделие отправлено на повторный обжиг'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В fire_clay исследована инструкция `return 'Изделие отправлено на повторный обжиг'` (стр. 159). Для достижения строки требуется: `glazed` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "fire_clay",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "glazed"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 55,
+       "text": "В каком случае изделие отправляется на повторный обжиг ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e1276cfb81496d25be271fd18e53e81c275436cf",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "fire_clay",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 87
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 55,
+       "end": 119,
+       "text": "и сколько шёл последний обжиг, по какому тарифу оплачивали печь?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e1276cfb81496d25be271fd18e53e81c275436cf",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "fire_clay",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 87
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "external"
+       ],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "partial"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "В каком случае",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "сколько шёл",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     },
+     {
+      "cue": "какому тарифу",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "fire_clay@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 159 записано выражение `'Изделие отправлено на повторный обжиг'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В fire_clay исследована инструкция `return 'Изделие отправлено на повторный обжиг'` (стр. 159). Для достижения строки требуется: `glazed` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "fire_clay",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "glazed"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 55,
+       "text": "В каком случае изделие отправляется на повторный обжиг ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 55,
+       "end": 119,
+       "text": "и сколько шёл последний обжиг, по какому тарифу оплачивали печь?",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "B3",
+   "question": "Для «Изделие отправлено на повторный обжиг» нужны предикат программы, показания таймера прошлой партии и договорная цена электроэнергии.",
+   "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "предикат программы",
+      "kind": "condition",
+      "type_found": false,
+      "site": "right",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "показания таймера",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     },
+     {
+      "cue": "договорная цена",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 159
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 159 записано выражение `'Изделие отправлено на повторный обжиг'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 70,
+       "text": "Для «Изделие отправлено на повторный обжиг» нужны предикат программы, ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 70,
+       "end": 103,
+       "text": "показания таймера прошлой партии ",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 103,
+       "end": 136,
+       "text": "и договорная цена электроэнергии.",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "memory_only",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "предикат программы",
+      "kind": "condition",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false
+     },
+     {
+      "cue": "показания таймера",
+      "kind": "runtime",
+      "gap": false,
+      "reason": false,
+      "incorrect_site": false
+     },
+     {
+      "cue": "договорная цена",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "B3/object_graph/0",
+     "B3/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 159 записано выражение `'Изделие отправлено на повторный обжиг'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 103,
+       "text": "Для «Изделие отправлено на повторный обжиг» нужны предикат программы, показания таймера прошлой партии ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e1276cfb81496d25be271fd18e53e81c275436cf",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "fire_clay",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 87
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 103,
+       "end": 136,
+       "text": "и договорная цена электроэнергии.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "external",
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "B4",
+   "question": "Покажи место для «Глина готова к глазурованию» и место для «Изделие отправлено на повторный обжиг». Допиши название фирмы, застраховавшей печь.",
+   "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "Покажи место",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "и место",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "название фирмы",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "B4/object_graph/0",
+     "B4/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 160
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "3",
+       "status": "located",
+       "owner": "format_context",
+       "line": 207
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 160 записано выражение `'Глина готова к глазурованию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В fire_clay на строке 159 записано выражение `'Изделие отправлено на повторный обжиг'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context на строке 207 записано выражение `'SkynetVS — поиск участков кода (READ-ONLY, НЕ ИСПРАВЛЕНИЕ)'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         207,
+         207
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 47,
+       "text": "Покажи место для «Глина готова к глазурованию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e1276cfb81496d25be271fd18e53e81c275436cf",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "fire_clay",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 64
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 47,
+       "end": 100,
+       "text": "и место для «Изделие отправлено на повторный обжиг». ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "e1276cfb81496d25be271fd18e53e81c275436cf",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "fire_clay",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 87
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 100,
+       "end": 143,
+       "text": "Допиши название фирмы, застраховавшей печь.",
+       "binding": {
+        "target": 2,
+        "object": {
+         "commit": "e1276cfb81496d25be271fd18e53e81c275436cf",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "format_context",
+         "line": 207,
+         "column": 12,
+         "end": 207,
+         "end_column": 104
+        },
+        "via": "semantic",
+        "antecedent": null,
+        "gap": null,
+        "tentative": true
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "semantic_candidate"
+       ],
+       "target": 2,
+       "claims": [
+        2
+       ],
+       "status": "partial"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "Покажи место",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "и место",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "название фирмы",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 160
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 159
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 160 записано выражение `'Глина готова к глазурованию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В fire_clay на строке 159 записано выражение `'Изделие отправлено на повторный обжиг'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 47,
+       "text": "Покажи место для «Глина готова к глазурованию» ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 47,
+       "end": 100,
+       "text": "и место для «Изделие отправлено на повторный обжиг». ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 100,
+       "end": 143,
+       "text": "Допиши название фирмы, застраховавшей печь.",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "shared_evidence",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "B5",
+   "question": "Восстанови вызов функции про повторный обжиг: какое выражение передано в параметр и каков адрес заказчика изделия?",
+   "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "какое выражение",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "адрес заказчика",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 82,
+       "text": "Восстанови вызов функции про повторный обжиг: какое выражение передано в параметр ",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 82,
+       "end": 114,
+       "text": "и каков адрес заказчика изделия?",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "reason": "uninterpreted"
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "какое выражение",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "адрес заказчика",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "B5/object_graph/0",
+     "B5/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "fire_clay",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "fire_clay",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "fire_clay",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В fire_clay на строке 159 записано выражение `'Изделие отправлено на повторный обжиг'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В load_kiln на строке 163 записан прямой вызов fire_clay.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "load_kiln",
+        "fire_clay"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: glazed ← `False`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "e1276cfb81496d25be271fd18e53e81c275436cf",
+     "parts": [
+      {
+       "start": 0,
+       "end": 82,
+       "text": "Восстанови вызов функции про повторный обжиг: какое выражение передано в параметр ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "e1276cfb81496d25be271fd18e53e81c275436cf",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "fire_clay",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 87
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established"
+      },
+      {
+       "start": 82,
+       "end": 114,
+       "text": "и каков адрес заказчика изделия?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "C1",
+   "question": "В коде про запотевший объектив телескопа укажи вызывающую функцию, конкретную привязку аргумента и место самого сообщения.",
+   "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "вызывающую функцию",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "конкретную привязку",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false
+     },
+     {
+      "cue": "место самого",
+      "kind": "site",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [
+     "C1/object_graph/0",
+     "C1/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_lens",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_lens",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_lens на строке 159 записано выражение `'Объектив телескопа запотел'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В night_watch на строке 163 записан прямой вызов inspect_lens.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "night_watch",
+        "inspect_lens"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 97,
+       "text": "В коде про запотевший объектив телескопа укажи вызывающую функцию, конкретную привязку аргумента ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "inspect_lens",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 67
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 97,
+       "end": 122,
+       "text": "и место самого сообщения.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "вызывающую функцию",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "конкретную привязку",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "место самого",
+      "kind": "site",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_lens",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_lens@159",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_lens",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "inspect_lens",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "night_watch@163",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_lens на строке 159 записано выражение `'Объектив телескопа запотел'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_lens исследована инструкция `return 'Объектив телескопа запотел'` (стр. 159). Для достижения строки требуется: `wet` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_lens",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "wet"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В night_watch на строке 163 записан прямой вызов inspect_lens.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "night_watch",
+        "inspect_lens"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: wet ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В night_watch исследована инструкция `return inspect_lens(True)` (стр. 163). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "night_watch",
+        "line": 163,
+        "condition": true,
+        "work": 1
+       }
+      }
+     ],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 97,
+       "text": "В коде про запотевший объектив телескопа укажи вызывающую функцию, конкретную привязку аргумента ",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "status": "established"
+      },
+      {
+       "start": 97,
+       "end": 122,
+       "text": "и место самого сообщения.",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "C2",
+   "question": "Сначала выясни условие для «Объектив телескопа запотел», затем условие для «Оптика готова к наблюдениям» и расположение второго выражения.",
+   "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "условие для «Объектив",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "условие для «Оптика",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "расположение второго",
+      "kind": "site",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 105,
+       "text": "Сначала выясни условие для «Объектив телескопа запотел», затем условие для «Оптика готова к наблюдениям» ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 105,
+       "end": 138,
+       "text": "и расположение второго выражения.",
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "shared_evidence",
+     "reason": "observation_ambiguous"
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "условие для «Объектив",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "условие для «Оптика",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "расположение второго",
+      "kind": "site",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [
+     "C2/object_graph/0"
+    ],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 105,
+       "text": "Сначала выясни условие для «Объектив телескопа запотел», затем условие для «Оптика готова к наблюдениям» ",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 105,
+       "end": 138,
+       "text": "и расположение второго выражения.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "C3",
+   "question": "Найди входной аргумент обработчика «Оптика готова к наблюдениям» и его локальное условие. Какая влажность была в куполе прошлой ночью?",
+   "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "входной аргумент",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "локальное условие",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "Какая влажность",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "C3/object_graph/0",
+     "C3/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_lens",
+       "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_lens@160",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_lens",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "inspect_lens",
+       "status": "bound"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_lens на строке 160 записано выражение `'Оптика готова к наблюдениям'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_lens исследована инструкция `return 'Оптика готова к наблюдениям'` (стр. 160). Для достижения строки требуется: `wet` ложно (стр. 158). При расчёте учтены переходы `return 'Объектив телескопа запотел'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_lens",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "wet"
+         ]
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В night_watch на строке 163 записан прямой вызов inspect_lens.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "night_watch",
+        "inspect_lens"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: wet ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 65,
+       "text": "Найди входной аргумент обработчика «Оптика готова к наблюдениям» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "inspect_lens",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 64
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        2,
+        3
+       ],
+       "status": "established"
+      },
+      {
+       "start": 65,
+       "end": 90,
+       "text": "и его локальное условие. ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "inspect_lens",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 64
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 90,
+       "end": 134,
+       "text": "Какая влажность была в куполе прошлой ночью?",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "входной аргумент",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "локальное условие",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "Какая влажность",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_lens",
+       "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_lens@160",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_lens",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "inspect_lens",
+       "status": "bound"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_lens на строке 160 записано выражение `'Оптика готова к наблюдениям'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_lens исследована инструкция `return 'Оптика готова к наблюдениям'` (стр. 160). Для достижения строки требуется: `wet` ложно (стр. 158). При расчёте учтены переходы `return 'Объектив телескопа запотел'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_lens",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "wet"
+         ]
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В night_watch на строке 163 записан прямой вызов inspect_lens.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "night_watch",
+        "inspect_lens"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: wet ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 65,
+       "text": "Найди входной аргумент обработчика «Оптика готова к наблюдениям» ",
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        2,
+        3
+       ],
+       "status": "established"
+      },
+      {
+       "start": 65,
+       "end": 90,
+       "text": "и его локальное условие. ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 90,
+       "end": 134,
+       "text": "Какая влажность была в куполе прошлой ночью?",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "memory_only",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "C4",
+   "question": "Где программа сообщает о готовности оптики к наблюдениям и где говорит о запотевании объектива телескопа? Ещё нужен адрес производителя телескопа.",
+   "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "Где программа",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": null,
+      "proved": true
+     },
+     {
+      "cue": "где говорит",
+      "kind": "site",
+      "type_found": true,
+      "site": "wrong",
+      "chosen": null,
+      "proved": false
+     },
+     {
+      "cue": "адрес производителя",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": true,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_lens",
+       "line": 160
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_lens на строке 160 записано выражение `'Оптика готова к наблюдениям'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 57,
+       "text": "Где программа сообщает о готовности оптики к наблюдениям ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 57,
+       "end": 106,
+       "text": "и где говорит о запотевании объектива телескопа? ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 106,
+       "end": 146,
+       "text": "Ещё нужен адрес производителя телескопа.",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "Где программа",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "где говорит",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true
+     },
+     {
+      "cue": "адрес производителя",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "C4/object_graph/0",
+     "C4/object_graph/1"
+    ],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_lens",
+       "line": 160
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "inspect_lens",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "3",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_lens на строке 160 записано выражение `'Оптика готова к наблюдениям'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_lens на строке 159 записано выражение `'Объектив телескопа запотел'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 57,
+       "text": "Где программа сообщает о готовности оптики к наблюдениям ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "inspect_lens",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 64
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 57,
+       "end": 106,
+       "text": "и где говорит о запотевании объектива телескопа? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "inspect_lens",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 67
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 106,
+       "end": 146,
+       "text": "Ещё нужен адрес производителя телескопа.",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "C5",
+   "question": "Когда в последний раз запотевал объектив телескопа и какая температура тогда была внутри купола?",
+   "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+   "object_graph": {
+    "scores": [
+     {
+      "cue": "Когда в последний",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     },
+     {
+      "cue": "какая температура",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "insufficient",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [
+     "C5/object_graph/0",
+     "C5/object_graph/1"
+    ],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 51,
+       "text": "Когда в последний раз запотевал объектив телескопа ",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 51,
+       "end": 96,
+       "text": "и какая температура тогда была внутри купола?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   },
+   "experience_release": {
+    "scores": [
+     {
+      "cue": "Когда в последний",
+      "kind": "runtime",
+      "gap": false,
+      "reason": false,
+      "incorrect_site": false
+     },
+     {
+      "cue": "какая температура",
+      "kind": "runtime",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "insufficient",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_lens",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_lens@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_lens на строке 159 записано выражение `'Объектив телескопа запотел'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_lens исследована инструкция `return 'Объектив телескопа запотел'` (стр. 159). Для достижения строки требуется: `wet` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_lens",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "wet"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "9796a0e7e19ef8a5ab99209ca28df283645f90ea",
+     "parts": [
+      {
+       "start": 0,
+       "end": 51,
+       "text": "Когда в последний раз запотевал объектив телескопа ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 51,
+       "end": 96,
+       "text": "и какая температура тогда была внутри купола?",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "strategy": "lexical_parts",
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  }
+ ],
+ "ms": {
+  "R1": {
+   "experience_release": 150.3,
+   "object_graph": 792.4
+  },
+  "R2": {
+   "object_graph": 4068.9,
+   "experience_release": 95.4
+  },
+  "R3": {
+   "experience_release": 92.0,
+   "object_graph": 270.8
+  },
+  "R4": {
+   "object_graph": 4044.6,
+   "experience_release": 94.2
+  },
+  "R5": {
+   "experience_release": 178.3,
+   "object_graph": 366.9
+  },
+  "A1": {
+   "object_graph": 371.6,
+   "experience_release": 188.9
+  },
+  "A2": {
+   "experience_release": 180.2,
+   "object_graph": 338.1
+  },
+  "A3": {
+   "object_graph": 907.7,
+   "experience_release": 190.4
+  },
+  "A4": {
+   "experience_release": 98.0,
+   "object_graph": 314.5
+  },
+  "A5": {
+   "object_graph": 4034.9,
+   "experience_release": 68.6
+  },
+  "B1": {
+   "experience_release": 179.5,
+   "object_graph": 4145.2
+  },
+  "B2": {
+   "object_graph": 291.6,
+   "experience_release": 111.6
+  },
+  "B3": {
+   "experience_release": 99.3,
+   "object_graph": 4087.0
+  },
+  "B4": {
+   "object_graph": 789.9,
+   "experience_release": 124.6
+  },
+  "B5": {
+   "experience_release": 66.1,
+   "object_graph": 4132.2
+  },
+  "C1": {
+   "object_graph": 4107.2,
+   "experience_release": 179.6
+  },
+  "C2": {
+   "experience_release": 94.7,
+   "object_graph": 285.4
+  },
+  "C3": {
+   "object_graph": 794.7,
+   "experience_release": 161.5
+  },
+  "C4": {
+   "experience_release": 97.2,
+   "object_graph": 4208.2
+  },
+  "C5": {
+   "object_graph": 4122.1,
+   "experience_release": 121.6
+  }
+ },
+ "full": {
+  "experience_release": {
+   "full": 2,
+   "partial": 5,
+   "strict_partial": 0,
+   "false_complete": 1,
+   "wrong_binding": 2,
+   "status_correct": 12,
+   "right": 23,
+   "wrong": 2,
+   "missing": 10,
+   "recognized": 27,
+   "correct_objects": 0,
+   "facts": 21,
+   "steps": 68,
+   "median_ms": 116.6,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0
+  },
+  "object_graph": {
+   "full": 4,
+   "partial": 6,
+   "strict_partial": 3,
+   "false_complete": 0,
+   "wrong_binding": 0,
+   "status_correct": 15,
+   "right": 26,
+   "wrong": 0,
+   "missing": 9,
+   "recognized": 29,
+   "correct_objects": 26,
+   "facts": 21,
+   "steps": 75,
+   "median_ms": 851.2,
+   "calls": 33,
+   "input_tokens": 28138,
+   "output_tokens": 4388
+  }
+ },
+ "generations": {
+  "R1/object_graph/0": {
+   "digest": "38629268f5d8aee04f871f59dd10b805953c790192ccf86573721a734a79709d",
+   "raw": "{\n  \"1\": 0\n}",
+   "wall_ms": 453.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 1690,
+   "completion_tokens": 14,
+   "prompt_ms": 318.25,
+   "predicted_ms": 103.035,
+   "predicted_per_second": 126.171
+  },
+  "R1/object_graph/1": {
+   "digest": "4432f9720c6e1daff6a86935159904bcad1ff40e385714aee6ad6a39f2f81e53",
+   "raw": "{\"1\":\"1 arguments\",\"2\":\"2 condition external\"}",
+   "wall_ms": 156.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 278,
+   "completion_tokens": 13,
+   "prompt_ms": 67.802,
+   "predicted_ms": 90.961,
+   "predicted_per_second": 131.925
+  },
+  "R2/object_graph/0": {
+   "digest": "150e4d8b2a32a6b5ebaf76ae75b5b4b7f0039ae0284b45a3920265b0d7aa7c12",
+   "raw": "{\n  \"1\": 1,\n  \"32\": 32,\n  \"21\": 21,\n  \"1\": 1,\n  \"2\": 2,\n  \"3\": 3,\n  \"4\": 4,\n  \"5\": 5,\n  \"6\": 6,\n  \"7\": 7,\n  \"8\": 8,\n  \"9\": 9,\n  \"10\": 10,\n  \"11\": 11,\n  \"12\": 12,\n  \"13\": 13,\n  \"14\": 14,\n  \"15\": 15,\n  \"16\": 16,\n  \"17\": 17,\n  \"18\": 18,\n  \"19\": 19,\n  \"20\": 20,\n  \"22\": 22,\n  \"23\": 23,\n  \"24\": 24,\n  \"25\": 25,\n  \"26\": 26,\n  \"27\": 27,\n  \"28\": 28,\n  \"29\": 29,\n  \"30\": 30,\n  \"31\": 31,\n  \"33\": 33,\n  \"34\": 34,\n  \"35\": 35,\n  \"36\": 36,\n  \"37\": 37,\n  \"38\": 38,\n  \"39\": 39,\n  \"40\": 40,\n  \"41\": 41,\n  \"42\": 42,\n  \"43\": 43,\n  \"44\": 44,\n  \"45\": 45,\n  \"46\": 46,\n  \"47\": 47,\n  \"48\": 48,\n  \"49\": 49,\n  \"50\": 50,\n  \"51\":",
+   "wall_ms": 3766.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1693,
+   "completion_tokens": 448,
+   "prompt_ms": 284.497,
+   "predicted_ms": 3450.541,
+   "predicted_per_second": 129.545
+  },
+  "R2/object_graph/1": {
+   "digest": "ab656e0e003c84c12574cbc7d257363fe1117fc03243148ab3097bc10e30ab0d",
+   "raw": "{\"1\":\"1 site\",\"2\":\"1 condition external\"}",
+   "wall_ms": 188.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 280,
+   "completion_tokens": 13,
+   "prompt_ms": 67.929,
+   "predicted_ms": 90.938,
+   "predicted_per_second": 131.958
+  },
+  "R3/object_graph/0": {
+   "digest": "25c291aead07865b4e95c91e8033193a3d9e290ba93f3ff5daf7651c2e65733f",
+   "raw": "{\"1\":\"1 site\",\"2\":\"1 condition external\"}",
+   "wall_ms": 156.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 276,
+   "completion_tokens": 13,
+   "prompt_ms": 67.882,
+   "predicted_ms": 90.857,
+   "predicted_per_second": 132.076
+  },
+  "R4/object_graph/0": {
+   "digest": "0a201c9a44ffafef6aacce98adc10712784880aaf8d811b187c5a76fc8ae36c9",
+   "raw": "{\n  \"2\": 0,\n  \"39\": 0,\n  \"1\": 0,\n  \"2\": 0,\n  \"3\": 0,\n  \"4\": 0,\n  \"5\": 0,\n  \"6\": 0,\n  \"7\": 0,\n  \"8\": 0,\n  \"9\": 0,\n  \"10\": 0,\n  \"11\": 0,\n  \"12\": 0,\n  \"13\": 0,\n  \"14\": 0,\n  \"15\": 0,\n  \"16\": 0,\n  \"17\": 0,\n  \"18\": 0,\n  \"19\": 0,\n  \"20\": 0,\n  \"21\": 0,\n  \"22\": 0,\n  \"23\": 0,\n  \"24\": 0,\n  \"25\": 0,\n  \"26\": 0,\n  \"27\": 0,\n  \"28\": 0,\n  \"29\": 0,\n  \"30\": 0,\n  \"31\": 0,\n  \"32\": 0,\n  \"33\": 0,\n  \"34\": 0,\n  \"35\": 0,\n  \"36\": 0,\n  \"37\": 0,\n  \"38\": 0,\n  \"40\": 0,\n  \"41\": 0,\n  \"42\": 0,\n  \"43\": 0,\n  \"44\": 0,\n  \"45\": 0,\n  \"46\": 0,\n  \"47\": 0,\n  \"48\": 0,\n  \"49\": 0,\n  \"50\": 0,\n  \"51\": 0,\n  \"52\": 0,\n  \"53\": 0,\n  \"54\": 0,\n  \"55\": 0,\n  \"56\": ",
+   "wall_ms": 3734.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1694,
+   "completion_tokens": 448,
+   "prompt_ms": 285.452,
+   "predicted_ms": 3445.484,
+   "predicted_per_second": 129.735
+  },
+  "R4/object_graph/1": {
+   "digest": "adc30866dc6c8fdd013993990b7b61c3abc832a2274576f99120ac129b730418",
+   "raw": "{\"1\":\"1 site\",\"2\":\"2 runtime\",\"3\":\"3 external\"}",
+   "wall_ms": 203.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 291,
+   "completion_tokens": 17,
+   "prompt_ms": 68.108,
+   "predicted_ms": 120.412,
+   "predicted_per_second": 132.877
+  },
+  "R5/object_graph/0": {
+   "digest": "b212c7d0e471d6015f0c876d3948ab94a76e68cc7471642b90ab2e57b7266465",
+   "raw": "{\"1\":\"2 caller\",\"2\":\"2 caller_condition\"}",
+   "wall_ms": 172.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 283,
+   "completion_tokens": 13,
+   "prompt_ms": 67.564,
+   "predicted_ms": 92.046,
+   "predicted_per_second": 130.37
+  },
+  "A1/object_graph/0": {
+   "digest": "749dcd2cab030fe584147b650f298abfe1755724c065ae1b7dc7e2a38d888582",
+   "raw": "{\"1\": \"1 caller\", \"2\": \"2 caller\"}",
+   "wall_ms": 172.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 278,
+   "completion_tokens": 15,
+   "prompt_ms": 67.505,
+   "predicted_ms": 104.36,
+   "predicted_per_second": 134.151
+  },
+  "A2/object_graph/0": {
+   "digest": "a45f558cac70ac06040ae79fee57ba995e9bf5d6ae4c274c45ad1ef12c87b584",
+   "raw": "{\"1\":\"1 caller\",\"2\":\"2 caller\"}",
+   "wall_ms": 156.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 285,
+   "completion_tokens": 12,
+   "prompt_ms": 67.707,
+   "predicted_ms": 82.223,
+   "predicted_per_second": 133.783
+  },
+  "A3/object_graph/0": {
+   "digest": "a84138bb6b3ba87833afd144dea6c6ab2a56f7c8f8422d8965ba774a08ed907c",
+   "raw": "{\n  \"1\": 0,\n  \"70\": 0,\n  \"71\": 0,\n  \"72\": 0\n}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 1774,
+   "completion_tokens": 38,
+   "prompt_ms": 290.288,
+   "predicted_ms": 286.148,
+   "predicted_per_second": 129.304
+  },
+  "A3/object_graph/1": {
+   "digest": "84c75130c2c644735e52e9e0cf430e43afb519363a623681e09015a4a5559067",
+   "raw": "{\"1\":\"1 site\", \"2\":\"1 condition external\"}",
+   "wall_ms": 172.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 280,
+   "completion_tokens": 14,
+   "prompt_ms": 68.302,
+   "predicted_ms": 97.226,
+   "predicted_per_second": 133.709
+  },
+  "A4/object_graph/0": {
+   "digest": "edc6a22118de8f0c0b0096e22864e5bf6d5de0428636a4a29f7bdaae76c3510a",
+   "raw": "{\"1\":\"1 site\",\"2\":\"1 arguments\"}",
+   "wall_ms": 156.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 278,
+   "completion_tokens": 12,
+   "prompt_ms": 67.606,
+   "predicted_ms": 82.301,
+   "predicted_per_second": 133.656
+  },
+  "A5/object_graph/0": {
+   "digest": "8acf7103553322ccbf01ff4761ff5a633a6ab760a22e7f0ddc0071aa881b0108",
+   "raw": "{\n  \"0\": 0,\n  \"72\": 0,\n  \"69\": 0,\n  \"1\": 0,\n  \"2\": 0,\n  \"3\": 0,\n  \"4\": 0,\n  \"5\": 0,\n  \"6\": 0,\n  \"7\": 0,\n  \"8\": 0,\n  \"9\": 0,\n  \"10\": 0,\n  \"11\": 0,\n  \"12\": 0,\n  \"13\": 0,\n  \"14\": 0,\n  \"15\": 0,\n  \"16\": 0,\n  \"17\": 0,\n  \"18\": 0,\n  \"19\": 0,\n  \"20\": 0,\n  \"21\": 0,\n  \"22\": 0,\n  \"23\": 0,\n  \"24\": 0,\n  \"25\": 0,\n  \"26\": 0,\n  \"27\": 0,\n  \"28\": 0,\n  \"29\": 0,\n  \"30\": 0,\n  \"31\": 0,\n  \"32\": 0,\n  \"33\": 0,\n  \"34\": 0,\n  \"35\": 0,\n  \"36\": 0,\n  \"37\": 0,\n  \"38\": 0,\n  \"39\": 0,\n  \"40\": 0,\n  \"41\": 0,\n  \"42\": 0,\n  \"43\": 0,\n  \"44\": 0,\n  \"45\": 0,\n  \"46\": 0,\n  \"47\": 0,\n  \"48\": 0,\n  \"49\": 0,\n  \"50\": 0,\n  \"51\": 0,\n  \"52\": 0,\n  \"53\": 0,\n  \"54\": ",
+   "wall_ms": 3766.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1770,
+   "completion_tokens": 448,
+   "prompt_ms": 289.908,
+   "predicted_ms": 3453.382,
+   "predicted_per_second": 129.438
+  },
+  "A5/object_graph/1": {
+   "digest": "8ce238cc8bc3095efa6c8266884500d480b8b859f86f8d62e0699f6aa385fafb",
+   "raw": "{\"1\":\"1 site\",\"2\":\"1 site\"}",
+   "wall_ms": 172.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 271,
+   "completion_tokens": 12,
+   "prompt_ms": 67.884,
+   "predicted_ms": 82.179,
+   "predicted_per_second": 133.854
+  },
+  "B1/object_graph/0": {
+   "digest": "0a1f1b20ce82177f2be6aba4859d02043d5ec77a7385a0cfd556f0df042c773e",
+   "raw": "{\n  \"1\": 0,\n  \"42\": 0,\n  \"1\": 0,\n  \"2\": 0,\n  \"3\": 0,\n  \"4\": 0,\n  \"5\": 0,\n  \"6\": 0,\n  \"7\": 0,\n  \"8\": 0,\n  \"9\": 0,\n  \"10\": 0,\n  \"11\": 0,\n  \"12\": 0,\n  \"13\": 0,\n  \"14\": 0,\n  \"15\": 0,\n  \"16\": 0,\n  \"17\": 0,\n  \"18\": 0,\n  \"19\": 0,\n  \"20\": 0,\n  \"21\": 0,\n  \"22\": 0,\n  \"23\": 0,\n  \"24\": 0,\n  \"25\": 0,\n  \"26\": 0,\n  \"27\": 0,\n  \"28\": 0,\n  \"29\": 0,\n  \"30\": 0,\n  \"31\": 0,\n  \"32\": 0,\n  \"33\": 0,\n  \"34\": 0,\n  \"35\": 0,\n  \"36\": 0,\n  \"37\": 0,\n  \"38\": 0,\n  \"39\": 0,\n  \"40\": 0,\n  \"41\": 0,\n  \"43\": 0,\n  \"44\": 0,\n  \"45\": 0,\n  \"46\": 0,\n  \"47\": 0,\n  \"48\": 0,\n  \"49\": 0,\n  \"50\": 0,\n  \"51\": 0,\n  \"52\": 0,\n  \"53\": 0,\n  \"54\": 0,\n  \"55\": 0,\n  \"56\": ",
+   "wall_ms": 3797.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1732,
+   "completion_tokens": 448,
+   "prompt_ms": 313.577,
+   "predicted_ms": 3457.653,
+   "predicted_per_second": 129.278
+  },
+  "B1/object_graph/1": {
+   "digest": "75dfc7f2ad2755bd9be00bf00518829f3799081ac1eb1b471f0f552df126bcc4",
+   "raw": "{\"1\":\"1 caller\",\"2\":\"1 condition external\"}",
+   "wall_ms": 187.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 286,
+   "completion_tokens": 13,
+   "prompt_ms": 68.098,
+   "predicted_ms": 89.96,
+   "predicted_per_second": 133.393
+  },
+  "B2/object_graph/0": {
+   "digest": "70857baacca6650ae77dba4b73e07c22556f48164c8cdd0be7d178d21e11b2a5",
+   "raw": "{\"1\":\"1 site\",\"2\":\"1 condition external\"}",
+   "wall_ms": 156.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 282,
+   "completion_tokens": 13,
+   "prompt_ms": 68.174,
+   "predicted_ms": 89.685,
+   "predicted_per_second": 133.802
+  },
+  "B3/object_graph/0": {
+   "digest": "9ea7fa3f2270bd73506d553f3f11bd5d02f58b8249419c5aa1331408a291520b",
+   "raw": "{\n  \"1\": 0,\n  \"2\": 0,\n  \"3\": 0,\n  \"4\": 0,\n  \"5\": 0,\n  \"6\": 0,\n  \"7\": 0,\n  \"8\": 0,\n  \"9\": 0,\n  \"10\": 0,\n  \"11\": 0,\n  \"12\": 0,\n  \"13\": 0,\n  \"14\": 0,\n  \"15\": 0,\n  \"16\": 0,\n  \"17\": 0,\n  \"18\": 0,\n  \"19\": 0,\n  \"20\": 0,\n  \"21\": 0,\n  \"22\": 0,\n  \"23\": 0,\n  \"24\": 0,\n  \"25\": 0,\n  \"26\": 0,\n  \"27\": 0,\n  \"28\": 0,\n  \"29\": 0,\n  \"30\": 0,\n  \"31\": 0,\n  \"32\": 0,\n  \"33\": 0,\n  \"34\": 0,\n  \"35\": 0,\n  \"36\": 0,\n  \"37\": 0,\n  \"38\": 0,\n  \"39\": 0,\n  \"40\": 0,\n  \"41\": 0,\n  \"42\": 0,\n  \"43\": 0,\n  \"44\": 0,\n  \"45\": 0,\n  \"46\": 0,\n  \"47\": 0,\n  \"48\": 0,\n  \"49\": 0,\n  \"50\": 0,\n  \"51\": 0,\n  \"52\": 0,\n  \"53\": 0,\n  \"54\": 0,\n  \"55\": 0,\n  \"56\": 0,\n  \"57\":",
+   "wall_ms": 3781.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1731,
+   "completion_tokens": 448,
+   "prompt_ms": 288.046,
+   "predicted_ms": 3459.11,
+   "predicted_per_second": 129.224
+  },
+  "B3/object_graph/1": {
+   "digest": "183790c5d9e875af76ba43120a5e99e784290caa0be3cf21e064406b16d25274",
+   "raw": "{\"1\":\"1 site\",\"2\":\"1 condition external\"}",
+   "wall_ms": 187.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 286,
+   "completion_tokens": 13,
+   "prompt_ms": 68.714,
+   "predicted_ms": 90.24,
+   "predicted_per_second": 132.979
+  },
+  "B4/object_graph/0": {
+   "digest": "3a227509b3999d76c140ec2800343415e5c2ab32cabeb24bf29c674653a0fab9",
+   "raw": "{\n  \"2\": 32\n}",
+   "wall_ms": 422.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 1738,
+   "completion_tokens": 15,
+   "prompt_ms": 289.243,
+   "predicted_ms": 109.399,
+   "predicted_per_second": 127.972
+  },
+  "B4/object_graph/1": {
+   "digest": "cb856d4a8edce955d18d83cb5891ae872cb35e7d606324795430a81396a00a93",
+   "raw": "{\"1\":\"1 site\",\"2\":\"1 site\",\"3\":\"1 site\"}",
+   "wall_ms": 219.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 298,
+   "completion_tokens": 17,
+   "prompt_ms": 68.663,
+   "predicted_ms": 120.485,
+   "predicted_per_second": 132.797
+  },
+  "B5/object_graph/0": {
+   "digest": "45bc699e1da363aa0c60537594463a3bb6054d57396b11c090eeefd6783ee120",
+   "raw": "{\n  \"1\": 0,\n  \"69\": 70,\n  \"1\": 1,\n  \"2\": 2,\n  \"3\": 3,\n  \"4\": 4,\n  \"5\": 5,\n  \"6\": 6,\n  \"7\": 7,\n  \"8\": 8,\n  \"9\": 9,\n  \"10\": 10,\n  \"11\": 11,\n  \"12\": 12,\n  \"13\": 13,\n  \"14\": 14,\n  \"15\": 15,\n  \"16\": 16,\n  \"17\": 17,\n  \"18\": 18,\n  \"19\": 19,\n  \"20\": 20,\n  \"21\": 21,\n  \"22\": 22,\n  \"23\": 23,\n  \"24\": 24,\n  \"25\": 25,\n  \"26\": 26,\n  \"27\": 27,\n  \"28\": 28,\n  \"29\": 29,\n  \"30\": 30,\n  \"31\": 31,\n  \"32\": 32,\n  \"33\": 33,\n  \"34\": 34,\n  \"35\": 35,\n  \"36\": 36,\n  \"37\": 37,\n  \"38\": 38,\n  \"39\": 39,\n  \"40\": 40,\n  \"41\": 41,\n  \"42\": 42,\n  \"43\": 43,\n  \"44\": 44,\n  \"45\": 45,\n  \"46\": 46,\n  \"47\": 47,\n  \"48\": 48,\n  \"49\": 49,\n  \"50\":",
+   "wall_ms": 3766.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1730,
+   "completion_tokens": 448,
+   "prompt_ms": 288.044,
+   "predicted_ms": 3464.093,
+   "predicted_per_second": 129.038
+  },
+  "B5/object_graph/1": {
+   "digest": "c7da3d336a52d9eb4400010c7a585070fb6711cee4f0f6c096644123f25cf442",
+   "raw": "{\"1\":\"1 arguments\",\"2\":\"2 site\"}",
+   "wall_ms": 156.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 275,
+   "completion_tokens": 12,
+   "prompt_ms": 68.437,
+   "predicted_ms": 84.203,
+   "predicted_per_second": 130.637
+  },
+  "C1/object_graph/0": {
+   "digest": "39c624bd465b406b027e6677a3a9d64b5a9e496fcf74c63fb6cc74d42452b0dd",
+   "raw": "{\n  \"1\": 0,\n  \"2\": 0,\n  \"3\": 0,\n  \"4\": 0,\n  \"5\": 0,\n  \"6\": 0,\n  \"7\": 0,\n  \"8\": 0,\n  \"9\": 0,\n  \"10\": 0,\n  \"11\": 0,\n  \"12\": 0,\n  \"13\": 0,\n  \"14\": 0,\n  \"15\": 0,\n  \"16\": 0,\n  \"17\": 0,\n  \"18\": 0,\n  \"19\": 0,\n  \"20\": 0,\n  \"21\": 0,\n  \"22\": 0,\n  \"23\": 0,\n  \"24\": 0,\n  \"25\": 0,\n  \"26\": 0,\n  \"27\": 0,\n  \"28\": 0,\n  \"29\": 0,\n  \"30\": 0,\n  \"31\": 0,\n  \"32\": 0,\n  \"33\": 0,\n  \"34\": 0,\n  \"35\": 0,\n  \"36\": 0,\n  \"37\": 0,\n  \"38\": 0,\n  \"39\": 0,\n  \"40\": 0,\n  \"41\": 0,\n  \"42\": 0,\n  \"43\": 0,\n  \"44\": 0,\n  \"45\": 0,\n  \"46\": 0,\n  \"47\": 0,\n  \"48\": 0,\n  \"49\": 0,\n  \"50\": 0,\n  \"51\": 0,\n  \"52\": 0,\n  \"53\": 0,\n  \"54\": 0,\n  \"55\": 0,\n  \"56\": 0,\n  \"57\":",
+   "wall_ms": 3765.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1724,
+   "completion_tokens": 448,
+   "prompt_ms": 290.3,
+   "predicted_ms": 3462.686,
+   "predicted_per_second": 129.091
+  },
+  "C1/object_graph/1": {
+   "digest": "b0e9efbe77227a16e0253411c36cb841ef77f5b8726375f3d90b030b5c7c65e7",
+   "raw": "{\"1\":\"1 caller\",\"2\":\"1 site\"}",
+   "wall_ms": 172.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 281,
+   "completion_tokens": 12,
+   "prompt_ms": 68.808,
+   "predicted_ms": 82.232,
+   "predicted_per_second": 133.768
+  },
+  "C2/object_graph/0": {
+   "digest": "c4636c527d1b9a5429fb76b55fac6ec8ab1a767b52021615ba918dc57d020beb",
+   "raw": "{\"1\":\"1 condition\",\"2\":\"1 site\"}",
+   "wall_ms": 172.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 287,
+   "completion_tokens": 12,
+   "prompt_ms": 68.134,
+   "predicted_ms": 82.15,
+   "predicted_per_second": 133.901
+  },
+  "C3/object_graph/0": {
+   "digest": "7636b464e021f611d1c4523e3b8885715106facdbd70c2c35d87b0557d05bf33",
+   "raw": "{\n  \"2\": 0\n}",
+   "wall_ms": 422.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 1737,
+   "completion_tokens": 14,
+   "prompt_ms": 289.461,
+   "predicted_ms": 101.439,
+   "predicted_per_second": 128.156
+  },
+  "C3/object_graph/1": {
+   "digest": "100f0d417d1cc01947b6a2c5b14c13c8f985037f1480d615d2bde033d3d22953",
+   "raw": "{\"1\":\"1 arguments\",\"2\":\"2 condition\",\"3\":\"3 runtime\"}",
+   "wall_ms": 204.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 297,
+   "completion_tokens": 17,
+   "prompt_ms": 68.398,
+   "predicted_ms": 119.262,
+   "predicted_per_second": 134.158
+  },
+  "C4/object_graph/0": {
+   "digest": "82bba0d05bd42454d1b99dfd0d164cb811b624d4a0d36bc6f4262a2ab30f693d",
+   "raw": "{\n  \"2\": 0,\n  \"69\": 69,\n  \"1\": 1,\n  \"2\": 2,\n  \"3\": 3,\n  \"4\": 4,\n  \"5\": 5,\n  \"6\": 6,\n  \"7\": 7,\n  \"8\": 8,\n  \"9\": 9,\n  \"10\": 10,\n  \"11\": 11,\n  \"12\": 12,\n  \"13\": 13,\n  \"14\": 14,\n  \"15\": 15,\n  \"16\": 16,\n  \"17\": 17,\n  \"18\": 18,\n  \"19\": 19,\n  \"20\": 20,\n  \"21\": 21,\n  \"22\": 22,\n  \"23\": 23,\n  \"24\": 24,\n  \"25\": 25,\n  \"26\": 26,\n  \"27\": 27,\n  \"28\": 28,\n  \"29\": 29,\n  \"30\": 30,\n  \"31\": 31,\n  \"32\": 32,\n  \"33\": 33,\n  \"34\": 34,\n  \"35\": 35,\n  \"36\": 36,\n  \"37\": 37,\n  \"38\": 38,\n  \"39\": 39,\n  \"40\": 40,\n  \"41\": 41,\n  \"42\": 42,\n  \"43\": 43,\n  \"44\": 44,\n  \"45\": 45,\n  \"46\": 46,\n  \"47\": 47,\n  \"48\": 48,\n  \"49\": 49,\n  \"50\":",
+   "wall_ms": 3860.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1732,
+   "completion_tokens": 448,
+   "prompt_ms": 289.339,
+   "predicted_ms": 3544.01,
+   "predicted_per_second": 126.128
+  },
+  "C4/object_graph/1": {
+   "digest": "de01f97642e41307085ae78ab07caa06240a62e34d07efb35e20b46e25838b02",
+   "raw": "{\"1\":\"1 site\",\"2\":\"1 site\",\"3\":\"1 site\"}",
+   "wall_ms": 204.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 293,
+   "completion_tokens": 17,
+   "prompt_ms": 68.195,
+   "predicted_ms": 119.053,
+   "predicted_per_second": 134.394
+  },
+  "C5/object_graph/0": {
+   "digest": "6318356dcbbe761bc5478e36c248f8f51f39a732a9909cd5ec31c4edbef418a3",
+   "raw": "{\n  \"1\": 0,\n  \"20\": 0,\n  \"1\": 0,\n  \"2\": 0,\n  \"3\": 0,\n  \"4\": 0,\n  \"5\": 0,\n  \"6\": 0,\n  \"7\": 0,\n  \"8\": 0,\n  \"9\": 0,\n  \"10\": 0,\n  \"11\": 0,\n  \"12\": 0,\n  \"13\": 0,\n  \"14\": 0,\n  \"15\": 0,\n  \"16\": 0,\n  \"17\": 0,\n  \"18\": 0,\n  \"19\": 0,\n  \"21\": 0,\n  \"22\": 0,\n  \"23\": 0,\n  \"24\": 0,\n  \"25\": 0,\n  \"26\": 0,\n  \"27\": 0,\n  \"28\": 0,\n  \"29\": 0,\n  \"30\": 0,\n  \"31\": 0,\n  \"32\": 0,\n  \"33\": 0,\n  \"34\": 0,\n  \"35\": 0,\n  \"36\": 0,\n  \"37\": 0,\n  \"38\": 0,\n  \"39\": 0,\n  \"40\": 0,\n  \"41\": 0,\n  \"42\": 0,\n  \"43\": 0,\n  \"44\": 0,\n  \"45\": 0,\n  \"46\": 0,\n  \"47\": 0,\n  \"48\": 0,\n  \"49\": 0,\n  \"50\": 0,\n  \"51\": 0,\n  \"52\": 0,\n  \"53\": 0,\n  \"54\": 0,\n  \"55\": 0,\n  \"56\": ",
+   "wall_ms": 3797.0,
+   "finish_reason": "length",
+   "prompt_tokens": 1734,
+   "completion_tokens": 448,
+   "prompt_ms": 302.233,
+   "predicted_ms": 3459.489,
+   "predicted_per_second": 129.21
+  },
+  "C5/object_graph/1": {
+   "digest": "d35c7376e994b1f3d5d80d00dbf0cd1672e871c273501be8b7c715f57577ae33",
+   "raw": "{\"1\": \"1 site\", \"2\": \"1 site\"}",
+   "wall_ms": 204.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 274,
+   "completion_tokens": 15,
+   "prompt_ms": 68.248,
+   "predicted_ms": 105.884,
+   "predicted_per_second": 132.22
+  }
+ },
+ "sessions": [
+  {
+   "startup_s": 5.781,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  },
+  {
+   "startup_s": 5.515,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  },
+  {
+   "startup_s": 5.734,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  }
+ ]
+}
