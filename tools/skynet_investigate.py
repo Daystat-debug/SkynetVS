@@ -274,7 +274,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
             return packet(req, src, reason="out_of_scope")
         if cli.auto_reader.EVENT.search(req.question):
             return packet(req, src, reason="observation_required")
-        if discovery in ("requirements","one_action","all_evidence"):
+        if discovery in ("requirements","one_action","all_evidence","eager_projection"):
             plan = "requirement_research"
             if paths or observed.goals.unsupported(req.question):
                 return packet(req,src,reason="clarification")
@@ -374,7 +374,13 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     def verify(req, evidence, draft, delivered):
         if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic", "local_control", "research_route", "discover_observation","requirement_research"):
             head_current(src)
-        return host.verify_snapshot(src, req, evidence, draft, delivered)
+        assessment = host.verify_snapshot(src, req, evidence, draft, delivered)
+        if plan=="requirement_research" and "requirements" in evidence["analysis"]:
+            meta = evidence["analysis"]["requirements"]
+            requirements.verify_receipts(meta,evidence["analysis"]["observations"])
+            if draft["status"]=="answer":
+                assessment["answer_completeness"] = "partial" if meta["missing"] else "interpreted_requirements_met"
+        return assessment
 
     result = task.run(retrieve, host.propose, verify)
     public = dict(state=result["state"], plan=plan, steps=trace, claims=[])
@@ -469,8 +475,16 @@ def main():
             for opt in out.get("discovery",{}).get("options",[]):
                 print(f'Возможный ориентир: {opt["label"]} — {opt["coordinate"]}',opt["ref"]["url"])
         else:
-            if out.get("requirements",{}).get("missing"):
-                print("Неполный ответ. Не удалось доказать:",out["requirements"]["gaps"])
+            if "requirements" in out:
+                labels = dict(site="место", condition="условия в самой функции", caller="прямой вызов",
+                              arguments="привязка аргументов", caller_condition="условия в вызывающей функции")
+                info = out["requirements"]
+                print("В вопросе распознаны:",", ".join(labels[k] for k in info["required"]))
+                for k in info["missing"]:
+                    reason = info["gaps"][k]
+                    print("Не подтверждено:", labels[k], "—", REASONS.get(reason,reason))
+                if "caller_condition" in info["supported"] and "condition" in info["supported"]:
+                    print("Условия проверены отдельно в каждой функции. Совместная достижимость не установлена.")
             if out["plan"] == "research_route":
                 if out["research"]["verdict"] == "excluded_route":
                     print("Для одного конкретного маршрута доказано противоречие. Другие пути остаются открытым вопросом.")

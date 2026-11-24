@@ -39,6 +39,33 @@ def interpret(question, select):
     return closure(labels)
 
 
+def verify_receipts(meta, rows):
+    """Check the account of completed work against the claims passed to publication."""
+    actual = [r.get("kind") for r in rows]
+    wanted = meta["required"]
+    missing = [k for k in wanted if k not in actual]
+    if (list(closure(wanted))!=wanted or actual!=[k for k in wanted if k not in missing]
+            or actual!=meta["supported"] or missing!=meta["missing"]):
+        raise observed.route.arguments.host.Rejected("claim_binding")
+    caller = None
+    for row in rows:
+        kind = row["kind"]
+        valid = True
+        if kind=="caller":
+            caller = row
+            edge = row.get("edge",[])
+            valid = len(edge)==2 and edge[1]==meta["owner"]
+        elif kind=="arguments":
+            valid = caller is not None and row["anchors"]==caller["anchors"]
+        elif kind in ("condition","caller_condition"):
+            owner = meta["owner"] if kind=="condition" else caller["edge"][0] if caller else None
+            valid = owner is not None and row.get("control",{}).get("function")==owner
+        elif kind=="site":
+            valid = any(a["lines"][0]<=meta["line"]<=a["lines"][1] for a in row["anchors"])
+        if not valid:
+            raise observed.route.arguments.host.Rejected("claim_binding")
+
+
 def research(search, question, select, policy):
     ctl = observed.ObservedRoute(search,None,None)
     claims = {}
@@ -47,7 +74,7 @@ def research(search, question, select, policy):
     meta = {}
     try:
         step = ctl.step("interpret_requirements","question")
-        if policy=="requirements":
+        if policy in ("requirements","eager_projection"):
             needs = interpret(question,select)
         elif policy=="all_evidence":
             needs = KINDS
@@ -78,7 +105,8 @@ def research(search, question, select, policy):
         claims["site"] = fact.fact
         locate.update(status="located",owner=fn.node.name,line=expr.lineno)
         site = None
-        for need in needs[1:]:
+        schedule = KINDS if policy=="eager_projection" else needs
+        for need in schedule[1:]:
             try:
                 if need=="condition":
                     claims[need] = ctl.proof(fn,effect.stmt)
@@ -109,8 +137,8 @@ def research(search, question, select, policy):
     except (Gap,observed.route.arguments.Limit) as exc:
         return ([],[],str(exc)),dict(meta,required=list(needs),supported=[],missing=list(needs))
     # A receipt exists only after the corresponding source-bound tool produced a claim.
-    receipts = [dict(c,kind=k) for k,c in claims.items()]
+    receipts = [dict(claims[k],kind=k) for k in needs if k in claims]
     missing = [k for k in needs if k not in claims]
     refs = dict.fromkeys(a["ref_id"] for c in receipts for a in c["anchors"])
     return (receipts,[search.items[k] for k in refs],None),dict(meta,required=list(needs),
-             supported=list(claims),missing=missing,gaps=gaps)
+             supported=[k for k in needs if k in claims],missing=missing,gaps={k:gaps[k] for k in missing})

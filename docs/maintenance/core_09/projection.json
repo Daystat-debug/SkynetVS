@@ -1,0 +1,4626 @@
+{
+ "rows": [
+  {
+   "id": "A1",
+   "question": "Покажи в исходниках место с меткой «M134_GOAL_EMPTY_OR_TOO_LONG».",
+   "oracle": {
+    "requirements": [
+     "site"
+    ],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site"
+   ],
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@49",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@146",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "A2",
+   "question": "Что должно оказаться истинным, чтобы сработала проверка «M134_GOAL_EMPTY_OR_TOO_LONG»?",
+   "oracle": {
+    "requirements": [
+     "site",
+     "condition"
+    ],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "condition"
+   ],
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@49",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В expand_query исследована инструкция `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` истинно (стр. 48). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         48,
+         48
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "expand_query",
+        "line": 49,
+        "condition": [
+         "test",
+         48,
+         "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site",
+       "condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@49",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@146",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В expand_query исследована инструкция `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` истинно (стр. 48). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         48,
+         48
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "expand_query",
+        "line": 49,
+        "condition": [
+         "test",
+         48,
+         "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site",
+       "condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "A3",
+   "question": "Из какой функции непосредственно обращаются к обработчику с «M134_GOAL_EMPTY_OR_TOO_LONG»?",
+   "oracle": {
+    "requirements": [
+     "site",
+     "caller"
+    ],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "caller"
+   ],
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": true,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "caller"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@49",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@146",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site",
+       "caller"
+      ],
+      "supported": [
+       "site",
+       "caller"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": true,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "caller"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site",
+       "caller"
+      ],
+      "supported": [
+       "site",
+       "caller"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "A4",
+   "question": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» нужны условия внутри обработчика и подстановка значений в параметры при прямом вызове.",
+   "oracle": {
+    "requirements": [
+     "site",
+     "condition",
+     "caller",
+     "arguments"
+    ],
+    "one_action": [
+     "site",
+     "condition"
+    ],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "condition",
+    "caller",
+    "arguments"
+   ],
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": true,
+     "arguments": true,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@49",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В expand_query исследована инструкция `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` истинно (стр. 48). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         48,
+         48
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "expand_query",
+        "line": 49,
+        "condition": [
+         "test",
+         48,
+         "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site",
+       "condition",
+       "caller",
+       "arguments"
+      ],
+      "supported": [
+       "site",
+       "condition",
+       "caller",
+       "arguments"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": true,
+     "arguments": true,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@49",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@146",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В expand_query исследована инструкция `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` истинно (стр. 48). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         48,
+         48
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "expand_query",
+        "line": 49,
+        "condition": [
+         "test",
+         48,
+         "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site",
+       "condition",
+       "caller",
+       "arguments"
+      ],
+      "supported": [
+       "site",
+       "condition",
+       "caller",
+       "arguments"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "A5",
+   "question": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» поясни, при каких условиях сам вызывающий участок доходит до вызова.",
+   "oracle": {
+    "requirements": [
+     "site",
+     "caller",
+     "caller_condition"
+    ],
+    "one_action": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "caller",
+    "caller_condition"
+   ],
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": true,
+     "arguments": false,
+     "caller_condition": true
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "caller",
+        "caller_condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@49",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@146",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В search_repository исследована инструкция `effective, expansions = expand_query(goal)` (стр. 146). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "search_repository",
+        "line": 146,
+        "condition": true,
+        "work": 3
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site",
+       "caller",
+       "caller_condition"
+      ],
+      "supported": [
+       "site",
+       "caller",
+       "caller_condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": true,
+     "arguments": false,
+     "caller_condition": true
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "caller",
+        "caller_condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@146",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В search_repository исследована инструкция `effective, expansions = expand_query(goal)` (стр. 146). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "search_repository",
+        "line": 146,
+        "condition": true,
+        "work": 3
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG",
+      "required": [
+       "site",
+       "caller",
+       "caller_condition"
+      ],
+      "supported": [
+       "site",
+       "caller",
+       "caller_condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "B1",
+   "question": "Укажи расположение «M126_QUERY_INVALID», достаточно строки.",
+   "oracle": {
+    "requirements": [
+     "site"
+    ],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site"
+   ],
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "rank_title_only",
+       "line": 41
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_title_only на строке 41 записано выражение `'M126_QUERY_INVALID'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         41,
+         41
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "rank_title_only",
+      "line": 41,
+      "interpretation": "M126_QUERY_INVALID",
+      "required": [
+       "site"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "rank_title_only",
+       "line": 41
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank_title_only@41",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_title_only",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "rank_title_only",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank@116",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_title_only на строке 41 записано выражение `'M126_QUERY_INVALID'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         41,
+         41
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "rank_title_only",
+      "line": 41,
+      "interpretation": "M126_QUERY_INVALID",
+      "required": [
+       "site"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "B2",
+   "question": "Разбери причины, по которым управление достигает «M126_QUERY_INVALID», с учётом более ранних выходов.",
+   "oracle": {
+    "requirements": [],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "condition"
+   ],
+   "eager_projection": {
+    "facts": {
+     "site": false,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": false,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": []
+      }
+     ],
+     "claims": [],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "required": [],
+      "supported": [],
+      "missing": []
+     },
+     "reason": "clarification"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": false,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": false,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": []
+      }
+     ],
+     "claims": [],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "required": [],
+      "supported": [],
+      "missing": []
+     },
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "B3",
+   "question": "В случае «M126_QUERY_INVALID» какие параметры передаются из вызывающего модуля и где записан вызов?",
+   "oracle": {
+    "requirements": [
+     "site",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ],
+    "one_action": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "caller",
+    "arguments"
+   ],
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": true,
+     "arguments": true,
+     "caller_condition": true
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "rank_title_only",
+       "line": 41
+      },
+      {
+       "tool": "calls",
+       "target": "rank_title_only",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "rank_title_only",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank@116",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_title_only на строке 41 записано выражение `'M126_QUERY_INVALID'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         41,
+         41
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank на строке 116 записан прямой вызов rank_title_only.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_title_only"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: title ← `title`, before_files ← `old_sources`, top_n ← `10`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В rank исследована инструкция `files = rank_title_only(title, old_sources, top_n=10)` (стр. 116). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113), `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         112,
+         112
+        ],
+        [
+         "R",
+         113,
+         113
+        ],
+        [
+         "R",
+         114,
+         114
+        ],
+        [
+         "R",
+         115,
+         115
+        ],
+        [
+         "R",
+         116,
+         116
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "rank",
+        "line": 116,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           112,
+           "not isinstance(old_sources, dict) or not old_sources"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           114,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ]
+        ],
+        "work": 7
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "rank_title_only",
+      "line": 41,
+      "interpretation": "M126_QUERY_INVALID",
+      "required": [
+       "site",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "supported": [
+       "site",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": true,
+     "arguments": true,
+     "caller_condition": true
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "rank_title_only",
+       "line": 41
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank_title_only@41",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_title_only",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "rank_title_only",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank@116",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_title_only на строке 41 записано выражение `'M126_QUERY_INVALID'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         41,
+         41
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank на строке 116 записан прямой вызов rank_title_only.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_title_only"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: title ← `title`, before_files ← `old_sources`, top_n ← `10`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В rank исследована инструкция `files = rank_title_only(title, old_sources, top_n=10)` (стр. 116). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113), `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         112,
+         112
+        ],
+        [
+         "R",
+         113,
+         113
+        ],
+        [
+         "R",
+         114,
+         114
+        ],
+        [
+         "R",
+         115,
+         115
+        ],
+        [
+         "R",
+         116,
+         116
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "rank",
+        "line": 116,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           112,
+           "not isinstance(old_sources, dict) or not old_sources"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           114,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ]
+        ],
+        "work": 7
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "rank_title_only",
+      "line": 41,
+      "interpretation": "M126_QUERY_INVALID",
+      "required": [
+       "site",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "supported": [
+       "site",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "B4",
+   "question": "Объясни для «M126_QUERY_INVALID» сразу условия на стороне вызывающего кода, условия на стороне получателя и передачу аргументов.",
+   "oracle": {
+    "requirements": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ],
+    "one_action": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "condition",
+    "caller",
+    "arguments",
+    "caller_condition"
+   ],
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": true,
+     "arguments": true,
+     "caller_condition": true
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "rank_title_only",
+       "line": 41
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank_title_only@41",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_title_only",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "rank_title_only",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank@116",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_title_only на строке 41 записано выражение `'M126_QUERY_INVALID'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         41,
+         41
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_title_only исследована инструкция `raise ValueError('M126_QUERY_INVALID')` (стр. 41). Для достижения строки требуется: `not isinstance(title, str) or not title.strip() or len(title) > 2048` истинно (стр. 40). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         40,
+         40
+        ],
+        [
+         "T",
+         41,
+         41
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        "function": "rank_title_only",
+        "line": 41,
+        "condition": [
+         "test",
+         40,
+         "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В rank на строке 116 записан прямой вызов rank_title_only.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_title_only"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: title ← `title`, before_files ← `old_sources`, top_n ← `10`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В rank исследована инструкция `files = rank_title_only(title, old_sources, top_n=10)` (стр. 116). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113), `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         112,
+         112
+        ],
+        [
+         "R",
+         113,
+         113
+        ],
+        [
+         "R",
+         114,
+         114
+        ],
+        [
+         "R",
+         115,
+         115
+        ],
+        [
+         "R",
+         116,
+         116
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "rank",
+        "line": 116,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           112,
+           "not isinstance(old_sources, dict) or not old_sources"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           114,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ]
+        ],
+        "work": 7
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "rank_title_only",
+      "line": 41,
+      "interpretation": "M126_QUERY_INVALID",
+      "required": [
+       "site",
+       "condition",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "supported": [
+       "site",
+       "condition",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": true,
+     "arguments": true,
+     "caller_condition": true
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "rank_title_only",
+       "line": 41
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank_title_only@41",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_title_only",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "rank_title_only",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank@116",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank_title_only на строке 41 записано выражение `'M126_QUERY_INVALID'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         41,
+         41
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_title_only исследована инструкция `raise ValueError('M126_QUERY_INVALID')` (стр. 41). Для достижения строки требуется: `not isinstance(title, str) or not title.strip() or len(title) > 2048` истинно (стр. 40). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         40,
+         40
+        ],
+        [
+         "T",
+         41,
+         41
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        "function": "rank_title_only",
+        "line": 41,
+        "condition": [
+         "test",
+         40,
+         "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В rank на строке 116 записан прямой вызов rank_title_only.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_title_only"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: title ← `title`, before_files ← `old_sources`, top_n ← `10`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В rank исследована инструкция `files = rank_title_only(title, old_sources, top_n=10)` (стр. 116). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113), `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         112,
+         112
+        ],
+        [
+         "R",
+         113,
+         113
+        ],
+        [
+         "R",
+         114,
+         114
+        ],
+        [
+         "R",
+         115,
+         115
+        ],
+        [
+         "R",
+         116,
+         116
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "rank",
+        "line": 116,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           112,
+           "not isinstance(old_sources, dict) or not old_sources"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           114,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ]
+        ],
+        "work": 7
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "rank_title_only",
+      "line": 41,
+      "interpretation": "M126_QUERY_INVALID",
+      "required": [
+       "site",
+       "condition",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "supported": [
+       "site",
+       "condition",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "B5",
+   "question": "«M126_QUERY_INVALID» — мне интересно либо место, либо вся история его появления; пока не решил, что именно.",
+   "oracle": {
+    "requirements": [],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [],
+   "requirements": {
+    "facts": {
+     "site": false,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": []
+      }
+     ],
+     "claims": [],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "required": [],
+      "supported": [],
+      "missing": []
+     },
+     "reason": "clarification"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": false,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": []
+      }
+     ],
+     "claims": [],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "required": [],
+      "supported": [],
+      "missing": []
+     },
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "C1",
+   "question": "На какой строке формируется предупреждение о неполном поиске из-за размера или кодировки?",
+   "oracle": {
+    "requirements": [
+     "site"
+    ],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site"
+   ],
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 217
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@217",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "required": [
+       "site"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 217
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "required": [
+       "site"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "C2",
+   "question": "От чего зависит появление предупреждения о неполном поиске из-за размера или кодировки?",
+   "oracle": {
+    "requirements": [
+     "site",
+     "condition"
+    ],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "condition"
+   ],
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 217
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@217",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.')` (стр. 217). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `scan['partial']` истинно (стр. 216). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 217,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          216,
+          "scan['partial']"
+         ]
+        ],
+        "work": 16
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "required": [
+       "site",
+       "condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 217
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@217",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.')` (стр. 217). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `scan['partial']` истинно (стр. 216). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 217,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          216,
+          "scan['partial']"
+         ]
+        ],
+        "work": 16
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "required": [
+       "site",
+       "condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "C3",
+   "question": "Где находится «часть файлов пропущена» и какая из доступных функций непосредственно вызывает его владельца?",
+   "oracle": {
+    "requirements": [
+     "site",
+     "caller"
+    ],
+    "one_action": [
+     "site"
+    ],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "caller"
+   ],
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "partial",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "caller"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 217
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@217",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "required": [
+       "site",
+       "caller"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [
+       "caller"
+      ],
+      "gaps": {
+       "caller": "path_unproven"
+      }
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "partial",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "caller"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 217
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "required": [
+       "site",
+       "caller"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [
+       "caller"
+      ],
+      "gaps": {
+       "caller": "path_unproven"
+      }
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "C4",
+   "question": "Для «часть файлов пропущена» укажи строку и точное время её последнего исполнения.",
+   "oracle": {
+    "requirements": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [],
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": false,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "partial",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 217
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@217",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.')` (стр. 217). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `scan['partial']` истинно (стр. 216). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 217,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          216,
+          "scan['partial']"
+         ]
+        ],
+        "work": 16
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "required": [
+       "site",
+       "condition",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "gaps": {
+       "caller": "path_unproven",
+       "arguments": "path_unproven",
+       "caller_condition": "path_unproven"
+      }
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": false,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "partial",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 217
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@217",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.')` (стр. 217). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `scan['partial']` истинно (стр. 216). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 217,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          216,
+          "scan['partial']"
+         ]
+        ],
+        "work": 16
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "required": [
+       "site",
+       "condition",
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [
+       "caller",
+       "arguments",
+       "caller_condition"
+      ],
+      "gaps": {
+       "caller": "path_unproven",
+       "arguments": "path_unproven",
+       "caller_condition": "path_unproven"
+      }
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "D1",
+   "question": "Покажи участок, печатающий «Контекст не собран».",
+   "oracle": {
+    "requirements": [
+     "site"
+    ],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site"
+   ],
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 223
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@223",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 223 записано выражение `'Контекст не собран. Уточни технические термины задачи.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 223,
+      "interpretation": "Контекст не собран. Уточни технические термины задачи.",
+      "required": [
+       "site"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 223
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 223 записано выражение `'Контекст не собран. Уточни технические термины задачи.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 223,
+      "interpretation": "Контекст не собран. Уточни технические термины задачи.",
+      "required": [
+       "site"
+      ],
+      "supported": [
+       "site"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "D2",
+   "question": "Какие проверки должны пропустить управление к «Контекст не собран»?",
+   "oracle": {
+    "requirements": [
+     "site",
+     "condition"
+    ],
+    "one_action": [
+     "site",
+     "condition"
+    ],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [
+    "site",
+    "condition"
+   ],
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 223
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@223",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 223 записано выражение `'Контекст не собран. Уточни технические термины задачи.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('Контекст не собран. Уточни технические термины задачи.')` (стр. 223). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` истинно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         222,
+         222
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 223,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          222,
+          "not report['_private_8k_text']"
+         ]
+        ],
+        "work": 29
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 223,
+      "interpretation": "Контекст не собран. Уточни технические термины задачи.",
+      "required": [
+       "site",
+       "condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": true,
+    "solved": true,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 223
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@223",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 223 записано выражение `'Контекст не собран. Уточни технические термины задачи.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('Контекст не собран. Уточни технические термины задачи.')` (стр. 223). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` истинно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         222,
+         222
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 223,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          222,
+          "not report['_private_8k_text']"
+         ]
+        ],
+        "work": 29
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 223,
+      "interpretation": "Контекст не собран. Уточни технические термины задачи.",
+      "required": [
+       "site",
+       "condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  },
+  {
+   "id": "D3",
+   "question": "Что скажешь о «Контекст не собран»?",
+   "oracle": {
+    "requirements": [],
+    "one_action": [],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [],
+   "eager_projection": {
+    "facts": {
+     "site": false,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": []
+      }
+     ],
+     "claims": [],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "required": [],
+      "supported": [],
+      "missing": []
+     },
+     "reason": "clarification"
+    }
+   },
+   "requirements": {
+    "facts": {
+     "site": false,
+     "condition": false,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": true,
+    "false_publication": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": []
+      }
+     ],
+     "claims": [],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "required": [],
+      "supported": [],
+      "missing": []
+     },
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "D4",
+   "question": "Мне нужны условия для «Контекст не собран» и адрес получателя электронного письма, которому ушёл результат.",
+   "oracle": {
+    "requirements": [
+     "site",
+     "condition"
+    ],
+    "one_action": [
+     "site",
+     "condition"
+    ],
+    "all_evidence": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ]
+   },
+   "wanted": [],
+   "requirements": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": false,
+    "false_publication": true,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 223
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@223",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 223 записано выражение `'Контекст не собран. Уточни технические термины задачи.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('Контекст не собран. Уточни технические термины задачи.')` (стр. 223). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` истинно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         222,
+         222
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 223,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          222,
+          "not report['_private_8k_text']"
+         ]
+        ],
+        "work": 29
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 223,
+      "interpretation": "Контекст не собран. Уточни технические термины задачи.",
+      "required": [
+       "site",
+       "condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   },
+   "eager_projection": {
+    "facts": {
+     "site": true,
+     "condition": true,
+     "caller": false,
+     "arguments": false,
+     "caller_condition": false
+    },
+    "sufficient": false,
+    "solved": false,
+    "handled": false,
+    "false_publication": true,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "requirement_research",
+     "steps": [
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "interpreted",
+       "need": [
+        "site",
+        "condition"
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "Git HEAD",
+       "status": "located",
+       "owner": "format_context",
+       "line": 223
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@223",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 223 записано выражение `'Контекст не собран. Уточни технические термины задачи.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('Контекст не собран. Уточни технические термины задачи.')` (стр. 223). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` истинно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         222,
+         222
+        ],
+        [
+         "C",
+         223,
+         223
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 223,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          222,
+          "not report['_private_8k_text']"
+         ]
+        ],
+        "work": 29
+       }
+      }
+     ],
+     "snapshot": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+     "requirements": {
+      "owner": "format_context",
+      "line": 223,
+      "interpretation": "Контекст не собран. Уточни технические термины задачи.",
+      "required": [
+       "site",
+       "condition"
+      ],
+      "supported": [
+       "site",
+       "condition"
+      ],
+      "missing": [],
+      "gaps": {}
+     },
+     "execution_observed": false,
+     "coverage": "static_subset"
+    }
+   }
+  }
+ ],
+ "ms": {
+  "A1": {
+   "eager_projection": 190.3,
+   "requirements": 92.9
+  },
+  "A2": {
+   "requirements": 106.4,
+   "eager_projection": 172.2
+  },
+  "A3": {
+   "eager_projection": 176.2,
+   "requirements": 125.5
+  },
+  "A4": {
+   "requirements": 157.5,
+   "eager_projection": 178.3
+  },
+  "A5": {
+   "eager_projection": 178.1,
+   "requirements": 146.0
+  },
+  "B1": {
+   "requirements": 90.7,
+   "eager_projection": 177.2
+  },
+  "B2": {
+   "eager_projection": 61.4,
+   "requirements": 65.5
+  },
+  "B3": {
+   "requirements": 159.2,
+   "eager_projection": 179.2
+  },
+  "B4": {
+   "eager_projection": 201.3,
+   "requirements": 172.4
+  },
+  "B5": {
+   "requirements": 61.0,
+   "eager_projection": 64.9
+  },
+  "C1": {
+   "eager_projection": 166.4,
+   "requirements": 101.7
+  },
+  "C2": {
+   "requirements": 111.9,
+   "eager_projection": 148.5
+  },
+  "C3": {
+   "eager_projection": 155.1,
+   "requirements": 129.8
+  },
+  "C4": {
+   "requirements": 144.0,
+   "eager_projection": 144.2
+  },
+  "D1": {
+   "eager_projection": 140.2,
+   "requirements": 94.3
+  },
+  "D2": {
+   "requirements": 108.0,
+   "eager_projection": 141.0
+  },
+  "D3": {
+   "eager_projection": 66.5,
+   "requirements": 61.4
+  },
+  "D4": {
+   "requirements": 108.3,
+   "eager_projection": 151.8
+  }
+ }
+}

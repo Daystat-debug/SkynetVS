@@ -1,0 +1,364 @@
+[
+ {
+  "id": "C04",
+  "q": "Что должно произойти, чтобы появилось «M130_TITLE_INVALID»?",
+  "ms": 17521.3,
+  "answer": {
+   "state": "answered",
+   "plan": "requirement_research",
+   "steps": [
+    {
+     "tool": "interpret_requirements",
+     "target": "question",
+     "status": "interpreted",
+     "need": [
+      "site",
+      "condition"
+     ]
+    },
+    {
+     "tool": "locate_observation",
+     "target": "Git HEAD",
+     "status": "located",
+     "owner": "rank",
+     "line": 115
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "rank@115",
+     "status": "proved"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В rank на строке 115 записано выражение `'M130_TITLE_INVALID'`.",
+     "refs": [
+      [
+       "R",
+       110,
+       110
+      ],
+      [
+       "R",
+       115,
+       115
+      ]
+     ],
+     "kind": "site"
+    },
+    {
+     "text": "В rank исследована инструкция `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` истинно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+     "refs": [
+      [
+       "R",
+       110,
+       110
+      ],
+      [
+       "R",
+       112,
+       112
+      ],
+      [
+       "R",
+       113,
+       113
+      ],
+      [
+       "R",
+       114,
+       114
+      ],
+      [
+       "R",
+       115,
+       115
+      ]
+     ],
+     "kind": "condition",
+     "control": {
+      "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+      "function": "rank",
+      "line": 115,
+      "condition": [
+       "and",
+       [
+        "not",
+        [
+         "test",
+         112,
+         "not isinstance(old_sources, dict) or not old_sources"
+        ]
+       ],
+       [
+        "test",
+        114,
+        "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+       ]
+      ],
+      "work": 5
+     }
+    }
+   ],
+   "snapshot": "53eab6faf23eecef27351102ff040ed92b2cba6c",
+   "requirements": {
+    "owner": "rank",
+    "line": 115,
+    "interpretation": "M130_TITLE_INVALID",
+    "required": [
+     "site",
+     "condition"
+    ],
+    "supported": [
+     "site",
+     "condition"
+    ],
+    "missing": [],
+    "gaps": {}
+   },
+   "execution_observed": false,
+   "coverage": "static_subset"
+  }
+ },
+ {
+  "id": "B4",
+  "q": "Объясни для «M126_QUERY_INVALID» сразу условия на стороне вызывающего кода, условия на стороне получателя и передачу аргументов.",
+  "ms": 10676.6,
+  "answer": {
+   "state": "answered",
+   "plan": "requirement_research",
+   "steps": [
+    {
+     "tool": "interpret_requirements",
+     "target": "question",
+     "status": "interpreted",
+     "need": [
+      "site",
+      "condition",
+      "caller",
+      "arguments",
+      "caller_condition"
+     ]
+    },
+    {
+     "tool": "locate_observation",
+     "target": "Git HEAD",
+     "status": "located",
+     "owner": "rank_title_only",
+     "line": 41
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "rank_title_only@41",
+     "status": "proved"
+    },
+    {
+     "tool": "calls",
+     "target": "rank_title_only",
+     "status": "call_sites"
+    },
+    {
+     "tool": "bind_arguments",
+     "target": "rank_title_only",
+     "status": "bound"
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "rank@116",
+     "status": "proved"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В rank_title_only на строке 41 записано выражение `'M126_QUERY_INVALID'`.",
+     "refs": [
+      [
+       "T",
+       34,
+       34
+      ],
+      [
+       "T",
+       41,
+       41
+      ]
+     ],
+     "kind": "site"
+    },
+    {
+     "text": "В rank_title_only исследована инструкция `raise ValueError('M126_QUERY_INVALID')` (стр. 41). Для достижения строки требуется: `not isinstance(title, str) or not title.strip() or len(title) > 2048` истинно (стр. 40). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+     "refs": [
+      [
+       "T",
+       34,
+       34
+      ],
+      [
+       "T",
+       40,
+       40
+      ],
+      [
+       "T",
+       41,
+       41
+      ]
+     ],
+     "kind": "condition",
+     "control": {
+      "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+      "function": "rank_title_only",
+      "line": 41,
+      "condition": [
+       "test",
+       40,
+       "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+      ],
+      "work": 4
+     }
+    },
+    {
+     "text": "В rank на строке 116 записан прямой вызов rank_title_only.",
+     "refs": [
+      [
+       "T",
+       34,
+       34
+      ],
+      [
+       "R",
+       110,
+       110
+      ],
+      [
+       "R",
+       116,
+       116
+      ],
+      [
+       "R",
+       17,
+       17
+      ]
+     ],
+     "edge": [
+      "rank",
+      "rank_title_only"
+     ],
+     "kind": "caller"
+    },
+    {
+     "text": "Привязка аргументов: title ← `title`, before_files ← `old_sources`, top_n ← `10`.",
+     "refs": [
+      [
+       "T",
+       34,
+       34
+      ],
+      [
+       "R",
+       110,
+       110
+      ],
+      [
+       "R",
+       116,
+       116
+      ],
+      [
+       "R",
+       17,
+       17
+      ]
+     ],
+     "kind": "arguments"
+    },
+    {
+     "text": "В rank исследована инструкция `files = rank_title_only(title, old_sources, top_n=10)` (стр. 116). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113), `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+     "refs": [
+      [
+       "R",
+       110,
+       110
+      ],
+      [
+       "R",
+       112,
+       112
+      ],
+      [
+       "R",
+       113,
+       113
+      ],
+      [
+       "R",
+       114,
+       114
+      ],
+      [
+       "R",
+       115,
+       115
+      ],
+      [
+       "R",
+       116,
+       116
+      ]
+     ],
+     "kind": "caller_condition",
+     "control": {
+      "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+      "function": "rank",
+      "line": 116,
+      "condition": [
+       "and",
+       [
+        "not",
+        [
+         "test",
+         112,
+         "not isinstance(old_sources, dict) or not old_sources"
+        ]
+       ],
+       [
+        "not",
+        [
+         "test",
+         114,
+         "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+        ]
+       ]
+      ],
+      "work": 7
+     }
+    }
+   ],
+   "snapshot": "53eab6faf23eecef27351102ff040ed92b2cba6c",
+   "requirements": {
+    "owner": "rank_title_only",
+    "line": 41,
+    "interpretation": "M126_QUERY_INVALID",
+    "required": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ],
+    "supported": [
+     "site",
+     "condition",
+     "caller",
+     "arguments",
+     "caller_condition"
+    ],
+    "missing": [],
+    "gaps": {}
+   },
+   "execution_observed": false,
+   "coverage": "static_subset"
+  }
+ }
+]
