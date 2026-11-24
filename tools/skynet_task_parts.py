@@ -103,7 +103,8 @@ def research(search, question, select, policy, object_catalog=None, suggestions=
         step=ctl.step("interpret_parts","question")
         if policy in objects.POLICIES:
             edges,bound=objects.resolve(parts,object_catalog,search.src.commit,policy,suggestions)
-            proposals=experience.shared_plan(parts) if policy=="object_offline" else plan(parts,select,"parts_once")
+            proposals=(experience.shared_plan(parts) if policy in ("object_offline","object_assisted")
+                       else plan(parts,select,"parts_once"))
             planned=[]
             for p,edge,(needs,issues,_) in zip(parts,edges,proposals,strict=True):
                 p["binding"]=edge

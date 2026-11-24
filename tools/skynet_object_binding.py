@@ -5,7 +5,7 @@ import re
 
 import skynet_requirements as req
 
-POLICIES = ("object_graph","object_local","object_recent","object_offline")
+POLICIES = ("object_graph","object_local","object_recent","object_offline","object_assisted")
 # Closed-class reference words refer to discourse positions, never to project symbols.
 ORDINAL = re.compile(r"\b(перв|втор|последн)(?:ый|ой|ий|ая|яя|ую|юю|ого|его|ом|ем|ому|ему)\b",re.I)
 ANAPHOR = re.compile(r"\b(?:него|неё|нее|нему|ней|эт(?:а|о|от|у|ого|ой|ом|ому)|тот же|той же|того же|там же|его|её)\b",re.I)
@@ -82,7 +82,7 @@ def resolve(parts,catalog,commit,policy,suggestions=None):
         tentative=False
         try:
             indexed=None
-            if ordinals and policy in ("object_graph","object_offline"):
+            if ordinals and policy in ("object_graph","object_offline","object_assisted"):
                 if len(ordinals)!=1:
                     raise req.Gap("observation_ambiguous")
                 pos={"перв":0,"втор":1,"последн":-1}[next(iter(ordinals))]

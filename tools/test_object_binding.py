@@ -56,9 +56,19 @@ class Binding(unittest.TestCase):
         with patch.object(parts,"research",substitute):
             rejected=loop.investigate(q,root,**opts)
             self.assertEqual((rejected["reason"],rejected["claims"]),("claim_binding",[]))
+        def swap_genuine_receipts(*args):
+            result,meta=original(*args)
+            for proof in meta["proofs"]:
+                proof["target"]=1-proof["target"]
+            for p in meta["parts"]:
+                p["claims"]=[1-p["claims"][0]]
+            return result,meta
+        with patch.object(parts,"research",swap_genuine_receipts):
+            rejected=loop.investigate(q,root,**opts)
+            self.assertEqual((rejected["reason"],rejected["claims"]),("claim_binding",[]))
         denied=loop.investigate("Где в modules/elsewhere.py эта строка?",root,**opts)
         self.assertEqual(denied["reason"],"out_of_scope")
-        self.assertEqual(len(calls),2)
+        self.assertEqual(len(calls),3)
 
 
 if __name__=="__main__":
