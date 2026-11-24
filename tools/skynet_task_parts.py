@@ -4,6 +4,7 @@ import re
 
 import skynet_requirements as req
 import skynet_obligation_check as obligations
+import skynet_experience as experience
 
 ISSUES = ("runtime", "external", "unsupported", "ambiguous")
 REVIEW = """Проверь каждый пункт задачи сам по себе. В data есть текст пункта и краткие
@@ -99,7 +100,11 @@ def research(search, question, select, policy):
     effects={}
     try:
         step=ctl.step("interpret_parts","question")
-        if policy=="memory_only" and len(parts)<=8:
+        if policy in experience.LEARNERS:
+            planned=experience.learned_plan(parts,policy)
+        elif policy=="shared_evidence":
+            planned=experience.shared_plan(parts)
+        elif policy=="memory_only" and len(parts)<=8:
             target=0
             planned=[]
             for i,p in enumerate(parts):
@@ -235,7 +240,7 @@ def review(ctl,parts,claims,proofs,items,effects,select,residual):
                      if claims[n]["kind"] in p["need"]]
 
 
-def verify(question,meta,claims,flat=False,checked=False):
+def verify(question,meta,claims,flat=False,checked=False,shared=False,learner=None):
     def check(ok):
         if not ok:
             raise req.observed.route.arguments.host.Rejected("claim_binding")
@@ -267,3 +272,12 @@ def verify(question,meta,claims,flat=False,checked=False):
     check(cited==set(index))
     if checked:
         obligations.verify(parts,claims)
+    if shared or learner:
+        required=experience.learned_plan(expected,learner) if learner else experience.shared_plan(expected)
+        for p,(needs,gaps,target) in zip(parts,required,strict=True):
+            check(p["target"]==target)
+            if p["status"]=="established":
+                check(not gaps and set(needs)=={claims[i]["kind"] for i in p["claims"]})
+                quotes=req.goals.quoted(expected[target]["text"])
+                sites=[claims[i]["text"].casefold() for i in p["claims"] if claims[i]["kind"]=="site"]
+                check(all(any(q.casefold() in s for s in sites) for q in quotes))

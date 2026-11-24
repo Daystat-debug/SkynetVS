@@ -262,10 +262,11 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     task = host.Task(question, SOURCE, timeout=TIME_LIMIT)
     trace = []
     plan = "interpret"
+    strategy = discovery
     src = None
 
     def retrieve(req):
-        nonlocal src, plan
+        nonlocal src, plan, strategy
         src, ground = opener(root)
         if set(src.raw) != host.lab.SCOPE or req.source_id != SOURCE:
             raise host.Rejected("snapshot_policy")
@@ -275,13 +276,16 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         paths = cli.PY_PATH.findall(req.question)
         if any(not any(p == f or p.endswith("/" + f) for p in src.pages) for f in paths):
             return packet(req, src, reason="out_of_scope")
-        if discovery in ("parts","parts_once","lexical_parts","residual","flat_residual","independent","memory_only"):
+        learned = discovery in task_parts.experience.POLICIES
+        if learned or discovery in task_parts.experience.LEARNERS or discovery in ("parts","parts_once","lexical_parts","residual","flat_residual","independent","memory_only","shared_evidence"):
             plan="task_parts"
             if paths:
                 return packet(req,src,reason="clarification")
+            if learned:
+                strategy = task_parts.experience.select(discovery,req.question)
             search=arguments.Search(req,src,lookup or cli.calls.lookup,trace,min(MAX_STEPS,steps),
                                     task.deadline,head_current,site_anchors)
-            output,meta=task_parts.research(search,req.question,select,discovery)
+            output,meta=task_parts.research(search,req.question,select,strategy)
             evidence=packet(req,src,*output)
             evidence["analysis"]["task_parts"]=meta
             return evidence
@@ -391,7 +395,8 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         if "task_parts" in evidence["analysis"]:
             meta=evidence["analysis"]["task_parts"]
             task_parts.verify(req.question,meta,evidence["analysis"]["observations"],discovery=="flat_residual",
-                              checked=discovery in ("independent","memory_only"))
+                              checked=strategy in ("independent","memory_only"),shared=strategy=="shared_evidence",
+                              learner=strategy if strategy in task_parts.experience.LEARNERS else None)
             if draft["status"]=="answer":
                 assessment["answer_completeness"]=("interpreted_requirements_met" if all(
                     p["status"]=="established" for p in meta["parts"]) else "partial")
@@ -410,6 +415,8 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     public["snapshot"] = evidence["snapshot_id"]
     if "task_parts" in evidence["analysis"]:
         public["parts"]=evidence["analysis"]["task_parts"]["parts"]
+        if discovery in task_parts.experience.POLICIES:
+            public["strategy"]=strategy
     if "requirements" in evidence["analysis"]:
         public["requirements"] = evidence["analysis"]["requirements"]
     if "research" in evidence["analysis"]:
@@ -485,7 +492,7 @@ def main():
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--requirements", action="store_true", help="Проверить требования по частям и показать, что осталось неизвестным.")
-    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid"),help="0.11 использует размеченные примеры, 0.11-hybrid добавляет план Qwen. По умолчанию 0.10.")
+    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid","0.12"),help="0.12 выбирает стратегию по опыту. По умолчанию 0.10.")
     modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
     modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
@@ -570,7 +577,7 @@ def task_interpreter(resources):
 if __name__ == "__main__":
     if not sys.stdout.isatty():
         sys.stdout.reconfigure(encoding="utf8")
-    policies = {"0.9":"requirements","0.10":"residual","0.11":"memory_only","0.11-hybrid":"independent"}
+    policies = {"0.9":"requirements","0.10":"residual","0.11":"memory_only","0.11-hybrid":"independent","0.12":"experience_release"}
     versioned = len(sys.argv)==3 and sys.argv[1]=="--requirements-worker" and sys.argv[2] in policies
     if versioned or sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)
