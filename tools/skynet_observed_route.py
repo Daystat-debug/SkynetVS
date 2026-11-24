@@ -64,7 +64,7 @@ def observe(search, question, policy, select):
         step.update(status="indexed",count=len(catalog))
         pick = controller.step("select_goal","question")
         try:
-            if policy in ("syntax", "captions", "explore", "facets", "pooled"):
+            if policy in ("syntax", "captions", "explore", "facets", "pooled", "grounded", "english_pool"):
                 parts = language.relation(question) if policy != "captions" else None
                 try:
                     if parts:
@@ -75,7 +75,7 @@ def observe(search, question, policy, select):
                     raise
                 except route.control.Gap as first:
                     split_literal = str(first)=="observation_missing" and len(goals.quoted(question))==2
-                    if policy not in ("facets","pooled") or (str(first)!="observation_ambiguous" and not split_literal):
+                    if policy not in ("facets","pooled","grounded","english_pool") or (str(first)!="observation_ambiguous" and not split_literal):
                         raise
                     hits, action = facets.ground(controller,question,catalog,select,policy)
                     if action in ("between","forward"):

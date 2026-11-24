@@ -66,6 +66,16 @@ class SourceLanguage(unittest.TestCase):
             with self.subTest(value=value),self.assertRaises(language.goals.route.control.Gap):
                 facets.specification("Когда появляется результат?",lambda *_:(value,{"finish_reason":"stop"}))
 
+    def test_optional_slot_only_for_unary_requests(self):
+        for op in ("when","between"):
+            obj = language.json.dumps(dict(op=op,a=dict(object="door hatch",detail="closed shut")))
+            read = lambda *_:(obj,{"finish_reason":"stop"})
+            if op=="when":
+                self.assertEqual(facets.specification("Когда заперт люк?",read,True)[0],"when")
+            else:
+                with self.assertRaises(language.goals.route.control.Gap):
+                    facets.specification("Связаны ли места?",read,True)
+
 
 if __name__ == "__main__":
     unittest.main()
