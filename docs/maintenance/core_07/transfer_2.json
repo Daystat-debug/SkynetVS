@@ -1,0 +1,25 @@
+{
+ "implementation":"867e644334208057ba064efb2895bf6e3953d1da",
+ "source":"fb30428c94b3d477dde9b5e081435a1669822aad",
+ "rubric":"Second transfer. Same semantics as transfer.json. Hint links are checked separately. A clarification, even with the correct hint, never counts as a completed positive task.",
+ "cases":[
+  {"id":"T01","q":"Где в отчёте указывается, откуда взята текущая версия исходников, рядом с идентификатором коммита?","path":"C","owner":"format_context","line":208,"refs":[202,208]},
+  {"id":"T02","q":"Где формируется сводка о числе прочитанных исходников и объёме в байтах?","path":"C","owner":"format_context","line":210,"refs":[202,210]},
+  {"id":"T03","q":"Когда в отчёт добавляется заголовок про локальный контекст и то, что код не выполнялся?","path":"C","owner":"format_context","line":225,"refs":[202,203,204,222,225],"controls":[["format_context",225,["and",-203,-222]]]},
+  {"id":"T04","q":"Где записано пояснение для человека о том, что создание патча не разрешено?","path":"C","owner":"format_context","line":220,"refs":[202,220]},
+  {"id":"T05","q":"Кто непосредственно вызывает проверку с сообщением «M126_FILES_LIMIT», при каких условиях и какие аргументы передаёт?","path":"T","owner":"rank_title_only","line":43,"refs":[34,40,41,42,43],"other_refs":{"R":[17,110,112,113,114,115,116]},"caller":"rank","binding":"before_files ← `old_sources`","controls":[["rank",116,["and",-112,-114]],["rank_title_only",43,["and",-40,42]]]},
+  {"id":"T06","q":"Когда программа говорит, что установленный Git не найден и ничего не скачано?","path":"G","owner":"find_git","line":39,"refs":[22,35,36,38,39],"controls":[["find_git",39,["all",35,-36]]]},
+  {"id":"T07","q":"При каких условиях переразмеченный текст отклоняют из-за того, что он стал занимать больше байтов, чем первоначальный?","path":"C","owner":"_render_current_head_labels","line":198,"refs":[175,181,182,183,184,188,189,197,198],"controls":[["_render_current_head_labels",198,["and",-181,-183,-188,197]]]},
+  {"id":"T08","q":"Где докладывается, сколько окон для контекста выбрано из предложенных и сколько байт занято?","path":"C","owner":"format_context","line":219,"refs":[202,219]},
+  {"id":"T09","q":"Когда появляется «M134_REPORT_SCHEMA_INVALID»?","reasons":["observation_ambiguous","diagnostic_ambiguous","clarification"]},
+  {"id":"T10","q":"Где отчёт сообщает, что резервная копия отправлена почтой?","reasons":["observation_ambiguous","observation_missing","clarification","no_match"]},
+  {"id":"T11","q":"Сколько раз за последний запуск появились подсказки для русского запроса?","reasons":["observation_required"]},
+  {"id":"T12","q":"Где в modules/backup.py создаётся строка об использованном числе байтов?","reasons":["out_of_scope"]},
+  {"id":"G01","q":"Когда резервный экземпляр попадает в изолированный каталог?","path":"R","owner":"other","line":12,"refs":[10,11,12],"controls":[["other",12,11]]},
+  {"id":"G02","q":"Кто вызывает код, который откладывает проверку архива до ручного разбора, и с какой глубиной?","path":"R","owner":"sink","line":4,"caller":"caller","binding":"depth=","verdict":"excluded_route","refs":[2,3,4,7,8],"controls":[["caller",8,true],["sink",4,3]]},
+  {"id":"G03","q":"Где формируется положительное заключение о проверке архива без замечаний?","path":"R","owner":"sink","line":5,"refs":[2,5]},
+  {"id":"G04","q":"Когда формируется «Копия готова для передачи»?","path":"R","owner":"other","line":13,"refs":[10,11,12,13],"controls":[["other",13,-11]]},
+  {"id":"G05","q":"Где появляется «Проверка архива»?","reasons":["observation_ambiguous","clarification"]},
+  {"id":"G06","q":"При каком условии подтверждается восстановление архива из облачного хранилища?","reasons":["observation_ambiguous","observation_missing","clarification","no_match"]}
+ ]
+}
