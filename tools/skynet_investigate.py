@@ -13,6 +13,7 @@ import skynet_core_explain as host
 import skynet_argument_flow as arguments
 import skynet_diagnostic_path as diagnostic
 import skynet_causal_query as causal
+import skynet_route_research as research
 
 SOURCE = host.SOURCE_ID + ".git-head"
 MAX_STEPS = 6
@@ -38,6 +39,8 @@ OWNER = rf"(?:функци[а-я]+,? (?:которая {ACTIVE}|{PARTICIPLE})|п
 OWNER_QUERY = re.compile(rf"{ASK}{INCOMING} {OWNER} (?:пол[ея] |ключ[а]? )?({NAME})", re.I)
 OUTGOING_OWNER = re.compile(r"(?:какие функции|кого|что) (?:напрямую )?вызывает (?:функция|производитель)\b", re.I)
 REASONS = {
+    "conditional_expression": "Вычисление вызова внутри выражения зависит от неподдерживаемого контекста.",
+    "research_frontier_limit": "Исчерпан предел рассмотренных вариантов.",
     "control_unsupported": "Существенный участок пути содержит неподдерживаемое управление. Полная локальная причина не установлена.",
     "control_unreachable": "В поддерживаемой структуре управления до указанной инструкции нет перехода.",
     "statement_ambiguous": "Укажите строку с одной инструкцией внутри выбранной функции.",
@@ -246,7 +249,7 @@ def path_evidence(req, src, names, lookup, trace, steps, deadline):
 
 def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEPS,
                 diagnostic_planner=diagnostic.witness, why=False, classifier=causal.classify,
-                proof_type=causal.control.Proof):
+                proof_type=causal.control.Proof, research_mode=False, research_policy="adaptive"):
     task = host.Task(question, SOURCE, timeout=TIME_LIMIT)
     trace = []
     plan = "interpret"
@@ -265,6 +268,18 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
             return packet(req, src, reason="out_of_scope")
         if cli.auto_reader.EVENT.search(req.question):
             return packet(req, src, reason="observation_required")
+        if research_mode:
+            plan = "research_route"
+            pair = research.goal(req.question, endpoints)
+            if paths or not pair:
+                return packet(req, src, reason="clarification")
+            search = arguments.Search(req, src, lookup or cli.calls.lookup, trace,
+                                      min(MAX_STEPS, steps), task.deadline, head_current, site_anchors)
+            controller = research.Research(search, *pair, policy=research_policy)
+            evidence = packet(req, src, *controller.solve())
+            evidence["analysis"]["research"] = dict(verdict=controller.result, attempts=controller.attempts,
+                examined=controller.examined, decisions=controller.decisions, policy=research_policy)
+            return evidence
         symptom = diagnostic.interpret(req.question)
         if why or (symptom and not symptom.origin) or (not symptom and causal.unbound_subject(req.question)):
             plan = "local_control"
@@ -317,7 +332,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return evidence
 
     def verify(req, evidence, draft, delivered):
-        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic", "local_control"):
+        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic", "local_control", "research_route"):
             head_current(src)
         return host.verify_snapshot(src, req, evidence, draft, delivered)
 
@@ -327,10 +342,16 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return dict(public, reason=result["reason"])
     evidence = result["evidence_set"]
     public["snapshot"] = evidence["snapshot_id"]
+    if "research" in evidence["analysis"]:
+        public["research"] = evidence["analysis"]["research"]
     proposal = result["answer_proposal"]
     if proposal["status"] != "answer":
         return dict(public, reason=proposal["reason"])
-    if plan == "explain_diagnostic":
+    if plan == "research_route":
+        public.update(coverage="one_static_route", execution_observed=False, joint_feasibility="not_proved")
+        if public["research"]["verdict"] == "excluded_route":
+            public["state"] = "partial"
+    elif plan == "explain_diagnostic":
         public["state"] = "partial"
         public["coverage"] = "one_static_site"
         public["execution_observed"] = False
@@ -343,13 +364,16 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         public["claims"].append(dict(text=claim["text"], refs=[by_id[a["ref_id"]] for a in claim["anchors"]]))
         if "edge" in obs:
             public["claims"][-1]["edge"] = obs["edge"]
+        if plan == "research_route" and "control" in obs:
+            public["claims"][-1]["control"] = obs["control"]
     return public
 
 
-def supervised(question, *, timeout=TIME_LIMIT, why=False):
+def supervised(question, *, timeout=TIME_LIMIT, why=False, research_mode=False):
     if len(question) > 600:
         return dict(state="insufficient", reason="clarification", claims=[], steps=[])
-    cmd = [sys.executable, "-I", "-S", "-B", str(Path(__file__).resolve()), "--why-worker" if why else "--worker"]
+    worker = "--research-worker" if research_mode else "--why-worker" if why else "--worker"
+    cmd = [sys.executable, "-I", "-S", "-B", str(Path(__file__).resolve()), worker]
     try:
         run = subprocess.run(cmd, input=question.encode("utf8"), capture_output=True, timeout=timeout)
         if not run.returncode:
@@ -363,9 +387,11 @@ def main():
     parser = argparse.ArgumentParser(description="Исследовать статические вызовы и поля в пяти файлах Git HEAD.")
     parser.add_argument("question")
     parser.add_argument("--json", action="store_true")
-    parser.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
+    modes.add_argument("--research", action="store_true", help="Один статический маршрут от функции до функции, поля, сообщения или инструкции. Формат: вход -> ориентир.")
     args = parser.parse_args()
-    out = supervised(args.question, why=args.why)
+    out = supervised(args.question, why=args.why, research_mode=args.research)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, indent=2))
     else:
@@ -376,6 +402,11 @@ def main():
         if out["state"] not in ("answered", "partial"):
             print(REASONS.get(out["reason"], "Ответ удержан."), "(" + out["reason"] + ")")
         else:
+            if out["plan"] == "research_route":
+                if out["research"]["verdict"] == "excluded_route":
+                    print("Для одного конкретного маршрута доказано противоречие. Другие пути остаются открытым вопросом.")
+                else:
+                    print("Условия одного статического маршрута. Совместная выполнимость условий на реальных входах не установлена.")
             if out["plan"] == "explain_diagnostic":
                 print("Подтверждены места вызовов и локальная ветвь. Объяснение причины от входа частичное.")
             for claim in out["claims"]:
@@ -389,9 +420,10 @@ def main():
 if __name__ == "__main__":
     if not sys.stdout.isatty():
         sys.stdout.reconfigure(encoding="utf8")
-    if sys.argv[1:] in (["--worker"], ["--why-worker"]):
+    if sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"]):
         data = sys.stdin.buffer.read(2401)
-        result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker")
+        result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
+                             research_mode=sys.argv[1] == "--research-worker")
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())
