@@ -1,0 +1,168 @@
+{
+ "ms": {
+  "B01": {
+   "checked": 112.4,
+   "site": 117.3,
+   "syntax": 112.0,
+   "explore": 97.6,
+   "pooled": 109.1,
+   "facets": 115.2
+  },
+  "B02": {
+   "site": 129.0,
+   "syntax": 94.2,
+   "explore": 139.0,
+   "pooled": 138.6,
+   "facets": 127.8,
+   "checked": 99.0
+  },
+  "B03": {
+   "syntax": 95.1,
+   "explore": 99.7,
+   "pooled": 118.4,
+   "facets": 131.1,
+   "checked": 97.3,
+   "site": 109.8
+  },
+  "B04": {
+   "explore": 96.3,
+   "pooled": 164.6,
+   "facets": 166.5,
+   "checked": 98.3,
+   "site": 135.7,
+   "syntax": 129.7
+  },
+  "B05": {
+   "pooled": 110.6,
+   "facets": 111.7,
+   "checked": 120.4,
+   "site": 123.1,
+   "syntax": 132.4,
+   "explore": 119.0
+  },
+  "B06": {
+   "facets": 120.9,
+   "checked": 100.4,
+   "site": 94.5,
+   "syntax": 93.8,
+   "explore": 95.9,
+   "pooled": 108.4
+  },
+  "B07": {
+   "checked": 93.5,
+   "site": 94.2,
+   "syntax": 92.3,
+   "explore": 91.9,
+   "pooled": 206.9,
+   "facets": 201.3
+  },
+  "B08": {
+   "site": 93.4,
+   "syntax": 175.0,
+   "explore": 182.1,
+   "pooled": 201.5,
+   "facets": 186.0,
+   "checked": 97.2
+  },
+  "B09": {
+   "syntax": 172.6,
+   "explore": 177.7,
+   "pooled": 181.6,
+   "facets": 180.9,
+   "checked": 96.3,
+   "site": 95.3
+  },
+  "B10": {
+   "explore": 101.7,
+   "pooled": 114.8,
+   "facets": 112.5,
+   "checked": 98.8,
+   "site": 124.5,
+   "syntax": 94.8
+  },
+  "B11": {
+   "pooled": 0.1,
+   "facets": 0.0,
+   "checked": 0.0,
+   "site": 0.0,
+   "syntax": 0.0,
+   "explore": 0.0
+  },
+  "B12": {
+   "facets": 0.0,
+   "checked": 0.0,
+   "site": 0.0,
+   "syntax": 0.0,
+   "explore": 0.0,
+   "pooled": 0.0
+  },
+  "F11": {
+   "checked": 101.5,
+   "site": 130.9,
+   "syntax": 104.9,
+   "explore": 101.3,
+   "pooled": 116.3,
+   "facets": 121.6
+  },
+  "F12": {
+   "site": 115.6,
+   "syntax": 98.9,
+   "explore": 99.8,
+   "pooled": 120.8,
+   "facets": 121.4,
+   "checked": 107.6
+  },
+  "F13": {
+   "syntax": 109.9,
+   "explore": 109.2,
+   "pooled": 172.4,
+   "facets": 133.5,
+   "checked": 98.1,
+   "site": 103.1
+  },
+  "F14": {
+   "explore": 106.7,
+   "pooled": 116.5,
+   "facets": 122.4,
+   "checked": 110.2,
+   "site": 125.0,
+   "syntax": 99.9
+  },
+  "F15": {
+   "pooled": 131.2,
+   "facets": 134.1,
+   "checked": 136.7,
+   "site": 157.2,
+   "syntax": 149.1,
+   "explore": 150.0
+  },
+  "F16": {
+   "facets": 174.9,
+   "checked": 111.4,
+   "site": 128.9,
+   "syntax": 172.0,
+   "explore": 148.1,
+   "pooled": 136.1
+  },
+  "F17": {
+   "checked": 99.5,
+   "site": 99.7,
+   "syntax": 103.9,
+   "explore": 101.4,
+   "pooled": 136.8,
+   "facets": 165.8
+  },
+  "F18": {
+   "site": 142.1,
+   "syntax": 104.1,
+   "explore": 105.6,
+   "pooled": 122.2,
+   "facets": 124.4,
+   "checked": 104.2
+  }
+ },
+ "source_read_ms": [
+  305.8,
+  280.7
+ ]
+}

@@ -1,0 +1,4646 @@
+{
+ "plan": "5a57069c28263b3106045ca0f9863e078651d33e:docs/maintenance/core_08/confirmation.json",
+ "rows": [
+  {
+   "id": "C01",
+   "question": "Где исправность размера объекта Git проверяют ещё до чтения самого содержимого — пришёл ли вообще размер в числовом виде?",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "C:68": false,
+     "C:109": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "C:68": false,
+     "C:109": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "explore": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "C:68": false,
+     "C:109": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "C:68": false,
+     "C:109": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "grounded": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "C:68": false,
+     "C:109": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "C02",
+   "question": "Где при смешивании двух очередей обнаруживают дубликат результата?",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "site": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:96": true,
+     "R:106": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В interleave_3_to_1 на строке 106 записано выражение `'M130_CANDIDATE_DUPLICATE'`.",
+       "refs": [
+        [
+         "R",
+         96,
+         96
+        ],
+        [
+         "R",
+         106,
+         106
+        ]
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "interleave_3_to_1",
+      "line": 106,
+      "interpretation": "M130_CANDIDATE_DUPLICATE"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "explore": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:96": false,
+     "R:106": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:96": false,
+     "R:106": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "grounded": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:96": false,
+     "R:106": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:96": false,
+     "R:106": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "C03",
+   "question": "Где прерывают поиск, если лексическое сопоставление не дало совпадения с задачей?",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "explore": {
+    "goal": false,
+    "conclusion": true,
+    "obligations": {
+     "C:144": true,
+     "C:156": true
+    },
+    "complete_evidence": true,
+    "full": false,
+    "false_publication": true,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "explore"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@156",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 156 записано выражение `'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'`.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ]
+      },
+      {
+       "text": "В search_repository исследована инструкция `raise ValueError('M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода')` (стр. 156). Для достижения строки требуется: `first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'` истинно (стр. 155). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         147,
+         147
+        ],
+        [
+         "C",
+         151,
+         151
+        ],
+        [
+         "C",
+         155,
+         155
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "search_repository",
+        "line": 156,
+        "condition": [
+         "test",
+         155,
+         "first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'"
+        ],
+        "work": 19
+       }
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "search_repository",
+      "line": 156,
+      "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "english_pool": {
+    "goal": false,
+    "conclusion": true,
+    "obligations": {
+     "C:144": true,
+     "C:156": true
+    },
+    "complete_evidence": true,
+    "full": false,
+    "false_publication": true,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "english_pool"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@156",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 156 записано выражение `'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'`.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ]
+      },
+      {
+       "text": "В search_repository исследована инструкция `raise ValueError('M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода')` (стр. 156). Для достижения строки требуется: `first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'` истинно (стр. 155). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         147,
+         147
+        ],
+        [
+         "C",
+         151,
+         151
+        ],
+        [
+         "C",
+         155,
+         155
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "search_repository",
+        "line": 156,
+        "condition": [
+         "test",
+         155,
+         "first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'"
+        ],
+        "work": 19
+       }
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "search_repository",
+      "line": 156,
+      "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "grounded": {
+    "goal": false,
+    "conclusion": true,
+    "obligations": {
+     "C:144": true,
+     "C:156": true
+    },
+    "complete_evidence": true,
+    "full": false,
+    "false_publication": true,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "grounded"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@156",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 156 записано выражение `'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'`.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ]
+      },
+      {
+       "text": "В search_repository исследована инструкция `raise ValueError('M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода')` (стр. 156). Для достижения строки требуется: `first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'` истинно (стр. 155). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         147,
+         147
+        ],
+        [
+         "C",
+         151,
+         151
+        ],
+        [
+         "C",
+         155,
+         155
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "search_repository",
+        "line": 156,
+        "condition": [
+         "test",
+         155,
+         "first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'"
+        ],
+        "work": 19
+       }
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "search_repository",
+      "line": 156,
+      "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "C:144": false,
+     "C:156": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "goal": false,
+    "conclusion": true,
+    "obligations": {
+     "C:144": true,
+     "C:156": true
+    },
+    "complete_evidence": true,
+    "full": false,
+    "false_publication": true,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@156",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 156 записано выражение `'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'`.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ]
+      },
+      {
+       "text": "В search_repository исследована инструкция `raise ValueError('M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода')` (стр. 156). Для достижения строки требуется: `first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'` истинно (стр. 155). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         147,
+         147
+        ],
+        [
+         "C",
+         151,
+         151
+        ],
+        [
+         "C",
+         155,
+         155
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "search_repository",
+        "line": 156,
+        "condition": [
+         "test",
+         155,
+         "first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'"
+        ],
+        "work": 19
+       }
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "search_repository",
+      "line": 156,
+      "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "C04",
+   "question": "Что должно произойти, чтобы появилось «M130_TITLE_INVALID»?",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "english_pool": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:110": true,
+     "R:112": false,
+     "R:113": false,
+     "R:114": false,
+     "R:115": true,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": true,
+    "false_claim": true,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "translated_english_pool"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "where",
+       "facets": [
+        2
+       ]
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank на строке 115 записано выражение `'M130_TITLE_INVALID'`.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         115,
+         115
+        ]
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "rank",
+      "line": 115,
+      "interpretation": "M130_TITLE_INVALID"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "grounded": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:110": true,
+     "R:112": false,
+     "R:113": false,
+     "R:114": false,
+     "R:115": true,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": true,
+    "false_claim": true,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "translated_grounded"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "where",
+       "facets": [
+        2
+       ]
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank на строке 115 записано выражение `'M130_TITLE_INVALID'`.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         115,
+         115
+        ]
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "rank",
+      "line": 115,
+      "interpretation": "M130_TITLE_INVALID"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:110": false,
+     "R:112": false,
+     "R:113": false,
+     "R:114": false,
+     "R:115": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:110": false,
+     "R:112": false,
+     "R:113": false,
+     "R:114": false,
+     "R:115": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "explore": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:110": false,
+     "R:112": false,
+     "R:113": false,
+     "R:114": false,
+     "R:115": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "C05",
+   "question": "Функции с сообщениями «M127_TITLE_INVALID» и «M130_NO_SCOPE_FILES_WITHIN_LIMIT» напрямую вызывают одна другую? Покажи свидетельство.",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "grounded": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:18": true,
+     "R:110": true,
+     "R:124": true,
+     "R:125": true,
+     "S:72": true,
+     "S:74": true,
+     "direct_edge": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "started"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "between",
+       "facets": [
+        2,
+        2
+       ]
+      },
+      {
+       "tool": "calls",
+       "target": "rank",
+       "status": "call_sites"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank на строке 124 записано выражение 'M130_NO_SCOPE_FILES_WITHIN_LIMIT'.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         124,
+         124
+        ]
+       ]
+      },
+      {
+       "text": "В rank_symbols на строке 74 записано выражение 'M127_TITLE_INVALID'.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         74,
+         74
+        ]
+       ]
+      },
+      {
+       "text": "В rank на строке 125 записан прямой вызов rank_symbols. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         125,
+         125
+        ],
+        [
+         "R",
+         18,
+         18
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_symbols"
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "action": "connect",
+      "verdict": "direct_edge",
+      "owner": "rank_symbols",
+      "line": 74,
+      "interpretation": "M130_NO_SCOPE_FILES_WITHIN_LIMIT ↔ M127_TITLE_INVALID"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:18": false,
+     "R:110": false,
+     "R:124": false,
+     "R:125": false,
+     "S:72": false,
+     "S:74": false,
+     "direct_edge": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_missing"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_missing"
+    }
+   },
+   "site": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:18": false,
+     "R:110": false,
+     "R:124": false,
+     "R:125": false,
+     "S:72": false,
+     "S:74": false,
+     "direct_edge": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_missing"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_missing"
+    }
+   },
+   "explore": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:18": false,
+     "R:110": false,
+     "R:124": false,
+     "R:125": false,
+     "S:72": false,
+     "S:74": false,
+     "direct_edge": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:18": true,
+     "R:110": true,
+     "R:124": true,
+     "R:125": true,
+     "S:72": true,
+     "S:74": true,
+     "direct_edge": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "started"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "between",
+       "facets": [
+        2,
+        2
+       ]
+      },
+      {
+       "tool": "calls",
+       "target": "rank",
+       "status": "call_sites"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank на строке 124 записано выражение 'M130_NO_SCOPE_FILES_WITHIN_LIMIT'.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         124,
+         124
+        ]
+       ]
+      },
+      {
+       "text": "В rank_symbols на строке 74 записано выражение 'M127_TITLE_INVALID'.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         74,
+         74
+        ]
+       ]
+      },
+      {
+       "text": "В rank на строке 125 записан прямой вызов rank_symbols. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+       "refs": [
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         125,
+         125
+        ],
+        [
+         "R",
+         18,
+         18
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_symbols"
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "action": "connect",
+      "verdict": "direct_edge",
+      "owner": "rank_symbols",
+      "line": 74,
+      "interpretation": "M130_NO_SCOPE_FILES_WITHIN_LIMIT ↔ M127_TITLE_INVALID"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   }
+  },
+  {
+   "id": "C06",
+   "question": "Есть ли вызов между «M134_GIT_PROJECT_ROOT_MISMATCH» и «M134_NO_LEXICAL_MATCH»?",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "C:68": false,
+     "C:80": false,
+     "C:144": false,
+     "C:150": false,
+     "C:156": false,
+     "direct_edge": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_missing"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_missing"
+    }
+   },
+   "site": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "C:68": false,
+     "C:80": false,
+     "C:144": false,
+     "C:150": false,
+     "C:156": false,
+     "direct_edge": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_missing"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_missing"
+    }
+   },
+   "explore": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "C:68": true,
+     "C:80": true,
+     "C:144": true,
+     "C:150": true,
+     "C:156": true,
+     "direct_edge": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "two_observations"
+      },
+      {
+       "tool": "calls",
+       "target": "search_repository",
+       "status": "withheld"
+      },
+      {
+       "tool": "calls",
+       "target": "scan_head",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 156 записано выражение 'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ]
+      },
+      {
+       "text": "В scan_head на строке 80 записано выражение 'M134_GIT_PROJECT_ROOT_MISMATCH'.",
+       "refs": [
+        [
+         "C",
+         68,
+         68
+        ],
+        [
+         "C",
+         80,
+         80
+        ]
+       ]
+      },
+      {
+       "text": "В search_repository на строке 150 записан прямой вызов scan_head. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+       "refs": [
+        [
+         "C",
+         68,
+         68
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         150,
+         150
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "scan_head"
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "action": "connect",
+      "verdict": "direct_edge",
+      "owner": "scan_head",
+      "line": 80,
+      "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода ↔ M134_GIT_PROJECT_ROOT_MISMATCH"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "english_pool": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "C:68": true,
+     "C:80": true,
+     "C:144": true,
+     "C:150": true,
+     "C:156": true,
+     "direct_edge": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "two_observations"
+      },
+      {
+       "tool": "calls",
+       "target": "search_repository",
+       "status": "withheld"
+      },
+      {
+       "tool": "calls",
+       "target": "scan_head",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 156 записано выражение 'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ]
+      },
+      {
+       "text": "В scan_head на строке 80 записано выражение 'M134_GIT_PROJECT_ROOT_MISMATCH'.",
+       "refs": [
+        [
+         "C",
+         68,
+         68
+        ],
+        [
+         "C",
+         80,
+         80
+        ]
+       ]
+      },
+      {
+       "text": "В search_repository на строке 150 записан прямой вызов scan_head. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+       "refs": [
+        [
+         "C",
+         68,
+         68
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         150,
+         150
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "scan_head"
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "action": "connect",
+      "verdict": "direct_edge",
+      "owner": "scan_head",
+      "line": 80,
+      "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода ↔ M134_GIT_PROJECT_ROOT_MISMATCH"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "grounded": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "C:68": true,
+     "C:80": true,
+     "C:144": true,
+     "C:150": true,
+     "C:156": true,
+     "direct_edge": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "two_observations"
+      },
+      {
+       "tool": "calls",
+       "target": "search_repository",
+       "status": "withheld"
+      },
+      {
+       "tool": "calls",
+       "target": "scan_head",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 156 записано выражение 'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ]
+      },
+      {
+       "text": "В scan_head на строке 80 записано выражение 'M134_GIT_PROJECT_ROOT_MISMATCH'.",
+       "refs": [
+        [
+         "C",
+         68,
+         68
+        ],
+        [
+         "C",
+         80,
+         80
+        ]
+       ]
+      },
+      {
+       "text": "В search_repository на строке 150 записан прямой вызов scan_head. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+       "refs": [
+        [
+         "C",
+         68,
+         68
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         150,
+         150
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "scan_head"
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "action": "connect",
+      "verdict": "direct_edge",
+      "owner": "scan_head",
+      "line": 80,
+      "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода ↔ M134_GIT_PROJECT_ROOT_MISMATCH"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   }
+  },
+  {
+   "id": "C07",
+   "question": "Где отклоняется задача из-за несовпадения номера коммита с номером, подписанным бухгалтерией?",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "site": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": false,
+    "false_publication": true,
+    "false_claim": true,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 156 записано выражение `'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'`.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         156,
+         156
+        ]
+       ]
+      }
+     ],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "search_repository",
+      "line": 156,
+      "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "explore": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "where",
+       "facets": [
+        2
+       ]
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "grounded": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "where",
+       "facets": [
+        2
+       ]
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "checked": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "C08",
+   "question": "Сколько раз за последний запуск поиску не удалось подобрать подходящий файл?",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "explore": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "observation_required"
+    }
+   },
+   "english_pool": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "observation_required"
+    }
+   },
+   "grounded": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "observation_required"
+    }
+   },
+   "checked": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "observation_required"
+    }
+   },
+   "site": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "observation_required"
+    }
+   }
+  },
+  {
+   "id": "C09",
+   "question": "Где в modules/media/export_clip.py описана подготовка материала к записи?",
+   "commit": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+   "english_pool": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "out_of_scope"
+    }
+   },
+   "grounded": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "out_of_scope"
+    }
+   },
+   "checked": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "out_of_scope"
+    }
+   },
+   "site": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "out_of_scope"
+    }
+   },
+   "explore": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+     "reason": "out_of_scope"
+    }
+   }
+  },
+  {
+   "id": "F21",
+   "question": "Где оператору сигнализируют, что аккумулятор камеры разряжен?",
+   "commit": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+   "grounded": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:159": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:159": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:159": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": true,
+    "false_claim": true,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_video на строке 170 записано выражение `'Video frame rate below minimum'`.",
+       "refs": [
+        [
+         "R",
+         168,
+         168
+        ],
+        [
+         "R",
+         170,
+         170
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "inspect_video",
+      "line": 170,
+      "interpretation": "Video frame rate below minimum"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "explore": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:159": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:159": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "F22",
+   "question": "Почему система сообщает об отсоединённом микрофоне?",
+   "commit": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:158": false,
+     "R:159": false,
+     "R:160": false,
+     "R:161": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:157": true,
+     "R:158": true,
+     "R:159": true,
+     "R:160": true,
+     "R:161": true,
+     "semantic_0": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "capture_status@161",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В capture_status на строке 161 записано выражение `'Microphone disconnected'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         161,
+         161
+        ]
+       ]
+      },
+      {
+       "text": "В capture_status исследована инструкция `return 'Microphone disconnected'` (стр. 161). Для достижения строки требуется: `battery == 0` ложно (стр. 158) и `not microphone` истинно (стр. 160). При расчёте учтены переходы `return 'Camera battery depleted'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ],
+        [
+         "R",
+         161,
+         161
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "capture_status",
+        "line": 161,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           158,
+           "battery == 0"
+          ]
+         ],
+         [
+          "test",
+          160,
+          "not microphone"
+         ]
+        ],
+        "work": 5
+       }
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "capture_status",
+      "line": 161,
+      "interpretation": "Microphone disconnected"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "explore": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:158": false,
+     "R:159": false,
+     "R:160": false,
+     "R:161": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:158": false,
+     "R:159": false,
+     "R:160": false,
+     "R:161": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "grounded": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:158": false,
+     "R:159": false,
+     "R:160": false,
+     "R:161": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "F23",
+   "question": "При каких условиях частоту кадров видеоматериала признают ниже допустимой?",
+   "commit": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+   "site": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:168": true,
+     "R:169": true,
+     "R:170": true,
+     "semantic_0": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_video@170",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_video на строке 170 записано выражение `'Video frame rate below minimum'`.",
+       "refs": [
+        [
+         "R",
+         168,
+         168
+        ],
+        [
+         "R",
+         170,
+         170
+        ]
+       ]
+      },
+      {
+       "text": "В inspect_video исследована инструкция `return 'Video frame rate below minimum'` (стр. 170). Для достижения строки требуется: `frame_rate < 24` истинно (стр. 169). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         168,
+         168
+        ],
+        [
+         "R",
+         169,
+         169
+        ],
+        [
+         "R",
+         170,
+         170
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_video",
+        "line": 170,
+        "condition": [
+         "test",
+         169,
+         "frame_rate < 24"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "inspect_video",
+      "line": 170,
+      "interpretation": "Video frame rate below minimum"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "explore": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:168": false,
+     "R:169": false,
+     "R:170": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:168": false,
+     "R:169": false,
+     "R:170": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "grounded": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:168": false,
+     "R:169": false,
+     "R:170": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:168": false,
+     "R:169": false,
+     "R:170": false,
+     "semantic_0": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "F24",
+   "question": "Где подтверждается готовность начинать запись?",
+   "commit": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+   "explore": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:162": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:157": true,
+     "R:162": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "translated_english_pool"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "where",
+       "facets": [
+        2
+       ]
+      }
+     ],
+     "claims": [
+      {
+       "text": "В capture_status на строке 162 записано выражение `'Recording ready to begin'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "capture_status",
+      "line": 162,
+      "interpretation": "Recording ready to begin"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "grounded": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:157": true,
+     "R:162": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "translated_grounded"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "where",
+       "facets": [
+        2
+       ]
+      }
+     ],
+     "claims": [
+      {
+       "text": "В capture_status на строке 162 записано выражение `'Recording ready to begin'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "capture_status",
+      "line": 162,
+      "interpretation": "Recording ready to begin"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:162": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:157": true,
+     "R:162": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В capture_status на строке 162 записано выражение `'Recording ready to begin'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "capture_status",
+      "line": 162,
+      "interpretation": "Recording ready to begin"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "F25",
+   "question": "Есть ли прямой вызов между «Recording ready» и «Studio schedule»?",
+   "commit": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+   "english_pool": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:157": true,
+     "R:162": true,
+     "R:164": true,
+     "R:165": true,
+     "R:166": true,
+     "direct_edge": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "two_observations"
+      },
+      {
+       "tool": "calls",
+       "target": "studio_session",
+       "status": "withheld"
+      },
+      {
+       "tool": "calls",
+       "target": "capture_status",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В studio_session на строке 165 записано выражение 'Studio schedule confirmed'.",
+       "refs": [
+        [
+         "R",
+         164,
+         164
+        ],
+        [
+         "R",
+         165,
+         165
+        ]
+       ]
+      },
+      {
+       "text": "В capture_status на строке 162 записано выражение 'Recording ready to begin'.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ]
+       ]
+      },
+      {
+       "text": "В studio_session на строке 166 записан прямой вызов capture_status. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         164,
+         164
+        ],
+        [
+         "R",
+         166,
+         166
+        ]
+       ],
+       "edge": [
+        "studio_session",
+        "capture_status"
+       ]
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "action": "connect",
+      "verdict": "direct_edge",
+      "owner": "capture_status",
+      "line": 162,
+      "interpretation": "Studio schedule confirmed ↔ Recording ready to begin"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "grounded": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:157": true,
+     "R:162": true,
+     "R:164": true,
+     "R:165": true,
+     "R:166": true,
+     "direct_edge": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "two_observations"
+      },
+      {
+       "tool": "calls",
+       "target": "studio_session",
+       "status": "withheld"
+      },
+      {
+       "tool": "calls",
+       "target": "capture_status",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В studio_session на строке 165 записано выражение 'Studio schedule confirmed'.",
+       "refs": [
+        [
+         "R",
+         164,
+         164
+        ],
+        [
+         "R",
+         165,
+         165
+        ]
+       ]
+      },
+      {
+       "text": "В capture_status на строке 162 записано выражение 'Recording ready to begin'.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ]
+       ]
+      },
+      {
+       "text": "В studio_session на строке 166 записан прямой вызов capture_status. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         164,
+         164
+        ],
+        [
+         "R",
+         166,
+         166
+        ]
+       ],
+       "edge": [
+        "studio_session",
+        "capture_status"
+       ]
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "action": "connect",
+      "verdict": "direct_edge",
+      "owner": "capture_status",
+      "line": 162,
+      "interpretation": "Studio schedule confirmed ↔ Recording ready to begin"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "checked": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:162": false,
+     "R:164": false,
+     "R:165": false,
+     "R:166": false,
+     "direct_edge": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_missing"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_missing"
+    }
+   },
+   "site": {
+    "goal": false,
+    "conclusion": false,
+    "obligations": {
+     "R:157": false,
+     "R:162": false,
+     "R:164": false,
+     "R:165": false,
+     "R:166": false,
+     "direct_edge": false
+    },
+    "complete_evidence": false,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_missing"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_missing"
+    }
+   },
+   "explore": {
+    "goal": true,
+    "conclusion": true,
+    "obligations": {
+     "R:157": true,
+     "R:162": true,
+     "R:164": true,
+     "R:165": true,
+     "R:166": true,
+     "direct_edge": true
+    },
+    "complete_evidence": true,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "two_observations"
+      },
+      {
+       "tool": "calls",
+       "target": "studio_session",
+       "status": "withheld"
+      },
+      {
+       "tool": "calls",
+       "target": "capture_status",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В studio_session на строке 165 записано выражение 'Studio schedule confirmed'.",
+       "refs": [
+        [
+         "R",
+         164,
+         164
+        ],
+        [
+         "R",
+         165,
+         165
+        ]
+       ]
+      },
+      {
+       "text": "В capture_status на строке 162 записано выражение 'Recording ready to begin'.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ]
+       ]
+      },
+      {
+       "text": "В studio_session на строке 166 записан прямой вызов capture_status. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         164,
+         164
+        ],
+        [
+         "R",
+         166,
+         166
+        ]
+       ],
+       "edge": [
+        "studio_session",
+        "capture_status"
+       ]
+      }
+     ],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "action": "connect",
+      "verdict": "direct_edge",
+      "owner": "capture_status",
+      "line": 162,
+      "interpretation": "Studio schedule confirmed ↔ Recording ready to begin"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   }
+  },
+  {
+   "id": "F26",
+   "question": "Какой участок предсказывает оставшееся время съёмки по напряжению батареи?",
+   "commit": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+   "grounded": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "checked": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "explore": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "english_pool": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      },
+      {
+       "tool": "interpret_requirements",
+       "target": "question",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "F27",
+   "question": "Есть ли прямой вызов между «frame rate accepted» и «Camera battery»?",
+   "commit": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+   "checked": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_missing"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_missing"
+    }
+   },
+   "site": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": false,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_missing"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_missing"
+    }
+   },
+   "explore": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "path_unproven"
+      },
+      {
+       "tool": "calls",
+       "target": "capture_status",
+       "status": "call_sites"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_video",
+       "status": "withheld"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "path_unproven"
+    }
+   },
+   "english_pool": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "path_unproven"
+      },
+      {
+       "tool": "calls",
+       "target": "capture_status",
+       "status": "call_sites"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_video",
+       "status": "withheld"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "path_unproven"
+    }
+   },
+   "grounded": {
+    "goal": null,
+    "conclusion": null,
+    "obligations": [],
+    "complete_evidence": null,
+    "full": true,
+    "false_publication": false,
+    "false_claim": false,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 74
+      },
+      {
+       "tool": "select_goal",
+       "target": "connect",
+       "status": "path_unproven"
+      },
+      {
+       "tool": "calls",
+       "target": "capture_status",
+       "status": "call_sites"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_video",
+       "status": "withheld"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b92aa226fdc7197828ccf217c2b235c551dc0bcf",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "path_unproven"
+    }
+   }
+  }
+ ],
+ "ms": {
+  "C01": {
+   "checked": 156.7,
+   "site": 154.8,
+   "explore": 152.7,
+   "english_pool": 163.0,
+   "grounded": 147.6
+  },
+  "C02": {
+   "site": 739.4,
+   "explore": 120.9,
+   "english_pool": 604.1,
+   "grounded": 568.4,
+   "checked": 643.8
+  },
+  "C03": {
+   "explore": 195.7,
+   "english_pool": 182.4,
+   "grounded": 142.5,
+   "checked": 615.9,
+   "site": 648.5
+  },
+  "C04": {
+   "english_pool": 480.1,
+   "grounded": 473.6,
+   "checked": 97.8,
+   "site": 92.4,
+   "explore": 95.4
+  },
+  "C05": {
+   "grounded": 808.1,
+   "checked": 99.5,
+   "site": 105.5,
+   "explore": 95.4,
+   "english_pool": 805.5
+  },
+  "C06": {
+   "checked": 125.7,
+   "site": 114.7,
+   "explore": 221.0,
+   "english_pool": 246.8,
+   "grounded": 209.1
+  },
+  "C07": {
+   "site": 652.2,
+   "explore": 102.3,
+   "english_pool": 465.9,
+   "grounded": 496.7,
+   "checked": 655.5
+  },
+  "C08": {
+   "explore": 0.1,
+   "english_pool": 0.0,
+   "grounded": 0.0,
+   "checked": 0.0,
+   "site": 0.0
+  },
+  "C09": {
+   "english_pool": 0.0,
+   "grounded": 0.0,
+   "checked": 0.0,
+   "site": 0.0,
+   "explore": 0.0
+  },
+  "F21": {
+   "grounded": 597.3,
+   "checked": 653.8,
+   "site": 723.6,
+   "explore": 116.6,
+   "english_pool": 594.1
+  },
+  "F22": {
+   "checked": 651.8,
+   "site": 660.5,
+   "explore": 120.2,
+   "english_pool": 435.6,
+   "grounded": 412.5
+  },
+  "F23": {
+   "site": 644.1,
+   "explore": 114.3,
+   "english_pool": 669.7,
+   "grounded": 640.7,
+   "checked": 600.4
+  },
+  "F24": {
+   "explore": 99.5,
+   "english_pool": 513.7,
+   "grounded": 492.4,
+   "checked": 626.8,
+   "site": 641.1
+  },
+  "F25": {
+   "english_pool": 167.5,
+   "grounded": 167.4,
+   "checked": 102.6,
+   "site": 109.8,
+   "explore": 179.8
+  },
+  "F26": {
+   "grounded": 383.7,
+   "checked": 105.9,
+   "site": 101.1,
+   "explore": 101.2,
+   "english_pool": 380.3
+  },
+  "F27": {
+   "checked": 139.2,
+   "site": 130.7,
+   "explore": 224.1,
+   "english_pool": 210.8,
+   "grounded": 216.2
+  }
+ },
+ "cost": {
+  "snapshot_ms": [
+   314.1,
+   297.4
+  ],
+  "sessions": [
+   {
+    "startup_s": 8.329,
+    "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+    "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+   },
+   {
+    "startup_s": 7.687,
+    "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+    "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+   },
+   {
+    "startup_s": 8.234,
+    "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+    "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+   }
+  ]
+ },
+ "guards": {
+  "short_budget": "step_budget",
+  "bad_reference": "invalid_reference",
+  "changed_head": "stale_snapshot"
+ },
+ "generations": {
+  "C02/site": {
+   "digest": "046a6ad630c640a744437395e419a5912ffa166e748c16d06132c3d17990ecc9",
+   "raw": "{\"site\":62}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2577,
+   "completion_tokens": 7,
+   "prompt_ms": 513.229,
+   "predicted_ms": 53.373,
+   "predicted_per_second": 112.416
+  },
+  "C02/english_pool": {
+   "digest": "bd9e9cf4095aa781c7711eb868b8f35eefa6ade5c44dbe3fd701a7112b5f8da8",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"duplicate result\",\n    \"detail\": \"detection during merging\"\n  },\n  \"domain\": \"queue merging\",\n  \"polarity\": \"negative\"\n}",
+   "wall_ms": 469.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 193,
+   "completion_tokens": 51,
+   "prompt_ms": 62.546,
+   "predicted_ms": 384.21,
+   "predicted_per_second": 130.137
+  },
+  "C02/grounded": {
+   "digest": "bd9e9cf4095aa781c7711eb868b8f35eefa6ade5c44dbe3fd701a7112b5f8da8",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"duplicate result\",\n    \"detail\": \"detection during merging\"\n  },\n  \"domain\": \"queue merging\",\n  \"polarity\": \"negative\"\n}",
+   "wall_ms": 437.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 193,
+   "completion_tokens": 51,
+   "prompt_ms": 50.233,
+   "predicted_ms": 379.088,
+   "predicted_per_second": 131.895
+  },
+  "C02/checked": {
+   "digest": "046a6ad630c640a744437395e419a5912ffa166e748c16d06132c3d17990ecc9",
+   "raw": "{\"site\":62}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2577,
+   "completion_tokens": 7,
+   "prompt_ms": 451.134,
+   "predicted_ms": 51.233,
+   "predicted_per_second": 117.112
+  },
+  "C03/checked": {
+   "digest": "cfa1efc560a39c42fda53f79fb4a9b7ca9fb779282fab30c0f083fc44a517dee",
+   "raw": "{\"site\":21}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2581,
+   "completion_tokens": 7,
+   "prompt_ms": 452.974,
+   "predicted_ms": 48.836,
+   "predicted_per_second": 122.86
+  },
+  "C03/site": {
+   "digest": "cfa1efc560a39c42fda53f79fb4a9b7ca9fb779282fab30c0f083fc44a517dee",
+   "raw": "{\"site\":21}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2581,
+   "completion_tokens": 7,
+   "prompt_ms": 428.411,
+   "predicted_ms": 51.074,
+   "predicted_per_second": 117.477
+  },
+  "C04/english_pool": {
+   "digest": "8cb9cb0c8b0398a2a4909654bb5047fb50966277be8b71abc156b907c2a5ac2a",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"error message\",\n    \"detail\": \"condition and trigger\"\n  }\n}",
+   "wall_ms": 313.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 191,
+   "completion_tokens": 34,
+   "prompt_ms": 50.352,
+   "predicted_ms": 245.371,
+   "predicted_per_second": 134.49
+  },
+  "C04/grounded": {
+   "digest": "8cb9cb0c8b0398a2a4909654bb5047fb50966277be8b71abc156b907c2a5ac2a",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"error message\",\n    \"detail\": \"condition and trigger\"\n  }\n}",
+   "wall_ms": 312.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 191,
+   "completion_tokens": 34,
+   "prompt_ms": 49.037,
+   "predicted_ms": 250.245,
+   "predicted_per_second": 131.871
+  },
+  "C05/grounded": {
+   "digest": "8d183d1817f86ca1fa0cf46eee4dfee33974b075a163eb6c3c006756d54616f6",
+   "raw": "{\n  \"op\": \"between\",\n  \"a\": {\n    \"object\": \"function\",\n    \"detail\": \"directly calls another function\"\n  },\n  \"b\": {\n    \"object\": \"message\",\n    \"detail\": \"M127_TITLE_INVALID or M130_NO_SCOPE_FILES_WITHIN_LIMIT\"\n  }\n}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 219,
+   "completion_tokens": 72,
+   "prompt_ms": 52.005,
+   "predicted_ms": 538.89,
+   "predicted_per_second": 131.752
+  },
+  "C05/english_pool": {
+   "digest": "8d183d1817f86ca1fa0cf46eee4dfee33974b075a163eb6c3c006756d54616f6",
+   "raw": "{\n  \"op\": \"between\",\n  \"a\": {\n    \"object\": \"function\",\n    \"detail\": \"directly calls another function\"\n  },\n  \"b\": {\n    \"object\": \"message\",\n    \"detail\": \"M127_TITLE_INVALID or M130_NO_SCOPE_FILES_WITHIN_LIMIT\"\n  }\n}",
+   "wall_ms": 593.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 219,
+   "completion_tokens": 72,
+   "prompt_ms": 50.519,
+   "predicted_ms": 527.93,
+   "predicted_per_second": 134.488
+  },
+  "C07/site": {
+   "digest": "c891532ebdfdf7ec98304817265eaa39a72df955a737dd8be0465257b1625d2c",
+   "raw": "{\"site\":21}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2589,
+   "completion_tokens": 7,
+   "prompt_ms": 428.072,
+   "predicted_ms": 50.479,
+   "predicted_per_second": 118.861
+  },
+  "C07/english_pool": {
+   "digest": "8a1a49ea54ce35d32dda8006f00f83f6772ab4261102b3bcb7c4ffd5f669a6bd",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"commit number mismatch\",\n    \"detail\": \"accounting signature number\"\n  }\n}",
+   "wall_ms": 328.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 205,
+   "completion_tokens": 36,
+   "prompt_ms": 50.824,
+   "predicted_ms": 265.973,
+   "predicted_per_second": 131.592
+  },
+  "C07/grounded": {
+   "digest": "8a1a49ea54ce35d32dda8006f00f83f6772ab4261102b3bcb7c4ffd5f669a6bd",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"commit number mismatch\",\n    \"detail\": \"accounting signature number\"\n  }\n}",
+   "wall_ms": 328.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 205,
+   "completion_tokens": 36,
+   "prompt_ms": 51.483,
+   "predicted_ms": 268.323,
+   "predicted_per_second": 130.44
+  },
+  "C07/checked": {
+   "digest": "c891532ebdfdf7ec98304817265eaa39a72df955a737dd8be0465257b1625d2c",
+   "raw": "{\"site\":21}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2589,
+   "completion_tokens": 7,
+   "prompt_ms": 427.269,
+   "predicted_ms": 50.848,
+   "predicted_per_second": 117.999
+  },
+  "F21/grounded": {
+   "digest": "643d8152756da7d0c46e2427471fdabcbf2d08fd63b0fde31c4c95f7f21d56c3",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"signal\",\n    \"detail\": \"indicate low battery\"\n  },\n  \"domain\": \"camera\",\n  \"polarity\": \"negative\"\n}",
+   "wall_ms": 438.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 193,
+   "completion_tokens": 49,
+   "prompt_ms": 52.9,
+   "predicted_ms": 387.503,
+   "predicted_per_second": 123.87
+  },
+  "F21/checked": {
+   "digest": "ebbc201d25d342b7f32cc046ec0452aeceea6feb1c7845013f1c09f44709b07d",
+   "raw": "{\"site\":73}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2683,
+   "completion_tokens": 7,
+   "prompt_ms": 447.981,
+   "predicted_ms": 49.198,
+   "predicted_per_second": 121.956
+  },
+  "F21/site": {
+   "digest": "ebbc201d25d342b7f32cc046ec0452aeceea6feb1c7845013f1c09f44709b07d",
+   "raw": "{\"site\":73}",
+   "wall_ms": 563.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2683,
+   "completion_tokens": 7,
+   "prompt_ms": 502.374,
+   "predicted_ms": 54.001,
+   "predicted_per_second": 111.109
+  },
+  "F21/english_pool": {
+   "digest": "643d8152756da7d0c46e2427471fdabcbf2d08fd63b0fde31c4c95f7f21d56c3",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"signal\",\n    \"detail\": \"indicate low battery\"\n  },\n  \"domain\": \"camera\",\n  \"polarity\": \"negative\"\n}",
+   "wall_ms": 453.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 193,
+   "completion_tokens": 49,
+   "prompt_ms": 62.727,
+   "predicted_ms": 367.407,
+   "predicted_per_second": 130.645
+  },
+  "F22/checked": {
+   "digest": "2c594e3775fb4c8f705bb3bd2c699239dd0bc98c7765f7f81b0f4c9062a73fda",
+   "raw": "{\"site\":70}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2676,
+   "completion_tokens": 7,
+   "prompt_ms": 447.069,
+   "predicted_ms": 50.884,
+   "predicted_per_second": 117.915
+  },
+  "F22/site": {
+   "digest": "2c594e3775fb4c8f705bb3bd2c699239dd0bc98c7765f7f81b0f4c9062a73fda",
+   "raw": "{\"site\":70}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2676,
+   "completion_tokens": 7,
+   "prompt_ms": 446.331,
+   "predicted_ms": 49.957,
+   "predicted_per_second": 120.103
+  },
+  "F22/english_pool": {
+   "digest": "c99f170daca83102f5d7e6dd7a35c656f9c2df79f47212ba8df81cfb69ac9c41",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"microphone\",\n    \"detail\": \"disconnected\"\n  }\n}",
+   "wall_ms": 312.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 186,
+   "completion_tokens": 33,
+   "prompt_ms": 48.756,
+   "predicted_ms": 237.012,
+   "predicted_per_second": 135.014
+  },
+  "F22/grounded": {
+   "digest": "c99f170daca83102f5d7e6dd7a35c656f9c2df79f47212ba8df81cfb69ac9c41",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"microphone\",\n    \"detail\": \"disconnected\"\n  }\n}",
+   "wall_ms": 297.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 186,
+   "completion_tokens": 33,
+   "prompt_ms": 48.7,
+   "predicted_ms": 237.312,
+   "predicted_per_second": 134.844
+  },
+  "F23/site": {
+   "digest": "4e8649f3728bbaa630bb2e9b69d0a1383a6647ded074814efa7b45dad3dd3a5f",
+   "raw": "{\"site\":73}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2685,
+   "completion_tokens": 7,
+   "prompt_ms": 446.233,
+   "predicted_ms": 51.353,
+   "predicted_per_second": 116.838
+  },
+  "F23/english_pool": {
+   "digest": "43d8df215d051306044be0ec7137e588ec07fae26ea962bc42094c24638ef825",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"frame rate\",\n    \"detail\": \"minimum acceptable frame rate\"\n  },\n  \"b\": {\n    \"object\": \"video material\",\n    \"detail\": \"frame rate below acceptable threshold\"\n  }\n}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 195,
+   "completion_tokens": 61,
+   "prompt_ms": 50.95,
+   "predicted_ms": 458.193,
+   "predicted_per_second": 130.949
+  },
+  "F23/grounded": {
+   "digest": "43d8df215d051306044be0ec7137e588ec07fae26ea962bc42094c24638ef825",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"frame rate\",\n    \"detail\": \"minimum acceptable frame rate\"\n  },\n  \"b\": {\n    \"object\": \"video material\",\n    \"detail\": \"frame rate below acceptable threshold\"\n  }\n}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 195,
+   "completion_tokens": 61,
+   "prompt_ms": 51.368,
+   "predicted_ms": 453.925,
+   "predicted_per_second": 132.18
+  },
+  "F23/checked": {
+   "digest": "4e8649f3728bbaa630bb2e9b69d0a1383a6647ded074814efa7b45dad3dd3a5f",
+   "raw": "{\"site\":73}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2685,
+   "completion_tokens": 7,
+   "prompt_ms": 443.827,
+   "predicted_ms": 48.556,
+   "predicted_per_second": 123.569
+  },
+  "F24/english_pool": {
+   "digest": "1fe18713273a385014e9f95a1cd1e702324e2458b5b3bb50967cbb464cb3074f",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"readiness to start recording\",\n    \"detail\": \"confirmation of readiness to start recording\"\n  }\n}",
+   "wall_ms": 360.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 184,
+   "completion_tokens": 40,
+   "prompt_ms": 50.723,
+   "predicted_ms": 286.988,
+   "predicted_per_second": 135.894
+  },
+  "F24/grounded": {
+   "digest": "1fe18713273a385014e9f95a1cd1e702324e2458b5b3bb50967cbb464cb3074f",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": {\n    \"object\": \"readiness to start recording\",\n    \"detail\": \"confirmation of readiness to start recording\"\n  }\n}",
+   "wall_ms": 344.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 184,
+   "completion_tokens": 40,
+   "prompt_ms": 49.415,
+   "predicted_ms": 287.233,
+   "predicted_per_second": 135.778
+  },
+  "F24/checked": {
+   "digest": "4b2a9bf51efa2df5463211e739052e62f14eb86fe2796fce20c2a85dd7d13e04",
+   "raw": "{\"site\":71}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2674,
+   "completion_tokens": 7,
+   "prompt_ms": 444.297,
+   "predicted_ms": 48.37,
+   "predicted_per_second": 124.044
+  },
+  "F24/site": {
+   "digest": "4b2a9bf51efa2df5463211e739052e62f14eb86fe2796fce20c2a85dd7d13e04",
+   "raw": "{\"site\":71}",
+   "wall_ms": 532.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2674,
+   "completion_tokens": 7,
+   "prompt_ms": 444.116,
+   "predicted_ms": 48.42,
+   "predicted_per_second": 123.916
+  },
+  "F26/grounded": {
+   "digest": "1c09457eadd1d2c850378d67ff8c5615ab2966402a5f21bb82d7a193227cb416",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": \"remaining shooting time prediction\",\n  \"b\": \"battery voltage\"\n}",
+   "wall_ms": 250.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 199,
+   "completion_tokens": 28,
+   "prompt_ms": 51.236,
+   "predicted_ms": 201.819,
+   "predicted_per_second": 133.783
+  },
+  "F26/english_pool": {
+   "digest": "1c09457eadd1d2c850378d67ff8c5615ab2966402a5f21bb82d7a193227cb416",
+   "raw": "{\n  \"op\": \"where\",\n  \"a\": \"remaining shooting time prediction\",\n  \"b\": \"battery voltage\"\n}",
+   "wall_ms": 250.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 199,
+   "completion_tokens": 28,
+   "prompt_ms": 49.906,
+   "predicted_ms": 199.613,
+   "predicted_per_second": 135.262
+  }
+ }
+}

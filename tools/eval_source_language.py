@@ -16,9 +16,11 @@ import skynet_source_language as language
 
 PLAN = "606b0d126de3df47085985da3330607092d0f0ab:docs/maintenance/core_08/transfer.json"
 SECOND = "8856d8fec59b3fa15d0a5d134840e3bde95a01f3:docs/maintenance/core_08/transfer_2.json"
+CONFIRMATION = "5a57069c28263b3106045ca0f9863e078651d33e:docs/maintenance/core_08/confirmation.json"
 DIR = ev.pilot.ROOT / "docs/maintenance/core_08"
 ARMS = ("checked", "lexical", "syntax", "captions", "caption_join", "explore")
 SECOND_ARMS = ("checked", "site", "syntax", "explore", "pooled", "facets")
+FINAL_ARMS = ("checked", "site", "explore", "english_pool", "grounded")
 
 
 def fixture_case(case, offset):
@@ -133,9 +135,9 @@ def controls(root, src, ground):
     return dict(short_budget=small, bad_reference=forged, changed_head=stale)
 
 
-def interpretation_controls(root, src, ground):
+def interpretation_controls(root, src, ground, policy):
     """Exercise the provider boundary even when a local model is unavailable."""
-    opts=dict(opener=lambda _:(src,ground),discovery="facets")
+    opts=dict(opener=lambda _:(src,ground),discovery=policy)
     question="Где неизвестное особое явление?"
     def run(q, select, reason):
         result=ev.loop.investigate(q,root,select=select,**opts)
@@ -191,7 +193,7 @@ def run(temp, plan, cache, live, arms):
             for arm in arms[i%len(arms):]+arms[:i%len(arms)]:
                 model.key,model.used = case["id"]+"/"+arm,0
                 model.live = live and model.key not in preexisting
-                if arm in ("checked","site","pooled","facets"):
+                if arm in ("checked","site","pooled","facets","grounded","english_pool"):
                     model.prepare()
                 opts=dict(opener=lambda _:(src,ground),select=model.select)
                 arm_host = prior if arm in ("lexical","checked") else ev.loop
@@ -219,14 +221,16 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("mode",choices=("record","verify","guards"))
     p.add_argument("--file",type=Path)
-    p.add_argument("--second",action="store_true")
+    stage=p.add_mutually_exclusive_group()
+    stage.add_argument("--second",action="store_true")
+    stage.add_argument("--final",action="store_true")
     p.add_argument("--reuse",type=Path,help="Resume using issued model responses after a recorder failure")
     p.add_argument("--timings-file",type=Path,help="Save measured host times on replay with generation excluded")
     args=p.parse_args()
     live=args.mode=="record"
-    plan_id = SECOND if args.second else PLAN
-    arms = SECOND_ARMS if args.second else ARMS
-    args.file = args.file or DIR/("results_2.json" if args.second else "results.json")
+    plan_id,arms,filename = ((CONFIRMATION,FINAL_ARMS,"confirmation_results.json") if args.final else
+         (SECOND,SECOND_ARMS,"results_2.json") if args.second else (PLAN,ARMS,"results.json"))
+    args.file = args.file or DIR/filename
     if live and args.file.exists():
         p.error("Choose a new file for a live recording")
     plan=json.loads(ev.pilot.git("show",plan_id))
@@ -236,7 +240,9 @@ def main():
             ev.pilot.git("clone","--quiet","--local","--no-checkout",str(ev.pilot.ROOT),str(repo))
             ev.archive.set_head(repo,plan["source"])
             src,ground=ev.loop.read_head(repo)
-            print({**controls(repo,src,ground),**interpretation_controls(repo,src,ground)})
+            print(controls(repo,src,ground))
+            for policy in ("facets","grounded"):
+                print(policy,interpretation_controls(repo,src,ground,policy))
         return
     saved={} if live else json.loads(args.file.read_text(encoding="utf8"))
     cache=saved.get("generations",{})
@@ -271,7 +277,8 @@ def main():
                 json.dump(dict(ms=elapsed,source_read_ms=cost["snapshot_ms"]),f,indent=1)
                 f.write("\n")
         elapsed=saved["ms"]
-    print("arm | goal | conclusion | evidence | correct | wrong publication | median online ms")
+    timing_label = "mixed live/replayed request ms" if (saved.get("cost",{}).get("reused_model_responses") or reused) else "recorded request ms"
+    print("arm | goal | conclusion | evidence | correct | wrong publication | median",timing_label)
     for arm in arms:
         print(arm,*[sum(bool(row[arm][k]) for row in rows) for k in
               ("goal","conclusion","complete_evidence","full","false_publication")],

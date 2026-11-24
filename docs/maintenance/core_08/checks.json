@@ -1,0 +1,110 @@
+{
+ "python_flags": [
+  "-I",
+  "-S",
+  "-B"
+ ],
+ "commands": [
+  {
+   "command": "tools/test_source_language.py",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/test_observation_goal.py",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/test_control_conditions.py",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/test_core_task.py",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/test_route_facts.py",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_source_language.py guards",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_observation_goals.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_observation_goals.py verify --separate --delivery",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_source_language.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_observation_goals.py verify --separate --lexical-control",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_control_conditions.py verify --compare-direction",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_control_conditions.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_route_research.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_diagnostic_path.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_investigation.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_core_adapter.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_package_boundaries.py",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_argument_flow.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/build_observation_language.py verify docs/maintenance/core_08/operation_language.json --operations",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/build_observation_language.py verify docs/maintenance/core_08/source_language.json",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_producer_investigation.py verify",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_source_language.py verify --second --timings-file docs/maintenance/core_08/replay_2_ms.json",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_source_language.py verify --final",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/eval_source_language.py guards",
+   "exit_code": 0
+  },
+  {
+   "command": "tools/test_source_language.py",
+   "exit_code": 0
+  }
+ ],
+ "note": "The first historical/targeted batch preceded the final presentation change. Final replay, both interpreter guards and the eight source-language tests were rerun."
+}

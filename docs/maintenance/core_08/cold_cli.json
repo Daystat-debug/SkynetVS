@@ -1,0 +1,399 @@
+[
+ {
+  "id": "C05",
+  "arm": "checked",
+  "ms": 693.0,
+  "full": false,
+  "answer": {
+   "state": "insufficient",
+   "plan": "discover_observation",
+   "steps": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "question",
+     "status": "observation_missing"
+    }
+   ],
+   "claims": [],
+   "snapshot": "5a57069c28263b3106045ca0f9863e078651d33e",
+   "discovery": {
+    "verdict": "unproven"
+   },
+   "reason": "observation_missing"
+  }
+ },
+ {
+  "id": "C05",
+  "arm": "grounded",
+  "ms": 10088.0,
+  "full": true,
+  "answer": {
+   "state": "answered",
+   "plan": "discover_observation",
+   "steps": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "question",
+     "status": "started"
+    },
+    {
+     "tool": "interpret_requirements",
+     "target": "question",
+     "status": "between",
+     "facets": [
+      2,
+      2
+     ]
+    },
+    {
+     "tool": "calls",
+     "target": "rank",
+     "status": "call_sites"
+    },
+    {
+     "tool": "calls",
+     "target": "rank_symbols",
+     "status": "call_sites"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В rank на строке 124 записано выражение 'M130_NO_SCOPE_FILES_WITHIN_LIMIT'.",
+     "refs": [
+      [
+       "R",
+       110,
+       110
+      ],
+      [
+       "R",
+       124,
+       124
+      ]
+     ]
+    },
+    {
+     "text": "В rank_symbols на строке 74 записано выражение 'M127_TITLE_INVALID'.",
+     "refs": [
+      [
+       "S",
+       72,
+       72
+      ],
+      [
+       "S",
+       74,
+       74
+      ]
+     ]
+    },
+    {
+     "text": "В rank на строке 125 записан прямой вызов rank_symbols. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+     "refs": [
+      [
+       "S",
+       72,
+       72
+      ],
+      [
+       "R",
+       110,
+       110
+      ],
+      [
+       "R",
+       125,
+       125
+      ],
+      [
+       "R",
+       18,
+       18
+      ]
+     ],
+     "edge": [
+      "rank",
+      "rank_symbols"
+     ]
+    }
+   ],
+   "snapshot": "5a57069c28263b3106045ca0f9863e078651d33e",
+   "discovery": {
+    "action": "connect",
+    "verdict": "direct_edge",
+    "owner": "rank_symbols",
+    "line": 74,
+    "interpretation": "M130_NO_SCOPE_FILES_WITHIN_LIMIT ↔ M127_TITLE_INVALID"
+   },
+   "coverage": "one_static_route",
+   "execution_observed": false,
+   "joint_feasibility": "not_proved"
+  }
+ },
+ {
+  "id": "C06",
+  "arm": "checked",
+  "ms": 694.0,
+  "full": false,
+  "answer": {
+   "state": "insufficient",
+   "plan": "discover_observation",
+   "steps": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "question",
+     "status": "observation_missing"
+    }
+   ],
+   "claims": [],
+   "snapshot": "5a57069c28263b3106045ca0f9863e078651d33e",
+   "discovery": {
+    "verdict": "unproven"
+   },
+   "reason": "observation_missing"
+  }
+ },
+ {
+  "id": "C06",
+  "arm": "grounded",
+  "ms": 743.2,
+  "full": true,
+  "answer": {
+   "state": "answered",
+   "plan": "discover_observation",
+   "steps": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "connect",
+     "status": "two_observations"
+    },
+    {
+     "tool": "calls",
+     "target": "search_repository",
+     "status": "withheld"
+    },
+    {
+     "tool": "calls",
+     "target": "scan_head",
+     "status": "call_sites"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В search_repository на строке 156 записано выражение 'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'.",
+     "refs": [
+      [
+       "C",
+       144,
+       144
+      ],
+      [
+       "C",
+       156,
+       156
+      ]
+     ]
+    },
+    {
+     "text": "В scan_head на строке 80 записано выражение 'M134_GIT_PROJECT_ROOT_MISMATCH'.",
+     "refs": [
+      [
+       "C",
+       68,
+       68
+      ],
+      [
+       "C",
+       80,
+       80
+      ]
+     ]
+    },
+    {
+     "text": "В search_repository на строке 150 записан прямой вызов scan_head. Это связь тел функций. Порядок появления двух признаков при исполнении не установлен.",
+     "refs": [
+      [
+       "C",
+       68,
+       68
+      ],
+      [
+       "C",
+       144,
+       144
+      ],
+      [
+       "C",
+       150,
+       150
+      ]
+     ],
+     "edge": [
+      "search_repository",
+      "scan_head"
+     ]
+    }
+   ],
+   "snapshot": "5a57069c28263b3106045ca0f9863e078651d33e",
+   "discovery": {
+    "action": "connect",
+    "verdict": "direct_edge",
+    "owner": "scan_head",
+    "line": 80,
+    "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода ↔ M134_GIT_PROJECT_ROOT_MISMATCH"
+   },
+   "coverage": "one_static_route",
+   "execution_observed": false,
+   "joint_feasibility": "not_proved"
+  }
+ },
+ {
+  "id": "C03",
+  "arm": "checked",
+  "ms": 10563.7,
+  "full": false,
+  "answer": {
+   "state": "insufficient",
+   "plan": "discover_observation",
+   "steps": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "question",
+     "status": "observation_ambiguous"
+    }
+   ],
+   "claims": [],
+   "snapshot": "5a57069c28263b3106045ca0f9863e078651d33e",
+   "discovery": {
+    "verdict": "unproven"
+   },
+   "reason": "observation_ambiguous"
+  }
+ },
+ {
+  "id": "C03",
+  "arm": "grounded",
+  "ms": 724.2,
+  "full": false,
+  "answer": {
+   "state": "answered",
+   "plan": "discover_observation",
+   "steps": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "when",
+     "status": "grounded"
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "search_repository@156",
+     "status": "proved"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В search_repository на строке 156 записано выражение `'M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода'`.",
+     "refs": [
+      [
+       "C",
+       144,
+       144
+      ],
+      [
+       "C",
+       156,
+       156
+      ]
+     ]
+    },
+    {
+     "text": "В search_repository исследована инструкция `raise ValueError('M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода')` (стр. 156). Для достижения строки требуется: `first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'` истинно (стр. 155). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+     "refs": [
+      [
+       "C",
+       144,
+       144
+      ],
+      [
+       "C",
+       147,
+       147
+      ],
+      [
+       "C",
+       151,
+       151
+      ],
+      [
+       "C",
+       155,
+       155
+      ],
+      [
+       "C",
+       156,
+       156
+      ]
+     ],
+     "control": {
+      "path": "modules/developer_task_ui/app/context_search.py",
+      "function": "search_repository",
+      "line": 156,
+      "condition": [
+       "test",
+       155,
+       "first['retrieval_confidence'] != 'LEXICAL_MATCH_EXISTS'"
+      ],
+      "work": 19
+     }
+    }
+   ],
+   "snapshot": "5a57069c28263b3106045ca0f9863e078651d33e",
+   "discovery": {
+    "verdict": "local_conditions",
+    "action": "when",
+    "owner": "search_repository",
+    "line": 156,
+    "interpretation": "M134_NO_LEXICAL_MATCH: уточни задачу именами методов или терминами из кода"
+   },
+   "coverage": "one_static_site",
+   "execution_observed": false
+  }
+ }
+]

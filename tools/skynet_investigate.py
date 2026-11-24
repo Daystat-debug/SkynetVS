@@ -460,6 +460,11 @@ def main():
                 print("Подтверждены места вызовов и локальная ветвь. Объяснение причины от входа частичное.")
             if out["plan"] == "discover_observation":
                 detail = out["discovery"]
+                if args.explore or args.indexed:
+                    meanings = dict(where="место в коде", when="локальные условия", via="входящий вызов",
+                                    connect="прямой вызов между функциями")
+                    print("Вопрос понят как запрос на", meanings[detail["action"]]+".",
+                          "Ссылки подтверждают факты о выбранном участке.")
                 print("Выбранный признак:",detail["interpretation"])
                 if detail["verdict"]=="location_only":
                     print("Установлено только место записи.",REASONS.get(detail["gap"],detail["gap"]))
