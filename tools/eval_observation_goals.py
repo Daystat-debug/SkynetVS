@@ -88,12 +88,17 @@ def grade(c,answer,root,src):
         good = not refs and answer.get("reason") in c["reasons"]
         return dict(full=good,target=None,spurious=bool(refs),checks=[],cited=len(refs))
     path = previous.PATHS[c["path"]]
-    tree = ast.parse(src.snapshot.sources[path])
-    functions = {fn.name:fn for fn in tree.body if isinstance(fn,ast.FunctionDef)}
+    functions = {fn.name:fn for source in src.snapshot.sources.values()
+                 for fn in ast.parse(source).body if isinstance(fn,ast.FunctionDef)}
     cited = lambda n:any(r["path"]==path and r["start"]<=n<=r["end"] for r in refs)
     target = (cited(c["line"]) and c["owner"] in text and (meta.get("owner",c["owner"])==c["owner"])
               and meta.get("line",c["line"])==c["line"])
     checks = [target,all(cited(n) for n in c["refs"])]
+    for code,lines in c.get("other_refs",{}).items():
+        checks.append(all(any(r["path"]==previous.PATHS[code] and r["start"]<=line<=r["end"] for r in refs)
+                          for line in lines))
+    if "binding" in c:
+        checks.append(c["binding"] in text)
     for name,line,term in c.get("controls",[]):
         terms=[]
         for cl in answer["claims"]:

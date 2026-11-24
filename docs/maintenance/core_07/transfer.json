@@ -1,0 +1,28 @@
+{
+ "implementation":"2d4f37d8460c09c6a6983c8bac72b152a016a18c",
+ "source":"fb30428c94b3d477dde9b5e081435a1669822aad",
+ "rubric":"A location must identify the actual selected expression. A when question also requires all local predicates under normal completion. A via question requires a witnessed caller, parameter binding and conditions at both ends. Signed lines are predicates; G uses offsets in the generated module. Wrong target and safe withholding are distinct. Negative cases require no published explanation.",
+ "cases":[
+  {"id":"T01","q":"При каких условиях в отчёт попадает предупреждение, что часть файлов пропущена по ограничениям размера или кодировки?","path":"C","owner":"format_context","line":217,"refs":[202,203,204,216,217],"controls":[["format_context",217,["and",-203,216]]]},
+  {"id":"T02","q":"Что должно случиться, чтобы пользователю сообщили о неполном охвате репозитория?","path":"C","owner":"format_context","line":217,"refs":[202,203,204,216,217],"controls":[["format_context",217,["and",-203,216]]]},
+  {"id":"T03","q":"Где отчёт поясняет, что локальные правки не учитываются?","path":"C","owner":"format_context","line":209,"refs":[202,209]},
+  {"id":"T04","q":"Когда появляется «Подсказки для русского запроса»?","path":"C","owner":"format_context","line":215,"refs":[202,203,204,214,215],"controls":[["format_context",215,["and",-203,214]]]},
+  {"id":"T05","q":"Кто непосредственно вызывает код, который сообщает о слишком длинном запросе после расширения, и что передаёт?","path":"C","owner":"expand_query","line":53,"refs":[47,48,49,52,53,144,146],"caller":"search_repository","binding":"goal ← `goal`","controls":[["search_repository",146,true],["expand_query",53,["and",-48,52]]]},
+  {"id":"T06","q":"Где записан отказ программы ранжирования при передаче неожиданного набора ключей входного словаря из командной строки?","path":"R","owner":"main","line":150,"refs":[144,150]},
+  {"id":"T07","q":"Где готовится строка с количеством файлов-кандидатов, функций и модульных участков?","path":"C","owner":"format_context","line":211,"refs":[202,211]},
+  {"id":"T08","q":"При каком условии отправляется уведомление о начале ранжирования файлов, функций и внутренних окон?","path":"C","owner":"search_repository","line":152,"refs":[144,151,152],"controls":[["search_repository",152,151]]},
+  {"id":"T09","q":"Какие проверки ведут к ошибке разбора списка файлов Git, если последняя запись не пустая?","path":"C","owner":"scan_head","line":85,"refs":[68,79,80,84,85],"controls":[["scan_head",85,["and",-79,84]]]},
+  {"id":"T10","q":"Где отчёт объясняет разницу между подписью показанного фрагмента и данными, для которых вычислен хеш?","path":"C","owner":"format_context","line":221,"refs":[202,221]},
+  {"id":"T11","q":"Кто передаёт предел выдачи в файловый поиск по заголовку и возможна ли на этом вызове ошибка недопустимого предела выдачи?","path":"T","owner":"rank_title_only","line":45,"refs":[34,40,41,42,43,44,45],"other_refs":{"R":[17,110,112,113,114,115,116]},"caller":"rank","binding":"top_n=10","verdict":"excluded_route","controls":[["rank",116,["and",-112,-114]],["rank_title_only",45,["and",-40,-42,44]]]},
+  {"id":"T12","q":"Где появляется «Git HEAD»?","reasons":["observation_ambiguous","clarification"]},
+  {"id":"T13","q":"Какой текст программа показывает при восстановлении связи с сетевым принтером?","reasons":["observation_ambiguous","observation_missing","clarification","no_match"]},
+  {"id":"T14","q":"Сколько раз сегодня появилось предупреждение о неполном поиске?","reasons":["observation_required"]},
+  {"id":"T15","q":"Где в modules/network.py формируется сообщение о ходе поиска?","reasons":["out_of_scope"]},
+  {"id":"T16","q":"Сколько миллисекунд обычно проходит между началом ранжирования и выводом результатов?","reasons":["observation_ambiguous","clarification","observation_required","no_match"]},
+  {"id":"G01","q":"При каком условии товар отправляется паковаться?","path":"R","owner":"sink","line":5,"refs":[2,3,4,5],"controls":[["sink",5,-3]]},
+  {"id":"G02","q":"Где формируется «Заказ передан на хранение»?","path":"R","owner":"other","line":12,"refs":[10,12]},
+  {"id":"G03","q":"Кто непосредственно вызывает код передачи заказа на упаковку и какое количество передаётся?","path":"R","owner":"sink","line":5,"caller":"caller","refs":[2,3,4,5,7,8],"binding":"units ←","controls":[["caller",8,true],["sink",5,-3]]},
+  {"id":"G04","q":"Когда появляется «Запас комплектующих ниже порога»?","reasons":["observation_ambiguous","clarification","diagnostic_ambiguous"]},
+  {"id":"G05","q":"Где подтверждается, что посылка доехала до получателя?","reasons":["observation_ambiguous","observation_missing","clarification","no_match"]}
+ ]
+}
