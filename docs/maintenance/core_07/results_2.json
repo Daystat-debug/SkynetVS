@@ -1,0 +1,6569 @@
+{
+ "rows": [
+  {
+   "id": "T01",
+   "q": "Где в отчёте указывается, откуда взята текущая версия исходников, рядом с идентификатором коммита?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 221 записано выражение `'Подписи фрагментов приведены к текущему Git HEAD только при отображении; SHA относятся к исходным данным.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         221,
+         221
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 221,
+      "interpretation": "Подписи фрагментов приведены к текущему Git HEAD только при отображении; SHA относятся к исходным данным."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В scan_head на строке 138 записано выражение `'M134_GIT_HEAD_CHANGED_DURING_SEARCH'`.",
+       "refs": [
+        [
+         "C",
+         68,
+         68
+        ],
+        [
+         "C",
+         138,
+         138
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "scan_head",
+      "line": 138,
+      "interpretation": "M134_GIT_HEAD_CHANGED_DURING_SEARCH"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "M134_GIT_HEAD_CHANGED_DURING_SEARCH",
+        "coordinate": "scan_head@138",
+        "ref": {
+         "id": "E195265bbcde27a1b",
+         "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 138,
+         "end": 138,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "7049fc8ef7bdadb17f6742e07560c48cc30e5505c44bf3b69c44a83a4657841c",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/fb30428c94b3d477dde9b5e081435a1669822aad/modules/developer_task_ui/app/context_search.py#L138-L138"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T02",
+   "q": "Где формируется сводка о числе прочитанных исходников и объёме в байтах?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В scan_head на строке 134 записано выражение `f'Git HEAD: прочитано {index}/{len(entries)} исходников…'`.",
+       "refs": [
+        [
+         "C",
+         68,
+         68
+        ],
+        [
+         "C",
+         134,
+         134
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "scan_head",
+      "line": 134,
+      "interpretation": "Git HEAD: прочитано {…}/{…} исходников…"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 209 записано выражение `'Область: main.py и modules/**/*.py; незакоммиченные изменения НЕ учитывались.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         209,
+         209
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 209,
+      "interpretation": "Область: main.py и modules/**/*.py; незакоммиченные изменения НЕ учитывались."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "Область: main.py и modules/**/*.py; незакоммиченные изменения НЕ учитывались.",
+        "coordinate": "format_context@207",
+        "ref": {
+         "id": "E1234cdf3a6b33ca4",
+         "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 209,
+         "end": 209,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "7151230a13e53464f853438a964f90c37880508d2ec5a5d3fa7f1350a63fe3c6",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/fb30428c94b3d477dde9b5e081435a1669822aad/modules/developer_task_ui/app/context_search.py#L209-L209"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "T03",
+   "q": "Когда в отчёт добавляется заголовок про локальный контекст и то, что код не выполнялся?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 9,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@225",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 225 записано выражение `'\\n---- Локальный контекст (исходный код НЕ выполнялся) ----\\n'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         225,
+         225
+        ]
+       ]
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('\\n---- Локальный контекст (исходный код НЕ выполнялся) ----\\n')` (стр. 225). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` ложно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         222,
+         222
+        ],
+        [
+         "C",
+         225,
+         225
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 225,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           222,
+           "not report['_private_8k_text']"
+          ]
+         ]
+        ],
+        "work": 28
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "format_context",
+      "line": 225,
+      "interpretation": "---- Локальный контекст (исходный код НЕ выполнялся) ----"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 9,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@225",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 225 записано выражение `'\\n---- Локальный контекст (исходный код НЕ выполнялся) ----\\n'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         225,
+         225
+        ]
+       ]
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('\\n---- Локальный контекст (исходный код НЕ выполнялся) ----\\n')` (стр. 225). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` ложно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         222,
+         222
+        ],
+        [
+         "C",
+         225,
+         225
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 225,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           222,
+           "not report['_private_8k_text']"
+          ]
+         ]
+        ],
+        "work": 28
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "format_context",
+      "line": 225,
+      "interpretation": "---- Локальный контекст (исходный код НЕ выполнялся) ----"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 9,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@225",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 225 записано выражение `'\\n---- Локальный контекст (исходный код НЕ выполнялся) ----\\n'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         225,
+         225
+        ]
+       ]
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('\\n---- Локальный контекст (исходный код НЕ выполнялся) ----\\n')` (стр. 225). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` ложно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         222,
+         222
+        ],
+        [
+         "C",
+         225,
+         225
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 225,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           222,
+           "not report['_private_8k_text']"
+          ]
+         ]
+        ],
+        "work": 28
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "format_context",
+      "line": 225,
+      "interpretation": "---- Локальный контекст (исходный код НЕ выполнялся) ----"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "T04",
+   "q": "Где записано пояснение для человека о том, что создание патча не разрешено?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "site": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 220 записано выражение `'Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         220,
+         220
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 220,
+      "interpretation": "Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 220 записано выражение `'Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         220,
+         220
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 220,
+      "interpretation": "Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 220 записано выражение `'Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         220,
+         220
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 220,
+      "interpretation": "Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 220 записано выражение `'Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         220,
+         220
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 220,
+      "interpretation": "Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "T05",
+   "q": "Кто непосредственно вызывает проверку с сообщением «M126_FILES_LIMIT», при каких условиях и какие аргументы передаёт?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "corroborated": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "cited": 17,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "via",
+       "status": "unique_quote"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_title_only",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank@116",
+       "status": "proved"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank_title_only@43",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank исследована инструкция `files = rank_title_only(title, old_sources, top_n=10)` (стр. 116). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113), `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         112,
+         112
+        ],
+        [
+         "R",
+         113,
+         113
+        ],
+        [
+         "R",
+         114,
+         114
+        ],
+        [
+         "R",
+         115,
+         115
+        ],
+        [
+         "R",
+         116,
+         116
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "rank",
+        "line": 116,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           112,
+           "not isinstance(old_sources, dict) or not old_sources"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           114,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ]
+        ],
+        "work": 7
+       }
+      },
+      {
+       "text": "В rank на строке 116 записан прямой вызов rank_title_only. Аргументы: title ← `title`, before_files ← `old_sources`, top_n ← `10`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_title_only"
+       ]
+      },
+      {
+       "text": "В rank_title_only исследована инструкция `raise ValueError('M126_FILES_LIMIT')` (стр. 43). Для достижения строки требуется: `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 40) и `not isinstance(before_files, dict) or not before_files or len(before_files) > 800` истинно (стр. 42). При расчёте учтены переходы `raise ValueError('M126_QUERY_INVALID')` (стр. 41). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         40,
+         40
+        ],
+        [
+         "T",
+         41,
+         41
+        ],
+        [
+         "T",
+         42,
+         42
+        ],
+        [
+         "T",
+         43,
+         43
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        "function": "rank_title_only",
+        "line": 43,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           40,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ],
+         [
+          "test",
+          42,
+          "not isinstance(before_files, dict) or not before_files or len(before_files) > 800"
+         ]
+        ],
+        "work": 7
+       }
+      },
+      {
+       "text": "В rank_title_only на строке 43 записано выражение `'M126_FILES_LIMIT'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         43,
+         43
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "conditional_route",
+      "action": "via",
+      "owner": "rank_title_only",
+      "line": 43,
+      "interpretation": "M126_FILES_LIMIT"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "explain_diagnostic",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "cited": 17,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "via",
+       "status": "lexical"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_title_only",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank@116",
+       "status": "proved"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank_title_only@43",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank исследована инструкция `files = rank_title_only(title, old_sources, top_n=10)` (стр. 116). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113), `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         112,
+         112
+        ],
+        [
+         "R",
+         113,
+         113
+        ],
+        [
+         "R",
+         114,
+         114
+        ],
+        [
+         "R",
+         115,
+         115
+        ],
+        [
+         "R",
+         116,
+         116
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "rank",
+        "line": 116,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           112,
+           "not isinstance(old_sources, dict) or not old_sources"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           114,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ]
+        ],
+        "work": 7
+       }
+      },
+      {
+       "text": "В rank на строке 116 записан прямой вызов rank_title_only. Аргументы: title ← `title`, before_files ← `old_sources`, top_n ← `10`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_title_only"
+       ]
+      },
+      {
+       "text": "В rank_title_only исследована инструкция `raise ValueError('M126_FILES_LIMIT')` (стр. 43). Для достижения строки требуется: `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 40) и `not isinstance(before_files, dict) or not before_files or len(before_files) > 800` истинно (стр. 42). При расчёте учтены переходы `raise ValueError('M126_QUERY_INVALID')` (стр. 41). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         40,
+         40
+        ],
+        [
+         "T",
+         41,
+         41
+        ],
+        [
+         "T",
+         42,
+         42
+        ],
+        [
+         "T",
+         43,
+         43
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        "function": "rank_title_only",
+        "line": 43,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           40,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ],
+         [
+          "test",
+          42,
+          "not isinstance(before_files, dict) or not before_files or len(before_files) > 800"
+         ]
+        ],
+        "work": 7
+       }
+      },
+      {
+       "text": "В rank_title_only на строке 43 записано выражение `'M126_FILES_LIMIT'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         43,
+         43
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "conditional_route",
+      "action": "via",
+      "owner": "rank_title_only",
+      "line": 43,
+      "interpretation": "M126_FILES_LIMIT"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "cited": 17,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "via",
+       "status": "site_selection"
+      },
+      {
+       "tool": "calls",
+       "target": "rank_title_only",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank@116",
+       "status": "proved"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "rank_title_only@43",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В rank исследована инструкция `files = rank_title_only(title, old_sources, top_n=10)` (стр. 116). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources` ложно (стр. 112) и `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 114). При расчёте учтены переходы `raise ValueError('M130_OLD_TREE_EMPTY')` (стр. 113), `raise ValueError('M130_TITLE_INVALID')` (стр. 115). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         112,
+         112
+        ],
+        [
+         "R",
+         113,
+         113
+        ],
+        [
+         "R",
+         114,
+         114
+        ],
+        [
+         "R",
+         115,
+         115
+        ],
+        [
+         "R",
+         116,
+         116
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "rank",
+        "line": 116,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           112,
+           "not isinstance(old_sources, dict) or not old_sources"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           114,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ]
+        ],
+        "work": 7
+       }
+      },
+      {
+       "text": "В rank на строке 116 записан прямой вызов rank_title_only. Аргументы: title ← `title`, before_files ← `old_sources`, top_n ← `10`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         116,
+         116
+        ],
+        [
+         "R",
+         17,
+         17
+        ]
+       ],
+       "edge": [
+        "rank",
+        "rank_title_only"
+       ]
+      },
+      {
+       "text": "В rank_title_only исследована инструкция `raise ValueError('M126_FILES_LIMIT')` (стр. 43). Для достижения строки требуется: `not isinstance(title, str) or not title.strip() or len(title) > 2048` ложно (стр. 40) и `not isinstance(before_files, dict) or not before_files or len(before_files) > 800` истинно (стр. 42). При расчёте учтены переходы `raise ValueError('M126_QUERY_INVALID')` (стр. 41). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         40,
+         40
+        ],
+        [
+         "T",
+         41,
+         41
+        ],
+        [
+         "T",
+         42,
+         42
+        ],
+        [
+         "T",
+         43,
+         43
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m126_rank.py",
+        "function": "rank_title_only",
+        "line": 43,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           40,
+           "not isinstance(title, str) or not title.strip() or len(title) > 2048"
+          ]
+         ],
+         [
+          "test",
+          42,
+          "not isinstance(before_files, dict) or not before_files or len(before_files) > 800"
+         ]
+        ],
+        "work": 7
+       }
+      },
+      {
+       "text": "В rank_title_only на строке 43 записано выражение `'M126_FILES_LIMIT'`.",
+       "refs": [
+        [
+         "T",
+         34,
+         34
+        ],
+        [
+         "T",
+         43,
+         43
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "conditional_route",
+      "action": "via",
+      "owner": "rank_title_only",
+      "line": 43,
+      "interpretation": "M126_FILES_LIMIT"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   }
+  },
+  {
+   "id": "T06",
+   "q": "Когда программа говорит, что установленный Git не найден и ничего не скачано?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 11,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "find_git@39",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В find_git на строке 39 записано выражение `'Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.'`.",
+       "refs": [
+        [
+         "G",
+         22,
+         22
+        ],
+        [
+         "G",
+         39,
+         39
+        ]
+       ]
+      },
+      {
+       "text": "В find_git исследована инструкция `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')` (стр. 39). Для достижения строки требуется: для всех итераций `for path in candidates` (стр. 35, включая пустой перебор) выполнено (`path.is_file()` ложно (стр. 36)). При расчёте учтены переходы `return path.absolute()` (стр. 38). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "G",
+         22,
+         22
+        ],
+        [
+         "G",
+         23,
+         23
+        ],
+        [
+         "G",
+         25,
+         25
+        ],
+        [
+         "G",
+         27,
+         27
+        ],
+        [
+         "G",
+         30,
+         30
+        ],
+        [
+         "G",
+         35,
+         35
+        ],
+        [
+         "G",
+         36,
+         36
+        ],
+        [
+         "G",
+         38,
+         38
+        ],
+        [
+         "G",
+         39,
+         39
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/git_source.py",
+        "function": "find_git",
+        "line": 39,
+        "condition": [
+         "all",
+         35,
+         "for path in candidates",
+         [
+          "not",
+          [
+           "test",
+           36,
+           "path.is_file()"
+          ]
+         ]
+        ],
+        "work": 17
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "find_git",
+      "line": 39,
+      "interpretation": "Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 11,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "find_git@39",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В find_git на строке 39 записано выражение `'Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.'`.",
+       "refs": [
+        [
+         "G",
+         22,
+         22
+        ],
+        [
+         "G",
+         39,
+         39
+        ]
+       ]
+      },
+      {
+       "text": "В find_git исследована инструкция `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')` (стр. 39). Для достижения строки требуется: для всех итераций `for path in candidates` (стр. 35, включая пустой перебор) выполнено (`path.is_file()` ложно (стр. 36)). При расчёте учтены переходы `return path.absolute()` (стр. 38). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "G",
+         22,
+         22
+        ],
+        [
+         "G",
+         23,
+         23
+        ],
+        [
+         "G",
+         25,
+         25
+        ],
+        [
+         "G",
+         27,
+         27
+        ],
+        [
+         "G",
+         30,
+         30
+        ],
+        [
+         "G",
+         35,
+         35
+        ],
+        [
+         "G",
+         36,
+         36
+        ],
+        [
+         "G",
+         38,
+         38
+        ],
+        [
+         "G",
+         39,
+         39
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/git_source.py",
+        "function": "find_git",
+        "line": 39,
+        "condition": [
+         "all",
+         35,
+         "for path in candidates",
+         [
+          "not",
+          [
+           "test",
+           36,
+           "path.is_file()"
+          ]
+         ]
+        ],
+        "work": 17
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "find_git",
+      "line": 39,
+      "interpretation": "Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 11,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "find_git@39",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В find_git на строке 39 записано выражение `'Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.'`.",
+       "refs": [
+        [
+         "G",
+         22,
+         22
+        ],
+        [
+         "G",
+         39,
+         39
+        ]
+       ]
+      },
+      {
+       "text": "В find_git исследована инструкция `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')` (стр. 39). Для достижения строки требуется: для всех итераций `for path in candidates` (стр. 35, включая пустой перебор) выполнено (`path.is_file()` ложно (стр. 36)). При расчёте учтены переходы `return path.absolute()` (стр. 38). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "G",
+         22,
+         22
+        ],
+        [
+         "G",
+         23,
+         23
+        ],
+        [
+         "G",
+         25,
+         25
+        ],
+        [
+         "G",
+         27,
+         27
+        ],
+        [
+         "G",
+         30,
+         30
+        ],
+        [
+         "G",
+         35,
+         35
+        ],
+        [
+         "G",
+         36,
+         36
+        ],
+        [
+         "G",
+         38,
+         38
+        ],
+        [
+         "G",
+         39,
+         39
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/git_source.py",
+        "function": "find_git",
+        "line": 39,
+        "condition": [
+         "all",
+         35,
+         "for path in candidates",
+         [
+          "not",
+          [
+           "test",
+           36,
+           "path.is_file()"
+          ]
+         ]
+        ],
+        "work": 17
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "find_git",
+      "line": 39,
+      "interpretation": "Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "T07",
+   "q": "При каких условиях переразмеченный текст отклоняют из-за того, что он стал занимать больше байтов, чем первоначальный?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 5,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@49",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ]
+      },
+      {
+       "text": "В expand_query исследована инструкция `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` истинно (стр. 48). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         48,
+         48
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "expand_query",
+        "line": 49,
+        "condition": [
+         "test",
+         48,
+         "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "expand_query",
+      "line": 49,
+      "interpretation": "M134_GOAL_EMPTY_OR_TOO_LONG"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "M134_GOAL_EMPTY_OR_TOO_LONG",
+        "coordinate": "expand_query@49",
+        "ref": {
+         "id": "E050aee48d292b578",
+         "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 49,
+         "end": 49,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "d359f6373cc8a5965cb16128712e3183de0209f4a6cc293090cf73569d52b368",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/fb30428c94b3d477dde9b5e081435a1669822aad/modules/developer_task_ui/app/context_search.py#L49-L49"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "T08",
+   "q": "Где докладывается, сколько окон для контекста выбрано из предложенных и сколько байт занято?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 219 записано выражение `f\"Окна 8 КБ: {meta['selected_windows']} выбрано из {meta['proposals_considered']}, использовано {meta['used_bytes']} байт.\"`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         219,
+         219
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 219,
+      "interpretation": "Окна 8 КБ: {…} выбрано из {…}, использовано {…} байт."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 219 записано выражение `f\"Окна 8 КБ: {meta['selected_windows']} выбрано из {meta['proposals_considered']}, использовано {meta['used_bytes']} байт.\"`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         219,
+         219
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 219,
+      "interpretation": "Окна 8 КБ: {…} выбрано из {…}, использовано {…} байт."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 219 записано выражение `f\"Окна 8 КБ: {meta['selected_windows']} выбрано из {meta['proposals_considered']}, использовано {meta['used_bytes']} байт.\"`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         219,
+         219
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 219,
+      "interpretation": "Окна 8 КБ: {…} выбрано из {…}, использовано {…} байт."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "T09",
+   "q": "Когда появляется «M134_REPORT_SCHEMA_INVALID»?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "site": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "M134_REPORT_SCHEMA_INVALID",
+        "coordinate": "format_context@204",
+        "ref": {
+         "id": "E8e88b4f2fe0329e8",
+         "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 204,
+         "end": 204,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "103bef8bd4f97fa8667c65d10ff150a52f0c970bf3e83440d6ade5abb58de411",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/fb30428c94b3d477dde9b5e081435a1669822aad/modules/developer_task_ui/app/context_search.py#L204-L204"
+        }
+       },
+       {
+        "label": "M134_REPORT_SCHEMA_INVALID",
+        "coordinate": "receipt_without_source@233",
+        "ref": {
+         "id": "E069807f9427894e8",
+         "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 233,
+         "end": 233,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "103bef8bd4f97fa8667c65d10ff150a52f0c970bf3e83440d6ade5abb58de411",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/fb30428c94b3d477dde9b5e081435a1669822aad/modules/developer_task_ui/app/context_search.py#L233-L233"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "M134_REPORT_SCHEMA_INVALID",
+        "coordinate": "format_context@204",
+        "ref": {
+         "id": "E8e88b4f2fe0329e8",
+         "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 204,
+         "end": 204,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "103bef8bd4f97fa8667c65d10ff150a52f0c970bf3e83440d6ade5abb58de411",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/fb30428c94b3d477dde9b5e081435a1669822aad/modules/developer_task_ui/app/context_search.py#L204-L204"
+        }
+       },
+       {
+        "label": "M134_REPORT_SCHEMA_INVALID",
+        "coordinate": "receipt_without_source@233",
+        "ref": {
+         "id": "E069807f9427894e8",
+         "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 233,
+         "end": 233,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "103bef8bd4f97fa8667c65d10ff150a52f0c970bf3e83440d6ade5abb58de411",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/fb30428c94b3d477dde9b5e081435a1669822aad/modules/developer_task_ui/app/context_search.py#L233-L233"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T10",
+   "q": "Где отчёт сообщает, что резервная копия отправлена почтой?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "corroborated": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "Область: main.py и modules/**/*.py; незакоммиченные изменения НЕ учитывались.",
+        "coordinate": "format_context@207",
+        "ref": {
+         "id": "E1234cdf3a6b33ca4",
+         "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 209,
+         "end": 209,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "7151230a13e53464f853438a964f90c37880508d2ec5a5d3fa7f1350a63fe3c6",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/fb30428c94b3d477dde9b5e081435a1669822aad/modules/developer_task_ui/app/context_search.py#L209-L209"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": false,
+    "target": null,
+    "spurious": true,
+    "checks": [],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 209 записано выражение `'Область: main.py и modules/**/*.py; незакоммиченные изменения НЕ учитывались.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         209,
+         209
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 209,
+      "interpretation": "Область: main.py и modules/**/*.py; незакоммиченные изменения НЕ учитывались."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "T11",
+   "q": "Сколько раз за последний запуск появились подсказки для русского запроса?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   },
+   "site": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   }
+  },
+  {
+   "id": "T12",
+   "q": "Где в modules/backup.py создаётся строка об использованном числе байтов?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   },
+   "site": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   }
+  },
+  {
+   "id": "G01",
+   "q": "Когда резервный экземпляр попадает в изолированный каталог?",
+   "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 9,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@225",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 225 записано выражение `'\\n---- Локальный контекст (исходный код НЕ выполнялся) ----\\n'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         225,
+         225
+        ]
+       ]
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('\\n---- Локальный контекст (исходный код НЕ выполнялся) ----\\n')` (стр. 225). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` ложно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         222,
+         222
+        ],
+        [
+         "C",
+         225,
+         225
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 225,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "not",
+          [
+           "test",
+           222,
+           "not report['_private_8k_text']"
+          ]
+         ]
+        ],
+        "work": 28
+       }
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "format_context",
+      "line": 225,
+      "interpretation": "---- Локальный контекст (исходный код НЕ выполнялся) ----"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "---- Локальный контекст (исходный код НЕ выполнялся) ----",
+        "coordinate": "format_context@225",
+        "ref": {
+         "id": "E05945eb477c1491f",
+         "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "start": 225,
+         "end": 225,
+         "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+         "excerpt_sha256": "755c7c453d45ff53aafd4997b1b22f9688baeb93b9f7c394b486e854d932c8aa",
+         "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/b0b39744f6e384ee363725c461d2f07240d5df80/modules/developer_task_ui/app/context_search.py#L225-L225"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 11,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "find_git@39",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В find_git на строке 39 записано выражение `'Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.'`.",
+       "refs": [
+        [
+         "G",
+         22,
+         22
+        ],
+        [
+         "G",
+         39,
+         39
+        ]
+       ]
+      },
+      {
+       "text": "В find_git исследована инструкция `raise GitReadError('Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git.')` (стр. 39). Для достижения строки требуется: для всех итераций `for path in candidates` (стр. 35, включая пустой перебор) выполнено (`path.is_file()` ложно (стр. 36)). При расчёте учтены переходы `return path.absolute()` (стр. 38). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "G",
+         22,
+         22
+        ],
+        [
+         "G",
+         23,
+         23
+        ],
+        [
+         "G",
+         25,
+         25
+        ],
+        [
+         "G",
+         27,
+         27
+        ],
+        [
+         "G",
+         30,
+         30
+        ],
+        [
+         "G",
+         35,
+         35
+        ],
+        [
+         "G",
+         36,
+         36
+        ],
+        [
+         "G",
+         38,
+         38
+        ],
+        [
+         "G",
+         39,
+         39
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/git_source.py",
+        "function": "find_git",
+        "line": 39,
+        "condition": [
+         "all",
+         35,
+         "for path in candidates",
+         [
+          "not",
+          [
+           "test",
+           36,
+           "path.is_file()"
+          ]
+         ]
+        ],
+        "work": 17
+       }
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "find_git",
+      "line": 39,
+      "interpretation": "Установленный Git не найден в стандартных каталогах. Ничего не скачано. Учебный пример доступен без Git."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "G02",
+   "q": "Кто вызывает код, который откладывает проверку архива до ручного разбора, и с какой глубиной?",
+   "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+   "site": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "cited": 16,
+    "calls": 1,
+    "answer": {
+     "state": "partial",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "via",
+       "status": "site_selection"
+      },
+      {
+       "tool": "calls",
+       "target": "stage_e56e56db927e",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_66e6b3d3bf85@163",
+       "status": "proved"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_e56e56db927e@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_66e6b3d3bf85 исследована инструкция `return stage_e56e56db927e(depth=25)` (стр. 163). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_66e6b3d3bf85",
+        "line": 163,
+        "condition": true,
+        "work": 1
+       }
+      },
+      {
+       "text": "В stage_66e6b3d3bf85 на строке 163 записан прямой вызов stage_e56e56db927e. Аргументы: depth ← `25`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "stage_66e6b3d3bf85",
+        "stage_e56e56db927e"
+       ]
+      },
+      {
+       "text": "В stage_e56e56db927e исследована инструкция `return 'Проверка архива отложена до ручного разбора'` (стр. 159). Для достижения строки требуется: `depth >= 26` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_e56e56db927e",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "depth >= 26"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "При привязке depth=25 условие для stage_e56e56db927e@159 ложно. Этот вариант перехода исключён.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ],
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ]
+      },
+      {
+       "text": "В stage_e56e56db927e на строке 159 записано выражение `'Проверка архива отложена до ручного разбора'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "excluded_route",
+      "action": "via",
+      "owner": "stage_e56e56db927e",
+      "line": 159,
+      "interpretation": "Проверка архива отложена до ручного разбора"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "cited": 16,
+    "calls": 1,
+    "answer": {
+     "state": "partial",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "via",
+       "status": "site_selection"
+      },
+      {
+       "tool": "calls",
+       "target": "stage_e56e56db927e",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_66e6b3d3bf85@163",
+       "status": "proved"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_e56e56db927e@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_66e6b3d3bf85 исследована инструкция `return stage_e56e56db927e(depth=25)` (стр. 163). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_66e6b3d3bf85",
+        "line": 163,
+        "condition": true,
+        "work": 1
+       }
+      },
+      {
+       "text": "В stage_66e6b3d3bf85 на строке 163 записан прямой вызов stage_e56e56db927e. Аргументы: depth ← `25`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "stage_66e6b3d3bf85",
+        "stage_e56e56db927e"
+       ]
+      },
+      {
+       "text": "В stage_e56e56db927e исследована инструкция `return 'Проверка архива отложена до ручного разбора'` (стр. 159). Для достижения строки требуется: `depth >= 26` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_e56e56db927e",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "depth >= 26"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "При привязке depth=25 условие для stage_e56e56db927e@159 ложно. Этот вариант перехода исключён.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ],
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ]
+      },
+      {
+       "text": "В stage_e56e56db927e на строке 159 записано выражение `'Проверка архива отложена до ручного разбора'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "excluded_route",
+      "action": "via",
+      "owner": "stage_e56e56db927e",
+      "line": 159,
+      "interpretation": "Проверка архива отложена до ручного разбора"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "cited": 16,
+    "calls": 0,
+    "answer": {
+     "state": "partial",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "via",
+       "status": "lexical"
+      },
+      {
+       "tool": "calls",
+       "target": "stage_e56e56db927e",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_66e6b3d3bf85@163",
+       "status": "proved"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_e56e56db927e@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_66e6b3d3bf85 исследована инструкция `return stage_e56e56db927e(depth=25)` (стр. 163). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_66e6b3d3bf85",
+        "line": 163,
+        "condition": true,
+        "work": 1
+       }
+      },
+      {
+       "text": "В stage_66e6b3d3bf85 на строке 163 записан прямой вызов stage_e56e56db927e. Аргументы: depth ← `25`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "stage_66e6b3d3bf85",
+        "stage_e56e56db927e"
+       ]
+      },
+      {
+       "text": "В stage_e56e56db927e исследована инструкция `return 'Проверка архива отложена до ручного разбора'` (стр. 159). Для достижения строки требуется: `depth >= 26` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_e56e56db927e",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "depth >= 26"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "При привязке depth=25 условие для stage_e56e56db927e@159 ложно. Этот вариант перехода исключён.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ],
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ]
+      },
+      {
+       "text": "В stage_e56e56db927e на строке 159 записано выражение `'Проверка архива отложена до ручного разбора'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "excluded_route",
+      "action": "via",
+      "owner": "stage_e56e56db927e",
+      "line": 159,
+      "interpretation": "Проверка архива отложена до ручного разбора"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "G03",
+   "q": "Где формируется положительное заключение о проверке архива без замечаний?",
+   "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+   "corroborated": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_e56e56db927e на строке 160 записано выражение `'Проверка архива завершена без замечаний'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "stage_e56e56db927e",
+      "line": 160,
+      "interpretation": "Проверка архива завершена без замечаний"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_e56e56db927e на строке 160 записано выражение `'Проверка архива завершена без замечаний'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "stage_e56e56db927e",
+      "line": 160,
+      "interpretation": "Проверка архива завершена без замечаний"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_e56e56db927e на строке 160 записано выражение `'Проверка архива завершена без замечаний'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "stage_e56e56db927e",
+      "line": 160,
+      "interpretation": "Проверка архива завершена без замечаний"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "site": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "site_selection"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_e56e56db927e на строке 160 записано выражение `'Проверка архива завершена без замечаний'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ]
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "stage_e56e56db927e",
+      "line": 160,
+      "interpretation": "Проверка архива завершена без замечаний"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "G04",
+   "q": "Когда формируется «Копия готова для передачи»?",
+   "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 6,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_fdd83051b6d3@168",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_fdd83051b6d3 на строке 168 записано выражение `'Копия готова для передачи'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ]
+      },
+      {
+       "text": "В stage_fdd83051b6d3 исследована инструкция `return 'Копия готова для передачи'` (стр. 168). Для достижения строки требуется: `verbose` ложно (стр. 166). При расчёте учтены переходы `return 'Копия помещена в карантинную папку'` (стр. 167). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_fdd83051b6d3",
+        "line": 168,
+        "condition": [
+         "not",
+         [
+          "test",
+          166,
+          "verbose"
+         ]
+        ],
+        "work": 4
+       }
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "stage_fdd83051b6d3",
+      "line": 168,
+      "interpretation": "Копия готова для передачи"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 6,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_fdd83051b6d3@168",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_fdd83051b6d3 на строке 168 записано выражение `'Копия готова для передачи'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ]
+      },
+      {
+       "text": "В stage_fdd83051b6d3 исследована инструкция `return 'Копия готова для передачи'` (стр. 168). Для достижения строки требуется: `verbose` ложно (стр. 166). При расчёте учтены переходы `return 'Копия помещена в карантинную папку'` (стр. 167). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_fdd83051b6d3",
+        "line": 168,
+        "condition": [
+         "not",
+         [
+          "test",
+          166,
+          "verbose"
+         ]
+        ],
+        "work": 4
+       }
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "stage_fdd83051b6d3",
+      "line": 168,
+      "interpretation": "Копия готова для передачи"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "site": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 6,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_fdd83051b6d3@168",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_fdd83051b6d3 на строке 168 записано выражение `'Копия готова для передачи'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ]
+      },
+      {
+       "text": "В stage_fdd83051b6d3 исследована инструкция `return 'Копия готова для передачи'` (стр. 168). Для достижения строки требуется: `verbose` ложно (стр. 166). При расчёте учтены переходы `return 'Копия помещена в карантинную папку'` (стр. 167). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_fdd83051b6d3",
+        "line": 168,
+        "condition": [
+         "not",
+         [
+          "test",
+          166,
+          "verbose"
+         ]
+        ],
+        "work": 4
+       }
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "stage_fdd83051b6d3",
+      "line": 168,
+      "interpretation": "Копия готова для передачи"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 6,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "unique_quote"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_fdd83051b6d3@168",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_fdd83051b6d3 на строке 168 записано выражение `'Копия готова для передачи'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ]
+      },
+      {
+       "text": "В stage_fdd83051b6d3 исследована инструкция `return 'Копия готова для передачи'` (стр. 168). Для достижения строки требуется: `verbose` ложно (стр. 166). При расчёте учтены переходы `return 'Копия помещена в карантинную папку'` (стр. 167). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_fdd83051b6d3",
+        "line": 168,
+        "condition": [
+         "not",
+         [
+          "test",
+          166,
+          "verbose"
+         ]
+        ],
+        "work": 4
+       }
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "stage_fdd83051b6d3",
+      "line": 168,
+      "interpretation": "Копия готова для передачи"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "G05",
+   "q": "Где появляется «Проверка архива»?",
+   "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "Проверка архива завершена без замечаний",
+        "coordinate": "stage_e56e56db927e@160",
+        "ref": {
+         "id": "Ead01d916c0d224d4",
+         "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "start": 160,
+         "end": 160,
+         "source_sha256": "720585b8b78b0bfeac753f1972b3b51373c0e30c7a8656bb23bc69a60d767ea6",
+         "excerpt_sha256": "77a96f9a64b7d89c10efb1bf2bba769a8a67c8dde411cacdd26d7fb3aa684efe",
+         "blob_oid": "17536909f3fb189ef99acf73705da148d8183255",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/b0b39744f6e384ee363725c461d2f07240d5df80/modules/developer_task_ui/app/retrieval/m130_rank.py#L160-L160"
+        }
+       },
+       {
+        "label": "Проверка архива отложена до ручного разбора",
+        "coordinate": "stage_e56e56db927e@159",
+        "ref": {
+         "id": "E127e804b9c407fd2",
+         "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "start": 159,
+         "end": 159,
+         "source_sha256": "720585b8b78b0bfeac753f1972b3b51373c0e30c7a8656bb23bc69a60d767ea6",
+         "excerpt_sha256": "45a0fc4311f0483f508479597d0f83af87d8c06cbc0b854a776d3d9c7eedc184",
+         "blob_oid": "17536909f3fb189ef99acf73705da148d8183255",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/b0b39744f6e384ee363725c461d2f07240d5df80/modules/developer_task_ui/app/retrieval/m130_rank.py#L159-L159"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "Проверка архива завершена без замечаний",
+        "coordinate": "stage_e56e56db927e@160",
+        "ref": {
+         "id": "Ead01d916c0d224d4",
+         "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "start": 160,
+         "end": 160,
+         "source_sha256": "720585b8b78b0bfeac753f1972b3b51373c0e30c7a8656bb23bc69a60d767ea6",
+         "excerpt_sha256": "77a96f9a64b7d89c10efb1bf2bba769a8a67c8dde411cacdd26d7fb3aa684efe",
+         "blob_oid": "17536909f3fb189ef99acf73705da148d8183255",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/b0b39744f6e384ee363725c461d2f07240d5df80/modules/developer_task_ui/app/retrieval/m130_rank.py#L160-L160"
+        }
+       },
+       {
+        "label": "Проверка архива отложена до ручного разбора",
+        "coordinate": "stage_e56e56db927e@159",
+        "ref": {
+         "id": "E127e804b9c407fd2",
+         "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "start": 159,
+         "end": 159,
+         "source_sha256": "720585b8b78b0bfeac753f1972b3b51373c0e30c7a8656bb23bc69a60d767ea6",
+         "excerpt_sha256": "45a0fc4311f0483f508479597d0f83af87d8c06cbc0b854a776d3d9c7eedc184",
+         "blob_oid": "17536909f3fb189ef99acf73705da148d8183255",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/b0b39744f6e384ee363725c461d2f07240d5df80/modules/developer_task_ui/app/retrieval/m130_rank.py#L159-L159"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "G06",
+   "q": "При каком условии подтверждается восстановление архива из облачного хранилища?",
+   "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "site": {
+    "full": false,
+    "target": null,
+    "spurious": true,
+    "checks": [],
+    "cited": 6,
+    "calls": 1,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "site_selection"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "stage_e56e56db927e@160",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stage_e56e56db927e на строке 160 записано выражение `'Проверка архива завершена без замечаний'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ]
+      },
+      {
+       "text": "В stage_e56e56db927e исследована инструкция `return 'Проверка архива завершена без замечаний'` (стр. 160). Для достижения строки требуется: `depth >= 26` ложно (стр. 158). При расчёте учтены переходы `return 'Проверка архива отложена до ручного разбора'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "stage_e56e56db927e",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "depth >= 26"
+         ]
+        ],
+        "work": 4
+       }
+      }
+     ],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "stage_e56e56db927e",
+      "line": 160,
+      "interpretation": "Проверка архива завершена без замечаний"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "corroborated": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "clarify",
+      "options": [
+       {
+        "label": "Проверка архива завершена без замечаний",
+        "coordinate": "stage_e56e56db927e@160",
+        "ref": {
+         "id": "Ead01d916c0d224d4",
+         "commit": "b0b39744f6e384ee363725c461d2f07240d5df80",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "start": 160,
+         "end": 160,
+         "source_sha256": "720585b8b78b0bfeac753f1972b3b51373c0e30c7a8656bb23bc69a60d767ea6",
+         "excerpt_sha256": "77a96f9a64b7d89c10efb1bf2bba769a8a67c8dde411cacdd26d7fb3aa684efe",
+         "blob_oid": "17536909f3fb189ef99acf73705da148d8183255",
+         "source_code_executed": false,
+         "url": "https://github.com/Daystat-debug/SkynetVS/blob/b0b39744f6e384ee363725c461d2f07240d5df80/modules/developer_task_ui/app/retrieval/m130_rank.py#L160-L160"
+        }
+       }
+      ]
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "b0b39744f6e384ee363725c461d2f07240d5df80",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  }
+ ],
+ "ms": {
+  "T01": {
+   "core06": 37.5,
+   "lexical": 154.0,
+   "hybrid": 796.7,
+   "site": 674.1,
+   "corroborated": 653.5
+  },
+  "T02": {
+   "lexical": 150.4,
+   "hybrid": 690.0,
+   "site": 658.5,
+   "corroborated": 644.2,
+   "core06": 32.6
+  },
+  "T03": {
+   "hybrid": 723.1,
+   "site": 645.9,
+   "corroborated": 642.3,
+   "core06": 32.3,
+   "lexical": 130.4
+  },
+  "T04": {
+   "site": 661.6,
+   "corroborated": 660.5,
+   "core06": 35.5,
+   "lexical": 138.1,
+   "hybrid": 118.4
+  },
+  "T05": {
+   "corroborated": 186.5,
+   "core06": 18.7,
+   "lexical": 185.9,
+   "hybrid": 261.6,
+   "site": 369.9
+  },
+  "T06": {
+   "core06": 35.5,
+   "lexical": 140.6,
+   "hybrid": 699.2,
+   "site": 645.7,
+   "corroborated": 648.1
+  },
+  "T07": {
+   "lexical": 95.3,
+   "hybrid": 774.2,
+   "site": 639.9,
+   "corroborated": 610.2,
+   "core06": 33.1
+  },
+  "T08": {
+   "hybrid": 711.9,
+   "site": 634.8,
+   "corroborated": 627.1,
+   "core06": 0.1,
+   "lexical": 112.0
+  },
+  "T09": {
+   "site": 95.5,
+   "corroborated": 98.7,
+   "core06": 68.2,
+   "lexical": 97.7,
+   "hybrid": 104.3
+  },
+  "T10": {
+   "corroborated": 627.2,
+   "core06": 35.4,
+   "lexical": 108.3,
+   "hybrid": 652.4,
+   "site": 621.1
+  },
+  "T11": {
+   "core06": 0.1,
+   "lexical": 0.0,
+   "hybrid": 0.0,
+   "site": 0.0,
+   "corroborated": 0.1
+  },
+  "T12": {
+   "lexical": 0.1,
+   "hybrid": 0.0,
+   "site": 0.0,
+   "corroborated": 0.0,
+   "core06": 0.0
+  },
+  "G01": {
+   "hybrid": 732.4,
+   "site": 743.8,
+   "corroborated": 696.4,
+   "core06": 70.4,
+   "lexical": 182.6
+  },
+  "G02": {
+   "site": 737.3,
+   "corroborated": 739.2,
+   "core06": 40.3,
+   "lexical": 221.6,
+   "hybrid": 745.8
+  },
+  "G03": {
+   "corroborated": 708.9,
+   "core06": 70.7,
+   "lexical": 149.8,
+   "hybrid": 176.7,
+   "site": 738.7
+  },
+  "G04": {
+   "core06": 72.0,
+   "lexical": 139.9,
+   "hybrid": 136.0,
+   "site": 240.5,
+   "corroborated": 130.4
+  },
+  "G05": {
+   "lexical": 98.2,
+   "hybrid": 98.2,
+   "site": 100.9,
+   "corroborated": 99.6,
+   "core06": 70.7
+  },
+  "G06": {
+   "hybrid": 713.6,
+   "site": 722.2,
+   "corroborated": 682.5,
+   "core06": 77.4,
+   "lexical": 137.6
+  }
+ },
+ "generations": {
+  "T01/hybrid": {
+   "digest": "0b48c835c7b57f280705b64f2769a0d6355399033fdb0982abd810fbf8ac9d4d",
+   "raw": "{\n  \"id\": 33,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 656.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2607,
+   "completion_tokens": 19,
+   "prompt_ms": 466.781,
+   "predicted_ms": 152.117,
+   "predicted_per_second": 118.33
+  },
+  "T01/site": {
+   "digest": "abc1f127316b6d96036fa58f99ebe1b800ff27b7bc0e540aa957e7c96b771762",
+   "raw": "{\"site\":19}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2593,
+   "completion_tokens": 7,
+   "prompt_ms": 445.335,
+   "predicted_ms": 48.864,
+   "predicted_per_second": 122.79
+  },
+  "T01/corroborated": {
+   "digest": "abc1f127316b6d96036fa58f99ebe1b800ff27b7bc0e540aa957e7c96b771762",
+   "raw": "{\"site\":19}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2593,
+   "completion_tokens": 7,
+   "prompt_ms": 436.37,
+   "predicted_ms": 49.776,
+   "predicted_per_second": 120.54
+  },
+  "T02/hybrid": {
+   "digest": "af0002e7f69bbcc708a5270eab7e478325599a128b0574fc984be9ed9607f874",
+   "raw": "{\"id\":35,\"action\":\"format_context\"}",
+   "wall_ms": 547.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2595,
+   "completion_tokens": 12,
+   "prompt_ms": 439.375,
+   "predicted_ms": 91.494,
+   "predicted_per_second": 120.226
+  },
+  "T02/site": {
+   "digest": "0dbabfae55c05051926d00adc20c34c972c18bf1baa886daa6aadc328d27c788",
+   "raw": "{\"site\":34}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2581,
+   "completion_tokens": 7,
+   "prompt_ms": 431.91,
+   "predicted_ms": 49.537,
+   "predicted_per_second": 121.122
+  },
+  "T02/corroborated": {
+   "digest": "0dbabfae55c05051926d00adc20c34c972c18bf1baa886daa6aadc328d27c788",
+   "raw": "{\"site\":34}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2581,
+   "completion_tokens": 7,
+   "prompt_ms": 433.95,
+   "predicted_ms": 49.269,
+   "predicted_per_second": 121.78
+  },
+  "T03/hybrid": {
+   "digest": "c3f1446f0424b994c75eed9997a5da8cbe1e25b9cca86a23a92aeeded54f5095",
+   "raw": "{\n  \"id\": 44,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 610.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2596,
+   "completion_tokens": 19,
+   "prompt_ms": 445.18,
+   "predicted_ms": 149.309,
+   "predicted_per_second": 120.555
+  },
+  "T03/site": {
+   "digest": "19aafeef910ebe6f8754a09eb16ac573be4bec1c2513dbdc1e221bbde8d8d9f7",
+   "raw": "{\"site\":44}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2582,
+   "completion_tokens": 7,
+   "prompt_ms": 438.517,
+   "predicted_ms": 50.516,
+   "predicted_per_second": 118.774
+  },
+  "T03/corroborated": {
+   "digest": "19aafeef910ebe6f8754a09eb16ac573be4bec1c2513dbdc1e221bbde8d8d9f7",
+   "raw": "{\"site\":44}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2582,
+   "completion_tokens": 7,
+   "prompt_ms": 433.291,
+   "predicted_ms": 49.632,
+   "predicted_per_second": 120.89
+  },
+  "T04/site": {
+   "digest": "7104371a44c5df1dedf832b934d731b09ed7a546423e876594e0766a3a869539",
+   "raw": "{\"site\":41}",
+   "wall_ms": 531.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2579,
+   "completion_tokens": 7,
+   "prompt_ms": 457.686,
+   "predicted_ms": 53.85,
+   "predicted_per_second": 111.421
+  },
+  "T04/corroborated": {
+   "digest": "7104371a44c5df1dedf832b934d731b09ed7a546423e876594e0766a3a869539",
+   "raw": "{\"site\":41}",
+   "wall_ms": 532.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2579,
+   "completion_tokens": 7,
+   "prompt_ms": 452.337,
+   "predicted_ms": 50.856,
+   "predicted_per_second": 117.98
+  },
+  "T05/hybrid": {
+   "digest": "1728cbfd8a485c3bcac983fe9640fbb28429e36ef27b0d5465300799dae75720",
+   "raw": "{\"id\":48,\"action\":\"clarify\"}",
+   "wall_ms": 156.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 253,
+   "completion_tokens": 12,
+   "prompt_ms": 53.148,
+   "predicted_ms": 87.211,
+   "predicted_per_second": 126.131
+  },
+  "T05/site": {
+   "digest": "b5ef9bc7e51895ec5be37099790134768caf9d98ed5465c4738fce4922041044",
+   "raw": "{\"site\":48}",
+   "wall_ms": 125.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 239,
+   "completion_tokens": 7,
+   "prompt_ms": 53.094,
+   "predicted_ms": 48.425,
+   "predicted_per_second": 123.903
+  },
+  "T06/hybrid": {
+   "digest": "c2eb203a0cb5b6f95577ebfa05ae3bb9ff9ea0b5ae5e8f42f33cc7a8f9d239c3",
+   "raw": "{\n  \"id\": 46,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 609.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2589,
+   "completion_tokens": 19,
+   "prompt_ms": 433.481,
+   "predicted_ms": 146.603,
+   "predicted_per_second": 122.781
+  },
+  "T06/site": {
+   "digest": "424ed4906fb77c1172732288cc81b779ec7f3c603fa6768c06a91e587d5ab199",
+   "raw": "{\"site\":46}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2575,
+   "completion_tokens": 7,
+   "prompt_ms": 433.169,
+   "predicted_ms": 50.543,
+   "predicted_per_second": 118.711
+  },
+  "T06/corroborated": {
+   "digest": "424ed4906fb77c1172732288cc81b779ec7f3c603fa6768c06a91e587d5ab199",
+   "raw": "{\"site\":46}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2575,
+   "completion_tokens": 7,
+   "prompt_ms": 442.497,
+   "predicted_ms": 50.19,
+   "predicted_per_second": 119.546
+  },
+  "T07/hybrid": {
+   "digest": "3d7c23f02e6fde055d0da23611757b3b136cccdf148e9835601f00093a58f1ca",
+   "raw": "{\n  \"id\": 15,\n  \"action\": \"scan_head\"\n}",
+   "wall_ms": 657.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2607,
+   "completion_tokens": 19,
+   "prompt_ms": 477.788,
+   "predicted_ms": 149.5,
+   "predicted_per_second": 120.401
+  },
+  "T07/site": {
+   "digest": "fdce00c022a802a247452e20e585eba080254c1f8ab9786548985fbcf765ba8b",
+   "raw": "{\"site\":1}",
+   "wall_ms": 484.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2593,
+   "completion_tokens": 6,
+   "prompt_ms": 447.703,
+   "predicted_ms": 42.379,
+   "predicted_per_second": 117.983
+  },
+  "T07/corroborated": {
+   "digest": "fdce00c022a802a247452e20e585eba080254c1f8ab9786548985fbcf765ba8b",
+   "raw": "{\"site\":1}",
+   "wall_ms": 515.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2593,
+   "completion_tokens": 6,
+   "prompt_ms": 437.557,
+   "predicted_ms": 43.564,
+   "predicted_per_second": 114.774
+  },
+  "T08/hybrid": {
+   "digest": "9ba4c1115accfbab7850ddb63bf2046e2883984025e51a6f2393acca41671ff1",
+   "raw": "{\n  \"id\": 40,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 609.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2601,
+   "completion_tokens": 19,
+   "prompt_ms": 438.555,
+   "predicted_ms": 146.347,
+   "predicted_per_second": 122.995
+  },
+  "T08/site": {
+   "digest": "5ef4860c2968f8868b5398ad344a4d14b6e3d661bcedc62e2c675aaf12acb22e",
+   "raw": "{\"site\":40}",
+   "wall_ms": 515.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2587,
+   "completion_tokens": 7,
+   "prompt_ms": 434.591,
+   "predicted_ms": 50.233,
+   "predicted_per_second": 119.443
+  },
+  "T08/corroborated": {
+   "digest": "5ef4860c2968f8868b5398ad344a4d14b6e3d661bcedc62e2c675aaf12acb22e",
+   "raw": "{\"site\":40}",
+   "wall_ms": 516.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2587,
+   "completion_tokens": 7,
+   "prompt_ms": 433.33,
+   "predicted_ms": 49.441,
+   "predicted_per_second": 121.357
+  },
+  "T10/corroborated": {
+   "digest": "9b62f9d586e43c4b8b3cde761dff8a2a83578a5e005a5744640a3a9bcc169022",
+   "raw": "{\"site\":34}",
+   "wall_ms": 531.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2577,
+   "completion_tokens": 7,
+   "prompt_ms": 459.787,
+   "predicted_ms": 50.74,
+   "predicted_per_second": 118.25
+  },
+  "T10/hybrid": {
+   "digest": "04bf71dfce7a7483e76fe788f6b4207b789eeaed3b2478aaedd66e30c9381e80",
+   "raw": "{\"id\":4,\"action\":\"scan_head\"}",
+   "wall_ms": 547.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2591,
+   "completion_tokens": 11,
+   "prompt_ms": 433.588,
+   "predicted_ms": 81.946,
+   "predicted_per_second": 122.032
+  },
+  "T10/site": {
+   "digest": "9b62f9d586e43c4b8b3cde761dff8a2a83578a5e005a5744640a3a9bcc169022",
+   "raw": "{\"site\":34}",
+   "wall_ms": 500.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2577,
+   "completion_tokens": 7,
+   "prompt_ms": 434.964,
+   "predicted_ms": 49.684,
+   "predicted_per_second": 120.763
+  },
+  "G01/hybrid": {
+   "digest": "e82f90edcfe3fbbd2cb8c4905116494c4125a94c5a54c01fa1289aecc32ba527",
+   "raw": "{\"id\":19,\"action\":\"clarify\"}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2740,
+   "completion_tokens": 12,
+   "prompt_ms": 467.423,
+   "predicted_ms": 93.339,
+   "predicted_per_second": 117.85
+  },
+  "G01/site": {
+   "digest": "964f64cb8915e73c6f24908bbec7fbfba3fa55be22824864db917e3417e5b127",
+   "raw": "{\"site\":44}",
+   "wall_ms": 547.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2726,
+   "completion_tokens": 7,
+   "prompt_ms": 467.225,
+   "predicted_ms": 51.066,
+   "predicted_per_second": 117.495
+  },
+  "G01/corroborated": {
+   "digest": "964f64cb8915e73c6f24908bbec7fbfba3fa55be22824864db917e3417e5b127",
+   "raw": "{\"site\":44}",
+   "wall_ms": 547.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2726,
+   "completion_tokens": 7,
+   "prompt_ms": 468.592,
+   "predicted_ms": 50.051,
+   "predicted_per_second": 119.878
+  },
+  "G02/site": {
+   "digest": "558e5b0f4dde03b3732cdb7315859398e334fd5f204de3a9660a49f9144fd9df",
+   "raw": "{\"site\":69}",
+   "wall_ms": 531.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2736,
+   "completion_tokens": 7,
+   "prompt_ms": 463.313,
+   "predicted_ms": 50.064,
+   "predicted_per_second": 119.847
+  },
+  "G02/corroborated": {
+   "digest": "558e5b0f4dde03b3732cdb7315859398e334fd5f204de3a9660a49f9144fd9df",
+   "raw": "{\"site\":69}",
+   "wall_ms": 531.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2736,
+   "completion_tokens": 7,
+   "prompt_ms": 464.247,
+   "predicted_ms": 49.944,
+   "predicted_per_second": 120.135
+  },
+  "G02/hybrid": {
+   "digest": "65dcb57e22f2272eafb21419c06578da3aad0008668071896d5dbe50ba85b4f0",
+   "raw": "{\n  \"id\": 69,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 640.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2750,
+   "completion_tokens": 19,
+   "prompt_ms": 464.683,
+   "predicted_ms": 146.604,
+   "predicted_per_second": 122.78
+  },
+  "G03/corroborated": {
+   "digest": "02baba822a96fd73e4b72d35c206ea4d597fd4e7a724b722cb9538dee08a8564",
+   "raw": "{\"site\":70}",
+   "wall_ms": 547.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2727,
+   "completion_tokens": 7,
+   "prompt_ms": 470.449,
+   "predicted_ms": 51.737,
+   "predicted_per_second": 115.971
+  },
+  "G03/site": {
+   "digest": "02baba822a96fd73e4b72d35c206ea4d597fd4e7a724b722cb9538dee08a8564",
+   "raw": "{\"site\":70}",
+   "wall_ms": 579.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2727,
+   "completion_tokens": 7,
+   "prompt_ms": 485.638,
+   "predicted_ms": 53.461,
+   "predicted_per_second": 112.231
+  },
+  "G04/site": {
+   "digest": "9c9a4954e6d7578e2c78169340e0c12212e4a539a9939b1b9b88ff1d8e60e27e",
+   "raw": "{\"site\":72}",
+   "wall_ms": 93.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 210,
+   "completion_tokens": 7,
+   "prompt_ms": 51.117,
+   "predicted_ms": 46.602,
+   "predicted_per_second": 128.75
+  },
+  "G06/hybrid": {
+   "digest": "80712cd1a6d3d7de6eeadc4bd50651e24bbf343cb993c4d227d09ca75f47e695",
+   "raw": "{\"id\":70,\"action\":\"clarify\"}",
+   "wall_ms": 578.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2743,
+   "completion_tokens": 12,
+   "prompt_ms": 463.05,
+   "predicted_ms": 90.496,
+   "predicted_per_second": 121.552
+  },
+  "G06/site": {
+   "digest": "f2449b80e2916f9fcd2d42b68a39c28debd156c13ecd6cd6b7e00ab8872b9073",
+   "raw": "{\"site\":70}",
+   "wall_ms": 547.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2729,
+   "completion_tokens": 7,
+   "prompt_ms": 464.297,
+   "predicted_ms": 50.112,
+   "predicted_per_second": 119.732
+  },
+  "G06/corroborated": {
+   "digest": "f2449b80e2916f9fcd2d42b68a39c28debd156c13ecd6cd6b7e00ab8872b9073",
+   "raw": "{\"site\":70}",
+   "wall_ms": 547.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2729,
+   "completion_tokens": 7,
+   "prompt_ms": 464.796,
+   "predicted_ms": 50.637,
+   "predicted_per_second": 118.49
+  }
+ },
+ "sessions": [
+  {
+   "startup_s": 8.375,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  },
+  {
+   "startup_s": 6.0,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  },
+  {
+   "startup_s": 5.766,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  }
+ ],
+ "historical": [
+  {
+   "id": "T05",
+   "full": true,
+   "facts": 13,
+   "needed": 13,
+   "answer": {
+    "state": "answered",
+    "plan": "research_route",
+    "steps": [
+     {
+      "tool": "resolve_outcome",
+      "target": "M141_INVALID_DISPLAY_CONTEXT",
+      "status": "located",
+      "candidates": 1
+     },
+     {
+      "tool": "calls",
+      "target": "_render_current_head_labels",
+      "status": "call_sites"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "format_context@226",
+      "status": "proved"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "_render_current_head_labels@182",
+      "status": "proved"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В format_context исследована инструкция `head.append(_render_current_head_labels(report['_private_8k_text']))` (стр. 226). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` ложно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+      "refs": [
+       [
+        "C",
+        202,
+        202
+       ],
+       [
+        "C",
+        203,
+        203
+       ],
+       [
+        "C",
+        204,
+        204
+       ],
+       [
+        "C",
+        214,
+        214
+       ],
+       [
+        "C",
+        216,
+        216
+       ],
+       [
+        "C",
+        222,
+        222
+       ],
+       [
+        "C",
+        226,
+        226
+       ]
+      ],
+      "control": {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "function": "format_context",
+       "line": 226,
+       "condition": [
+        "and",
+        [
+         "not",
+         [
+          "test",
+          203,
+          "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+         ]
+        ],
+        [
+         "not",
+         [
+          "test",
+          222,
+          "not report['_private_8k_text']"
+         ]
+        ]
+       ],
+       "work": 30
+      }
+     },
+     {
+      "text": "В format_context на строке 226 записан прямой вызов _render_current_head_labels. Аргументы: raw ← `report['_private_8k_text']`.",
+      "refs": [
+       [
+        "C",
+        175,
+        175
+       ],
+       [
+        "C",
+        202,
+        202
+       ],
+       [
+        "C",
+        226,
+        226
+       ]
+      ],
+      "edge": [
+       "format_context",
+       "_render_current_head_labels"
+      ]
+     },
+     {
+      "text": "В _render_current_head_labels исследована инструкция `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')` (стр. 182). Для достижения строки требуется: `not isinstance(raw, str)` истинно (стр. 181). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+      "refs": [
+       [
+        "C",
+        175,
+        175
+       ],
+       [
+        "C",
+        181,
+        181
+       ],
+       [
+        "C",
+        182,
+        182
+       ]
+      ],
+      "control": {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "function": "_render_current_head_labels",
+       "line": 182,
+       "condition": [
+        "test",
+        181,
+        "not isinstance(raw, str)"
+       ],
+       "work": 4
+      }
+     },
+     {
+      "text": "В _render_current_head_labels записано `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')`.",
+      "refs": [
+       [
+        "C",
+        175,
+        175
+       ],
+       [
+        "C",
+        182,
+        182
+       ]
+      ]
+     }
+    ],
+    "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+    "research": {
+     "verdict": "conditional_route",
+     "attempts": 1,
+     "examined": 1,
+     "decisions": [],
+     "policy": "adaptive"
+    },
+    "coverage": "one_static_route",
+    "execution_observed": false,
+    "joint_feasibility": "not_proved"
+   }
+  },
+  {
+   "id": "T06",
+   "full": true,
+   "facts": 18,
+   "needed": 18,
+   "answer": {
+    "state": "answered",
+    "plan": "research_route",
+    "steps": [
+     {
+      "tool": "resolve_outcome",
+      "target": "_include",
+      "status": "located",
+      "candidates": 1
+     },
+     {
+      "tool": "calls",
+      "target": "_include",
+      "status": "call_sites"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "scan_head@98",
+      "status": "proved"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В scan_head исследована инструкция `if _include(name):\n    entries.append((name, oid.decode('ascii')))` (стр. 98). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` ложно (стр. 79) и `not records or records[-1] != b''` ложно (стр. 84) и для предыдущих итераций `for entry in records[:-1]` (стр. 87, включая пустой перебор) выполнено (`not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92)) и началась рассматриваемая итерация `for entry in records[:-1]` (стр. 87) и `not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92) и `mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))` ложно (стр. 95). При расчёте учтены переходы `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80), `raise ValueError('M134_LS_TREE_FORMAT_INVALID')` (стр. 85), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 90), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 93), `continue` (стр. 96). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+      "refs": [
+       [
+        "C",
+        68,
+        68
+       ],
+       [
+        "C",
+        79,
+        79
+       ],
+       [
+        "C",
+        80,
+        80
+       ],
+       [
+        "C",
+        84,
+        84
+       ],
+       [
+        "C",
+        85,
+        85
+       ],
+       [
+        "C",
+        87,
+        87
+       ],
+       [
+        "C",
+        89,
+        89
+       ],
+       [
+        "C",
+        90,
+        90
+       ],
+       [
+        "C",
+        92,
+        92
+       ],
+       [
+        "C",
+        93,
+        93
+       ],
+       [
+        "C",
+        95,
+        95
+       ],
+       [
+        "C",
+        96,
+        96
+       ],
+       [
+        "C",
+        98,
+        98
+       ],
+       [
+        "C",
+        98,
+        99
+       ]
+      ],
+      "control": {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "function": "scan_head",
+       "line": 98,
+       "condition": [
+        "and",
+        [
+         "not",
+         [
+          "test",
+          79,
+          "str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()"
+         ]
+        ],
+        [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           84,
+           "not records or records[-1] != b''"
+          ]
+         ],
+         [
+          "and",
+          [
+           "past",
+           87,
+           "for entry in records[:-1]",
+           [
+            "and",
+            [
+             "not",
+             [
+              "test",
+              89,
+              "not sep"
+             ]
+            ],
+            [
+             "not",
+             [
+              "test",
+              92,
+              "len(parts) != 3"
+             ]
+            ]
+           ]
+          ],
+          [
+           "and",
+           [
+            "iteration",
+            87,
+            "for entry in records[:-1]"
+           ],
+           [
+            "and",
+            [
+             "not",
+             [
+              "test",
+              89,
+              "not sep"
+             ]
+            ],
+            [
+             "and",
+             [
+              "not",
+              [
+               "test",
+               92,
+               "len(parts) != 3"
+              ]
+             ],
+             [
+              "not",
+              [
+               "test",
+               95,
+               "mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))"
+              ]
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ],
+       "work": 57
+      }
+     },
+     {
+      "text": "В scan_head на строке 98 записан прямой вызов _include. Аргументы: path ← `name`.",
+      "refs": [
+       [
+        "C",
+        57,
+        57
+       ],
+       [
+        "C",
+        68,
+        68
+       ],
+       [
+        "C",
+        98,
+        98
+       ]
+      ],
+      "edge": [
+       "scan_head",
+       "_include"
+      ]
+     },
+     {
+      "text": "Целевое определение — _include.",
+      "refs": [
+       [
+        "C",
+        57,
+        57
+       ]
+      ]
+     }
+    ],
+    "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+    "research": {
+     "verdict": "conditional_route",
+     "attempts": 1,
+     "examined": 1,
+     "decisions": [],
+     "policy": "adaptive"
+    },
+    "coverage": "one_static_route",
+    "execution_observed": false,
+    "joint_feasibility": "not_proved"
+   }
+  },
+  {
+   "id": "T08",
+   "full": false,
+   "facts": 14,
+   "needed": 29,
+   "answer": {
+    "state": "partial",
+    "plan": "research_route",
+    "steps": [
+     {
+      "tool": "resolve_outcome",
+      "target": "M127_OLD_SOURCES_INVALID",
+      "status": "located",
+      "candidates": 1
+     },
+     {
+      "tool": "calls",
+      "target": "extract_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "rank@125",
+      "status": "proved"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "search_repository@153",
+      "status": "proved"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В search_repository@153 записан прямой вызов rank.",
+      "refs": [
+       [
+        "R",
+        110,
+        111
+       ],
+       [
+        "C",
+        144,
+        144
+       ],
+       [
+        "C",
+        153,
+        153
+       ],
+       [
+        "C",
+        14,
+        14
+       ]
+      ],
+      "edge": [
+       "search_repository",
+       "rank"
+      ]
+     },
+     {
+      "text": "В rank@125 записан прямой вызов rank_symbols.",
+      "refs": [
+       [
+        "S",
+        72,
+        72
+       ],
+       [
+        "R",
+        110,
+        110
+       ],
+       [
+        "R",
+        125,
+        125
+       ],
+       [
+        "R",
+        18,
+        18
+       ]
+      ],
+      "edge": [
+       "rank",
+       "rank_symbols"
+      ]
+     },
+     {
+      "text": "В rank_symbols@77 записан прямой вызов extract_symbols.",
+      "refs": [
+       [
+        "S",
+        28,
+        28
+       ],
+       [
+        "S",
+        72,
+        72
+       ],
+       [
+        "S",
+        77,
+        77
+       ]
+      ],
+      "edge": [
+       "rank_symbols",
+       "extract_symbols"
+      ]
+     },
+     {
+      "text": "В extract_symbols записано `raise ValueError('M127_OLD_SOURCES_INVALID')`.",
+      "refs": [
+       [
+        "S",
+        28,
+        28
+       ],
+       [
+        "S",
+        31,
+        31
+       ]
+      ]
+     }
+    ],
+    "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+    "research": {
+     "verdict": "structural_only",
+     "attempts": 1,
+     "examined": 4,
+     "decisions": [],
+     "policy": "adaptive"
+    },
+    "coverage": "one_static_route",
+    "execution_observed": false,
+    "joint_feasibility": "not_proved"
+   }
+  }
+ ]
+}

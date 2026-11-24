@@ -21,6 +21,7 @@ DIR = pilot.ROOT/"docs/maintenance/core_07"
 ARMS = ("core06","lexical","model","hybrid")
 SEPARATE = ("core06","lexical","hybrid","site","corroborated")
 FIRST_PLAN = "392e828531de3deb47acaab8a3f980071244d6e8:docs/maintenance/core_07/transfer.json"
+SECOND_PLAN = "cf1b6a65fbb2852ea78770aacec8e76bfbf9a697:docs/maintenance/core_07/transfer_2.json"
 
 
 def fixture(raw, seed):
@@ -216,12 +217,16 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("mode",choices=("record","verify"))
     parser.add_argument("--separate",action="store_true",help="Second frozen transfer, independent site and action selection.")
+    parser.add_argument("--output",type=Path,help="New file for a separate live recording.")
     args=parser.parse_args()
     live=args.mode=="record"
     arms=SEPARATE if args.separate else ARMS
-    plan=(json.loads((DIR/"transfer_2.json").read_text(encoding="utf8")) if args.separate
-          else json.loads(pilot.git("show",FIRST_PLAN)))
-    dest=DIR/("results_2.json" if args.separate else "results.json")
+    plan=json.loads(pilot.git("show",SECOND_PLAN if args.separate else FIRST_PLAN))
+    if args.output and not live:
+        parser.error("--output is for a new live recording")
+    dest=args.output or DIR/("results_2.json" if args.separate else "results.json")
+    if live and dest.exists():
+        parser.error("Result file already exists. Select a new --output path.")
     saved={} if live else json.loads(dest.read_text(encoding="utf8"))
     calls=saved.get("generations",{})
     with tempfile.TemporaryDirectory(prefix="skynet-goals-") as tmp:
