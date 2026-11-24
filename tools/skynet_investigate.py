@@ -15,6 +15,7 @@ import skynet_diagnostic_path as diagnostic
 import skynet_causal_query as causal
 import skynet_route_research as research
 import skynet_observed_route as observed
+import skynet_requirements as requirements
 
 SOURCE = host.SOURCE_ID + ".git-head"
 MAX_STEPS = 6
@@ -273,6 +274,16 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
             return packet(req, src, reason="out_of_scope")
         if cli.auto_reader.EVENT.search(req.question):
             return packet(req, src, reason="observation_required")
+        if discovery in ("requirements","one_action","all_evidence"):
+            plan = "requirement_research"
+            if paths or observed.goals.unsupported(req.question):
+                return packet(req,src,reason="clarification")
+            search = arguments.Search(req,src,lookup or cli.calls.lookup,trace,min(MAX_STEPS,steps),
+                                      task.deadline,head_current,site_anchors)
+            output,meta = requirements.research(search,req.question,select,discovery)
+            evidence = packet(req,src,*output)
+            evidence["analysis"]["requirements"] = meta
+            return evidence
         symptom = diagnostic.interpret(req.question)
         pair = research.goal(req.question, endpoints) if discovery or research_mode else None
         if research_mode or (discovery and pair):
@@ -361,7 +372,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return evidence
 
     def verify(req, evidence, draft, delivered):
-        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic", "local_control", "research_route", "discover_observation"):
+        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic", "local_control", "research_route", "discover_observation","requirement_research"):
             head_current(src)
         return host.verify_snapshot(src, req, evidence, draft, delivered)
 
@@ -371,6 +382,8 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return dict(public, reason=result["reason"])
     evidence = result["evidence_set"]
     public["snapshot"] = evidence["snapshot_id"]
+    if "requirements" in evidence["analysis"]:
+        public["requirements"] = evidence["analysis"]["requirements"]
     if "research" in evidence["analysis"]:
         public["research"] = evidence["analysis"]["research"]
     if "discovery" in evidence["analysis"]:
@@ -383,6 +396,10 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     proposal = result["answer_proposal"]
     if proposal["status"] != "answer":
         return dict(public, reason=proposal["reason"])
+    if plan=="requirement_research":
+        public.update(execution_observed=False,coverage="static_subset")
+        if public["requirements"]["missing"]:
+            public["state"]="partial"
     if plan == "research_route":
         public.update(coverage="one_static_route", execution_observed=False, joint_feasibility="not_proved")
         if public["research"]["verdict"] in ("excluded_route","structural_only"):
@@ -406,15 +423,17 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         public["claims"].append(dict(text=claim["text"], refs=[by_id[a["ref_id"]] for a in claim["anchors"]]))
         if "edge" in obs:
             public["claims"][-1]["edge"] = obs["edge"]
-        if plan in ("research_route","discover_observation") and "control" in obs:
+        if plan=="requirement_research":
+            public["claims"][-1]["kind"] = obs["kind"]
+        if plan in ("research_route","discover_observation","requirement_research") and "control" in obs:
             public["claims"][-1]["control"] = obs["control"]
     return public
 
 
-def supervised(question, *, timeout=TIME_LIMIT, why=False, research_mode=False, discovery=False, explore=False, offline=False):
+def supervised(question, *, timeout=TIME_LIMIT, why=False, research_mode=False, discovery=False, explore=False, offline=False, requirements_mode=False):
     if len(question) > 600:
         return dict(state="insufficient", reason="clarification", claims=[], steps=[])
-    worker = ("--offline-worker" if offline else "--explore-worker" if explore else "--research-worker" if research_mode else
+    worker = ("--requirements-worker" if requirements_mode else "--offline-worker" if offline else "--explore-worker" if explore else "--research-worker" if research_mode else
               "--why-worker" if why else "--ask-worker" if discovery else "--worker")
     cmd = [sys.executable, "-I", "-S", "-B", str(Path(__file__).resolve()), worker]
     try:
@@ -431,12 +450,13 @@ def main():
     parser.add_argument("question")
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--requirements", action="store_true", help="Определить нужные свидетельства об одном участке и проверить их полноту.")
     modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
     modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
     modes.add_argument("--research", action="store_true", help="Один статический маршрут от функции до функции, поля, сообщения или инструкции. Формат: вход -> ориентир.")
     args = parser.parse_args()
-    out = supervised(args.question, why=args.why, research_mode=args.research, discovery=True, explore=args.explore, offline=args.indexed)
+    out = supervised(args.question, why=args.why, research_mode=args.research, discovery=True, explore=args.explore, offline=args.indexed, requirements_mode=args.requirements)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, indent=2))
     else:
@@ -449,6 +469,8 @@ def main():
             for opt in out.get("discovery",{}).get("options",[]):
                 print(f'Возможный ориентир: {opt["label"]} — {opt["coordinate"]}',opt["ref"]["url"])
         else:
+            if out.get("requirements",{}).get("missing"):
+                print("Неполный ответ. Не удалось доказать:",out["requirements"]["gaps"])
             if out["plan"] == "research_route":
                 if out["research"]["verdict"] == "excluded_route":
                     print("Для одного конкретного маршрута доказано противоречие. Другие пути остаются открытым вопросом.")
@@ -479,11 +501,11 @@ def main():
 if __name__ == "__main__":
     if not sys.stdout.isatty():
         sys.stdout.reconfigure(encoding="utf8")
-    if sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"]):
+    if sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)
         result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
                              research_mode=sys.argv[1] == "--research-worker",
-                             discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore"}.get(sys.argv[1]))
+                             discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore","--requirements-worker":"requirements"}.get(sys.argv[1]))
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())
