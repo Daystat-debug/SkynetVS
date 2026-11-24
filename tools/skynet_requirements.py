@@ -68,9 +68,7 @@ def verify_receipts(meta, rows):
 
 def research(search, question, select, policy):
     ctl = observed.ObservedRoute(search,None,None)
-    claims = {}
     needs = ()
-    gaps = {}
     meta = {}
     try:
         step = ctl.step("interpret_requirements","question")
@@ -98,44 +96,49 @@ def research(search, question, select, policy):
             effect = hits[0]
         else:
             effect,_,_ = language.choose("Где "+question,catalog,"explore")
-        fn,expr = effect.fn,effect.expr
-        meta.update(owner=fn.node.name,line=expr.lineno,interpretation=effect.label)
-        fact = ctl.outcome(fn,effect.stmt,f"В {fn.node.name} на строке {expr.lineno} записано выражение "
-                           f"`{ast.unparse(expr)}`.",[(expr.lineno,expr.end_lineno)])
-        claims["site"] = fact.fact
-        locate.update(status="located",owner=fn.node.name,line=expr.lineno)
-        site = None
-        schedule = KINDS if policy=="eager_projection" else needs
-        for need in schedule[1:]:
-            try:
-                if need=="condition":
-                    claims[need] = ctl.proof(fn,effect.stmt)
-                elif need=="caller":
-                    sites = search.incoming(fn.node.name)
-                    if len(sites)!=1:
-                        raise Gap("caller_choice" if sites else "path_unproven")
-                    site = sites[0]
-                    claims[need] = dict(text=f"В {site.caller.node.name} на строке {site.call.lineno} записан "
-                            f"прямой вызов {fn.node.name}.",anchors=site.anchors,edge=[site.caller.node.name,fn.node.name])
-                elif site is None:
-                    raise Gap(gaps["caller"])
-                elif need=="caller_condition":
-                    claims[need] = ctl.proof(site.caller,ctl.call_statement(site))
-                else:
-                    step = ctl.step("bind_arguments",fn.node.name)
-                    bindings,_ = observed.route.facts.bind(site,{})
-                    detail = ", ".join(f"{name} ← `{value}`" + (" (по умолчанию)" if default else "")
-                                       for name,value,default in bindings)
-                    claims[need] = dict(text="Привязка аргументов: "+(detail or "явных параметров нет")+".",
-                                        anchors=site.anchors)
-                    step["status"]="bound"
-            except (Gap,observed.route.arguments.Limit) as exc:
-                if str(exc)=="evidence_budget":
-                    raise
-                gaps[need]=str(exc)
-        search.check_budget()
+        return collect(ctl,effect,needs,locate,KINDS if policy=="eager_projection" else needs)
     except (Gap,observed.route.arguments.Limit) as exc:
         return ([],[],str(exc)),dict(meta,required=list(needs),supported=[],missing=list(needs))
+
+
+def collect(ctl,effect,needs,locate,schedule):
+    search=ctl.s
+    claims,gaps,meta={},{},{}
+    fn,expr = effect.fn,effect.expr
+    meta.update(owner=fn.node.name,line=expr.lineno,interpretation=effect.label)
+    fact = ctl.outcome(fn,effect.stmt,f"В {fn.node.name} на строке {expr.lineno} записано выражение "
+                       f"`{ast.unparse(expr)}`.",[(expr.lineno,expr.end_lineno)])
+    claims["site"] = fact.fact
+    locate.update(status="located",owner=fn.node.name,line=expr.lineno)
+    site = None
+    for need in schedule[1:]:
+        try:
+            if need=="condition":
+                claims[need] = ctl.proof(fn,effect.stmt)
+            elif need=="caller":
+                sites = search.incoming(fn.node.name)
+                if len(sites)!=1:
+                    raise Gap("caller_choice" if sites else "path_unproven")
+                site = sites[0]
+                claims[need] = dict(text=f"В {site.caller.node.name} на строке {site.call.lineno} записан "
+                        f"прямой вызов {fn.node.name}.",anchors=site.anchors,edge=[site.caller.node.name,fn.node.name])
+            elif site is None:
+                raise Gap(gaps["caller"])
+            elif need=="caller_condition":
+                claims[need] = ctl.proof(site.caller,ctl.call_statement(site))
+            else:
+                step = ctl.step("bind_arguments",fn.node.name)
+                bindings,_ = observed.route.facts.bind(site,{})
+                detail = ", ".join(f"{name} ← `{value}`" + (" (по умолчанию)" if default else "")
+                                   for name,value,default in bindings)
+                claims[need] = dict(text="Привязка аргументов: "+(detail or "явных параметров нет")+".",
+                                    anchors=site.anchors)
+                step["status"]="bound"
+        except (Gap,observed.route.arguments.Limit) as exc:
+            if str(exc)=="evidence_budget":
+                raise
+            gaps[need]=str(exc)
+    search.check_budget()
     # A receipt exists only after the corresponding source-bound tool produced a claim.
     receipts = [dict(claims[k],kind=k) for k in needs if k in claims]
     missing = [k for k in needs if k not in claims]

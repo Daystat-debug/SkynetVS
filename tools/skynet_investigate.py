@@ -1,11 +1,13 @@
 """Bounded read-only investigation of static calls in the host's five-file Git HEAD."""
 import argparse
 from collections import defaultdict, deque
+from contextlib import ExitStack
 import json
 from pathlib import Path
 import re
 import subprocess
 import sys
+import tempfile
 from time import monotonic
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -16,6 +18,7 @@ import skynet_causal_query as causal
 import skynet_route_research as research
 import skynet_observed_route as observed
 import skynet_requirements as requirements
+import skynet_task_parts as task_parts
 
 SOURCE = host.SOURCE_ID + ".git-head"
 MAX_STEPS = 6
@@ -272,6 +275,16 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         paths = cli.PY_PATH.findall(req.question)
         if any(not any(p == f or p.endswith("/" + f) for p in src.pages) for f in paths):
             return packet(req, src, reason="out_of_scope")
+        if discovery in ("parts","parts_once","lexical_parts"):
+            plan="task_parts"
+            if paths:
+                return packet(req,src,reason="clarification")
+            search=arguments.Search(req,src,lookup or cli.calls.lookup,trace,min(MAX_STEPS,steps),
+                                    task.deadline,head_current,site_anchors)
+            output,meta=task_parts.research(search,req.question,select,discovery)
+            evidence=packet(req,src,*output)
+            evidence["analysis"]["task_parts"]=meta
+            return evidence
         if cli.auto_reader.EVENT.search(req.question):
             return packet(req, src, reason="observation_required")
         if discovery in ("requirements","one_action","all_evidence","eager_projection"):
@@ -372,9 +385,15 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return evidence
 
     def verify(req, evidence, draft, delivered):
-        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic", "local_control", "research_route", "discover_observation","requirement_research"):
+        if plan in ("callers_of_field_producer", "trace_argument", "explain_diagnostic", "local_control", "research_route", "discover_observation","requirement_research","task_parts"):
             head_current(src)
         assessment = host.verify_snapshot(src, req, evidence, draft, delivered)
+        if "task_parts" in evidence["analysis"]:
+            meta=evidence["analysis"]["task_parts"]
+            task_parts.verify(req.question,meta,evidence["analysis"]["observations"])
+            if draft["status"]=="answer":
+                assessment["answer_completeness"]=("interpreted_requirements_met" if all(
+                    p["status"]=="established" for p in meta["parts"]) else "partial")
         if plan=="requirement_research" and "requirements" in evidence["analysis"]:
             meta = evidence["analysis"]["requirements"]
             requirements.verify_receipts(meta,evidence["analysis"]["observations"])
@@ -388,6 +407,8 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return dict(public, reason=result["reason"])
     evidence = result["evidence_set"]
     public["snapshot"] = evidence["snapshot_id"]
+    if "task_parts" in evidence["analysis"]:
+        public["parts"]=evidence["analysis"]["task_parts"]["parts"]
     if "requirements" in evidence["analysis"]:
         public["requirements"] = evidence["analysis"]["requirements"]
     if "research" in evidence["analysis"]:
@@ -402,6 +423,10 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     proposal = result["answer_proposal"]
     if proposal["status"] != "answer":
         return dict(public, reason=proposal["reason"])
+    if plan=="task_parts":
+        public.update(coverage="static_subset",execution_observed=False)
+        if any(p["status"]!="established" for p in public["parts"]):
+            public["state"]="partial"
     if plan=="requirement_research":
         public.update(execution_observed=False,coverage="static_subset")
         if public["requirements"]["missing"]:
@@ -429,9 +454,9 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         public["claims"].append(dict(text=claim["text"], refs=[by_id[a["ref_id"]] for a in claim["anchors"]]))
         if "edge" in obs:
             public["claims"][-1]["edge"] = obs["edge"]
-        if plan=="requirement_research":
+        if plan in ("requirement_research","task_parts"):
             public["claims"][-1]["kind"] = obs["kind"]
-        if plan in ("research_route","discover_observation","requirement_research") and "control" in obs:
+        if plan in ("research_route","discover_observation","requirement_research","task_parts") and "control" in obs:
             public["claims"][-1]["control"] = obs["control"]
     return public
 
@@ -456,7 +481,7 @@ def main():
     parser.add_argument("question")
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
-    modes.add_argument("--requirements", action="store_true", help="Определить нужные свидетельства об одном участке и проверить их полноту.")
+    modes.add_argument("--requirements", action="store_true", help="Проверить требования по частям и показать, что осталось неизвестным.")
     modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
     modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
@@ -470,6 +495,13 @@ def main():
             print("Git-снимок", out["snapshot"])
         if out["steps"]:
             print("Ход поиска:", " → ".join(f'{s["tool"]}({s["target"]})' for s in out["steps"]))
+        for part in out.get("parts",[]):
+            status={"unknown":"Не установлено","partial":"Установлено частично","established":"Установлено"}
+            print(status[part["status"]], "—",part["text"].strip())
+            for issue in part["issues"]:
+                print(" ",REASONS.get(issue,{"runtime":"Нужны наблюдения запуска.","external":"Нужны внешние данные.",
+                      "unsupported":"Для этой части нет статического инструмента.","ambiguous":"Нужно уточнение.",
+                      "uninterpreted":"Требование не удалось распознать."}.get(issue,issue)))
         if out["state"] not in ("answered", "partial"):
             print(REASONS.get(out["reason"], "Ответ удержан."), "(" + out["reason"] + ")")
             for opt in out.get("discovery",{}).get("options",[]):
@@ -517,9 +549,19 @@ if __name__ == "__main__":
         sys.stdout.reconfigure(encoding="utf8")
     if sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)
-        result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
-                             research_mode=sys.argv[1] == "--research-worker",
-                             discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore","--requirements-worker":"requirements"}.get(sys.argv[1]))
+        with ExitStack() as resources:
+            provider=None
+            def task_select(system,user):
+                global provider
+                if provider is None:
+                    import runtime289
+                    tmp=resources.enter_context(tempfile.TemporaryDirectory(prefix="skynet-parts-"))
+                    provider=resources.enter_context(runtime289.LocalProvider(Path(tmp)))
+                return provider.complete(system,user)
+            result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
+                                 research_mode=sys.argv[1] == "--research-worker",
+                                 select=task_select if sys.argv[1]=="--requirements-worker" else observed.goals.local_select,
+                                 discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore","--requirements-worker":"parts"}.get(sys.argv[1]))
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())
