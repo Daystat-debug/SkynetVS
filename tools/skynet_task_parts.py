@@ -198,13 +198,18 @@ def verify(question,meta,claims):
     cursor=0
     for group in meta["proofs"]:
         check(cursor==group["start"] and cursor<group["end"]<=len(claims))
+        check(type(group["target"]) is int and 0<=group["target"]<len(parts))
         rows=claims[cursor:group["end"]]
         req.verify_receipts(group["receipt"],rows)
         index.update((cursor+i,(group["target"],r["kind"])) for i,r in enumerate(rows))
         cursor=group["end"]
     check(cursor==len(claims))
+    cited=set()
     for p in parts:
         got=[i for i,(target,kind) in index.items() if target==p.get("target") and kind in p.get("need",[])]
         check(got==p["claims"])
+        cited.update(got)
         complete=bool(got) and not p["issues"] and {index[i][1] for i in got}==set(p["need"])
         check(p["status"]==("established" if complete else "partial" if got else "unknown"))
+        check(complete or bool(p["issues"]))
+    check(cited==set(index))
