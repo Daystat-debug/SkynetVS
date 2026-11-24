@@ -1,0 +1,212 @@
+{
+ "base": "75f09fd3b6a211128637fc83c853a1fd07eab787",
+ "implementation": "187ebde3bdaca11384116fea32bdb5c4fcfd7565",
+ "targets": {
+  "A": [
+   "C",
+   "expand_query",
+   49,
+   "M134_GOAL_EMPTY_OR_TOO_LONG",
+   48,
+   "search_repository",
+   "C",
+   146,
+   true,
+   [
+    "goal ← `goal`"
+   ],
+   [
+    47,
+    49
+   ],
+   [
+    144,
+    146
+   ]
+  ],
+  "B": [
+   "T",
+   "rank_title_only",
+   41,
+   "M126_QUERY_INVALID",
+   40,
+   "rank",
+   "R",
+   116,
+   [
+    "and",
+    -112,
+    -114
+   ],
+   [
+    "title ← `title`",
+    "before_files ← `old_sources`",
+    "top_n ← `10`"
+   ],
+   [
+    34,
+    41
+   ],
+   [
+    17,
+    110,
+    116
+   ]
+  ],
+  "C": [
+   "C",
+   "format_context",
+   217,
+   "часть файлов пропущена",
+   [
+    "and",
+    -203,
+    216
+   ],
+   null,
+   null,
+   null,
+   null,
+   [],
+   [
+    202,
+    217
+   ],
+   []
+  ],
+  "D": [
+   "C",
+   "format_context",
+   223,
+   "Контекст не собран",
+   [
+    "and",
+    -203,
+    222
+   ],
+   null,
+   null,
+   null,
+   null,
+   [],
+   [
+    202,
+    223
+   ],
+   []
+  ]
+ },
+ "rubric": "Known-target interpretation replaces {x} with ОБЪЕКТ. Full run uses quoted literal or explicit unquoted description. Exact set measures understanding; extra verified evidence is allowed for useful completion. C3 requires partial with supported site plus caller gap. Unsupported/mixed tasks require clarification or refusal without claims. Primary positive count excludes C3. Compare same locator+proofs (one_action, all_evidence) and shipping Core 0.8. No tuning after freeze.",
+ "cases": [
+  [
+   "A1",
+   "A",
+   "Покажи в исходниках место с меткой {x}.",
+   "site"
+  ],
+  [
+   "A2",
+   "A",
+   "Что должно оказаться истинным, чтобы сработала проверка {x}?",
+   "site condition"
+  ],
+  [
+   "A3",
+   "A",
+   "Из какой функции непосредственно обращаются к обработчику с {x}?",
+   "site caller"
+  ],
+  [
+   "A4",
+   "A",
+   "Для {x} нужны условия внутри обработчика и подстановка значений в параметры при прямом вызове.",
+   "site condition caller arguments"
+  ],
+  [
+   "A5",
+   "A",
+   "Для {x} поясни, при каких условиях сам вызывающий участок доходит до вызова.",
+   "site caller caller_condition"
+  ],
+  [
+   "B1",
+   "B",
+   "Укажи расположение {x}, достаточно строки.",
+   "site"
+  ],
+  [
+   "B2",
+   "B",
+   "Разбери причины, по которым управление достигает {x}, с учётом более ранних выходов.",
+   "site condition"
+  ],
+  [
+   "B3",
+   "B",
+   "В случае {x} какие параметры передаются из вызывающего модуля и где записан вызов?",
+   "site caller arguments"
+  ],
+  [
+   "B4",
+   "B",
+   "Объясни для {x} сразу условия на стороне вызывающего кода, условия на стороне получателя и передачу аргументов.",
+   "site condition caller arguments caller_condition"
+  ],
+  [
+   "B5",
+   "B",
+   "{x} — мне интересно либо место, либо вся история его появления; пока не решил, что именно.",
+   ""
+  ],
+  [
+   "C1",
+   "C",
+   "На какой строке формируется {x}?",
+   "site",
+   "предупреждение о неполном поиске из-за размера или кодировки"
+  ],
+  [
+   "C2",
+   "C",
+   "От чего зависит появление {x}?",
+   "site condition",
+   "предупреждения о неполном поиске из-за размера или кодировки"
+  ],
+  [
+   "C3",
+   "C",
+   "Где находится {x} и какая из доступных функций непосредственно вызывает его владельца?",
+   "site caller"
+  ],
+  [
+   "C4",
+   "C",
+   "Для {x} укажи строку и точное время её последнего исполнения.",
+   ""
+  ],
+  [
+   "D1",
+   "D",
+   "Покажи участок, печатающий {x}.",
+   "site"
+  ],
+  [
+   "D2",
+   "D",
+   "Какие проверки должны пропустить управление к {x}?",
+   "site condition"
+  ],
+  [
+   "D3",
+   "D",
+   "Что скажешь о {x}?",
+   ""
+  ],
+  [
+   "D4",
+   "D",
+   "Мне нужны условия для {x} и адрес получателя электронного письма, которому ушёл результат.",
+   ""
+  ]
+ ]
+}
