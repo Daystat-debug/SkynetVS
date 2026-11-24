@@ -497,13 +497,16 @@ def main():
             print("Ход поиска:", " → ".join(f'{s["tool"]}({s["target"]})' for s in out["steps"]))
         for part in out.get("parts",[]):
             status={"unknown":"Не установлено","partial":"Установлено частично","established":"Установлено"}
-            print(status[part["status"]], "—",part["text"].strip())
+            cited=", ".join(str(i+1) for i in part["claims"])
+            print(status[part["status"]], "—",part["text"].strip(),f"[{cited}]" if cited else "")
             if part.get("residual") and part["status"]!="established":
                 print("  Осталось проверить:",part["residual"]["text"])
             for issue in part["issues"]:
                 print(" ",REASONS.get(issue,{"runtime":"Нужны наблюдения запуска.","external":"Нужны внешние данные.",
                       "unsupported":"Для этой части нет статического инструмента.","ambiguous":"Нужно уточнение.",
-                      "uninterpreted":"Требование не удалось распознать."}.get(issue,issue)))
+                      "uninterpreted":"Требование не удалось распознать.",
+                      "unverified_meaning":"Не подтверждено, что факты отвечают на эту просьбу.",
+                      "part_budget":"Запрос содержит больше восьми частей."}.get(issue,issue)))
         if out["state"] not in ("answered", "partial"):
             print(REASONS.get(out["reason"], "Ответ удержан."), "(" + out["reason"] + ")")
             for opt in out.get("discovery",{}).get("options",[]):
@@ -538,12 +541,24 @@ def main():
                 print("Выбранный признак:",detail["interpretation"])
                 if detail["verdict"]=="location_only":
                     print("Установлено только место записи.",REASONS.get(detail["gap"],detail["gap"]))
-            for claim in out["claims"]:
-                print(claim["text"])
+            for number,claim in enumerate(out["claims"],1):
+                print((f"[{number}] " if "parts" in out else "")+claim["text"])
                 for ref in claim["refs"]:
                     print(" ", ref["url"])
             print("Область вывода — статические связи пяти файлов. Выполнение не наблюдалось.")
     return int(out["state"] == "failed")
+
+
+def task_interpreter(resources):
+    provider=None
+    def select(system,user):
+        nonlocal provider
+        if provider is None:
+            import runtime289
+            tmp=resources.enter_context(tempfile.TemporaryDirectory(prefix="skynet-parts-"))
+            provider=resources.enter_context(runtime289.LocalProvider(Path(tmp)))
+        return provider.complete(system,user)
+    return select
 
 
 if __name__ == "__main__":
@@ -552,17 +567,9 @@ if __name__ == "__main__":
     if sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)
         with ExitStack() as resources:
-            provider=None
-            def task_select(system,user):
-                global provider
-                if provider is None:
-                    import runtime289
-                    tmp=resources.enter_context(tempfile.TemporaryDirectory(prefix="skynet-parts-"))
-                    provider=resources.enter_context(runtime289.LocalProvider(Path(tmp)))
-                return provider.complete(system,user)
             result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
                                  research_mode=sys.argv[1] == "--research-worker",
-                                 select=task_select if sys.argv[1]=="--requirements-worker" else observed.goals.local_select,
+                                 select=task_interpreter(resources) if sys.argv[1]=="--requirements-worker" else observed.goals.local_select,
                                  discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore","--requirements-worker":"residual"}.get(sys.argv[1]))
         print(json.dumps(result, ensure_ascii=True))
     else:

@@ -1,0 +1,114 @@
+{
+ "python_flags": [
+  "-I",
+  "-S",
+  "-B"
+ ],
+ "directory": "tools",
+ "checks": [
+  {
+   "command": "test_requirements.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_requirements.py projection",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py guards",
+   "exit": 0
+  },
+  {
+   "command": "eval_requirements.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify --final",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify --second",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify --separate --delivery",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify --separate --lexical-control",
+   "exit": 0
+  },
+  {
+   "command": "eval_control_conditions.py verify --compare-direction",
+   "exit": 0
+  },
+  {
+   "command": "eval_control_conditions.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_diagnostic_path.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_route_research.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_package_boundaries.py",
+   "exit": 0
+  },
+  {
+   "command": "test_core_task.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_investigation.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_core_adapter.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_argument_flow.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_producer_investigation.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_task_parts.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_task_parts.py verify --final",
+   "exit": 0
+  },
+  {
+   "command": "test_task_parts.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_core_adapter.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_package_boundaries.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_requirements.py verify",
+   "exit": 0
+  }
+ ]
+}

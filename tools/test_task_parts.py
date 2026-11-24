@@ -55,6 +55,25 @@ class Parts(unittest.TestCase):
         with patch.object(ev.ev.loop.host.lab.cli.calls,"cited",lambda *a:dict(original(*a),url="wrong")):
             self.assertEqual(run().get("reason"),"invalid_reference")
 
+    def test_mixed_unsplit_question_and_scope_before_model(self):
+        root=ev.ev.pilot.ROOT
+        src,ground=ev.ev.loop.read_head(root)
+        q="Укажи условия для «M126_QUERY_INVALID», сообщив цену доставки."
+        calls=[]
+        def select(prompt,payload):
+            calls.append(prompt)
+            obj={"1":"1 condition"} if prompt==mod.PROMPT else {"1":{"missing":"цену доставки","why":"external"}}
+            return json.dumps(obj,ensure_ascii=False),dict(finish_reason="stop")
+        opts=dict(discovery="residual",opener=lambda _:(src,ground),select=select)
+        out=ev.ev.loop.investigate(q,root,**opts)
+        self.assertEqual(out["state"],"partial")
+        gap=out["parts"][0]["residual"]
+        self.assertEqual(q[gap["start"]:gap["end"]],"цену доставки")
+        self.assertIn("condition",[c["kind"] for c in out["claims"]])
+        denied=ev.ev.loop.investigate("Где в modules/private.py такая строка?",root,**opts)
+        self.assertEqual(denied["reason"],"out_of_scope")
+        self.assertEqual(calls,[mod.PROMPT,mod.RESIDUAL])
+
 
 if __name__=="__main__":
     unittest.main()

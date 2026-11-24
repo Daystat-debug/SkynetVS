@@ -1,0 +1,510 @@
+[
+ {
+  "id": "R13",
+  "question": "Перечисли аргументы прямого вызова обработчика «M134_EXPANDED_QUERY_TOO_LONG» и сообщи имя дежурного администратора.",
+  "ms": 7438.0,
+  "answer": {
+   "state": "partial",
+   "plan": "task_parts",
+   "steps": [
+    {
+     "tool": "interpret_parts",
+     "target": "question",
+     "status": "interpreted",
+     "count": 2
+    },
+    {
+     "tool": "locate_observation",
+     "target": "1",
+     "status": "located",
+     "owner": "expand_query",
+     "line": 53
+    },
+    {
+     "tool": "calls",
+     "target": "expand_query",
+     "status": "call_sites"
+    },
+    {
+     "tool": "bind_arguments",
+     "target": "expand_query",
+     "status": "bound"
+    },
+    {
+     "tool": "check_coverage",
+     "target": "original wording",
+     "status": "reviewed"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+     "refs": [
+      [
+       "C",
+       47,
+       47
+      ],
+      [
+       "C",
+       53,
+       53
+      ]
+     ],
+     "kind": "site"
+    },
+    {
+     "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+     "refs": [
+      [
+       "C",
+       47,
+       47
+      ],
+      [
+       "C",
+       144,
+       144
+      ],
+      [
+       "C",
+       146,
+       146
+      ]
+     ],
+     "edge": [
+      "search_repository",
+      "expand_query"
+     ],
+     "kind": "caller"
+    },
+    {
+     "text": "Привязка аргументов: goal ← `goal`.",
+     "refs": [
+      [
+       "C",
+       47,
+       47
+      ],
+      [
+       "C",
+       144,
+       144
+      ],
+      [
+       "C",
+       146,
+       146
+      ]
+     ],
+     "kind": "arguments"
+    }
+   ],
+   "snapshot": "8ec46cb8d5366381324cb4e6f67befbef77adee7",
+   "parts": [
+    {
+     "start": 0,
+     "end": 78,
+     "text": "Перечисли аргументы прямого вызова обработчика «M134_EXPANDED_QUERY_TOO_LONG» ",
+     "need": [
+      "site",
+      "caller",
+      "arguments"
+     ],
+     "issues": [],
+     "target": 0,
+     "claims": [
+      0,
+      1,
+      2
+     ],
+     "status": "established"
+    },
+    {
+     "start": 78,
+     "end": 116,
+     "text": "и сообщи имя дежурного администратора.",
+     "need": [],
+     "issues": [
+      "external"
+     ],
+     "target": 1,
+     "claims": [],
+     "status": "unknown"
+    }
+   ],
+   "coverage": "static_subset",
+   "execution_observed": false
+  }
+ },
+ {
+  "id": "R11",
+  "question": "Отметь строку с «M134_EXPANDED_QUERY_TOO_LONG», указав также номер заявки, по которой согласовали это ограничение.",
+  "ms": 7390.7,
+  "answer": {
+   "state": "answered",
+   "plan": "task_parts",
+   "steps": [
+    {
+     "tool": "interpret_parts",
+     "target": "question",
+     "status": "interpreted",
+     "count": 1
+    },
+    {
+     "tool": "locate_observation",
+     "target": "1",
+     "status": "located",
+     "owner": "expand_query",
+     "line": 53
+    },
+    {
+     "tool": "check_coverage",
+     "target": "original wording",
+     "status": "reviewed"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+     "refs": [
+      [
+       "C",
+       47,
+       47
+      ],
+      [
+       "C",
+       53,
+       53
+      ]
+     ],
+     "kind": "site"
+    }
+   ],
+   "snapshot": "8ec46cb8d5366381324cb4e6f67befbef77adee7",
+   "parts": [
+    {
+     "start": 0,
+     "end": 114,
+     "text": "Отметь строку с «M134_EXPANDED_QUERY_TOO_LONG», указав также номер заявки, по которой согласовали это ограничение.",
+     "need": [
+      "site"
+     ],
+     "issues": [],
+     "target": 0,
+     "claims": [
+      0
+     ],
+     "status": "established"
+    }
+   ],
+   "coverage": "static_subset",
+   "execution_observed": false
+  }
+ },
+ {
+  "id": "D4",
+  "question": "Мне нужны условия для «Контекст не собран» и адрес получателя электронного письма, которому ушёл результат.",
+  "ms": 7606.3,
+  "answer": {
+   "state": "partial",
+   "plan": "task_parts",
+   "steps": [
+    {
+     "tool": "interpret_parts",
+     "target": "question",
+     "status": "interpreted",
+     "count": 2
+    },
+    {
+     "tool": "locate_observation",
+     "target": "1",
+     "status": "located",
+     "owner": "format_context",
+     "line": 223
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "format_context@223",
+     "status": "proved"
+    },
+    {
+     "tool": "check_coverage",
+     "target": "original wording",
+     "status": "reviewed"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В format_context на строке 223 записано выражение `'Контекст не собран. Уточни технические термины задачи.'`.",
+     "refs": [
+      [
+       "C",
+       202,
+       202
+      ],
+      [
+       "C",
+       223,
+       223
+      ]
+     ],
+     "kind": "site"
+    },
+    {
+     "text": "В format_context исследована инструкция `head.append('Контекст не собран. Уточни технические термины задачи.')` (стр. 223). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` истинно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+     "refs": [
+      [
+       "C",
+       202,
+       202
+      ],
+      [
+       "C",
+       203,
+       203
+      ],
+      [
+       "C",
+       204,
+       204
+      ],
+      [
+       "C",
+       214,
+       214
+      ],
+      [
+       "C",
+       216,
+       216
+      ],
+      [
+       "C",
+       222,
+       222
+      ],
+      [
+       "C",
+       223,
+       223
+      ]
+     ],
+     "kind": "condition",
+     "control": {
+      "path": "modules/developer_task_ui/app/context_search.py",
+      "function": "format_context",
+      "line": 223,
+      "condition": [
+       "and",
+       [
+        "not",
+        [
+         "test",
+         203,
+         "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+        ]
+       ],
+       [
+        "test",
+        222,
+        "not report['_private_8k_text']"
+       ]
+      ],
+      "work": 29
+     }
+    }
+   ],
+   "snapshot": "8ec46cb8d5366381324cb4e6f67befbef77adee7",
+   "parts": [
+    {
+     "start": 0,
+     "end": 43,
+     "text": "Мне нужны условия для «Контекст не собран» ",
+     "need": [
+      "site",
+      "condition"
+     ],
+     "issues": [],
+     "target": 0,
+     "claims": [
+      0,
+      1
+     ],
+     "status": "established"
+    },
+    {
+     "start": 43,
+     "end": 107,
+     "text": "и адрес получателя электронного письма, которому ушёл результат.",
+     "need": [],
+     "issues": [
+      "unsupported"
+     ],
+     "target": 0,
+     "claims": [],
+     "residual": {
+      "start": 43,
+      "end": 107,
+      "text": "и адрес получателя электронного письма, которому ушёл результат.",
+      "why": "unsupported"
+     },
+     "initial_need": [
+      "site"
+     ],
+     "status": "unknown"
+    }
+   ],
+   "coverage": "static_subset",
+   "execution_observed": false
+  }
+ },
+ {
+  "id": "C4",
+  "question": "Для «часть файлов пропущена» укажи строку и точное время её последнего исполнения.",
+  "ms": 7383.2,
+  "answer": {
+   "state": "partial",
+   "plan": "task_parts",
+   "steps": [
+    {
+     "tool": "interpret_parts",
+     "target": "question",
+     "status": "interpreted",
+     "count": 2
+    },
+    {
+     "tool": "locate_observation",
+     "target": "1",
+     "status": "located",
+     "owner": "format_context",
+     "line": 217
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "format_context@217",
+     "status": "proved"
+    },
+    {
+     "tool": "check_coverage",
+     "target": "original wording",
+     "status": "reviewed"
+    }
+   ],
+   "claims": [
+    {
+     "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+     "refs": [
+      [
+       "C",
+       202,
+       202
+      ],
+      [
+       "C",
+       217,
+       217
+      ]
+     ],
+     "kind": "site"
+    },
+    {
+     "text": "В format_context исследована инструкция `head.append('ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.')` (стр. 217). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `scan['partial']` истинно (стр. 216). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+     "refs": [
+      [
+       "C",
+       202,
+       202
+      ],
+      [
+       "C",
+       203,
+       203
+      ],
+      [
+       "C",
+       204,
+       204
+      ],
+      [
+       "C",
+       214,
+       214
+      ],
+      [
+       "C",
+       216,
+       216
+      ],
+      [
+       "C",
+       217,
+       217
+      ]
+     ],
+     "kind": "condition",
+     "control": {
+      "path": "modules/developer_task_ui/app/context_search.py",
+      "function": "format_context",
+      "line": 217,
+      "condition": [
+       "and",
+       [
+        "not",
+        [
+         "test",
+         203,
+         "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+        ]
+       ],
+       [
+        "test",
+        216,
+        "scan['partial']"
+       ]
+      ],
+      "work": 16
+     }
+    }
+   ],
+   "snapshot": "8ec46cb8d5366381324cb4e6f67befbef77adee7",
+   "parts": [
+    {
+     "start": 0,
+     "end": 42,
+     "text": "Для «часть файлов пропущена» укажи строку ",
+     "need": [
+      "site"
+     ],
+     "issues": [],
+     "target": 0,
+     "claims": [
+      0
+     ],
+     "status": "established"
+    },
+    {
+     "start": 42,
+     "end": 82,
+     "text": "и точное время её последнего исполнения.",
+     "need": [
+      "site",
+      "condition"
+     ],
+     "issues": [
+      "external"
+     ],
+     "target": 0,
+     "claims": [
+      0,
+      1
+     ],
+     "status": "partial"
+    }
+   ],
+   "coverage": "static_subset",
+   "execution_observed": false
+  }
+ }
+]
