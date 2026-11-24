@@ -44,6 +44,8 @@ class Outcome:
 
 
 class Research:
+    call_statement = staticmethod(facts.call_statement)
+
     def __init__(self, search, origin, target, policy="adaptive"):
         self.s = search
         self.origin, self.target, self.policy = origin, target, policy
@@ -145,7 +147,7 @@ class Research:
             final = i == len(route)
             site = None if final else route[i]
             fn = outcome.function if final else site.caller
-            stmt = outcome.statement if final else facts.call_statement(site)
+            stmt = outcome.statement if final else self.call_statement(site)
             proof = self.proof(fn,stmt)
             if proof:
                 claims.append(proof)
@@ -168,7 +170,7 @@ class Research:
     def screen(self, outcome, route, site):
         # Is the suffix already incompatible with literal arguments from this
         # site, before we spend an incoming-call lookup finding its ancestors?
-        stmt = facts.call_statement(route[0]) if route else outcome.statement
+        stmt = self.call_statement(route[0]) if route else outcome.statement
         proof = self.proof(site.callee, stmt)
         _, env = facts.bind(site,{})
         return self.conflicts(site.callee,proof,env)
