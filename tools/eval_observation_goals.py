@@ -144,13 +144,13 @@ def portable(out):
     return json.loads(json.dumps(public))
 
 
-def run(temp,plan,calls,live,arms=ARMS):
+def run(temp,plan,calls,live,arms=ARMS,delivery=False):
     root = temp/"repo"
     pilot.git("clone","--quiet","--local","--no-checkout",str(pilot.ROOT),str(root))
     archive.set_head(root,BASE)
     prior=archive.pinned_host(temp,"accepted_core06",BASE)
     raw,_=old.blob(root,BASE,old.RANK)
-    generated,info=(second_fixture if arms==SEPARATE else fixture)(raw,plan["implementation"])
+    generated,info=(fixture if arms==ARMS else second_fixture)(raw,plan["implementation"])
     src,ground=loop.read_head(root)
     provider=Generations(temp,calls,live)
     rows,ms=[],{}
@@ -165,14 +165,22 @@ def run(temp,plan,calls,live,arms=ARMS):
             for arm in arms[i%len(arms):]+arms[:i%len(arms)]:
                 provider.key=c["id"]+"/"+arm
                 provider.used=0
-                if arm not in ("core06","lexical"):
+                if arm not in ("core06","lexical","lexical_checked"):
                     provider.prepare()
                 opts=dict(opener=lambda _:(src,ground))
                 start=perf_counter()
                 if arm=="core06":
                     out=prior.investigate(c["q"],root,**opts)
+                elif arm=="lexical_checked":
+                    # Remove only the independent language-model vote. Keep the
+                    # deployed operator, quote handling, corpus rule and evidence tools.
+                    def lexical_vote(_system,payload):
+                        first=next(iter(json.loads(payload)["candidates"]))
+                        return json.dumps(dict(site=int(first))),dict(finish_reason="stop")
+                    out=loop.investigate(c["q"],root,discovery="checked",select=lexical_vote,**opts)
                 else:
-                    out=loop.investigate(c["q"],root,discovery=arm,select=provider.select,**opts)
+                    policy="checked" if delivery and arm=="corroborated" else arm
+                    out=loop.investigate(c["q"],root,discovery=policy,select=provider.select,**opts)
                 ms[c["id"]][arm]=round((perf_counter()-start)*1000,1)
                 assert len(out["steps"])<=6 and not any(s["tool"]=="classify_intent" for s in out["steps"])
                 assert not provider.replay_errors, provider.replay_errors
@@ -184,7 +192,7 @@ def run(temp,plan,calls,live,arms=ARMS):
         provider.stack.close()
     archive.set_head(root,BASE)
     src,ground=loop.read_head(root)
-    opts=dict(opener=lambda _:(src,ground),discovery="hybrid")
+    opts=dict(opener=lambda _:(src,ground),discovery="checked" if delivery else "hybrid")
     q='Когда появляется «Контекст не собран»?'
     cited=loop.host.lab.cli.calls.cited
     with patch.object(loop.host.lab.cli.calls,"cited",lambda *args:dict(cited(*args),url="unissued")):
@@ -218,19 +226,28 @@ def main():
     parser.add_argument("mode",choices=("record","verify"))
     parser.add_argument("--separate",action="store_true",help="Second frozen transfer, independent site and action selection.")
     parser.add_argument("--output",type=Path,help="New file for a separate live recording.")
+    parser.add_argument("--delivery",action="store_true",help="Verify the shipping CLI policy against the second recording.")
+    parser.add_argument("--lexical-control",action="store_true",help="Remove only the model vote on the same second transfer.")
     args=parser.parse_args()
     live=args.mode=="record"
+    if args.delivery and (live or not args.separate or args.lexical_control):
+        parser.error("--delivery requires verify --separate")
+    if args.lexical_control and not args.separate:
+        parser.error("--lexical-control requires --separate")
     arms=SEPARATE if args.separate else ARMS
+    if args.lexical_control:
+        arms=("lexical_checked",)
     plan=json.loads(pilot.git("show",SECOND_PLAN if args.separate else FIRST_PLAN))
     if args.output and not live:
         parser.error("--output is for a new live recording")
-    dest=args.output or DIR/("results_2.json" if args.separate else "results.json")
+    filename="lexical_control.json" if args.lexical_control else "results_2.json" if args.separate else "results.json"
+    dest=args.output or DIR/filename
     if live and dest.exists():
         parser.error("Result file already exists. Select a new --output path.")
     saved={} if live else json.loads(dest.read_text(encoding="utf8"))
     calls=saved.get("generations",{})
     with tempfile.TemporaryDirectory(prefix="skynet-goals-") as tmp:
-        rows,ms,sessions=run(Path(tmp),plan,calls,live,arms)
+        rows,ms,sessions=run(Path(tmp),plan,calls,live,arms,args.delivery)
         historical_rows=historical(Path(tmp)/"repo")
     if live:
         with dest.open("x",encoding="utf8",newline="\n") as f:
@@ -238,6 +255,16 @@ def main():
                       f,ensure_ascii=False,indent=1)
             f.write("\n")
     else:
+        if args.delivery:
+            removed=0
+            for row in saved["rows"]:
+                answer=row["corroborated"]["answer"]
+                if (answer.get("discovery",{}).get("options") and
+                        not loop.observed.goals.quoted(row["q"])):
+                    assert not answer["claims"] and answer["state"]=="insufficient"
+                    removed+=len(answer["discovery"]["options"])
+                    answer["discovery"]=dict(verdict="unproven")
+            print("Suppressed uncorroborated hints:",removed)
         assert (rows,historical_rows)==(saved["rows"],saved["historical"])
     for arm in arms:
         print(arm,"full",sum(r[arm]["full"] for r in rows),"/",len(rows),

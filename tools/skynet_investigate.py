@@ -475,7 +475,7 @@ if __name__ == "__main__":
         data = sys.stdin.buffer.read(2401)
         result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
                              research_mode=sys.argv[1] == "--research-worker",
-                             discovery="corroborated" if sys.argv[1]=="--ask-worker" else None)
+                             discovery="checked" if sys.argv[1]=="--ask-worker" else None)
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())
