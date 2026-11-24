@@ -1,0 +1,28 @@
+{
+ "source":"2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+ "implementation":"b4251d71cfa2185c99ed81163cccd6a68b034034",
+ "rubric":"Same independent source and evidence grades as transfer.json. For a proven exclusion a partial response explicitly stating the exclusion and supplying all requested bindings, local conditions and links is a valid completed investigation. Static connection refers to the containing functions only. A Boolean claim about real execution cannot be derived from this graph.",
+ "fixture":["","def freight_gate(parcel_weight, capacity):","    if parcel_weight > capacity:","        return 'Parcel exceeds weight capacity'","    if parcel_weight < 0:","        return 'Negative parcel weight'","    return 'Parcel admitted for shipping'","","def book_dispatch():","    notice = 'Invoice waiting for print'","    return freight_gate(3, 7)","","def open_manifest(locked):","    if locked:","        return 'Manifest is locked for editing'","    return 'Manifest ready for editing'"],
+ "cases":[
+  {"id":"B01","q":"Где сравнивают корневую папку, названную Git, с каталогом открытого проекта и отвергают расхождение?","path":"C","owner":"scan_head","line":80,"refs":[68,80],"action":"where"},
+  {"id":"B02","q":"На каком участке обход заканчивается ошибкой, если среди прочитанного не осталось ни одного пригодного питоновского исходника? Укажи место.","path":"C","owner":"scan_head","line":136,"refs":[68,136],"action":"where"},
+  {"id":"B03","q":"Где отсекают слишком большой суммарный объём входных текстов ещё до выделения символов?","path":"S","owner":"extract_symbols","line":33,"refs":[28,33],"action":"where"},
+  {"id":"B04","q":"При каких условиях общий объём в байтах уже не позволяет начать извлечение функций из старых исходников?","path":"S","owner":"extract_symbols","line":33,"refs":[28,30,31,32,33],"controls":[["extract_symbols",33,["and",-30,32]]],"action":"when"},
+  {"id":"B05","q":"Где отчёт предупреждает читателя о неполном охвате из-за размера или кодировки?","path":"C","owner":"format_context","line":217,"refs":[202,217],"action":"where"},
+  {"id":"B06","q":"Что должно выполниться, чтобы пользователь увидел «Подсказки для русского запроса»?","path":"C","owner":"format_context","line":215,"refs":[202,203,204,214,215],"controls":[["format_context",215,["and",-203,214]]],"action":"when"},
+  {"id":"B07","q":"Связаны ли непосредственно функции, которые выдают «M134_GOAL_EMPTY_OR_TOO_LONG» и «M134_NO_LEXICAL_MATCH»? Интересует наличие вызова между ними.","edge":["search_repository","expand_query"],"marks":[["C",156],["C",49]],"must":{"C":[47,49,144,146,156]}},
+  {"id":"B08","q":"Есть ли прямой вызов между «M126_PATH_INVALID» и «M130_NO_SCOPE_FILES_WITHIN_LIMIT»?","edge":["rank","rank_title_only"],"marks":[["R",124],["T",50]],"must":{"R":[17,110,116,124],"T":[34,50]}},
+  {"id":"B09","q":"Есть ли прямой вызов между «M134_GOAL_EMPTY_OR_TOO_LONG» и «M130_RANK_INPUT_CONTRACT_VIOLATION»?","reasons":["path_unproven"]},
+  {"id":"B10","q":"Где проверяют, не превышен ли лимит размера электронного письма перед отправкой адресату?","reasons":["observation_missing","observation_ambiguous","clarification","no_match"]},
+  {"id":"B11","q":"Где в modules/external/billing.py отображают предупреждение об ограничении?","reasons":["out_of_scope"]},
+  {"id":"B12","q":"Сколько раз за последний запуск был превышен порог объёма входных текстов?","reasons":["observation_required"]},
+  {"id":"F11","q":"Почему посылку считают слишком тяжёлой для перевозки?","path":"R","owner":"freight_gate","line":4,"refs":[2,3,4],"controls":[["freight_gate",4,3]],"action":"when"},
+  {"id":"F12","q":"Где отмечен невозможный отрицательный вес отправления?","path":"R","owner":"freight_gate","line":6,"refs":[2,6],"action":"where"},
+  {"id":"F13","q":"При каких обстоятельствах груз пропускают к отгрузке?","path":"R","owner":"freight_gate","line":7,"refs":[2,3,4,5,6,7],"controls":[["freight_gate",7,["and",-3,-5]]],"action":"when"},
+  {"id":"F14","q":"Где написано, что накладная ждёт отправки на печать?","path":"R","owner":"book_dispatch","line":10,"refs":[9,10],"action":"where"},
+  {"id":"F15","q":"Какое условие должно выполниться для появления «Manifest is locked»?","path":"R","owner":"open_manifest","line":15,"refs":[13,14,15],"controls":[["open_manifest",15,14]],"action":"when"},
+  {"id":"F16","q":"Есть ли вызов между «Invoice waiting» и «Negative parcel»?","edge":["book_dispatch","freight_gate"],"marks":[["R",10],["R",6]],"must":{"R":[2,6,9,10,11]}},
+  {"id":"F17","q":"Участок, в котором написано «Parcel admitted», обязательно выполнялся при выставлении счёта в последнем рейсе?","reasons":["observation_required","clarification","observation_ambiguous"]},
+  {"id":"F18","q":"Где транспортная система проверяет вес по тарифу международной страховки?","reasons":["observation_missing","observation_ambiguous","clarification","no_match"]}
+ ]
+}
