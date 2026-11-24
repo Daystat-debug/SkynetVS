@@ -114,9 +114,14 @@ def quoted(question):
     return [next(v for v in m if v) for m in QUOTES.findall(question)]
 
 
+def unsupported(question):
+    plain = QUOTES.sub(" ",question).casefold()
+    return re.search(r"исправ|удал|замени|перепиши|вчера|запусти|на самом деле|сколько раз|откуда бер|из какого поля",plain)
+
+
 def action(question):
     plain = QUOTES.sub(" ",question).casefold()
-    if re.search(r"исправ|удал|замени|перепиши|вчера|запусти|на самом деле|сколько раз|откуда бер|из какого поля",plain):
+    if unsupported(question):
         return None
     if re.search(r"вызывающ|кто .*вызыва|от какого вызова|кто .*переда",plain):
         return "via"

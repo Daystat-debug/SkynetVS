@@ -3,6 +3,7 @@ import ast
 
 import skynet_route_research as route
 import skynet_observation_goal as goals
+import skynet_source_language as language
 
 
 def statement(site):
@@ -62,7 +63,14 @@ def observe(search, question, policy, select):
         step.update(status="indexed",count=len(catalog))
         pick = controller.step("select_goal","question")
         try:
-            effect,action,method = goals.choose(question,catalog,policy,select)
+            if policy in ("syntax", "captions", "explore"):
+                parts = language.relation(question) if policy != "captions" else None
+                if parts:
+                    pick.update(status="two_observations", target="connect")
+                    return language.connect(controller, parts, catalog, policy)
+                effect,action,method = language.choose(question,catalog,policy)
+            else:
+                effect,action,method = goals.choose(question,catalog,policy,select)
         except route.control.Gap as exc:
             pick["status"] = str(exc)
             raise
