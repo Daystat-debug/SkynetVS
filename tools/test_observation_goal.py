@@ -57,6 +57,19 @@ class Boundaries(unittest.TestCase):
             goal.choose("Когда появляется ответ?",[card],"model",
                         lambda *_:('{"id":1,"action":"where"}',dict(finish_reason="stop")))
 
+    def test_separate_selector(self):
+        fn=SimpleNamespace(node=SimpleNamespace(name="sample"))
+        cards=[goal.Effect(fn,None,None,x,"") for x in ("Сигнал датчика","Ответ оператора")]
+        pick=lambda *_:('{"site":1}',dict(finish_reason="stop"))
+        self.assertEqual(goal.choose("Когда появляется сигнал датчика?",cards,"corroborated",pick)[:2],
+                         (cards[0],"when"))
+        with self.assertRaises(goal.NeedChoice) as denied:
+            goal.choose("Где ответ оператора?",cards,"corroborated",pick)
+        self.assertEqual(denied.exception.options,[cards[0]])
+        for raw in ('{"site":true}','{"site":0}','{"site":999}','{"site":1,"action":"where"}'):
+            with self.subTest(raw=raw),self.assertRaises(Gap):
+                goal.choose("Где датчик?",cards,"site",lambda *_:(raw,dict(finish_reason="stop")))
+
 
 if __name__=="__main__":
     unittest.main()

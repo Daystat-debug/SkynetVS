@@ -19,6 +19,8 @@ loop, archive, old, pilot = previous.loop, previous.archive, previous.old, previ
 BASE = "fb30428c94b3d477dde9b5e081435a1669822aad"
 DIR = pilot.ROOT/"docs/maintenance/core_07"
 ARMS = ("core06","lexical","model","hybrid")
+SEPARATE = ("core06","lexical","hybrid","site","corroborated")
+FIRST_PLAN = "392e828531de3deb47acaab8a3f980071244d6e8:docs/maintenance/core_07/transfer.json"
 
 
 def fixture(raw, seed):
@@ -35,6 +37,21 @@ def fixture(raw, seed):
                base=len(raw.splitlines()),threshold=threshold)
 
 
+def second_fixture(raw,seed):
+    rng=random.Random(int(seed[-16:],16))
+    sink,caller,other = ["stage_"+format(rng.getrandbits(48),"x") for _ in range(3)]
+    threshold=rng.randint(4,30)
+    lines=["",f"def {sink}(*, depth):",f"    if depth >= {threshold}:",
+           "        return 'Проверка архива отложена до ручного разбора'",
+           "    return 'Проверка архива завершена без замечаний'", "",
+           f"def {caller}():",f"    return {sink}(depth={threshold-1})","",
+           f"def {other}(verbose):","    if verbose:",
+           "        return 'Копия помещена в карантинную папку'",
+           "    return 'Копия готова для передачи'"]
+    return raw+("\n".join(lines)+"\n").encode(),dict(sink=sink,caller=caller,other=other,
+               base=len(raw.splitlines()),threshold=threshold)
+
+
 class Generations:
     def __init__(self,temp,cache,live):
         self.temp,self.cache,self.live = temp,cache,live
@@ -43,6 +60,7 @@ class Generations:
         self.sessions = []
         self.key = ""
         self.used = 0
+        self.replay_errors = []
 
     def prepare(self):
         if not self.live or (self.provider and self.provider.calls<16):
@@ -62,8 +80,10 @@ class Generations:
         if self.live:
             raw,timing = self.provider.complete(system,user)
             self.cache[self.key]=dict(digest=digest,raw=raw,**timing)
+        if self.key not in self.cache or self.cache[self.key]["digest"]!=digest:
+            self.replay_errors.append(self.key)
+            raise ValueError("selection record does not match the issued menu")
         entry=self.cache[self.key]
-        assert entry["digest"]==digest
         return entry["raw"],entry
 
 
@@ -123,13 +143,13 @@ def portable(out):
     return json.loads(json.dumps(public))
 
 
-def run(temp,plan,calls,live):
+def run(temp,plan,calls,live,arms=ARMS):
     root = temp/"repo"
     pilot.git("clone","--quiet","--local","--no-checkout",str(pilot.ROOT),str(root))
     archive.set_head(root,BASE)
     prior=archive.pinned_host(temp,"accepted_core06",BASE)
     raw,_=old.blob(root,BASE,old.RANK)
-    generated,info=fixture(raw,plan["implementation"])
+    generated,info=(second_fixture if arms==SEPARATE else fixture)(raw,plan["implementation"])
     src,ground=loop.read_head(root)
     provider=Generations(temp,calls,live)
     rows,ms=[],{}
@@ -141,10 +161,10 @@ def run(temp,plan,calls,live):
             c=expected(case,info)
             row=dict(id=c["id"],q=c["q"],commit=src.commit)
             ms[c["id"]]={}
-            for arm in ARMS[i%4:]+ARMS[:i%4]:
+            for arm in arms[i%len(arms):]+arms[:i%len(arms)]:
                 provider.key=c["id"]+"/"+arm
                 provider.used=0
-                if arm in ("model","hybrid"):
+                if arm not in ("core06","lexical"):
                     provider.prepare()
                 opts=dict(opener=lambda _:(src,ground))
                 start=perf_counter()
@@ -154,6 +174,9 @@ def run(temp,plan,calls,live):
                     out=loop.investigate(c["q"],root,discovery=arm,select=provider.select,**opts)
                 ms[c["id"]][arm]=round((perf_counter()-start)*1000,1)
                 assert len(out["steps"])<=6 and not any(s["tool"]=="classify_intent" for s in out["steps"])
+                assert not provider.replay_errors, provider.replay_errors
+                for option in out.get("discovery",{}).get("options",[]):
+                    old.verify_refs(root,src.commit,[option["ref"]])
                 row[arm]=dict(**grade(c,out,root,src),calls=provider.used,answer=portable(out))
             rows.append(row)
     finally:
@@ -192,14 +215,17 @@ def historical(root):
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("mode",choices=("record","verify"))
+    parser.add_argument("--separate",action="store_true",help="Second frozen transfer, independent site and action selection.")
     args=parser.parse_args()
     live=args.mode=="record"
-    plan=json.loads((DIR/"transfer.json").read_text(encoding="utf8"))
-    dest=DIR/"results.json"
+    arms=SEPARATE if args.separate else ARMS
+    plan=(json.loads((DIR/"transfer_2.json").read_text(encoding="utf8")) if args.separate
+          else json.loads(pilot.git("show",FIRST_PLAN)))
+    dest=DIR/("results_2.json" if args.separate else "results.json")
     saved={} if live else json.loads(dest.read_text(encoding="utf8"))
     calls=saved.get("generations",{})
     with tempfile.TemporaryDirectory(prefix="skynet-goals-") as tmp:
-        rows,ms,sessions=run(Path(tmp),plan,calls,live)
+        rows,ms,sessions=run(Path(tmp),plan,calls,live,arms)
         historical_rows=historical(Path(tmp)/"repo")
     if live:
         with dest.open("x",encoding="utf8",newline="\n") as f:
@@ -208,7 +234,7 @@ def main():
             f.write("\n")
     else:
         assert (rows,historical_rows)==(saved["rows"],saved["historical"])
-    for arm in ARMS:
+    for arm in arms:
         print(arm,"full",sum(r[arm]["full"] for r in rows),"/",len(rows),
               "wrong target",sum(r[arm]["spurious"] for r in rows),"model selections",sum(r[arm]["calls"] for r in rows),
               "median ms",median(ms[r["id"]][arm] for r in rows))

@@ -374,7 +374,12 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     if "research" in evidence["analysis"]:
         public["research"] = evidence["analysis"]["research"]
     if "discovery" in evidence["analysis"]:
-        public["discovery"] = evidence["analysis"]["discovery"]
+        info = dict(evidence["analysis"]["discovery"])
+        if "options" in info:
+            by_id = {i["ref_id"]:i["locator"] for i in evidence["items"]}
+            info["options"] = [dict(label=o["label"],coordinate=o["coordinate"],ref=by_id[o["ref_id"]])
+                               for o in info["options"]]
+        public["discovery"] = info
     proposal = result["answer_proposal"]
     if proposal["status"] != "answer":
         return dict(public, reason=proposal["reason"])
@@ -438,6 +443,8 @@ def main():
             print("Ход поиска:", " → ".join(f'{s["tool"]}({s["target"]})' for s in out["steps"]))
         if out["state"] not in ("answered", "partial"):
             print(REASONS.get(out["reason"], "Ответ удержан."), "(" + out["reason"] + ")")
+            for opt in out.get("discovery",{}).get("options",[]):
+                print(f'Возможный ориентир: {opt["label"]} — {opt["coordinate"]}',opt["ref"]["url"])
         else:
             if out["plan"] == "research_route":
                 if out["research"]["verdict"] == "excluded_route":
@@ -468,7 +475,7 @@ if __name__ == "__main__":
         data = sys.stdin.buffer.read(2401)
         result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
                              research_mode=sys.argv[1] == "--research-worker",
-                             discovery="hybrid" if sys.argv[1]=="--ask-worker" else None)
+                             discovery="corroborated" if sys.argv[1]=="--ask-worker" else None)
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())

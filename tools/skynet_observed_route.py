@@ -86,6 +86,14 @@ def observe(search, question, policy, select):
             if not isinstance(sites[0].caller.node,ast.FunctionDef):
                 raise route.control.Gap("control_unsupported")
             meta["verdict"],claims = controller.certify(fact,sites)
+    except goals.NeedChoice as exc:
+        options = []
+        for effect in exc.options:
+            fn,expr = effect.fn,effect.expr
+            anchor = controller.anchor(fn,expr.lineno,expr.end_lineno)
+            options.append(dict(coordinate=f"{fn.node.name}@{effect.stmt.lineno}",label=effect.label,
+                                ref_id=anchor["ref_id"]))
+        return ([],list(search.items.values()),str(exc)),dict(verdict="clarify",options=options)
     except (route.control.Gap,route.arguments.Limit) as exc:
         if meta["verdict"]!="location" or str(exc)=="evidence_budget":
             return ([],[],str(exc)),dict(verdict="unproven")
