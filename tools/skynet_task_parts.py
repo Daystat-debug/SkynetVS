@@ -3,6 +3,7 @@ import json
 import re
 
 import skynet_requirements as req
+import skynet_obligation_check as obligations
 
 ISSUES = ("runtime", "external", "unsupported", "ambiguous")
 REVIEW = """Проверь каждый пункт задачи сам по себе. В data есть текст пункта и краткие
@@ -87,7 +88,10 @@ def research(search, question, select, policy):
     ctl=req.observed.ObservedRoute(search,None,None)
     flat=policy=="flat_residual"
     residual=policy in ("residual","flat_residual")
-    parts=[dict(start=0,end=len(question),text=question)] if flat else split(question)
+    checked = policy in ("independent", "memory_only")
+    parts = obligations.segment(question) if checked else split(question)
+    if flat:
+        parts = [dict(start=0,end=len(question),text=question)]
     claims=[]
     groups={}
     proofs=[]
@@ -95,7 +99,17 @@ def research(search, question, select, policy):
     effects={}
     try:
         step=ctl.step("interpret_parts","question")
-        planned=plan(parts,select,policy)
+        if policy=="memory_only" and len(parts)<=8:
+            target=0
+            planned=[]
+            for i,p in enumerate(parts):
+                if req.goals.quoted(p["text"]):
+                    target=i
+                planned.append(([],[],target))
+        else:
+            planned=plan(parts,select,policy)
+        if checked and len(parts)<=8:
+            planned=obligations.augment(parts,planned)
         step.update(status="interpreted",count=len(parts))
         for i,(needs,issues,target) in enumerate(planned):
             p=parts[i]
@@ -221,12 +235,13 @@ def review(ctl,parts,claims,proofs,items,effects,select,residual):
                      if claims[n]["kind"] in p["need"]]
 
 
-def verify(question,meta,claims,flat=False):
+def verify(question,meta,claims,flat=False,checked=False):
     def check(ok):
         if not ok:
             raise req.observed.route.arguments.host.Rejected("claim_binding")
     parts=meta["parts"]
-    expected=[dict(start=0,end=len(question),text=question)] if flat else split(question)
+    expected=[dict(start=0,end=len(question),text=question)] if flat else (
+        obligations.segment(question) if checked else split(question))
     check([{k:p[k] for k in ("start","end","text")} for p in parts]==expected)
     index={}
     cursor=0
@@ -250,3 +265,5 @@ def verify(question,meta,claims,flat=False):
         check(p["status"]==("established" if complete else "partial" if got else "unknown"))
         check(complete or bool(p["issues"]))
     check(cited==set(index))
+    if checked:
+        obligations.verify(parts,claims)

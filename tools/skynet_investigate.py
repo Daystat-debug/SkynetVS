@@ -275,7 +275,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         paths = cli.PY_PATH.findall(req.question)
         if any(not any(p == f or p.endswith("/" + f) for p in src.pages) for f in paths):
             return packet(req, src, reason="out_of_scope")
-        if discovery in ("parts","parts_once","lexical_parts","residual","flat_residual"):
+        if discovery in ("parts","parts_once","lexical_parts","residual","flat_residual","independent","memory_only"):
             plan="task_parts"
             if paths:
                 return packet(req,src,reason="clarification")
@@ -390,7 +390,8 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         assessment = host.verify_snapshot(src, req, evidence, draft, delivered)
         if "task_parts" in evidence["analysis"]:
             meta=evidence["analysis"]["task_parts"]
-            task_parts.verify(req.question,meta,evidence["analysis"]["observations"],discovery=="flat_residual")
+            task_parts.verify(req.question,meta,evidence["analysis"]["observations"],discovery=="flat_residual",
+                              checked=discovery in ("independent","memory_only"))
             if draft["status"]=="answer":
                 assessment["answer_completeness"]=("interpreted_requirements_met" if all(
                     p["status"]=="established" for p in meta["parts"]) else "partial")
@@ -461,12 +462,14 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     return public
 
 
-def supervised(question, *, timeout=TIME_LIMIT, why=False, research_mode=False, discovery=False, explore=False, offline=False, requirements_mode=False):
+def supervised(question, *, timeout=TIME_LIMIT, why=False, research_mode=False, discovery=False, explore=False, offline=False, requirements_mode=False, requirements_version="0.10"):
     if len(question) > 600:
         return dict(state="insufficient", reason="clarification", claims=[], steps=[])
     worker = ("--requirements-worker" if requirements_mode else "--offline-worker" if offline else "--explore-worker" if explore else "--research-worker" if research_mode else
               "--why-worker" if why else "--ask-worker" if discovery else "--worker")
     cmd = [sys.executable, "-I", "-S", "-B", str(Path(__file__).resolve()), worker]
+    if requirements_mode:
+        cmd.append(requirements_version)
     try:
         run = subprocess.run(cmd, input=question.encode("utf8"), capture_output=True, timeout=timeout)
         if not run.returncode:
@@ -482,12 +485,15 @@ def main():
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--requirements", action="store_true", help="Проверить требования по частям и показать, что осталось неизвестным.")
+    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11"),help="Версия исследования требований (по умолчанию 0.10).")
     modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
     modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
     modes.add_argument("--research", action="store_true", help="Один статический маршрут от функции до функции, поля, сообщения или инструкции. Формат: вход -> ориентир.")
     args = parser.parse_args()
-    out = supervised(args.question, why=args.why, research_mode=args.research, discovery=True, explore=args.explore, offline=args.indexed, requirements_mode=args.requirements)
+    if args.requirements_version and not args.requirements:
+        parser.error("--requirements-version требует --requirements")
+    out = supervised(args.question, why=args.why, research_mode=args.research, discovery=True, explore=args.explore, offline=args.indexed, requirements_mode=args.requirements, requirements_version=args.requirements_version or "0.10")
     if args.json:
         print(json.dumps(out, ensure_ascii=False, indent=2))
     else:
@@ -564,13 +570,16 @@ def task_interpreter(resources):
 if __name__ == "__main__":
     if not sys.stdout.isatty():
         sys.stdout.reconfigure(encoding="utf8")
-    if sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
+    policies = {"0.9":"requirements","0.10":"residual","0.11":"independent"}
+    versioned = len(sys.argv)==3 and sys.argv[1]=="--requirements-worker" and sys.argv[2] in policies
+    if versioned or sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)
+        version = sys.argv[2] if versioned else "0.10"
         with ExitStack() as resources:
             result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
                                  research_mode=sys.argv[1] == "--research-worker",
-                                 select=task_interpreter(resources) if sys.argv[1]=="--requirements-worker" else observed.goals.local_select,
-                                 discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore","--requirements-worker":"residual"}.get(sys.argv[1]))
+                                 select=task_interpreter(resources) if sys.argv[1]=="--requirements-worker" and version!="0.9" else observed.goals.local_select,
+                                 discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore","--requirements-worker":policies[version]}.get(sys.argv[1]))
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())
