@@ -4,6 +4,7 @@ import ast
 import skynet_route_research as route
 import skynet_observation_goal as goals
 import skynet_source_language as language
+import skynet_goal_facets as facets
 
 
 def statement(site):
@@ -63,12 +64,25 @@ def observe(search, question, policy, select):
         step.update(status="indexed",count=len(catalog))
         pick = controller.step("select_goal","question")
         try:
-            if policy in ("syntax", "captions", "explore"):
+            if policy in ("syntax", "captions", "explore", "facets", "pooled"):
                 parts = language.relation(question) if policy != "captions" else None
-                if parts:
-                    pick.update(status="two_observations", target="connect")
-                    return language.connect(controller, parts, catalog, policy)
-                effect,action,method = language.choose(question,catalog,policy)
+                try:
+                    if parts:
+                        pick.update(status="two_observations", target="connect")
+                        return language.connect(controller, parts, catalog, policy)
+                    effect,action,method = language.choose(question,catalog,policy)
+                except goals.NeedChoice:
+                    raise
+                except route.control.Gap as first:
+                    split_literal = str(first)=="observation_missing" and len(goals.quoted(question))==2
+                    if policy not in ("facets","pooled") or (str(first)!="observation_ambiguous" and not split_literal):
+                        raise
+                    hits, action = facets.ground(controller,question,catalog,select,policy)
+                    if action in ("between","forward"):
+                        return language.join(controller,*hits,directed=action=="forward")
+                    if len(hits)!=1:
+                        raise goals.NeedChoice(hits[:3])
+                    effect,method = hits[0],"translated_"+policy
             else:
                 effect,action,method = goals.choose(question,catalog,policy,select)
         except route.control.Gap as exc:

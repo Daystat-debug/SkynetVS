@@ -1,0 +1,26 @@
+{
+ "question": "При каких обстоятельствах платёжный терминал запрашивает повторное подтверждение суммы?",
+ "result": {
+  "rejected": "observation_ambiguous"
+ },
+ "calls": {
+  "dev": {
+   "digest": "9d7237e43dd8f7b196e9049431e53e3bcd37406b5a010149ce2af3f4663e38df",
+   "raw": "{\n  \"op\": \"where\",\n  \"targets\": [\n    [\n      [\"payment\", \"transaction\", \"amount\", \"confirm\", \"recheck\", \"verify\", \"reconfirm\", \"recheck\", \"reverify\"],\n      [\"condition\", \"situation\", \"context\", \"scenario\", \"case\", \"circumstance\", \"environment\", \"setting\"]\n    ],\n    [\n      [\"user\", \"client\", \"consumer\", \"person\", \"individual\", \"customer\", \"end-user\"],\n      [\"action\", \"behavior\", \"response\", \"interaction\", \"input\", \"trigger\", \"event\", \"response\"]\n    ]\n  ]\n}",
+   "wall_ms": 1109.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 373,
+   "completion_tokens": 133,
+   "prompt_ms": 96.06,
+   "predicted_ms": 993.632,
+   "predicted_per_second": 132.846
+  }
+ },
+ "sessions": [
+  {
+   "startup_s": 6.313,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  }
+ ]
+}

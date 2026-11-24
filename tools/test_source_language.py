@@ -8,6 +8,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import skynet_source_language as language
+import skynet_goal_facets as facets
 
 
 def effect(owner, text):
@@ -50,6 +51,20 @@ class SourceLanguage(unittest.TestCase):
         cards = [effect("a","розовый квадрат"), effect("b","чёрный треугольник"), effect("c","белый круг")]
         with self.assertRaisesRegex(language.goals.route.control.Gap,"missing"):
             language.choose("Где возвращается розовый квадрат 777?",cards,"syntax")
+
+    def test_match_independent_facets(self):
+        cards=[effect("a","disk quota limit"),effect("b","network quota error"),effect("c","disk busy"),
+               effect("d","light on"),effect("e","light off"),effect("f","network busy")]
+        self.assertIs(facets.resolve(cards,[["disk"],["quota"]],"",False),cards[0])
+        with self.assertRaisesRegex(language.goals.route.control.Gap,"ambiguous"):
+            facets.resolve(cards,[["quota"],["quota"]],"",False)
+
+    def test_model_may_only_return_data(self):
+        for value in ('{"op":"exec","a":{},"b":null}', '{"op":"via","a":{},"b":null,"file":"x"}',
+                      '{"op":"when","a":{"object":"p/x","detail":"b"},"b":null}',
+                      '{"op":"where","a":{"object":"a","detail":"b"},"b":null}'):
+            with self.subTest(value=value),self.assertRaises(language.goals.route.control.Gap):
+                facets.specification("Когда появляется результат?",lambda *_:(value,{"finish_reason":"stop"}))
 
 
 if __name__ == "__main__":

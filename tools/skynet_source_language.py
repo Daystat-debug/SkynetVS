@@ -154,7 +154,12 @@ def candidates(part, catalog, policy):
 
 def connect(controller, parts, catalog, policy):
     left, right = [candidates(p, catalog, policy) for p in parts]
-    for sources, targets in ((left, right), (right, left)):
+    return join(controller, left, right)
+
+
+def join(controller, left, right, *, directed=False):
+    orders = ((left,right),) if directed else ((left,right),(right,left))
+    for sources, targets in orders:
         for target in targets:
             if not any(e.fn != target.fn for e in sources):
                 continue

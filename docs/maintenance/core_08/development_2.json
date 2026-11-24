@@ -1,0 +1,26 @@
+{
+ "question": "При каких обстоятельствах платёжный терминал запрашивает повторное подтверждение суммы?",
+ "result": {
+  "rejected": "observation_ambiguous"
+ },
+ "calls": {
+  "dev": {
+   "digest": "b1e2e7ac2ea9462b79e95ba0a9b733541e8c7be56732902c0882f7559bddbafe",
+   "raw": "{\n  \"op\": \"when\",\n  \"a\": \"payment terminal | transaction amount | confirm repeat | verify again | double check | recheck | reconfirm | revalidate | reauthenticate | reauthorize | reprocess | reissue | recheck sum | recheck total | recheck value | recheck payment | recheck amount | recheck transaction | recheck payment amount | recheck payment total\",\n  \"b\": \"\"\n}",
+   "wall_ms": 766.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 435,
+   "completion_tokens": 90,
+   "prompt_ms": 93.278,
+   "predicted_ms": 670.547,
+   "predicted_per_second": 132.727
+  }
+ },
+ "sessions": [
+  {
+   "startup_s": 6.078,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  }
+ ]
+}

@@ -1,0 +1,39 @@
+{
+ "question": "При каких обстоятельствах платёжный терминал запрашивает повторное подтверждение суммы?",
+ "result": {
+  "op": "when",
+  "targets": [
+   [
+    [
+     "платёжный",
+     "терминал"
+    ],
+    [
+     "подтверждение",
+     "суммы",
+     "повторное"
+    ]
+   ]
+  ]
+ },
+ "calls": {
+  "dev": {
+   "digest": "2696c9b73f46e14c2999f6014b3d9a4e052ae54c56b55a3e6edadc743c23160c",
+   "raw": "{\"op\":\"when\",\"a\":{\"object\":\"платёжный терминал\",\"detail\":\"подтверждение суммы повторное\"},\"b\":null}",
+   "wall_ms": 375.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 297,
+   "completion_tokens": 33,
+   "prompt_ms": 97.694,
+   "predicted_ms": 273.969,
+   "predicted_per_second": 116.802
+  }
+ },
+ "sessions": [
+  {
+   "startup_s": 6.594,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  }
+ ]
+}

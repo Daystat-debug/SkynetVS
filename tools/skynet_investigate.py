@@ -411,10 +411,10 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     return public
 
 
-def supervised(question, *, timeout=TIME_LIMIT, why=False, research_mode=False, discovery=False, explore=False):
+def supervised(question, *, timeout=TIME_LIMIT, why=False, research_mode=False, discovery=False, explore=False, offline=False):
     if len(question) > 600:
         return dict(state="insufficient", reason="clarification", claims=[], steps=[])
-    worker = ("--explore-worker" if explore else "--research-worker" if research_mode else
+    worker = ("--offline-worker" if offline else "--explore-worker" if explore else "--research-worker" if research_mode else
               "--why-worker" if why else "--ask-worker" if discovery else "--worker")
     cmd = [sys.executable, "-I", "-S", "-B", str(Path(__file__).resolve()), worker]
     try:
@@ -431,11 +431,12 @@ def main():
     parser.add_argument("question")
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
-    modes.add_argument("--explore", action="store_true", help="Смысловой поиск по признакам и проверка прямой связи между двумя признаками.")
+    modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
+    modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
     modes.add_argument("--research", action="store_true", help="Один статический маршрут от функции до функции, поля, сообщения или инструкции. Формат: вход -> ориентир.")
     args = parser.parse_args()
-    out = supervised(args.question, why=args.why, research_mode=args.research, discovery=True, explore=args.explore)
+    out = supervised(args.question, why=args.why, research_mode=args.research, discovery=True, explore=args.explore, offline=args.indexed)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, indent=2))
     else:
@@ -473,11 +474,11 @@ def main():
 if __name__ == "__main__":
     if not sys.stdout.isatty():
         sys.stdout.reconfigure(encoding="utf8")
-    if sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"]):
+    if sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"]):
         data = sys.stdin.buffer.read(2401)
         result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
                              research_mode=sys.argv[1] == "--research-worker",
-                             discovery={"--ask-worker":"checked","--explore-worker":"explore"}.get(sys.argv[1]))
+                             discovery={"--ask-worker":"checked","--explore-worker":"facets","--offline-worker":"explore"}.get(sys.argv[1]))
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())
