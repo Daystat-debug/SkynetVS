@@ -1,6 +1,18 @@
 {
  "experience": {
-  "action": "shared_evidence"
+  "feature": "quote",
+  "no": {
+   "action": "lexical_parts"
+  },
+  "yes": {
+   "feature": "several_quotes",
+   "no": {
+    "action": "memory_only"
+   },
+   "yes": {
+    "action": "shared_evidence"
+   }
+  }
  },
  "experience_seed": {
   "action": "memory_only"
@@ -20,7 +32,7 @@
    "ambiguous": {},
    "unsupported": {}
   },
-  "threshold": 0.35
+  "threshold": 0
  },
  "receipt_seed": {
   "weights": {
@@ -103,7 +115,7 @@
    "ambiguous": {},
    "unsupported": {}
   },
-  "threshold": 0.35
+  "threshold": 0
  },
  "receipt_trained": {
   "weights": {
@@ -362,7 +374,7 @@
    "ambiguous": {},
    "unsupported": {}
   },
-  "threshold": 0.35
+  "threshold": 0
  },
  "selected": "experience"
 }

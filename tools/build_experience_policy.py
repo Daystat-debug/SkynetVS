@@ -16,7 +16,11 @@ from skynet_task_parts import split
 prev=scoring.previous
 DIR=scoring.DIR.parent/"core_12"
 TRAIN=scoring.PLAN
-CALIBRATION="d7df2c8fa445bc11404e6ccf861f455b18b63464:docs/maintenance/core_12/calibration.json"
+CALIBRATION="17d444011f52c19b1f3d4ad5b062383655bc9827:docs/maintenance/core_12/grouped_calibration.json"
+
+
+def signatures(panel):
+    return {tuple(sorted(kind for _,_,kind in demands)) for _,_,demands in panel["cases"]}
 
 
 def reward(case, row, targets):
@@ -84,6 +88,8 @@ def train_receipts(cases,rows):
 
 
 def build():
+    assert not signatures(json.loads(prev.ev.pilot.git("show",TRAIN))) & signatures(
+        json.loads(prev.ev.pilot.git("show",CALIBRATION)))
     training,train_rows=experience(TRAIN)
     calibration,cal_rows=experience(CALIBRATION)
     seed=[r for r in training if r["id"].startswith("R")]

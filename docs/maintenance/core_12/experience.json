@@ -1,6 +1,6 @@
 {
  "training": "b0aa0ba5a0fe72f1888ca0de0aba10781e0c6b98:docs/maintenance/core_11/control.json",
- "calibration": "d7df2c8fa445bc11404e6ccf861f455b18b63464:docs/maintenance/core_12/calibration.json",
+ "calibration": "17d444011f52c19b1f3d4ad5b062383655bc9827:docs/maintenance/core_12/grouped_calibration.json",
  "seed": [
   "R01",
   "R02",
@@ -13,19 +13,19 @@
  ],
  "calibration_trials": [
   [
-   31,
+   13,
    0
   ],
   [
-   26,
+   13,
    1
   ],
   [
-   20,
+   14,
    2
   ]
  ],
- "depth": 0,
+ "depth": 2,
  "train_feedback": [
   {
    "id": "R01",
@@ -486,49 +486,11 @@
  ],
  "calibration_feedback": [
   {
-   "id": "K1",
-   "features": {
-    "quote": false,
-    "several_quotes": false,
-    "compound": false,
-    "comma_split": true,
-    "lexical": false,
-    "uncertain": false,
-    "nonstatic": false,
-    "has_static": true,
-    "shared_subject": false
-   },
-   "reward": {
-    "memory_only": 0,
-    "lexical_parts": 0,
-    "shared_evidence": 5
-   }
-  },
-  {
-   "id": "K2",
+   "id": "K21",
    "features": {
     "quote": true,
     "several_quotes": false,
     "compound": false,
-    "comma_split": true,
-    "lexical": false,
-    "uncertain": true,
-    "nonstatic": false,
-    "has_static": false,
-    "shared_subject": false
-   },
-   "reward": {
-    "memory_only": 0,
-    "lexical_parts": 0,
-    "shared_evidence": 0
-   }
-  },
-  {
-   "id": "K3",
-   "features": {
-    "quote": true,
-    "several_quotes": true,
-    "compound": true,
     "comma_split": false,
     "lexical": false,
     "uncertain": false,
@@ -543,136 +505,136 @@
    }
   },
   {
-   "id": "K4",
+   "id": "K22",
    "features": {
     "quote": false,
-    "several_quotes": false,
-    "compound": false,
-    "comma_split": false,
-    "lexical": false,
-    "uncertain": false,
-    "nonstatic": true,
-    "has_static": false,
-    "shared_subject": false
-   },
-   "reward": {
-    "memory_only": 1,
-    "lexical_parts": 0,
-    "shared_evidence": 1
-   }
-  },
-  {
-   "id": "K5",
-   "features": {
-    "quote": false,
-    "several_quotes": false,
-    "compound": false,
-    "comma_split": false,
-    "lexical": false,
-    "uncertain": true,
-    "nonstatic": false,
-    "has_static": false,
-    "shared_subject": false
-   },
-   "reward": {
-    "memory_only": 0,
-    "lexical_parts": 0,
-    "shared_evidence": 0
-   }
-  },
-  {
-   "id": "K6",
-   "features": {
-    "quote": true,
     "several_quotes": false,
     "compound": true,
     "comma_split": false,
-    "lexical": false,
+    "lexical": true,
     "uncertain": false,
     "nonstatic": false,
     "has_static": true,
-    "shared_subject": true
+    "shared_subject": false
    },
    "reward": {
     "memory_only": 5,
-    "lexical_parts": 0,
-    "shared_evidence": 5
-   }
-  },
-  {
-   "id": "K7",
-   "features": {
-    "quote": true,
-    "several_quotes": false,
-    "compound": true,
-    "comma_split": true,
-    "lexical": true,
-    "uncertain": false,
-    "nonstatic": true,
-    "has_static": true,
-    "shared_subject": true
-   },
-   "reward": {
-    "memory_only": 4,
-    "lexical_parts": 2,
-    "shared_evidence": 4
-   }
-  },
-  {
-   "id": "K8",
-   "features": {
-    "quote": false,
-    "several_quotes": false,
-    "compound": false,
-    "comma_split": true,
-    "lexical": true,
-    "uncertain": false,
-    "nonstatic": false,
-    "has_static": true,
-    "shared_subject": false
-   },
-   "reward": {
-    "memory_only": 0,
     "lexical_parts": 5,
     "shared_evidence": 5
    }
   },
   {
-   "id": "K9",
+   "id": "K23",
    "features": {
-    "quote": false,
+    "quote": true,
     "several_quotes": false,
     "compound": true,
-    "comma_split": false,
-    "lexical": false,
+    "comma_split": true,
+    "lexical": true,
     "uncertain": false,
     "nonstatic": false,
     "has_static": true,
-    "shared_subject": false
+    "shared_subject": true
    },
    "reward": {
-    "memory_only": 5,
+    "memory_only": 0,
+    "lexical_parts": 0,
+    "shared_evidence": -6
+   }
+  },
+  {
+   "id": "K24",
+   "features": {
+    "quote": true,
+    "several_quotes": false,
+    "compound": true,
+    "comma_split": false,
+    "lexical": true,
+    "uncertain": true,
+    "nonstatic": false,
+    "has_static": true,
+    "shared_subject": true
+   },
+   "reward": {
+    "memory_only": 0,
     "lexical_parts": 0,
     "shared_evidence": 5
    }
   },
   {
-   "id": "K10",
+   "id": "K25",
    "features": {
     "quote": false,
     "several_quotes": false,
-    "compound": false,
+    "compound": true,
     "comma_split": true,
-    "lexical": false,
+    "lexical": true,
     "uncertain": true,
     "nonstatic": false,
-    "has_static": false,
+    "has_static": true,
     "shared_subject": false
    },
    "reward": {
-    "memory_only": 1,
-    "lexical_parts": 1,
-    "shared_evidence": 1
+    "memory_only": 2,
+    "lexical_parts": 2,
+    "shared_evidence": 2
+   }
+  },
+  {
+   "id": "K26",
+   "features": {
+    "quote": false,
+    "several_quotes": false,
+    "compound": true,
+    "comma_split": false,
+    "lexical": true,
+    "uncertain": true,
+    "nonstatic": false,
+    "has_static": true,
+    "shared_subject": false
+   },
+   "reward": {
+    "memory_only": 0,
+    "lexical_parts": 0,
+    "shared_evidence": 0
+   }
+  },
+  {
+   "id": "K27",
+   "features": {
+    "quote": true,
+    "several_quotes": false,
+    "compound": true,
+    "comma_split": true,
+    "lexical": true,
+    "uncertain": true,
+    "nonstatic": false,
+    "has_static": true,
+    "shared_subject": true
+   },
+   "reward": {
+    "memory_only": 2,
+    "lexical_parts": 2,
+    "shared_evidence": 2
+   }
+  },
+  {
+   "id": "K28",
+   "features": {
+    "quote": true,
+    "several_quotes": false,
+    "compound": true,
+    "comma_split": false,
+    "lexical": true,
+    "uncertain": false,
+    "nonstatic": true,
+    "has_static": false,
+    "shared_subject": true
+   },
+   "reward": {
+    "memory_only": 0,
+    "lexical_parts": 2,
+    "shared_evidence": 0
    }
   }
  ],
@@ -7484,1187 +7446,13 @@
  ],
  "calibration_answers": [
   {
-   "id": "K1",
-   "question": "Интересует ветвление: из-за чего полотно снимают с ткацкого станка?",
+   "id": "K21",
+   "question": "Для «Полотно снято с ткацкого станка» выпиши подстановку в параметры функции при обращении из другого места.",
    "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
    "memory_only": {
     "scores": [
      {
-      "cue": "из-за чего",
-      "kind": "condition",
-      "understood": true,
-      "acknowledged": true,
-      "proved": false
-     }
-    ],
-    "expected": "answered",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 2
-      },
-      {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "started"
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 22,
-       "text": "Интересует ветвление: ",
-       "need": [],
-       "issues": [
-        "unverified_meaning"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      },
-      {
-       "start": 22,
-       "end": 67,
-       "text": "из-за чего полотно снимают с ткацкого станка?",
-       "need": [
-        "site",
-        "condition"
-       ],
-       "issues": [
-        "observation_ambiguous"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "unverified_meaning"
-    }
-   },
-   "lexical_parts": {
-    "scores": [
-     {
-      "cue": "из-за чего",
-      "kind": "condition",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     }
-    ],
-    "expected": "answered",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 67,
-       "text": "Интересует ветвление: из-за чего полотно снимают с ткацкого станка?",
-       "need": [],
-       "issues": [
-        "uninterpreted"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "uninterpreted"
-    }
-   },
-   "shared_evidence": {
-    "scores": [
-     {
-      "cue": "из-за чего",
-      "kind": "condition",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     }
-    ],
-    "expected": "answered",
-    "status_correct": true,
-    "useful_full": true,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "answered",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      },
-      {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "located",
-       "owner": "inspect_cloth",
-       "line": 159
-      },
-      {
-       "tool": "prove_conditions",
-       "target": "inspect_cloth@159",
-       "status": "proved"
-      }
-     ],
-     "claims": [
-      {
-       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         159,
-         159
-        ]
-       ],
-       "kind": "site"
-      },
-      {
-       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         158,
-         158
-        ],
-        [
-         "R",
-         159,
-         159
-        ]
-       ],
-       "kind": "condition",
-       "control": {
-        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
-        "function": "inspect_cloth",
-        "line": 159,
-        "condition": [
-         "test",
-         158,
-         "torn"
-        ],
-        "work": 2
-       }
-      }
-     ],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 67,
-       "text": "Интересует ветвление: из-за чего полотно снимают с ткацкого станка?",
-       "need": [
-        "site",
-        "condition"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        1
-       ],
-       "status": "established"
-      }
-     ],
-     "coverage": "static_subset",
-     "execution_observed": false
-    }
-   }
-  },
-  {
-   "id": "K2",
-   "question": "Дай координаты фразы «Рулон передан упаковщику», после них нужен адрес фабрики.",
-   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-   "lexical_parts": {
-    "scores": [
-     {
-      "cue": "координаты",
-      "kind": "site",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     },
-     {
-      "cue": "адрес фабрики",
-      "kind": "external",
-      "understood": false,
-      "acknowledged": true,
-      "proved": null
-     }
-    ],
-    "expected": "partial",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 79,
-       "text": "Дай координаты фразы «Рулон передан упаковщику», после них нужен адрес фабрики.",
-       "need": [],
-       "issues": [
-        "uninterpreted"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "uninterpreted"
-    }
-   },
-   "shared_evidence": {
-    "scores": [
-     {
-      "cue": "координаты",
-      "kind": "site",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     },
-     {
-      "cue": "адрес фабрики",
-      "kind": "external",
-      "understood": false,
-      "acknowledged": true,
-      "proved": null
-     }
-    ],
-    "expected": "partial",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 79,
-       "text": "Дай координаты фразы «Рулон передан упаковщику», после них нужен адрес фабрики.",
-       "need": [],
-       "issues": [
-        "unverified_meaning"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "unverified_meaning"
-    }
-   },
-   "memory_only": {
-    "scores": [
-     {
-      "cue": "координаты",
-      "kind": "site",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     },
-     {
-      "cue": "адрес фабрики",
-      "kind": "external",
-      "understood": false,
-      "acknowledged": true,
-      "proved": null
-     }
-    ],
-    "expected": "partial",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 2
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 49,
-       "text": "Дай координаты фразы «Рулон передан упаковщику», ",
-       "need": [],
-       "issues": [
-        "unverified_meaning"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      },
-      {
-       "start": 49,
-       "end": 79,
-       "text": "после них нужен адрес фабрики.",
-       "need": [],
-       "issues": [
-        "ambiguous"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "unverified_meaning"
-    }
-   }
-  },
-  {
-   "id": "K3",
-   "question": "При каком исходе проверки появится «Полотно снято с ткацкого станка» и при каком исходе проверки — «Рулон передан упаковщику»?",
-   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-   "shared_evidence": {
-    "scores": [
-     {
-      "cue": "При каком исходе",
-      "kind": "condition",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     },
-     {
-      "cue": "и при каком",
-      "kind": "condition",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     }
-    ],
-    "expected": "answered",
-    "status_correct": true,
-    "useful_full": true,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "answered",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 2
-      },
-      {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "located",
-       "owner": "inspect_cloth",
-       "line": 159
-      },
-      {
-       "tool": "prove_conditions",
-       "target": "inspect_cloth@159",
-       "status": "proved"
-      },
-      {
-       "tool": "locate_observation",
-       "target": "2",
-       "status": "located",
-       "owner": "inspect_cloth",
-       "line": 160
-      },
-      {
-       "tool": "prove_conditions",
-       "target": "inspect_cloth@160",
-       "status": "proved"
-      }
-     ],
-     "claims": [
-      {
-       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         159,
-         159
-        ]
-       ],
-       "kind": "site"
-      },
-      {
-       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         158,
-         158
-        ],
-        [
-         "R",
-         159,
-         159
-        ]
-       ],
-       "kind": "condition",
-       "control": {
-        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
-        "function": "inspect_cloth",
-        "line": 159,
-        "condition": [
-         "test",
-         158,
-         "torn"
-        ],
-        "work": 2
-       }
-      },
-      {
-       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         160,
-         160
-        ]
-       ],
-       "kind": "site"
-      },
-      {
-       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         158,
-         158
-        ],
-        [
-         "R",
-         159,
-         159
-        ],
-        [
-         "R",
-         160,
-         160
-        ]
-       ],
-       "kind": "condition",
-       "control": {
-        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
-        "function": "inspect_cloth",
-        "line": 160,
-        "condition": [
-         "not",
-         [
-          "test",
-          158,
-          "torn"
-         ]
-        ],
-        "work": 4
-       }
-      }
-     ],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 69,
-       "text": "При каком исходе проверки появится «Полотно снято с ткацкого станка» ",
-       "need": [
-        "site",
-        "condition"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        1
-       ],
-       "status": "established"
-      },
-      {
-       "start": 69,
-       "end": 126,
-       "text": "и при каком исходе проверки — «Рулон передан упаковщику»?",
-       "need": [
-        "site",
-        "condition"
-       ],
-       "issues": [],
-       "target": 1,
-       "claims": [
-        2,
-        3
-       ],
-       "status": "established"
-      }
-     ],
-     "coverage": "static_subset",
-     "execution_observed": false
-    }
-   },
-   "memory_only": {
-    "scores": [
-     {
-      "cue": "При каком исходе",
-      "kind": "condition",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     },
-     {
-      "cue": "и при каком",
-      "kind": "condition",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     }
-    ],
-    "expected": "answered",
-    "status_correct": true,
-    "useful_full": true,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "answered",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 2
-      },
-      {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "located",
-       "owner": "inspect_cloth",
-       "line": 159
-      },
-      {
-       "tool": "prove_conditions",
-       "target": "inspect_cloth@159",
-       "status": "proved"
-      },
-      {
-       "tool": "locate_observation",
-       "target": "2",
-       "status": "located",
-       "owner": "inspect_cloth",
-       "line": 160
-      },
-      {
-       "tool": "prove_conditions",
-       "target": "inspect_cloth@160",
-       "status": "proved"
-      }
-     ],
-     "claims": [
-      {
-       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         159,
-         159
-        ]
-       ],
-       "kind": "site"
-      },
-      {
-       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         158,
-         158
-        ],
-        [
-         "R",
-         159,
-         159
-        ]
-       ],
-       "kind": "condition",
-       "control": {
-        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
-        "function": "inspect_cloth",
-        "line": 159,
-        "condition": [
-         "test",
-         158,
-         "torn"
-        ],
-        "work": 2
-       }
-      },
-      {
-       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         160,
-         160
-        ]
-       ],
-       "kind": "site"
-      },
-      {
-       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         158,
-         158
-        ],
-        [
-         "R",
-         159,
-         159
-        ],
-        [
-         "R",
-         160,
-         160
-        ]
-       ],
-       "kind": "condition",
-       "control": {
-        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
-        "function": "inspect_cloth",
-        "line": 160,
-        "condition": [
-         "not",
-         [
-          "test",
-          158,
-          "torn"
-         ]
-        ],
-        "work": 4
-       }
-      }
-     ],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 69,
-       "text": "При каком исходе проверки появится «Полотно снято с ткацкого станка» ",
-       "need": [
-        "site",
-        "condition"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        1
-       ],
-       "status": "established"
-      },
-      {
-       "start": 69,
-       "end": 126,
-       "text": "и при каком исходе проверки — «Рулон передан упаковщику»?",
-       "need": [
-        "site",
-        "condition"
-       ],
-       "issues": [],
-       "target": 1,
-       "claims": [
-        2,
-        3
-       ],
-       "status": "established"
-      }
-     ],
-     "coverage": "static_subset",
-     "execution_observed": false
-    }
-   },
-   "lexical_parts": {
-    "scores": [
-     {
-      "cue": "При каком исходе",
-      "kind": "condition",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     },
-     {
-      "cue": "и при каком",
-      "kind": "condition",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     }
-    ],
-    "expected": "answered",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 2
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 69,
-       "text": "При каком исходе проверки появится «Полотно снято с ткацкого станка» ",
-       "need": [],
-       "issues": [
-        "uninterpreted"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      },
-      {
-       "start": 69,
-       "end": 126,
-       "text": "и при каком исходе проверки — «Рулон передан упаковщику»?",
-       "need": [],
-       "issues": [
-        "uninterpreted"
-       ],
-       "target": 1,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "uninterpreted"
-    }
-   }
-  },
-  {
-   "id": "K4",
-   "question": "Можно ли узнать серийный номер станка по паспорту оборудования?",
-   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-   "memory_only": {
-    "scores": [
-     {
-      "cue": "серийный номер",
-      "kind": "external",
-      "understood": true,
-      "acknowledged": true,
-      "proved": null
-     }
-    ],
-    "expected": "insufficient",
-    "status_correct": true,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 63,
-       "text": "Можно ли узнать серийный номер станка по паспорту оборудования?",
-       "need": [],
-       "issues": [
-        "external"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "external"
-    }
-   },
-   "lexical_parts": {
-    "scores": [
-     {
-      "cue": "серийный номер",
-      "kind": "external",
-      "understood": false,
-      "acknowledged": true,
-      "proved": null
-     }
-    ],
-    "expected": "insufficient",
-    "status_correct": true,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 63,
-       "text": "Можно ли узнать серийный номер станка по паспорту оборудования?",
-       "need": [],
-       "issues": [
-        "uninterpreted"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "uninterpreted"
-    }
-   },
-   "shared_evidence": {
-    "scores": [
-     {
-      "cue": "серийный номер",
-      "kind": "external",
-      "understood": true,
-      "acknowledged": true,
-      "proved": null
-     }
-    ],
-    "expected": "insufficient",
-    "status_correct": true,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 63,
-       "text": "Можно ли узнать серийный номер станка по паспорту оборудования?",
-       "need": [],
-       "issues": [
-        "external"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "external"
-    }
-   }
-  },
-  {
-   "id": "K5",
-   "question": "Нужна навигация до текста о передаче рулона упаковщику.",
-   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-   "lexical_parts": {
-    "scores": [
-     {
-      "cue": "навигация",
-      "kind": "site",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     }
-    ],
-    "expected": "answered",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 55,
-       "text": "Нужна навигация до текста о передаче рулона упаковщику.",
-       "need": [],
-       "issues": [
-        "uninterpreted"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "uninterpreted"
-    }
-   },
-   "shared_evidence": {
-    "scores": [
-     {
-      "cue": "навигация",
-      "kind": "site",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     }
-    ],
-    "expected": "answered",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 55,
-       "text": "Нужна навигация до текста о передаче рулона упаковщику.",
-       "need": [],
-       "issues": [
-        "unverified_meaning"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "unverified_meaning"
-    }
-   },
-   "memory_only": {
-    "scores": [
-     {
-      "cue": "навигация",
-      "kind": "site",
-      "understood": false,
-      "acknowledged": true,
-      "proved": false
-     }
-    ],
-    "expected": "answered",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 55,
-       "text": "Нужна навигация до текста о передаче рулона упаковщику.",
-       "need": [],
-       "issues": [
-        "unverified_meaning"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "unverified_meaning"
-    }
-   }
-  },
-  {
-   "id": "K6",
-   "question": "Покажи место прямого обращения к обработчику «Полотно снято с ткацкого станка» и подставленное в этом месте значение.",
-   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-   "shared_evidence": {
-    "scores": [
-     {
-      "cue": "прямого обращения",
-      "kind": "caller",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     },
-     {
-      "cue": "подставленное",
+      "cue": "подстановку",
       "kind": "arguments",
       "understood": true,
       "acknowledged": true,
@@ -8685,7 +7473,7 @@
        "tool": "interpret_parts",
        "target": "question",
        "status": "interpreted",
-       "count": 2
+       "count": 1
       },
       {
        "tool": "locate_observation",
@@ -8773,24 +7561,8 @@
      "parts": [
       {
        "start": 0,
-       "end": 79,
-       "text": "Покажи место прямого обращения к обработчику «Полотно снято с ткацкого станка» ",
-       "need": [
-        "site",
-        "caller"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        1
-       ],
-       "status": "established"
-      },
-      {
-       "start": 79,
-       "end": 117,
-       "text": "и подставленное в этом месте значение.",
+       "end": 108,
+       "text": "Для «Полотно снято с ткацкого станка» выпиши подстановку в параметры функции при обращении из другого места.",
        "need": [
         "site",
         "caller",
@@ -8810,17 +7582,56 @@
      "execution_observed": false
     }
    },
-   "memory_only": {
+   "lexical_parts": {
     "scores": [
      {
-      "cue": "прямого обращения",
-      "kind": "caller",
-      "understood": true,
+      "cue": "подстановку",
+      "kind": "arguments",
+      "understood": false,
       "acknowledged": true,
-      "proved": true
-     },
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "status_correct": false,
+    "useful_full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      }
+     ],
+     "claims": [],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 108,
+       "text": "Для «Полотно снято с ткацкого станка» выпиши подстановку в параметры функции при обращении из другого места.",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "uninterpreted"
+    }
+   },
+   "shared_evidence": {
+    "scores": [
      {
-      "cue": "подставленное",
+      "cue": "подстановку",
       "kind": "arguments",
       "understood": true,
       "acknowledged": true,
@@ -8841,7 +7652,7 @@
        "tool": "interpret_parts",
        "target": "question",
        "status": "interpreted",
-       "count": 2
+       "count": 1
       },
       {
        "tool": "locate_observation",
@@ -8929,24 +7740,8 @@
      "parts": [
       {
        "start": 0,
-       "end": 79,
-       "text": "Покажи место прямого обращения к обработчику «Полотно снято с ткацкого станка» ",
-       "need": [
-        "site",
-        "caller"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        1
-       ],
-       "status": "established"
-      },
-      {
-       "start": 79,
-       "end": 117,
-       "text": "и подставленное в этом месте значение.",
+       "end": 108,
+       "text": "Для «Полотно снято с ткацкого станка» выпиши подстановку в параметры функции при обращении из другого места.",
        "need": [
         "site",
         "caller",
@@ -8965,18 +7760,676 @@
      "coverage": "static_subset",
      "execution_observed": false
     }
-   },
+   }
+  },
+  {
+   "id": "K22",
+   "question": "Где записана передача рулона упаковщику и кто непосредственно вызывает функцию с таким исходом?",
+   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
    "lexical_parts": {
     "scores": [
      {
-      "cue": "прямого обращения",
+      "cue": "Где записана",
+      "kind": "site",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "кто непосредственно",
       "kind": "caller",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "status_correct": true,
+    "useful_full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@160",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_cloth",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "inspect_cloth",
+       "status": "bound"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "finish_weave@163",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "torn"
+         ]
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "finish_weave",
+        "inspect_cloth"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: torn ← `False`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В finish_weave исследована инструкция `return inspect_cloth(False)` (стр. 163). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "caller_condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "finish_weave",
+        "line": 163,
+        "condition": true,
+        "work": 1
+       }
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "Где записана передача рулона упаковщику ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 40,
+       "end": 95,
+       "text": "и кто непосредственно вызывает функцию с таким исходом?",
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments",
+        "caller_condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "shared_evidence": {
+    "scores": [
+     {
+      "cue": "Где записана",
+      "kind": "site",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "кто непосредственно",
+      "kind": "caller",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "status_correct": true,
+    "useful_full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 160
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_cloth",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "finish_weave",
+        "inspect_cloth"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "Где записана передача рулона упаковщику ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 40,
+       "end": 95,
+       "text": "и кто непосредственно вызывает функцию с таким исходом?",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "memory_only": {
+    "scores": [
+     {
+      "cue": "Где записана",
+      "kind": "site",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "кто непосредственно",
+      "kind": "caller",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "status_correct": true,
+    "useful_full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 160
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_cloth",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "finish_weave",
+        "inspect_cloth"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "Где записана передача рулона упаковщику ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 40,
+       "end": 95,
+       "text": "и кто непосредственно вызывает функцию с таким исходом?",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K23",
+   "question": "Покажи условие для «Полотно снято с ткацкого станка» и выражение, с которым вызывают обработчик.",
+   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+   "shared_evidence": {
+    "scores": [
+     {
+      "cue": "условие",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "выражение",
+      "kind": "arguments",
       "understood": false,
       "acknowledged": true,
       "proved": false
+     }
+    ],
+    "expected": "answered",
+    "status_correct": true,
+    "useful_full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@159",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_cloth",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "torn"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "finish_weave",
+        "inspect_cloth"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 53,
+       "text": "Покажи условие для «Полотно снято с ткацкого станка» ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 53,
+       "end": 96,
+       "text": "и выражение, с которым вызывают обработчик.",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        2
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "memory_only": {
+    "scores": [
+     {
+      "cue": "условие",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
      },
      {
-      "cue": "подставленное",
+      "cue": "выражение",
       "kind": "arguments",
       "understood": false,
       "acknowledged": true,
@@ -8990,7 +8443,184 @@
     "false_complete": false,
     "calls": [],
     "answer": {
-     "state": "insufficient",
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@159",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_cloth",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "torn"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "finish_weave",
+        "inspect_cloth"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 53,
+       "text": "Покажи условие для «Полотно снято с ткацкого станка» ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 53,
+       "end": 66,
+       "text": "и выражение, ",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 66,
+       "end": 96,
+       "text": "с которым вызывают обработчик.",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        2
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "lexical_parts": {
+    "scores": [
+     {
+      "cue": "условие",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "выражение",
+      "kind": "arguments",
+      "understood": false,
+      "acknowledged": true,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "status_correct": false,
+    "useful_full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
      "plan": "task_parts",
      "steps": [
       {
@@ -8998,15 +8628,344 @@
        "target": "question",
        "status": "interpreted",
        "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@159",
+       "status": "proved"
       }
      ],
-     "claims": [],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "torn"
+        ],
+        "work": 2
+       }
+      }
+     ],
      "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
      "parts": [
       {
        "start": 0,
-       "end": 79,
-       "text": "Покажи место прямого обращения к обработчику «Полотно снято с ткацкого станка» ",
+       "end": 53,
+       "text": "Покажи условие для «Полотно снято с ткацкого станка» ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 53,
+       "end": 96,
+       "text": "и выражение, с которым вызывают обработчик.",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K24",
+   "question": "Кто обращается к обработчику «Рулон передан упаковщику» и почему эта ветка вообще достижима внутри него?",
+   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+   "memory_only": {
+    "scores": [
+     {
+      "cue": "Кто обращается",
+      "kind": "caller",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "почему эта ветка",
+      "kind": "condition",
+      "understood": false,
+      "acknowledged": true,
+      "proved": false
+     }
+    ],
+    "expected": "answered",
+    "status_correct": false,
+    "useful_full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 160
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_cloth",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "finish_weave",
+        "inspect_cloth"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 56,
+       "text": "Кто обращается к обработчику «Рулон передан упаковщику» ",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 56,
+       "end": 104,
+       "text": "и почему эта ветка вообще достижима внутри него?",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "lexical_parts": {
+    "scores": [
+     {
+      "cue": "Кто обращается",
+      "kind": "caller",
+      "understood": false,
+      "acknowledged": true,
+      "proved": false
+     },
+     {
+      "cue": "почему эта ветка",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "status_correct": false,
+    "useful_full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@160",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "torn"
+         ]
+        ],
+        "work": 4
+       }
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 56,
+       "text": "Кто обращается к обработчику «Рулон передан упаковщику» ",
        "need": [],
        "issues": [
         "uninterpreted"
@@ -9016,9 +8975,329 @@
        "status": "unknown"
       },
       {
-       "start": 79,
-       "end": 117,
-       "text": "и подставленное в этом месте значение.",
+       "start": 56,
+       "end": 104,
+       "text": "и почему эта ветка вообще достижима внутри него?",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "shared_evidence": {
+    "scores": [
+     {
+      "cue": "Кто обращается",
+      "kind": "caller",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "почему эта ветка",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     }
+    ],
+    "expected": "answered",
+    "status_correct": true,
+    "useful_full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@160",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "inspect_cloth",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "torn"
+         ]
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "finish_weave",
+        "inspect_cloth"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 56,
+       "text": "Кто обращается к обработчику «Рулон передан упаковщику» ",
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        2
+       ],
+       "status": "established"
+      },
+      {
+       "start": 56,
+       "end": 104,
+       "text": "и почему эта ветка вообще достижима внутри него?",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K25",
+   "question": "Укажи строку о снятии полотна с ткацкого станка, условие этой ветки и адрес ателье.",
+   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+   "lexical_parts": {
+    "scores": [
+     {
+      "cue": "Укажи строку",
+      "kind": "site",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "условие этой",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "адрес ателье",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     }
+    ],
+    "expected": "partial",
+    "status_correct": true,
+    "useful_full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "torn"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 68,
+       "text": "Укажи строку о снятии полотна с ткацкого станка, условие этой ветки ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 68,
+       "end": 83,
+       "text": "и адрес ателье.",
        "need": [],
        "issues": [
         "uninterpreted"
@@ -9028,27 +9307,168 @@
        "status": "unknown"
       }
      ],
-     "reason": "uninterpreted"
+     "coverage": "static_subset",
+     "execution_observed": false
     }
-   }
-  },
-  {
-   "id": "K7",
-   "question": "Запиши, где встречается «Рулон передан упаковщику»; проверь длительность последней упаковки по секундомеру.",
-   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-   "memory_only": {
+   },
+   "shared_evidence": {
     "scores": [
      {
-      "cue": "где встречается",
+      "cue": "Укажи строку",
       "kind": "site",
       "understood": true,
       "acknowledged": true,
       "proved": true
      },
      {
-      "cue": "длительность",
-      "kind": "runtime",
+      "cue": "условие этой",
+      "kind": "condition",
       "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "адрес ателье",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     }
+    ],
+    "expected": "partial",
+    "status_correct": true,
+    "useful_full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "torn"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 68,
+       "text": "Укажи строку о снятии полотна с ткацкого станка, условие этой ветки ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 68,
+       "end": 83,
+       "text": "и адрес ателье.",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "memory_only": {
+    "scores": [
+     {
+      "cue": "Укажи строку",
+      "kind": "site",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "условие этой",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "адрес ателье",
+      "kind": "external",
+      "understood": false,
       "acknowledged": true,
       "proved": null
      }
@@ -9072,14 +9492,395 @@
       {
        "tool": "locate_observation",
        "target": "1",
-       "status": "started"
+       "status": "located",
+       "owner": "inspect_cloth",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Полотно снято с ткацкого станка'` (стр. 159). Для достижения строки требуется: `torn` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "torn"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 49,
+       "text": "Укажи строку о снятии полотна с ткацкого станка, ",
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 49,
+       "end": 68,
+       "text": "условие этой ветки ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 68,
+       "end": 83,
+       "text": "и адрес ателье.",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K26",
+   "question": "Нужны сертификат поставщика пряжи и условия страхового договора.",
+   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+   "shared_evidence": {
+    "scores": [
+     {
+      "cue": "сертификат",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     },
+     {
+      "cue": "условия страхового",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     }
+    ],
+    "expected": "insufficient",
+    "status_correct": true,
+    "useful_full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
       },
       {
        "tool": "locate_observation",
-       "target": "2",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Нужны сертификат поставщика пряжи ",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 34,
+       "end": 64,
+       "text": "и условия страхового договора.",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "memory_only": {
+    "scores": [
+     {
+      "cue": "сертификат",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     },
+     {
+      "cue": "условия страхового",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     }
+    ],
+    "expected": "insufficient",
+    "status_correct": true,
+    "useful_full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Нужны сертификат поставщика пряжи ",
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 34,
+       "end": 64,
+       "text": "и условия страхового договора.",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "lexical_parts": {
+    "scores": [
+     {
+      "cue": "сертификат",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     },
+     {
+      "cue": "условия страхового",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     }
+    ],
+    "expected": "insufficient",
+    "status_correct": true,
+    "useful_full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Нужны сертификат поставщика пряжи ",
+       "need": [],
+       "issues": [
+        "uninterpreted"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 34,
+       "end": 64,
+       "text": "и условия страхового договора.",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "uninterpreted"
+    }
+   }
+  },
+  {
+   "id": "K27",
+   "question": "О фразе «Рулон передан упаковщику» нужны место в коде, условие показа и время реальной передачи последнего рулона.",
+   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+   "memory_only": {
+    "scores": [
+     {
+      "cue": "место в коде",
+      "kind": "site",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "условие показа",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "время реальной",
+      "kind": "runtime",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
+     }
+    ],
+    "expected": "partial",
+    "status_correct": true,
+    "useful_full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
        "status": "located",
        "owner": "inspect_cloth",
        "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@160",
+       "status": "proved"
       }
      ],
      "claims": [
@@ -9098,47 +9899,89 @@
         ]
        ],
        "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "torn"
+         ]
+        ],
+        "work": 4
+       }
       }
      ],
      "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
      "parts": [
       {
        "start": 0,
-       "end": 8,
-       "text": "Запиши, ",
-       "need": [
-        "site"
-       ],
-       "issues": [
-        "observation_ambiguous"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      },
-      {
-       "start": 8,
-       "end": 52,
-       "text": "где встречается «Рулон передан упаковщику»; ",
+       "end": 55,
+       "text": "О фразе «Рулон передан упаковщику» нужны место в коде, ",
        "need": [
         "site"
        ],
        "issues": [],
-       "target": 1,
+       "target": 0,
        "claims": [
         0
        ],
        "status": "established"
       },
       {
-       "start": 52,
-       "end": 107,
-       "text": "проверь длительность последней упаковки по секундомеру.",
+       "start": 55,
+       "end": 70,
+       "text": "условие показа ",
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 70,
+       "end": 114,
+       "text": "и время реальной передачи последнего рулона.",
        "need": [],
        "issues": [
-        "runtime"
+        "unverified_meaning"
        ],
-       "target": 1,
+       "target": 0,
        "claims": [],
        "status": "unknown"
       }
@@ -9150,14 +9993,21 @@
    "lexical_parts": {
     "scores": [
      {
-      "cue": "где встречается",
+      "cue": "место в коде",
       "kind": "site",
       "understood": true,
       "acknowledged": true,
       "proved": true
      },
      {
-      "cue": "длительность",
+      "cue": "условие показа",
+      "kind": "condition",
+      "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "время реальной",
       "kind": "runtime",
       "understood": false,
       "acknowledged": true,
@@ -9186,6 +10036,11 @@
        "status": "located",
        "owner": "inspect_cloth",
        "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@160",
+       "status": "proved"
       }
      ],
      "claims": [
@@ -9204,28 +10059,70 @@
         ]
        ],
        "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "torn"
+         ]
+        ],
+        "work": 4
+       }
       }
      ],
      "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
      "parts": [
       {
        "start": 0,
-       "end": 52,
-       "text": "Запиши, где встречается «Рулон передан упаковщику»; ",
+       "end": 70,
+       "text": "О фразе «Рулон передан упаковщику» нужны место в коде, условие показа ",
        "need": [
-        "site"
+        "site",
+        "condition"
        ],
        "issues": [],
        "target": 0,
        "claims": [
-        0
+        0,
+        1
        ],
        "status": "established"
       },
       {
-       "start": 52,
-       "end": 107,
-       "text": "проверь длительность последней упаковки по секундомеру.",
+       "start": 70,
+       "end": 114,
+       "text": "и время реальной передачи последнего рулона.",
        "need": [],
        "issues": [
         "uninterpreted"
@@ -9242,16 +10139,23 @@
    "shared_evidence": {
     "scores": [
      {
-      "cue": "где встречается",
+      "cue": "место в коде",
       "kind": "site",
       "understood": true,
       "acknowledged": true,
       "proved": true
      },
      {
-      "cue": "длительность",
-      "kind": "runtime",
+      "cue": "условие показа",
+      "kind": "condition",
       "understood": true,
+      "acknowledged": true,
+      "proved": true
+     },
+     {
+      "cue": "время реальной",
+      "kind": "runtime",
+      "understood": false,
       "acknowledged": true,
       "proved": null
      }
@@ -9278,6 +10182,11 @@
        "status": "located",
        "owner": "inspect_cloth",
        "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "inspect_cloth@160",
+       "status": "proved"
       }
      ],
      "claims": [
@@ -9296,31 +10205,73 @@
         ]
        ],
        "kind": "site"
+      },
+      {
+       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "inspect_cloth",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "torn"
+         ]
+        ],
+        "work": 4
+       }
       }
      ],
      "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
      "parts": [
       {
        "start": 0,
-       "end": 52,
-       "text": "Запиши, где встречается «Рулон передан упаковщику»; ",
+       "end": 70,
+       "text": "О фразе «Рулон передан упаковщику» нужны место в коде, условие показа ",
        "need": [
-        "site"
+        "site",
+        "condition"
        ],
        "issues": [],
        "target": 0,
        "claims": [
-        0
+        0,
+        1
        ],
        "status": "established"
       },
       {
-       "start": 52,
-       "end": 107,
-       "text": "проверь длительность последней упаковки по секундомеру.",
+       "start": 70,
+       "end": 114,
+       "text": "и время реальной передачи последнего рулона.",
        "need": [],
        "issues": [
-        "runtime"
+        "unverified_meaning"
        ],
        "target": 0,
        "claims": [],
@@ -9333,34 +10284,41 @@
    }
   },
   {
-   "id": "K8",
-   "question": "Кто вызывает проверку, снимающую полотно с ткацкого станка?",
+   "id": "K28",
+   "question": "Назови вызывающий код для «Полотно снято с ткацкого станка» и юридический адрес владельца станка.",
    "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
    "lexical_parts": {
     "scores": [
      {
-      "cue": "Кто вызывает",
+      "cue": "вызывающий код",
       "kind": "caller",
       "understood": true,
       "acknowledged": true,
       "proved": true
+     },
+     {
+      "cue": "юридический адрес",
+      "kind": "external",
+      "understood": false,
+      "acknowledged": true,
+      "proved": null
      }
     ],
-    "expected": "answered",
+    "expected": "partial",
     "status_correct": true,
-    "useful_full": true,
-    "useful_partial": false,
+    "useful_full": false,
+    "useful_partial": true,
     "false_complete": false,
     "calls": [],
     "answer": {
-     "state": "answered",
+     "state": "partial",
      "plan": "task_parts",
      "steps": [
       {
        "tool": "interpret_parts",
        "target": "question",
        "status": "interpreted",
-       "count": 1
+       "count": 2
       },
       {
        "tool": "locate_observation",
@@ -9513,8 +10471,8 @@
      "parts": [
       {
        "start": 0,
-       "end": 59,
-       "text": "Кто вызывает проверку, снимающую полотно с ткацкого станка?",
+       "end": 60,
+       "text": "Назови вызывающий код для «Полотно снято с ткацкого станка» ",
        "need": [
         "site",
         "condition",
@@ -9532,552 +10490,42 @@
         4
        ],
        "status": "established"
-      }
-     ],
-     "coverage": "static_subset",
-     "execution_observed": false
-    }
-   },
-   "shared_evidence": {
-    "scores": [
-     {
-      "cue": "Кто вызывает",
-      "kind": "caller",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     }
-    ],
-    "expected": "answered",
-    "status_correct": true,
-    "useful_full": true,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "answered",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
       },
       {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "located",
-       "owner": "inspect_cloth",
-       "line": 159
-      },
-      {
-       "tool": "calls",
-       "target": "inspect_cloth",
-       "status": "call_sites"
-      }
-     ],
-     "claims": [
-      {
-       "text": "В inspect_cloth на строке 159 записано выражение `'Полотно снято с ткацкого станка'`.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         159,
-         159
-        ]
-       ],
-       "kind": "site"
-      },
-      {
-       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         162,
-         162
-        ],
-        [
-         "R",
-         163,
-         163
-        ]
-       ],
-       "edge": [
-        "finish_weave",
-        "inspect_cloth"
-       ],
-       "kind": "caller"
-      }
-     ],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 59,
-       "text": "Кто вызывает проверку, снимающую полотно с ткацкого станка?",
-       "need": [
-        "site",
-        "caller"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        1
-       ],
-       "status": "established"
-      }
-     ],
-     "coverage": "static_subset",
-     "execution_observed": false
-    }
-   },
-   "memory_only": {
-    "scores": [
-     {
-      "cue": "Кто вызывает",
-      "kind": "caller",
-      "understood": true,
-      "acknowledged": true,
-      "proved": false
-     }
-    ],
-    "expected": "answered",
-    "status_correct": false,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 2
-      },
-      {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "started"
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 23,
-       "text": "Кто вызывает проверку, ",
-       "need": [
-        "site",
-        "caller"
-       ],
-       "issues": [
-        "observation_ambiguous"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      },
-      {
-       "start": 23,
-       "end": 59,
-       "text": "снимающую полотно с ткацкого станка?",
+       "start": 60,
+       "end": 97,
+       "text": "и юридический адрес владельца станка.",
        "need": [],
        "issues": [
-        "unverified_meaning"
+        "uninterpreted"
        ],
        "target": 0,
        "claims": [],
        "status": "unknown"
       }
      ],
-     "reason": "observation_ambiguous"
+     "coverage": "static_subset",
+     "execution_observed": false
     }
-   }
-  },
-  {
-   "id": "K9",
-   "question": "Что должно пройти проверку перед передачей рулона упаковщику и в какой функции расположен этот ответ?",
-   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+   },
    "shared_evidence": {
     "scores": [
      {
-      "cue": "Что должно",
-      "kind": "condition",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     },
-     {
-      "cue": "в какой функции",
-      "kind": "site",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     }
-    ],
-    "expected": "answered",
-    "status_correct": true,
-    "useful_full": true,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "answered",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 2
-      },
-      {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "located",
-       "owner": "inspect_cloth",
-       "line": 160
-      },
-      {
-       "tool": "prove_conditions",
-       "target": "inspect_cloth@160",
-       "status": "proved"
-      },
-      {
-       "tool": "calls",
-       "target": "inspect_cloth",
-       "status": "call_sites"
-      }
-     ],
-     "claims": [
-      {
-       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         160,
-         160
-        ]
-       ],
-       "kind": "site"
-      },
-      {
-       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         158,
-         158
-        ],
-        [
-         "R",
-         159,
-         159
-        ],
-        [
-         "R",
-         160,
-         160
-        ]
-       ],
-       "kind": "condition",
-       "control": {
-        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
-        "function": "inspect_cloth",
-        "line": 160,
-        "condition": [
-         "not",
-         [
-          "test",
-          158,
-          "torn"
-         ]
-        ],
-        "work": 4
-       }
-      },
-      {
-       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         162,
-         162
-        ],
-        [
-         "R",
-         163,
-         163
-        ]
-       ],
-       "edge": [
-        "finish_weave",
-        "inspect_cloth"
-       ],
-       "kind": "caller"
-      }
-     ],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 61,
-       "text": "Что должно пройти проверку перед передачей рулона упаковщику ",
-       "need": [
-        "site",
-        "condition"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        1
-       ],
-       "status": "established"
-      },
-      {
-       "start": 61,
-       "end": 101,
-       "text": "и в какой функции расположен этот ответ?",
-       "need": [
-        "site",
-        "caller"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        2
-       ],
-       "status": "established"
-      }
-     ],
-     "coverage": "static_subset",
-     "execution_observed": false
-    }
-   },
-   "memory_only": {
-    "scores": [
-     {
-      "cue": "Что должно",
-      "kind": "condition",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     },
-     {
-      "cue": "в какой функции",
-      "kind": "site",
-      "understood": true,
-      "acknowledged": true,
-      "proved": true
-     }
-    ],
-    "expected": "answered",
-    "status_correct": true,
-    "useful_full": true,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "answered",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 2
-      },
-      {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "located",
-       "owner": "inspect_cloth",
-       "line": 160
-      },
-      {
-       "tool": "prove_conditions",
-       "target": "inspect_cloth@160",
-       "status": "proved"
-      },
-      {
-       "tool": "calls",
-       "target": "inspect_cloth",
-       "status": "call_sites"
-      }
-     ],
-     "claims": [
-      {
-       "text": "В inspect_cloth на строке 160 записано выражение `'Рулон передан упаковщику'`.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         160,
-         160
-        ]
-       ],
-       "kind": "site"
-      },
-      {
-       "text": "В inspect_cloth исследована инструкция `return 'Рулон передан упаковщику'` (стр. 160). Для достижения строки требуется: `torn` ложно (стр. 158). При расчёте учтены переходы `return 'Полотно снято с ткацкого станка'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         158,
-         158
-        ],
-        [
-         "R",
-         159,
-         159
-        ],
-        [
-         "R",
-         160,
-         160
-        ]
-       ],
-       "kind": "condition",
-       "control": {
-        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
-        "function": "inspect_cloth",
-        "line": 160,
-        "condition": [
-         "not",
-         [
-          "test",
-          158,
-          "torn"
-         ]
-        ],
-        "work": 4
-       }
-      },
-      {
-       "text": "В finish_weave на строке 163 записан прямой вызов inspect_cloth.",
-       "refs": [
-        [
-         "R",
-         157,
-         157
-        ],
-        [
-         "R",
-         162,
-         162
-        ],
-        [
-         "R",
-         163,
-         163
-        ]
-       ],
-       "edge": [
-        "finish_weave",
-        "inspect_cloth"
-       ],
-       "kind": "caller"
-      }
-     ],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 61,
-       "text": "Что должно пройти проверку перед передачей рулона упаковщику ",
-       "need": [
-        "site",
-        "condition"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        1
-       ],
-       "status": "established"
-      },
-      {
-       "start": 61,
-       "end": 101,
-       "text": "и в какой функции расположен этот ответ?",
-       "need": [
-        "site",
-        "caller"
-       ],
-       "issues": [],
-       "target": 0,
-       "claims": [
-        0,
-        2
-       ],
-       "status": "established"
-      }
-     ],
-     "coverage": "static_subset",
-     "execution_observed": false
-    }
-   },
-   "lexical_parts": {
-    "scores": [
-     {
-      "cue": "Что должно",
-      "kind": "condition",
+      "cue": "вызывающий код",
+      "kind": "caller",
       "understood": false,
       "acknowledged": true,
       "proved": false
      },
      {
-      "cue": "в какой функции",
-      "kind": "site",
-      "understood": false,
+      "cue": "юридический адрес",
+      "kind": "external",
+      "understood": true,
       "acknowledged": true,
-      "proved": false
+      "proved": null
      }
     ],
-    "expected": "answered",
+    "expected": "partial",
     "status_correct": false,
     "useful_full": false,
     "useful_partial": false,
@@ -10099,49 +10547,51 @@
      "parts": [
       {
        "start": 0,
-       "end": 61,
-       "text": "Что должно пройти проверку перед передачей рулона упаковщику ",
+       "end": 60,
+       "text": "Назови вызывающий код для «Полотно снято с ткацкого станка» ",
        "need": [],
        "issues": [
-        "uninterpreted"
+        "unsupported"
        ],
        "target": 0,
        "claims": [],
        "status": "unknown"
       },
       {
-       "start": 61,
-       "end": 101,
-       "text": "и в какой функции расположен этот ответ?",
+       "start": 60,
+       "end": 97,
+       "text": "и юридический адрес владельца станка.",
        "need": [],
        "issues": [
-        "uninterpreted"
+        "external"
        ],
        "target": 0,
        "claims": [],
        "status": "unknown"
       }
      ],
-     "reason": "uninterpreted"
+     "reason": "unsupported"
     }
-   }
-  },
-  {
-   "id": "K10",
-   "question": "Проверь, нагрелся ли сегодня мотор станка выше нормы.",
-   "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
+   },
    "memory_only": {
     "scores": [
      {
-      "cue": "нагрелся",
-      "kind": "runtime",
+      "cue": "вызывающий код",
+      "kind": "caller",
+      "understood": false,
+      "acknowledged": true,
+      "proved": false
+     },
+     {
+      "cue": "юридический адрес",
+      "kind": "external",
       "understood": true,
       "acknowledged": true,
       "proved": null
      }
     ],
-    "expected": "insufficient",
-    "status_correct": true,
+    "expected": "partial",
+    "status_correct": false,
     "useful_full": false,
     "useful_partial": false,
     "false_complete": false,
@@ -10155,11 +10605,6 @@
        "target": "question",
        "status": "interpreted",
        "count": 2
-      },
-      {
-       "tool": "locate_observation",
-       "target": "1",
-       "status": "started"
       }
      ],
      "claims": [],
@@ -10167,140 +10612,45 @@
      "parts": [
       {
        "start": 0,
-       "end": 9,
-       "text": "Проверь, ",
-       "need": [
-        "site",
-        "condition"
-       ],
+       "end": 60,
+       "text": "Назови вызывающий код для «Полотно снято с ткацкого станка» ",
+       "need": [],
        "issues": [
-        "observation_ambiguous"
+        "unsupported"
        ],
        "target": 0,
        "claims": [],
        "status": "unknown"
       },
       {
-       "start": 9,
-       "end": 53,
-       "text": "нагрелся ли сегодня мотор станка выше нормы.",
+       "start": 60,
+       "end": 97,
+       "text": "и юридический адрес владельца станка.",
        "need": [],
        "issues": [
-        "runtime"
+        "external"
        ],
        "target": 0,
        "claims": [],
        "status": "unknown"
       }
      ],
-     "reason": "observation_ambiguous"
-    }
-   },
-   "lexical_parts": {
-    "scores": [
-     {
-      "cue": "нагрелся",
-      "kind": "runtime",
-      "understood": true,
-      "acknowledged": true,
-      "proved": null
-     }
-    ],
-    "expected": "insufficient",
-    "status_correct": true,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 53,
-       "text": "Проверь, нагрелся ли сегодня мотор станка выше нормы.",
-       "need": [],
-       "issues": [
-        "runtime"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "runtime"
-    }
-   },
-   "shared_evidence": {
-    "scores": [
-     {
-      "cue": "нагрелся",
-      "kind": "runtime",
-      "understood": true,
-      "acknowledged": true,
-      "proved": null
-     }
-    ],
-    "expected": "insufficient",
-    "status_correct": true,
-    "useful_full": false,
-    "useful_partial": false,
-    "false_complete": false,
-    "calls": [],
-    "answer": {
-     "state": "insufficient",
-     "plan": "task_parts",
-     "steps": [
-      {
-       "tool": "interpret_parts",
-       "target": "question",
-       "status": "interpreted",
-       "count": 1
-      }
-     ],
-     "claims": [],
-     "snapshot": "bfe1747c2d1c4367361d8d56afe2670edb94101d",
-     "parts": [
-      {
-       "start": 0,
-       "end": 53,
-       "text": "Проверь, нагрелся ли сегодня мотор станка выше нормы.",
-       "need": [],
-       "issues": [
-        "runtime"
-       ],
-       "target": 0,
-       "claims": [],
-       "status": "unknown"
-      }
-     ],
-     "reason": "runtime"
+     "reason": "unsupported"
     }
    }
   }
  ],
  "receipt_calibration": [
   [
-   15,
+   11,
    0
   ],
   [
-   21,
+   6,
    0.35
   ],
   [
-   12,
+   6,
    0.7
   ]
  ]
