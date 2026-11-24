@@ -1,4 +1,3 @@
-import copy
 import json
 from pathlib import Path
 import sys
@@ -11,6 +10,12 @@ import skynet_task_parts as mod
 
 
 class Parts(unittest.TestCase):
+    def test_residual_must_be_unique_and_word_aligned(self):
+        p=dict(start=7,text="слово, слово, подпись автора")
+        for fragment in ("слово","пись","подписи",".","авто"):
+            self.assertIsNone(mod.residual_span(p,fragment))
+        self.assertEqual(mod.residual_span(p,"подпись автора")["start"],21)
+
     def test_offsets_and_literal_conjunction(self):
         q="  Где «да и нет»?\n   И кто вызывает?"
         parts=mod.split(q)

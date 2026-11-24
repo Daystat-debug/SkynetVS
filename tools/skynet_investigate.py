@@ -275,7 +275,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         paths = cli.PY_PATH.findall(req.question)
         if any(not any(p == f or p.endswith("/" + f) for p in src.pages) for f in paths):
             return packet(req, src, reason="out_of_scope")
-        if discovery in ("parts","parts_once","lexical_parts"):
+        if discovery in ("parts","parts_once","lexical_parts","residual","flat_residual"):
             plan="task_parts"
             if paths:
                 return packet(req,src,reason="clarification")
@@ -390,7 +390,7 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         assessment = host.verify_snapshot(src, req, evidence, draft, delivered)
         if "task_parts" in evidence["analysis"]:
             meta=evidence["analysis"]["task_parts"]
-            task_parts.verify(req.question,meta,evidence["analysis"]["observations"])
+            task_parts.verify(req.question,meta,evidence["analysis"]["observations"],discovery=="flat_residual")
             if draft["status"]=="answer":
                 assessment["answer_completeness"]=("interpreted_requirements_met" if all(
                     p["status"]=="established" for p in meta["parts"]) else "partial")
@@ -498,6 +498,8 @@ def main():
         for part in out.get("parts",[]):
             status={"unknown":"Не установлено","partial":"Установлено частично","established":"Установлено"}
             print(status[part["status"]], "—",part["text"].strip())
+            if part.get("residual") and part["status"]!="established":
+                print("  Осталось проверить:",part["residual"]["text"])
             for issue in part["issues"]:
                 print(" ",REASONS.get(issue,{"runtime":"Нужны наблюдения запуска.","external":"Нужны внешние данные.",
                       "unsupported":"Для этой части нет статического инструмента.","ambiguous":"Нужно уточнение.",
@@ -561,7 +563,7 @@ if __name__ == "__main__":
             result = investigate(data.decode("utf8"), host.lab.cli.pilot.ROOT, why=sys.argv[1] == "--why-worker",
                                  research_mode=sys.argv[1] == "--research-worker",
                                  select=task_select if sys.argv[1]=="--requirements-worker" else observed.goals.local_select,
-                                 discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore","--requirements-worker":"parts"}.get(sys.argv[1]))
+                                 discovery={"--ask-worker":"checked","--explore-worker":"grounded","--offline-worker":"explore","--requirements-worker":"residual"}.get(sys.argv[1]))
         print(json.dumps(result, ensure_ascii=True))
     else:
         sys.exit(main())
