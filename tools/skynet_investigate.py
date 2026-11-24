@@ -485,7 +485,7 @@ def main():
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--requirements", action="store_true", help="Проверить требования по частям и показать, что осталось неизвестным.")
-    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11"),help="Версия исследования требований (по умолчанию 0.10).")
+    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid"),help="0.11 использует размеченные примеры, 0.11-hybrid добавляет план Qwen. По умолчанию 0.10.")
     modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
     modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
@@ -570,7 +570,7 @@ def task_interpreter(resources):
 if __name__ == "__main__":
     if not sys.stdout.isatty():
         sys.stdout.reconfigure(encoding="utf8")
-    policies = {"0.9":"requirements","0.10":"residual","0.11":"independent"}
+    policies = {"0.9":"requirements","0.10":"residual","0.11":"memory_only","0.11-hybrid":"independent"}
     versioned = len(sys.argv)==3 and sys.argv[1]=="--requirements-worker" and sys.argv[2] in policies
     if versioned or sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)

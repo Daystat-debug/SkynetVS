@@ -1,0 +1,122 @@
+{
+ "history": [
+  {
+   "command": "test_requirements.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py guards",
+   "exit": 0
+  },
+  {
+   "command": "eval_requirements.py projection",
+   "exit": 0
+  },
+  {
+   "command": "eval_requirements.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify --final",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify --second",
+   "exit": 0
+  },
+  {
+   "command": "eval_source_language.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify --separate --delivery",
+   "exit": 0
+  },
+  {
+   "command": "eval_observation_goals.py verify --separate --lexical-control",
+   "exit": 0
+  },
+  {
+   "command": "eval_control_conditions.py verify --compare-direction",
+   "exit": 0
+  },
+  {
+   "command": "eval_control_conditions.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_package_boundaries.py",
+   "exit": 0
+  },
+  {
+   "command": "test_core_task.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_investigation.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_core_adapter.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_diagnostic_path.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_route_research.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_task_parts.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_producer_investigation.py verify",
+   "exit": 0
+  },
+  {
+   "command": "test_task_parts.py",
+   "exit": 0
+  },
+  {
+   "command": "eval_argument_flow.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_task_parts.py verify --final",
+   "exit": 0
+  }
+ ],
+ "current": [
+  {
+   "command": "test_obligation_check.py",
+   "tests": 6,
+   "exit": 0
+  },
+  {
+   "command": "build_obligation_memory.py --verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_obligation_check.py verify",
+   "exit": 0
+  },
+  {
+   "command": "eval_obligation_check.py ablate",
+   "exit": 0
+  }
+ ],
+ "cli": {
+  "question_id": "R04",
+  "version": "0.11",
+  "exit": 0,
+  "elapsed_s": 0.7669474,
+  "stdout": "Git-снимок b0aa0ba5a0fe72f1888ca0de0aba10781e0c6b98\r\nХод поиска: interpret_parts(question) → locate_observation(1)\r\nУстановлено — Найди «M130_RANK_INPUT_CONTRACT_VIOLATION»; [1]\r\nНе установлено — приложи фамилию автора первоначального требования. \r\n  Нужны внешние данные.\r\n[1] В main на строке 150 записано выражение `'M130_RANK_INPUT_CONTRACT_VIOLATION'`.\r\n  https://github.com/Daystat-debug/SkynetVS/blob/b0aa0ba5a0fe72f1888ca0de0aba10781e0c6b98/modules/developer_task_ui/app/retrieval/m130_rank.py#L144-L144\r\n  https://github.com/Daystat-debug/SkynetVS/blob/b0aa0ba5a0fe72f1888ca0de0aba10781e0c6b98/modules/developer_task_ui/app/retrieval/m130_rank.py#L150-L150\r\nОбласть вывода — статические связи пяти файлов. Выполнение не наблюдалось."
+ }
+}
