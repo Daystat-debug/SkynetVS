@@ -1,0 +1,4280 @@
+{
+ "rows": [
+  {
+   "id": "T01",
+   "q": "При каких условиях в отчёт попадает предупреждение, что часть файлов пропущена по ограничениям размера или кодировки?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 8,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@217",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ]
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.')` (стр. 217). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `scan['partial']` истинно (стр. 216). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 217,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          216,
+          "scan['partial']"
+         ]
+        ],
+        "work": 16
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T02",
+   "q": "Что должно случиться, чтобы пользователю сообщили о неполном охвате репозитория?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "T03",
+   "q": "Где отчёт поясняет, что локальные правки не учитываются?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T04",
+   "q": "Когда появляется «Подсказки для русского запроса»?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "hybrid": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 7,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@215",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 215 записано выражение `'Подсказки для русского запроса: ' + ', '.join(report['query_expansion'])`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         215,
+         215
+        ]
+       ]
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('Подсказки для русского запроса: ' + ', '.join(report['query_expansion']))` (стр. 215). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `report['query_expansion']` истинно (стр. 214). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         215,
+         215
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 215,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          214,
+          "report['query_expansion']"
+         ]
+        ],
+        "work": 13
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "format_context",
+      "line": 215,
+      "interpretation": "Подсказки для русского запроса: {…}"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 7,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@215",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 215 записано выражение `'Подсказки для русского запроса: ' + ', '.join(report['query_expansion'])`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         215,
+         215
+        ]
+       ]
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('Подсказки для русского запроса: ' + ', '.join(report['query_expansion']))` (стр. 215). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `report['query_expansion']` истинно (стр. 214). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         215,
+         215
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 215,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           203,
+           "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+          ]
+         ],
+         [
+          "test",
+          214,
+          "report['query_expansion']"
+         ]
+        ],
+        "work": 13
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "format_context",
+      "line": 215,
+      "interpretation": "Подсказки для русского запроса: {…}"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T05",
+   "q": "Кто непосредственно вызывает код, который сообщает о слишком длинном запросе после расширения, и что передаёт?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T06",
+   "q": "Где записан отказ программы ранжирования при передаче неожиданного набора ключей входного словаря из командной строки?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 212 записано выражение `'Ключевые файлы (лексическое ранжирование, не подтверждённая локализация ошибки):'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         212,
+         212
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 212,
+      "interpretation": "Ключевые файлы (лексическое ранжирование, не подтверждённая локализация ошибки):"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "T07",
+   "q": "Где готовится строка с количеством файлов-кандидатов, функций и модульных участков?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 211 записано выражение `f\"Файлов-кандидатов: {report['candidate_files_full_tree']}; функций: {report['candidate_functions']}; модульных участков: {report['candidate_modules']}\"`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         211,
+         211
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 211,
+      "interpretation": "Файлов-кандидатов: {…}; функций: {…}; модульных участков: {…}"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "T08",
+   "q": "При каком условии отправляется уведомление о начале ранжирования файлов, функций и внутренних окон?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true
+    ],
+    "cited": 6,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "search_repository@152",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В search_repository на строке 152 записано выражение `'Ранжирую файлы, функции и внутренние окна (только Git HEAD)…'`.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         152,
+         152
+        ]
+       ]
+      },
+      {
+       "text": "В search_repository исследована инструкция `notify('Ранжирую файлы, функции и внутренние окна (только Git HEAD)…')` (стр. 152). Для достижения строки требуется: `notify` истинно (стр. 151). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         147,
+         147
+        ],
+        [
+         "C",
+         151,
+         151
+        ],
+        [
+         "C",
+         152,
+         152
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "search_repository",
+        "line": 152,
+        "condition": [
+         "test",
+         151,
+         "notify"
+        ],
+        "work": 12
+       }
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "search_repository",
+      "line": 152,
+      "interpretation": "Ранжирую файлы, функции и внутренние окна (только Git HEAD)…"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T09",
+   "q": "Какие проверки ведут к ошибке разбора списка файлов Git, если последняя запись не пустая?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T10",
+   "q": "Где отчёт объясняет разницу между подписью показанного фрагмента и данными, для которых вычислен хеш?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 221 записано выражение `'Подписи фрагментов приведены к текущему Git HEAD только при отображении; SHA относятся к исходным данным.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         221,
+         221
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 221,
+      "interpretation": "Подписи фрагментов приведены к текущему Git HEAD только при отображении; SHA относятся к исходным данным."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "T11",
+   "q": "Кто передаёт предел выдачи в файловый поиск по заголовку и возможна ли на этом вызове ошибка недопустимого предела выдачи?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "partial",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "via",
+       "status": "lexical"
+      },
+      {
+       "tool": "calls",
+       "target": "format_context",
+       "status": "withheld"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 217 записано выражение `'ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         217,
+         217
+        ]
+       ]
+      }
+     ],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "location_only",
+      "action": "via",
+      "owner": "format_context",
+      "line": 217,
+      "interpretation": "ВНИМАНИЕ: часть файлов пропущена по ограничениям размера/кодировки; поиск неполный.",
+      "gap": "path_unproven"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "T12",
+   "q": "Где появляется «Git HEAD»?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "model": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T13",
+   "q": "Какой текст программа показывает при восстановлении связи с сетевым принтером?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "model": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "T14",
+   "q": "Сколько раз сегодня появилось предупреждение о неполном поиске?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   },
+   "model": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "observation_required"
+    }
+   }
+  },
+  {
+   "id": "T15",
+   "q": "Где в modules/network.py формируется сообщение о ходе поиска?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "model": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "interpret",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "out_of_scope"
+    }
+   }
+  },
+  {
+   "id": "T16",
+   "q": "Сколько миллисекунд обычно проходит между началом ранжирования и выводом результатов?",
+   "commit": "fb30428c94b3d477dde9b5e081435a1669822aad",
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "model": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 68
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "G01",
+   "q": "При каком условии товар отправляется паковаться?",
+   "commit": "c30d17d22f8b657692e95ccb18a296634072c69d",
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": false,
+    "target": false,
+    "spurious": true,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 8,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "when",
+       "status": "lexical"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "format_context@221",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 221 записано выражение `'Подписи фрагментов приведены к текущему Git HEAD только при отображении; SHA относятся к исходным данным.'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         221,
+         221
+        ]
+       ]
+      },
+      {
+       "text": "В format_context исследована инструкция `head.append('Подписи фрагментов приведены к текущему Git HEAD только при отображении; SHA относятся к исходным данным.')` (стр. 221). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         203,
+         203
+        ],
+        [
+         "C",
+         204,
+         204
+        ],
+        [
+         "C",
+         214,
+         214
+        ],
+        [
+         "C",
+         216,
+         216
+        ],
+        [
+         "C",
+         221,
+         221
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "format_context",
+        "line": 221,
+        "condition": [
+         "not",
+         [
+          "test",
+          203,
+          "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+         ]
+        ],
+        "work": 24
+       }
+      }
+     ],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "local_conditions",
+      "action": "when",
+      "owner": "format_context",
+      "line": 221,
+      "interpretation": "Подписи фрагментов приведены к текущему Git HEAD только при отображении; SHA относятся к исходным данным."
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "G02",
+   "q": "Где формируется «Заказ передан на хранение»?",
+   "commit": "c30d17d22f8b657692e95ccb18a296634072c69d",
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В node_203befe69ab5a на строке 167 записано выражение `'Заказ передан на хранение'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ]
+      }
+     ],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "node_203befe69ab5a",
+      "line": 167,
+      "interpretation": "Заказ передан на хранение"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true
+    ],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В node_203befe69ab5a на строке 167 записано выражение `'Заказ передан на хранение'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ]
+      }
+     ],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "node_203befe69ab5a",
+      "line": 167,
+      "interpretation": "Заказ передан на хранение"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "reason": "clarification"
+    }
+   }
+  },
+  {
+   "id": "G03",
+   "q": "Кто непосредственно вызывает код передачи заказа на упаковку и какое количество передаётся?",
+   "commit": "c30d17d22f8b657692e95ccb18a296634072c69d",
+   "model": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": false,
+    "target": false,
+    "spurious": false,
+    "checks": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": true,
+    "spurious": false,
+    "checks": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "cited": 11,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "via",
+       "status": "lexical"
+      },
+      {
+       "tool": "calls",
+       "target": "node_264b92e6dbf84",
+       "status": "call_sites"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "node_2c4dcbe57f2a2@163",
+       "status": "proved"
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "node_264b92e6dbf84@160",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В node_2c4dcbe57f2a2 исследована инструкция `return node_264b92e6dbf84(15)` (стр. 163). Предшествующих явных условий перехода нет. Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "node_2c4dcbe57f2a2",
+        "line": 163,
+        "condition": true,
+        "work": 1
+       }
+      },
+      {
+       "text": "В node_2c4dcbe57f2a2 на строке 163 записан прямой вызов node_264b92e6dbf84. Аргументы: units ← `15`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "node_2c4dcbe57f2a2",
+        "node_264b92e6dbf84"
+       ]
+      },
+      {
+       "text": "В node_264b92e6dbf84 исследована инструкция `return 'Заказ передан на упаковку'` (стр. 160). Для достижения строки требуется: `units < 14` ложно (стр. 158). При расчёте учтены переходы `raise ValueError('Запас комплектующих ниже порога')` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "node_264b92e6dbf84",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "units < 14"
+         ]
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В node_264b92e6dbf84 на строке 160 записано выражение `'Заказ передан на упаковку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ]
+      }
+     ],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "conditional_route",
+      "action": "via",
+      "owner": "node_264b92e6dbf84",
+      "line": 160,
+      "interpretation": "Заказ передан на упаковку"
+     },
+     "coverage": "one_static_route",
+     "execution_observed": false,
+     "joint_feasibility": "not_proved"
+    }
+   }
+  },
+  {
+   "id": "G04",
+   "q": "Когда появляется «Запас комплектующих ниже порога»?",
+   "commit": "c30d17d22f8b657692e95ccb18a296634072c69d",
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "model": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "G05",
+   "q": "Где подтверждается, что посылка доехала до получателя?",
+   "commit": "c30d17d22f8b657692e95ccb18a296634072c69d",
+   "core06": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 0,
+    "answer": {
+     "state": "insufficient",
+     "plan": "static_question",
+     "steps": [],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "reason": "clarification"
+    }
+   },
+   "lexical": {
+    "full": false,
+    "target": null,
+    "spurious": true,
+    "checks": [],
+    "cited": 2,
+    "calls": 0,
+    "answer": {
+     "state": "answered",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "where",
+       "status": "lexical"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В format_context на строке 212 записано выражение `'Ключевые файлы (лексическое ранжирование, не подтверждённая локализация ошибки):'`.",
+       "refs": [
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         212,
+         212
+        ]
+       ]
+      }
+     ],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "location",
+      "action": "where",
+      "owner": "format_context",
+      "line": 212,
+      "interpretation": "Ключевые файлы (лексическое ранжирование, не подтверждённая локализация ошибки):"
+     },
+     "coverage": "one_static_site",
+     "execution_observed": false
+    }
+   },
+   "model": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   },
+   "hybrid": {
+    "full": true,
+    "target": null,
+    "spurious": false,
+    "checks": [],
+    "cited": 0,
+    "calls": 1,
+    "answer": {
+     "state": "insufficient",
+     "plan": "discover_observation",
+     "steps": [
+      {
+       "tool": "index_observations",
+       "target": "Git HEAD",
+       "status": "indexed",
+       "count": 72
+      },
+      {
+       "tool": "select_goal",
+       "target": "question",
+       "status": "observation_ambiguous"
+      }
+     ],
+     "claims": [],
+     "snapshot": "c30d17d22f8b657692e95ccb18a296634072c69d",
+     "discovery": {
+      "verdict": "unproven"
+     },
+     "reason": "observation_ambiguous"
+    }
+   }
+  }
+ ],
+ "ms": {
+  "T01": {
+   "core06": 40.6,
+   "lexical": 166.9,
+   "model": 849.4,
+   "hybrid": 742.1
+  },
+  "T02": {
+   "lexical": 97.4,
+   "model": 712.7,
+   "hybrid": 683.1,
+   "core06": 33.2
+  },
+  "T03": {
+   "model": 708.0,
+   "hybrid": 686.9,
+   "core06": 32.1,
+   "lexical": 94.3
+  },
+  "T04": {
+   "hybrid": 127.4,
+   "core06": 64.5,
+   "lexical": 129.4,
+   "model": 261.6
+  },
+  "T05": {
+   "core06": 33.4,
+   "lexical": 96.0,
+   "model": 633.4,
+   "hybrid": 644.2
+  },
+  "T06": {
+   "lexical": 128.3,
+   "model": 696.6,
+   "hybrid": 728.4,
+   "core06": 96.5
+  },
+  "T07": {
+   "model": 717.8,
+   "hybrid": 764.9,
+   "core06": 33.5,
+   "lexical": 113.0
+  },
+  "T08": {
+   "hybrid": 630.0,
+   "core06": 32.4,
+   "lexical": 134.1,
+   "model": 639.5
+  },
+  "T09": {
+   "core06": 33.5,
+   "lexical": 94.8,
+   "model": 617.5,
+   "hybrid": 697.7
+  },
+  "T10": {
+   "lexical": 132.0,
+   "model": 720.0,
+   "hybrid": 707.7,
+   "core06": 32.4
+  },
+  "T11": {
+   "model": 704.4,
+   "hybrid": 695.8,
+   "core06": 33.5,
+   "lexical": 146.9
+  },
+  "T12": {
+   "hybrid": 93.2,
+   "core06": 65.4,
+   "lexical": 92.4,
+   "model": 95.6
+  },
+  "T13": {
+   "core06": 65.6,
+   "lexical": 103.3,
+   "model": 703.0,
+   "hybrid": 702.8
+  },
+  "T14": {
+   "lexical": 0.1,
+   "model": 0.0,
+   "hybrid": 0.0,
+   "core06": 0.0
+  },
+  "T15": {
+   "model": 0.0,
+   "hybrid": 0.1,
+   "core06": 0.1,
+   "lexical": 0.0
+  },
+  "T16": {
+   "hybrid": 705.3,
+   "core06": 36.6,
+   "lexical": 98.6,
+   "model": 704.3
+  },
+  "G01": {
+   "core06": 70.6,
+   "lexical": 130.2,
+   "model": 750.1,
+   "hybrid": 732.3
+  },
+  "G02": {
+   "lexical": 115.3,
+   "model": 242.4,
+   "hybrid": 119.0,
+   "core06": 69.7
+  },
+  "G03": {
+   "model": 661.6,
+   "hybrid": 709.1,
+   "core06": 35.3,
+   "lexical": 184.1
+  },
+  "G04": {
+   "hybrid": 96.9,
+   "core06": 71.1,
+   "lexical": 99.1,
+   "model": 100.4
+  },
+  "G05": {
+   "core06": 36.3,
+   "lexical": 114.9,
+   "model": 667.7,
+   "hybrid": 721.6
+  }
+ },
+ "generations": {
+  "T01/model": {
+   "digest": "20ce9483ae04b16fb8c03adc87dfde70d4c7f60278b466601285432b57c189d6",
+   "raw": "{\n  \"id\": 39,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 640.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2606,
+   "completion_tokens": 19,
+   "prompt_ms": 477.016,
+   "predicted_ms": 146.737,
+   "predicted_per_second": 122.668
+  },
+  "T01/hybrid": {
+   "digest": "20ce9483ae04b16fb8c03adc87dfde70d4c7f60278b466601285432b57c189d6",
+   "raw": "{\n  \"id\": 39,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 609.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2606,
+   "completion_tokens": 19,
+   "prompt_ms": 437.794,
+   "predicted_ms": 148.764,
+   "predicted_per_second": 120.997
+  },
+  "T02/model": {
+   "digest": "8c4562d55518dd8dc3ac0fa30de8ba623fcda932f938461501db40a58ceaab76",
+   "raw": "{\n  \"id\": 39,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 609.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2596,
+   "completion_tokens": 19,
+   "prompt_ms": 438.732,
+   "predicted_ms": 146.017,
+   "predicted_per_second": 123.273
+  },
+  "T02/hybrid": {
+   "digest": "8c4562d55518dd8dc3ac0fa30de8ba623fcda932f938461501db40a58ceaab76",
+   "raw": "{\n  \"id\": 39,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 578.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2596,
+   "completion_tokens": 19,
+   "prompt_ms": 433.235,
+   "predicted_ms": 145.14,
+   "predicted_per_second": 124.018
+  },
+  "T03/model": {
+   "digest": "a2ef640c28e29529b629f956f335b07a9645f13b25d5bdef1d7ddd4d4cdac9c1",
+   "raw": "{\n  \"id\": 34,\n  \"action\": \"format_context\"\n}",
+   "wall_ms": 610.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2588,
+   "completion_tokens": 19,
+   "prompt_ms": 428.804,
+   "predicted_ms": 145.626,
+   "predicted_per_second": 123.604
+  },
+  "T03/hybrid": {
+   "digest": "a2ef640c28e29529b629f956f335b07a9645f13b25d5bdef1d7ddd4d4cdac9c1",
+   "raw": "{\n  \"id\": 34,\n  \"action\": \"format_context\"\n}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2588,
+   "completion_tokens": 19,
+   "prompt_ms": 428.723,
+   "predicted_ms": 146.722,
+   "predicted_per_second": 122.681
+  },
+  "T04/model": {
+   "digest": "4955788b18896dfde084c5e6a865fa53a695076eb26696bf82a7b24534b47189",
+   "raw": "{\"id\":38,\"action\":\"clarify\"}",
+   "wall_ms": 172.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 227,
+   "completion_tokens": 12,
+   "prompt_ms": 51.163,
+   "predicted_ms": 84.872,
+   "predicted_per_second": 129.607
+  },
+  "T05/model": {
+   "digest": "f47187ba1eb2b73759e40ffaedbd63e7d9aa614c15a0841c6f8e4b6a1a99a506",
+   "raw": "{\"id\":1,\"action\":\"clarify\"}",
+   "wall_ms": 532.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2599,
+   "completion_tokens": 11,
+   "prompt_ms": 441.031,
+   "predicted_ms": 83.275,
+   "predicted_per_second": 120.084
+  },
+  "T05/hybrid": {
+   "digest": "f47187ba1eb2b73759e40ffaedbd63e7d9aa614c15a0841c6f8e4b6a1a99a506",
+   "raw": "{\"id\":1,\"action\":\"clarify\"}",
+   "wall_ms": 547.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2599,
+   "completion_tokens": 11,
+   "prompt_ms": 434.287,
+   "predicted_ms": 81.434,
+   "predicted_per_second": 122.799
+  },
+  "T06/model": {
+   "digest": "87b5c31fe841799d68685c1df5b51f8b9eed96c2364a6c16f61181c8ad883318",
+   "raw": "{\n  \"id\": 21,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2601,
+   "completion_tokens": 19,
+   "prompt_ms": 433.897,
+   "predicted_ms": 146.512,
+   "predicted_per_second": 122.857
+  },
+  "T06/hybrid": {
+   "digest": "87b5c31fe841799d68685c1df5b51f8b9eed96c2364a6c16f61181c8ad883318",
+   "raw": "{\n  \"id\": 21,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 609.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2601,
+   "completion_tokens": 19,
+   "prompt_ms": 435.863,
+   "predicted_ms": 147.759,
+   "predicted_per_second": 121.82
+  },
+  "T07/model": {
+   "digest": "a4801f4a933c4bcdca846a380ebe76ca425d243d8380c29121958631d597eb90",
+   "raw": "{\n  \"id\": 34,\n  \"action\": \"format_context\"\n}",
+   "wall_ms": 593.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2598,
+   "completion_tokens": 19,
+   "prompt_ms": 434.762,
+   "predicted_ms": 149.168,
+   "predicted_per_second": 120.669
+  },
+  "T07/hybrid": {
+   "digest": "a4801f4a933c4bcdca846a380ebe76ca425d243d8380c29121958631d597eb90",
+   "raw": "{\n  \"id\": 34,\n  \"action\": \"format_context\"\n}",
+   "wall_ms": 641.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2598,
+   "completion_tokens": 19,
+   "prompt_ms": 467.008,
+   "predicted_ms": 154.113,
+   "predicted_per_second": 116.797
+  },
+  "T08/hybrid": {
+   "digest": "3708efcda8657934b05b1e612edbd8a1b85a9e02e5b5ea414e9cc42838a167e7",
+   "raw": "{\"id\":20,\"action\":\"notify\"}",
+   "wall_ms": 531.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2600,
+   "completion_tokens": 11,
+   "prompt_ms": 433.477,
+   "predicted_ms": 81.818,
+   "predicted_per_second": 122.222
+  },
+  "T08/model": {
+   "digest": "3708efcda8657934b05b1e612edbd8a1b85a9e02e5b5ea414e9cc42838a167e7",
+   "raw": "{\"id\":20,\"action\":\"notify\"}",
+   "wall_ms": 531.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2600,
+   "completion_tokens": 11,
+   "prompt_ms": 434.417,
+   "predicted_ms": 82.045,
+   "predicted_per_second": 121.884
+  },
+  "T09/model": {
+   "digest": "0bf8c79a4806f1f1512072ec0509895b672e87d61235009d4f62a47b59634646",
+   "raw": "{\"id\":9,\"action\":\"clarify\"}",
+   "wall_ms": 532.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2597,
+   "completion_tokens": 11,
+   "prompt_ms": 433.749,
+   "predicted_ms": 81.37,
+   "predicted_per_second": 122.895
+  },
+  "T09/hybrid": {
+   "digest": "0bf8c79a4806f1f1512072ec0509895b672e87d61235009d4f62a47b59634646",
+   "raw": "{\"id\":9,\"action\":\"clarify\"}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2597,
+   "completion_tokens": 11,
+   "prompt_ms": 476.823,
+   "predicted_ms": 88.565,
+   "predicted_per_second": 112.911
+  },
+  "T10/model": {
+   "digest": "0608eb35999f213166975ddf94130914363e376dc8b2886ac34e6675707dc27a",
+   "raw": "{\n  \"id\": 42,\n  \"action\": \"format_context\"\n}",
+   "wall_ms": 625.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2601,
+   "completion_tokens": 19,
+   "prompt_ms": 446.846,
+   "predicted_ms": 146.628,
+   "predicted_per_second": 122.76
+  },
+  "T10/hybrid": {
+   "digest": "0608eb35999f213166975ddf94130914363e376dc8b2886ac34e6675707dc27a",
+   "raw": "{\n  \"id\": 42,\n  \"action\": \"format_context\"\n}",
+   "wall_ms": 610.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2601,
+   "completion_tokens": 19,
+   "prompt_ms": 434.025,
+   "predicted_ms": 145.325,
+   "predicted_per_second": 123.86
+  },
+  "T11/model": {
+   "digest": "8fc2d99332f5de4bf155ffbd343341c6ea90cafb744149c98755bbee1e1c23c1",
+   "raw": "{\n  \"id\": 51,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 610.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2607,
+   "completion_tokens": 19,
+   "prompt_ms": 434.439,
+   "predicted_ms": 146.161,
+   "predicted_per_second": 123.152
+  },
+  "T11/hybrid": {
+   "digest": "8fc2d99332f5de4bf155ffbd343341c6ea90cafb744149c98755bbee1e1c23c1",
+   "raw": "{\n  \"id\": 51,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2607,
+   "completion_tokens": 19,
+   "prompt_ms": 435.606,
+   "predicted_ms": 146.086,
+   "predicted_per_second": 123.215
+  },
+  "T13/model": {
+   "digest": "1f7b5e720923beb9aadfc7933f498bb997864b50d182854bd3d3a067b902bc99",
+   "raw": "{\n  \"id\": 17,\n  \"action\": \"scan_head\"\n}",
+   "wall_ms": 610.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2590,
+   "completion_tokens": 19,
+   "prompt_ms": 438.115,
+   "predicted_ms": 148.051,
+   "predicted_per_second": 121.58
+  },
+  "T13/hybrid": {
+   "digest": "1f7b5e720923beb9aadfc7933f498bb997864b50d182854bd3d3a067b902bc99",
+   "raw": "{\n  \"id\": 17,\n  \"action\": \"scan_head\"\n}",
+   "wall_ms": 609.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2590,
+   "completion_tokens": 19,
+   "prompt_ms": 431.176,
+   "predicted_ms": 145.452,
+   "predicted_per_second": 123.752
+  },
+  "T16/hybrid": {
+   "digest": "f46cd46631792e1bc57393fea011bd983c53be100d367cf02952906c26a871b1",
+   "raw": "{\n  \"id\": 0,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2592,
+   "completion_tokens": 18,
+   "prompt_ms": 433.425,
+   "predicted_ms": 137.382,
+   "predicted_per_second": 123.743
+  },
+  "T16/model": {
+   "digest": "f46cd46631792e1bc57393fea011bd983c53be100d367cf02952906c26a871b1",
+   "raw": "{\n  \"id\": 0,\n  \"action\": \"clarify\"\n}",
+   "wall_ms": 610.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2592,
+   "completion_tokens": 18,
+   "prompt_ms": 432.891,
+   "predicted_ms": 137.434,
+   "predicted_per_second": 123.696
+  },
+  "G01/model": {
+   "digest": "71696e33a5c758f70258d70603ec0ba380990245cb35d2200bc52dccd918693e",
+   "raw": "{\n  \"id\": 70,\n  \"action\": \"scan_head\"\n}",
+   "wall_ms": 641.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2724,
+   "completion_tokens": 19,
+   "prompt_ms": 465.796,
+   "predicted_ms": 148.206,
+   "predicted_per_second": 121.453
+  },
+  "G01/hybrid": {
+   "digest": "71696e33a5c758f70258d70603ec0ba380990245cb35d2200bc52dccd918693e",
+   "raw": "{\n  \"id\": 70,\n  \"action\": \"scan_head\"\n}",
+   "wall_ms": 641.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2724,
+   "completion_tokens": 19,
+   "prompt_ms": 464.147,
+   "predicted_ms": 145.687,
+   "predicted_per_second": 123.553
+  },
+  "G02/model": {
+   "digest": "fc702d3d34a3b3fd5a676d17dbb77d8f0a858625f45650615bc9541c1ab206e6",
+   "raw": "{\"id\":71,\"action\":\"clarify\"}",
+   "wall_ms": 141.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 225,
+   "completion_tokens": 12,
+   "prompt_ms": 51.373,
+   "predicted_ms": 84.034,
+   "predicted_per_second": 130.899
+  },
+  "G03/model": {
+   "digest": "c9304502bac3e0a50a608e25c2bb65e5993c55bd604923c4f0db25b8edf2bada",
+   "raw": "{\"id\":70,\"action\":\"clarify\"}",
+   "wall_ms": 562.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2739,
+   "completion_tokens": 12,
+   "prompt_ms": 459.662,
+   "predicted_ms": 92.899,
+   "predicted_per_second": 118.408
+  },
+  "G03/hybrid": {
+   "digest": "c9304502bac3e0a50a608e25c2bb65e5993c55bd604923c4f0db25b8edf2bada",
+   "raw": "{\"id\":70,\"action\":\"clarify\"}",
+   "wall_ms": 578.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2739,
+   "completion_tokens": 12,
+   "prompt_ms": 459.65,
+   "predicted_ms": 90.534,
+   "predicted_per_second": 121.501
+  },
+  "G05/model": {
+   "digest": "7c8b65b60b24973eaae97a3c34fe2af698ea55d78594387da47c7c223d9f1bdc",
+   "raw": "{\"id\":37,\"action\":\"clarify\"}",
+   "wall_ms": 563.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2728,
+   "completion_tokens": 12,
+   "prompt_ms": 466.495,
+   "predicted_ms": 91.785,
+   "predicted_per_second": 119.845
+  },
+  "G05/hybrid": {
+   "digest": "7c8b65b60b24973eaae97a3c34fe2af698ea55d78594387da47c7c223d9f1bdc",
+   "raw": "{\"id\":37,\"action\":\"clarify\"}",
+   "wall_ms": 594.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 2728,
+   "completion_tokens": 12,
+   "prompt_ms": 480.71,
+   "predicted_ms": 94.419,
+   "predicted_per_second": 116.502
+  }
+ },
+ "sessions": [
+  {
+   "startup_s": 6.891,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  },
+  {
+   "startup_s": 5.547,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  }
+ ],
+ "historical": [
+  {
+   "id": "T05",
+   "full": true,
+   "facts": 13,
+   "needed": 13,
+   "answer": {
+    "state": "answered",
+    "plan": "research_route",
+    "steps": [
+     {
+      "tool": "resolve_outcome",
+      "target": "M141_INVALID_DISPLAY_CONTEXT",
+      "status": "located",
+      "candidates": 1
+     },
+     {
+      "tool": "calls",
+      "target": "_render_current_head_labels",
+      "status": "call_sites"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "format_context@226",
+      "status": "proved"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "_render_current_head_labels@182",
+      "status": "proved"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В format_context исследована инструкция `head.append(_render_current_head_labels(report['_private_8k_text']))` (стр. 226). Для достижения строки требуется: `report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'` ложно (стр. 203) и `not report['_private_8k_text']` ложно (стр. 222). При расчёте учтены переходы `raise ValueError('M134_REPORT_SCHEMA_INVALID')` (стр. 204). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+      "refs": [
+       [
+        "C",
+        202,
+        202
+       ],
+       [
+        "C",
+        203,
+        203
+       ],
+       [
+        "C",
+        204,
+        204
+       ],
+       [
+        "C",
+        214,
+        214
+       ],
+       [
+        "C",
+        216,
+        216
+       ],
+       [
+        "C",
+        222,
+        222
+       ],
+       [
+        "C",
+        226,
+        226
+       ]
+      ],
+      "control": {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "function": "format_context",
+       "line": 226,
+       "condition": [
+        "and",
+        [
+         "not",
+         [
+          "test",
+          203,
+          "report.get('schema') != 'SKYNETVS_M134_READONLY_PROJECT_CONTEXT_V1'"
+         ]
+        ],
+        [
+         "not",
+         [
+          "test",
+          222,
+          "not report['_private_8k_text']"
+         ]
+        ]
+       ],
+       "work": 30
+      }
+     },
+     {
+      "text": "В format_context на строке 226 записан прямой вызов _render_current_head_labels. Аргументы: raw ← `report['_private_8k_text']`.",
+      "refs": [
+       [
+        "C",
+        175,
+        175
+       ],
+       [
+        "C",
+        202,
+        202
+       ],
+       [
+        "C",
+        226,
+        226
+       ]
+      ],
+      "edge": [
+       "format_context",
+       "_render_current_head_labels"
+      ]
+     },
+     {
+      "text": "В _render_current_head_labels исследована инструкция `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')` (стр. 182). Для достижения строки требуется: `not isinstance(raw, str)` истинно (стр. 181). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+      "refs": [
+       [
+        "C",
+        175,
+        175
+       ],
+       [
+        "C",
+        181,
+        181
+       ],
+       [
+        "C",
+        182,
+        182
+       ]
+      ],
+      "control": {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "function": "_render_current_head_labels",
+       "line": 182,
+       "condition": [
+        "test",
+        181,
+        "not isinstance(raw, str)"
+       ],
+       "work": 4
+      }
+     },
+     {
+      "text": "В _render_current_head_labels записано `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')`.",
+      "refs": [
+       [
+        "C",
+        175,
+        175
+       ],
+       [
+        "C",
+        182,
+        182
+       ]
+      ]
+     }
+    ],
+    "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+    "research": {
+     "verdict": "conditional_route",
+     "attempts": 1,
+     "examined": 1,
+     "decisions": [],
+     "policy": "adaptive"
+    },
+    "coverage": "one_static_route",
+    "execution_observed": false,
+    "joint_feasibility": "not_proved"
+   }
+  },
+  {
+   "id": "T06",
+   "full": true,
+   "facts": 18,
+   "needed": 18,
+   "answer": {
+    "state": "answered",
+    "plan": "research_route",
+    "steps": [
+     {
+      "tool": "resolve_outcome",
+      "target": "_include",
+      "status": "located",
+      "candidates": 1
+     },
+     {
+      "tool": "calls",
+      "target": "_include",
+      "status": "call_sites"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "scan_head@98",
+      "status": "proved"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В scan_head исследована инструкция `if _include(name):\n    entries.append((name, oid.decode('ascii')))` (стр. 98). Для достижения строки требуется: `str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()` ложно (стр. 79) и `not records or records[-1] != b''` ложно (стр. 84) и для предыдущих итераций `for entry in records[:-1]` (стр. 87, включая пустой перебор) выполнено (`not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92)) и началась рассматриваемая итерация `for entry in records[:-1]` (стр. 87) и `not sep` ложно (стр. 89) и `len(parts) != 3` ложно (стр. 92) и `mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))` ложно (стр. 95). При расчёте учтены переходы `raise ValueError('M134_GIT_PROJECT_ROOT_MISMATCH')` (стр. 80), `raise ValueError('M134_LS_TREE_FORMAT_INVALID')` (стр. 85), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 90), `raise ValueError('M134_LS_TREE_RECORD_INVALID')` (стр. 93), `continue` (стр. 96). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+      "refs": [
+       [
+        "C",
+        68,
+        68
+       ],
+       [
+        "C",
+        79,
+        79
+       ],
+       [
+        "C",
+        80,
+        80
+       ],
+       [
+        "C",
+        84,
+        84
+       ],
+       [
+        "C",
+        85,
+        85
+       ],
+       [
+        "C",
+        87,
+        87
+       ],
+       [
+        "C",
+        89,
+        89
+       ],
+       [
+        "C",
+        90,
+        90
+       ],
+       [
+        "C",
+        92,
+        92
+       ],
+       [
+        "C",
+        93,
+        93
+       ],
+       [
+        "C",
+        95,
+        95
+       ],
+       [
+        "C",
+        96,
+        96
+       ],
+       [
+        "C",
+        98,
+        98
+       ],
+       [
+        "C",
+        98,
+        99
+       ]
+      ],
+      "control": {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "function": "scan_head",
+       "line": 98,
+       "condition": [
+        "and",
+        [
+         "not",
+         [
+          "test",
+          79,
+          "str(Path(top).absolute()).casefold() != str(root.absolute()).casefold()"
+         ]
+        ],
+        [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           84,
+           "not records or records[-1] != b''"
+          ]
+         ],
+         [
+          "and",
+          [
+           "past",
+           87,
+           "for entry in records[:-1]",
+           [
+            "and",
+            [
+             "not",
+             [
+              "test",
+              89,
+              "not sep"
+             ]
+            ],
+            [
+             "not",
+             [
+              "test",
+              92,
+              "len(parts) != 3"
+             ]
+            ]
+           ]
+          ],
+          [
+           "and",
+           [
+            "iteration",
+            87,
+            "for entry in records[:-1]"
+           ],
+           [
+            "and",
+            [
+             "not",
+             [
+              "test",
+              89,
+              "not sep"
+             ]
+            ],
+            [
+             "and",
+             [
+              "not",
+              [
+               "test",
+               92,
+               "len(parts) != 3"
+              ]
+             ],
+             [
+              "not",
+              [
+               "test",
+               95,
+               "mode not in (b'100644', b'100755') or kind != b'blob' or (not SHA40.fullmatch(oid.decode('ascii', 'strict')))"
+              ]
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ],
+       "work": 57
+      }
+     },
+     {
+      "text": "В scan_head на строке 98 записан прямой вызов _include. Аргументы: path ← `name`.",
+      "refs": [
+       [
+        "C",
+        57,
+        57
+       ],
+       [
+        "C",
+        68,
+        68
+       ],
+       [
+        "C",
+        98,
+        98
+       ]
+      ],
+      "edge": [
+       "scan_head",
+       "_include"
+      ]
+     },
+     {
+      "text": "Целевое определение — _include.",
+      "refs": [
+       [
+        "C",
+        57,
+        57
+       ]
+      ]
+     }
+    ],
+    "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+    "research": {
+     "verdict": "conditional_route",
+     "attempts": 1,
+     "examined": 1,
+     "decisions": [],
+     "policy": "adaptive"
+    },
+    "coverage": "one_static_route",
+    "execution_observed": false,
+    "joint_feasibility": "not_proved"
+   }
+  },
+  {
+   "id": "T08",
+   "full": false,
+   "facts": 14,
+   "needed": 29,
+   "answer": {
+    "state": "partial",
+    "plan": "research_route",
+    "steps": [
+     {
+      "tool": "resolve_outcome",
+      "target": "M127_OLD_SOURCES_INVALID",
+      "status": "located",
+      "candidates": 1
+     },
+     {
+      "tool": "calls",
+      "target": "extract_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank_symbols",
+      "status": "call_sites"
+     },
+     {
+      "tool": "calls",
+      "target": "rank",
+      "status": "call_sites"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "rank@125",
+      "status": "proved"
+     },
+     {
+      "tool": "prove_conditions",
+      "target": "search_repository@153",
+      "status": "proved"
+     }
+    ],
+    "claims": [
+     {
+      "text": "В search_repository@153 записан прямой вызов rank.",
+      "refs": [
+       [
+        "R",
+        110,
+        111
+       ],
+       [
+        "C",
+        144,
+        144
+       ],
+       [
+        "C",
+        153,
+        153
+       ],
+       [
+        "C",
+        14,
+        14
+       ]
+      ],
+      "edge": [
+       "search_repository",
+       "rank"
+      ]
+     },
+     {
+      "text": "В rank@125 записан прямой вызов rank_symbols.",
+      "refs": [
+       [
+        "S",
+        72,
+        72
+       ],
+       [
+        "R",
+        110,
+        110
+       ],
+       [
+        "R",
+        125,
+        125
+       ],
+       [
+        "R",
+        18,
+        18
+       ]
+      ],
+      "edge": [
+       "rank",
+       "rank_symbols"
+      ]
+     },
+     {
+      "text": "В rank_symbols@77 записан прямой вызов extract_symbols.",
+      "refs": [
+       [
+        "S",
+        28,
+        28
+       ],
+       [
+        "S",
+        72,
+        72
+       ],
+       [
+        "S",
+        77,
+        77
+       ]
+      ],
+      "edge": [
+       "rank_symbols",
+       "extract_symbols"
+      ]
+     },
+     {
+      "text": "В extract_symbols записано `raise ValueError('M127_OLD_SOURCES_INVALID')`.",
+      "refs": [
+       [
+        "S",
+        28,
+        28
+       ],
+       [
+        "S",
+        31,
+        31
+       ]
+      ]
+     }
+    ],
+    "snapshot": "fb30428c94b3d477dde9b5e081435a1669822aad",
+    "research": {
+     "verdict": "structural_only",
+     "attempts": 1,
+     "examined": 4,
+     "decisions": [],
+     "policy": "adaptive"
+    },
+    "coverage": "one_static_route",
+    "execution_observed": false,
+    "joint_feasibility": "not_proved"
+   }
+  }
+ ]
+}
