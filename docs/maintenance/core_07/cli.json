@@ -1,0 +1,220 @@
+{
+ "head": "2316a4c5167b31d351cec912adeb99f4fa23f6e7",
+ "rows": [
+  {
+   "id": "T05",
+   "q": "Кто непосредственно вызывает проверку с сообщением «M126_FILES_LIMIT», при каких условиях и какие аргументы передаёт?",
+   "ms": 781.7,
+   "state": "answered",
+   "details": {
+    "verdict": "conditional_route",
+    "action": "via",
+    "owner": "rank_title_only",
+    "line": 43,
+    "interpretation": "M126_FILES_LIMIT"
+   },
+   "trace": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "via",
+     "status": "unique_quote"
+    },
+    {
+     "tool": "calls",
+     "target": "rank_title_only",
+     "status": "call_sites"
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "rank@116",
+     "status": "proved"
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "rank_title_only@43",
+     "status": "proved"
+    }
+   ],
+   "claims": 4
+  },
+  {
+   "id": "T04",
+   "q": "Где записано пояснение для человека о том, что создание патча не разрешено?",
+   "ms": 8087.9,
+   "state": "answered",
+   "details": {
+    "verdict": "location",
+    "action": "where",
+    "owner": "format_context",
+    "line": 220,
+    "interpretation": "Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён."
+   },
+   "trace": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "where",
+     "status": "site_selection"
+    }
+   ],
+   "claims": 1
+  },
+  {
+   "id": "T09",
+   "q": "Когда появляется «M134_REPORT_SCHEMA_INVALID»?",
+   "ms": 698.5,
+   "state": "insufficient",
+   "details": {
+    "verdict": "clarify",
+    "options": [
+     {
+      "label": "M134_REPORT_SCHEMA_INVALID",
+      "coordinate": "format_context@204",
+      "ref": {
+       "id": "E8cfb104dd1505876",
+       "commit": "2316a4c5167b31d351cec912adeb99f4fa23f6e7",
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "start": 204,
+       "end": 204,
+       "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+       "excerpt_sha256": "103bef8bd4f97fa8667c65d10ff150a52f0c970bf3e83440d6ade5abb58de411",
+       "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+       "source_code_executed": false,
+       "url": "https://github.com/Daystat-debug/SkynetVS/blob/2316a4c5167b31d351cec912adeb99f4fa23f6e7/modules/developer_task_ui/app/context_search.py#L204-L204"
+      }
+     },
+     {
+      "label": "M134_REPORT_SCHEMA_INVALID",
+      "coordinate": "receipt_without_source@233",
+      "ref": {
+       "id": "Ef139fb72d25a8cf5",
+       "commit": "2316a4c5167b31d351cec912adeb99f4fa23f6e7",
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "start": 233,
+       "end": 233,
+       "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+       "excerpt_sha256": "103bef8bd4f97fa8667c65d10ff150a52f0c970bf3e83440d6ade5abb58de411",
+       "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+       "source_code_executed": false,
+       "url": "https://github.com/Daystat-debug/SkynetVS/blob/2316a4c5167b31d351cec912adeb99f4fa23f6e7/modules/developer_task_ui/app/context_search.py#L233-L233"
+      }
+     }
+    ]
+   },
+   "trace": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "question",
+     "status": "observation_ambiguous"
+    }
+   ],
+   "claims": 0
+  },
+  {
+   "id": "coordinate",
+   "q": "receipt_without_source@233",
+   "ms": 639.4,
+   "state": "answered",
+   "details": {},
+   "trace": [
+    {
+     "tool": "locate_statement",
+     "target": "receipt_without_source@233",
+     "status": "located"
+    },
+    {
+     "tool": "prove_local_control",
+     "target": "receipt_without_source",
+     "status": "proved"
+    }
+   ],
+   "claims": 1
+  },
+  {
+   "id": "T04",
+   "q": "Где записано пояснение для человека о том, что создание патча не разрешено?",
+   "ms": 8080.2,
+   "state": "answered",
+   "details": {
+    "verdict": "location",
+    "action": "where",
+    "owner": "format_context",
+    "line": 220,
+    "interpretation": "Это данные для анализа человеком или локальной моделью; patch не создан и не разрешён."
+   },
+   "trace": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "where",
+     "status": "site_selection"
+    }
+   ],
+   "claims": 1
+  },
+  {
+   "id": "T05",
+   "q": "Кто непосредственно вызывает проверку с сообщением «M126_FILES_LIMIT», при каких условиях и какие аргументы передаёт?",
+   "ms": 967.7,
+   "state": "answered",
+   "details": {
+    "verdict": "conditional_route",
+    "action": "via",
+    "owner": "rank_title_only",
+    "line": 43,
+    "interpretation": "M126_FILES_LIMIT"
+   },
+   "trace": [
+    {
+     "tool": "index_observations",
+     "target": "Git HEAD",
+     "status": "indexed",
+     "count": 68
+    },
+    {
+     "tool": "select_goal",
+     "target": "via",
+     "status": "unique_quote"
+    },
+    {
+     "tool": "calls",
+     "target": "rank_title_only",
+     "status": "call_sites"
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "rank@116",
+     "status": "proved"
+    },
+    {
+     "tool": "prove_conditions",
+     "target": "rank_title_only@43",
+     "status": "proved"
+    }
+   ],
+   "claims": 4
+  }
+ ]
+}
