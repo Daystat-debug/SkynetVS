@@ -1,0 +1,30 @@
+{
+ "source":"2d69cbfe0d74d2419dabe818b9b932fbfc53e623",
+ "implementation":"6a193f6011c8498c65ebf2faa3fda1f219567504",
+ "rubric":"Coordinates for fixture rows are relative to the number of original lines. edge gives caller and callee as well as both marker coordinates and all required path:line pairs. A relation between the containing functions does not imply sequential execution of the two messages. state=answered requires every obligation. Budget six. No model-generated gold.",
+ "fixture":["","def assay_gate(temperature):","    if temperature <= -4:","        return 'Термометр ниже рабочей отметки'","    return 'Реактив готов к смешиванию'","","def assay_accept():","    note = 'Бирка партии распечатана'","    return assay_gate(5)","","def assay_dryer(manual):","    if manual:","        return 'Бирка партии распечатана'","    return 'Образец отправлен в сушильный шкаф'","","def assay_weigh(blob, expected_size):","    if len(blob) != expected_size:","        raise ValueError('WEIGHING_SIZE_MISMATCH')","    return 'Показание весов принято'"],
+ "cases":[
+  {"id":"A01","q":"Где обнаруживают, что длина полученного объекта отличается от заявленного размера?","path":"C","owner":"scan_head","line":119,"refs":[68,119],"action":"where"},
+  {"id":"A02","q":"Где при чтении репозитория отвергают содержимое, чей вычисленный идентификатор не совпал с ожидаемым?","path":"C","owner":"scan_head","line":122,"refs":[68,122],"action":"where"},
+  {"id":"A03","q":"Где сообщают, что за время обхода указатель на последний коммит успел смениться?","path":"C","owner":"scan_head","line":138,"refs":[68,138],"action":"where"},
+  {"id":"A04","q":"В каком месте выявляют повтор одного и того же кандидата после чередования результатов?","path":"R","owner":"interleave_3_to_1","line":106,"refs":[96,106],"action":"where"},
+  {"id":"A05","q":"При каких обстоятельствах после дополнения поисковой фразы её длина оказывается недопустимой?","path":"C","owner":"expand_query","line":53,"refs":[47,48,49,52,53],"controls":[["expand_query",53,["and",-48,52]]],"action":"when"},
+  {"id":"A06","q":"Когда при разборе заголовка запрещают неверное количество результатов «M126_TOP_N_INVALID»?","path":"T","owner":"rank_title_only","line":45,"refs":[34,40,41,42,43,44,45],"controls":[["rank_title_only",45,["and",-40,-42,44]]],"action":"when"},
+  {"id":"A07","q":"Кто передаёт параметры в место с «M126_TOP_N_INVALID»? Нужны сам вызов и условия перехода.","path":"T","owner":"rank_title_only","line":45,"refs":[34,40,41,42,43,44,45],"other_refs":{"R":[17,110,112,113,114,115,116]},"controls":[["rank",116,["and",-112,-114]],["rank_title_only",45,["and",-40,-42,44]]],"action":"via","caller":"rank","binding":"before_files ← `old_sources`"},
+  {"id":"A08","q":"Есть ли прямой вызов между «M127_TOP_LIMIT_INVALID» и «M130_OLD_TREE_EMPTY»?","edge":["rank","rank_symbols"],"marks":[["R",113],["S",76]],"must":{"R":[18,110,113,125],"S":[72,76]}},
+  {"id":"A09","q":"Есть ли вызов между «M141_INVALID_DISPLAY_CONTEXT» и «M134_REPORT_SCHEMA_INVALID»?","edge":["format_context","_render_current_head_labels"],"marks":[["C",204],["C",182]],"must":{"C":[175,182,202,204,226]}},
+  {"id":"A10","q":"Могут ли функции, одна из которых ругается на неверный заголовок, а другая — на ограничение числа файлов, обращаться друг к другу напрямую? Речь о проверке «M130_TITLE_INVALID» и о «M126_FILES_LIMIT».","edge":["rank","rank_title_only"],"marks":[["R",115],["T",43]],"must":{"R":[17,110,115,116],"T":[34,43]}},
+  {"id":"A11","q":"Есть ли прямой вызов между поиском участков без лексического совпадения и обнаружением смены коммита за время чтения репозитория?","edge":["search_repository","scan_head"],"marks":[["C",156],["C",138]],"must":{"C":[68,138,144,150,156]}},
+  {"id":"A12","q":"Когда выдаётся «M134_LS_TREE_RECORD_INVALID»?","reasons":["observation_ambiguous","diagnostic_ambiguous","clarification"]},
+  {"id":"A13","q":"Где сообщают, что размер зашифрованного почтового вложения превышает лимит почтового сервера?","reasons":["observation_ambiguous","observation_missing","clarification","no_match"]},
+  {"id":"A14","q":"Сколько раз за последний запуск изменился идентификатор коммита?","reasons":["observation_required"]},
+  {"id":"A15","q":"Где в modules/mailbox_guard.py отклоняют вложение?","reasons":["out_of_scope"]},
+  {"id":"F01","q":"Где написано, что образец отправлен в сушильный шкаф?","path":"R","owner":"assay_dryer","line":14,"refs":[11,14],"action":"where"},
+  {"id":"F02","q":"Когда термометр ниже рабочей отметки?","path":"R","owner":"assay_gate","line":4,"refs":[2,3,4],"controls":[["assay_gate",4,3]],"action":"when"},
+  {"id":"F03","q":"Где у весов выявляют несовпадение измеренной длины и ожидаемого размера?","path":"R","owner":"assay_weigh","line":18,"refs":[16,18],"action":"where"},
+  {"id":"F04","q":"Есть ли прямой вызов между «Реактив готов» и «Бирка партии»?","edge":["assay_accept","assay_gate"],"marks":[["R",8],["R",5]],"must":{"R":[2,5,7,8,9]}},
+  {"id":"F05","q":"Есть ли прямой вызов между «Образец отправлен» и «Показание весов»?","reasons":["path_unproven"]},
+  {"id":"F06","q":"Где в лабораторной части обещают автоматически продезинфицировать весы после каждого измерения?","reasons":["observation_missing","observation_ambiguous","clarification","no_match"]},
+  {"id":"F07","q":"От чего зависит, можно ли уже соединять химикаты?","path":"R","owner":"assay_gate","line":5,"refs":[2,3,4,5],"controls":[["assay_gate",5,-3]],"action":"when"}
+ ]
+}
