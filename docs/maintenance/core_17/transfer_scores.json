@@ -1,0 +1,2901 @@
+{
+ "metrics": {
+  "joint_plan": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 13,
+   "right": 7,
+   "wrong": 0,
+   "types": 20,
+   "facts": 7,
+   "full": 3,
+   "partial": 2,
+   "useful_partial": 3,
+   "false_complete": 0,
+   "refused": 14,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 17,
+    "runtime": 1,
+    "unverified_meaning": 1
+   },
+   "steps": 47,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 107.0
+  },
+  "identity_lexical": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 17,
+   "right": 8,
+   "wrong": 0,
+   "types": 20,
+   "facts": 8,
+   "full": 4,
+   "partial": 2,
+   "useful_partial": 3,
+   "false_complete": 0,
+   "refused": 13,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 16,
+    "runtime": 1,
+    "unverified_meaning": 1
+   },
+   "steps": 47,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 103.8
+  },
+  "identity_rank": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 17,
+   "right": 13,
+   "wrong": 5,
+   "types": 20,
+   "facts": 13,
+   "full": 8,
+   "partial": 3,
+   "useful_partial": 3,
+   "false_complete": 4,
+   "refused": 5,
+   "failed": 0,
+   "contrasts": [
+    [
+     "D4",
+     "D5"
+    ],
+    [
+     "P2",
+     "P4"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 6,
+    "runtime": 1,
+    "unverified_meaning": 1
+   },
+   "steps": 51,
+   "calls": 17,
+   "input_tokens": 11667,
+   "output_tokens": 321,
+   "median_ms": 377.1
+  },
+  "identity_contrast": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 17,
+   "right": 5,
+   "wrong": 1,
+   "types": 20,
+   "facts": 5,
+   "full": 2,
+   "partial": 2,
+   "useful_partial": 3,
+   "false_complete": 1,
+   "refused": 14,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 14,
+    "observation_missing": 4,
+    "runtime": 1,
+    "unverified_meaning": 1
+   },
+   "steps": 46,
+   "calls": 34,
+   "input_tokens": 18176,
+   "output_tokens": 758,
+   "median_ms": 586.5
+  },
+  "known_objects": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 13,
+   "right": 20,
+   "wrong": 0,
+   "types": 20,
+   "facts": 20,
+   "full": 14,
+   "partial": 3,
+   "useful_partial": 3,
+   "false_complete": 0,
+   "refused": 3,
+   "failed": 0,
+   "contrasts": [
+    [
+     "R1",
+     "R2"
+    ],
+    [
+     "R2",
+     "R3"
+    ],
+    [
+     "D1",
+     "D2"
+    ],
+    [
+     "D2",
+     "D3"
+    ],
+    [
+     "D4",
+     "D5"
+    ],
+    [
+     "P1",
+     "P2"
+    ],
+    [
+     "P2",
+     "P3"
+    ],
+    [
+     "P2",
+     "P4"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 4,
+    "runtime": 1,
+    "unverified_meaning": 1
+   },
+   "steps": 53,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 118.3
+  }
+ },
+ "questions": [
+  {
+   "id": "R1",
+   "question": "Где записано «M127_TITLE_INVALID»?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": 56,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": 56,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": 56,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": 56,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": 56,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "R2",
+   "question": "Где отклоняют пустой заголовок задачи перед ранжированием символов?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": null,
+       "rank": 11,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "X",
+       "kind": "site",
+       "gold": 56,
+       "chosen": 56,
+       "rank": 11,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "R3",
+   "question": "Где отклоняют недопустимый предел выдачи перед ранжированием символов?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "Y",
+       "kind": "site",
+       "gold": 57,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "Y",
+       "kind": "site",
+       "gold": 57,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "target": "Y",
+       "kind": "site",
+       "gold": 57,
+       "chosen": 47,
+       "rank": null,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "Y",
+       "kind": "site",
+       "gold": 57,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "Y",
+       "kind": "site",
+       "gold": 57,
+       "chosen": 57,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D1",
+   "question": "При каком условии появляется «Семафор запрещает движение»?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D2",
+   "question": "При каком условии путевой сигнал требует от машиниста остановиться?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": null,
+       "rank": 7,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": 68,
+       "rank": 7,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": null,
+       "rank": 7,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "missing",
+       "issues": [
+        "observation_missing"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 69,
+       "chosen": 69,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D3",
+   "question": "При каком условии путевой сигнал позволяет машинисту ехать дальше?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "condition",
+       "gold": 68,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "condition",
+       "gold": 68,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "condition",
+       "gold": 68,
+       "chosen": 68,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "condition",
+       "gold": 68,
+       "chosen": 70,
+       "rank": 3,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "decision": "contrast",
+       "issues": []
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "condition",
+       "gold": 68,
+       "chosen": 68,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D4",
+   "question": "Где перекрыт проезд через переезд?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "D",
+       "kind": "site",
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "D",
+       "kind": "site",
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "D",
+       "kind": "site",
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "D",
+       "kind": "site",
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "D",
+       "kind": "site",
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D5",
+   "question": "Где открыт проезд через переезд?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "subwords",
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D6",
+   "question": "Кто вызывает обработчик запрета по сигналу семафора и кто вызывает обработчик закрытого переезда?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "D",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "subwords",
+       "issues": []
+      },
+      {
+       "target": "D",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "subwords",
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "nomination",
+       "issues": []
+      },
+      {
+       "target": "D",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "target": "D",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "B",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "D",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D7",
+   "question": "Где «Семафор разрешает движение» и где сказано, что стрелка переведена на запасной путь?",
+   "arms": {
+    "joint_plan": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "site",
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "site",
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "site",
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "site",
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": "missing",
+       "issues": [
+        "observation_missing"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "site",
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D8",
+   "question": "Где описан сигнал семафора?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D9",
+   "question": "Где «Проезд через переезд открыт» и сколько раз это произошло вчера?",
+   "arms": {
+    "joint_plan": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "runtime",
+       "gold": 70,
+       "chosen": 70,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "runtime",
+       "gold": 70,
+       "chosen": 70,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "runtime",
+       "gold": 70,
+       "chosen": 70,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "runtime",
+       "gold": 70,
+       "chosen": 70,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "C",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "runtime",
+       "gold": 70,
+       "chosen": 70,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P1",
+   "question": "Кто вызывает обработчик эндотермического процесса в жидкости?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "E",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "E",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": null,
+       "rank": 10,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "E",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": null,
+       "rank": 10,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "E",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": null,
+       "rank": 10,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "missing",
+       "issues": [
+        "observation_missing"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "E",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": 68,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P2",
+   "question": "Кто вызывает обработчик экзотермического процесса в жидкости?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": null,
+       "rank": 6,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 6,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": null,
+       "rank": 6,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": 69,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P3",
+   "question": "Кто вызывает обработчик экзотермического процесса во внешней стенке?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "H",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "H",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": null,
+       "rank": 9,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "H",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": null,
+       "rank": 9,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "H",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": null,
+       "rank": 9,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "missing",
+       "issues": [
+        "observation_missing"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "H",
+       "kind": "caller",
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P4",
+   "question": "Кто вызывает обработчик отдачи тепла раствором?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "F",
+       "kind": "caller",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P5",
+   "question": "Где «Оболочка поглощает тепло» и где говорится об отдаче тепла раствором? Какие аргументы получает вторая функция?",
+   "arms": {
+    "joint_plan": {
+     "state": "partial",
+     "full": false,
+     "partial": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "F",
+       "kind": "site",
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "target": "F",
+       "kind": "arguments",
+       "gold": 69,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "partial",
+     "full": false,
+     "partial": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "F",
+       "kind": "site",
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "target": "F",
+       "kind": "arguments",
+       "gold": 69,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "F",
+       "kind": "site",
+       "gold": 69,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "decision": "nomination",
+       "issues": []
+      },
+      {
+       "target": "F",
+       "kind": "arguments",
+       "gold": 69,
+       "chosen": 68,
+       "rank": null,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "partial",
+     "full": false,
+     "partial": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "F",
+       "kind": "site",
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "target": "F",
+       "kind": "arguments",
+       "gold": 69,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "F",
+       "kind": "site",
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "F",
+       "kind": "arguments",
+       "gold": 69,
+       "chosen": 69,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P6",
+   "question": "Где описан теплообмен раствора?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": 68,
+       "rank": null,
+       "wrong": true,
+       "understood": false,
+       "fact": null,
+       "decision": "nomination",
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "ambiguous",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P7",
+   "question": "Где говорится о замерзании раствора?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "-",
+       "kind": "unsupported",
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P8",
+   "question": "Где говорится о поглощении тепла стенкой и какова цена замены этой стенки по договору?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "target": "-",
+       "kind": "external",
+       "gold": 70,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "unverified_meaning"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "target": "-",
+       "kind": "external",
+       "gold": 70,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "unverified_meaning"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": "nomination",
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "external",
+       "gold": 70,
+       "chosen": 70,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "unverified_meaning"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "target": "-",
+       "kind": "external",
+       "gold": 70,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "unverified_meaning"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "G",
+       "kind": "site",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "-",
+       "kind": "external",
+       "gold": 70,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "decision": null,
+       "issues": [
+        "unverified_meaning"
+       ]
+      }
+     ]
+    }
+   }
+  }
+ ]
+}
