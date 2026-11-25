@@ -1,0 +1,199 @@
+{
+ "base": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+ "implementation": "eb7630d",
+ "protocol": "Additional challenge written after implementation freeze and before either panel was scored. Real new expression and new domain. Keep technical paraphrases, paired contrasts without an interrogative verb and change of grammatical subject. No refitting. All experiments use the original five-file gate.",
+ "fixtures": {
+  "V": [
+   "",
+   "def reserve_seat(full):",
+   "    if full:",
+   "        return 'Резерв отклонён из-за нехватки кресел'",
+   "    return 'Резерв внесён в ведомость'",
+   "",
+   "def receive_order():",
+   "    return reserve_seat(False)",
+   "",
+   "def print_ticket(jammed):",
+   "    if jammed:",
+   "        return 'Билет застрял в принтере'",
+   "    return 'Билет передан зрителю'",
+   "",
+   "def dispatch_ticket():",
+   "    return print_ticket(True)"
+  ]
+ },
+ "targets": {
+  "X": [
+   "S",
+   "extract_symbols",
+   33,
+   "M127_INPUT_TOO_LARGE",
+   [
+    "and",
+    -30,
+    32
+   ],
+   "rank_symbols",
+   "S",
+   77,
+   [
+    "old_sources ← `old_sources`"
+   ]
+  ],
+  "A": [
+   "R",
+   "reserve_seat",
+   4,
+   "Резерв отклонён",
+   3,
+   "receive_order",
+   "R",
+   8,
+   [
+    "full ← `False`"
+   ]
+  ],
+  "B": [
+   "R",
+   "print_ticket",
+   12,
+   "Билет застрял",
+   11,
+   "dispatch_ticket",
+   "R",
+   16,
+   [
+    "jammed ← `True`"
+   ]
+  ]
+ },
+ "contrasts": [
+  [
+   "R1",
+   "R2"
+  ],
+  [
+   "V1",
+   "V2"
+  ],
+  [
+   "V3",
+   "V4"
+  ]
+ ],
+ "cases": [
+  [
+   "R1",
+   "«M127_INPUT_TOO_LARGE». Меня интересует непосредственный инициатор этой проверки.",
+   [
+    [
+     "инициатор",
+     "X",
+     "caller"
+    ]
+   ]
+  ],
+  [
+   "R2",
+   "«M127_INPUT_TOO_LARGE». Меня интересует входное значение этой проверки в точке обращения.",
+   [
+    [
+     "входное",
+     "X",
+     "arguments"
+    ]
+   ]
+  ],
+  [
+   "V1",
+   "Для «Билет застрял в принтере» нужен участок, откуда управление приходит в обработчик.",
+   [
+    [
+     "нужен участок",
+     "B",
+     "caller"
+    ]
+   ]
+  ],
+  [
+   "V2",
+   "Для «Билет застрял в принтере» нужен выбор ветви внутри обработчика.",
+   [
+    [
+     "нужен выбор",
+     "B",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "V3",
+   "По отказу резерва из-за нехватки кресел и застрявшему билету нужны имена вызывающих функций.",
+   [
+    [
+     "По отказу",
+     "A",
+     "caller"
+    ],
+    [
+     "застрявшему",
+     "B",
+     "caller"
+    ]
+   ]
+  ],
+  [
+   "V4",
+   "По отказу резерва из-за нехватки кресел и застрявшему билету нужны значения на входе в эти функции.",
+   [
+    [
+     "По отказу",
+     "A",
+     "arguments"
+    ],
+    [
+     "застрявшему",
+     "B",
+     "arguments"
+    ]
+   ]
+  ],
+  [
+   "V5",
+   "Покажи строку «Билет застрял в принтере» и стоимость его замены по накладной.",
+   [
+    [
+     "Покажи",
+     "B",
+     "site"
+    ],
+    [
+     "стоимость",
+     "-",
+     "external"
+    ]
+   ]
+  ],
+  [
+   "V6",
+   "Где «Резерв отклонён из-за нехватки кресел» и где «Билет застрял в принтере»? Назови вход для него.",
+   [
+    [
+     "Где",
+     "A",
+     "site"
+    ],
+    [
+     "где «Билет",
+     "B",
+     "site"
+    ],
+    [
+     "Назови",
+     "-",
+     "ambiguous"
+    ]
+   ]
+  ]
+ ]
+}
