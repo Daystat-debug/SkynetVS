@@ -86,6 +86,20 @@ def choose(question, catalog, policy):
         if len(hits) != 1:
             raise goals.NeedChoice(hits[:3])
         return hits[0], op, "unique_quote"
+    rows = lexical_rows(question,catalog,policy)
+    if not rows:
+        raise goals.route.control.Gap("observation_missing")
+    score, i, overlap = rows[0]
+    second = rows[1][0] if len(rows)>1 else 0
+    if overlap < 2 or score <= 1.4*max(1,second):
+        raise goals.route.control.Gap("observation_ambiguous")
+    numbers = set(re.findall(r"(?<!\w)\d+(?!\w)", question))
+    if not numbers.issubset(re.findall(r"(?<!\w)\d+(?!\w)", descriptor(catalog[i]))):
+        raise goals.route.control.Gap("observation_missing")
+    return catalog[i], op, policy
+
+
+def lexical_rows(question, catalog, policy):
     enriched = policy != "syntax"
     index = features() if enriched else {}
     query = set(goals.terms(question)) - STOP
@@ -109,16 +123,7 @@ def choose(question, catalog, policy):
                     (doc[w]+1.2*(.25+.75*doc.total()/max(1,avg))) for w in shared)
         rows.append((score, i, len(shared)))
     rows.sort(key=lambda row: (-row[0], row[1]))
-    if not rows:
-        raise goals.route.control.Gap("observation_missing")
-    score, i, overlap = rows[0]
-    second = rows[1][0] if len(rows)>1 else 0
-    if overlap < 2 or score <= 1.4*max(1,second):
-        raise goals.route.control.Gap("observation_ambiguous")
-    numbers = set(re.findall(r"(?<!\w)\d+(?!\w)", question))
-    if not numbers.issubset(re.findall(r"(?<!\w)\d+(?!\w)", descriptor(catalog[i]))):
-        raise goals.route.control.Gap("observation_missing")
-    return catalog[i], op, policy
+    return rows
 
 
 def relation(question):

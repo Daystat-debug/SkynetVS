@@ -38,6 +38,10 @@ def ground(text,catalog):
 
 
 def nominations(parts,catalog,commit,policy,select):
+    identity_model=scope.allocation.identity
+    if policy in identity_model.POLICIES:
+        return identity_model.propose(parts,catalog,policy,select,
+            lambda text:req.goals.quoted(text) or ORDINAL.search(text) or ANAPHOR.search(text))
     if policy=="object_offline" or policy in OFFLINE_FRAMES:
         return {}
     edges,_=resolve(parts,catalog,commit,policy)
@@ -94,8 +98,23 @@ def resolve(parts,catalog,commit,policy,suggestions=None):
                 indexed=slots[pos]
             # Prefer a grounded description even if a pronoun occurs elsewhere in it.
             try:
-                subject,how=ground(text,catalog)
+                if policy in scope.allocation.identity.POLICIES and suggestions and i in suggestions:
+                    record=suggestions[i]
+                    ix=record["chosen"]
+                    if record["why"]=="unavailable":
+                        subject,how=ground(text,catalog)
+                    elif type(ix) is int and ix in record["pool"] and 0<=ix<len(catalog):
+                        subject,how=catalog[ix],record["why"]
+                        numbers=set(re.findall(r"(?<!\w)\d+(?!\w)",text))
+                        if not numbers.issubset(re.findall(r"(?<!\w)\d+(?!\w)",req.language.descriptor(subject))):
+                            raise req.Gap("observation_missing")
+                    else:
+                        raise req.Gap("observation_missing" if record["why"]=="missing" else "observation_ambiguous")
+                else:
+                    subject,how=ground(text,catalog)
             except req.Gap:
+                if policy in scope.allocation.identity.POLICIES and suggestions and i in suggestions:
+                    raise
                 if suggestions and i in suggestions and not (quoted or pointer):
                     ix=suggestions[i]
                     subject=catalog[ix]

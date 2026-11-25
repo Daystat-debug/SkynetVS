@@ -1,0 +1,296 @@
+{
+ "metrics": {
+  "joint_plan": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 1,
+   "right": 0,
+   "wrong": 0,
+   "types": 2,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "false_complete": 0,
+   "refused": 1,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 2
+   },
+   "steps": 3,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 190.4
+  },
+  "identity_lexical": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 2,
+   "right": 0,
+   "wrong": 0,
+   "types": 0,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "false_complete": 0,
+   "refused": 0,
+   "contrasts": [],
+   "gaps": {
+    "stage_error": 2
+   },
+   "steps": 1,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 82.4
+  },
+  "identity_rank": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 2,
+   "right": 0,
+   "wrong": 0,
+   "types": 0,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "false_complete": 0,
+   "refused": 0,
+   "contrasts": [],
+   "gaps": {
+    "stage_error": 2
+   },
+   "steps": 1,
+   "calls": 1,
+   "input_tokens": 1057,
+   "output_tokens": 28,
+   "median_ms": 538.5
+  },
+  "identity_contrast": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 2,
+   "right": 0,
+   "wrong": 0,
+   "types": 0,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "false_complete": 0,
+   "refused": 0,
+   "contrasts": [],
+   "gaps": {
+    "stage_error": 2
+   },
+   "steps": 1,
+   "calls": 2,
+   "input_tokens": 1529,
+   "output_tokens": 75,
+   "median_ms": 945.3
+  },
+  "known_objects": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 1,
+   "right": 2,
+   "wrong": 0,
+   "types": 2,
+   "facts": 2,
+   "full": 1,
+   "partial": 0,
+   "false_complete": 0,
+   "refused": 0,
+   "contrasts": [],
+   "gaps": {},
+   "steps": 5,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 193.7
+  }
+ },
+ "questions": [
+  {
+   "id": "F10",
+   "question": "Кто обращается к обработчику слишком горячей обмотки и почему код сообщает о заедающей заслонке?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 70,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "decision": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "failed",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": null,
+       "rank": 15,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "stage_error"
+       ]
+      },
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 70,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "decision": "subwords",
+       "issues": [
+        "stage_error"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "failed",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": null,
+       "rank": 15,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "decision": "nomination",
+       "issues": [
+        "stage_error"
+       ]
+      },
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 70,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "decision": "nomination",
+       "issues": [
+        "stage_error"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "failed",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": null,
+       "rank": 15,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "stage_error"
+       ]
+      },
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 70,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "decision": "ambiguous",
+       "issues": [
+        "stage_error"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "target": "A",
+       "kind": "caller",
+       "gold": 68,
+       "chosen": 68,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      },
+      {
+       "target": "B",
+       "kind": "condition",
+       "gold": 70,
+       "chosen": 70,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "decision": null,
+       "issues": []
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

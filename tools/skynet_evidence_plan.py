@@ -1,8 +1,9 @@
 """Allocate the remaining host steps across expression-specific research obligations."""
 from itertools import combinations
+import skynet_semantic_identity as identity
 
 
-POLICIES = ("joint_order", "joint_cheapest", "joint_plan")
+POLICIES = ("joint_order", "joint_cheapest", "joint_plan") + identity.POLICIES
 
 
 class Products:
@@ -60,7 +61,7 @@ def ordered(policy, groups, decisions, effects, ctl, log):
     if products:
         products.requested.update(effects[t].fn.node for t in pending if t in effects and "arguments" in requests[t])
 
-    def identity(t):
+    def coordinates(t):
         if t not in effects:
             return ("~", t, 0)
         e = effects[t]
@@ -87,11 +88,11 @@ def ordered(policy, groups, decisions, effects, ctl, log):
         # A bounded 2^8 search over sets. Each real tool still enforces its original charge.
         remaining = search.budget - len(search.trace)
         keys = {t:operations(t) for t in pending}
-        by_cost = sorted(pending, key=lambda t:(t not in effects,len(keys[t]),identity(t)))
+        by_cost = sorted(pending, key=lambda t:(t not in effects,len(keys[t]),coordinates(t)))
         selected = by_cost
         if policy == "joint_order":
             selected = pending
-        elif policy == "joint_plan":
+        elif policy == "joint_plan" or policy in identity.POLICIES:
             best = (0,0)
             for n in range(1,len(by_cost)+1):
                 for subset in combinations(by_cost,n):

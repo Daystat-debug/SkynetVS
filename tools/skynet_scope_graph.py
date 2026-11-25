@@ -97,9 +97,9 @@ def interpret(parts, edges, effects, policy):
     return link(parts, edges, predicates(parts, edges, effects), policy)
 
 
-def verify(parts, meta, claims, catalog, commit, policy):
+def verify(parts, meta, claims, catalog, commit, policy, suggestions=None):
     import skynet_object_binding as objects
-    edges, effects = objects.resolve(parts, catalog, commit, policy)
+    edges, effects = objects.resolve(parts, catalog, commit, policy, suggestions)
     decisions = interpret(parts, edges, effects, policy)
     for p, d, (needs, issues, _) in zip(meta["parts"], decisions, relation.plan(decisions), strict=True):
         if (p["need"] != needs or not set(issues) <= set(p["issues"])

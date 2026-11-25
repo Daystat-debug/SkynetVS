@@ -1,0 +1,1736 @@
+{
+ "panel_blob": "05e893d67c4002dfcb0560a9786059dcddeaf462",
+ "rows": [
+  {
+   "id": "F10",
+   "question": "Кто обращается к обработчику слишком горячей обмотки и почему код сообщает о заедающей заслонке?",
+   "snapshot": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+   "joint_plan": {
+    "scores": [
+     {
+      "object": false,
+      "requirement": true,
+      "joint": false,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "object"
+     },
+     {
+      "object": false,
+      "requirement": true,
+      "joint": false,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "object"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "identity": [
+     {
+      "cue": "Кто обращается к обработчику слишком горячей обмотки",
+      "target": "A",
+      "kind": "caller",
+      "gold": 68,
+      "chosen": null,
+      "wrong": false,
+      "direct_search": true,
+      "rank": null,
+      "first": null,
+      "reviewed": false,
+      "decision": null,
+      "hypothesis": {},
+      "via": "unresolved",
+      "issues": [
+       "observation_ambiguous"
+      ],
+      "understood": true,
+      "fact": false,
+      "coordinates": null
+     },
+     {
+      "cue": "и почему код сообщает о заедающей заслонке",
+      "target": "B",
+      "kind": "condition",
+      "gold": 70,
+      "chosen": null,
+      "wrong": false,
+      "direct_search": true,
+      "rank": 2,
+      "first": null,
+      "reviewed": false,
+      "decision": null,
+      "hypothesis": {},
+      "via": "unresolved",
+      "issues": [
+       "observation_ambiguous"
+      ],
+      "understood": true,
+      "fact": false,
+      "coordinates": null
+     }
+    ],
+    "useful_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 1,
+         "requests": [
+          "caller"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 4,
+         "estimated_steps": 1,
+         "requests": [
+          "condition"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+     "parts": [
+      {
+       "start": 0,
+       "end": 53,
+       "text": "Кто обращается к обработчику слишком горячей обмотки ",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "caller",
+        "initial": "caller",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "caller"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 53,
+       "end": 96,
+       "text": "и почему код сообщает о заедающей заслонке?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "condition",
+        "initial": "condition",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "condition"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "observation_ambiguous",
+     "collector_log": []
+    }
+   },
+   "identity_lexical": {
+    "scores": [
+     {
+      "object": false,
+      "requirement": true,
+      "joint": false,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "object"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "identity": [
+     {
+      "cue": "Кто обращается к обработчику слишком горячей обмотки",
+      "target": "A",
+      "kind": "caller",
+      "gold": 68,
+      "chosen": null,
+      "wrong": false,
+      "direct_search": true,
+      "rank": 15,
+      "first": null,
+      "reviewed": false,
+      "decision": "ambiguous",
+      "hypothesis": {
+       "pool": [
+        63,
+        41,
+        74,
+        46,
+        42,
+        69,
+        75,
+        0,
+        39,
+        70,
+        40,
+        72,
+        33,
+        32,
+        68,
+        16
+       ],
+       "first": null,
+       "chosen": null,
+       "why": "ambiguous"
+      },
+      "via": "unresolved",
+      "issues": [
+       "observation_ambiguous"
+      ],
+      "understood": true,
+      "fact": false,
+      "coordinates": null
+     },
+     {
+      "cue": "и почему код сообщает о заедающей заслонке",
+      "target": "B",
+      "kind": "condition",
+      "gold": 70,
+      "chosen": 70,
+      "wrong": false,
+      "direct_search": true,
+      "rank": 2,
+      "first": 70,
+      "reviewed": false,
+      "decision": "subwords",
+      "hypothesis": {
+       "pool": [
+        71,
+        70,
+        74,
+        69,
+        75,
+        43,
+        31,
+        26,
+        72,
+        20,
+        32,
+        68,
+        38,
+        16,
+        19,
+        45
+       ],
+       "first": 70,
+       "chosen": 70,
+       "why": "subwords"
+      },
+      "via": "subwords",
+      "issues": [],
+      "understood": true,
+      "fact": true,
+      "coordinates": {
+       "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_gate",
+       "line": 167,
+       "column": 15,
+       "end": 167,
+       "end_column": 44
+      }
+     }
+    ],
+    "useful_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 1,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "condition"
+         ]
+        },
+        {
+         "target": 0,
+         "remaining": 3,
+         "estimated_steps": 1,
+         "requests": [
+          "caller"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_gate",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "read_gate@167",
+       "status": "proved"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В read_gate на строке 167 записано выражение `'Заслонка заела'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В read_gate исследована инструкция `return 'Заслонка заела'` (стр. 167). Для достижения строки требуется: `jammed` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "read_gate",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "jammed"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+     "parts": [
+      {
+       "start": 0,
+       "end": 53,
+       "text": "Кто обращается к обработчику слишком горячей обмотки ",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "caller",
+        "initial": "caller",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "caller"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 53,
+       "end": 96,
+       "text": "и почему код сообщает о заедающей заслонке?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_gate",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 44
+        },
+        "via": "subwords",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "initial": "condition",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "condition"
+        ],
+        "revised": false,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_gate",
+       "line": 167,
+       "schedule": [
+        "site",
+        "condition"
+       ],
+       "collected": [
+        "site",
+        "condition"
+       ],
+       "gaps": {}
+      }
+     ]
+    }
+   },
+   "identity_rank": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "identity": [
+     {
+      "cue": "Кто обращается к обработчику слишком горячей обмотки",
+      "target": "A",
+      "kind": "caller",
+      "gold": 68,
+      "chosen": 68,
+      "wrong": false,
+      "direct_search": true,
+      "rank": 15,
+      "first": 68,
+      "reviewed": false,
+      "decision": "nomination",
+      "hypothesis": {
+       "pool": [
+        63,
+        41,
+        74,
+        46,
+        42,
+        69,
+        75,
+        0,
+        39,
+        70,
+        40,
+        72,
+        33,
+        32,
+        68,
+        16
+       ],
+       "first": 68,
+       "chosen": 68,
+       "why": "nomination",
+       "second": null
+      },
+      "via": "nomination",
+      "issues": [],
+      "understood": true,
+      "fact": true,
+      "coordinates": {
+       "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_coil",
+       "line": 159,
+       "column": 15,
+       "end": 159,
+       "end_column": 50
+      }
+     },
+     {
+      "cue": "и почему код сообщает о заедающей заслонке",
+      "target": "B",
+      "kind": "condition",
+      "gold": 70,
+      "chosen": 70,
+      "wrong": false,
+      "direct_search": true,
+      "rank": 2,
+      "first": 70,
+      "reviewed": false,
+      "decision": "nomination",
+      "hypothesis": {
+       "pool": [
+        71,
+        70,
+        74,
+        69,
+        75,
+        43,
+        31,
+        26,
+        72,
+        20,
+        32,
+        68,
+        38,
+        16,
+        19,
+        45
+       ],
+       "first": 70,
+       "chosen": 70,
+       "why": "nomination",
+       "second": null
+      },
+      "via": "nomination",
+      "issues": [],
+      "understood": true,
+      "fact": true,
+      "coordinates": {
+       "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_gate",
+       "line": 167,
+       "column": 15,
+       "end": 167,
+       "end_column": 44
+      }
+     }
+    ],
+    "useful_partial": false,
+    "calls": [
+     "F10/identity_rank/0"
+    ],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "caller"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "condition"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_coil",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_coil",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_gate",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "read_gate@167",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_coil на строке 159 записано выражение `'Катушка перегрета'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В poll_coil на строке 163 записан прямой вызов check_coil.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "poll_coil",
+        "check_coil"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В read_gate на строке 167 записано выражение `'Заслонка заела'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В read_gate исследована инструкция `return 'Заслонка заела'` (стр. 167). Для достижения строки требуется: `jammed` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "read_gate",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "jammed"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+     "parts": [
+      {
+       "start": 0,
+       "end": 53,
+       "text": "Кто обращается к обработчику слишком горячей обмотки ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_coil",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 50
+        },
+        "via": "nomination",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "initial": "caller",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "caller"
+        ],
+        "revised": false,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      },
+      {
+       "start": 53,
+       "end": 96,
+       "text": "и почему код сообщает о заедающей заслонке?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_gate",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 44
+        },
+        "via": "nomination",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "initial": "condition",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "condition"
+        ],
+        "revised": false,
+        "direct": [
+         3
+        ],
+        "support": [
+         2
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_coil",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_gate",
+       "line": 167,
+       "schedule": [
+        "site",
+        "condition"
+       ],
+       "collected": [
+        "site",
+        "condition"
+       ],
+       "gaps": {}
+      }
+     ]
+    }
+   },
+   "identity_contrast": {
+    "scores": [
+     {
+      "object": false,
+      "requirement": true,
+      "joint": false,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "object"
+     },
+     {
+      "object": false,
+      "requirement": true,
+      "joint": false,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "object"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "identity": [
+     {
+      "cue": "Кто обращается к обработчику слишком горячей обмотки",
+      "target": "A",
+      "kind": "caller",
+      "gold": 68,
+      "chosen": null,
+      "wrong": false,
+      "direct_search": true,
+      "rank": 15,
+      "first": 68,
+      "reviewed": true,
+      "decision": "ambiguous",
+      "hypothesis": {
+       "pool": [
+        63,
+        41,
+        74,
+        46,
+        42,
+        69,
+        75,
+        0,
+        39,
+        70,
+        40,
+        72,
+        33,
+        32,
+        68,
+        16
+       ],
+       "first": 68,
+       "chosen": null,
+       "why": "ambiguous",
+       "second": null,
+       "review": [
+        46,
+        74,
+        41,
+        63,
+        69,
+        68
+       ]
+      },
+      "via": "unresolved",
+      "issues": [
+       "observation_ambiguous"
+      ],
+      "understood": true,
+      "fact": false,
+      "coordinates": null
+     },
+     {
+      "cue": "и почему код сообщает о заедающей заслонке",
+      "target": "B",
+      "kind": "condition",
+      "gold": 70,
+      "chosen": null,
+      "wrong": false,
+      "direct_search": true,
+      "rank": 2,
+      "first": 70,
+      "reviewed": true,
+      "decision": "ambiguous",
+      "hypothesis": {
+       "pool": [
+        71,
+        70,
+        74,
+        69,
+        75,
+        43,
+        31,
+        26,
+        72,
+        20,
+        32,
+        68,
+        38,
+        16,
+        19,
+        45
+       ],
+       "first": 70,
+       "chosen": null,
+       "why": "ambiguous",
+       "second": null,
+       "review": [
+        43,
+        75,
+        69,
+        74,
+        71,
+        70
+       ]
+      },
+      "via": "unresolved",
+      "issues": [
+       "observation_ambiguous"
+      ],
+      "understood": true,
+      "fact": false,
+      "coordinates": null
+     }
+    ],
+    "useful_partial": false,
+    "calls": [
+     "F10/identity_contrast/0",
+     "F10/identity_contrast/1"
+    ],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 1,
+         "requests": [
+          "caller"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 4,
+         "estimated_steps": 1,
+         "requests": [
+          "condition"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+     "parts": [
+      {
+       "start": 0,
+       "end": 53,
+       "text": "Кто обращается к обработчику слишком горячей обмотки ",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "caller",
+        "initial": "caller",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "caller"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 53,
+       "end": 96,
+       "text": "и почему код сообщает о заедающей заслонке?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "condition",
+        "initial": "condition",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "condition"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "observation_ambiguous",
+     "collector_log": []
+    }
+   },
+   "known_objects": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "identity": [
+     {
+      "cue": "Кто обращается к обработчику слишком горячей обмотки",
+      "target": "A",
+      "kind": "caller",
+      "gold": 68,
+      "chosen": 68,
+      "wrong": false,
+      "direct_search": true,
+      "rank": null,
+      "first": null,
+      "reviewed": false,
+      "decision": null,
+      "hypothesis": {},
+      "via": "oracle_object",
+      "issues": [],
+      "understood": true,
+      "fact": true,
+      "coordinates": {
+       "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_coil",
+       "line": 159,
+       "column": 15,
+       "end": 159,
+       "end_column": 50
+      }
+     },
+     {
+      "cue": "и почему код сообщает о заедающей заслонке",
+      "target": "B",
+      "kind": "condition",
+      "gold": 70,
+      "chosen": 70,
+      "wrong": false,
+      "direct_search": true,
+      "rank": 2,
+      "first": null,
+      "reviewed": false,
+      "decision": null,
+      "hypothesis": {},
+      "via": "oracle_object",
+      "issues": [],
+      "understood": true,
+      "fact": true,
+      "coordinates": {
+       "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_gate",
+       "line": 167,
+       "column": 15,
+       "end": 167,
+       "end_column": 44
+      }
+     }
+    ],
+    "useful_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "caller"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "condition"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_coil",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_coil",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_gate",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "read_gate@167",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_coil на строке 159 записано выражение `'Катушка перегрета'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В poll_coil на строке 163 записан прямой вызов check_coil.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "poll_coil",
+        "check_coil"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В read_gate на строке 167 записано выражение `'Заслонка заела'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В read_gate исследована инструкция `return 'Заслонка заела'` (стр. 167). Для достижения строки требуется: `jammed` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "read_gate",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "jammed"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+     "parts": [
+      {
+       "start": 0,
+       "end": 53,
+       "text": "Кто обращается к обработчику слишком горячей обмотки ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_coil",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 50
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "initial": "caller",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "caller"
+        ],
+        "revised": false,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      },
+      {
+       "start": 53,
+       "end": 96,
+       "text": "и почему код сообщает о заедающей заслонке?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "fb160261c06dda862ac57c25951c59d7bd3eb723",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_gate",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 44
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "initial": "condition",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "condition"
+        ],
+        "revised": false,
+        "direct": [
+         3
+        ],
+        "support": [
+         2
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_coil",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_gate",
+       "line": 167,
+       "schedule": [
+        "site",
+        "condition"
+       ],
+       "collected": [
+        "site",
+        "condition"
+       ],
+       "gaps": {}
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "ms": {
+  "F10": {
+   "joint_plan": 178.8,
+   "identity_lexical": 145.5,
+   "identity_rank": 791.2,
+   "identity_contrast": 1052.5,
+   "known_objects": 178.8
+  }
+ },
+ "metrics": {
+  "joint_plan": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 1,
+   "right": 0,
+   "wrong": 0,
+   "types": 2,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 0,
+   "refused": 1,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 2
+   },
+   "steps": 3,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 178.8
+  },
+  "identity_lexical": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 2,
+   "right": 1,
+   "wrong": 0,
+   "types": 2,
+   "facts": 1,
+   "full": 0,
+   "partial": 0,
+   "useful_partial": 1,
+   "false_complete": 0,
+   "refused": 0,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 1
+   },
+   "steps": 4,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 145.5
+  },
+  "identity_rank": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 2,
+   "right": 2,
+   "wrong": 0,
+   "types": 2,
+   "facts": 2,
+   "full": 1,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 0,
+   "refused": 0,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {},
+   "steps": 5,
+   "calls": 1,
+   "input_tokens": 1073,
+   "output_tokens": 50,
+   "median_ms": 791.2
+  },
+  "identity_contrast": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 2,
+   "right": 0,
+   "wrong": 0,
+   "types": 2,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 0,
+   "refused": 1,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 2
+   },
+   "steps": 3,
+   "calls": 2,
+   "input_tokens": 1597,
+   "output_tokens": 78,
+   "median_ms": 1052.5
+  },
+  "known_objects": {
+   "static": 2,
+   "searched": 2,
+   "candidates": 1,
+   "right": 2,
+   "wrong": 0,
+   "types": 2,
+   "facts": 2,
+   "full": 1,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 0,
+   "refused": 0,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {},
+   "steps": 5,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 178.8
+  }
+ },
+ "generations": {
+  "F10/identity_rank/0": {
+   "digest": "823ee798a715f5ed9415b1db74e52a83a4bc9307b64947f5f23b5689e550afff",
+   "raw": "{\n  \"0\": {\n    \"0\": 15,\n    \"1\": 0\n  },\n  \"1\": {\n    \"0\": 2,\n    \"1\": 0\n  }\n}",
+   "wall_ms": 610.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 1073,
+   "completion_tokens": 50,
+   "prompt_ms": 207.184,
+   "predicted_ms": 378.375,
+   "predicted_per_second": 129.501
+  },
+  "F10/identity_contrast/0": {
+   "digest": "823ee798a715f5ed9415b1db74e52a83a4bc9307b64947f5f23b5689e550afff",
+   "raw": "{\n  \"0\": {\n    \"0\": 15,\n    \"1\": 0\n  },\n  \"1\": {\n    \"0\": 2,\n    \"1\": 0\n  }\n}",
+   "wall_ms": 578.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 1073,
+   "completion_tokens": 50,
+   "prompt_ms": 186.481,
+   "predicted_ms": 376.763,
+   "predicted_per_second": 130.055
+  },
+  "F10/identity_contrast/1": {
+   "digest": "0da0d9ee884a141241505f9e12b3982b2131290d9be2eaa4a535398f7b87758d",
+   "raw": "{\n  \"0\": [2, \"check_coil\"],\n  \"1\": [0, \"\"]\n}",
+   "wall_ms": 344.0,
+   "finish_reason": "stop",
+   "prompt_tokens": 524,
+   "completion_tokens": 28,
+   "prompt_ms": 101.428,
+   "predicted_ms": 205.316,
+   "predicted_per_second": 131.505
+  }
+ },
+ "sessions": [
+  {
+   "startup_s": 6.109,
+   "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+   "runtime_sha256": "bac6914b5e83523eb008c6789eaa12669f93fbc196c3b9e8237b6672323b33e9"
+  }
+ ]
+}
