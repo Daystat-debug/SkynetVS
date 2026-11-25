@@ -1,0 +1,276 @@
+{
+ "base": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+ "protocol": "Frozen before implementation. No fitting or threshold selection on these questions or their variants. Evaluate end-to-end at same snapshot, host budgets and evidence scope. Contrasts require correct answer to BOTH and different directly requested kinds; support dependencies alone cannot satisfy a contrast. Score exact object, exact requested evidence closure and joint per supported demand, complete/partial/false complete, unresolved reasons, latency and calls. Compare object_offline, new history-only nearest-neighbour with same object resolver, and relational projection. Train only on pre-0.14 materials. Report all rows including failures.",
+ "fixtures": {
+  "K": [
+   "",
+   "def grade_sample(porous):",
+   "    if porous:",
+   "        return 'Керн отправлен на просушку'",
+   "    return 'Керн допущен к анализу'",
+   "",
+   "def inspect_core():",
+   "    return grade_sample(True)",
+   "",
+   "def label_vial(faded):",
+   "    if faded:",
+   "        return 'Маркировка ампулы стёрта'",
+   "    return 'Номер ампулы читается'",
+   "",
+   "def inspect_vial():",
+   "    return label_vial(False)"
+  ]
+ },
+ "targets": {
+  "X": [
+   "C",
+   "expand_query",
+   53,
+   "M134_EXPANDED_QUERY_TOO_LONG",
+   [
+    "and",
+    -48,
+    52
+   ],
+   "search_repository",
+   "C",
+   146,
+   [
+    "goal ← `goal`"
+   ]
+  ],
+  "A": [
+   "R",
+   "grade_sample",
+   4,
+   "Керн отправлен",
+   3,
+   "inspect_core",
+   "R",
+   8,
+   [
+    "porous ← `True`"
+   ]
+  ],
+  "B": [
+   "R",
+   "label_vial",
+   12,
+   "Маркировка ампулы",
+   11,
+   "inspect_vial",
+   "R",
+   16,
+   [
+    "faded ← `False`"
+   ]
+  ]
+ },
+ "contrasts": [
+  [
+   "R1",
+   "R2"
+  ],
+  [
+   "R2",
+   "R3"
+  ],
+  [
+   "K1",
+   "K2"
+  ],
+  [
+   "K2",
+   "K3"
+  ],
+  [
+   "K4",
+   "K5"
+  ]
+ ],
+ "cases": [
+  [
+   "R1",
+   "Какое условие приводит к «M134_EXPANDED_QUERY_TOO_LONG»?",
+   [
+    [
+     "Какое",
+     "X",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "R2",
+   "Из какой функции обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+   [
+    [
+     "Из какой",
+     "X",
+     "caller"
+    ]
+   ]
+  ],
+  [
+   "R3",
+   "С каким аргументом обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+   [
+    [
+     "С каким",
+     "X",
+     "arguments"
+    ]
+   ]
+  ],
+  [
+   "K1",
+   "Где в исходнике говорится о просушке керна?",
+   [
+    [
+     "Где",
+     "A",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "K2",
+   "При каком условии говорится о просушке керна?",
+   [
+    [
+     "При каком",
+     "A",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "K3",
+   "Какой параметр получает обработчик сообщения о просушке керна со стороны вызывающего кода?",
+   [
+    [
+     "Какой",
+     "A",
+     "arguments"
+    ]
+   ]
+  ],
+  [
+   "K4",
+   "Кто вызывает обработчик «Маркировка ампулы стёрта» и «Керн отправлен на просушку»?",
+   [
+    [
+     "Кто",
+     "B",
+     "caller"
+    ],
+    [
+     "и «Керн",
+     "A",
+     "caller"
+    ]
+   ]
+  ],
+  [
+   "K5",
+   "Покажи условия для «Маркировка ампулы стёрта» и «Керн отправлен на просушку».",
+   [
+    [
+     "Покажи",
+     "B",
+     "condition"
+    ],
+    [
+     "и «Керн",
+     "A",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "K6",
+   "Найди «Керн отправлен на просушку» и «Маркировка ампулы стёрта». Что передано обработчику второй?",
+   [
+    [
+     "Найди",
+     "A",
+     "site"
+    ],
+    [
+     "и «Маркировка",
+     "B",
+     "site"
+    ],
+    [
+     "Что передано",
+     "B",
+     "arguments"
+    ]
+   ]
+  ],
+  [
+   "K7",
+   "Где «Маркировка ампулы стёрта» и где «Керн отправлен на просушку»? Кто обращается к его обработчику?",
+   [
+    [
+     "Где",
+     "B",
+     "site"
+    ],
+    [
+     "где «Керн",
+     "A",
+     "site"
+    ],
+    [
+     "Кто",
+     "-",
+     "ambiguous"
+    ]
+   ]
+  ],
+  [
+   "K8",
+   "Назови условие для «Маркировка ампулы стёрта» и фамилию изготовителя этой ампулы.",
+   [
+    [
+     "Назови",
+     "B",
+     "condition"
+    ],
+    [
+     "фамилию",
+     "-",
+     "external"
+    ]
+   ]
+  ],
+  [
+   "K9",
+   "Кто посылает образец породы сушиться?",
+   [
+    [
+     "Кто",
+     "A",
+     "caller"
+    ]
+   ]
+  ],
+  [
+   "K10",
+   "Где «Керн отправлен на просушку» и сколько раз такое случилось вчера?",
+   [
+    [
+     "Где",
+     "A",
+     "site"
+    ],
+    [
+     "сколько раз",
+     "-",
+     "runtime"
+    ]
+   ]
+  ]
+ ]
+}
