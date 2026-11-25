@@ -1,0 +1,624 @@
+[
+  {
+    "question": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» и «M127_OLD_SOURCES_INVALID» из каких функций вызываются их обработчики?",
+    "result": {
+      "state": "answered",
+      "plan": "task_parts",
+      "steps": [
+        {
+          "tool": "interpret_parts",
+          "target": "question",
+          "status": "interpreted",
+          "count": 2
+        },
+        {
+          "tool": "locate_observation",
+          "target": "1",
+          "status": "located",
+          "owner": "expand_query",
+          "line": 49
+        },
+        {
+          "tool": "calls",
+          "target": "expand_query",
+          "status": "call_sites"
+        },
+        {
+          "tool": "locate_observation",
+          "target": "2",
+          "status": "located",
+          "owner": "extract_symbols",
+          "line": 31
+        },
+        {
+          "tool": "calls",
+          "target": "extract_symbols",
+          "status": "call_sites"
+        }
+      ],
+      "claims": [
+        {
+          "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+          "refs": [
+            {
+              "id": "E088706269e71f574",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 47,
+              "end": 47,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "ae54e34d09e0d4e13ed3d877521a779ddef69eb422fb720bb99383642fbb76b9",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L47-L47"
+            },
+            {
+              "id": "Ed5841761523a6d8b",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 49,
+              "end": 49,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "d359f6373cc8a5965cb16128712e3183de0209f4a6cc293090cf73569d52b368",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L49-L49"
+            }
+          ],
+          "kind": "site"
+        },
+        {
+          "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+          "refs": [
+            {
+              "id": "E088706269e71f574",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 47,
+              "end": 47,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "ae54e34d09e0d4e13ed3d877521a779ddef69eb422fb720bb99383642fbb76b9",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L47-L47"
+            },
+            {
+              "id": "Ec69f469006b3920a",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 144,
+              "end": 144,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "9194abc9b9ff3b76cbf26189f4df2acde68c6757423c97b8687a52a8af5e6634",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L144-L144"
+            },
+            {
+              "id": "Ea63911dc003d941f",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 146,
+              "end": 146,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "9303d5b02e864f065de48649f707e42f92af7706bf010a6114e30787463ef5fb",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L146-L146"
+            }
+          ],
+          "edge": [
+            "search_repository",
+            "expand_query"
+          ],
+          "kind": "caller"
+        },
+        {
+          "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+          "refs": [
+            {
+              "id": "E494f5fc44d7f02c7",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "start": 28,
+              "end": 28,
+              "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+              "excerpt_sha256": "1486d37ed353bd6d954dd5adc50c8bcd9a3369b2d1de114a20fb39e714b2088c",
+              "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L28-L28"
+            },
+            {
+              "id": "Efaa15d580727b8b3",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "start": 31,
+              "end": 31,
+              "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+              "excerpt_sha256": "d5962604980efa3ed0998a67c663deaf3cf38d4ef39a41dc9227db182709780b",
+              "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L31-L31"
+            }
+          ],
+          "kind": "site"
+        },
+        {
+          "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+          "refs": [
+            {
+              "id": "E494f5fc44d7f02c7",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "start": 28,
+              "end": 28,
+              "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+              "excerpt_sha256": "1486d37ed353bd6d954dd5adc50c8bcd9a3369b2d1de114a20fb39e714b2088c",
+              "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L28-L28"
+            },
+            {
+              "id": "E5c2b287468f13a71",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "start": 72,
+              "end": 72,
+              "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+              "excerpt_sha256": "7ab8331806d35534da64e7870e1871cb3d0b2fa8cd51ca3cbf8a428b9a1f30c4",
+              "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L72-L72"
+            },
+            {
+              "id": "E085eae3542d25453",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "start": 77,
+              "end": 77,
+              "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+              "excerpt_sha256": "2d6b1c008a131e45894e243a5c0db2dc05396e99bfa2f7280b92827d66d366a2",
+              "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L77-L77"
+            }
+          ],
+          "edge": [
+            "rank_symbols",
+            "extract_symbols"
+          ],
+          "kind": "caller"
+        }
+      ],
+      "snapshot": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+      "parts": [
+        {
+          "start": 0,
+          "end": 34,
+          "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+          "binding": {
+            "target": 0,
+            "object": {
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "owner": "expand_query",
+              "line": 49,
+              "column": 25,
+              "end": 49,
+              "end_column": 54
+            },
+            "via": "quote",
+            "antecedent": null,
+            "gap": null,
+            "tentative": false
+          },
+          "need": [
+            "site",
+            "caller"
+          ],
+          "issues": [],
+          "target": 0,
+          "claims": [
+            0,
+            1
+          ],
+          "status": "established",
+          "relation": {
+            "kind": "caller",
+            "initial": null,
+            "origins": [
+              1
+            ],
+            "alternatives": [
+              "caller"
+            ],
+            "revised": true,
+            "direct": [
+              1
+            ],
+            "support": [
+              0
+            ]
+          }
+        },
+        {
+          "start": 34,
+          "end": 106,
+          "text": "и «M127_OLD_SOURCES_INVALID» из каких функций вызываются их обработчики?",
+          "binding": {
+            "target": 1,
+            "object": {
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "owner": "extract_symbols",
+              "line": 31,
+              "column": 25,
+              "end": 31,
+              "end_column": 51
+            },
+            "via": "quote",
+            "antecedent": null,
+            "gap": null,
+            "tentative": false
+          },
+          "need": [
+            "site",
+            "caller"
+          ],
+          "issues": [],
+          "target": 1,
+          "claims": [
+            2,
+            3
+          ],
+          "status": "established",
+          "relation": {
+            "kind": "caller",
+            "initial": "caller",
+            "origins": [
+              1
+            ],
+            "alternatives": [
+              "caller"
+            ],
+            "revised": false,
+            "direct": [
+              3
+            ],
+            "support": [
+              2
+            ]
+          }
+        }
+      ],
+      "coverage": "static_subset",
+      "execution_observed": false
+    }
+  },
+  {
+    "question": "Укажи место «M134_GOAL_EMPTY_OR_TOO_LONG» и «M127_OLD_SOURCES_INVALID» и назови условие для «M134_EXPANDED_QUERY_TOO_LONG».",
+    "result": {
+      "state": "partial",
+      "plan": "task_parts",
+      "steps": [
+        {
+          "tool": "interpret_parts",
+          "target": "question",
+          "status": "interpreted",
+          "count": 3
+        },
+        {
+          "tool": "locate_observation",
+          "target": "1",
+          "status": "located",
+          "owner": "expand_query",
+          "line": 49
+        },
+        {
+          "tool": "locate_observation",
+          "target": "3",
+          "status": "located",
+          "owner": "expand_query",
+          "line": 53
+        },
+        {
+          "tool": "prove_conditions",
+          "target": "expand_query@53",
+          "status": "proved"
+        }
+      ],
+      "claims": [
+        {
+          "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+          "refs": [
+            {
+              "id": "E088706269e71f574",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 47,
+              "end": 47,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "ae54e34d09e0d4e13ed3d877521a779ddef69eb422fb720bb99383642fbb76b9",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L47-L47"
+            },
+            {
+              "id": "Ed5841761523a6d8b",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 49,
+              "end": 49,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "d359f6373cc8a5965cb16128712e3183de0209f4a6cc293090cf73569d52b368",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L49-L49"
+            }
+          ],
+          "kind": "site"
+        },
+        {
+          "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+          "refs": [
+            {
+              "id": "E088706269e71f574",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 47,
+              "end": 47,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "ae54e34d09e0d4e13ed3d877521a779ddef69eb422fb720bb99383642fbb76b9",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L47-L47"
+            },
+            {
+              "id": "E73c9526732b4ed59",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 53,
+              "end": 53,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "ba196773c8a6699a347444be9bd08d616271cb1e1bc88a5455b66b3b150e7fd2",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L53-L53"
+            }
+          ],
+          "kind": "site"
+        },
+        {
+          "text": "В expand_query исследована инструкция `raise ValueError('M134_EXPANDED_QUERY_TOO_LONG')` (стр. 53). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` ложно (стр. 48) и `len(text) > 2048 or len(text.encode('utf-8')) > 4096` истинно (стр. 52). При расчёте учтены переходы `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+          "refs": [
+            {
+              "id": "E088706269e71f574",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 47,
+              "end": 47,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "ae54e34d09e0d4e13ed3d877521a779ddef69eb422fb720bb99383642fbb76b9",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L47-L47"
+            },
+            {
+              "id": "Eb7b6bdc345b4f55f",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 48,
+              "end": 48,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "9006789980e257a0bfb4b960d48d0fb4a8c169983551c6001dbf4f325058bcb9",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L48-L48"
+            },
+            {
+              "id": "Ed5841761523a6d8b",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 49,
+              "end": 49,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "d359f6373cc8a5965cb16128712e3183de0209f4a6cc293090cf73569d52b368",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L49-L49"
+            },
+            {
+              "id": "E9d53924c9cc68e01",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 52,
+              "end": 52,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "fd05b9228e5060bccb336bf8174178676e492bc80ee62d44014cd7e875c0fd3e",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L52-L52"
+            },
+            {
+              "id": "E73c9526732b4ed59",
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "start": 53,
+              "end": 53,
+              "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+              "excerpt_sha256": "ba196773c8a6699a347444be9bd08d616271cb1e1bc88a5455b66b3b150e7fd2",
+              "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+              "source_code_executed": false,
+              "url": "https://github.com/Daystat-debug/SkynetVS/blob/136daf4c41957ebe5a3eb02a5596723c1f8f484c/modules/developer_task_ui/app/context_search.py#L53-L53"
+            }
+          ],
+          "kind": "condition",
+          "control": {
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "function": "expand_query",
+            "line": 53,
+            "condition": [
+              "and",
+              [
+                "not",
+                [
+                  "test",
+                  48,
+                  "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+                ]
+              ],
+              [
+                "test",
+                52,
+                "len(text) > 2048 or len(text.encode('utf-8')) > 4096"
+              ]
+            ],
+            "work": 9
+          }
+        }
+      ],
+      "snapshot": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+      "parts": [
+        {
+          "start": 0,
+          "end": 42,
+          "text": "Укажи место «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+          "binding": {
+            "target": 0,
+            "object": {
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "owner": "expand_query",
+              "line": 49,
+              "column": 25,
+              "end": 49,
+              "end_column": 54
+            },
+            "via": "quote",
+            "antecedent": null,
+            "gap": null,
+            "tentative": false
+          },
+          "need": [
+            "site"
+          ],
+          "issues": [],
+          "target": 0,
+          "claims": [
+            0
+          ],
+          "status": "established",
+          "relation": {
+            "kind": "site",
+            "initial": "site",
+            "origins": [
+              0
+            ],
+            "alternatives": [
+              "site"
+            ],
+            "revised": false,
+            "direct": [
+              0
+            ],
+            "support": []
+          }
+        },
+        {
+          "start": 42,
+          "end": 71,
+          "text": "и «M127_OLD_SOURCES_INVALID» ",
+          "binding": {
+            "target": 1,
+            "object": {
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+              "owner": "extract_symbols",
+              "line": 31,
+              "column": 25,
+              "end": 31,
+              "end_column": 51
+            },
+            "via": "quote",
+            "antecedent": null,
+            "gap": null,
+            "tentative": false
+          },
+          "need": [],
+          "issues": [
+            "ambiguous"
+          ],
+          "target": 1,
+          "claims": [],
+          "status": "unknown",
+          "relation": {
+            "kind": "ambiguous",
+            "initial": null,
+            "origins": [
+              0,
+              2
+            ],
+            "alternatives": [
+              "condition",
+              "site"
+            ],
+            "revised": true,
+            "direct": [],
+            "support": []
+          }
+        },
+        {
+          "start": 71,
+          "end": 123,
+          "text": "и назови условие для «M134_EXPANDED_QUERY_TOO_LONG».",
+          "binding": {
+            "target": 2,
+            "object": {
+              "commit": "136daf4c41957ebe5a3eb02a5596723c1f8f484c",
+              "path": "modules/developer_task_ui/app/context_search.py",
+              "owner": "expand_query",
+              "line": 53,
+              "column": 25,
+              "end": 53,
+              "end_column": 55
+            },
+            "via": "quote",
+            "antecedent": null,
+            "gap": null,
+            "tentative": false
+          },
+          "need": [
+            "site",
+            "condition"
+          ],
+          "issues": [],
+          "target": 2,
+          "claims": [
+            1,
+            2
+          ],
+          "status": "established",
+          "relation": {
+            "kind": "condition",
+            "initial": "condition",
+            "origins": [
+              2
+            ],
+            "alternatives": [
+              "condition"
+            ],
+            "revised": false,
+            "direct": [
+              2
+            ],
+            "support": [
+              1
+            ]
+          }
+        }
+      ],
+      "coverage": "static_subset",
+      "execution_observed": false
+    }
+  }
+]
