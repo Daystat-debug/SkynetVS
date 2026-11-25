@@ -1,0 +1,428 @@
+{
+  "question": "Какие аргументы переданы в обработчик «M127_TITLE_INVALID» и какие аргументы переданы в обработчик «M141_INVALID_DISPLAY_CONTEXT»?",
+  "result": {
+    "state": "answered",
+    "plan": "task_parts",
+    "steps": [
+      {
+        "tool": "interpret_parts",
+        "target": "question",
+        "status": "interpreted",
+        "count": 2,
+        "allocation": [
+          {
+            "target": 1,
+            "remaining": 5,
+            "estimated_steps": 2,
+            "requests": [
+              "arguments"
+            ]
+          },
+          {
+            "target": 0,
+            "remaining": 3,
+            "estimated_steps": 2,
+            "requests": [
+              "arguments"
+            ]
+          }
+        ]
+      },
+      {
+        "tool": "locate_observation",
+        "target": "2",
+        "status": "located",
+        "owner": "_render_current_head_labels",
+        "line": 182
+      },
+      {
+        "tool": "calls",
+        "target": "_render_current_head_labels",
+        "status": "call_sites"
+      },
+      {
+        "tool": "locate_observation",
+        "target": "1",
+        "status": "located",
+        "owner": "rank_symbols",
+        "line": 74
+      },
+      {
+        "tool": "calls",
+        "target": "rank_symbols",
+        "status": "call_sites"
+      }
+    ],
+    "claims": [
+      {
+        "text": "В _render_current_head_labels на строке 182 записано выражение `'M141_INVALID_DISPLAY_CONTEXT'`.",
+        "refs": [
+          {
+            "id": "E3c346d017c3fd43e",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 175,
+            "end": 175,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "5a848a66d64f8ccf055924162a4bc3453ae09a90263073e8fd5785a20e24fa16",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/context_search.py#L175-L175"
+          },
+          {
+            "id": "E22ebad17cb87809c",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 182,
+            "end": 182,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "bbd29cbec78052fb16f323fd227f44892d0d2fd9fc4bfa58be099c97d1a83e6d",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/context_search.py#L182-L182"
+          }
+        ],
+        "kind": "site"
+      },
+      {
+        "text": "В format_context на строке 226 записан прямой вызов _render_current_head_labels.",
+        "refs": [
+          {
+            "id": "E3c346d017c3fd43e",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 175,
+            "end": 175,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "5a848a66d64f8ccf055924162a4bc3453ae09a90263073e8fd5785a20e24fa16",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/context_search.py#L175-L175"
+          },
+          {
+            "id": "E13695c1c56a0917a",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 202,
+            "end": 202,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "a5235b181cfa82d46361fe8a3b1692f6f87f7f5e1e8ee6ac09731355c2589199",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/context_search.py#L202-L202"
+          },
+          {
+            "id": "Eb8383f8bf9867396",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 226,
+            "end": 226,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "bd6093b1b6ffaf9eefd91c2c831733bb4b32341979a98e939da93539a4d974c2",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/context_search.py#L226-L226"
+          }
+        ],
+        "edge": [
+          "format_context",
+          "_render_current_head_labels"
+        ],
+        "kind": "caller"
+      },
+      {
+        "text": "Привязка аргументов: raw ← `report['_private_8k_text']`.",
+        "refs": [
+          {
+            "id": "E3c346d017c3fd43e",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 175,
+            "end": 175,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "5a848a66d64f8ccf055924162a4bc3453ae09a90263073e8fd5785a20e24fa16",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/context_search.py#L175-L175"
+          },
+          {
+            "id": "E13695c1c56a0917a",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 202,
+            "end": 202,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "a5235b181cfa82d46361fe8a3b1692f6f87f7f5e1e8ee6ac09731355c2589199",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/context_search.py#L202-L202"
+          },
+          {
+            "id": "Eb8383f8bf9867396",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "start": 226,
+            "end": 226,
+            "source_sha256": "3c7ccc28145ba51e2e4945dd24ff4258477278a3c1181cf6a6c190e9e278196a",
+            "excerpt_sha256": "bd6093b1b6ffaf9eefd91c2c831733bb4b32341979a98e939da93539a4d974c2",
+            "blob_oid": "3bc5eb29961570c3686832287d17c34c003ffe4a",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/context_search.py#L226-L226"
+          }
+        ],
+        "kind": "arguments"
+      },
+      {
+        "text": "В rank_symbols на строке 74 записано выражение `'M127_TITLE_INVALID'`.",
+        "refs": [
+          {
+            "id": "Ecf3777eb1ef9ae32",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+            "start": 72,
+            "end": 72,
+            "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+            "excerpt_sha256": "7ab8331806d35534da64e7870e1871cb3d0b2fa8cd51ca3cbf8a428b9a1f30c4",
+            "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L72-L72"
+          },
+          {
+            "id": "Eb1e7bb001d9a74e7",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+            "start": 74,
+            "end": 74,
+            "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+            "excerpt_sha256": "92084a72d1a2899ad847095aa2785401721cc67a60bc4ad3348079127b54f698",
+            "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L74-L74"
+          }
+        ],
+        "kind": "site"
+      },
+      {
+        "text": "В rank на строке 125 записан прямой вызов rank_symbols.",
+        "refs": [
+          {
+            "id": "Ecf3777eb1ef9ae32",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+            "start": 72,
+            "end": 72,
+            "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+            "excerpt_sha256": "7ab8331806d35534da64e7870e1871cb3d0b2fa8cd51ca3cbf8a428b9a1f30c4",
+            "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L72-L72"
+          },
+          {
+            "id": "E61bd72a95f28a4b2",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 110,
+            "end": 110,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "f2eab977d38c89f3e569cbcccf1566df0dddeb543df54e4ade667aea89bb79e2",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L110"
+          },
+          {
+            "id": "Ebda6c4bd7fdb1789",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 125,
+            "end": 125,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "3fb17afa0eaaa0515074d3178af11403c65c1cbf71fc9222962f0e5ccaa39a4b",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m130_rank.py#L125-L125"
+          },
+          {
+            "id": "Ebd0385b81f8a8f14",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 18,
+            "end": 18,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "aa850c8a507cf4c13b229ee65ea8d2c9bdc4dbe94fe84528cfe78beb42d09a9d",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m130_rank.py#L18-L18"
+          }
+        ],
+        "edge": [
+          "rank",
+          "rank_symbols"
+        ],
+        "kind": "caller"
+      },
+      {
+        "text": "Привязка аргументов: issue_title ← `title`, old_sources ← `selected`, limit ← `100`.",
+        "refs": [
+          {
+            "id": "Ecf3777eb1ef9ae32",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+            "start": 72,
+            "end": 72,
+            "source_sha256": "45304524578c3327b3fd6b1e25c8b6c595307b1dd3be977761b053a4119f7374",
+            "excerpt_sha256": "7ab8331806d35534da64e7870e1871cb3d0b2fa8cd51ca3cbf8a428b9a1f30c4",
+            "blob_oid": "28ecd4e27dbeba07ed73e582af51c6007a698792",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m127_symbol.py#L72-L72"
+          },
+          {
+            "id": "E61bd72a95f28a4b2",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 110,
+            "end": 110,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "f2eab977d38c89f3e569cbcccf1566df0dddeb543df54e4ade667aea89bb79e2",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m130_rank.py#L110-L110"
+          },
+          {
+            "id": "Ebda6c4bd7fdb1789",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 125,
+            "end": 125,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "3fb17afa0eaaa0515074d3178af11403c65c1cbf71fc9222962f0e5ccaa39a4b",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m130_rank.py#L125-L125"
+          },
+          {
+            "id": "Ebd0385b81f8a8f14",
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+            "start": 18,
+            "end": 18,
+            "source_sha256": "716b3c8c600b84f733c25becab0107918941be296f851ecd4bbe70aaa81f09f5",
+            "excerpt_sha256": "aa850c8a507cf4c13b229ee65ea8d2c9bdc4dbe94fe84528cfe78beb42d09a9d",
+            "blob_oid": "a189b3c7b99362d8dd035868cc4b11c48755d9e7",
+            "source_code_executed": false,
+            "url": "https://github.com/Daystat-debug/SkynetVS/blob/2b80947b0fca725cc3969fd2db5a7bd255791c7c/modules/developer_task_ui/app/retrieval/m130_rank.py#L18-L18"
+          }
+        ],
+        "kind": "arguments"
+      }
+    ],
+    "snapshot": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+    "parts": [
+      {
+        "start": 0,
+        "end": 59,
+        "text": "Какие аргументы переданы в обработчик «M127_TITLE_INVALID» ",
+        "binding": {
+          "target": 0,
+          "object": {
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+            "owner": "rank_symbols",
+            "line": 74,
+            "column": 25,
+            "end": 74,
+            "end_column": 45
+          },
+          "via": "quote",
+          "antecedent": null,
+          "gap": null,
+          "tentative": false
+        },
+        "need": [
+          "site",
+          "caller",
+          "arguments"
+        ],
+        "issues": [],
+        "target": 0,
+        "claims": [
+          3,
+          4,
+          5
+        ],
+        "status": "established",
+        "relation": {
+          "kind": "arguments",
+          "initial": "arguments",
+          "origins": [
+            0
+          ],
+          "alternatives": [
+            "arguments"
+          ],
+          "revised": false,
+          "direct": [
+            5
+          ],
+          "support": [
+            3,
+            4
+          ]
+        }
+      },
+      {
+        "start": 59,
+        "end": 130,
+        "text": "и какие аргументы переданы в обработчик «M141_INVALID_DISPLAY_CONTEXT»?",
+        "binding": {
+          "target": 1,
+          "object": {
+            "commit": "2b80947b0fca725cc3969fd2db5a7bd255791c7c",
+            "path": "modules/developer_task_ui/app/context_search.py",
+            "owner": "_render_current_head_labels",
+            "line": 182,
+            "column": 25,
+            "end": 182,
+            "end_column": 55
+          },
+          "via": "quote",
+          "antecedent": null,
+          "gap": null,
+          "tentative": false
+        },
+        "need": [
+          "site",
+          "caller",
+          "arguments"
+        ],
+        "issues": [],
+        "target": 1,
+        "claims": [
+          0,
+          1,
+          2
+        ],
+        "status": "established",
+        "relation": {
+          "kind": "arguments",
+          "initial": "arguments",
+          "origins": [
+            1
+          ],
+          "alternatives": [
+            "arguments"
+          ],
+          "revised": false,
+          "direct": [
+            2
+          ],
+          "support": [
+            0,
+            1
+          ]
+        }
+      }
+    ],
+    "coverage": "static_subset",
+    "execution_observed": false
+  }
+}

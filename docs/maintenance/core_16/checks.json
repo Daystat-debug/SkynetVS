@@ -1,0 +1,237 @@
+[
+  {
+    "command": "build_experience_policy.py --verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "build_obligation_memory.py --verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "build_relation_fit.py --verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_argument_flow.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_control_conditions.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_control_conditions.py verify --compare-direction",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_core_adapter.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_diagnostic_path.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_evidence_plan.py verify history",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_evidence_plan.py verify transfer",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_experience.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_experience.py verify --domains",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_experience.py verify --retention",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_investigation.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_module_entry.py verify",
+    "exit": 0,
+    "diagnostic": "10 frozen AST cases and 6 real question/profile pairs verified."
+  },
+  {
+    "command": "eval_object_binding.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_object_binding.py verify --final",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_object_binding.py verify --history",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_obligation_check.py ablate",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_obligation_check.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_observation_goals.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_observation_goals.py verify --separate --delivery",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_observation_goals.py verify --separate --lexical-control",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_package_boundaries.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_producer_investigation.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_relation.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_relation.py verify --history",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_requirements.py projection",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_requirements.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_route_research.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_scope_graph.py verify control",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_scope_graph.py verify transfer",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_source_language.py guards",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_source_language.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_source_language.py verify --final",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_source_language.py verify --second",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_task_parts.py verify",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "eval_task_parts.py verify --final",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_core_task.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_evidence_plan.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_experience.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_object_binding.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_obligation_check.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_relation.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_requirements.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_scope_graph.py",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "test_task_parts.py",
+    "exit": 0,
+    "diagnostic": ""
+  }
+]

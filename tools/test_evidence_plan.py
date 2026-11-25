@@ -1,6 +1,7 @@
 import ast
 from pathlib import Path
 import sys
+from time import monotonic
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -63,6 +64,18 @@ class Planning(unittest.TestCase):
         s=SimpleNamespace(check_budget=lambda:None,src=object(),current=moved)
         with self.assertRaisesRegex(lab.ev.loop.host.Rejected,"stale_snapshot"):
             Products(s,cli.calls).bound(None)
+
+    def test_reuse_obeys_live_resource_limits(self):
+        search=object.__new__(lab.SEARCH)
+        search.deadline=monotonic()+25
+        search.items=dict.fromkeys(range(97))
+        cache=Products(search,cli.calls)
+        with self.assertRaisesRegex(lab.ev.loop.arguments.Limit,"evidence_budget"):
+            cache.bound(None)
+        search.items.clear()
+        search.deadline=monotonic()-1
+        with self.assertRaisesRegex(lab.ev.loop.host.Rejected,"deadline"):
+            cache.bound(None)
 
 
 if __name__=="__main__":
