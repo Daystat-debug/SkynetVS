@@ -99,12 +99,17 @@ def research(search, question, select, policy, object_catalog=None, suggestions=
     proofs=[]
     items={}
     effects={}
+    decisions=[]
     try:
         step=ctl.step("interpret_parts","question")
         if policy in objects.POLICIES:
             edges,bound=objects.resolve(parts,object_catalog,search.src.commit,policy,suggestions)
-            proposals=(experience.shared_plan(parts) if policy in ("object_offline","object_assisted")
-                       else plan(parts,select,"parts_once"))
+            if policy in objects.relation.POLICIES:
+                decisions=objects.relation.interpret(parts,edges,bound,policy)
+                proposals=objects.relation.plan(decisions)
+            else:
+                proposals=(experience.shared_plan(parts) if policy in ("object_offline","object_assisted")
+                           else plan(parts,select,"parts_once"))
             planned=[]
             for p,edge,(needs,issues,_) in zip(parts,edges,proposals,strict=True):
                 p["binding"]=edge
@@ -176,6 +181,8 @@ def research(search, question, select, policy, object_catalog=None, suggestions=
             p.update(issues=[str(exc)],claims=[])
     for p in parts:
         p["status"]="unknown" if not p["claims"] else "partial" if p["issues"] else "established"
+    for p,decision in zip(parts,decisions):
+        p["relation"]=objects.relation.projection(p,decision,claims)
     reason=None if claims else next((issue for p in parts for issue in p["issues"]), "clarification")
     return (claims,list(items.values()),reason),dict(parts=parts,proofs=proofs)
 
