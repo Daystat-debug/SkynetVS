@@ -104,8 +104,9 @@ def research(search, question, select, policy, object_catalog=None, suggestions=
         step=ctl.step("interpret_parts","question")
         if policy in objects.POLICIES:
             edges,bound=objects.resolve(parts,object_catalog,search.src.commit,policy,suggestions)
-            if policy in objects.relation.POLICIES:
-                decisions=objects.relation.interpret(parts,edges,bound,policy)
+            if policy in objects.OFFLINE_FRAMES:
+                interpreter=objects.scope if policy in objects.scope.POLICIES else objects.relation
+                decisions=interpreter.interpret(parts,edges,bound,policy)
                 proposals=objects.relation.plan(decisions)
             else:
                 proposals=(experience.shared_plan(parts) if policy in ("object_offline","object_assisted")
