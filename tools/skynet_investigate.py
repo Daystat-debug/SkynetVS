@@ -264,11 +264,12 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
     plan = "interpret"
     strategy = discovery
     object_catalog = None
+    products = None
     suggestions = None
     src = None
 
     def retrieve(req):
-        nonlocal src, plan, strategy, object_catalog, suggestions
+        nonlocal src, plan, strategy, object_catalog, suggestions, products
         src, ground = opener(root)
         if set(src.raw) != host.lab.SCOPE or req.source_id != SOURCE:
             raise host.Rejected("snapshot_policy")
@@ -287,6 +288,10 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
                 strategy = task_parts.experience.select(discovery,req.question)
             search=arguments.Search(req,src,lookup or cli.calls.lookup,trace,min(MAX_STEPS,steps),
                                     task.deadline,head_current,site_anchors)
+            allocation=task_parts.objects.scope.allocation
+            if strategy in allocation.POLICIES and lookup is None:
+                products=search.products=allocation.Products(search,cli.calls)
+                search.lookup=search.products.lookup
             if strategy in task_parts.objects.POLICIES:
                 if len(task_parts.split(req.question))>8:
                     return packet(req,src,reason="part_budget")
@@ -416,6 +421,8 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
                                  else task_parts.objects.relation)
                     interpreter.verify(task_parts.split(req.question),meta,
                         evidence["analysis"]["observations"],object_catalog,src.commit,strategy)
+                if products and not products.consistent(meta,evidence["analysis"]["observations"],requirements.argument_claim):
+                    raise host.Rejected("claim_binding")
             if draft["status"]=="answer":
                 assessment["answer_completeness"]=("interpreted_requirements_met" if all(
                     p["status"]=="established" for p in meta["parts"]) else "partial")
@@ -511,7 +518,7 @@ def main():
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--requirements", action="store_true", help="Проверить требования по частям и показать, что осталось неизвестным.")
-    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid","0.12","0.13","0.13-offline","0.13-model","0.14","0.15"),help="0.15 исследует область действия требований во всём вопросе. По умолчанию 0.10.")
+    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid","0.12","0.13","0.13-offline","0.13-model","0.14","0.15","0.16"),help="0.16 распределяет шаги исследования между требованиями. По умолчанию 0.10.")
     modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
     modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
@@ -603,7 +610,7 @@ if __name__ == "__main__":
         sys.stdout.reconfigure(encoding="utf8")
     policies = {"0.9":"requirements","0.10":"residual","0.11":"memory_only","0.11-hybrid":"independent","0.12":"experience_release",
                 "0.13":"object_assisted","0.13-offline":"object_offline","0.13-model":"object_graph","0.14":"relation_frame",
-                "0.15":"scope_graph"}
+                "0.15":"scope_graph","0.16":"joint_plan"}
     versioned = len(sys.argv)==3 and sys.argv[1]=="--requirements-worker" and sys.argv[2] in policies
     if versioned or sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)

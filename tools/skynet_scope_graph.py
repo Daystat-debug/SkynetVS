@@ -3,9 +3,10 @@ from itertools import product
 
 import skynet_experience as experience
 import skynet_relation as relation
+import skynet_evidence_plan as allocation
 
 req = relation.req
-POLICIES = ("scope_graph", "scope_nearest", "scope_local")
+POLICIES = ("scope_graph", "scope_nearest", "scope_local") + allocation.POLICIES
 # Only grammatical material may disappear around a grounded topic.
 GLUE = frozenset("и а также для у по о об про с в на к обоих обеих оба обе".split())
 
@@ -77,7 +78,7 @@ def sentences(parts, edges):
 def link(parts, edges, seeds, policy):
     decisions = []
     for group in sentences(parts, edges):
-        if policy == "scope_graph":
+        if policy == "scope_graph" or policy in allocation.POLICIES:
             candidates = alternatives(group, seeds)
         else:
             heads = [i for i in group if seeds[i] in req.KINDS]

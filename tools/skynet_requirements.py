@@ -101,6 +101,12 @@ def research(search, question, select, policy):
         return ([],[],str(exc)),dict(meta,required=list(needs),supported=[],missing=list(needs))
 
 
+def argument_claim(bindings):
+    detail = ", ".join(f"{name} ← `{value}`" + (" (по умолчанию)" if default else "")
+                       for name,value,default in bindings)
+    return "Привязка аргументов: "+(detail or "явных параметров нет")+"."
+
+
 def collect(ctl,effect,needs,locate,schedule):
     search=ctl.s
     claims,gaps,meta={},{},{}
@@ -127,13 +133,14 @@ def collect(ctl,effect,needs,locate,schedule):
             elif need=="caller_condition":
                 claims[need] = ctl.proof(site.caller,ctl.call_statement(site))
             else:
-                step = ctl.step("bind_arguments",fn.node.name)
-                bindings,_ = observed.route.facts.bind(site,{})
-                detail = ", ".join(f"{name} ← `{value}`" + (" (по умолчанию)" if default else "")
-                                   for name,value,default in bindings)
-                claims[need] = dict(text="Привязка аргументов: "+(detail or "явных параметров нет")+".",
+                products = getattr(search,"products",None)
+                bindings = products.bound(site) if products else None
+                if bindings is None:
+                    step = ctl.step("bind_arguments",fn.node.name)
+                    bindings,_ = observed.route.facts.bind(site,{})
+                    step["status"]="bound"
+                claims[need] = dict(text=argument_claim(bindings),
                                     anchors=site.anchors)
-                step["status"]="bound"
         except (Gap,observed.route.arguments.Limit) as exc:
             if str(exc)=="evidence_budget":
                 raise

@@ -24,7 +24,7 @@ def signature(fn):
     return inspect.Signature(values)
 
 
-def argument_text(fn, call):
+def argument_text(fn, call, remember=None):
     if any(isinstance(a, ast.Starred) for a in call.args) or any(k.arg is None for k in call.keywords):
         return "Аргументы разворачиваются при выполнении: " + ast.unparse(call) + "."
     sig = signature(fn)
@@ -34,6 +34,11 @@ def argument_text(fn, call):
         return "Запись вызова не согласуется с видимой сигнатурой: " + ast.unparse(call) + "."
     pairs = [f"`{k}` получает `{v}`" for k,v in bound.arguments.items()]
     defaults = [f"`{k}={p.default}`" for k,p in sig.parameters.items() if k not in bound.arguments and p.default is not p.empty]
+    if (remember is not None and not fn.args.vararg and not fn.args.kwarg
+            and len({kw.arg for kw in call.keywords}) == len(call.keywords)):
+        # The textual call report already bound these exact static expressions to this signature.
+        remember(fn, call, tuple((k, bound.arguments.get(k, p.default), k not in bound.arguments)
+                                 for k, p in sig.parameters.items()))
     text = ", ".join(pairs) + "." if pairs else "Явных аргументов нет."
     if defaults:
         text += " По умолчанию используются " + ", ".join(defaults) + "."
@@ -196,6 +201,10 @@ def lookup(q, src, refuse, paths=None, *, evidence=None):
     if not set(paths) <= src.pages.keys():
         return refuse("external")
     trees = {p:ast.parse(src.snapshot.sources[p]) for p in paths}
+    return _lookup_trees(q, src, refuse, paths, trees, evidence=evidence)
+
+
+def _lookup_trees(q, src, refuse, paths, trees, *, evidence=None, remember=None):
     functions = [(p,n) for p,tree in trees.items() for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))]
     words = set(re.findall(r"\b[A-Za-z_]\w*\b", q))
     targets = [(p,n) for p,n in functions if n.name in words]
@@ -228,7 +237,7 @@ def lookup(q, src, refuse, paths=None, *, evidence=None):
                 origin = (f"При запуске модуля как программы, если выполнение дойдёт до выражения "
                           f"`{ast.unparse(call)}`, возможен вызов `{fn.name}`" if entry
                           else f"`{caller.name}` вызывает `{fn.name}`")
-                text = f"{origin}: {argument_text(fn,call)} {assigned}"
+                text = f"{origin}: {argument_text(fn,call,remember)} {assigned}"
                 site = CallSite.resolved(src,p,call,target_path,fn)
                 context = dict(kind="module_entry" if entry else "function",
                                caller=None if entry else caller.name, context_line=caller.lineno)

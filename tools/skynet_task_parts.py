@@ -139,7 +139,11 @@ def research(search, question, select, policy, object_catalog=None, suggestions=
             if needs:
                 groups.setdefault(target,[]).append(i)
         catalog=None
-        for target,indices in groups.items():
+        order=groups.items()
+        if policy in objects.scope.allocation.POLICIES:
+            step["allocation"]=[]
+            order=objects.scope.allocation.ordered(policy,groups,decisions,bound,ctl,step["allocation"])
+        for target,indices in order:
             try:
                 locate=ctl.step("locate_observation",str(target+1))
                 if object_catalog is not None:

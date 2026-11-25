@@ -1,0 +1,7453 @@
+{
+ "panel_blob": "af75384f15a8ee74a6fba9f8a4d6b235662f9de8",
+ "rows": [
+  {
+   "id": "R2",
+   "question": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+   "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+   "scope_graph": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "evidence"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "step_budget"
+       ],
+       "target": 1,
+       "claims": [
+        3,
+        4
+       ],
+       "status": "partial",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {
+        "arguments": "step_budget"
+       }
+      }
+     ],
+     "work": {
+      "file_parses": 15,
+      "peak_items": 8,
+      "scans": 2,
+      "signatures": 3,
+      "rebinds": 1
+     }
+    }
+   },
+   "scope_nearest": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "evidence"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "step_budget"
+       ],
+       "target": 1,
+       "claims": [
+        3,
+        4
+       ],
+       "status": "partial",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {
+        "arguments": "step_budget"
+       }
+      }
+     ],
+     "work": {
+      "file_parses": 15,
+      "peak_items": 8,
+      "scans": 2,
+      "signatures": 3,
+      "rebinds": 1
+     }
+    }
+   },
+   "joint_order": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments",
+     "Y/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: old_sources ← `old_sources`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "joint_cheapest": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments",
+     "Y/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: old_sources ← `old_sources`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "joint_plan": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments",
+     "Y/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: old_sources ← `old_sources`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "oracle_scope_graph": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "evidence"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "step_budget"
+       ],
+       "target": 1,
+       "claims": [
+        3,
+        4
+       ],
+       "status": "partial",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {
+        "arguments": "step_budget"
+       }
+      }
+     ],
+     "work": {
+      "file_parses": 15,
+      "peak_items": 8,
+      "scans": 2,
+      "signatures": 3,
+      "rebinds": 1
+     }
+    }
+   },
+   "oracle_scope_nearest": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "evidence"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "expand_query",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "step_budget"
+       ],
+       "target": 1,
+       "claims": [
+        3,
+        4
+       ],
+       "status": "partial",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {
+        "arguments": "step_budget"
+       }
+      }
+     ],
+     "work": {
+      "file_parses": 15,
+      "peak_items": 8,
+      "scans": 2,
+      "signatures": 3,
+      "rebinds": 1
+     }
+    }
+   },
+   "oracle_joint_order": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments",
+     "Y/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: old_sources ← `old_sources`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "oracle_joint_cheapest": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments",
+     "Y/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: old_sources ← `old_sources`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "oracle_joint_plan": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "X/arguments",
+     "Y/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 49
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 31
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 49 записано выражение `'M134_GOAL_EMPTY_OR_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         49,
+         49
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: goal ← `goal`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В extract_symbols на строке 31 записано выражение `'M127_OLD_SOURCES_INVALID'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         31,
+         31
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: old_sources ← `old_sources`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+     "parts": [
+      {
+       "start": 0,
+       "end": 34,
+       "text": "Для «M134_GOAL_EMPTY_OR_TOO_LONG» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 49,
+         "column": 25,
+         "end": 49,
+         "end_column": 54
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 34,
+       "end": 98,
+       "text": "и «M127_OLD_SOURCES_INVALID» какие значения переданы при вызове?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "cc83c374f4d5aac673dd948bc257b9399793de9d",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 31,
+         "column": 25,
+         "end": 31,
+         "end_column": 51
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/context_search.py",
+       "owner": "expand_query",
+       "line": 49,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+       "owner": "extract_symbols",
+       "line": 31,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   }
+  },
+  {
+   "id": "D3",
+   "question": "«Шлюз закрыт на ревизию» и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+   "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+   "scope_nearest": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "evidence"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "check_lock",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "step_budget"
+       ],
+       "target": 1,
+       "claims": [
+        3,
+        4
+       ],
+       "status": "partial",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {
+        "arguments": "step_budget"
+       }
+      }
+     ],
+     "work": {
+      "file_parses": 15,
+      "peak_items": 8,
+      "scans": 2,
+      "signatures": 3,
+      "rebinds": 1
+     }
+    }
+   },
+   "joint_order": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments",
+     "B/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: drift ← `False`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "joint_cheapest": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments",
+     "B/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: drift ← `False`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "joint_plan": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments",
+     "B/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: drift ← `False`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "oracle_scope_graph": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "evidence"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "check_lock",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "step_budget"
+       ],
+       "target": 1,
+       "claims": [
+        3,
+        4
+       ],
+       "status": "partial",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {
+        "arguments": "step_budget"
+       }
+      }
+     ],
+     "work": {
+      "file_parses": 15,
+      "peak_items": 8,
+      "scans": 2,
+      "signatures": 3,
+      "rebinds": 1
+     }
+    }
+   },
+   "oracle_scope_nearest": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "evidence"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "check_lock",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "step_budget"
+       ],
+       "target": 1,
+       "claims": [
+        3,
+        4
+       ],
+       "status": "partial",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {
+        "arguments": "step_budget"
+       }
+      }
+     ],
+     "work": {
+      "file_parses": 15,
+      "peak_items": 8,
+      "scans": 2,
+      "signatures": 3,
+      "rebinds": 1
+     }
+    }
+   },
+   "oracle_joint_order": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments",
+     "B/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: drift ← `False`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "oracle_joint_cheapest": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments",
+     "B/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: drift ← `False`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "oracle_joint_plan": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     }
+    ],
+    "full": true,
+    "partial": false,
+    "limited": false,
+    "correct": true,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments",
+     "B/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": false,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2,
+       "allocation": [
+        {
+         "target": 0,
+         "remaining": 5,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        },
+        {
+         "target": 1,
+         "remaining": 3,
+         "estimated_steps": 2,
+         "requests": [
+          "arguments"
+         ]
+        }
+       ]
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: drift ← `False`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         0
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "oracle_object",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        3,
+        4,
+        5
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [
+         5
+        ],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      }
+     ],
+     "work": {
+      "file_parses": 5,
+      "peak_items": 8,
+      "tree_hits": 10,
+      "argument_hits": 2,
+      "argument_products": 2,
+      "scans": 2,
+      "signatures": 2
+     }
+    }
+   },
+   "scope_graph": {
+    "scores": [
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": true,
+      "blocked": null,
+      "marked": false,
+      "correct_reason": false,
+      "stage": "delivered"
+     },
+     {
+      "object": true,
+      "requirement": true,
+      "joint": true,
+      "delivered": false,
+      "blocked": null,
+      "marked": true,
+      "correct_reason": false,
+      "stage": "evidence"
+     }
+    ],
+    "full": false,
+    "partial": false,
+    "limited": false,
+    "correct": false,
+    "false_complete": false,
+    "obtained": [
+     "A/arguments"
+    ],
+    "wrong_direct": 0,
+    "kept_partial": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "check_lock",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "check_lock",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "check_lock",
+       "status": "bound"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "read_probe",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "read_probe",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В check_lock на строке 159 записано выражение `'Шлюз закрыт на ревизию'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В visit_lock на строке 163 записан прямой вызов check_lock.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "visit_lock",
+        "check_lock"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: sealed ← `True`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "kind": "arguments"
+      },
+      {
+       "text": "В read_probe на строке 167 записано выражение `'Датчик потерял калибровку'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В sample_probe на строке 171 записан прямой вызов read_probe.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "sample_probe",
+        "read_probe"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "775d5756197ae839112133e10e1aae687b96203f",
+     "parts": [
+      {
+       "start": 0,
+       "end": 25,
+       "text": "«Шлюз закрыт на ревизию» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "check_lock",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 58
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "initial": null,
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": true,
+        "direct": [
+         2
+        ],
+        "support": [
+         0,
+         1
+        ]
+       }
+      },
+      {
+       "start": 25,
+       "end": 92,
+       "text": "и «Датчик потерял калибровку» — нужны значения параметров на входе.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "775d5756197ae839112133e10e1aae687b96203f",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "read_probe",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 65
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [
+        "step_budget"
+       ],
+       "target": 1,
+       "claims": [
+        3,
+        4
+       ],
+       "status": "partial",
+       "relation": {
+        "kind": "arguments",
+        "initial": "arguments",
+        "origins": [
+         1
+        ],
+        "alternatives": [
+         "arguments"
+        ],
+        "revised": false,
+        "direct": [],
+        "support": [
+         3,
+         4
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false,
+     "collector_log": [
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "check_lock",
+       "line": 159,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "gaps": {}
+      },
+      {
+       "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+       "owner": "read_probe",
+       "line": 167,
+       "schedule": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "collected": [
+        "site",
+        "caller"
+       ],
+       "gaps": {
+        "arguments": "step_budget"
+       }
+      }
+     ],
+     "work": {
+      "file_parses": 15,
+      "peak_items": 8,
+      "scans": 2,
+      "signatures": 3,
+      "rebinds": 1
+     }
+    }
+   }
+  }
+ ],
+ "ms": {
+  "R2": {
+   "scope_graph": 234.6,
+   "scope_nearest": 199.3,
+   "joint_order": 206.6,
+   "joint_cheapest": 208.5,
+   "joint_plan": 220.4,
+   "oracle_scope_graph": 196.8,
+   "oracle_scope_nearest": 198.8,
+   "oracle_joint_order": 218.5,
+   "oracle_joint_cheapest": 222.4,
+   "oracle_joint_plan": 209.2
+  },
+  "D3": {
+   "scope_nearest": 220.4,
+   "joint_order": 205.2,
+   "joint_cheapest": 211.1,
+   "joint_plan": 212.2,
+   "oracle_scope_graph": 214.7,
+   "oracle_scope_nearest": 218.3,
+   "oracle_joint_order": 212.7,
+   "oracle_joint_cheapest": 210.2,
+   "oracle_joint_plan": 210.9,
+   "scope_graph": 212.5
+  }
+ },
+ "metrics": {
+  "scope_graph": {
+   "full": 0,
+   "partial": 0,
+   "limited": 0,
+   "correct": 0,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 2,
+   "stages": {
+    "delivered": 2,
+    "evidence": 2
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 12,
+   "calls": 0,
+   "median_ms": 223.6,
+   "work": {
+    "file_parses": 30,
+    "scans": 4,
+    "signatures": 6,
+    "rebinds": 2
+   },
+   "peak_items": 8,
+   "kept_partial": 2,
+   "wrong_direct": 0,
+   "published_claims": 10,
+   "order_differences": []
+  },
+  "scope_nearest": {
+   "full": 0,
+   "partial": 0,
+   "limited": 0,
+   "correct": 0,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 2,
+   "stages": {
+    "delivered": 2,
+    "evidence": 2
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 12,
+   "calls": 0,
+   "median_ms": 209.9,
+   "work": {
+    "file_parses": 30,
+    "scans": 4,
+    "signatures": 6,
+    "rebinds": 2
+   },
+   "peak_items": 8,
+   "kept_partial": 2,
+   "wrong_direct": 0,
+   "published_claims": 10,
+   "order_differences": []
+  },
+  "joint_order": {
+   "full": 2,
+   "partial": 0,
+   "limited": 0,
+   "correct": 2,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 4,
+   "stages": {
+    "delivered": 4
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 10,
+   "calls": 0,
+   "median_ms": 205.9,
+   "work": {
+    "file_parses": 10,
+    "tree_hits": 20,
+    "argument_hits": 4,
+    "argument_products": 4,
+    "scans": 4,
+    "signatures": 4
+   },
+   "peak_items": 8,
+   "kept_partial": 0,
+   "wrong_direct": 0,
+   "published_claims": 12,
+   "order_differences": []
+  },
+  "joint_cheapest": {
+   "full": 2,
+   "partial": 0,
+   "limited": 0,
+   "correct": 2,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 4,
+   "stages": {
+    "delivered": 4
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 10,
+   "calls": 0,
+   "median_ms": 209.8,
+   "work": {
+    "file_parses": 10,
+    "tree_hits": 20,
+    "argument_hits": 4,
+    "argument_products": 4,
+    "scans": 4,
+    "signatures": 4
+   },
+   "peak_items": 8,
+   "kept_partial": 0,
+   "wrong_direct": 0,
+   "published_claims": 12,
+   "order_differences": []
+  },
+  "joint_plan": {
+   "full": 2,
+   "partial": 0,
+   "limited": 0,
+   "correct": 2,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 4,
+   "stages": {
+    "delivered": 4
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 10,
+   "calls": 0,
+   "median_ms": 216.3,
+   "work": {
+    "file_parses": 10,
+    "tree_hits": 20,
+    "argument_hits": 4,
+    "argument_products": 4,
+    "scans": 4,
+    "signatures": 4
+   },
+   "peak_items": 8,
+   "kept_partial": 0,
+   "wrong_direct": 0,
+   "published_claims": 12,
+   "order_differences": []
+  },
+  "oracle_scope_graph": {
+   "full": 0,
+   "partial": 0,
+   "limited": 0,
+   "correct": 0,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 2,
+   "stages": {
+    "delivered": 2,
+    "evidence": 2
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 12,
+   "calls": 0,
+   "median_ms": 205.8,
+   "work": {
+    "file_parses": 30,
+    "scans": 4,
+    "signatures": 6,
+    "rebinds": 2
+   },
+   "peak_items": 8,
+   "kept_partial": 2,
+   "wrong_direct": 0,
+   "published_claims": 10,
+   "order_differences": []
+  },
+  "oracle_scope_nearest": {
+   "full": 0,
+   "partial": 0,
+   "limited": 0,
+   "correct": 0,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 2,
+   "stages": {
+    "delivered": 2,
+    "evidence": 2
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 12,
+   "calls": 0,
+   "median_ms": 208.6,
+   "work": {
+    "file_parses": 30,
+    "scans": 4,
+    "signatures": 6,
+    "rebinds": 2
+   },
+   "peak_items": 8,
+   "kept_partial": 2,
+   "wrong_direct": 0,
+   "published_claims": 10,
+   "order_differences": []
+  },
+  "oracle_joint_order": {
+   "full": 2,
+   "partial": 0,
+   "limited": 0,
+   "correct": 2,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 4,
+   "stages": {
+    "delivered": 4
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 10,
+   "calls": 0,
+   "median_ms": 215.6,
+   "work": {
+    "file_parses": 10,
+    "tree_hits": 20,
+    "argument_hits": 4,
+    "argument_products": 4,
+    "scans": 4,
+    "signatures": 4
+   },
+   "peak_items": 8,
+   "kept_partial": 0,
+   "wrong_direct": 0,
+   "published_claims": 12,
+   "order_differences": []
+  },
+  "oracle_joint_cheapest": {
+   "full": 2,
+   "partial": 0,
+   "limited": 0,
+   "correct": 2,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 4,
+   "stages": {
+    "delivered": 4
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 10,
+   "calls": 0,
+   "median_ms": 216.3,
+   "work": {
+    "file_parses": 10,
+    "tree_hits": 20,
+    "argument_hits": 4,
+    "argument_products": 4,
+    "scans": 4,
+    "signatures": 4
+   },
+   "peak_items": 8,
+   "kept_partial": 0,
+   "wrong_direct": 0,
+   "published_claims": 12,
+   "order_differences": []
+  },
+  "oracle_joint_plan": {
+   "full": 2,
+   "partial": 0,
+   "limited": 0,
+   "correct": 2,
+   "false_complete": 0,
+   "object": 4,
+   "requirement": 4,
+   "joint": 4,
+   "static": 4,
+   "available": 4,
+   "facts": 4,
+   "stages": {
+    "delivered": 4
+   },
+   "refused": 0,
+   "unresolved_reasons": 0,
+   "contrasts": [],
+   "steps": 10,
+   "calls": 0,
+   "median_ms": 210.1,
+   "work": {
+    "file_parses": 10,
+    "tree_hits": 20,
+    "argument_hits": 4,
+    "argument_products": 4,
+    "scans": 4,
+    "signatures": 4
+   },
+   "peak_items": 8,
+   "kept_partial": 0,
+   "wrong_direct": 0,
+   "published_claims": 12,
+   "order_differences": []
+  }
+ }
+}
