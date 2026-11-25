@@ -1,0 +1,1818 @@
+{
+ "panel": "ddd2b60e4032def685af34b01942ac87b5506a0e:docs/maintenance/core_13/confirmation.json",
+ "rows": [
+  {
+   "id": "R2",
+   "question": "Где записано «M141_INVALID_DISPLAY_CONTEXT» и где «M130_OLD_TREE_EMPTY»? Откуда вызывают первую проверку?",
+   "snapshot": "0806fc025f628ccc16fda8c96dec5088aedad859",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Где записано",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «M130",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Откуда вызывают",
+      "kind": "caller",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "_render_current_head_labels",
+       "line": 182
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "_render_current_head_labels@182",
+       "status": "proved"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "rank",
+       "line": 113
+      }
+     ],
+     "claims": [
+      {
+       "text": "В _render_current_head_labels на строке 182 записано выражение `'M141_INVALID_DISPLAY_CONTEXT'`.",
+       "refs": [
+        [
+         "C",
+         175,
+         175
+        ],
+        [
+         "C",
+         182,
+         182
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В _render_current_head_labels исследована инструкция `raise ValueError('M141_INVALID_DISPLAY_CONTEXT')` (стр. 182). Для достижения строки требуется: `not isinstance(raw, str)` истинно (стр. 181). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         175,
+         175
+        ],
+        [
+         "C",
+         181,
+         181
+        ],
+        [
+         "C",
+         182,
+         182
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "_render_current_head_labels",
+        "line": 182,
+        "condition": [
+         "test",
+         181,
+         "not isinstance(raw, str)"
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В rank на строке 113 записано выражение `'M130_OLD_TREE_EMPTY'`.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         113,
+         113
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "0806fc025f628ccc16fda8c96dec5088aedad859",
+     "parts": [
+      {
+       "start": 0,
+       "end": 44,
+       "text": "Где записано «M141_INVALID_DISPLAY_CONTEXT» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "_render_current_head_labels",
+         "line": 182,
+         "column": 25,
+         "end": 182,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 44,
+       "end": 73,
+       "text": "и где «M130_OLD_TREE_EMPTY»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "rank",
+         "line": 113,
+         "column": 25,
+         "end": 113,
+         "end_column": 46
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2
+       ],
+       "status": "established"
+      },
+      {
+       "start": 73,
+       "end": 105,
+       "text": "Откуда вызывают первую проверку?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "_render_current_head_labels",
+         "line": 182,
+         "column": 25,
+         "end": 182,
+         "end_column": 55
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Где записано",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «M130",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Откуда вызывают",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "_render_current_head_labels",
+       "line": 182
+      },
+      {
+       "tool": "calls",
+       "target": "_render_current_head_labels",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "rank",
+       "line": 113
+      }
+     ],
+     "claims": [
+      {
+       "text": "В _render_current_head_labels на строке 182 записано выражение `'M141_INVALID_DISPLAY_CONTEXT'`.",
+       "refs": [
+        [
+         "C",
+         175,
+         175
+        ],
+        [
+         "C",
+         182,
+         182
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context на строке 226 записан прямой вызов _render_current_head_labels.",
+       "refs": [
+        [
+         "C",
+         175,
+         175
+        ],
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         226,
+         226
+        ]
+       ],
+       "edge": [
+        "format_context",
+        "_render_current_head_labels"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В rank на строке 113 записано выражение `'M130_OLD_TREE_EMPTY'`.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         113,
+         113
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "0806fc025f628ccc16fda8c96dec5088aedad859",
+     "parts": [
+      {
+       "start": 0,
+       "end": 44,
+       "text": "Где записано «M141_INVALID_DISPLAY_CONTEXT» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "_render_current_head_labels",
+         "line": 182,
+         "column": 25,
+         "end": 182,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 44,
+       "end": 73,
+       "text": "и где «M130_OLD_TREE_EMPTY»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "rank",
+         "line": 113,
+         "column": 25,
+         "end": 113,
+         "end_column": 46
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         2
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 73,
+       "end": 105,
+       "text": "Откуда вызывают первую проверку?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "_render_current_head_labels",
+         "line": 182,
+         "column": 25,
+         "end": 182,
+         "end_column": 55
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Где записано",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «M130",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Откуда вызывают",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "_render_current_head_labels",
+       "line": 182
+      },
+      {
+       "tool": "calls",
+       "target": "_render_current_head_labels",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "rank",
+       "line": 113
+      }
+     ],
+     "claims": [
+      {
+       "text": "В _render_current_head_labels на строке 182 записано выражение `'M141_INVALID_DISPLAY_CONTEXT'`.",
+       "refs": [
+        [
+         "C",
+         175,
+         175
+        ],
+        [
+         "C",
+         182,
+         182
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В format_context на строке 226 записан прямой вызов _render_current_head_labels.",
+       "refs": [
+        [
+         "C",
+         175,
+         175
+        ],
+        [
+         "C",
+         202,
+         202
+        ],
+        [
+         "C",
+         226,
+         226
+        ]
+       ],
+       "edge": [
+        "format_context",
+        "_render_current_head_labels"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В rank на строке 113 записано выражение `'M130_OLD_TREE_EMPTY'`.",
+       "refs": [
+        [
+         "R",
+         110,
+         110
+        ],
+        [
+         "R",
+         113,
+         113
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "0806fc025f628ccc16fda8c96dec5088aedad859",
+     "parts": [
+      {
+       "start": 0,
+       "end": 44,
+       "text": "Где записано «M141_INVALID_DISPLAY_CONTEXT» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "_render_current_head_labels",
+         "line": 182,
+         "column": 25,
+         "end": 182,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 44,
+       "end": 73,
+       "text": "и где «M130_OLD_TREE_EMPTY»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "rank",
+         "line": 113,
+         "column": 25,
+         "end": 113,
+         "end_column": 46
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         2
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 73,
+       "end": 105,
+       "text": "Откуда вызывают первую проверку?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "0806fc025f628ccc16fda8c96dec5088aedad859",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "_render_current_head_labels",
+         "line": 182,
+         "column": 25,
+         "end": 182,
+         "end_column": 55
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "E4",
+   "question": "Найди в коде слова о допустимой массе отправления. Что передают в эту функцию при вызове?",
+   "snapshot": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Найди",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Что передают",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "weigh_parcel",
+       "line": 160
+      },
+      {
+       "tool": "calls",
+       "target": "weigh_parcel",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В weigh_parcel на строке 160 записано выражение `'Масса отправления допустима'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В take_parcel на строке 163 записан прямой вызов weigh_parcel.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "take_parcel",
+        "weigh_parcel"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+     "parts": [
+      {
+       "start": 0,
+       "end": 51,
+       "text": "Найди в коде слова о допустимой массе отправления. ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "weigh_parcel",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 65
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 51,
+       "end": 89,
+       "text": "Что передают в эту функцию при вызове?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "weigh_parcel",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 65
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Найди",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Что передают",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "weigh_parcel",
+       "line": 160
+      },
+      {
+       "tool": "calls",
+       "target": "weigh_parcel",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В weigh_parcel на строке 160 записано выражение `'Масса отправления допустима'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В take_parcel на строке 163 записан прямой вызов weigh_parcel.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "take_parcel",
+        "weigh_parcel"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+     "parts": [
+      {
+       "start": 0,
+       "end": 51,
+       "text": "Найди в коде слова о допустимой массе отправления. ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "weigh_parcel",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 65
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 51,
+       "end": 89,
+       "text": "Что передают в эту функцию при вызове?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "weigh_parcel",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 65
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Найди",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": false,
+      "joint": false
+     },
+     {
+      "cue": "Что передают",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "weigh_parcel",
+       "line": 160
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "weigh_parcel@160",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "weigh_parcel",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В weigh_parcel на строке 160 записано выражение `'Масса отправления допустима'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В weigh_parcel исследована инструкция `return 'Масса отправления допустима'` (стр. 160). Для достижения строки требуется: `heavy` ложно (стр. 158). При расчёте учтены переходы `return 'Посылка превышает лимит веса'` (стр. 159). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ],
+        [
+         "R",
+         160,
+         160
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "weigh_parcel",
+        "line": 160,
+        "condition": [
+         "not",
+         [
+          "test",
+          158,
+          "heavy"
+         ]
+        ],
+        "work": 4
+       }
+      },
+      {
+       "text": "В take_parcel на строке 163 записан прямой вызов weigh_parcel.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "take_parcel",
+        "weigh_parcel"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+     "parts": [
+      {
+       "start": 0,
+       "end": 51,
+       "text": "Найди в коде слова о допустимой массе отправления. ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "weigh_parcel",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 65
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 51,
+       "end": 89,
+       "text": "Что передают в эту функцию при вызове?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "weigh_parcel",
+         "line": 160,
+         "column": 11,
+         "end": 160,
+         "end_column": 65
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        2
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "E5",
+   "question": "Нужны строка «Почтовый сбор не внесён» и адрес отделения, где приняли конверт.",
+   "snapshot": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "строка «Почтовый",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "адрес отделения",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "stamp_letter",
+       "line": 168
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stamp_letter на строке 168 записано выражение `'Почтовый сбор не внесён'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+     "parts": [
+      {
+       "start": 0,
+       "end": 39,
+       "text": "Нужны строка «Почтовый сбор не внесён» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "stamp_letter",
+         "line": 168,
+         "column": 11,
+         "end": 168,
+         "end_column": 56
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 39,
+       "end": 78,
+       "text": "и адрес отделения, где приняли конверт.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "строка «Почтовый",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "адрес отделения",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "stamp_letter",
+       "line": 168
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stamp_letter на строке 168 записано выражение `'Почтовый сбор не внесён'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+     "parts": [
+      {
+       "start": 0,
+       "end": 39,
+       "text": "Нужны строка «Почтовый сбор не внесён» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "stamp_letter",
+         "line": 168,
+         "column": 11,
+         "end": 168,
+         "end_column": 56
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 39,
+       "end": 78,
+       "text": "и адрес отделения, где приняли конверт.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "строка «Почтовый",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "адрес отделения",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "stamp_letter",
+       "line": 168
+      }
+     ],
+     "claims": [
+      {
+       "text": "В stamp_letter на строке 168 записано выражение `'Почтовый сбор не внесён'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         168,
+         168
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+     "parts": [
+      {
+       "start": 0,
+       "end": 39,
+       "text": "Нужны строка «Почтовый сбор не внесён» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "28d9c21c6e08d6579a12b41f7222a6096cba5474",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "stamp_letter",
+         "line": 168,
+         "column": 11,
+         "end": 168,
+         "end_column": 56
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 39,
+       "end": 78,
+       "text": "и адрес отделения, где приняли конверт.",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  }
+ ],
+ "ms": {
+  "R2": {
+   "object_offline": 146.4,
+   "relation_nearest": 198.7,
+   "relation_frame": 161.8
+  },
+  "E4": {
+   "relation_nearest": 159.5,
+   "relation_frame": 201.4,
+   "object_offline": 217.8
+  },
+  "E5": {
+   "relation_frame": 145.3,
+   "object_offline": 162.8,
+   "relation_nearest": 150.2
+  }
+ },
+ "metrics": {
+  "object_offline": {
+   "static": 6,
+   "objects": 6,
+   "types": 3,
+   "joint": 3,
+   "facts": 4,
+   "gaps": 1,
+   "correct_gap": 0,
+   "full": 0,
+   "partial": 1,
+   "strict_partial": 0,
+   "false_complete": 2,
+   "insufficient": 0,
+   "contrasts": [],
+   "steps": 11,
+   "calls": 0,
+   "median_ms": 162.8
+  },
+  "relation_nearest": {
+   "static": 6,
+   "objects": 6,
+   "types": 5,
+   "joint": 5,
+   "facts": 5,
+   "gaps": 1,
+   "correct_gap": 0,
+   "full": 1,
+   "partial": 1,
+   "strict_partial": 0,
+   "false_complete": 1,
+   "insufficient": 0,
+   "contrasts": [],
+   "steps": 9,
+   "calls": 0,
+   "median_ms": 159.5
+  },
+  "relation_frame": {
+   "static": 6,
+   "objects": 6,
+   "types": 5,
+   "joint": 5,
+   "facts": 5,
+   "gaps": 1,
+   "correct_gap": 0,
+   "full": 1,
+   "partial": 1,
+   "strict_partial": 0,
+   "false_complete": 1,
+   "insufficient": 0,
+   "contrasts": [],
+   "steps": 9,
+   "calls": 0,
+   "median_ms": 161.8
+  }
+ }
+}

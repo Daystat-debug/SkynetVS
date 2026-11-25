@@ -1,0 +1,5977 @@
+{
+ "panel": "f934ab67d87c106bfd4ea3ba210faa380348424b:docs/maintenance/core_14/control.json",
+ "rows": [
+  {
+   "id": "R1",
+   "question": "Какое условие приводит к «M134_EXPANDED_QUERY_TOO_LONG»?",
+   "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Какое",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@53",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В expand_query исследована инструкция `raise ValueError('M134_EXPANDED_QUERY_TOO_LONG')` (стр. 53). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` ложно (стр. 48) и `len(text) > 2048 or len(text.encode('utf-8')) > 4096` истинно (стр. 52). При расчёте учтены переходы `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         48,
+         48
+        ],
+        [
+         "C",
+         49,
+         49
+        ],
+        [
+         "C",
+         52,
+         52
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "expand_query",
+        "line": 53,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           48,
+           "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+          ]
+         ],
+         [
+          "test",
+          52,
+          "len(text) > 2048 or len(text.encode('utf-8')) > 4096"
+         ]
+        ],
+        "work": 9
+       }
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 56,
+       "text": "Какое условие приводит к «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Какое",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@53",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В expand_query исследована инструкция `raise ValueError('M134_EXPANDED_QUERY_TOO_LONG')` (стр. 53). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` ложно (стр. 48) и `len(text) > 2048 or len(text.encode('utf-8')) > 4096` истинно (стр. 52). При расчёте учтены переходы `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         48,
+         48
+        ],
+        [
+         "C",
+         49,
+         49
+        ],
+        [
+         "C",
+         52,
+         52
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "expand_query",
+        "line": 53,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           48,
+           "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+          ]
+         ],
+         [
+          "test",
+          52,
+          "len(text) > 2048 or len(text.encode('utf-8')) > 4096"
+         ]
+        ],
+        "work": 9
+       }
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 56,
+       "text": "Какое условие приводит к «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Какое",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "expand_query@53",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В expand_query исследована инструкция `raise ValueError('M134_EXPANDED_QUERY_TOO_LONG')` (стр. 53). Для достижения строки требуется: `not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)` ложно (стр. 48) и `len(text) > 2048 or len(text.encode('utf-8')) > 4096` истинно (стр. 52). При расчёте учтены переходы `raise ValueError('M134_GOAL_EMPTY_OR_TOO_LONG')` (стр. 49). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         48,
+         48
+        ],
+        [
+         "C",
+         49,
+         49
+        ],
+        [
+         "C",
+         52,
+         52
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/context_search.py",
+        "function": "expand_query",
+        "line": 53,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           48,
+           "not isinstance(goal, str) or not goal.strip() or len(goal) > 1200 or (len(goal.encode('utf-8')) > 2500)"
+          ]
+         ],
+         [
+          "test",
+          52,
+          "len(text) > 2048 or len(text.encode('utf-8')) > 4096"
+         ]
+        ],
+        "work": 9
+       }
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 56,
+       "text": "Какое условие приводит к «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "R2",
+   "question": "Из какой функции обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+   "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Из какой",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 73,
+       "text": "Из какой функции обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Из какой",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 73,
+       "text": "Из какой функции обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Из какой",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 73,
+       "text": "Из какой функции обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "R3",
+   "question": "С каким аргументом обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+   "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "С каким",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 75,
+       "text": "С каким аргументом обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "С каким",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 75,
+       "text": "С каким аргументом обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "С каким",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "expand_query",
+       "line": 53
+      },
+      {
+       "tool": "calls",
+       "target": "expand_query",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В expand_query на строке 53 записано выражение `'M134_EXPANDED_QUERY_TOO_LONG'`.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         53,
+         53
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В search_repository на строке 146 записан прямой вызов expand_query.",
+       "refs": [
+        [
+         "C",
+         47,
+         47
+        ],
+        [
+         "C",
+         144,
+         144
+        ],
+        [
+         "C",
+         146,
+         146
+        ]
+       ],
+       "edge": [
+        "search_repository",
+        "expand_query"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 75,
+       "text": "С каким аргументом обращаются к обработчику «M134_EXPANDED_QUERY_TOO_LONG»?",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/context_search.py",
+         "owner": "expand_query",
+         "line": 53,
+         "column": 25,
+         "end": 53,
+         "end_column": 55
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K1",
+   "question": "Где в исходнике говорится о просушке керна?",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": true,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 43,
+       "text": "Где в исходнике говорится о просушке керна?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": true,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 43,
+       "text": "Где в исходнике говорится о просушке керна?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": true,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 43,
+       "text": "Где в исходнике говорится о просушке керна?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "K2",
+   "question": "При каком условии говорится о просушке керна?",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "При каком",
+      "kind": "condition",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 45,
+       "text": "При каком условии говорится о просушке керна?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "При каком",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": true,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 45,
+       "text": "При каком условии говорится о просушке керна?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "condition",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "При каком",
+      "kind": "condition",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": true,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 45,
+       "text": "При каком условии говорится о просушке керна?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "K3",
+   "question": "Какой параметр получает обработчик сообщения о просушке керна со стороны вызывающего кода?",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Какой",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 90,
+       "text": "Какой параметр получает обработчик сообщения о просушке керна со стороны вызывающего кода?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Какой",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 90,
+       "text": "Какой параметр получает обработчик сообщения о просушке керна со стороны вызывающего кода?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Какой",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 90,
+       "text": "Какой параметр получает обработчик сообщения о просушке керна со стороны вызывающего кода?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "K4",
+   "question": "Кто вызывает обработчик «Маркировка ампулы стёрта» и «Керн отправлен на просушку»?",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Кто",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Керн",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "label_vial",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "grade_sample",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_vial на строке 171 записан прямой вызов label_vial.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "inspect_vial",
+        "label_vial"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_core на строке 163 записан прямой вызов grade_sample.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "inspect_core",
+        "grade_sample"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 51,
+       "text": "Кто вызывает обработчик «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 51,
+       "end": 82,
+       "text": "и «Керн отправлен на просушку»?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Кто",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Керн",
+      "kind": "caller",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "label_vial",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_vial на строке 171 записан прямой вызов label_vial.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "inspect_vial",
+        "label_vial"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 51,
+       "text": "Кто вызывает обработчик «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      },
+      {
+       "start": 51,
+       "end": 82,
+       "text": "и «Керн отправлен на просушку»?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         2
+        ],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Кто",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Керн",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "label_vial",
+       "status": "call_sites"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "calls",
+       "target": "grade_sample",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_vial на строке 171 записан прямой вызов label_vial.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "inspect_vial",
+        "label_vial"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_core на строке 163 записан прямой вызов grade_sample.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         162,
+         162
+        ],
+        [
+         "R",
+         163,
+         163
+        ]
+       ],
+       "edge": [
+        "inspect_core",
+        "grade_sample"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 51,
+       "text": "Кто вызывает обработчик «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      },
+      {
+       "start": 51,
+       "end": 82,
+       "text": "и «Керн отправлен на просушку»?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": 0,
+        "direct": [
+         3
+        ],
+        "support": [
+         2
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K5",
+   "question": "Покажи условия для «Маркировка ампулы стёрта» и «Керн отправлен на просушку».",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Покажи",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Керн",
+      "kind": "condition",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "label_vial@167",
+       "status": "proved"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial исследована инструкция `return 'Маркировка ампулы стёрта'` (стр. 167). Для достижения строки требуется: `faded` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "label_vial",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "faded"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 46,
+       "text": "Покажи условия для «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      },
+      {
+       "start": 46,
+       "end": 77,
+       "text": "и «Керн отправлен на просушку».",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         2
+        ],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Покажи",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Керн",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "label_vial@167",
+       "status": "proved"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "grade_sample@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial исследована инструкция `return 'Маркировка ампулы стёрта'` (стр. 167). Для достижения строки требуется: `faded` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "label_vial",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "faded"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В grade_sample исследована инструкция `return 'Керн отправлен на просушку'` (стр. 159). Для достижения строки требуется: `porous` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "grade_sample",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "porous"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 46,
+       "text": "Покажи условия для «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      },
+      {
+       "start": 46,
+       "end": 77,
+       "text": "и «Керн отправлен на просушку».",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "inherited_from": 0,
+        "direct": [
+         3
+        ],
+        "support": [
+         2
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Покажи",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Керн",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "label_vial@167",
+       "status": "proved"
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "grade_sample@159",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial исследована инструкция `return 'Маркировка ампулы стёрта'` (стр. 167). Для достижения строки требуется: `faded` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "label_vial",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "faded"
+        ],
+        "work": 2
+       }
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В grade_sample исследована инструкция `return 'Керн отправлен на просушку'` (стр. 159). Для достижения строки требуется: `porous` истинно (стр. 158). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         158,
+         158
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "grade_sample",
+        "line": 159,
+        "condition": [
+         "test",
+         158,
+         "porous"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 46,
+       "text": "Покажи условия для «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 46,
+       "end": 77,
+       "text": "и «Керн отправлен на просушку».",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        2,
+        3
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K6",
+   "question": "Найди «Керн отправлен на просушку» и «Маркировка ампулы стёрта». Что передано обработчику второй?",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Найди",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Маркировка",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Что передано",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "label_vial",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "label_vial",
+       "status": "bound"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_vial на строке 171 записан прямой вызов label_vial.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "inspect_vial",
+        "label_vial"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: faded ← `False`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 35,
+       "text": "Найди «Керн отправлен на просушку» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 35,
+       "end": 65,
+       "text": "и «Маркировка ампулы стёрта». ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": 0,
+        "direct": [
+         1
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 65,
+       "end": 97,
+       "text": "Что передано обработчику второй?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "reference",
+        "antecedent": 1,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1,
+        2,
+        3
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "arguments",
+        "inherited_from": null,
+        "direct": [
+         3
+        ],
+        "support": [
+         1,
+         2
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Найди",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Маркировка",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Что передано",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "label_vial",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В inspect_vial на строке 171 записан прямой вызов label_vial.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "inspect_vial",
+        "label_vial"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 35,
+       "text": "Найди «Керн отправлен на просушку» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 35,
+       "end": 65,
+       "text": "и «Маркировка ампулы стёрта». ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 65,
+       "end": 97,
+       "text": "Что передано обработчику второй?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "reference",
+        "antecedent": 1,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1,
+        2
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Найди",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "и «Маркировка",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Что передано",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      }
+     ],
+     "claims": [
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 35,
+       "text": "Найди «Керн отправлен на просушку» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 35,
+       "end": 65,
+       "text": "и «Маркировка ампулы стёрта». ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 65,
+       "end": 97,
+       "text": "Что передано обработчику второй?",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "reference",
+        "antecedent": 1,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K7",
+   "question": "Где «Маркировка ампулы стёрта» и где «Керн отправлен на просушку»? Кто обращается к его обработчику?",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «Керн",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Кто",
+      "kind": "ambiguous",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "3",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 31,
+       "text": "Где «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 31,
+       "end": 67,
+       "text": "и где «Керн отправлен на просушку»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 67,
+       "end": 100,
+       "text": "Кто обращается к его обработчику?",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «Керн",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Кто",
+      "kind": "ambiguous",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "3",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 31,
+       "text": "Где «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 31,
+       "end": 67,
+       "text": "и где «Керн отправлен на просушку»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 67,
+       "end": 100,
+       "text": "Кто обращается к его обработчику?",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «Керн",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Кто",
+      "kind": "ambiguous",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "3",
+       "status": "started"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 31,
+       "text": "Где «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 31,
+       "end": 67,
+       "text": "и где «Керн отправлен на просушку»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 67,
+       "end": 100,
+       "text": "Кто обращается к его обработчику?",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K8",
+   "question": "Назови условие для «Маркировка ампулы стёрта» и фамилию изготовителя этой ампулы.",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Назови",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "фамилию",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "label_vial@167",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial исследована инструкция `return 'Маркировка ампулы стёрта'` (стр. 167). Для достижения строки требуется: `faded` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "label_vial",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "faded"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 46,
+       "text": "Назови условие для «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      },
+      {
+       "start": 46,
+       "end": 81,
+       "text": "и фамилию изготовителя этой ампулы.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "external"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "external",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Назови",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "фамилию",
+      "kind": "external",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "label_vial@167",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial исследована инструкция `return 'Маркировка ампулы стёрта'` (стр. 167). Для достижения строки требуется: `faded` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "label_vial",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "faded"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 46,
+       "text": "Назови условие для «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "condition",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      },
+      {
+       "start": 46,
+       "end": 81,
+       "text": "и фамилию изготовителя этой ампулы.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Назови",
+      "kind": "condition",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "фамилию",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "label_vial",
+       "line": 167
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "label_vial@167",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В label_vial на строке 167 записано выражение `'Маркировка ампулы стёрта'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В label_vial исследована инструкция `return 'Маркировка ампулы стёрта'` (стр. 167). Для достижения строки требуется: `faded` истинно (стр. 166). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         166,
+         166
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+        "function": "label_vial",
+        "line": 167,
+        "condition": [
+         "test",
+         166,
+         "faded"
+        ],
+        "work": 2
+       }
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 46,
+       "text": "Назови условие для «Маркировка ампулы стёрта» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 46,
+       "end": 81,
+       "text": "и фамилию изготовителя этой ампулы.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "label_vial",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 63
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "external"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "K9",
+   "question": "Кто посылает образец породы сушиться?",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Кто",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 37,
+       "text": "Кто посылает образец породы сушиться?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Кто",
+      "kind": "caller",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": true,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 37,
+       "text": "Кто посылает образец породы сушиться?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Кто",
+      "kind": "caller",
+      "type_found": true,
+      "site": "missing",
+      "chosen": null,
+      "proved": false,
+      "exact_type": true,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "started"
+      }
+     ],
+     "claims": [],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 37,
+       "text": "Кто посылает образец породы сушиться?",
+       "binding": {
+        "target": 0,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "observation_ambiguous"
+    }
+   }
+  },
+  {
+   "id": "K10",
+   "question": "Где «Керн отправлен на просушку» и сколько раз такое случилось вчера?",
+   "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "сколько раз",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      }
+     ],
+     "claims": [
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 33,
+       "text": "Где «Керн отправлен на просушку» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 33,
+       "end": 69,
+       "text": "и сколько раз такое случилось вчера?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "сколько раз",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      }
+     ],
+     "claims": [
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 33,
+       "text": "Где «Керн отправлен на просушку» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 33,
+       "end": 69,
+       "text": "и сколько раз такое случилось вчера?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "runtime",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "сколько раз",
+      "kind": "runtime",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "grade_sample",
+       "line": 159
+      }
+     ],
+     "claims": [
+      {
+       "text": "В grade_sample на строке 159 записано выражение `'Керн отправлен на просушку'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+     "parts": [
+      {
+       "start": 0,
+       "end": 33,
+       "text": "Где «Керн отправлен на просушку» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "d13aad3ecd729a8bfcc66dcc14b67426f114bd62",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "grade_sample",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 66
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 33,
+       "end": 69,
+       "text": "и сколько раз такое случилось вчера?",
+       "binding": {
+        "target": 1,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "runtime"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "runtime",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  }
+ ],
+ "ms": {
+  "R1": {
+   "object_offline": 110.6,
+   "relation_nearest": 140.8,
+   "relation_frame": 106.1
+  },
+  "R2": {
+   "relation_nearest": 127.0,
+   "relation_frame": 127.4,
+   "object_offline": 131.2
+  },
+  "R3": {
+   "relation_frame": 126.0,
+   "object_offline": 124.4,
+   "relation_nearest": 134.2
+  },
+  "K1": {
+   "object_offline": 103.6,
+   "relation_nearest": 100.7,
+   "relation_frame": 99.8
+  },
+  "K2": {
+   "relation_nearest": 85.3,
+   "relation_frame": 99.4,
+   "object_offline": 99.8
+  },
+  "K3": {
+   "relation_frame": 102.3,
+   "object_offline": 100.1,
+   "relation_nearest": 102.5
+  },
+  "K4": {
+   "object_offline": 187.8,
+   "relation_nearest": 145.2,
+   "relation_frame": 177.8
+  },
+  "K5": {
+   "relation_nearest": 133.8,
+   "relation_frame": 151.1,
+   "object_offline": 147.2
+  },
+  "K6": {
+   "relation_frame": 169.2,
+   "object_offline": 164.1,
+   "relation_nearest": 119.3
+  },
+  "K7": {
+   "object_offline": 133.5,
+   "relation_nearest": 131.2,
+   "relation_frame": 137.2
+  },
+  "K8": {
+   "relation_nearest": 116.7,
+   "relation_frame": 115.7,
+   "object_offline": 117.3
+  },
+  "K9": {
+   "relation_frame": 86.9,
+   "object_offline": 101.4,
+   "relation_nearest": 101.2
+  },
+  "K10": {
+   "object_offline": 96.0,
+   "relation_nearest": 99.5,
+   "relation_frame": 100.8
+  }
+ },
+ "metrics": {
+  "object_offline": {
+   "static": 18,
+   "objects": 14,
+   "types": 15,
+   "joint": 12,
+   "facts": 12,
+   "gaps": 3,
+   "correct_gap": 3,
+   "full": 4,
+   "partial": 3,
+   "strict_partial": 3,
+   "false_complete": 2,
+   "insufficient": 4,
+   "contrasts": [
+    [
+     "R1",
+     "R2"
+    ],
+    [
+     "K4",
+     "K5"
+    ]
+   ],
+   "steps": 40,
+   "calls": 0,
+   "median_ms": 117.3
+  },
+  "relation_nearest": {
+   "static": 18,
+   "objects": 14,
+   "types": 12,
+   "joint": 10,
+   "facts": 10,
+   "gaps": 3,
+   "correct_gap": 3,
+   "full": 2,
+   "partial": 3,
+   "strict_partial": 3,
+   "false_complete": 3,
+   "insufficient": 4,
+   "contrasts": [
+    [
+     "R1",
+     "R2"
+    ]
+   ],
+   "steps": 36,
+   "calls": 0,
+   "median_ms": 119.3
+  },
+  "relation_frame": {
+   "static": 18,
+   "objects": 14,
+   "types": 15,
+   "joint": 13,
+   "facts": 13,
+   "gaps": 3,
+   "correct_gap": 2,
+   "full": 5,
+   "partial": 3,
+   "strict_partial": 2,
+   "false_complete": 1,
+   "insufficient": 4,
+   "contrasts": [
+    [
+     "R1",
+     "R2"
+    ],
+    [
+     "K4",
+     "K5"
+    ]
+   ],
+   "steps": 40,
+   "calls": 0,
+   "median_ms": 115.7
+  }
+ }
+}

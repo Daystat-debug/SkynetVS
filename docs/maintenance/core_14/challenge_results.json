@@ -1,0 +1,3413 @@
+{
+ "panel": "65ee023a2de52bfac6afb8523ecde0f23e8037ae:docs/maintenance/core_14/challenge.json",
+ "rows": [
+  {
+   "id": "R1",
+   "question": "«M127_INPUT_TOO_LARGE». Меня интересует непосредственный инициатор этой проверки.",
+   "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "инициатор",
+      "kind": "caller",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 33
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "extract_symbols@33",
+       "status": "proved"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В extract_symbols на строке 33 записано выражение `'M127_INPUT_TOO_LARGE'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         33,
+         33
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В extract_symbols исследована инструкция `raise ValueError('M127_INPUT_TOO_LARGE')` (стр. 33). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources or len(old_sources) > 24` ложно (стр. 30) и `sum((len(v.encode('utf-8')) if isinstance(v, str) else 10000000 for v in old_sources.values())) > 6000000` истинно (стр. 32). При расчёте учтены переходы `raise ValueError('M127_OLD_SOURCES_INVALID')` (стр. 31). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         30,
+         30
+        ],
+        [
+         "S",
+         31,
+         31
+        ],
+        [
+         "S",
+         32,
+         32
+        ],
+        [
+         "S",
+         33,
+         33
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        "function": "extract_symbols",
+        "line": 33,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           30,
+           "not isinstance(old_sources, dict) or not old_sources or len(old_sources) > 24"
+          ]
+         ],
+         [
+          "test",
+          32,
+          "sum((len(v.encode('utf-8')) if isinstance(v, str) else 10000000 for v in old_sources.values())) > 6000000"
+         ]
+        ],
+        "work": 7
+       }
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 24,
+       "text": "«M127_INPUT_TOO_LARGE». ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 24,
+       "end": 81,
+       "text": "Меня интересует непосредственный инициатор этой проверки.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "инициатор",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 24,
+       "text": "«M127_INPUT_TOO_LARGE». ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 24,
+       "end": 81,
+       "text": "Меня интересует непосредственный инициатор этой проверки.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "инициатор",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 24,
+       "text": "«M127_INPUT_TOO_LARGE». ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 24,
+       "end": 81,
+       "text": "Меня интересует непосредственный инициатор этой проверки.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   }
+  },
+  {
+   "id": "R2",
+   "question": "«M127_INPUT_TOO_LARGE». Меня интересует входное значение этой проверки в точке обращения.",
+   "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "входное",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 24,
+       "text": "«M127_INPUT_TOO_LARGE». ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 24,
+       "end": 89,
+       "text": "Меня интересует входное значение этой проверки в точке обращения.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "входное",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 24,
+       "text": "«M127_INPUT_TOO_LARGE». ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 24,
+       "end": 89,
+       "text": "Меня интересует входное значение этой проверки в точке обращения.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "входное",
+      "kind": "arguments",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "extract_symbols",
+       "line": 33
+      },
+      {
+       "tool": "prove_conditions",
+       "target": "extract_symbols@33",
+       "status": "proved"
+      },
+      {
+       "tool": "calls",
+       "target": "extract_symbols",
+       "status": "call_sites"
+      },
+      {
+       "tool": "bind_arguments",
+       "target": "extract_symbols",
+       "status": "bound"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В extract_symbols на строке 33 записано выражение `'M127_INPUT_TOO_LARGE'`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         33,
+         33
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В extract_symbols исследована инструкция `raise ValueError('M127_INPUT_TOO_LARGE')` (стр. 33). Для достижения строки требуется: `not isinstance(old_sources, dict) or not old_sources or len(old_sources) > 24` ложно (стр. 30) и `sum((len(v.encode('utf-8')) if isinstance(v, str) else 10000000 for v in old_sources.values())) > 6000000` истинно (стр. 32). При расчёте учтены переходы `raise ValueError('M127_OLD_SOURCES_INVALID')` (стр. 31). Предикаты относятся к своим строкам при нормальном завершении вычислений и конечном переборе.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         30,
+         30
+        ],
+        [
+         "S",
+         31,
+         31
+        ],
+        [
+         "S",
+         32,
+         32
+        ],
+        [
+         "S",
+         33,
+         33
+        ]
+       ],
+       "kind": "condition",
+       "control": {
+        "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+        "function": "extract_symbols",
+        "line": 33,
+        "condition": [
+         "and",
+         [
+          "not",
+          [
+           "test",
+           30,
+           "not isinstance(old_sources, dict) or not old_sources or len(old_sources) > 24"
+          ]
+         ],
+         [
+          "test",
+          32,
+          "sum((len(v.encode('utf-8')) if isinstance(v, str) else 10000000 for v in old_sources.values())) > 6000000"
+         ]
+        ],
+        "work": 7
+       }
+      },
+      {
+       "text": "В rank_symbols на строке 77 записан прямой вызов extract_symbols.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "edge": [
+        "rank_symbols",
+        "extract_symbols"
+       ],
+       "kind": "caller"
+      },
+      {
+       "text": "Привязка аргументов: old_sources ← `old_sources`.",
+       "refs": [
+        [
+         "S",
+         28,
+         28
+        ],
+        [
+         "S",
+         72,
+         72
+        ],
+        [
+         "S",
+         77,
+         77
+        ]
+       ],
+       "kind": "arguments"
+      }
+     ],
+     "snapshot": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+     "parts": [
+      {
+       "start": 0,
+       "end": 24,
+       "text": "«M127_INPUT_TOO_LARGE». ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 24,
+       "end": 89,
+       "text": "Меня интересует входное значение этой проверки в точке обращения.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "98f76735805544f08c938c1a4f0dbd3ed8ec3157",
+         "path": "modules/developer_task_ui/app/retrieval/m127_symbol.py",
+         "owner": "extract_symbols",
+         "line": 33,
+         "column": 25,
+         "end": 33,
+         "end_column": 47
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "condition",
+        "caller",
+        "arguments"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1,
+        2,
+        3
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "V1",
+   "question": "Для «Билет застрял в принтере» нужен участок, откуда управление приходит в обработчик.",
+   "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "нужен участок",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      }
+     ],
+     "claims": [],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 86,
+       "text": "Для «Билет застрял в принтере» нужен участок, откуда управление приходит в обработчик.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "нужен участок",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": true,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "print_ticket",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В dispatch_ticket на строке 171 записан прямой вызов print_ticket.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "dispatch_ticket",
+        "print_ticket"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 86,
+       "text": "Для «Билет застрял в принтере» нужен участок, откуда управление приходит в обработчик.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "нужен участок",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      }
+     ],
+     "claims": [],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 86,
+       "text": "Для «Билет застрял в принтере» нужен участок, откуда управление приходит в обработчик.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   }
+  },
+  {
+   "id": "V2",
+   "question": "Для «Билет застрял в принтере» нужен выбор ветви внутри обработчика.",
+   "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "нужен выбор",
+      "kind": "condition",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "print_ticket",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В dispatch_ticket на строке 171 записан прямой вызов print_ticket.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "dispatch_ticket",
+        "print_ticket"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 68,
+       "text": "Для «Билет застрял в принтере» нужен выбор ветви внутри обработчика.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "нужен выбор",
+      "kind": "condition",
+      "type_found": false,
+      "site": "right",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": true,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "answered",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "print_ticket",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В dispatch_ticket на строке 171 записан прямой вызов print_ticket.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "dispatch_ticket",
+        "print_ticket"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 68,
+       "text": "Для «Билет застрял в принтере» нужен выбор ветви внутри обработчика.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "нужен выбор",
+      "kind": "condition",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 1
+      }
+     ],
+     "claims": [],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 68,
+       "text": "Для «Билет застрял в принтере» нужен выбор ветви внутри обработчика.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   }
+  },
+  {
+   "id": "V3",
+   "question": "По отказу резерва из-за нехватки кресел и застрявшему билету нужны имена вызывающих функций.",
+   "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "По отказу",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     },
+     {
+      "cue": "застрявшему",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "По отказу резерва из-за нехватки кресел ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 40,
+       "end": 92,
+       "text": "и застрявшему билету нужны имена вызывающих функций.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "По отказу",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     },
+     {
+      "cue": "застрявшему",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "print_ticket",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В dispatch_ticket на строке 171 записан прямой вызов print_ticket.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "dispatch_ticket",
+        "print_ticket"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "По отказу резерва из-за нехватки кресел ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 40,
+       "end": 92,
+       "text": "и застрявшему билету нужны имена вызывающих функций.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "caller",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": [
+         0
+        ]
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "По отказу",
+      "kind": "caller",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     },
+     {
+      "cue": "застрявшему",
+      "kind": "caller",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      },
+      {
+       "tool": "calls",
+       "target": "print_ticket",
+       "status": "call_sites"
+      }
+     ],
+     "claims": [
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В dispatch_ticket на строке 171 записан прямой вызов print_ticket.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         170,
+         170
+        ],
+        [
+         "R",
+         171,
+         171
+        ]
+       ],
+       "edge": [
+        "dispatch_ticket",
+        "print_ticket"
+       ],
+       "kind": "caller"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "По отказу резерва из-за нехватки кресел ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 40,
+       "end": 92,
+       "text": "и застрявшему билету нужны имена вызывающих функций.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site",
+        "caller"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        0,
+        1
+       ],
+       "status": "established"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "V4",
+   "question": "По отказу резерва из-за нехватки кресел и застрявшему билету нужны значения на входе в эти функции.",
+   "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "По отказу",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     },
+     {
+      "cue": "застрявшему",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "По отказу резерва из-за нехватки кресел ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 40,
+       "end": 99,
+       "text": "и застрявшему билету нужны значения на входе в эти функции.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "По отказу",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     },
+     {
+      "cue": "застрявшему",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "По отказу резерва из-за нехватки кресел ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      },
+      {
+       "start": 40,
+       "end": 99,
+       "text": "и застрявшему билету нужны значения на входе в эти функции.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "По отказу",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     },
+     {
+      "cue": "застрявшему",
+      "kind": "arguments",
+      "type_found": false,
+      "site": "missing",
+      "chosen": true,
+      "proved": false,
+      "exact_type": false,
+      "joint": false
+     }
+    ],
+    "expected": "answered",
+    "full": false,
+    "partial": false,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": false,
+    "calls": [],
+    "answer": {
+     "state": "insufficient",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      }
+     ],
+     "claims": [],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 40,
+       "text": "По отказу резерва из-за нехватки кресел ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      },
+      {
+       "start": 40,
+       "end": 99,
+       "text": "и застрявшему билету нужны значения на входе в эти функции.",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "description",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 1,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "reason": "unverified_meaning"
+    }
+   }
+  },
+  {
+   "id": "V5",
+   "question": "Покажи строку «Билет застрял в принтере» и стоимость его замены по накладной.",
+   "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Покажи",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "стоимость",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      }
+     ],
+     "claims": [
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 41,
+       "text": "Покажи строку «Билет застрял в принтере» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 41,
+       "end": 77,
+       "text": "и стоимость его замены по накладной.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "external"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Покажи",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "стоимость",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      }
+     ],
+     "claims": [
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 41,
+       "text": "Покажи строку «Билет застрял в принтере» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 41,
+       "end": 77,
+       "text": "и стоимость его замены по накладной.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "external"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "external",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Покажи",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "стоимость",
+      "kind": "external",
+      "gap": true,
+      "reason": true,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": true,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 2
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      }
+     ],
+     "claims": [
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 41,
+       "text": "Покажи строку «Билет застрял в принтере» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 41,
+       "end": 77,
+       "text": "и стоимость его замены по накладной.",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "reference",
+        "antecedent": 0,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "external"
+       ],
+       "target": 0,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "external",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  },
+  {
+   "id": "V6",
+   "question": "Где «Резерв отклонён из-за нехватки кресел» и где «Билет застрял в принтере»? Назови вход для него.",
+   "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+   "relation_nearest": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «Билет",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Назови",
+      "kind": "ambiguous",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "reserve_seat",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      }
+     ],
+     "claims": [
+      {
+       "text": "В reserve_seat на строке 159 записано выражение `'Резерв отклонён из-за нехватки кресел'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 44,
+       "text": "Где «Резерв отклонён из-за нехватки кресел» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 44,
+       "end": 78,
+       "text": "и где «Билет застрял в принтере»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 78,
+       "end": 99,
+       "text": "Назови вход для него.",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "relation_frame": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «Билет",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Назови",
+      "kind": "ambiguous",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "reserve_seat",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      }
+     ],
+     "claims": [
+      {
+       "text": "В reserve_seat на строке 159 записано выражение `'Резерв отклонён из-за нехватки кресел'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 44,
+       "text": "Где «Резерв отклонён из-за нехватки кресел» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         0
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 44,
+       "end": 78,
+       "text": "и где «Билет застрял в принтере»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established",
+       "relation": {
+        "kind": "site",
+        "inherited_from": null,
+        "direct": [
+         1
+        ],
+        "support": []
+       }
+      },
+      {
+       "start": 78,
+       "end": 99,
+       "text": "Назови вход для него.",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown",
+       "relation": {
+        "kind": "unverified_meaning",
+        "inherited_from": null,
+        "direct": [],
+        "support": []
+       }
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   },
+   "object_offline": {
+    "scores": [
+     {
+      "cue": "Где",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "где «Билет",
+      "kind": "site",
+      "type_found": true,
+      "site": "right",
+      "chosen": true,
+      "proved": true,
+      "exact_type": true,
+      "joint": true
+     },
+     {
+      "cue": "Назови",
+      "kind": "ambiguous",
+      "gap": true,
+      "reason": false,
+      "incorrect_site": false
+     }
+    ],
+    "expected": "partial",
+    "full": false,
+    "partial": true,
+    "strict_partial": false,
+    "false_complete": false,
+    "wrong_binding": false,
+    "status_correct": true,
+    "calls": [],
+    "answer": {
+     "state": "partial",
+     "plan": "task_parts",
+     "steps": [
+      {
+       "tool": "interpret_parts",
+       "target": "question",
+       "status": "interpreted",
+       "count": 3
+      },
+      {
+       "tool": "locate_observation",
+       "target": "1",
+       "status": "located",
+       "owner": "reserve_seat",
+       "line": 159
+      },
+      {
+       "tool": "locate_observation",
+       "target": "2",
+       "status": "located",
+       "owner": "print_ticket",
+       "line": 167
+      }
+     ],
+     "claims": [
+      {
+       "text": "В reserve_seat на строке 159 записано выражение `'Резерв отклонён из-за нехватки кресел'`.",
+       "refs": [
+        [
+         "R",
+         157,
+         157
+        ],
+        [
+         "R",
+         159,
+         159
+        ]
+       ],
+       "kind": "site"
+      },
+      {
+       "text": "В print_ticket на строке 167 записано выражение `'Билет застрял в принтере'`.",
+       "refs": [
+        [
+         "R",
+         165,
+         165
+        ],
+        [
+         "R",
+         167,
+         167
+        ]
+       ],
+       "kind": "site"
+      }
+     ],
+     "snapshot": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+     "parts": [
+      {
+       "start": 0,
+       "end": 44,
+       "text": "Где «Резерв отклонён из-за нехватки кресел» ",
+       "binding": {
+        "target": 0,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "reserve_seat",
+         "line": 159,
+         "column": 15,
+         "end": 159,
+         "end_column": 86
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 0,
+       "claims": [
+        0
+       ],
+       "status": "established"
+      },
+      {
+       "start": 44,
+       "end": 78,
+       "text": "и где «Билет застрял в принтере»? ",
+       "binding": {
+        "target": 1,
+        "object": {
+         "commit": "26385ee01602218c1884aa83d95bcf8ad6f84f24",
+         "path": "modules/developer_task_ui/app/retrieval/m130_rank.py",
+         "owner": "print_ticket",
+         "line": 167,
+         "column": 15,
+         "end": 167,
+         "end_column": 62
+        },
+        "via": "quote",
+        "antecedent": null,
+        "gap": null,
+        "tentative": false
+       },
+       "need": [
+        "site"
+       ],
+       "issues": [],
+       "target": 1,
+       "claims": [
+        1
+       ],
+       "status": "established"
+      },
+      {
+       "start": 78,
+       "end": 99,
+       "text": "Назови вход для него.",
+       "binding": {
+        "target": 2,
+        "object": null,
+        "via": "unresolved",
+        "antecedent": null,
+        "gap": "observation_ambiguous",
+        "tentative": false
+       },
+       "need": [],
+       "issues": [
+        "unverified_meaning"
+       ],
+       "target": 2,
+       "claims": [],
+       "status": "unknown"
+      }
+     ],
+     "coverage": "static_subset",
+     "execution_observed": false
+    }
+   }
+  }
+ ],
+ "ms": {
+  "R1": {
+   "object_offline": 114.5,
+   "relation_nearest": 83.5,
+   "relation_frame": 81.7
+  },
+  "R2": {
+   "relation_nearest": 79.9,
+   "relation_frame": 82.3,
+   "object_offline": 158.1
+  },
+  "V1": {
+   "relation_frame": 85.4,
+   "object_offline": 138.5,
+   "relation_nearest": 81.0
+  },
+  "V2": {
+   "object_offline": 136.3,
+   "relation_nearest": 149.7,
+   "relation_frame": 81.5
+  },
+  "V3": {
+   "relation_nearest": 90.3,
+   "relation_frame": 139.0,
+   "object_offline": 140.0
+  },
+  "V4": {
+   "relation_frame": 89.8,
+   "object_offline": 89.2,
+   "relation_nearest": 89.8
+  },
+  "V5": {
+   "object_offline": 99.6,
+   "relation_nearest": 100.3,
+   "relation_frame": 103.1
+  },
+  "V6": {
+   "relation_nearest": 116.3,
+   "relation_frame": 116.5,
+   "object_offline": 115.9
+  }
+ },
+ "metrics": {
+  "object_offline": {
+   "static": 11,
+   "objects": 11,
+   "types": 5,
+   "joint": 5,
+   "facts": 6,
+   "gaps": 2,
+   "correct_gap": 1,
+   "full": 1,
+   "partial": 2,
+   "strict_partial": 1,
+   "false_complete": 1,
+   "insufficient": 1,
+   "contrasts": [],
+   "steps": 23,
+   "calls": 0,
+   "median_ms": 126.10000000000001
+  },
+  "relation_nearest": {
+   "static": 11,
+   "objects": 11,
+   "types": 3,
+   "joint": 3,
+   "facts": 3,
+   "gaps": 2,
+   "correct_gap": 1,
+   "full": 0,
+   "partial": 2,
+   "strict_partial": 1,
+   "false_complete": 1,
+   "insufficient": 5,
+   "contrasts": [],
+   "steps": 13,
+   "calls": 0,
+   "median_ms": 90.05
+  },
+  "relation_frame": {
+   "static": 11,
+   "objects": 11,
+   "types": 4,
+   "joint": 4,
+   "facts": 4,
+   "gaps": 2,
+   "correct_gap": 1,
+   "full": 0,
+   "partial": 2,
+   "strict_partial": 1,
+   "false_complete": 0,
+   "insufficient": 5,
+   "contrasts": [],
+   "steps": 13,
+   "calls": 0,
+   "median_ms": 87.6
+  }
+ }
+}
