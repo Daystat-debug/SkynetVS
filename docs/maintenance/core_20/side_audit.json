@@ -1,0 +1,1100 @@
+{
+ "metrics": {
+  "known_question/correct_positive": 0,
+  "known_question/wrong": 0,
+  "known_sources/correct_positive": 0,
+  "known_sources/wrong": 0
+ },
+ "signs": {
+  "question": {
+   "+/+": 13,
+   "-/-": 2,
+   "+/?": 2,
+   "-/?": 1,
+   "?/?": 1
+  },
+  "source": {
+   "+/+": 10,
+   "-/-": 2,
+   "?/+": 1,
+   "-/+": 1
+  }
+ },
+ "individual": [
+  {
+   "id": "A1",
+   "cue": "Где",
+   "target": "A1",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "A2",
+   "cue": "Где",
+   "target": "A2",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "A3",
+   "cue": "При каком",
+   "target": "A3",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "different",
+       "concept_r"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "A4",
+   "cue": "Где",
+   "target": "A4",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "A5",
+   "cue": "Кто",
+   "target": "A5",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "A6",
+   "cue": "Где",
+   "target": "A6",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "different",
+       "concept_r"
+      ],
+      [
+       "different",
+       "concept_r"
+      ],
+      [
+       "different",
+       "concept_r"
+      ],
+      [
+       "different",
+       "concept_r"
+      ],
+      [
+       "different",
+       "concept_r"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "A7",
+   "cue": "Где",
+   "target": "-",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "A8",
+   "cue": "Где",
+   "target": "-",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "different",
+       "concept_r"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "A9",
+   "cue": "и где",
+   "target": "A4",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ],
+      [
+       "unknown",
+       "unresolved_span"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "B1",
+   "cue": "Где",
+   "target": "B1",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "B2",
+   "cue": "Где",
+   "target": "B2",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "B3",
+   "cue": "Где",
+   "target": "B3",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "B4",
+   "cue": "Где",
+   "target": "B4",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "B5",
+   "cue": "Где",
+   "target": "B1",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "B6",
+   "cue": "Где",
+   "target": "-",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "C1",
+   "cue": "При каком",
+   "target": "C1",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "C2",
+   "cue": "При каком",
+   "target": "C2",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ],
+      [
+       "unknown",
+       "incomplete_relation"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "C3",
+   "cue": "Где",
+   "target": "-",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ],
+      [
+       "unknown",
+       "missing_or_unaligned_role"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "C4",
+   "cue": "Где",
+   "target": "C4",
+   "results": {
+    "known_question": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    },
+    "known_sources": {
+     "chosen": null,
+     "decisions": [
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ],
+      [
+       "unknown",
+       "missing_predicate"
+      ]
+     ]
+    }
+   }
+  }
+ ]
+}

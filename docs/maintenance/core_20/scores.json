@@ -1,0 +1,4637 @@
+{
+ "metrics": {
+  "joint_plan": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 17,
+   "right": 8,
+   "wrong": 1,
+   "types": 19,
+   "facts": 8,
+   "full": 5,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 1,
+   "refused": 15,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 14,
+    "unverified_meaning": 1,
+    "runtime": 1
+   },
+   "steps": 46,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 125.6
+  },
+  "identity_lexical": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 19,
+   "right": 8,
+   "wrong": 3,
+   "types": 19,
+   "facts": 8,
+   "full": 5,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 2,
+   "refused": 13,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 12,
+    "unverified_meaning": 1,
+    "path_unproven": 2,
+    "runtime": 1
+   },
+   "steps": 48,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 126.8
+  },
+  "learn_bag": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 19,
+   "right": 5,
+   "wrong": 0,
+   "types": 19,
+   "facts": 5,
+   "full": 3,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 0,
+   "refused": 17,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 18,
+    "unverified_meaning": 1,
+    "runtime": 1
+   },
+   "steps": 46,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 122.1
+  },
+  "learn_roles": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 19,
+   "right": 6,
+   "wrong": 0,
+   "types": 19,
+   "facts": 6,
+   "full": 4,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 0,
+   "refused": 16,
+   "failed": 0,
+   "contrasts": [
+    [
+     "B1",
+     "B2"
+    ],
+    [
+     "B1",
+     "B3"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 17,
+    "unverified_meaning": 1,
+    "runtime": 1
+   },
+   "steps": 45,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 118.7
+  },
+  "desc_bag": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 19,
+   "right": 4,
+   "wrong": 2,
+   "types": 19,
+   "facts": 4,
+   "full": 2,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 2,
+   "refused": 16,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 17,
+    "unverified_meaning": 1,
+    "runtime": 1
+   },
+   "steps": 46,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 117.2
+  },
+  "desc_regular": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 19,
+   "right": 3,
+   "wrong": 0,
+   "types": 19,
+   "facts": 3,
+   "full": 1,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 0,
+   "refused": 19,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 20,
+    "unverified_meaning": 1,
+    "runtime": 1
+   },
+   "steps": 45,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 120.9
+  },
+  "desc_free": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 19,
+   "right": 3,
+   "wrong": 0,
+   "types": 19,
+   "facts": 3,
+   "full": 1,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 0,
+   "refused": 19,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 20,
+    "unverified_meaning": 1,
+    "runtime": 1
+   },
+   "steps": 45,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 119.7
+  },
+  "desc_mixed": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 19,
+   "right": 4,
+   "wrong": 0,
+   "types": 19,
+   "facts": 4,
+   "full": 2,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 0,
+   "refused": 18,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 19,
+    "unverified_meaning": 1,
+    "runtime": 1
+   },
+   "steps": 46,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 120.2
+  },
+  "known_objects": {
+   "static": 20,
+   "searched": 19,
+   "candidates": 17,
+   "right": 20,
+   "wrong": 0,
+   "types": 19,
+   "facts": 19,
+   "full": 16,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 1,
+   "refused": 4,
+   "failed": 0,
+   "contrasts": [
+    [
+     "A1",
+     "A2"
+    ],
+    [
+     "A1",
+     "A3"
+    ],
+    [
+     "A1",
+     "A4"
+    ],
+    [
+     "A1",
+     "A5"
+    ],
+    [
+     "A1",
+     "A6"
+    ],
+    [
+     "A1",
+     "A7"
+    ],
+    [
+     "B1",
+     "B2"
+    ],
+    [
+     "B1",
+     "B3"
+    ],
+    [
+     "B1",
+     "B4"
+    ],
+    [
+     "B1",
+     "B5"
+    ],
+    [
+     "C1",
+     "C2"
+    ],
+    [
+     "C2",
+     "C3"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 3,
+    "unverified_meaning": 1,
+    "runtime": 1
+   },
+   "steps": 50,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 128.2
+  }
+ },
+ "questions": [
+  {
+   "id": "R1",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "R2",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A1",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A2",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A3",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A4",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A5",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A6",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A7",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A8",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "A9",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 3,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 3,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 3,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "B1",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "false_complete": true,
+     "facts": 0,
+     "wrong": 1
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "B2",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "B3",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "false_complete": true,
+     "facts": 0,
+     "wrong": 1
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "false_complete": true,
+     "facts": 0,
+     "wrong": 1
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "B4",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "B5",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "B6",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "C1",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "C2",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "false_complete": true,
+     "facts": 0,
+     "wrong": 1
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "partial": false,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "C3",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "false_complete": true,
+     "facts": 0,
+     "wrong": 1
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "C4",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "partial",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 1
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "insufficient",
+     "full": false,
+     "partial": false,
+     "false_complete": false,
+     "facts": 0,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": false,
+     "partial": false,
+     "false_complete": true,
+     "facts": 0,
+     "wrong": 0
+    }
+   }
+  },
+  {
+   "id": "C5",
+   "arms": {
+    "joint_plan": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "identity_lexical": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_bag": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "learn_roles": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_bag": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_regular": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_free": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "desc_mixed": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    },
+    "known_objects": {
+     "state": "partial",
+     "full": false,
+     "partial": true,
+     "false_complete": false,
+     "facts": 1,
+     "wrong": 0
+    }
+   }
+  }
+ ],
+ "closed": {
+  "order": [
+   "equal",
+   "different",
+   "unknown"
+  ],
+  "metrics": {
+   "always_different": {
+    "right": 0,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      0,
+      15,
+      0
+     ],
+     [
+      0,
+      69,
+      0
+     ],
+     [
+      0,
+      10,
+      0
+     ]
+    ]
+   },
+   "trigrams": {
+    "right": 4,
+    "wrong": 2,
+    "held": 4,
+    "matrix": null
+   },
+   "learn_bag": {
+    "right": 2,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      10,
+      2,
+      3
+     ],
+     [
+      14,
+      20,
+      35
+     ],
+     [
+      2,
+      3,
+      5
+     ]
+    ]
+   },
+   "learn_roles": {
+    "right": 3,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      3,
+      12,
+      0
+     ],
+     [
+      0,
+      69,
+      0
+     ],
+     [
+      0,
+      10,
+      0
+     ]
+    ]
+   },
+   "desc_bag": {
+    "right": 1,
+    "wrong": 2,
+    "held": 3,
+    "matrix": [
+     [
+      10,
+      1,
+      4
+     ],
+     [
+      34,
+      24,
+      11
+     ],
+     [
+      7,
+      3,
+      0
+     ]
+    ]
+   },
+   "desc_regular": {
+    "right": 0,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      0,
+      0,
+      15
+     ],
+     [
+      0,
+      1,
+      68
+     ],
+     [
+      0,
+      0,
+      10
+     ]
+    ]
+   },
+   "desc_free": {
+    "right": 0,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      0,
+      0,
+      15
+     ],
+     [
+      0,
+      0,
+      69
+     ],
+     [
+      0,
+      0,
+      10
+     ]
+    ]
+   },
+   "desc_mixed": {
+    "right": 1,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      1,
+      0,
+      14
+     ],
+     [
+      0,
+      2,
+      67
+     ],
+     [
+      0,
+      0,
+      10
+     ]
+    ]
+   },
+   "gold_roles": {
+    "right": 4,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      4,
+      0,
+      11
+     ],
+     [
+      0,
+      12,
+      57
+     ],
+     [
+      0,
+      0,
+      10
+     ]
+    ]
+   },
+   "gold_concepts": {
+    "right": 1,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      1,
+      1,
+      13
+     ],
+     [
+      0,
+      10,
+      59
+     ],
+     [
+      0,
+      0,
+      10
+     ]
+    ]
+   },
+   "gold_both": {
+    "right": 15,
+    "wrong": 0,
+    "held": 4,
+    "matrix": [
+     [
+      15,
+      0,
+      0
+     ],
+     [
+      0,
+      69,
+      0
+     ],
+     [
+      0,
+      0,
+      10
+     ]
+    ]
+   }
+  },
+  "roles": {
+   "desc_regular/question": {
+    "correct": 22,
+    "predicted": 80,
+    "gold": 65,
+    "whole": 0,
+    "utterances": 19
+   },
+   "desc_regular/source": {
+    "correct": 41,
+    "predicted": 49,
+    "gold": 48,
+    "whole": 9,
+    "utterances": 14
+   },
+   "desc_free/question": {
+    "correct": 17,
+    "predicted": 42,
+    "gold": 65,
+    "whole": 1,
+    "utterances": 19
+   },
+   "desc_free/source": {
+    "correct": 4,
+    "predicted": 25,
+    "gold": 48,
+    "whole": 0,
+    "utterances": 14
+   },
+   "desc_mixed/question": {
+    "correct": 18,
+    "predicted": 44,
+    "gold": 65,
+    "whole": 1,
+    "utterances": 19
+   },
+   "desc_mixed/source": {
+    "correct": 26,
+    "predicted": 27,
+    "gold": 48,
+    "whole": 5,
+    "utterances": 14
+   }
+  },
+  "individual": [
+   {
+    "id": "A1",
+    "cue": "Где",
+    "target": "A1",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "different",
+     "different",
+     "different",
+     "equal",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "unknown",
+       "equal",
+       "unknown",
+       "equal",
+       "unknown",
+       "equal"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "different",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      "A1",
+      [
+       "unknown",
+       "different",
+       "unknown",
+       "equal",
+       "different",
+       "different"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "A1",
+      [
+       "different",
+       "different",
+       "different",
+       "equal",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "A2",
+    "cue": "Где",
+    "target": "A2",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "different",
+     "equal",
+     "different",
+     "different",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "unknown",
+       "equal",
+       "unknown",
+       "equal",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "equal",
+       "equal",
+       "equal",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "A2",
+      [
+       "different",
+       "equal",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "A3",
+    "cue": "При каком",
+    "target": "A3",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "different",
+     "different",
+     "different",
+     "different",
+     "equal",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "different",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "equal",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      "A3",
+      [
+       "unknown",
+       "different",
+       "unknown",
+       "different",
+       "equal",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      "A3",
+      [
+       "unknown",
+       "different",
+       "unknown",
+       "different",
+       "equal",
+       "different"
+      ]
+     ],
+     "gold_concepts": [
+      "A3",
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "equal",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "A3",
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "equal",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "A4",
+    "cue": "Где",
+    "target": "A4",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "equal",
+     "different",
+     "different",
+     "different",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      "A4",
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "equal",
+       "unknown",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "unknown",
+       "different",
+       "different",
+       "unknown",
+       "different",
+       "unknown"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "A4",
+      [
+       "equal",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "A5",
+    "cue": "Кто",
+    "target": "A5",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "different",
+     "different",
+     "equal",
+     "different",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      "A5",
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "different",
+       "unknown",
+       "equal",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      "A5",
+      [
+       "different",
+       "equal",
+       "equal",
+       "equal",
+       "equal",
+       "different"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "A5",
+      [
+       "different",
+       "different",
+       "equal",
+       "different",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "A6",
+    "cue": "Где",
+    "target": "A6",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "different",
+     "different",
+     "different",
+     "different",
+     "different",
+     "equal"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      "A6",
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "equal"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "different",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "A6",
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "equal"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "A7",
+    "cue": "Где",
+    "target": "-",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "different",
+     "different",
+     "unknown",
+     "unknown",
+     "unknown",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "different",
+       "unknown",
+       "unknown",
+       "unknown",
+       "equal",
+       "different"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "equal",
+       "equal",
+       "equal",
+       "different"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      null,
+      [
+       "different",
+       "different",
+       "unknown",
+       "unknown",
+       "unknown",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "A8",
+    "cue": "Где",
+    "target": "-",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "different",
+     "different",
+     "different",
+     "different",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "unknown",
+       "equal",
+       "unknown",
+       "equal",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "equal",
+       "unknown",
+       "equal",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "different"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "different",
+       "unknown",
+       "unknown",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "A9",
+    "cue": "и где",
+    "target": "A4",
+    "menu": [
+     "A4",
+     "A2",
+     "A5",
+     "A1",
+     "A3",
+     "A6"
+    ],
+    "gold": [
+     "equal",
+     "different",
+     "different",
+     "different",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      "A4",
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "equal",
+       "unknown",
+       "different",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "equal",
+       "equal",
+       "different",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "A4",
+      [
+       "equal",
+       "different",
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "B1",
+    "cue": "Где",
+    "target": "B1",
+    "menu": [
+     "B4",
+     "B1",
+     "B3",
+     "B2"
+    ],
+    "gold": [
+     "different",
+     "equal",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      "B1",
+      [
+       "equal",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "learn_roles": [
+      "B1",
+      [
+       "different",
+       "equal",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      "B2",
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      "B1",
+      [
+       "unknown",
+       "equal",
+       "different",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "B1",
+      [
+       "different",
+       "equal",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "B2",
+    "cue": "Где",
+    "target": "B2",
+    "menu": [
+     "B4",
+     "B1",
+     "B3",
+     "B2"
+    ],
+    "gold": [
+     "different",
+     "different",
+     "different",
+     "equal"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "equal",
+       "equal",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "learn_roles": [
+      "B2",
+      [
+       "different",
+       "different",
+       "different",
+       "equal"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "B2",
+      [
+       "different",
+       "different",
+       "different",
+       "equal"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "B3",
+    "cue": "Где",
+    "target": "B3",
+    "menu": [
+     "B4",
+     "B1",
+     "B3",
+     "B2"
+    ],
+    "gold": [
+     "different",
+     "different",
+     "equal",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      "B2",
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "equal",
+       "equal"
+      ]
+     ],
+     "learn_roles": [
+      "B3",
+      [
+       "different",
+       "different",
+       "equal",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "different",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "B3",
+      [
+       "different",
+       "different",
+       "equal",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "B4",
+    "cue": "Где",
+    "target": "B4",
+    "menu": [
+     "B4",
+     "B1",
+     "B3",
+     "B2"
+    ],
+    "gold": [
+     "equal",
+     "different",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "equal",
+       "equal",
+       "different",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "B4",
+      [
+       "equal",
+       "different",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "B5",
+    "cue": "Где",
+    "target": "B1",
+    "menu": [
+     "B4",
+     "B1",
+     "B3",
+     "B2"
+    ],
+    "gold": [
+     "different",
+     "equal",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "different",
+       "different",
+       "unknown",
+       "different"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "equal",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "different",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "B1",
+      [
+       "different",
+       "equal",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "B6",
+    "cue": "Где",
+    "target": "-",
+    "menu": [
+     "B4",
+     "B1",
+     "B3",
+     "B2"
+    ],
+    "gold": [
+     "different",
+     "unknown",
+     "unknown",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      null,
+      [
+       "different",
+       "unknown",
+       "unknown",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "C1",
+    "cue": "При каком",
+    "target": "C1",
+    "menu": [
+     "C3",
+     "C4",
+     "C2",
+     "C1"
+    ],
+    "gold": [
+     "unknown",
+     "different",
+     "different",
+     "equal"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      "C1",
+      [
+       "unknown",
+       "different",
+       "unknown",
+       "equal"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "different",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      "C1",
+      [
+       "unknown",
+       "unknown",
+       "different",
+       "equal"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "C1",
+      [
+       "unknown",
+       "different",
+       "different",
+       "equal"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "C2",
+    "cue": "При каком",
+    "target": "C2",
+    "menu": [
+     "C3",
+     "C4",
+     "C2",
+     "C1"
+    ],
+    "gold": [
+     "unknown",
+     "different",
+     "equal",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      "C3",
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "unknown",
+       "different",
+       "different",
+       "unknown"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "equal",
+       "different",
+       "different",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "C2",
+      [
+       "unknown",
+       "different",
+       "equal",
+       "different"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "C3",
+    "cue": "Где",
+    "target": "-",
+    "menu": [
+     "C3",
+     "C4",
+     "C2",
+     "C1"
+    ],
+    "gold": [
+     "unknown",
+     "different",
+     "unknown",
+     "unknown"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "different",
+       "different",
+       "unknown",
+       "equal"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      "C1",
+      [
+       "different",
+       "different",
+       "equal",
+       "equal"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      null,
+      [
+       "unknown",
+       "different",
+       "unknown",
+       "unknown"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "C4",
+    "cue": "Где",
+    "target": "C4",
+    "menu": [
+     "C3",
+     "C4",
+     "C2",
+     "C1"
+    ],
+    "gold": [
+     "different",
+     "equal",
+     "different",
+     "different"
+    ],
+    "arms": {
+     "always_different": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "trigrams": [
+      null,
+      []
+     ],
+     "learn_bag": [
+      null,
+      [
+       "different",
+       "unknown",
+       "different",
+       "different"
+      ]
+     ],
+     "learn_roles": [
+      null,
+      [
+       "different",
+       "different",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_bag": [
+      null,
+      [
+       "different",
+       "equal",
+       "different",
+       "different"
+      ]
+     ],
+     "desc_regular": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_free": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "desc_mixed": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_roles": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_concepts": [
+      null,
+      [
+       "unknown",
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     ],
+     "gold_both": [
+      "C4",
+      [
+       "different",
+       "equal",
+       "different",
+       "different"
+      ]
+     ]
+    }
+   }
+  ]
+ }
+}
