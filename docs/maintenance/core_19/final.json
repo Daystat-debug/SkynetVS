@@ -1,0 +1,1388 @@
+{
+ "base": "598b93283a92b9a632a5c78f515f89a452ea637a",
+ "implementation": "47dbe3d44fc5203521d7d16247e0028593835e81",
+ "domains": {
+  "A": "обсерватория",
+  "B": "судоходство",
+  "C": "покрытия"
+ },
+ "fixtures": {
+  "A": [
+   "",
+   "def night_log(forward):",
+   "    if forward:",
+   "        return 'Астроном передал журнал технику'",
+   "    return 'Техник передал журнал астроному'",
+   "",
+   "def inspect_night():",
+   "    return night_log(True)",
+   "",
+   "def shift_log(declined):",
+   "    if declined:",
+   "        return 'Астроном не передал журнал технику'",
+   "    return 'Астроном показал журнал технику'",
+   "",
+   "def inspect_shift():",
+   "    return shift_log(True)",
+   "",
+   "def gear_log(other_item):",
+   "    if other_item:",
+   "        return 'Астроном передал ключ технику'",
+   "    return 'Стажёр передал журнал технику'",
+   "",
+   "def inspect_gear():",
+   "    return gear_log(True)",
+   ""
+  ],
+  "B": [
+   "",
+   "def harbor_order(ahead):",
+   "    if ahead:",
+   "        return 'Катер обогнал паром'",
+   "    return 'Паром обогнал катер'",
+   "",
+   "def read_harbor():",
+   "    return harbor_order(True)",
+   "",
+   "def harbor_result(behind):",
+   "    if behind:",
+   "        return 'Катер не обогнал паром'",
+   "    return 'Катер буксировал паром'",
+   "",
+   "def read_result():",
+   "    return harbor_result(True)",
+   ""
+  ],
+  "C": [
+   "",
+   "def finish_gloss(shiny):",
+   "    if shiny:",
+   "        return 'Лак блестит'",
+   "    return 'Лак не блестит'",
+   "",
+   "def inspect_gloss():",
+   "    return finish_gloss(True)",
+   "",
+   "def finish_surface(enamel):",
+   "    if enamel:",
+   "        return 'Эмаль блестит'",
+   "    return 'Лак растрескался'",
+   "",
+   "def inspect_surface():",
+   "    return finish_surface(True)",
+   ""
+  ]
+ },
+ "targets": {
+  "A1": [
+   "R",
+   "night_log",
+   4,
+   "Астроном передал журнал технику",
+   3,
+   "inspect_night",
+   "R",
+   8,
+   [
+    "forward ← `True`"
+   ]
+  ],
+  "A2": [
+   "R",
+   "night_log",
+   5,
+   "Техник передал журнал астроному",
+   -3,
+   "inspect_night",
+   "R",
+   8,
+   [
+    "forward ← `True`"
+   ]
+  ],
+  "A3": [
+   "R",
+   "shift_log",
+   12,
+   "Астроном не передал журнал технику",
+   11,
+   "inspect_shift",
+   "R",
+   16,
+   [
+    "declined ← `True`"
+   ]
+  ],
+  "A4": [
+   "R",
+   "shift_log",
+   13,
+   "Астроном показал журнал технику",
+   -11,
+   "inspect_shift",
+   "R",
+   16,
+   [
+    "declined ← `True`"
+   ]
+  ],
+  "A5": [
+   "R",
+   "gear_log",
+   20,
+   "Астроном передал ключ технику",
+   19,
+   "inspect_gear",
+   "R",
+   24,
+   [
+    "other_item ← `True`"
+   ]
+  ],
+  "A6": [
+   "R",
+   "gear_log",
+   21,
+   "Стажёр передал журнал технику",
+   -19,
+   "inspect_gear",
+   "R",
+   24,
+   [
+    "other_item ← `True`"
+   ]
+  ],
+  "B1": [
+   "R",
+   "harbor_order",
+   4,
+   "Катер обогнал паром",
+   3,
+   "read_harbor",
+   "R",
+   8,
+   [
+    "ahead ← `True`"
+   ]
+  ],
+  "B2": [
+   "R",
+   "harbor_order",
+   5,
+   "Паром обогнал катер",
+   -3,
+   "read_harbor",
+   "R",
+   8,
+   [
+    "ahead ← `True`"
+   ]
+  ],
+  "B3": [
+   "R",
+   "harbor_result",
+   12,
+   "Катер не обогнал паром",
+   11,
+   "read_result",
+   "R",
+   16,
+   [
+    "behind ← `True`"
+   ]
+  ],
+  "B4": [
+   "R",
+   "harbor_result",
+   13,
+   "Катер буксировал паром",
+   -11,
+   "read_result",
+   "R",
+   16,
+   [
+    "behind ← `True`"
+   ]
+  ],
+  "C1": [
+   "R",
+   "finish_gloss",
+   4,
+   "Лак блестит",
+   3,
+   "inspect_gloss",
+   "R",
+   8,
+   [
+    "shiny ← `True`"
+   ]
+  ],
+  "C2": [
+   "R",
+   "finish_gloss",
+   5,
+   "Лак не блестит",
+   -3,
+   "inspect_gloss",
+   "R",
+   8,
+   [
+    "shiny ← `True`"
+   ]
+  ],
+  "C3": [
+   "R",
+   "finish_surface",
+   12,
+   "Эмаль блестит",
+   11,
+   "inspect_surface",
+   "R",
+   16,
+   [
+    "enamel ← `True`"
+   ]
+  ],
+  "C4": [
+   "R",
+   "finish_surface",
+   13,
+   "Лак растрескался",
+   -11,
+   "inspect_surface",
+   "R",
+   16,
+   [
+    "enamel ← `True`"
+   ]
+  ],
+  "RP": [
+   "S",
+   "extract_symbols",
+   37,
+   "M127_OLD_SOURCE_PATH_INVALID",
+   36
+  ]
+ },
+ "cases": [
+  [
+   "R1",
+   "Где записана ошибка «M127_OLD_SOURCE_PATH_INVALID»?",
+   [
+    [
+     "Где",
+     "RP",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "R2",
+   "Где при извлечении символов отвергают имя исходника с переходом к родительскому каталогу?",
+   [
+    [
+     "Где",
+     "RP",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A1",
+   "Где астроном вручил журнал технику?",
+   [
+    [
+     "Где",
+     "A1",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A2",
+   "Где журнал был передан техником астроному?",
+   [
+    [
+     "Где",
+     "A2",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A3",
+   "Кто вызывает обработчик случая, когда астроном не передал журнал технику?",
+   [
+    [
+     "Кто",
+     "A3",
+     "caller"
+    ]
+   ]
+  ],
+  [
+   "A4",
+   "Где технику астроном продемонстрировал журнал?",
+   [
+    [
+     "Где",
+     "A4",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A5",
+   "Где техник получил от астронома ключ?",
+   [
+    [
+     "Где",
+     "A5",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A6",
+   "Где отмечено, что журнал вручил технику стажёр?",
+   [
+    [
+     "Где",
+     "A6",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A7",
+   "Где сказано, что журнал передали технику, без указания отправителя?",
+   [
+    [
+     "Где",
+     "-",
+     "ambiguous"
+    ]
+   ]
+  ],
+  [
+   "A8",
+   "Где астроном передал технику окуляр?",
+   [
+    [
+     "Где",
+     "-",
+     "unsupported"
+    ]
+   ]
+  ],
+  [
+   "A9",
+   "Где «Астроном показал журнал технику» и где технику передан ключ астрономом? Какие аргументы получает вторая функция?",
+   [
+    [
+     "Где",
+     "A4",
+     "site"
+    ],
+    [
+     "и где",
+     "A5",
+     "site"
+    ],
+    [
+     "Какие аргументы",
+     "A5",
+     "arguments"
+    ]
+   ]
+  ],
+  [
+   "B1",
+   "Где катер обогнал паром?",
+   [
+    [
+     "Где",
+     "B1",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "B2",
+   "Где говорится, что паром обогнал катер?",
+   [
+    [
+     "Где",
+     "B2",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "B3",
+   "Где сказано, что обгона парома катером не произошло?",
+   [
+    [
+     "Где",
+     "B3",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "B4",
+   "Где катер тянул паром на буксире?",
+   [
+    [
+     "Где",
+     "B4",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "B5",
+   "Где при обгоне паром остался позади катера?",
+   [
+    [
+     "Где",
+     "B1",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "B6",
+   "Где один из двух кораблей обогнал другой?",
+   [
+    [
+     "Где",
+     "-",
+     "ambiguous"
+    ]
+   ]
+  ],
+  [
+   "C1",
+   "При каком условии лак блестит?",
+   [
+    [
+     "При каком",
+     "C1",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "C2",
+   "При каком условии у лака отсутствует блеск?",
+   [
+    [
+     "При каком",
+     "C2",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "C3",
+   "Где поверхность эмали даёт блеск?",
+   [
+    [
+     "Где",
+     "C3",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "C4",
+   "Где на лаке появились трещины?",
+   [
+    [
+     "Где",
+     "C4",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "C5",
+   "Где сказано, что эмаль растрескалась?",
+   [
+    [
+     "Где",
+     "-",
+     "unsupported"
+    ]
+   ]
+  ],
+  [
+   "C6",
+   "Где «Лак растрескался» и сколько раз это произошло вчера?",
+   [
+    [
+     "Где",
+     "C4",
+     "site"
+    ],
+    [
+     "сколько раз",
+     "-",
+     "runtime"
+    ]
+   ]
+  ]
+ ],
+ "predicates": {
+  "R1": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "R2": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A1": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A2": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A3": [
+   [
+    "Кто",
+    "caller"
+   ]
+  ],
+  "A4": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A5": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A6": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A7": [
+   [
+    "Где",
+    "ambiguous"
+   ]
+  ],
+  "A8": [
+   [
+    "Где",
+    "unsupported"
+   ]
+  ],
+  "A9": [
+   [
+    "Где",
+    "site"
+   ],
+   [
+    "и где",
+    "site"
+   ],
+   [
+    "Какие аргументы",
+    "arguments"
+   ]
+  ],
+  "B1": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "B2": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "B3": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "B4": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "B5": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "B6": [
+   [
+    "Где",
+    "ambiguous"
+   ]
+  ],
+  "C1": [
+   [
+    "При каком",
+    "condition"
+   ]
+  ],
+  "C2": [
+   [
+    "При каком",
+    "condition"
+   ]
+  ],
+  "C3": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "C4": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "C5": [
+   [
+    "Где",
+    "unsupported"
+   ]
+  ],
+  "C6": [
+   [
+    "Где",
+    "site"
+   ],
+   [
+    "сколько раз",
+    "runtime"
+   ]
+  ]
+ },
+ "contrasts": [
+  [
+   "A1",
+   "A2"
+  ],
+  [
+   "A1",
+   "A3"
+  ],
+  [
+   "A1",
+   "A4"
+  ],
+  [
+   "A1",
+   "A5"
+  ],
+  [
+   "A1",
+   "A6"
+  ],
+  [
+   "A1",
+   "A7"
+  ],
+  [
+   "B1",
+   "B2"
+  ],
+  [
+   "B1",
+   "B3"
+  ],
+  [
+   "B1",
+   "B4"
+  ],
+  [
+   "B1",
+   "B5"
+  ],
+  [
+   "C1",
+   "C2"
+  ],
+  [
+   "C1",
+   "C3"
+  ],
+  [
+   "C4",
+   "C5"
+  ]
+ ],
+ "negative_reasons": {
+  "A7/Где": "observation_ambiguous",
+  "A8/Где": "observation_missing",
+  "B6/Где": "observation_ambiguous",
+  "C5/Где": "observation_missing"
+ },
+ "negative_referents": {
+  "C6/сколько раз": "C4"
+ },
+ "menus": {
+  "A": [
+   "A3",
+   "A5",
+   "A2",
+   "A6",
+   "A1",
+   "A4"
+  ],
+  "B": [
+   "B4",
+   "B2",
+   "B1",
+   "B3"
+  ],
+  "C": [
+   "C3",
+   "C2",
+   "C4",
+   "C1"
+  ]
+ },
+ "events": {
+  "A1": [
+   "astr",
+   "give",
+   "log",
+   "tech",
+   1
+  ],
+  "A2": [
+   "tech",
+   "give",
+   "log",
+   "astr",
+   1
+  ],
+  "A3": [
+   "astr",
+   "give",
+   "log",
+   "tech",
+   0
+  ],
+  "A4": [
+   "astr",
+   "show",
+   "log",
+   "tech",
+   1
+  ],
+  "A5": [
+   "astr",
+   "give",
+   "key",
+   "tech",
+   1
+  ],
+  "A6": [
+   "intern",
+   "give",
+   "log",
+   "tech",
+   1
+  ],
+  "B1": [
+   "boat",
+   "pass",
+   "ferry",
+   "-",
+   1
+  ],
+  "B2": [
+   "ferry",
+   "pass",
+   "boat",
+   "-",
+   1
+  ],
+  "B3": [
+   "boat",
+   "pass",
+   "ferry",
+   "-",
+   0
+  ],
+  "B4": [
+   "boat",
+   "tow",
+   "ferry",
+   "-",
+   1
+  ],
+  "C1": [
+   "lac",
+   "shine",
+   "-",
+   "-",
+   1
+  ],
+  "C2": [
+   "lac",
+   "shine",
+   "-",
+   "-",
+   0
+  ],
+  "C3": [
+   "enamel",
+   "shine",
+   "-",
+   "-",
+   1
+  ],
+  "C4": [
+   "lac",
+   "crack",
+   "-",
+   "-",
+   1
+  ]
+ },
+ "pairs": [
+  [
+   "A1",
+   "Где",
+   {
+    "A3": [
+     "different",
+     "polarity"
+    ],
+    "A5": [
+     "different",
+     "item"
+    ],
+    "A2": [
+     "different",
+     "direction"
+    ],
+    "A6": [
+     "different",
+     "participant"
+    ],
+    "A1": [
+     "equal",
+     "learned_paraphrase"
+    ],
+    "A4": [
+     "different",
+     "relation"
+    ]
+   }
+  ],
+  [
+   "A2",
+   "Где",
+   {
+    "A3": [
+     "different",
+     "multiple"
+    ],
+    "A5": [
+     "different",
+     "multiple"
+    ],
+    "A2": [
+     "equal",
+     "voice"
+    ],
+    "A6": [
+     "different",
+     "multiple"
+    ],
+    "A1": [
+     "different",
+     "direction"
+    ],
+    "A4": [
+     "different",
+     "multiple"
+    ]
+   }
+  ],
+  [
+   "A3",
+   "Кто",
+   {
+    "A3": [
+     "equal",
+     "embedded"
+    ],
+    "A5": [
+     "different",
+     "multiple"
+    ],
+    "A2": [
+     "different",
+     "multiple"
+    ],
+    "A6": [
+     "different",
+     "multiple"
+    ],
+    "A1": [
+     "different",
+     "polarity"
+    ],
+    "A4": [
+     "different",
+     "multiple"
+    ]
+   }
+  ],
+  [
+   "A4",
+   "Где",
+   {
+    "A3": [
+     "different",
+     "multiple"
+    ],
+    "A5": [
+     "different",
+     "multiple"
+    ],
+    "A2": [
+     "different",
+     "multiple"
+    ],
+    "A6": [
+     "different",
+     "multiple"
+    ],
+    "A1": [
+     "different",
+     "relation"
+    ],
+    "A4": [
+     "equal",
+     "relation_paraphrase"
+    ]
+   }
+  ],
+  [
+   "A5",
+   "Где",
+   {
+    "A3": [
+     "different",
+     "multiple"
+    ],
+    "A5": [
+     "equal",
+     "novel_paraphrase"
+    ],
+    "A2": [
+     "different",
+     "multiple"
+    ],
+    "A6": [
+     "different",
+     "multiple"
+    ],
+    "A1": [
+     "different",
+     "item"
+    ],
+    "A4": [
+     "different",
+     "multiple"
+    ]
+   }
+  ],
+  [
+   "A6",
+   "Где",
+   {
+    "A3": [
+     "different",
+     "multiple"
+    ],
+    "A5": [
+     "different",
+     "multiple"
+    ],
+    "A2": [
+     "different",
+     "multiple"
+    ],
+    "A6": [
+     "equal",
+     "word_order"
+    ],
+    "A1": [
+     "different",
+     "participant"
+    ],
+    "A4": [
+     "different",
+     "multiple"
+    ]
+   }
+  ],
+  [
+   "A7",
+   "Где",
+   {
+    "A3": [
+     "different",
+     "polarity"
+    ],
+    "A5": [
+     "different",
+     "item"
+    ],
+    "A2": [
+     "different",
+     "participant"
+    ],
+    "A6": [
+     "unknown",
+     "underspecified"
+    ],
+    "A1": [
+     "unknown",
+     "underspecified"
+    ],
+    "A4": [
+     "different",
+     "relation"
+    ]
+   }
+  ],
+  [
+   "A8",
+   "Где",
+   {
+    "A3": [
+     "different",
+     "multiple"
+    ],
+    "A5": [
+     "different",
+     "item"
+    ],
+    "A2": [
+     "different",
+     "multiple"
+    ],
+    "A6": [
+     "different",
+     "multiple"
+    ],
+    "A1": [
+     "different",
+     "item"
+    ],
+    "A4": [
+     "different",
+     "multiple"
+    ]
+   }
+  ],
+  [
+   "A9",
+   "и где",
+   {
+    "A3": [
+     "different",
+     "multiple"
+    ],
+    "A5": [
+     "equal",
+     "voice"
+    ],
+    "A2": [
+     "different",
+     "multiple"
+    ],
+    "A6": [
+     "different",
+     "multiple"
+    ],
+    "A1": [
+     "different",
+     "item"
+    ],
+    "A4": [
+     "different",
+     "multiple"
+    ]
+   }
+  ],
+  [
+   "B1",
+   "Где",
+   {
+    "B4": [
+     "different",
+     "relation"
+    ],
+    "B2": [
+     "different",
+     "direction"
+    ],
+    "B1": [
+     "equal",
+     "exact_words"
+    ],
+    "B3": [
+     "different",
+     "polarity"
+    ]
+   }
+  ],
+  [
+   "B2",
+   "Где",
+   {
+    "B4": [
+     "different",
+     "multiple"
+    ],
+    "B2": [
+     "equal",
+     "direction"
+    ],
+    "B1": [
+     "different",
+     "direction"
+    ],
+    "B3": [
+     "different",
+     "multiple"
+    ]
+   }
+  ],
+  [
+   "B3",
+   "Где",
+   {
+    "B4": [
+     "different",
+     "multiple"
+    ],
+    "B2": [
+     "different",
+     "multiple"
+    ],
+    "B1": [
+     "different",
+     "polarity"
+    ],
+    "B3": [
+     "equal",
+     "negated_paraphrase"
+    ]
+   }
+  ],
+  [
+   "B4",
+   "Где",
+   {
+    "B4": [
+     "equal",
+     "novel_paraphrase"
+    ],
+    "B2": [
+     "different",
+     "multiple"
+    ],
+    "B1": [
+     "different",
+     "relation"
+    ],
+    "B3": [
+     "different",
+     "multiple"
+    ]
+   }
+  ],
+  [
+   "B5",
+   "Где",
+   {
+    "B4": [
+     "different",
+     "relation"
+    ],
+    "B2": [
+     "different",
+     "direction"
+    ],
+    "B1": [
+     "equal",
+     "inverse_description"
+    ],
+    "B3": [
+     "different",
+     "polarity"
+    ]
+   }
+  ],
+  [
+   "B6",
+   "Где",
+   {
+    "B4": [
+     "different",
+     "relation"
+    ],
+    "B2": [
+     "unknown",
+     "underspecified"
+    ],
+    "B1": [
+     "unknown",
+     "underspecified"
+    ],
+    "B3": [
+     "different",
+     "polarity"
+    ]
+   }
+  ],
+  [
+   "C1",
+   "При каком",
+   {
+    "C3": [
+     "different",
+     "participant"
+    ],
+    "C2": [
+     "different",
+     "polarity"
+    ],
+    "C4": [
+     "different",
+     "relation"
+    ],
+    "C1": [
+     "equal",
+     "exact_words"
+    ]
+   }
+  ],
+  [
+   "C2",
+   "При каком",
+   {
+    "C3": [
+     "different",
+     "multiple"
+    ],
+    "C2": [
+     "equal",
+     "negated_paraphrase"
+    ],
+    "C4": [
+     "different",
+     "multiple"
+    ],
+    "C1": [
+     "different",
+     "polarity"
+    ]
+   }
+  ],
+  [
+   "C3",
+   "Где",
+   {
+    "C3": [
+     "equal",
+     "novel_paraphrase"
+    ],
+    "C2": [
+     "different",
+     "multiple"
+    ],
+    "C4": [
+     "different",
+     "multiple"
+    ],
+    "C1": [
+     "different",
+     "participant"
+    ]
+   }
+  ],
+  [
+   "C4",
+   "Где",
+   {
+    "C3": [
+     "different",
+     "multiple"
+    ],
+    "C2": [
+     "different",
+     "multiple"
+    ],
+    "C4": [
+     "equal",
+     "novel_paraphrase"
+    ],
+    "C1": [
+     "different",
+     "relation"
+    ]
+   }
+  ],
+  [
+   "C5",
+   "Где",
+   {
+    "C3": [
+     "different",
+     "relation"
+    ],
+    "C2": [
+     "different",
+     "multiple"
+    ],
+    "C4": [
+     "different",
+     "participant"
+    ],
+    "C1": [
+     "different",
+     "multiple"
+    ]
+   }
+  ]
+ ]
+}
