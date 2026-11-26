@@ -1,0 +1,8227 @@
+{
+ "metrics": {
+  "joint_plan": {
+   "static": 21,
+   "searched": 20,
+   "candidates": 17,
+   "right": 8,
+   "wrong": 0,
+   "types": 21,
+   "facts": 8,
+   "full": 5,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 0,
+   "refused": 17,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 17,
+    "runtime": 1
+   },
+   "steps": 48,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 123.1
+  },
+  "identity_lexical": {
+   "static": 21,
+   "searched": 20,
+   "candidates": 19,
+   "right": 9,
+   "wrong": 1,
+   "types": 21,
+   "facts": 9,
+   "full": 6,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 1,
+   "refused": 15,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 15,
+    "runtime": 1
+   },
+   "steps": 48,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 118.9
+  },
+  "identity_rank": {
+   "static": 21,
+   "searched": 20,
+   "candidates": 19,
+   "right": 12,
+   "wrong": 8,
+   "types": 21,
+   "facts": 12,
+   "full": 10,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 8,
+   "refused": 3,
+   "failed": 0,
+   "contrasts": [
+    [
+     "A1",
+     "A4"
+    ],
+    [
+     "A1",
+     "A5"
+    ],
+    [
+     "B1",
+     "B2"
+    ],
+    [
+     "B1",
+     "B4"
+    ],
+    [
+     "C1",
+     "C2"
+    ],
+    [
+     "C1",
+     "C3"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 5,
+    "runtime": 1
+   },
+   "steps": 50,
+   "calls": 21,
+   "input_tokens": 13695,
+   "output_tokens": 357,
+   "median_ms": 2482.6
+  },
+  "identity_contrast": {
+   "static": 21,
+   "searched": 20,
+   "candidates": 19,
+   "right": 5,
+   "wrong": 2,
+   "types": 21,
+   "facts": 5,
+   "full": 3,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 2,
+   "refused": 16,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_missing": 1,
+    "observation_ambiguous": 17,
+    "runtime": 1
+   },
+   "steps": 49,
+   "calls": 42,
+   "input_tokens": 21120,
+   "output_tokens": 774,
+   "median_ms": 4126.8
+  },
+  "event_vocab": {
+   "static": 21,
+   "searched": 20,
+   "candidates": 19,
+   "right": 2,
+   "wrong": 0,
+   "types": 2,
+   "facts": 2,
+   "full": 1,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 0,
+   "refused": 1,
+   "failed": 20,
+   "contrasts": [],
+   "gaps": {
+    "deadline": 22,
+    "observation_ambiguous": 1,
+    "runtime": 1
+   },
+   "steps": 7,
+   "calls": 42,
+   "input_tokens": 16472,
+   "output_tokens": 6041,
+   "median_ms": 30540.7
+  },
+  "learn_bag": {
+   "static": 21,
+   "searched": 20,
+   "candidates": 19,
+   "right": 7,
+   "wrong": 0,
+   "types": 21,
+   "facts": 7,
+   "full": 4,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 0,
+   "refused": 18,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 18,
+    "runtime": 1
+   },
+   "steps": 49,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 122.4
+  },
+  "learn_roles": {
+   "static": 21,
+   "searched": 20,
+   "candidates": 19,
+   "right": 8,
+   "wrong": 0,
+   "types": 21,
+   "facts": 8,
+   "full": 5,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 0,
+   "refused": 17,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 17,
+    "runtime": 1
+   },
+   "steps": 49,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 123.4
+  },
+  "known_objects": {
+   "static": 21,
+   "searched": 20,
+   "candidates": 17,
+   "right": 21,
+   "wrong": 0,
+   "types": 21,
+   "facts": 21,
+   "full": 18,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 0,
+   "refused": 4,
+   "failed": 0,
+   "contrasts": [
+    [
+     "A1",
+     "A2"
+    ],
+    [
+     "A1",
+     "A3"
+    ],
+    [
+     "A1",
+     "A4"
+    ],
+    [
+     "A1",
+     "A5"
+    ],
+    [
+     "A1",
+     "A6"
+    ],
+    [
+     "A1",
+     "A7"
+    ],
+    [
+     "B1",
+     "B2"
+    ],
+    [
+     "B1",
+     "B3"
+    ],
+    [
+     "B1",
+     "B4"
+    ],
+    [
+     "B1",
+     "B5"
+    ],
+    [
+     "C1",
+     "C2"
+    ],
+    [
+     "C1",
+     "C3"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 4,
+    "runtime": 1
+   },
+   "steps": 51,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 123.7
+  }
+ },
+ "questions": [
+  {
+   "id": "R1",
+   "question": "Где записана ошибка «M127_OLD_SOURCE_PATH_INVALID»?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "R2",
+   "question": "Где при извлечении символов отвергают имя исходника с переходом к родительскому каталогу?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": null,
+       "rank": 13,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 45,
+       "rank": null,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_missing"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 53,
+       "chosen": 53,
+       "rank": 13,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A1",
+   "question": "Где астроном вручил журнал технику?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A2",
+   "question": "Где журнал был передан техником астроному?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A3",
+   "question": "Кто вызывает обработчик случая, когда астроном не передал журнал технику?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A4",
+   "question": "Где технику астроном продемонстрировал журнал?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 4,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 4,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 4,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 4,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 4,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 4,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A5",
+   "question": "Где техник получил от астронома ключ?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A6",
+   "question": "Где отмечено, что журнал вручил технику стажёр?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 73,
+       "chosen": 73,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 73,
+       "chosen": 73,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": 73,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 73,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 73,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 73,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 73,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 73,
+       "chosen": 73,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A7",
+   "question": "Где сказано, что журнал передали технику, без указания отправителя?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 69,
+       "rank": null,
+       "wrong": true,
+       "understood": false,
+       "fact": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A8",
+   "question": "Где астроном передал технику окуляр?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 68,
+       "rank": null,
+       "wrong": true,
+       "understood": false,
+       "fact": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A9",
+   "question": "Где «Астроном показал журнал технику» и где технику передан ключ астрономом? Какие аргументы получает вторая функция?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      },
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      },
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      },
+      {
+       "gold": 72,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 72,
+       "chosen": 72,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B1",
+   "question": "Где катер обогнал паром?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B2",
+   "question": "Где говорится, что паром обогнал катер?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B3",
+   "question": "Где сказано, что обгона парома катером не произошло?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B4",
+   "question": "Где катер тянул паром на буксире?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B5",
+   "question": "Где при обгоне паром остался позади катера?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 70,
+       "rank": 2,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 70,
+       "rank": 2,
+       "wrong": true,
+       "understood": true,
+       "fact": false,
+       "issues": []
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 2,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B6",
+   "question": "Где один из двух кораблей обогнал другой?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 68,
+       "rank": null,
+       "wrong": true,
+       "understood": false,
+       "fact": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "C1",
+   "question": "При каком условии лак блестит?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "C2",
+   "question": "При каком условии у лака отсутствует блеск?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "rank": 3,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "C3",
+   "question": "Где поверхность эмали даёт блеск?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "C4",
+   "question": "Где на лаке появились трещины?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": false,
+       "fact": false,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": false,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "C5",
+   "question": "Где сказано, что эмаль растрескалась?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 71,
+       "rank": null,
+       "wrong": true,
+       "understood": false,
+       "fact": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 71,
+       "rank": null,
+       "wrong": true,
+       "understood": false,
+       "fact": null,
+       "issues": []
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 71,
+       "rank": null,
+       "wrong": true,
+       "understood": false,
+       "fact": null,
+       "issues": []
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "failed",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "deadline"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "rank": null,
+       "wrong": false,
+       "understood": false,
+       "fact": null,
+       "issues": [
+        "observation_ambiguous"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "C6",
+   "question": "Где «Лак растрескался» и сколько раз это произошло вчера?",
+   "arms": {
+    "joint_plan": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "learn_bag": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "learn_roles": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": 1,
+       "wrong": false,
+       "understood": true,
+       "fact": true,
+       "issues": []
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "rank": null,
+       "wrong": false,
+       "understood": true,
+       "fact": null,
+       "issues": [
+        "runtime"
+       ]
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "closed": {
+  "metrics": {
+   "trigrams": {
+    "positive": 5,
+    "wrong": 1,
+    "correct_hold": 3,
+    "confusion": {},
+    "changes": {}
+   },
+   "learn_bag": {
+    "positive": 3,
+    "wrong": 0,
+    "correct_hold": 4,
+    "confusion": {
+     "different/unknown": 27,
+     "different/different": 34,
+     "equal/equal": 11,
+     "different/equal": 17,
+     "unknown/equal": 2,
+     "equal/unknown": 3,
+     "unknown/different": 2,
+     "equal/different": 2
+    },
+    "changes": {
+     "polarity/False": 6,
+     "item/True": 2,
+     "direction/False": 5,
+     "participant/True": 5,
+     "learned_paraphrase/True": 1,
+     "relation/False": 4,
+     "multiple/False": 24,
+     "voice/True": 2,
+     "embedded/True": 1,
+     "multiple/True": 18,
+     "relation_paraphrase/True": 1,
+     "novel_paraphrase/True": 2,
+     "item/False": 4,
+     "word_order/True": 1,
+     "polarity/True": 3,
+     "participant/False": 1,
+     "underspecified/False": 4,
+     "relation/True": 6,
+     "exact_words/True": 2,
+     "direction/True": 1,
+     "negated_paraphrase/False": 2,
+     "inverse_description/False": 1,
+     "novel_paraphrase/False": 2
+    }
+   },
+   "learn_roles": {
+    "positive": 4,
+    "wrong": 0,
+    "correct_hold": 4,
+    "confusion": {
+     "different/different": 77,
+     "different/unknown": 1,
+     "equal/unknown": 2,
+     "equal/different": 10,
+     "equal/equal": 4,
+     "unknown/different": 4
+    },
+    "changes": {
+     "polarity/True": 9,
+     "item/False": 1,
+     "direction/True": 5,
+     "participant/True": 6,
+     "learned_paraphrase/False": 1,
+     "relation/True": 10,
+     "multiple/True": 42,
+     "voice/False": 1,
+     "embedded/True": 1,
+     "relation_paraphrase/False": 1,
+     "novel_paraphrase/False": 3,
+     "item/True": 5,
+     "word_order/False": 1,
+     "underspecified/False": 4,
+     "voice/True": 1,
+     "exact_words/True": 1,
+     "direction/False": 1,
+     "negated_paraphrase/False": 2,
+     "inverse_description/False": 1,
+     "exact_words/False": 1,
+     "novel_paraphrase/True": 1
+    }
+   }
+  },
+  "rows": [
+   {
+    "id": "A1",
+    "cue": "Где",
+    "gold": "A1",
+    "annotations": {
+     "A3": [
+      "different",
+      "polarity"
+     ],
+     "A5": [
+      "different",
+      "item"
+     ],
+     "A2": [
+      "different",
+      "direction"
+     ],
+     "A6": [
+      "different",
+      "participant"
+     ],
+     "A1": [
+      "equal",
+      "learned_paraphrase"
+     ],
+     "A4": [
+      "different",
+      "relation"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.27313301,
+         0.34681324,
+         0.38005375
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.1237412,
+         0.44479478,
+         0.43146402
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.3565486,
+         0.27475599,
+         0.36869541
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.1237412,
+         0.44479478,
+         0.43146402
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.5237059,
+         0.22856427,
+         0.24772983
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.5237059,
+         0.22856427,
+         0.24772983
+        ],
+        "verdict": "equal",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "астроном"
+       ],
+       "r": [
+        "handover"
+       ],
+       "x": [
+        "журнал"
+       ],
+       "b": [
+        "технику"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.03989292,
+         0.9599063,
+         0.00020078
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         0.00475489,
+         0.16664947,
+         0.82859564
+        ],
+        "verdict": "unknown",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         2.197e-05,
+         0.98442639,
+         0.01555163
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         0.00032759,
+         0.95504206,
+         0.04463036
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         0.00537297,
+         0.13934306,
+         0.85528398
+        ],
+        "verdict": "unknown",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         0.06776123,
+         0.93193265,
+         0.00030612
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "A2",
+    "cue": "Где",
+    "gold": "A2",
+    "annotations": {
+     "A3": [
+      "different",
+      "multiple"
+     ],
+     "A5": [
+      "different",
+      "multiple"
+     ],
+     "A2": [
+      "equal",
+      "voice"
+     ],
+     "A6": [
+      "different",
+      "multiple"
+     ],
+     "A1": [
+      "different",
+      "direction"
+     ],
+     "A4": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": "A2",
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.38169348,
+         0.25556419,
+         0.36274233
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.22706881,
+         0.34096821,
+         0.43196297
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.73424518,
+         0.11221075,
+         0.15354407
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.27768237,
+         0.3288636,
+         0.39345403
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.67483301,
+         0.13113582,
+         0.19403117
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.3488924,
+         0.28971694,
+         0.36139066
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "техником"
+       ],
+       "r": [
+        "журнал",
+        "handover"
+       ],
+       "x": [],
+       "b": [
+        "астроному"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.0,
+         0.99999995,
+         5e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         3.947e-05,
+         0.99995957,
+         9.6e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         0.03498199,
+         0.96487631,
+         0.0001417
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         9.293e-05,
+         0.9999049,
+         2.18e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         6.073e-05,
+         0.99993795,
+         1.31e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         1e-08,
+         0.99999555,
+         4.45e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "A3",
+    "cue": "Кто",
+    "gold": "A3",
+    "annotations": {
+     "A3": [
+      "equal",
+      "embedded"
+     ],
+     "A5": [
+      "different",
+      "multiple"
+     ],
+     "A2": [
+      "different",
+      "multiple"
+     ],
+     "A6": [
+      "different",
+      "multiple"
+     ],
+     "A1": [
+      "different",
+      "polarity"
+     ],
+     "A4": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.84789202,
+         0.07409993,
+         0.07800804
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.53525837,
+         0.23082002,
+         0.23392161
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.7268366,
+         0.12577843,
+         0.14738496
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.49149749,
+         0.25693291,
+         0.2515696
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.8265351,
+         0.0855941,
+         0.0878708
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.48054192,
+         0.26300018,
+         0.2564579
+        ],
+        "verdict": "equal",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": "A3",
+      "query_frame": {
+       "a": [
+        "астроном"
+       ],
+       "r": [
+        "handover"
+       ],
+       "x": [
+        "журнал"
+       ],
+       "b": [
+        "когда",
+        "технику"
+       ],
+       "n": [
+        "не"
+       ]
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.9825653,
+         0.00380298,
+         0.01363173
+        ],
+        "verdict": "equal",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         5.01e-06,
+         0.998121,
+         0.00187399
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         1e-08,
+         0.99999591,
+         4.08e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         6e-08,
+         0.99998136,
+         1.858e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         6.7e-06,
+         0.99766917,
+         0.00232414
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         9.75e-06,
+         0.99999014,
+         1e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "A4",
+    "cue": "Где",
+    "gold": "A4",
+    "annotations": {
+     "A3": [
+      "different",
+      "multiple"
+     ],
+     "A5": [
+      "different",
+      "multiple"
+     ],
+     "A2": [
+      "different",
+      "multiple"
+     ],
+     "A6": [
+      "different",
+      "multiple"
+     ],
+     "A1": [
+      "different",
+      "relation"
+     ],
+     "A4": [
+      "equal",
+      "relation_paraphrase"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.29218009,
+         0.33504363,
+         0.37277628
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.13673672,
+         0.4347387,
+         0.42852458
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.38299371,
+         0.2610465,
+         0.35595979
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.13673672,
+         0.4347387,
+         0.42852458
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.55212421,
+         0.21313534,
+         0.23474046
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.55212421,
+         0.21313534,
+         0.23474046
+        ],
+        "verdict": "equal",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "астроном"
+       ],
+       "r": [
+        "display",
+        "журнал"
+       ],
+       "x": [],
+       "b": [
+        "технику"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         1.3e-07,
+         0.99997928,
+         2.058e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         0.0007035,
+         0.99929292,
+         3.57e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         5.5e-07,
+         0.99999944,
+         1e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         8.46e-06,
+         0.9999915,
+         3e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         0.0009505,
+         0.9990451,
+         4.41e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         0.00491614,
+         0.09082948,
+         0.90425438
+        ],
+        "verdict": "unknown",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "A5",
+    "cue": "Где",
+    "gold": "A5",
+    "annotations": {
+     "A3": [
+      "different",
+      "multiple"
+     ],
+     "A5": [
+      "equal",
+      "novel_paraphrase"
+     ],
+     "A2": [
+      "different",
+      "multiple"
+     ],
+     "A6": [
+      "different",
+      "multiple"
+     ],
+     "A1": [
+      "different",
+      "item"
+     ],
+     "A4": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": "A5"
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.04588196,
+         0.46169227,
+         0.49242577
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.39643284,
+         0.26475148,
+         0.33881568
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.11371012,
+         0.43388707,
+         0.4524028
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.01657885,
+         0.52143114,
+         0.46199001
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.0846362,
+         0.43677351,
+         0.47859029
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.10827502,
+         0.41790439,
+         0.4738206
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "получил"
+       ],
+       "r": [
+        "техник",
+        "астронома"
+       ],
+       "x": [],
+       "b": [
+        "ключ"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.0,
+         0.99999999,
+         1e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         2.62e-06,
+         0.9999973,
+         8e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         4.61e-06,
+         0.99999525,
+         1.5e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         2.94e-06,
+         0.99999696,
+         1.1e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         5.04e-06,
+         0.9999948,
+         1.6e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         6e-08,
+         0.9999468,
+         5.314e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "A6",
+    "cue": "Где",
+    "gold": "A6",
+    "annotations": {
+     "A3": [
+      "different",
+      "multiple"
+     ],
+     "A5": [
+      "different",
+      "multiple"
+     ],
+     "A2": [
+      "different",
+      "multiple"
+     ],
+     "A6": [
+      "equal",
+      "word_order"
+     ],
+     "A1": [
+      "different",
+      "participant"
+     ],
+     "A4": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": "A6"
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.05638654,
+         0.49756177,
+         0.44605169
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.01687145,
+         0.54551262,
+         0.43761593
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.08009306,
+         0.46823855,
+         0.45166839
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.4622248,
+         0.26856459,
+         0.26921062
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.10776808,
+         0.46784024,
+         0.42439168
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.10776808,
+         0.46784024,
+         0.42439168
+        ],
+        "verdict": "different",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "что",
+        "технику"
+       ],
+       "r": [
+        "отмечено",
+        "handover"
+       ],
+       "x": [],
+       "b": [
+        "стажер"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.0,
+         0.99999989,
+         1.1e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         5.668e-05,
+         0.99994141,
+         1.91e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         0.01084742,
+         0.98866811,
+         0.00048446
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         3.97e-05,
+         0.99995915,
+         1.15e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         8.364e-05,
+         0.99991385,
+         2.51e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         2e-08,
+         0.99998828,
+         1.17e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "A7",
+    "cue": "Где",
+    "gold": null,
+    "annotations": {
+     "A3": [
+      "different",
+      "polarity"
+     ],
+     "A5": [
+      "different",
+      "item"
+     ],
+     "A2": [
+      "different",
+      "participant"
+     ],
+     "A6": [
+      "unknown",
+      "underspecified"
+     ],
+     "A1": [
+      "unknown",
+      "underspecified"
+     ],
+     "A4": [
+      "different",
+      "relation"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.17039361,
+         0.41485086,
+         0.41475553
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.07720374,
+         0.47972325,
+         0.44307301
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.29059798,
+         0.34096004,
+         0.36844199
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.42180749,
+         0.28106394,
+         0.29712857
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.35897401,
+         0.31579902,
+         0.32522697
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.12227579,
+         0.46252702,
+         0.41519719
+        ],
+        "verdict": "different",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "что"
+       ],
+       "r": [
+        "сказано",
+        "журнал",
+        "указания"
+       ],
+       "x": [
+        "передали"
+       ],
+       "b": [
+        "технику",
+        "отправителя"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         7e-08,
+         0.99997906,
+         2.088e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         4e-08,
+         0.99996297,
+         3.699e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         1e-07,
+         0.99997085,
+         2.904e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         1e-07,
+         0.99997245,
+         2.745e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "A8",
+    "cue": "Где",
+    "gold": null,
+    "annotations": {
+     "A3": [
+      "different",
+      "multiple"
+     ],
+     "A5": [
+      "different",
+      "item"
+     ],
+     "A2": [
+      "different",
+      "multiple"
+     ],
+     "A6": [
+      "different",
+      "multiple"
+     ],
+     "A1": [
+      "different",
+      "item"
+     ],
+     "A4": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.27313301,
+         0.34681324,
+         0.38005375
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.5237059,
+         0.22856427,
+         0.24772983
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.3565486,
+         0.27475599,
+         0.36869541
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.1237412,
+         0.44479478,
+         0.43146402
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.5237059,
+         0.22856427,
+         0.24772983
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.15725918,
+         0.41957844,
+         0.42316237
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "астроном",
+        "технику"
+       ],
+       "r": [
+        "handover"
+       ],
+       "x": [],
+       "b": [
+        "окуляр"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         9.8e-07,
+         0.9989972,
+         0.00100182
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         0.36491865,
+         0.62092433,
+         0.01415702
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         0.34503617,
+         0.64289509,
+         0.01206875
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         0.00519985,
+         0.99462749,
+         0.00017265
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         0.36491865,
+         0.62092433,
+         0.01415702
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         1.4e-06,
+         0.99863534,
+         0.00136326
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "A9",
+    "cue": "и где",
+    "gold": "A5",
+    "annotations": {
+     "A3": [
+      "different",
+      "multiple"
+     ],
+     "A5": [
+      "equal",
+      "voice"
+     ],
+     "A2": [
+      "different",
+      "multiple"
+     ],
+     "A6": [
+      "different",
+      "multiple"
+     ],
+     "A1": [
+      "different",
+      "item"
+     ],
+     "A4": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": "A5"
+     },
+     "learn_bag": {
+      "chosen": "A5",
+      "query_frame": {},
+      "candidates": {
+       "A3": {
+        "probs": [
+         0.14365321,
+         0.39363279,
+         0.462714
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A5": {
+        "probs": [
+         0.75231784,
+         0.10385842,
+         0.14382375
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "A2": {
+        "probs": [
+         0.23321218,
+         0.33743356,
+         0.42935426
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A6": {
+        "probs": [
+         0.08414391,
+         0.45791554,
+         0.45794055
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A1": {
+        "probs": [
+         0.29716208,
+         0.3179127,
+         0.38492522
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "A4": {
+        "probs": [
+         0.09767381,
+         0.44652931,
+         0.45579688
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": "A5",
+      "query_frame": {
+       "a": [
+        "и",
+        "ключ"
+       ],
+       "r": [
+        "handover"
+       ],
+       "x": [],
+       "b": [
+        "астрономом"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "A3": {
+        "probs": [
+         2e-08,
+         0.9999836,
+         1.638e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "A5": {
+        "probs": [
+         0.55397707,
+         0.42277411,
+         0.02324883
+        ],
+        "verdict": "equal",
+        "frame": {
+         "a": [
+          "астроном",
+          "ключ"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A2": {
+        "probs": [
+         0.05019235,
+         0.94949718,
+         0.00031047
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "техник",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "астроному"
+         ],
+         "n": []
+        }
+       },
+       "A6": {
+        "probs": [
+         0.01543621,
+         0.98395275,
+         0.00061104
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "стажер",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A1": {
+        "probs": [
+         0.01058113,
+         0.98903005,
+         0.00038882
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном",
+          "журнал"
+         ],
+         "r": [
+          "handover"
+         ],
+         "x": [],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       },
+       "A4": {
+        "probs": [
+         2e-08,
+         0.99998021,
+         1.977e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "астроном"
+         ],
+         "r": [
+          "display"
+         ],
+         "x": [
+          "журнал"
+         ],
+         "b": [
+          "технику"
+         ],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "B1",
+    "cue": "Где",
+    "gold": "B1",
+    "annotations": {
+     "B4": [
+      "different",
+      "relation"
+     ],
+     "B2": [
+      "different",
+      "direction"
+     ],
+     "B1": [
+      "equal",
+      "exact_words"
+     ],
+     "B3": [
+      "different",
+      "polarity"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.34550288,
+         0.32208419,
+         0.33241294
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "B2": {
+        "probs": [
+         0.89184342,
+         0.05099209,
+         0.05716449
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "B1": {
+        "probs": [
+         0.89184342,
+         0.05099209,
+         0.05716449
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "B3": {
+        "probs": [
+         0.57551155,
+         0.19572849,
+         0.22875996
+        ],
+        "verdict": "equal",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": "B1",
+      "query_frame": {
+       "a": [
+        "катер"
+       ],
+       "r": [
+        "обогнал"
+       ],
+       "x": [],
+       "b": [
+        "паром"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.06515301,
+         0.93444705,
+         0.00039994
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "буксировал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B2": {
+        "probs": [
+         0.00108922,
+         0.99888396,
+         2.682e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "катер"
+         ],
+         "n": []
+        }
+       },
+       "B1": {
+        "probs": [
+         0.99053318,
+         0.002828,
+         0.00663882
+        ],
+        "verdict": "equal",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B3": {
+        "probs": [
+         8.8e-07,
+         0.99971134,
+         0.00028778
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер",
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "B2",
+    "cue": "Где",
+    "gold": "B2",
+    "annotations": {
+     "B4": [
+      "different",
+      "multiple"
+     ],
+     "B2": [
+      "equal",
+      "direction"
+     ],
+     "B1": [
+      "different",
+      "direction"
+     ],
+     "B3": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.29404775,
+         0.36177133,
+         0.34418092
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "B2": {
+        "probs": [
+         0.84789202,
+         0.07409993,
+         0.07800804
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "B1": {
+        "probs": [
+         0.84789202,
+         0.07409993,
+         0.07800804
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "B3": {
+        "probs": [
+         0.48803688,
+         0.25165205,
+         0.26031106
+        ],
+        "verdict": "equal",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "что",
+        "паром"
+       ],
+       "r": [
+        "говорится",
+        "обогнал"
+       ],
+       "x": [],
+       "b": [
+        "катер"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "B4": {
+        "probs": [
+         5.8e-07,
+         0.9999994,
+         2e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "буксировал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B2": {
+        "probs": [
+         0.07309685,
+         0.92657355,
+         0.0003296
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "катер"
+         ],
+         "n": []
+        }
+       },
+       "B1": {
+        "probs": [
+         5.423e-05,
+         0.99994435,
+         1.41e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B3": {
+        "probs": [
+         1e-08,
+         0.99999577,
+         4.21e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер",
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "B3",
+    "cue": "Где",
+    "gold": "B3",
+    "annotations": {
+     "B4": [
+      "different",
+      "multiple"
+     ],
+     "B2": [
+      "different",
+      "multiple"
+     ],
+     "B1": [
+      "different",
+      "polarity"
+     ],
+     "B3": [
+      "equal",
+      "negated_paraphrase"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.10021772,
+         0.45082863,
+         0.44895364
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "B2": {
+        "probs": [
+         0.18295047,
+         0.39648566,
+         0.42056387
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "B1": {
+        "probs": [
+         0.18295047,
+         0.39648566,
+         0.42056387
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "B3": {
+        "probs": [
+         0.34410556,
+         0.3043961,
+         0.35149835
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "что",
+        "катером"
+       ],
+       "r": [
+        "сказано",
+        "парома",
+        "произошло"
+       ],
+       "x": [],
+       "b": [],
+       "n": [
+        "не"
+       ]
+      },
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.0,
+         0.99999995,
+         4e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "буксировал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B2": {
+        "probs": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "катер"
+         ],
+         "n": []
+        }
+       },
+       "B1": {
+        "probs": [
+         0.0,
+         0.99999995,
+         5e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B3": {
+        "probs": [
+         0.00015036,
+         0.99949233,
+         0.00035731
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер",
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "B4",
+    "cue": "Где",
+    "gold": "B4",
+    "annotations": {
+     "B4": [
+      "equal",
+      "novel_paraphrase"
+     ],
+     "B2": [
+      "different",
+      "multiple"
+     ],
+     "B1": [
+      "different",
+      "relation"
+     ],
+     "B3": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": "B4"
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.64970033,
+         0.16571363,
+         0.18458604
+        ],
+        "verdict": "equal",
+        "frame": {}
+       },
+       "B2": {
+        "probs": [
+         0.29404775,
+         0.36177133,
+         0.34418092
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "B1": {
+        "probs": [
+         0.29404775,
+         0.36177133,
+         0.34418092
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "B3": {
+        "probs": [
+         0.25149614,
+         0.36508883,
+         0.38341503
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "паром",
+        "на"
+       ],
+       "r": [
+        "катер",
+        "тянул"
+       ],
+       "x": [],
+       "b": [
+        "буксире"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "B4": {
+        "probs": [
+         2.71e-06,
+         0.99999723,
+         6e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "буксировал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B2": {
+        "probs": [
+         0.00038123,
+         0.99960357,
+         1.519e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "катер"
+         ],
+         "n": []
+        }
+       },
+       "B1": {
+        "probs": [
+         1.73e-06,
+         0.99999823,
+         4e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B3": {
+        "probs": [
+         0.0,
+         0.99999983,
+         1.7e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер",
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "B5",
+    "cue": "Где",
+    "gold": "B1",
+    "annotations": {
+     "B4": [
+      "different",
+      "relation"
+     ],
+     "B2": [
+      "different",
+      "direction"
+     ],
+     "B1": [
+      "equal",
+      "inverse_description"
+     ],
+     "B3": [
+      "different",
+      "polarity"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.20338878,
+         0.38898809,
+         0.40762314
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "B2": {
+        "probs": [
+         0.34509432,
+         0.30529035,
+         0.34961533
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "B1": {
+        "probs": [
+         0.34509432,
+         0.30529035,
+         0.34961533
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "B3": {
+        "probs": [
+         0.13375647,
+         0.41288938,
+         0.45335415
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [],
+       "r": [
+        "обгоне",
+        "позади"
+       ],
+       "x": [],
+       "b": [
+        "катера"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.00019151,
+         0.99980424,
+         4.25e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "буксировал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B2": {
+        "probs": [
+         0.00374551,
+         0.99624173,
+         1.276e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "катер"
+         ],
+         "n": []
+        }
+       },
+       "B1": {
+        "probs": [
+         0.0007809,
+         0.99920237,
+         1.673e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B3": {
+        "probs": [
+         0.0,
+         0.99999985,
+         1.5e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер",
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "B6",
+    "cue": "Где",
+    "gold": null,
+    "annotations": {
+     "B4": [
+      "different",
+      "relation"
+     ],
+     "B2": [
+      "unknown",
+      "underspecified"
+     ],
+     "B1": [
+      "unknown",
+      "underspecified"
+     ],
+     "B3": [
+      "different",
+      "polarity"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "B4": {
+        "probs": [
+         0.00333376,
+         0.57986714,
+         0.4167991
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "B2": {
+        "probs": [
+         0.04113123,
+         0.51641389,
+         0.44245488
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "B1": {
+        "probs": [
+         0.04113123,
+         0.51641389,
+         0.44245488
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "B3": {
+        "probs": [
+         0.02178425,
+         0.53130512,
+         0.44691062
+        ],
+        "verdict": "different",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "из"
+       ],
+       "r": [
+        "один",
+        "обогнал"
+       ],
+       "x": [],
+       "b": [
+        "другой"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "B4": {
+        "probs": [
+         1.75e-06,
+         0.99999817,
+         7e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "буксировал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B2": {
+        "probs": [
+         0.00034452,
+         0.99964201,
+         1.347e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "катер"
+         ],
+         "n": []
+        }
+       },
+       "B1": {
+        "probs": [
+         0.00034452,
+         0.99964201,
+         1.347e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [
+          "паром"
+         ],
+         "n": []
+        }
+       },
+       "B3": {
+        "probs": [
+         0.0,
+         0.99999987,
+         1.3e-07
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "катер",
+          "паром"
+         ],
+         "r": [
+          "обогнал"
+         ],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "C1",
+    "cue": "При каком",
+    "gold": "C1",
+    "annotations": {
+     "C3": [
+      "different",
+      "participant"
+     ],
+     "C2": [
+      "different",
+      "polarity"
+     ],
+     "C4": [
+      "different",
+      "relation"
+     ],
+     "C1": [
+      "equal",
+      "exact_words"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": "C1",
+      "query_frame": {},
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.09662672,
+         0.48365006,
+         0.41972322
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C2": {
+        "probs": [
+         0.31433648,
+         0.3460401,
+         0.33962341
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C4": {
+        "probs": [
+         0.09662672,
+         0.48365006,
+         0.41972322
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C1": {
+        "probs": [
+         0.8265351,
+         0.0855941,
+         0.0878708
+        ],
+        "verdict": "equal",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [],
+       "r": [],
+       "x": [],
+       "b": [
+        "лак"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.02716653,
+         0.97239967,
+         0.0004338
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "эмаль"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "блестит"
+         ],
+         "n": []
+        }
+       },
+       "C2": {
+        "probs": [
+         2e-08,
+         0.99999796,
+         2.02e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "C4": {
+        "probs": [
+         0.00934291,
+         0.99049711,
+         0.00015998
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "растрескался"
+         ],
+         "n": []
+        }
+       },
+       "C1": {
+        "probs": [
+         0.00018066,
+         0.98207621,
+         0.01774313
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "C2",
+    "cue": "При каком",
+    "gold": "C2",
+    "annotations": {
+     "C3": [
+      "different",
+      "multiple"
+     ],
+     "C2": [
+      "equal",
+      "negated_paraphrase"
+     ],
+     "C4": [
+      "different",
+      "multiple"
+     ],
+     "C1": [
+      "different",
+      "polarity"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.01924118,
+         0.53836476,
+         0.44239405
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C2": {
+        "probs": [
+         0.06078858,
+         0.48002432,
+         0.4591871
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C4": {
+        "probs": [
+         0.03616907,
+         0.51683462,
+         0.44699631
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C1": {
+        "probs": [
+         0.22940122,
+         0.38172621,
+         0.38887257
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "отсутствует"
+       ],
+       "r": [
+        "лака"
+       ],
+       "x": [],
+       "b": [
+        "у",
+        "блеск"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.00031667,
+         0.99967904,
+         4.29e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "эмаль"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "блестит"
+         ],
+         "n": []
+        }
+       },
+       "C2": {
+        "probs": [
+         0.0,
+         0.99999991,
+         9e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "C4": {
+        "probs": [
+         0.00030242,
+         0.99969044,
+         7.15e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "растрескался"
+         ],
+         "n": []
+        }
+       },
+       "C1": {
+        "probs": [
+         5.2e-06,
+         0.99925139,
+         0.0007434
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "C3",
+    "cue": "Где",
+    "gold": "C3",
+    "annotations": {
+     "C3": [
+      "equal",
+      "novel_paraphrase"
+     ],
+     "C2": [
+      "different",
+      "multiple"
+     ],
+     "C4": [
+      "different",
+      "multiple"
+     ],
+     "C1": [
+      "different",
+      "participant"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": "C3"
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.27954935,
+         0.34013199,
+         0.38031866
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "C2": {
+        "probs": [
+         0.01040359,
+         0.5418379,
+         0.44775851
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C4": {
+        "probs": [
+         0.00244562,
+         0.58761339,
+         0.40994099
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C1": {
+        "probs": [
+         0.01995409,
+         0.5299936,
+         0.45005231
+        ],
+        "verdict": "different",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": "C3",
+      "query_frame": {
+       "a": [
+        "эмали"
+       ],
+       "r": [
+        "поверхность",
+        "дает"
+       ],
+       "x": [],
+       "b": [
+        "блеск"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.53279091,
+         0.46269161,
+         0.00451749
+        ],
+        "verdict": "equal",
+        "frame": {
+         "a": [
+          "эмаль"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "блестит"
+         ],
+         "n": []
+        }
+       },
+       "C2": {
+        "probs": [
+         0.0,
+         0.99999994,
+         6e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "C4": {
+        "probs": [
+         0.00014067,
+         0.99985516,
+         4.17e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "растрескался"
+         ],
+         "n": []
+        }
+       },
+       "C1": {
+        "probs": [
+         2.5e-06,
+         0.99955081,
+         0.00044669
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "C4",
+    "cue": "Где",
+    "gold": "C4",
+    "annotations": {
+     "C3": [
+      "different",
+      "multiple"
+     ],
+     "C2": [
+      "different",
+      "multiple"
+     ],
+     "C4": [
+      "equal",
+      "novel_paraphrase"
+     ],
+     "C1": [
+      "different",
+      "relation"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": null
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.00244562,
+         0.58761339,
+         0.40994099
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C2": {
+        "probs": [
+         0.05543389,
+         0.46983141,
+         0.4747347
+        ],
+        "verdict": "unknown",
+        "frame": {}
+       },
+       "C4": {
+        "probs": [
+         0.03788386,
+         0.50558942,
+         0.45652671
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C1": {
+        "probs": [
+         0.03788386,
+         0.50558942,
+         0.45652671
+        ],
+        "verdict": "different",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "лаке"
+       ],
+       "r": [
+        "на",
+        "появились"
+       ],
+       "x": [],
+       "b": [
+        "трещины"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.00014067,
+         0.99985516,
+         4.17e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "эмаль"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "блестит"
+         ],
+         "n": []
+        }
+       },
+       "C2": {
+        "probs": [
+         4.8e-07,
+         0.99990061,
+         9.891e-05
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "C4": {
+        "probs": [
+         0.19211589,
+         0.80135264,
+         0.00653147
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "растрескался"
+         ],
+         "n": []
+        }
+       },
+       "C1": {
+        "probs": [
+         0.00147078,
+         0.63897322,
+         0.359556
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "id": "C5",
+    "cue": "Где",
+    "gold": null,
+    "annotations": {
+     "C3": [
+      "different",
+      "relation"
+     ],
+     "C2": [
+      "different",
+      "multiple"
+     ],
+     "C4": [
+      "different",
+      "participant"
+     ],
+     "C1": [
+      "different",
+      "multiple"
+     ]
+    },
+    "arms": {
+     "trigrams": {
+      "chosen": "C4"
+     },
+     "learn_bag": {
+      "chosen": null,
+      "query_frame": {},
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.09662672,
+         0.48365006,
+         0.41972322
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C2": {
+        "probs": [
+         0.00244562,
+         0.58761339,
+         0.40994099
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C4": {
+        "probs": [
+         0.04055729,
+         0.50260177,
+         0.45684094
+        ],
+        "verdict": "different",
+        "frame": {}
+       },
+       "C1": {
+        "probs": [
+         0.00244562,
+         0.58761339,
+         0.40994099
+        ],
+        "verdict": "different",
+        "frame": {}
+       }
+      }
+     },
+     "learn_roles": {
+      "chosen": null,
+      "query_frame": {
+       "a": [
+        "что"
+       ],
+       "r": [
+        "сказано",
+        "эмаль"
+       ],
+       "x": [],
+       "b": [
+        "растрескалась"
+       ],
+       "n": []
+      },
+      "candidates": {
+       "C3": {
+        "probs": [
+         0.00031755,
+         0.99967512,
+         7.33e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "эмаль"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "блестит"
+         ],
+         "n": []
+        }
+       },
+       "C2": {
+        "probs": [
+         0.0,
+         0.99999996,
+         4e-08
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": [
+          "не"
+         ]
+        }
+       },
+       "C4": {
+        "probs": [
+         0.00059625,
+         0.99940106,
+         2.69e-06
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [
+          "растрескался"
+         ],
+         "n": []
+        }
+       },
+       "C1": {
+        "probs": [
+         1.35e-06,
+         0.99971087,
+         0.00028778
+        ],
+        "verdict": "different",
+        "frame": {
+         "a": [
+          "лак"
+         ],
+         "r": [],
+         "x": [],
+         "b": [],
+         "n": []
+        }
+       }
+      }
+     }
+    }
+   }
+  ]
+ }
+}
