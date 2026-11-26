@@ -1,0 +1,976 @@
+{
+ "frozen_experiment": "7202be7ee7157109fb9816ce795b16eccf2b23e5",
+ "questions": [
+  {
+   "id": "A1",
+   "cue": "Где",
+   "target": "A",
+   "gold": 68,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "museum",
+    "transfer",
+    "sketch",
+    "theater",
+    "+"
+   ],
+   "fields": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [
+    68
+   ],
+   "unreadable": [
+    "34",
+    "39"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": "A",
+     "why": "event_frame",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "reversed_roles",
+      "A": "covers"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": null,
+     "why": "ambiguous",
+     "comparison": {
+      "D": "different_terms",
+      "B": "opposite_polarity",
+      "C": "reversed_roles",
+      "A": "covers"
+     }
+    }
+   }
+  },
+  {
+   "id": "A2",
+   "cue": "Где",
+   "target": "C",
+   "gold": 70,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "theater",
+    "transfer",
+    "sketch",
+    "museum",
+    "+"
+   ],
+   "fields": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [
+    70
+   ],
+   "unreadable": [
+    "34",
+    "39"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": "C",
+     "why": "event_frame",
+     "comparison": {
+      "D": "reversed_roles",
+      "B": "different_terms",
+      "C": "covers",
+      "A": "reversed_roles"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": null,
+     "why": "ambiguous",
+     "comparison": {
+      "D": "reversed_roles",
+      "B": "reversed_roles",
+      "C": "covers",
+      "A": "reversed_roles"
+     }
+    }
+   }
+  },
+  {
+   "id": "A3",
+   "cue": "Где",
+   "target": "B",
+   "gold": 69,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "museum",
+    "not transfer",
+    "sketch",
+    "theater",
+    "+"
+   ],
+   "fields": [
+    true,
+    false,
+    true,
+    true,
+    false
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "34",
+    "33",
+    "39"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": "B",
+     "why": "event_frame",
+     "comparison": {
+      "D": "different_terms",
+      "B": "covers",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": "B",
+     "why": "event_frame",
+     "comparison": {
+      "D": "different_terms",
+      "B": "covers",
+      "C": "reversed_roles",
+      "A": "opposite_polarity"
+     }
+    }
+   }
+  },
+  {
+   "id": "A4",
+   "cue": "Где",
+   "target": "A",
+   "gold": 68,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "museum",
+    "transfer",
+    "sketch",
+    "theater",
+    "+"
+   ],
+   "fields": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [
+    68
+   ],
+   "unreadable": [
+    "32",
+    "69",
+    "16",
+    "43",
+    "38",
+    "45",
+    "34",
+    "42",
+    "27",
+    "37",
+    "47",
+    "35"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": "A",
+     "why": "event_frame",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "reversed_roles",
+      "A": "covers"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": null,
+     "why": "ambiguous",
+     "comparison": {
+      "D": "different_terms",
+      "B": "opposite_polarity",
+      "C": "reversed_roles",
+      "A": "covers"
+     }
+    }
+   }
+  },
+  {
+   "id": "A5",
+   "cue": "Где",
+   "target": "D",
+   "gold": 71,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "museum",
+    "transfer",
+    "sketch",
+    "theater",
+    "+"
+   ],
+   "fields": [
+    true,
+    true,
+    false,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [
+    68
+   ],
+   "unreadable": [
+    "34",
+    "33"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": "A",
+     "why": "event_frame",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "reversed_roles",
+      "A": "covers"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": "D",
+     "why": "event_frame",
+     "comparison": {
+      "D": "covers",
+      "B": "different_terms",
+      "C": "reversed_roles",
+      "A": "different_terms"
+     }
+    }
+   }
+  },
+  {
+   "id": "A6",
+   "cue": "Где",
+   "target": "-",
+   "gold": null,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "museum",
+    "transfer",
+    "afisha",
+    "theater",
+    "+"
+   ],
+   "fields": [
+    true,
+    true,
+    false,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "34",
+    "39"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "reversed_roles",
+      "A": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "reversed_roles",
+      "A": "different_terms"
+     }
+    }
+   }
+  },
+  {
+   "id": "A7",
+   "cue": "Где",
+   "target": "-",
+   "gold": null,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "sketch",
+    "transfer",
+    "code",
+    "museum",
+    "+"
+   ],
+   "fields": [
+    false,
+    true,
+    false,
+    false,
+    true
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "33"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": null,
+     "why": "ambiguous",
+     "comparison": {
+      "D": "different_terms",
+      "B": "opposite_polarity",
+      "C": "covers",
+      "A": "covers"
+     }
+    }
+   }
+  },
+  {
+   "id": "A8",
+   "cue": "и где",
+   "target": "D",
+   "gold": 71,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "museum",
+    "transfer",
+    "model",
+    "theater",
+    "+"
+   ],
+   "fields": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [
+    71
+   ],
+   "unreadable": [
+    "34"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": "D",
+     "why": "event_frame",
+     "comparison": {
+      "D": "covers",
+      "B": "different_terms",
+      "C": "reversed_roles",
+      "A": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "D": "different_terms",
+      "B": "different_terms",
+      "C": "different_terms",
+      "A": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": "D",
+     "why": "event_frame",
+     "comparison": {
+      "D": "covers",
+      "B": "different_terms",
+      "C": "reversed_roles",
+      "A": "different_terms"
+     }
+    }
+   }
+  },
+  {
+   "id": "B1",
+   "cue": "При каком",
+   "target": "E",
+   "gold": 68,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "lens",
+    "transparent",
+    "light",
+    "?",
+    "+"
+   ],
+   "fields": [
+    true,
+    true,
+    false,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "34",
+    "39"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "incomplete_frames",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "incomplete",
+      "G": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": "E",
+     "why": "event_frame",
+     "comparison": {
+      "F": "opposite_polarity",
+      "H": "different_terms",
+      "E": "covers",
+      "G": "different_terms"
+     }
+    }
+   }
+  },
+  {
+   "id": "B2",
+   "cue": "При каком",
+   "target": "F",
+   "gold": 69,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "lens",
+    "not transparent",
+    "system",
+    "git head",
+    "+"
+   ],
+   "fields": [
+    true,
+    false,
+    false,
+    false,
+    false
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "33",
+    "34"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": "F",
+     "why": "event_frame",
+     "comparison": {
+      "F": "covers",
+      "H": "different_terms",
+      "E": "opposite_polarity",
+      "G": "different_terms"
+     }
+    }
+   }
+  },
+  {
+   "id": "B3",
+   "cue": "При каком",
+   "target": "G",
+   "gold": 70,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "prism",
+    "be transparent",
+    "source",
+    "git head",
+    "+"
+   ],
+   "fields": [
+    true,
+    false,
+    false,
+    false,
+    true
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "34",
+    "33",
+    "39"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": "G",
+     "why": "event_frame",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "covers"
+     }
+    }
+   }
+  },
+  {
+   "id": "B4",
+   "cue": "При каком",
+   "target": "E",
+   "gold": 68,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "lens",
+    "display",
+    "objects",
+    "eye",
+    "+"
+   ],
+   "fields": [
+    true,
+    false,
+    false,
+    false,
+    true
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "34"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": "E",
+     "why": "event_frame",
+     "comparison": {
+      "F": "opposite_polarity",
+      "H": "different_terms",
+      "E": "covers",
+      "G": "different_terms"
+     }
+    }
+   }
+  },
+  {
+   "id": "B5",
+   "cue": "Где",
+   "target": "H",
+   "gold": 71,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "lens",
+    "fragile",
+    "system",
+    "?",
+    "+"
+   ],
+   "fields": [
+    true,
+    true,
+    false,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "34"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "incomplete_frames",
+     "comparison": {
+      "F": "different_terms",
+      "H": "incomplete",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": "H",
+     "why": "event_frame",
+     "comparison": {
+      "F": "different_terms",
+      "H": "covers",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    }
+   }
+  },
+  {
+   "id": "B6",
+   "cue": "Где",
+   "target": "-",
+   "gold": null,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "lens",
+    "describe",
+    "transparent",
+    "?",
+    "+"
+   ],
+   "fields": [
+    true,
+    false,
+    false,
+    true,
+    false
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "34"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": null,
+     "why": "ambiguous",
+     "comparison": {
+      "F": "covers",
+      "H": "different_terms",
+      "E": "covers",
+      "G": "different_terms"
+     }
+    }
+   }
+  },
+  {
+   "id": "B7",
+   "cue": "Где",
+   "target": "-",
+   "gold": null,
+   "extraction": [
+    "ok",
+    "field_format"
+   ],
+   "query": [
+    "prism",
+    "be fragile",
+    "prism",
+    "?",
+    "+"
+   ],
+   "fields": [
+    true,
+    false,
+    false,
+    true,
+    true
+   ],
+   "exact_covers_in_actual_pool": [],
+   "unreadable": [
+    "34",
+    "39",
+    "33"
+   ],
+   "full_decision": "incomplete_frames",
+   "isolated": {
+    "vocabulary_closed": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "vocabulary_known_sources": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    },
+    "bag_known_both": {
+     "chosen": null,
+     "why": "no_alignment",
+     "comparison": {
+      "F": "different_terms",
+      "H": "different_terms",
+      "E": "different_terms",
+      "G": "different_terms"
+     }
+    }
+   }
+  }
+ ],
+ "closed_metrics": {
+  "vocabulary_closed": {
+   "positive": 5,
+   "negative": 4,
+   "wrong": 1
+  },
+  "vocabulary_known_sources": {
+   "positive": 0,
+   "negative": 4,
+   "wrong": 0
+  },
+  "bag_known_both": {
+   "positive": 8,
+   "negative": 4,
+   "wrong": 0
+  }
+ },
+ "vocabulary_questions_exact": 4,
+ "identical_source_replies": 16,
+ "source_extraction": {
+  "keys_format": 1,
+  "field_format": 15
+ }
+}

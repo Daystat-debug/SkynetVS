@@ -1,0 +1,5223 @@
+{
+ "metrics": {
+  "joint_plan": {
+   "static": 16,
+   "searched": 15,
+   "candidates": 12,
+   "right": 7,
+   "wrong": 0,
+   "types": 14,
+   "facts": 7,
+   "full": 4,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 0,
+   "refused": 13,
+   "failed": 0,
+   "contrasts": [
+    [
+     "A2",
+     "A7"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 13,
+    "runtime": 1
+   },
+   "steps": 40,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 126.2
+  },
+  "identity_lexical": {
+   "static": 16,
+   "searched": 15,
+   "candidates": 14,
+   "right": 7,
+   "wrong": 1,
+   "types": 14,
+   "facts": 7,
+   "full": 4,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 1,
+   "refused": 12,
+   "failed": 0,
+   "contrasts": [
+    [
+     "A2",
+     "A7"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 12,
+    "runtime": 1
+   },
+   "steps": 40,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 114.2
+  },
+  "identity_rank": {
+   "static": 16,
+   "searched": 15,
+   "candidates": 14,
+   "right": 11,
+   "wrong": 2,
+   "types": 15,
+   "facts": 11,
+   "full": 9,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 2,
+   "refused": 5,
+   "failed": 0,
+   "contrasts": [
+    [
+     "A1",
+     "A2"
+    ],
+    [
+     "A1",
+     "A5"
+    ],
+    [
+     "A2",
+     "A7"
+    ],
+    [
+     "B1",
+     "B2"
+    ],
+    [
+     "B1",
+     "B3"
+    ],
+    [
+     "B1",
+     "B4"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 7,
+    "runtime": 1
+   },
+   "steps": 43,
+   "calls": 16,
+   "input_tokens": 10761,
+   "output_tokens": 272,
+   "median_ms": 378.0
+  },
+  "identity_contrast": {
+   "static": 16,
+   "searched": 15,
+   "candidates": 14,
+   "right": 5,
+   "wrong": 0,
+   "types": 14,
+   "facts": 5,
+   "full": 3,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 0,
+   "refused": 13,
+   "failed": 0,
+   "contrasts": [
+    [
+     "A2",
+     "A7"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 15,
+    "runtime": 1
+   },
+   "steps": 40,
+   "calls": 32,
+   "input_tokens": 16737,
+   "output_tokens": 645,
+   "median_ms": 620.0
+  },
+  "event_meaning": {
+   "static": 16,
+   "searched": 15,
+   "candidates": 14,
+   "right": 3,
+   "wrong": 0,
+   "types": 13,
+   "facts": 3,
+   "full": 1,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 0,
+   "refused": 15,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 17,
+    "runtime": 1
+   },
+   "steps": 39,
+   "calls": 32,
+   "input_tokens": 10525,
+   "output_tokens": 4748,
+   "median_ms": 2520.9
+  },
+  "known_objects": {
+   "static": 16,
+   "searched": 15,
+   "candidates": 12,
+   "right": 16,
+   "wrong": 0,
+   "types": 16,
+   "facts": 16,
+   "full": 13,
+   "partial": 1,
+   "useful_partial": 1,
+   "false_complete": 0,
+   "refused": 4,
+   "failed": 0,
+   "contrasts": [
+    [
+     "A1",
+     "A2"
+    ],
+    [
+     "A1",
+     "A3"
+    ],
+    [
+     "A1",
+     "A4"
+    ],
+    [
+     "A1",
+     "A5"
+    ],
+    [
+     "A2",
+     "A7"
+    ],
+    [
+     "B1",
+     "B2"
+    ],
+    [
+     "B1",
+     "B3"
+    ],
+    [
+     "B1",
+     "B4"
+    ],
+    [
+     "B1",
+     "B6"
+    ]
+   ],
+   "gaps": {
+    "observation_ambiguous": 4,
+    "runtime": 1
+   },
+   "steps": 43,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 129.4
+  },
+  "event_vocab": {
+   "static": 16,
+   "searched": 15,
+   "candidates": 14,
+   "right": 3,
+   "wrong": 0,
+   "types": 13,
+   "facts": 3,
+   "full": 1,
+   "partial": 1,
+   "useful_partial": 2,
+   "false_complete": 0,
+   "refused": 15,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 17,
+    "runtime": 1
+   },
+   "steps": 39,
+   "calls": 32,
+   "input_tokens": 12862,
+   "output_tokens": 4696,
+   "median_ms": 2524.9
+  }
+ },
+ "questions": [
+  {
+   "id": "R1",
+   "question": "Кто вызывает функцию со строкой «M127_TITLE_INVALID»?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 56,
+       "kind": "caller",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 56,
+       "kind": "caller",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 56,
+       "kind": "caller",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 56,
+       "kind": "caller",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 56,
+       "kind": "caller",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 56,
+       "kind": "caller",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 56,
+       "kind": "caller",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "R2",
+   "question": "Где проверяют пригодность заголовка до вычисления рейтинга символов?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": null,
+       "kind": "site",
+       "rank": 6,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": null,
+       "kind": "site",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 63,
+       "kind": "site",
+       "rank": null,
+       "wrong": true,
+       "issues": [],
+       "understood": true,
+       "fact": false,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": null,
+       "kind": "site",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": null,
+       "kind": "site",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "keys_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": 56,
+       "kind": "site",
+       "rank": 6,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 56,
+       "chosen": null,
+       "kind": "site",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "keys_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A1",
+   "question": "Где музей передаёт эскиз театру?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "underspecified",
+       "extraction": [
+        "field_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "covers": 1,
+        "different_terms": 12,
+        "reversed_roles": 1,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A2",
+   "question": "Где театр передаёт эскиз музею?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "subwords"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "contrast"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 14,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "covers": 1,
+        "different_terms": 11,
+        "reversed_roles": 2,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A3",
+   "question": "Где указано, что музей не передаёт эскиз театру?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "opposite_polarity": 1,
+        "different_terms": 12,
+        "unreadable": 3
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A4",
+   "question": "Где сценическая площадка получает от музея предварительный рисунок?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 3,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 3,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 3,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 3,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "underspecified",
+       "extraction": [
+        "field_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "site",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "site",
+       "rank": 3,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "reversed_roles": 1,
+        "unreadable": 12,
+        "covers": 1,
+        "different_terms": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A5",
+   "question": "Где музей отправляет театру уменьшенную модель?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "underspecified",
+       "extraction": [
+        "field_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 12,
+        "covers": 1,
+        "reversed_roles": 1,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A6",
+   "question": "Где музей передаёт театру афишу?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "underspecified",
+       "extraction": [
+        "field_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 13,
+        "reversed_roles": 1,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A7",
+   "question": "Где эскиз переходит от одного учреждения к другому?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 15,
+        "unreadable": 1
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "A8",
+   "question": "Где «Театр передаёт эскиз музею» и где говорится о передаче макета из музея в театр? Какие аргументы получает вторая функция?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "arguments",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "subwords"
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "arguments",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      },
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "arguments",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      },
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "arguments",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      },
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "arguments",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "arguments",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "covers": 1,
+        "different_terms": 13,
+        "reversed_roles": 1,
+        "unreadable": 1
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      },
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "arguments",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B1",
+   "question": "При каком условии линза прозрачна?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 14,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "incomplete": 1,
+        "different_terms": 13,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B2",
+   "question": "При каком условии линза не прозрачна?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "contrast"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 14,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "incomplete": 1,
+        "different_terms": 13,
+        "unreadable": 2
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B3",
+   "question": "При каком условии призма прозрачна?",
+   "arms": {
+    "joint_plan": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "subwords"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": 70,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 70,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 1,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "incomplete": 1,
+        "different_terms": 12,
+        "unreadable": 3
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B4",
+   "question": "При каком условии через линзу можно ясно видеть предметы?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 2,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "condition",
+       "rank": 2,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 2,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 2,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 15,
+        "unreadable": 1
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "condition",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 2,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 15,
+        "unreadable": 1
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B5",
+   "question": "Где говорится о том, что линзу легко разбить?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 2,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 2,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 2,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 2,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": null,
+       "kind": "site",
+       "rank": 2,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 14,
+        "incomplete": 1,
+        "unreadable": 1
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B6",
+   "question": "Где описана прозрачность линзы без уточнения, прозрачна она или нет?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 68,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": true,
+       "issues": [],
+       "understood": false,
+       "fact": null,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 15,
+        "unreadable": 1
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B7",
+   "question": "Где указано, что призма хрупкая?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 71,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": true,
+       "issues": [],
+       "understood": false,
+       "fact": null,
+       "decision": "subwords"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "underspecified"
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "unsupported",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": false,
+       "fact": null,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 13,
+        "unreadable": 3
+       },
+       "same_frames_bag": {
+        "chosen": null,
+        "why": "incomplete_frames"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "B8",
+   "question": "Где «Линза хрупкая» и сколько раз это произошло вчера?",
+   "arms": {
+    "joint_plan": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "runtime",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "runtime"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "runtime",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "runtime"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "runtime",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "runtime"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "runtime",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "runtime"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "runtime",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "runtime"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "runtime",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "runtime"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "event_vocab": {
+     "state": "partial",
+     "full": false,
+     "useful_partial": true,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "site",
+       "rank": 1,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      },
+      {
+       "gold": 71,
+       "chosen": 71,
+       "kind": "runtime",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "runtime"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "diagnostics": {
+  "sources": {
+   "A": {
+    "status": "ok",
+    "frames": {
+     "D": [
+      "museum",
+      "transfer",
+      "model",
+      "theater",
+      "+"
+     ],
+     "B": [
+      "museum",
+      "not transfer",
+      "sketch",
+      "theater",
+      "+"
+     ],
+     "C": [
+      "theater",
+      "transfer",
+      "sketch",
+      "museum",
+      "+"
+     ],
+     "A": [
+      "museum",
+      "transfer",
+      "sketch",
+      "theater",
+      "+"
+     ]
+    },
+    "fields": {
+     "D": [
+      true,
+      true,
+      true,
+      true,
+      true
+     ],
+     "B": [
+      true,
+      false,
+      true,
+      true,
+      false
+     ],
+     "C": [
+      true,
+      true,
+      true,
+      true,
+      true
+     ],
+     "A": [
+      true,
+      true,
+      true,
+      true,
+      true
+     ]
+    }
+   },
+   "B": {
+    "status": "ok",
+    "frames": {
+     "F": [
+      "glass",
+      "be",
+      "transparent",
+      "lens",
+      "?"
+     ],
+     "H": [
+      "glass",
+      "be",
+      "fragile",
+      "lens",
+      "?"
+     ],
+     "E": [
+      "lens",
+      "be",
+      "transparent",
+      "glass",
+      "?"
+     ],
+     "G": [
+      "prism",
+      "be",
+      "transparent",
+      "glass",
+      "?"
+     ]
+    },
+    "fields": {
+     "F": [
+      false,
+      false,
+      false,
+      false,
+      false
+     ],
+     "H": [
+      false,
+      false,
+      false,
+      false,
+      false
+     ],
+     "E": [
+      true,
+      false,
+      false,
+      false,
+      false
+     ],
+     "G": [
+      true,
+      false,
+      false,
+      false,
+      false
+     ]
+    }
+   }
+  },
+  "questions": [
+   {
+    "id": "A1",
+    "cue": "Где",
+    "gold": "A",
+    "source_domain": "A",
+    "query": null,
+    "reference": [
+     "museum",
+     "give",
+     "sketch",
+     "theater",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {
+     "B": "opposite_polarity",
+     "C": "reversed_roles"
+    },
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "A",
+      "why": "event_frame",
+      "comparison": {
+       "D": "different_terms",
+       "B": "opposite_polarity",
+       "C": "reversed_roles",
+       "A": "covers"
+      },
+      "true_conflicts": 2,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": false,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "A2",
+    "cue": "Где",
+    "gold": "C",
+    "source_domain": "A",
+    "query": [
+     "theater",
+     "send",
+     "sketch",
+     "museum",
+     "+"
+    ],
+    "reference": [
+     "theater",
+     "give",
+     "sketch",
+     "museum",
+     "+"
+    ],
+    "fields": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "conflicts": {
+     "A": "reversed_roles",
+     "B": "reversed_roles"
+    },
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "C",
+      "why": "event_frame",
+      "comparison": {
+       "D": "reversed_roles",
+       "B": "reversed_roles",
+       "C": "covers",
+       "A": "reversed_roles"
+      },
+      "true_conflicts": 2,
+      "false_conflicts": 1,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": "C",
+      "correct": true,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "A3",
+    "cue": "Где",
+    "gold": "B",
+    "source_domain": "A",
+    "query": null,
+    "reference": [
+     "museum",
+     "give",
+     "sketch",
+     "theater",
+     "-"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {
+     "A": "opposite_polarity",
+     "C": "reversed_roles"
+    },
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "B",
+      "why": "event_frame",
+      "comparison": {
+       "D": "different_terms",
+       "B": "covers",
+       "C": "reversed_roles",
+       "A": "opposite_polarity"
+      },
+      "true_conflicts": 2,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": false,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "A4",
+    "cue": "Где",
+    "gold": "A",
+    "source_domain": "A",
+    "query": null,
+    "reference": [
+     "museum",
+     "give",
+     "sketch",
+     "theater",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {
+     "B": "opposite_polarity",
+     "C": "reversed_roles"
+    },
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "A",
+      "why": "event_frame",
+      "comparison": {
+       "D": "different_terms",
+       "B": "opposite_polarity",
+       "C": "reversed_roles",
+       "A": "covers"
+      },
+      "true_conflicts": 2,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": false,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "A5",
+    "cue": "Где",
+    "gold": "D",
+    "source_domain": "A",
+    "query": null,
+    "reference": [
+     "museum",
+     "give",
+     "model",
+     "theater",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {},
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "D",
+      "why": "event_frame",
+      "comparison": {
+       "D": "covers",
+       "B": "different_terms",
+       "C": "reversed_roles",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 1,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": false,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "A6",
+    "cue": "Где",
+    "gold": "-",
+    "source_domain": "A",
+    "query": null,
+    "reference": [
+     "museum",
+     "give",
+     "poster",
+     "theater",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {},
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "reversed_roles",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 1,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": true,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "A7",
+    "cue": "Где",
+    "gold": "-",
+    "source_domain": "A",
+    "query": null,
+    "reference": [
+     "?",
+     "give",
+     "sketch",
+     "?",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {
+     "B": "opposite_polarity"
+    },
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": null,
+      "why": "ambiguous",
+      "comparison": {
+       "D": "different_terms",
+       "B": "opposite_polarity",
+       "C": "covers",
+       "A": "covers"
+      },
+      "true_conflicts": 1,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": true,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "A8",
+    "cue": "и где",
+    "gold": "D",
+    "source_domain": "A",
+    "query": null,
+    "reference": [
+     "museum",
+     "give",
+     "model",
+     "theater",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {},
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "D": "different_terms",
+       "B": "different_terms",
+       "C": "different_terms",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "D": "unreadable",
+       "B": "unreadable",
+       "C": "unreadable",
+       "A": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "D",
+      "why": "event_frame",
+      "comparison": {
+       "D": "covers",
+       "B": "different_terms",
+       "C": "reversed_roles",
+       "A": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 1,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": "D",
+      "correct": true,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "B1",
+    "cue": "При каком",
+    "gold": "E",
+    "source_domain": "B",
+    "query": [
+     "light",
+     "transmit",
+     "object",
+     "eye",
+     "+"
+    ],
+    "reference": [
+     "lens",
+     "transparent",
+     "?",
+     "?",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     true
+    ],
+    "conflicts": {
+     "F": "opposite_polarity"
+    },
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "E",
+      "why": "event_frame",
+      "comparison": {
+       "F": "opposite_polarity",
+       "H": "different_terms",
+       "E": "covers",
+       "G": "different_terms"
+      },
+      "true_conflicts": 1,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": false,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "B2",
+    "cue": "При каком",
+    "gold": "F",
+    "source_domain": "B",
+    "query": [
+     "light",
+     "absorb",
+     "lens",
+     "?",
+     "+"
+    ],
+    "reference": [
+     "lens",
+     "transparent",
+     "?",
+     "?",
+     "-"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     true,
+     false
+    ],
+    "conflicts": {
+     "E": "opposite_polarity"
+    },
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "F",
+      "why": "event_frame",
+      "comparison": {
+       "F": "covers",
+       "H": "different_terms",
+       "E": "opposite_polarity",
+       "G": "different_terms"
+      },
+      "true_conflicts": 1,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": false,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "B3",
+    "cue": "При каком",
+    "gold": "G",
+    "source_domain": "B",
+    "query": null,
+    "reference": [
+     "prism",
+     "transparent",
+     "?",
+     "?",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {},
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "G",
+      "why": "event_frame",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "covers"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": "G",
+      "correct": true,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "B4",
+    "cue": "При каком",
+    "gold": "E",
+    "source_domain": "B",
+    "query": [
+     "object",
+     "refract",
+     "light",
+     "eye",
+     "+"
+    ],
+    "reference": [
+     "lens",
+     "transparent",
+     "?",
+     "?",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     true
+    ],
+    "conflicts": {
+     "F": "opposite_polarity"
+    },
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "E",
+      "why": "event_frame",
+      "comparison": {
+       "F": "opposite_polarity",
+       "H": "different_terms",
+       "E": "covers",
+       "G": "different_terms"
+      },
+      "true_conflicts": 1,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": false,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "B5",
+    "cue": "Где",
+    "gold": "H",
+    "source_domain": "B",
+    "query": null,
+    "reference": [
+     "lens",
+     "fragile",
+     "?",
+     "?",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {},
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": false,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": "H",
+      "why": "event_frame",
+      "comparison": {
+       "F": "different_terms",
+       "H": "covers",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": false,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "B6",
+    "cue": "Где",
+    "gold": "-",
+    "source_domain": "B",
+    "query": null,
+    "reference": [
+     "lens",
+     "transparent",
+     "?",
+     "?",
+     "?"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {},
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": null,
+      "why": "ambiguous",
+      "comparison": {
+       "F": "covers",
+       "H": "different_terms",
+       "E": "covers",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": null,
+      "correct": true,
+      "wrong": false
+     }
+    }
+   },
+   {
+    "id": "B7",
+    "cue": "Где",
+    "gold": "-",
+    "source_domain": "B",
+    "query": null,
+    "reference": [
+     "prism",
+     "fragile",
+     "?",
+     "?",
+     "+"
+    ],
+    "fields": [
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "conflicts": {},
+    "trials": {
+     "extracted": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "bag": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_question": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_sources": {
+      "chosen": null,
+      "why": "underspecified",
+      "comparison": {
+       "F": "unreadable",
+       "H": "unreadable",
+       "E": "unreadable",
+       "G": "unreadable"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "known_both": {
+      "chosen": null,
+      "why": "no_alignment",
+      "comparison": {
+       "F": "different_terms",
+       "H": "different_terms",
+       "E": "different_terms",
+       "G": "different_terms"
+      },
+      "true_conflicts": 0,
+      "false_conflicts": 0,
+      "correct": true,
+      "wrong": false
+     },
+     "lexical": {
+      "chosen": "H",
+      "correct": false,
+      "wrong": true
+     }
+    }
+   }
+  ]
+ }
+}
