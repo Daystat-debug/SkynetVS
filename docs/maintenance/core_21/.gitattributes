@@ -1,0 +1,3 @@
+# The replay compares serialized JSON Lines bytes on Windows as well.
+scores.jsonl text eol=lf
+dialogues.json.gz -text

@@ -1,0 +1,258 @@
+[
+  {
+    "command": "audit_description_match.py verify",
+    "exit": 0
+  },
+  {
+    "command": "audit_learned_match.py verify",
+    "exit": 0
+  },
+  {
+    "command": "build_experience_policy.py --verify",
+    "exit": 0
+  },
+  {
+    "command": "build_obligation_memory.py --verify",
+    "exit": 0
+  },
+  {
+    "command": "build_relation_fit.py --verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_active_dialogue.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_argument_flow.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_control_conditions.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_control_conditions.py verify --compare-direction",
+    "exit": 0
+  },
+  {
+    "command": "eval_core_adapter.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_description_match.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_diagnostic_path.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_event_meaning.py verify history",
+    "exit": 0
+  },
+  {
+    "command": "eval_event_meaning.py verify transfer",
+    "exit": 0
+  },
+  {
+    "command": "eval_evidence_plan.py verify history",
+    "exit": 0
+  },
+  {
+    "command": "eval_evidence_plan.py verify transfer",
+    "exit": 0
+  },
+  {
+    "command": "eval_experience.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_experience.py verify --domains",
+    "exit": 0
+  },
+  {
+    "command": "eval_experience.py verify --retention",
+    "exit": 0
+  },
+  {
+    "command": "eval_investigation.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_learned_match.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_module_entry.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_object_binding.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_object_binding.py verify --final",
+    "exit": 0
+  },
+  {
+    "command": "eval_object_binding.py verify --history",
+    "exit": 0
+  },
+  {
+    "command": "eval_obligation_check.py ablate",
+    "exit": 0
+  },
+  {
+    "command": "eval_obligation_check.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_observation_goals.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_observation_goals.py verify --separate --delivery",
+    "exit": 0
+  },
+  {
+    "command": "eval_observation_goals.py verify --separate --lexical-control",
+    "exit": 0
+  },
+  {
+    "command": "eval_package_boundaries.py",
+    "exit": 0
+  },
+  {
+    "command": "eval_producer_investigation.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_relation.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_relation.py verify --history",
+    "exit": 0
+  },
+  {
+    "command": "eval_requirements.py projection",
+    "exit": 0
+  },
+  {
+    "command": "eval_requirements.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_route_research.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_scope_graph.py verify control",
+    "exit": 0
+  },
+  {
+    "command": "eval_scope_graph.py verify transfer",
+    "exit": 0
+  },
+  {
+    "command": "eval_semantic_identity.py verify history",
+    "exit": 0
+  },
+  {
+    "command": "eval_semantic_identity.py verify transfer",
+    "exit": 0
+  },
+  {
+    "command": "eval_source_language.py guards",
+    "exit": 0
+  },
+  {
+    "command": "eval_source_language.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_source_language.py verify --final",
+    "exit": 0
+  },
+  {
+    "command": "eval_source_language.py verify --second",
+    "exit": 0
+  },
+  {
+    "command": "eval_task_parts.py verify",
+    "exit": 0
+  },
+  {
+    "command": "eval_task_parts.py verify --final",
+    "exit": 0
+  },
+  {
+    "command": "fit_description_match.py verify",
+    "exit": 0
+  },
+  {
+    "command": "fit_semantic_pairs.py verify",
+    "exit": 0
+  },
+  {
+    "command": "summarize_event_meaning.py verify",
+    "exit": 0
+  },
+  {
+    "command": "test_active_dialogue.py",
+    "exit": 0
+  },
+  {
+    "command": "test_core_task.py",
+    "exit": 0
+  },
+  {
+    "command": "test_description_match.py",
+    "exit": 0
+  },
+  {
+    "command": "test_event_meaning.py",
+    "exit": 0
+  },
+  {
+    "command": "test_evidence_plan.py",
+    "exit": 0
+  },
+  {
+    "command": "test_experience.py",
+    "exit": 0
+  },
+  {
+    "command": "test_learned_match.py",
+    "exit": 0
+  },
+  {
+    "command": "test_object_binding.py",
+    "exit": 0
+  },
+  {
+    "command": "test_obligation_check.py",
+    "exit": 0
+  },
+  {
+    "command": "test_relation.py",
+    "exit": 0
+  },
+  {
+    "command": "test_requirements.py",
+    "exit": 0
+  },
+  {
+    "command": "test_scope_graph.py",
+    "exit": 0
+  },
+  {
+    "command": "test_semantic_identity.py",
+    "exit": 0
+  },
+  {
+    "command": "test_task_parts.py",
+    "exit": 0
+  }
+]
