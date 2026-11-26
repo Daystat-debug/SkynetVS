@@ -1,0 +1,720 @@
+{
+ "base": "0c0f7916f28cbac2cfd6616b320946330b1715fe",
+ "implementation": "de44f0a1d104aaa474d7d36b1e6fc61c54357267",
+ "fixtures": {
+  "A": [
+   "",
+   "def record_dispatch(released):",
+   "    if released:",
+   "        return 'Музей передаёт эскиз театру'",
+   "    return 'Музей не передаёт эскиз театру'",
+   "",
+   "def read_dispatch():",
+   "    return record_dispatch(True)",
+   "",
+   "def record_exchange(outbound):",
+   "    if outbound:",
+   "        return 'Театр передаёт эскиз музею'",
+   "    return 'Музей передаёт макет театру'",
+   "",
+   "def read_exchange():",
+   "    return record_exchange(True)",
+   ""
+  ],
+  "B": [
+   "",
+   "def inspect_lens(clear):",
+   "    if clear:",
+   "        return 'Линза прозрачна'",
+   "    return 'Линза не прозрачна'",
+   "",
+   "def read_lens():",
+   "    return inspect_lens(True)",
+   "",
+   "def inspect_optics(prism):",
+   "    if prism:",
+   "        return 'Призма прозрачна'",
+   "    return 'Линза хрупкая'",
+   "",
+   "def read_optics():",
+   "    return inspect_optics(True)",
+   ""
+  ]
+ },
+ "targets": {
+  "A": [
+   "R",
+   "record_dispatch",
+   4,
+   "Музей передаёт эскиз театру",
+   3,
+   "read_dispatch",
+   "R",
+   8,
+   [
+    "released ← `True`"
+   ]
+  ],
+  "B": [
+   "R",
+   "record_dispatch",
+   5,
+   "Музей не передаёт эскиз театру",
+   -3,
+   "read_dispatch",
+   "R",
+   8,
+   [
+    "released ← `True`"
+   ]
+  ],
+  "C": [
+   "R",
+   "record_exchange",
+   12,
+   "Театр передаёт эскиз музею",
+   11,
+   "read_exchange",
+   "R",
+   16,
+   [
+    "outbound ← `True`"
+   ]
+  ],
+  "D": [
+   "R",
+   "record_exchange",
+   13,
+   "Музей передаёт макет театру",
+   -11,
+   "read_exchange",
+   "R",
+   16,
+   [
+    "outbound ← `True`"
+   ]
+  ],
+  "E": [
+   "R",
+   "inspect_lens",
+   4,
+   "Линза прозрачна",
+   3,
+   "read_lens",
+   "R",
+   8,
+   [
+    "clear ← `True`"
+   ]
+  ],
+  "F": [
+   "R",
+   "inspect_lens",
+   5,
+   "Линза не прозрачна",
+   -3,
+   "read_lens",
+   "R",
+   8,
+   [
+    "clear ← `True`"
+   ]
+  ],
+  "G": [
+   "R",
+   "inspect_optics",
+   12,
+   "Призма прозрачна",
+   11,
+   "read_optics",
+   "R",
+   16,
+   [
+    "prism ← `True`"
+   ]
+  ],
+  "H": [
+   "R",
+   "inspect_optics",
+   13,
+   "Линза хрупкая",
+   -11,
+   "read_optics",
+   "R",
+   16,
+   [
+    "prism ← `True`"
+   ]
+  ],
+  "X": [
+   "S",
+   "rank_symbols",
+   74,
+   "M127_TITLE_INVALID",
+   73,
+   "rank",
+   "R",
+   125,
+   [
+    "issue_title ← `title`"
+   ],
+   18
+  ]
+ },
+ "cases": [
+  [
+   "R1",
+   "Кто вызывает функцию со строкой «M127_TITLE_INVALID»?",
+   [
+    [
+     "Кто",
+     "X",
+     "caller"
+    ]
+   ]
+  ],
+  [
+   "R2",
+   "Где проверяют пригодность заголовка до вычисления рейтинга символов?",
+   [
+    [
+     "Где",
+     "X",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A1",
+   "Где музей передаёт эскиз театру?",
+   [
+    [
+     "Где",
+     "A",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A2",
+   "Где театр передаёт эскиз музею?",
+   [
+    [
+     "Где",
+     "C",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A3",
+   "Где указано, что музей не передаёт эскиз театру?",
+   [
+    [
+     "Где",
+     "B",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A4",
+   "Где сценическая площадка получает от музея предварительный рисунок?",
+   [
+    [
+     "Где",
+     "A",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A5",
+   "Где музей отправляет театру уменьшенную модель?",
+   [
+    [
+     "Где",
+     "D",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "A6",
+   "Где музей передаёт театру афишу?",
+   [
+    [
+     "Где",
+     "-",
+     "unsupported"
+    ]
+   ]
+  ],
+  [
+   "A7",
+   "Где эскиз переходит от одного учреждения к другому?",
+   [
+    [
+     "Где",
+     "-",
+     "ambiguous"
+    ]
+   ]
+  ],
+  [
+   "A8",
+   "Где «Театр передаёт эскиз музею» и где говорится о передаче макета из музея в театр? Какие аргументы получает вторая функция?",
+   [
+    [
+     "Где",
+     "C",
+     "site"
+    ],
+    [
+     "и где",
+     "D",
+     "site"
+    ],
+    [
+     "Какие аргументы",
+     "D",
+     "arguments"
+    ]
+   ]
+  ],
+  [
+   "B1",
+   "При каком условии линза прозрачна?",
+   [
+    [
+     "При каком",
+     "E",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "B2",
+   "При каком условии линза не прозрачна?",
+   [
+    [
+     "При каком",
+     "F",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "B3",
+   "При каком условии призма прозрачна?",
+   [
+    [
+     "При каком",
+     "G",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "B4",
+   "При каком условии через линзу можно ясно видеть предметы?",
+   [
+    [
+     "При каком",
+     "E",
+     "condition"
+    ]
+   ]
+  ],
+  [
+   "B5",
+   "Где говорится о том, что линзу легко разбить?",
+   [
+    [
+     "Где",
+     "H",
+     "site"
+    ]
+   ]
+  ],
+  [
+   "B6",
+   "Где описана прозрачность линзы без уточнения, прозрачна она или нет?",
+   [
+    [
+     "Где",
+     "-",
+     "ambiguous"
+    ]
+   ]
+  ],
+  [
+   "B7",
+   "Где указано, что призма хрупкая?",
+   [
+    [
+     "Где",
+     "-",
+     "unsupported"
+    ]
+   ]
+  ],
+  [
+   "B8",
+   "Где «Линза хрупкая» и сколько раз это произошло вчера?",
+   [
+    [
+     "Где",
+     "H",
+     "site"
+    ],
+    [
+     "сколько раз",
+     "-",
+     "runtime"
+    ]
+   ]
+  ]
+ ],
+ "predicates": {
+  "R1": [
+   [
+    "Кто",
+    "caller"
+   ]
+  ],
+  "R2": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A1": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A2": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A3": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A4": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A5": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "A6": [
+   [
+    "Где",
+    "unsupported"
+   ]
+  ],
+  "A7": [
+   [
+    "Где",
+    "ambiguous"
+   ]
+  ],
+  "A8": [
+   [
+    "Где",
+    "site"
+   ],
+   [
+    "и где",
+    "site"
+   ],
+   [
+    "Какие аргументы",
+    "arguments"
+   ]
+  ],
+  "B1": [
+   [
+    "При каком",
+    "condition"
+   ]
+  ],
+  "B2": [
+   [
+    "При каком",
+    "condition"
+   ]
+  ],
+  "B3": [
+   [
+    "При каком",
+    "condition"
+   ]
+  ],
+  "B4": [
+   [
+    "При каком",
+    "condition"
+   ]
+  ],
+  "B5": [
+   [
+    "Где",
+    "site"
+   ]
+  ],
+  "B6": [
+   [
+    "Где",
+    "ambiguous"
+   ]
+  ],
+  "B7": [
+   [
+    "Где",
+    "unsupported"
+   ]
+  ],
+  "B8": [
+   [
+    "Где",
+    "site"
+   ],
+   [
+    "сколько раз",
+    "runtime"
+   ]
+  ]
+ },
+ "contrasts": [
+  [
+   "A1",
+   "A2"
+  ],
+  [
+   "A1",
+   "A3"
+  ],
+  [
+   "A1",
+   "A4"
+  ],
+  [
+   "A1",
+   "A5"
+  ],
+  [
+   "A5",
+   "A6"
+  ],
+  [
+   "A2",
+   "A7"
+  ],
+  [
+   "B1",
+   "B2"
+  ],
+  [
+   "B1",
+   "B3"
+  ],
+  [
+   "B1",
+   "B4"
+  ],
+  [
+   "B3",
+   "B7"
+  ],
+  [
+   "B1",
+   "B6"
+  ]
+ ],
+ "cards": {
+  "A": {
+   "D": "museum|give|model|theater|+",
+   "B": "museum|give|sketch|theater|-",
+   "C": "theater|give|sketch|museum|+",
+   "A": "museum|give|sketch|theater|+"
+  },
+  "B": {
+   "F": "lens|transparent|?|?|-",
+   "H": "lens|fragile|?|?|+",
+   "E": "lens|transparent|?|?|+",
+   "G": "prism|transparent|?|?|+"
+  }
+ },
+ "diagnostics": [
+  [
+   "A1",
+   "Где",
+   "museum|give|sketch|theater|+",
+   {
+    "B": "opposite_polarity",
+    "C": "reversed_roles"
+   }
+  ],
+  [
+   "A2",
+   "Где",
+   "theater|give|sketch|museum|+",
+   {
+    "A": "reversed_roles",
+    "B": "reversed_roles"
+   }
+  ],
+  [
+   "A3",
+   "Где",
+   "museum|give|sketch|theater|-",
+   {
+    "A": "opposite_polarity",
+    "C": "reversed_roles"
+   }
+  ],
+  [
+   "A4",
+   "Где",
+   "museum|give|sketch|theater|+",
+   {
+    "B": "opposite_polarity",
+    "C": "reversed_roles"
+   }
+  ],
+  [
+   "A5",
+   "Где",
+   "museum|give|model|theater|+",
+   {}
+  ],
+  [
+   "A6",
+   "Где",
+   "museum|give|poster|theater|+",
+   {}
+  ],
+  [
+   "A7",
+   "Где",
+   "?|give|sketch|?|+",
+   {
+    "B": "opposite_polarity"
+   }
+  ],
+  [
+   "A8",
+   "и где",
+   "museum|give|model|theater|+",
+   {}
+  ],
+  [
+   "B1",
+   "При каком",
+   "lens|transparent|?|?|+",
+   {
+    "F": "opposite_polarity"
+   }
+  ],
+  [
+   "B2",
+   "При каком",
+   "lens|transparent|?|?|-",
+   {
+    "E": "opposite_polarity"
+   }
+  ],
+  [
+   "B3",
+   "При каком",
+   "prism|transparent|?|?|+",
+   {}
+  ],
+  [
+   "B4",
+   "При каком",
+   "lens|transparent|?|?|+",
+   {
+    "F": "opposite_polarity"
+   }
+  ],
+  [
+   "B5",
+   "Где",
+   "lens|fragile|?|?|+",
+   {}
+  ],
+  [
+   "B6",
+   "Где",
+   "lens|transparent|?|?|?",
+   {}
+  ],
+  [
+   "B7",
+   "Где",
+   "prism|fragile|?|?|+",
+   {}
+  ]
+ ],
+ "negative_reasons": {
+  "A6/Где": "observation_missing",
+  "A7/Где": "observation_ambiguous",
+  "B6/Где": "observation_ambiguous",
+  "B7/Где": "observation_missing"
+ },
+ "negative_referents": {
+  "B8/сколько раз": "H"
+ },
+ "aliases": {
+  "museum": [
+   "art museum"
+  ],
+  "theater": [
+   "theatre"
+  ],
+  "give": [
+   "transfer",
+   "send",
+   "hand over",
+   "pass"
+  ],
+  "sketch": [
+   "drawing",
+   "design sketch"
+  ],
+  "model": [
+   "mockup",
+   "mock-up",
+   "scale model"
+  ],
+  "lens": [
+   "optical lens"
+  ],
+  "transparent": [
+   "clear"
+  ],
+  "prism": [
+   "optical prism"
+  ],
+  "fragile": [
+   "brittle"
+  ],
+  "poster": [
+   "placard"
+  ]
+ }
+}
