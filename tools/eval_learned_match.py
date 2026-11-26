@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+from time import monotonic
 from unittest.mock import patch
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
@@ -71,6 +72,50 @@ def closed(panel):
     return dict(metrics=metrics,rows=result)
 
 
+def replay_timing(run, saved):
+    """Replay provider latency. At a boundary the live checked step prefix is timing input."""
+    records = {r["question"]:r for r in saved["rows"]}
+    loop = old.ev.loop
+    task_module = sys.modules[loop.host.Task.__module__]
+    def timed(question,root,*,discovery,select,**kw):
+        row = records[question]
+        receipt = row[discovery]
+        calls = receipt["calls"]
+        if not calls:
+            return run(question,root,discovery=discovery,select=select,**kw)
+        limit = loop.TIME_LIMIT
+        total = saved["ms"][row["id"]][discovery]/1000
+        charged = sum(saved["generations"][k]["wall_ms"] for k in calls)/1000
+        assert charged <= total+.001
+        near = charged < limit <= total
+        start, elapsed, count = monotonic(), 0., 0
+        def clock():
+            return max(monotonic(),start+elapsed)
+        def issue(*args):
+            nonlocal elapsed,count
+            raw,timing = select(*args)
+            elapsed += timing["wall_ms"]/1000
+            count += 1
+            return raw,timing
+        with ExitStack() as stack:
+            for module in (loop,loop.arguments,task_module):
+                stack.enter_context(patch.object(module,"monotonic",clock))
+            if near:
+                # Only the host total and completed steps were recorded between provider and
+                # cutoff. Reapply that timing boundary, then let the real host fail closed.
+                prefix = receipt["answer"]["steps"]
+                check = loop.arguments.Search.check_budget
+                def measured(search):
+                    nonlocal elapsed
+                    if count==len(calls) and len(search.trace)>=len(prefix):
+                        assert search.trace[:len(prefix)]==prefix
+                        elapsed = total
+                    return check(search)
+                stack.enter_context(patch.object(loop.arguments.Search,"check_budget",measured))
+            return run(question,root,discovery=discovery,select=issue,**kw)
+    return timed
+
+
 def execute(live):
     path = match.DIR/"final.json"
     panel = lab.load(path)
@@ -82,6 +127,8 @@ def execute(live):
     saved = {} if live else json.loads(gzip.decompress(dest.read_bytes()))
     cache = saved.get("generations",{})
     run,grade = old.harness(panel)
+    if not live:
+        run = replay_timing(run,saved)
     with ExitStack() as stack:
         tmp = Path(stack.enter_context(tempfile.TemporaryDirectory()))
         stack.enter_context(patch.object(old.ev.loop,"investigate",run))

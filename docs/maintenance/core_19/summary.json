@@ -1,0 +1,1451 @@
+{
+ "calibration": {
+  "learn_roles": {
+   "positive": 72,
+   "right": 28,
+   "wrong": 2,
+   "correct_hold": 70
+  },
+  "learn_bag": {
+   "positive": 72,
+   "right": 8,
+   "wrong": 1,
+   "correct_hold": 72
+  }
+ },
+ "train": {
+  "learn_roles": {
+   "positive": 144,
+   "right": 144,
+   "wrong": 0,
+   "correct_hold": 144
+  },
+  "learn_bag": {
+   "positive": 144,
+   "right": 12,
+   "wrong": 2,
+   "correct_hold": 144
+  }
+ },
+ "closed": {
+  "trigrams": {
+   "positive": 5,
+   "wrong": 1,
+   "correct_hold": 3,
+   "confusion": {},
+   "changes": {}
+  },
+  "learn_bag": {
+   "positive": 3,
+   "wrong": 0,
+   "correct_hold": 4,
+   "confusion": {
+    "different/unknown": 27,
+    "different/different": 34,
+    "equal/equal": 11,
+    "different/equal": 17,
+    "unknown/equal": 2,
+    "equal/unknown": 3,
+    "unknown/different": 2,
+    "equal/different": 2
+   },
+   "changes": {
+    "polarity/False": 6,
+    "item/True": 2,
+    "direction/False": 5,
+    "participant/True": 5,
+    "learned_paraphrase/True": 1,
+    "relation/False": 4,
+    "multiple/False": 24,
+    "voice/True": 2,
+    "embedded/True": 1,
+    "multiple/True": 18,
+    "relation_paraphrase/True": 1,
+    "novel_paraphrase/True": 2,
+    "item/False": 4,
+    "word_order/True": 1,
+    "polarity/True": 3,
+    "participant/False": 1,
+    "underspecified/False": 4,
+    "relation/True": 6,
+    "exact_words/True": 2,
+    "direction/True": 1,
+    "negated_paraphrase/False": 2,
+    "inverse_description/False": 1,
+    "novel_paraphrase/False": 2
+   }
+  },
+  "learn_roles": {
+   "positive": 4,
+   "wrong": 0,
+   "correct_hold": 4,
+   "confusion": {
+    "different/different": 77,
+    "different/unknown": 1,
+    "equal/unknown": 2,
+    "equal/different": 10,
+    "equal/equal": 4,
+    "unknown/different": 4
+   },
+   "changes": {
+    "polarity/True": 9,
+    "item/False": 1,
+    "direction/True": 5,
+    "participant/True": 6,
+    "learned_paraphrase/False": 1,
+    "relation/True": 10,
+    "multiple/True": 42,
+    "voice/False": 1,
+    "embedded/True": 1,
+    "relation_paraphrase/False": 1,
+    "novel_paraphrase/False": 3,
+    "item/True": 5,
+    "word_order/False": 1,
+    "underspecified/False": 4,
+    "voice/True": 1,
+    "exact_words/True": 1,
+    "direction/False": 1,
+    "negated_paraphrase/False": 2,
+    "inverse_description/False": 1,
+    "exact_words/False": 1,
+    "novel_paraphrase/True": 1
+   }
+  }
+ },
+ "questions": {
+  "R1": {
+   "joint_plan": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "R2": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "A1": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "A2": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "A3": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "A4": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "A5": {
+   "joint_plan": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "A6": {
+   "joint_plan": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "A7": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   }
+  },
+  "A8": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   }
+  },
+  "A9": {
+   "joint_plan": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 3,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 3,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 3,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 3,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 3,
+    "wrong": 0
+   }
+  },
+  "B1": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "B2": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "B3": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "B4": {
+   "joint_plan": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "B5": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "B6": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   }
+  },
+  "C1": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "C2": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "C3": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "C4": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": true,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  },
+  "C5": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": true,
+    "facts": 0,
+    "wrong": 1
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": false,
+    "useful_partial": false,
+    "false_complete": false,
+    "facts": 0,
+    "wrong": 0
+   }
+  },
+  "C6": {
+   "joint_plan": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_lexical": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_rank": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "identity_contrast": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "event_vocab": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "learn_bag": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "learn_roles": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   },
+   "known_objects": {
+    "full": false,
+    "useful_partial": true,
+    "false_complete": false,
+    "facts": 1,
+    "wrong": 0
+   }
+  }
+ }
+}
