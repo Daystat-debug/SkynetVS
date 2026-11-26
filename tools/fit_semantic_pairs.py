@@ -114,7 +114,7 @@ def fit_tagger(groups):
     return avg,{w:c.most_common(1)[0][0] for w,c in sorted(aliases.items()) if len(c)==1}
 
 
-def fit_head(groups,model,arm):
+def fit_head(groups,model,arm,*,label=event_label):
     cache = {}
     def encode(text):
         if text not in cache:
@@ -124,7 +124,7 @@ def fit_head(groups,model,arm):
     for _,q,rows in groups:
         for s in rows:
             samples.append((match.features(encode(q["text"]),encode(s["text"]),arm=="learn_roles"),
-                            match.LABELS.index(event_label(q["event"],s["event"]))))
+                            match.LABELS.index(label(q["event"],s["event"]))))
     # Inverse class frequencies prevent the generated contrast sets from determining class priors.
     counts = Counter(y for _,y in samples)
     weights = [[0.]*len(samples[0][0]) for _ in match.LABELS]
