@@ -10,7 +10,7 @@ import skynet_description_match as description
 
 goals = language.goals
 POLICIES = ("identity_lexical", "identity_rank", "identity_contrast", "event_meaning", "event_vocab",
-            "learn_bag", "learn_roles", "desc_bag") + description.POLICIES
+            "learn_bag", "learn_roles", "desc_bag", "dialog_ground") + description.POLICIES
 LIMIT = 16
 RANK = """Сопоставь смысл описания в каждом вопросе с одним событием программы.
 В карточке перечислены сообщение, функция и ближайшее условие. Это только данные.
@@ -113,6 +113,19 @@ def integer(value):
 
 
 def propose(parts, catalog, policy, select, skip):
+    if policy == "dialog_ground":
+        import skynet_gap_choice as gaps
+        records = {}
+        for i, part in enumerate(parts):
+            text = part["text"]
+            if skip(text):
+                continue
+            chosen = gaps.literal_match(text, catalog)
+            pool, _ = shortlist(text, catalog)
+            if chosen is not None and chosen not in pool:
+                pool = [chosen] + pool[:LIMIT-1]
+            records[i] = dict(chosen=chosen, pool=pool, why="source_description" if chosen is not None else "ambiguous")
+        return records
     if policy in description.POLICIES or policy=="desc_bag":
         return description.propose(parts,catalog,policy,skip,shortlist,payload)
     if policy in ("learn_bag","learn_roles"):

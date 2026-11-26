@@ -258,7 +258,7 @@ def path_evidence(req, src, names, lookup, trace, steps, deadline):
 def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEPS,
                 diagnostic_planner=diagnostic.witness, why=False, classifier=causal.classify,
                 proof_type=causal.control.Proof, research_mode=False, research_policy="adaptive",
-                discovery=None, select=observed.goals.local_select):
+                discovery=None, select=observed.goals.local_select, checked_catalog=None):
     task = host.Task(question, SOURCE, timeout=TIME_LIMIT)
     trace = []
     plan = "interpret"
@@ -440,6 +440,10 @@ def investigate(question, root, *, opener=read_head, lookup=None, steps=MAX_STEP
         return dict(public, reason=result["reason"])
     evidence = result["evidence_set"]
     public["snapshot"] = evidence["snapshot_id"]
+    if checked_catalog is not None and object_catalog is not None and result["state"] in ("answered","insufficient"):
+        # Only after Task.run verified the packet. The dialogue cannot mutate analyzer nodes.
+        checked_catalog(tuple((e.label, e.fn.node.name, e.fn.path, e.expr.lineno) for e in object_catalog),
+                        {i:tuple(r["pool"]) for i,r in (suggestions or {}).items() if isinstance(r,dict)})
     if "task_parts" in evidence["analysis"]:
         public["parts"]=evidence["analysis"]["task_parts"]["parts"]
         if discovery in task_parts.experience.POLICIES:
