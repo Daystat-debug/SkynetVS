@@ -519,7 +519,7 @@ def main():
     parser.add_argument("--json", action="store_true")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--requirements", action="store_true", help="Проверить требования по частям и показать, что осталось неизвестным.")
-    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid","0.12","0.13","0.13-offline","0.13-model","0.14","0.15","0.16","0.17","0.17-offline","0.17-rank"),help="0.17 сопоставляет описания объектов с конкурирующими гипотезами. По умолчанию 0.10.")
+    parser.add_argument("--requirements-version",choices=("0.9","0.10","0.11","0.11-hybrid","0.12","0.13","0.13-offline","0.13-model","0.14","0.15","0.16","0.17","0.17-offline","0.17-rank","0.18"),help="0.18 сопоставляет участников и свойства событий. По умолчанию 0.10.")
     modes.add_argument("--explore", action="store_true", help="Исследовать по признакам. Для сложного пересказа возможна локальная интерпретация.")
     modes.add_argument("--indexed", action="store_true", help="Только подготовленный индекс для поиска по наблюдаемым признакам.")
     modes.add_argument("--why", action="store_true", help="Проверить локальные условия по сообщению или функции@строке; свободная формулировка может потребовать локальную модель.")
@@ -545,6 +545,8 @@ def main():
                 print(f'  Цель поиска: {obj["path"]} · {obj["owner"]}, строка {obj["line"]}.')
                 if binding["via"] in ("nomination","contrast"):
                     print("  Модель сопоставила описание с этим объектом. Ссылки подтверждают статические факты о нём.")
+                if args.requirements_version == "0.18" and binding["via"] in ("event_frame", "reference"):
+                    print("  Привязка предмета — интерпретация вопроса. Ссылки проверены для указанного объекта.")
             if part.get("residual") and part["status"]!="established":
                 print("  Осталось проверить:",part["residual"]["text"])
             for issue in part["issues"]:
@@ -614,7 +616,7 @@ if __name__ == "__main__":
     policies = {"0.9":"requirements","0.10":"residual","0.11":"memory_only","0.11-hybrid":"independent","0.12":"experience_release",
                 "0.13":"object_assisted","0.13-offline":"object_offline","0.13-model":"object_graph","0.14":"relation_frame",
                 "0.15":"scope_graph","0.16":"joint_plan","0.17":"identity_contrast",
-                "0.17-offline":"identity_lexical","0.17-rank":"identity_rank"}
+                "0.17-offline":"identity_lexical","0.17-rank":"identity_rank","0.18":"event_meaning"}
     versioned = len(sys.argv)==3 and sys.argv[1]=="--requirements-worker" and sys.argv[2] in policies
     if versioned or sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)

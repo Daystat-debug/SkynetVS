@@ -1,0 +1,692 @@
+{
+ "metrics": {
+  "joint_plan": {
+   "static": 3,
+   "searched": 3,
+   "candidates": 0,
+   "right": 0,
+   "wrong": 0,
+   "types": 3,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 0,
+   "refused": 4,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 4
+   },
+   "steps": 8,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 134.9
+  },
+  "identity_lexical": {
+   "static": 3,
+   "searched": 3,
+   "candidates": 3,
+   "right": 0,
+   "wrong": 0,
+   "types": 3,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 0,
+   "refused": 4,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 4
+   },
+   "steps": 8,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 125.9
+  },
+  "identity_rank": {
+   "static": 3,
+   "searched": 3,
+   "candidates": 3,
+   "right": 2,
+   "wrong": 2,
+   "types": 3,
+   "facts": 2,
+   "full": 2,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 2,
+   "refused": 0,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {},
+   "steps": 11,
+   "calls": 4,
+   "input_tokens": 2605,
+   "output_tokens": 68,
+   "median_ms": 436.9
+  },
+  "identity_contrast": {
+   "static": 3,
+   "searched": 3,
+   "candidates": 3,
+   "right": 0,
+   "wrong": 1,
+   "types": 3,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 1,
+   "refused": 3,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_missing": 1,
+    "observation_ambiguous": 2
+   },
+   "steps": 9,
+   "calls": 8,
+   "input_tokens": 4074,
+   "output_tokens": 135,
+   "median_ms": 683.9
+  },
+  "event_meaning": {
+   "static": 3,
+   "searched": 3,
+   "candidates": 3,
+   "right": 0,
+   "wrong": 0,
+   "types": 3,
+   "facts": 0,
+   "full": 0,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 0,
+   "refused": 4,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 4
+   },
+   "steps": 8,
+   "calls": 8,
+   "input_tokens": 2589,
+   "output_tokens": 1142,
+   "median_ms": 2477.3
+  },
+  "known_objects": {
+   "static": 3,
+   "searched": 3,
+   "candidates": 0,
+   "right": 3,
+   "wrong": 0,
+   "types": 3,
+   "facts": 3,
+   "full": 3,
+   "partial": 0,
+   "useful_partial": 0,
+   "false_complete": 0,
+   "refused": 1,
+   "failed": 0,
+   "contrasts": [],
+   "gaps": {
+    "observation_ambiguous": 1
+   },
+   "steps": 11,
+   "calls": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "median_ms": 140.5
+  }
+ },
+ "questions": [
+  {
+   "id": "D2",
+   "question": "При каком условии путевой сигнал требует от машиниста остановиться?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "condition",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 7,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 68,
+       "kind": "condition",
+       "rank": 7,
+       "wrong": true,
+       "issues": [],
+       "understood": true,
+       "fact": false,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 7,
+       "wrong": false,
+       "issues": [
+        "observation_missing"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "missing"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 7,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 14,
+        "unreadable": 2
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "kind": "condition",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "D3",
+   "question": "При каком условии путевой сигнал позволяет машинисту ехать дальше?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 3,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "condition",
+       "rank": 3,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 70,
+       "kind": "condition",
+       "rank": 3,
+       "wrong": true,
+       "issues": [],
+       "understood": true,
+       "fact": false,
+       "decision": "contrast"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": null,
+       "kind": "condition",
+       "rank": 3,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "different_terms": 14,
+        "unreadable": 2
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 68,
+       "chosen": 68,
+       "kind": "condition",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P2",
+   "question": "Кто вызывает обработчик экзотермического процесса в жидкости?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "caller",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "caller",
+       "rank": 6,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "kind": "caller",
+       "rank": 6,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "caller",
+       "rank": 6,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": null,
+       "kind": "caller",
+       "rank": 6,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": false,
+       "decision": "incomplete_frames",
+       "extraction": [
+        "ok",
+        "field_format"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "answered",
+     "full": true,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": 69,
+       "chosen": 69,
+       "kind": "caller",
+       "rank": null,
+       "wrong": false,
+       "issues": [],
+       "understood": true,
+       "fact": true,
+       "decision": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "P6",
+   "question": "Где описан теплообмен раствора?",
+   "arms": {
+    "joint_plan": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    },
+    "identity_lexical": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "identity_rank": {
+     "state": "answered",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": true,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": 68,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": true,
+       "issues": [],
+       "understood": false,
+       "fact": null,
+       "decision": "nomination"
+      }
+     ]
+    },
+    "identity_contrast": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "ambiguous"
+      }
+     ]
+    },
+    "event_meaning": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": "underspecified",
+       "extraction": [
+        "keys_format",
+        "ok"
+       ],
+       "comparisons": {
+        "unreadable": 16
+       }
+      }
+     ]
+    },
+    "known_objects": {
+     "state": "insufficient",
+     "full": false,
+     "useful_partial": false,
+     "false_complete": false,
+     "mentions": [
+      {
+       "gold": null,
+       "chosen": null,
+       "kind": "ambiguous",
+       "rank": null,
+       "wrong": false,
+       "issues": [
+        "observation_ambiguous"
+       ],
+       "understood": true,
+       "fact": null,
+       "decision": null
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "diagnostics": {}
+}
