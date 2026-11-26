@@ -616,7 +616,7 @@ if __name__ == "__main__":
     policies = {"0.9":"requirements","0.10":"residual","0.11":"memory_only","0.11-hybrid":"independent","0.12":"experience_release",
                 "0.13":"object_assisted","0.13-offline":"object_offline","0.13-model":"object_graph","0.14":"relation_frame",
                 "0.15":"scope_graph","0.16":"joint_plan","0.17":"identity_contrast",
-                "0.17-offline":"identity_lexical","0.17-rank":"identity_rank","0.18":"event_meaning"}
+                "0.17-offline":"identity_lexical","0.17-rank":"identity_rank","0.18":"event_vocab"}
     versioned = len(sys.argv)==3 and sys.argv[1]=="--requirements-worker" and sys.argv[2] in policies
     if versioned or sys.argv[1:] in (["--worker"], ["--why-worker"], ["--research-worker"], ["--ask-worker"], ["--explore-worker"], ["--offline-worker"], ["--requirements-worker"]):
         data = sys.stdin.buffer.read(2401)

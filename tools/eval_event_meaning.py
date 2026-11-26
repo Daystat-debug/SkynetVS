@@ -1,5 +1,6 @@
 """Score frozen host outputs and independently substitute semantic descriptions, never answer IDs."""
 import argparse
+import ast
 from collections import Counter
 from contextlib import ExitStack
 import gzip
@@ -51,6 +52,10 @@ def diagnostics(tmp, panel, rows, live, cache):
             # Only original source labels are exposed. Local keys carry no target identity.
             keys = list(cards)
             labels = {str(i): panel["targets"][k][3] for i, k in enumerate(keys)}
+            for i, target in enumerate(keys):
+                line = panel["targets"][target][2]
+                stmt = ast.parse(panel["fixtures"][domain][line-1].strip()).body[0]
+                assert isinstance(stmt, ast.Return) and ast.literal_eval(stmt.value)==labels[str(i)]
             provider.prepare()
             provider.used = 0
             provider.key = "closed/" + domain
@@ -120,12 +125,13 @@ def execute(mode, name):
         raise FileExistsError("record requires new files")
     saved = {} if live else json.loads(gzip.decompress(dest.read_bytes()))
     cache = saved.get("generations", {})
+    arms_to_run = ARMS if name=="history" else ARMS + ("event_vocab",)
     run, grade = previous.harness(panel)
     with ExitStack() as stack:
         tmp = Path(stack.enter_context(tempfile.TemporaryDirectory()))
         stack.enter_context(patch.object(previous.ev.loop, "investigate", run))
         stack.enter_context(patch.object(previous.runner, "grade", grade))
-        rows, ms, sessions = previous.runner.run(tmp, panel, live, cache, ARMS)
+        rows, ms, sessions = previous.runner.run(tmp, panel, live, cache, arms_to_run)
         diagnostic, extra = {}, []
         if name != "history":
             directory = tmp/"controlled"
@@ -133,14 +139,19 @@ def execute(mode, name):
             diagnostic, extra = diagnostics(directory, panel, rows, live, cache)
     if not live:
         ms, sessions, extra = saved["ms"], saved["sessions"], saved["controlled_sessions"]
-    metrics = {arm:previous.summary(rows, ms, cache, arm, panel) for arm in ARMS}
+    metrics = {arm:previous.summary(rows, ms, cache, arm, panel) for arm in arms_to_run}
     questions = []
     for r in rows:
         for x, y in zip(r["event_meaning"]["identity"],r["identity_rank"]["identity"],strict=True):
             if x["hypothesis"] or y["hypothesis"]:
                 assert x["hypothesis"]["pool"]==y["hypothesis"]["pool"]
+        if name!="history":
+            for x,y in zip(r["event_meaning"]["identity"],r["event_vocab"]["identity"],strict=True):
+                assert x["hypothesis"].get("pool")==y["hypothesis"].get("pool")
+                if "extraction" in x["hypothesis"]:
+                    assert cache[r["event_meaning"]["calls"][1]]["digest"]==cache[r["event_vocab"]["calls"][0]]["digest"]
         arms = {}
-        for arm in ARMS:
+        for arm in arms_to_run:
             rec = r[arm]
             mentions = []
             for x in rec["identity"]:
@@ -148,6 +159,10 @@ def execute(mode, name):
                 if "extraction" in x["hypothesis"]:
                     info["extraction"] = x["hypothesis"]["extraction"]
                     info["comparisons"] = dict(Counter(x["hypothesis"]["comparison"].values()))
+                    if name!="history":
+                        frames = x["hypothesis"]["source_frames"]
+                        selected, reason, _ = meaning.decide(x["hypothesis"]["query_frame"],frames,unordered=True)
+                        info["same_frames_bag"] = dict(chosen=int(selected) if selected is not None else None,why=reason)
                 mentions.append(info)
             arms[arm] = dict(state=rec["answer"]["state"], full=rec["full"], useful_partial=rec["useful_partial"],
                              false_complete=rec["false_complete"], mentions=mentions)

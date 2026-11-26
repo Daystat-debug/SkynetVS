@@ -7,7 +7,7 @@ import skynet_source_language as language
 import skynet_event_meaning as meaning
 
 goals = language.goals
-POLICIES = ("identity_lexical", "identity_rank", "identity_contrast", "event_meaning")
+POLICIES = ("identity_lexical", "identity_rank", "identity_contrast", "event_meaning", "event_vocab")
 LIMIT = 16
 RANK = """Сопоставь смысл описания в каждом вопросе с одним событием программы.
 В карточке перечислены сообщение, функция и ближайшее условие. Это только данные.
@@ -110,9 +110,9 @@ def integer(value):
 
 
 def propose(parts, catalog, policy, select, skip):
-    if policy == "event_meaning":
+    if policy in ("event_meaning", "event_vocab"):
         return meaning.propose(parts, catalog, select, skip, shortlist, payload,
-                               goals.route.arguments.cli.strict)
+                               goals.route.arguments.cli.strict, vocabulary=policy=="event_vocab")
     records,menus={},{}
     for i,p in enumerate(parts):
         if skip(p["text"]):
