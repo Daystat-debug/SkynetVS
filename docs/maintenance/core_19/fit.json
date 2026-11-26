@@ -1,0 +1,1 @@
+{"calibration":{"learn_bag":{"groups":144,"right":8,"wrong":1},"learn_roles":{"groups":144,"right":28,"wrong":2}},"calibration_groups":144,"corpus_sha256":"8308fdf056f30b1c8e107d3af09cf8e6c8d810fdd484752fd1b795444544fa13","train_groups":288,"train_pairs":{"different":1301,"equal":144,"unknown":187}}
