@@ -1,0 +1,612 @@
+{
+ "base": "f0a23772fd15c50c00a87383cf9e6f641cc120a7",
+ "implementation": "a4d22f0c0772710edc03d8666d8517a9f4de034d",
+ "provenance": "Авторские новые карточки, без внешней проверки. Парные A2/A8 различаются тем, существует ли у пользователя определённое направление. Снимки создаются только в тестовом клоне.",
+ "groups": [
+  {
+   "source": [],
+   "targets": {
+    "path": [
+     "S",
+     "extract_symbols",
+     37,
+     "M127_OLD_SOURCE_PATH_INVALID",
+     36
+    ],
+    "title": [
+     "S",
+     "rank_symbols",
+     74,
+     "M127_TITLE_INVALID",
+     73
+    ],
+    "limit": [
+     "S",
+     "rank_symbols",
+     76,
+     "M127_TOP_LIMIT_INVALID",
+     75
+    ]
+   },
+   "cases": [
+    {
+     "id": "R1",
+     "question": "Где в коде записано «M127_TITLE_INVALID»?",
+     "needs": [
+      [
+       "title",
+       "site"
+      ]
+     ],
+     "gaps": [
+      null
+     ],
+     "user": null
+    },
+    {
+     "id": "R2",
+     "question": "Где возникает ошибка «M127_OLD_SOURCE»?",
+     "needs": [
+      [
+       "path",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "intent_ambiguity"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "Меня интересует PATH, имя файла.",
+      "visible": "PATH"
+     }
+    },
+    {
+     "id": "R3",
+     "question": "Где возникает «M127_TITLE_EXPIRED»?",
+     "needs": [
+      [
+       null,
+       "site"
+      ]
+     ],
+     "gaps": [
+      "absent_catalog_literal"
+     ],
+     "user": null
+    },
+    {
+     "id": "R4",
+     "question": "Где формируется ошибка про неправильный заголовок запроса?",
+     "needs": [
+      [
+       "title",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "interpretation_gap"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "Помню часть надписи: TITLE INVALID.",
+      "visible": "TITLE_INVALID"
+     }
+    },
+    {
+     "id": "R5",
+     "question": "Где записано «M127_TOP_LIMIT_INVALID»? Сколько раз вчера возникло «M127_TITLE_INVALID»?",
+     "needs": [
+      [
+       "limit",
+       "site"
+      ],
+      [
+       null,
+       "site"
+      ]
+     ],
+     "gaps": [
+      null,
+      "unavailable_information"
+     ],
+     "user": null
+    }
+   ]
+  },
+  {
+   "source": [
+    "",
+    "def archive_motion(flag):",
+    "    if flag:",
+    "        return 'Папка отправлена из зала в запасник'",
+    "    return 'Папка отправлена из запасника в зал'",
+    "",
+    "def inspect_archive_motion():",
+    "    return archive_motion(True)",
+    "",
+    "def archive_decision(flag):",
+    "    if flag:",
+    "        return 'Выдача рукописи разрешена'",
+    "    return 'Выдача рукописи отложена'",
+    "",
+    "def inspect_archive_decision():",
+    "    return archive_decision(True)",
+    "",
+    "def archive_desk(flag):",
+    "    if flag:",
+    "        return 'Опись принята хранителем'",
+    "    return 'Опись принята реставратором'"
+   ],
+   "targets": {
+    "m1": [
+     "R",
+     "archive_motion",
+     4,
+     "Папка отправлена из зала в запасник",
+     3,
+     "inspect_archive_motion",
+     "R",
+     8,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "m2": [
+     "R",
+     "archive_motion",
+     5,
+     "Папка отправлена из запасника в зал",
+     -3,
+     "inspect_archive_motion",
+     "R",
+     8,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "a1": [
+     "R",
+     "archive_decision",
+     12,
+     "Выдача рукописи разрешена",
+     11,
+     "inspect_archive_decision",
+     "R",
+     16,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "a2": [
+     "R",
+     "archive_decision",
+     13,
+     "Выдача рукописи отложена",
+     -11,
+     "inspect_archive_decision",
+     "R",
+     16,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "d1": [
+     "R",
+     "archive_desk",
+     20,
+     "Опись принята хранителем",
+     19,
+     "inspect_archive_desk",
+     "R",
+     24,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "d2": [
+     "R",
+     "archive_desk",
+     21,
+     "Опись принята реставратором",
+     -19,
+     "inspect_archive_desk",
+     "R",
+     24,
+     [
+      "flag ← `True`"
+     ]
+    ]
+   },
+   "cases": [
+    {
+     "id": "A1",
+     "question": "При каком условии появляется Выдача рукописи отложена?",
+     "needs": [
+      [
+       "a2",
+       "condition"
+      ]
+     ],
+     "gaps": [
+      null
+     ],
+     "user": null
+    },
+    {
+     "id": "A2",
+     "question": "Где записано «Папка отправлена»?",
+     "needs": [
+      [
+       "m2",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "intent_ambiguity"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "Из запасника в зал, меня интересует обратный путь.",
+      "visible": "запасника в зал"
+     }
+    },
+    {
+     "id": "A3",
+     "question": "Где отмечают решение о выдаче рукописи?",
+     "needs": [
+      [
+       "a1",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "interpretation_gap"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "Разрешена, то есть дали добро.",
+      "visible": "разрешена"
+     }
+    },
+    {
+     "id": "A4",
+     "question": "Где записано «Опись принята»?",
+     "needs": [
+      [
+       "d2",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "intent_ambiguity"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "Документ получил специалист по восстановлению старых вещей.",
+      "visible": "реставратором"
+     }
+    },
+    {
+     "id": "A5",
+     "question": "Где записано «Выдача рукописи разрешена»? Кто вызывает функцию с сообщением «Папка отправлена»?",
+     "needs": [
+      [
+       "a1",
+       "site"
+      ],
+      [
+       "m1",
+       "caller"
+      ]
+     ],
+     "gaps": [
+      null,
+      "intent_ambiguity"
+     ],
+     "user": {
+      "part": 1,
+      "axis": "object",
+      "reply": "Из зала в запасник.",
+      "visible": "зала в запасник"
+     }
+    },
+    {
+     "id": "A6",
+     "question": "Кто вызывает функцию с сообщением «Опись принята хранителем»?",
+     "needs": [
+      [
+       "d1",
+       "unavailable"
+      ]
+     ],
+     "gaps": [
+      "missing_evidence"
+     ],
+     "user": null
+    },
+    {
+     "id": "A7",
+     "question": "Расскажи про «Выдача рукописи отложена».",
+     "needs": [
+      [
+       "a2",
+       "condition"
+      ]
+     ],
+     "gaps": [
+      "requirement_gap"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "requirement",
+      "reply": "Меня интересует условие.",
+      "visible": "условие"
+     }
+    },
+    {
+     "id": "A8",
+     "question": "Где записано «Папка отправлена»?",
+     "needs": [
+      [
+       null,
+       "site"
+      ]
+     ],
+     "gaps": [
+      "intent_ambiguity"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "Не знаю.",
+      "visible": null
+     }
+    }
+   ]
+  },
+  {
+   "source": [
+    "",
+    "def stage_input(flag):",
+    "    if flag:",
+    "        return 'Микрофон направлен на сцену'",
+    "    return 'Микрофон направлен на публику'",
+    "",
+    "def inspect_stage_input():",
+    "    return stage_input(True)",
+    "",
+    "def stage_record(flag):",
+    "    if flag:",
+    "        return 'Запись начинается после паузы'",
+    "    return 'Запись завершается после паузы'",
+    "",
+    "def inspect_stage_record():",
+    "    return stage_record(True)",
+    "",
+    "def lobby_notice(flag):",
+    "    if flag:",
+    "        return 'Ожидание микрофона в фойе'",
+    "    return 'Ожидание микрофона в зале'",
+    "",
+    "def inspect_lobby_notice():",
+    "    return lobby_notice(True)"
+   ],
+   "targets": {
+    "p1": [
+     "R",
+     "stage_input",
+     4,
+     "Микрофон направлен на сцену",
+     3,
+     "inspect_stage_input",
+     "R",
+     8,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "p2": [
+     "R",
+     "stage_input",
+     5,
+     "Микрофон направлен на публику",
+     -3,
+     "inspect_stage_input",
+     "R",
+     8,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "t1": [
+     "R",
+     "stage_record",
+     12,
+     "Запись начинается после паузы",
+     11,
+     "inspect_stage_record",
+     "R",
+     16,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "t2": [
+     "R",
+     "stage_record",
+     13,
+     "Запись завершается после паузы",
+     -11,
+     "inspect_stage_record",
+     "R",
+     16,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "l1": [
+     "R",
+     "lobby_notice",
+     20,
+     "Ожидание микрофона в фойе",
+     19,
+     "inspect_lobby_notice",
+     "R",
+     24,
+     [
+      "flag ← `True`"
+     ]
+    ],
+    "l2": [
+     "R",
+     "lobby_notice",
+     21,
+     "Ожидание микрофона в зале",
+     -19,
+     "inspect_lobby_notice",
+     "R",
+     24,
+     [
+      "flag ← `True`"
+     ]
+    ]
+   },
+   "cases": [
+    {
+     "id": "B1",
+     "question": "Отметь место, где появляется «Микрофон направлен на сцену».",
+     "needs": [
+      [
+       "p1",
+       "site"
+      ]
+     ],
+     "gaps": [
+      null
+     ],
+     "user": null
+    },
+    {
+     "id": "B2",
+     "question": "Где отмечается направление микрофона?",
+     "needs": [
+      [
+       "p2",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "interpretation_gap"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "В сторону зрительного зала.",
+      "visible": "публику"
+     }
+    },
+    {
+     "id": "B3",
+     "question": "Где записано «после паузы»?",
+     "needs": [
+      [
+       "t2",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "intent_ambiguity"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "Завершается после паузы, речь о конце записи.",
+      "visible": "завершается"
+     }
+    },
+    {
+     "id": "B4",
+     "question": "Где записано «Ожидание микрофона»?",
+     "needs": [
+      [
+       "l2",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "intent_ambiguity"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "object",
+      "reply": "В зале.",
+      "visible": "зале"
+     }
+    },
+    {
+     "id": "B5",
+     "question": "Где записано «Запись начинается после паузы»? Где указано, на кого нацелен прибор?",
+     "needs": [
+      [
+       "t1",
+       "site"
+      ],
+      [
+       "p1",
+       "site"
+      ]
+     ],
+     "gaps": [
+      null,
+      "interpretation_gap"
+     ],
+     "user": {
+      "part": 1,
+      "axis": "object",
+      "reply": "Нужна сцена, в надписи написано «на сцену».",
+      "visible": "сцену"
+     }
+    },
+    {
+     "id": "B6",
+     "question": "Где записано «Запись стерта после паузы»?",
+     "needs": [
+      [
+       null,
+       "site"
+      ]
+     ],
+     "gaps": [
+      "absent_catalog_literal"
+     ],
+     "user": null
+    },
+    {
+     "id": "B7",
+     "question": "Где в исходнике обозначено условие как текст «Ожидание микрофона в фойе»?",
+     "needs": [
+      [
+       "l1",
+       "site"
+      ]
+     ],
+     "gaps": [
+      "requirement_gap"
+     ],
+     "user": {
+      "part": 0,
+      "axis": "requirement",
+      "reply": "Только место в коде.",
+      "visible": "место"
+     }
+    }
+   ]
+  }
+ ]
+}
